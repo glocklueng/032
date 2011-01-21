@@ -1,0 +1,102 @@
+# This new makefile replaces the previous Makefile/Makefile.linux
+# with as much common code for both environments as possible.
+# Following is a short OS detection to set up variables, all the
+# remaining Makefile should be portable and only depend on these
+# variables
+#
+
+# Make sure that all is the default target
+# (The including Makefile still needs to define what 'all' is)
+all:
+
+CROSS   ?= arm-elf-
+CC	= $(CROSS)gcc
+AS	= $(CROSS)as
+LD	= $(CROSS)ld
+OBJCOPY = $(CROSS)objcopy
+
+OBJDIR	= obj
+
+INCLUDE = -I../include
+
+# Windows' echo echos its input verbatim, on Posix there is some
+#  amount of shell command line parsing going on. echo "" on 
+#  Windows yields literal "", on Linux yields an empty line
+ifeq ($(shell echo ""),)
+
+# This is probably a proper system, so we can use uname
+UNAME := $(shell uname)
+DELETE=rm -rf
+MOVE=mv
+COPY=cp
+PATHSEP=/
+FLASH_TOOL=client/flasher
+DETECTED_OS=UNAME
+# You may/should set this in your environment
+LIBGCC ?= $(shell $(CC) -print-libgcc-file-name)
+
+else
+
+# Assume that we are running on Windows.
+DELETE=del /q
+MOVE=ren
+COPY=copy
+PATHSEP=\\#
+LIBGCC ?= ../../devkitARM/lib/gcc/arm-elf/4.1.0/interwork/libgcc.a
+FLASH_TOOL=winsrc\\prox.exe
+DETECTED_OS=Windows
+
+endif
+
+
+# Also search prerequisites in the common directory (for usb.c), and the fpga directory (for fpga.bit)
+VPATH = . ../common/ ../fpga/
+
+INCLUDES = ../include/proxmark3.h ../include/at91sam7s512.h ../include/config_gpio.h ../include/usb_cmd.h $(APP_INCLUDES)
+
+CFLAGS =  -c $(INCLUDE) -Wall -Werror -pedantic -std=gnu99 $(APP_CFLAGS)
+
+THUMBOBJ = $(patsubst %.c,$(OBJDIR)/%.o,$(THUMBSRC))
+ARMOBJ   = $(patsubst %.c,$(OBJDIR)/%.o,$(ARMSRC))
+ASMOBJ   = $(patsubst %.s,$(OBJDIR)/%.o,$(ASMSRC))
+VERSIONOBJ = $(OBJDIR)/version.o
+
+$(THUMBOBJ): $(OBJDIR)/%.o: %.c $(INCLUDES)
+	$(CC) $(CFLAGS) -mthumb -mthumb-interwork -o $@ $< 
+
+$(ARMOBJ): $(OBJDIR)/%.o: %.c $(INCLUDES)
+	$(CC) $(CFLAGS) -mthumb-interwork -o $@ $< 
+
+$(ASMOBJ): $(OBJDIR)/%.o: %.s
+	$(CC) $(CFLAGS) -mthumb-interwork -o $@ $<
+
+$(VERSIONOBJ): $(OBJDIR)/%.o: %.c $(INCLUDES)
+	$(CC) $(CFLAGS) -mthumb -mthumb-interwork -o $@ $< 
+
+# This objcopy call translates physical flash addresses to logical addresses
+# without touching start address or RAM addresses (.bss and .data sections)
+# See ldscript.common. -- Henryk Plötz <henryk@ploetzli.ch> 2009-08-27
+OBJCOPY_TRANSLATIONS = --no-change-warnings \
+	--change-addresses -0x100000 --change-start 0 \
+	--change-section-address .bss+0 --change-section-address .data+0 \
+	--change-section-address .commonarea+0
+$(OBJDIR)/%.s19: $(OBJDIR)/%.elf
+	$(OBJCOPY) -Osrec --srec-forceS3 --strip-debug $(OBJCOPY_TRANSLATIONS) $^ $@
+
+# version.c should be remade on every compilation
+.PHONY: version.c
+version.c: default_version.c
+	perl ../tools/mkversion.pl .. > $@ || $(COPY) $^ $@ 
+
+# Automatic dependency generation
+DEPENDENCY_FILES = $(patsubst %.c,$(OBJDIR)/%.d,$(notdir $(THUMBSRC))) \
+	$(patsubst %.c,$(OBJDIR)/%.d,$(notdir $(ARMSRC))) \
+	$(patsubst %.s,$(OBJDIR)/%.d,$(notdir $(ASMSRC)))
+
+$(DEPENDENCY_FILES): Makefile ../common/Makefile.common
+$(patsubst %.o,%.d,$(THUMBOBJ) $(ARMOBJ)): $(OBJDIR)/%.d: %.c
+	@$(CC) -MM -MT "$(@) $(@:.d=.o)" $(CFLAGS) $< > $@
+$(patsubst %.o,%.d,$(ASMOBJ)):$(OBJDIR)/%.d: %.s
+	@$(CC) -MM -MT "$(@) $(@:.d=.o)" $(CFLAGS) $< > $@
+
+-include $(DEPENDENCY_FILES)
