@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<project>
+  <fileVersion>2</fileVersion>
+  <fileChecksum>3974772799</fileChecksum>
+  <configuration>
+    <name>Debug</name>
+    <outputs>
+      <file>$PROJ_DIR$\display.c</file>
+      <file>$PROJ_DIR$\..\..\..\inc\hw_memmap.h</file>
+      <file>$PROJ_DIR$\imu.c</file>
+      <file>$PROJ_DIR$\filter.c</file>
+      <file>$PROJ_DIR$\init.c</file>
+      <file>$PROJ_DIR$\quad_dk.c</file>
+      <file>$PROJ_DIR$\..\drivers\set_pinout.c</file>
+      <file>$PROJ_DIR$\startup.c</file>
+      <file>$PROJ_DIR$\..\..\..\driverlib\ewarm\Exe\driverlib.a</file>
+      <file>$PROJ_DIR$\..\..\..\grlib\ewarm\Exe\grlib.a</file>
+      <file>$PROJ_DIR$\ewarm\List\quad_dk.map</file>
+      <file>$PROJ_DIR$\..\..\..\inc\hw_adc.h</file>
+      <file>$PROJ_DIR$\ewarm\Obj\startup.o</file>
+      <file>$PROJ_DIR$\..\drivers\kitronix320x240x16_ssd2119_8bit.c</file>
+      <file>$PROJ_DIR$\ewarm\Obj\startup.pbi</file>
+      <file>$PROJ_DIR$\ewarm\Obj\filter.pbi</file>
+      <file>$TOOLKIT_DIR$\lib\rt7M_tl.a</file>
+      <file>$PROJ_DIR$\ewarm\Exe\quad_dk.out</file>
+      <file>$TOOLKIT_DIR$\lib\shb_l.a</file>
+      <file>$PROJ_DIR$\ewarm\Obj\quad_dk.pbi</file>
+      <file>$PROJ_DIR$\ewarm\Obj\quad_dk.o</file>
+      <file>$PROJ_DIR$\..\..\..\inc\hw_gpio.h</file>
+      <file>$TOOLKIT_DIR$\lib\dl7M_tln.a</file>
+      <file>$PROJ_DIR$\ewarm\Obj\quad_dk.pbd</file>
+      <file>$PROJ_DIR$\ewarm\Obj\imu.o</file>
+      <file>$PROJ_DIR$\ewarm\Obj\imu.pbi</file>
+      <file>$PROJ_DIR$\..\..\..\driverlib\adc.c</file>
+      <file>$PROJ_DIR$\ewarm\Obj\init.o</file>
+      <file>$PROJ_DIR$\..\..\..\driverlib\adc.h</file>
+      <file>$PROJ_DIR$\ewarm\Obj\init.pbi</file>
+      <file>$PROJ_DIR$\..\..\..\inc\hw_ints.h</file>
+      <file>$PROJ_DIR$\quad_dk.icf</file>
+      <file>$PROJ_DIR$\..\..\..\inc\lm3s9b96.h</file>
+      <file>$TOOLKIT_DIR$\lib\m7M_tl.a</file>
+      <file>$PROJ_DIR$\init.h</file>
+      <file>$PROJ_DIR$\ewarm\Exe\quad_dk.bin</file>
+      <file>$PROJ_DIR$\ewarm\Obj\set_pinout.pbi</file>
+      <file>$PROJ_DIR$\ewarm\Obj\set_pinout.o</file>
+      <file>$PROJ_DIR$\ewarm\Obj\kitronix320x240x16_ssd2119_8bit.o</file>
+      <file>$PROJ_DIR$\..\drivers\kitronix320x240x16_ssd2119_8bit.h</file>
+      <file>$PROJ_DIR$\..\..\..\driverlib\debug.h</file>
+      <file>$PROJ_DIR$\..\..\..\driverlib\uart.h</file>
+      <file>$PROJ_DIR$\..\drivers\set_pinout.h</file>
+      <file>$PROJ_DIR$\..\..\..\driverlib\timer.h</file>
+      <file>$PROJ_DIR$\..\..\..\driverlib\sysctl.h</file>
+      <file>$PROJ_DIR$\..\..\..\driverlib\interrupt.h</file>
+      <file>$PROJ_DIR$\ewarm\Obj\kitronix320x240x16_ssd2119_8bit.pbi</file>
+      <file>$PROJ_DIR$\..\..\..\inc\hw_types.h</file>
+      <file>$PROJ_DIR$\..\..\..\inc\hw_timer.h</file>
+      <file>$PROJ_DIR$\..\..\..\grlib\widget.h</file>
+      <file>$PROJ_DIR$\..\..\..\grlib\grlib.h</file>
+      <file>$PROJ_DIR$\..\..\..\driverlib\gpio.h</file>
+      <file>$PROJ_DIR$\display.h</file>
+      <file>$PROJ_DIR$\ewarm\Obj\display.o</file>
+      <file>$PROJ_DIR$\ewarm\Obj\display.pbi</file>
+      <file>$PROJ_DIR$\imu.h</file>
+    </outputs>
+    <file>
+      <name>[ROOT_NODE]</name>
+      <outputs>
+        <tool>
+          <name>ILINK</name>
+          <file> 17 10</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\display.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 53</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 54</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 52 11 21 30 1 48 47 28 40 51 45 44 43 41 50 49 39 42</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 52 11 21 30 1 48 47 28 40 51 45 44 43 41 50 49 39 42</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\imu.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 24</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 25</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 55</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 55</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\filter.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 15</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\init.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 27</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 29</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 34 11 21 30 1 48 47 28 51 45 44 43 50 49 39 42</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 34 11 21 30 1 48 47 28 51 45 44 43 50 49 39 42</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\quad_dk.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 20</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 19</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 32 11 21 30 1 48 47 28 40 51 45 44 43 41 50 49 39 42 34 55 52</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 32 11 21 30 1 48 47 28 40 51 45 44 43 41 50 49 39 42 34 55 52</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\drivers\set_pinout.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 37</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 36</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 1 47 21 44 42</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 1 47 21 44 42</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\startup.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 12</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 14</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\drivers\kitronix320x240x16_ssd2119_8bit.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 38</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 46</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 21 30 1 47 51 45 44 43 50 39</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 21 30 1 47 51 45 44 43 50 39</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\ewarm\Exe\quad_dk.out</name>
+      <outputs>
+        <tool>
+          <name>ILINK</name>
+          <file> 10</file>
+        </tool>
+        <tool>
+          <name>OBJCOPY</name>
+          <file> 35</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ILINK</name>
+          <file> 31 53 24 27 20 37 12 8 9 18 16 33 22</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\ewarm\Obj\quad_dk.pbd</name>
+      <inputs>
+        <tool>
+          <name>BILINK</name>
+          <file> 54 25 29 19 36 14</file>
+        </tool>
+      </inputs>
+    </file>
+  </configuration>
+</project>
+
+

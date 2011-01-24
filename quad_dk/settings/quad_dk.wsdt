@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<Workspace>
+  <ConfigDictionary>
+    
+  <CurrentConfigs><Project>quad_dk/Debug</Project><Project>driverlib/Debug</Project></CurrentConfigs><CurrentProj>quad_dk</CurrentProj><OverviewSelected>1</OverviewSelected></ConfigDictionary>
+  <Desktop>
+    <Static>
+      <Workspace>
+        <ColumnWidths>
+          
+          
+          
+          
+        <Column0>146</Column0><Column1>27</Column1><Column2>27</Column2><Column3>27</Column3></ColumnWidths>
+      </Workspace>
+    <Build><ColumnWidth0>20</ColumnWidth0><ColumnWidth1>1395</ColumnWidth1><ColumnWidth2>372</ColumnWidth2><ColumnWidth3>93</ColumnWidth3></Build><TerminalIO/><Debug-Log><ColumnWidth0>22</ColumnWidth0><ColumnWidth1>1859</ColumnWidth1></Debug-Log></Static>
+    <Windows>
+      
+    <Wnd2>
+        <Tabs>
+          <Tab>
+            <Identity>TabID-5971-17976</Identity>
+            <TabName>Workspace</TabName>
+            <Factory>Workspace</Factory>
+            <Session>
+              
+            <NodeDict><ExpandedNode>&lt;ws></ExpandedNode><ExpandedNode>&lt;ws>/driverlib</ExpandedNode><ExpandedNode>&lt;ws>/driverlib/Source</ExpandedNode><ExpandedNode>&lt;ws>/quad_dk</ExpandedNode><ExpandedNode>&lt;ws>/quad_dk/Source</ExpandedNode><ExpandedNode>&lt;ws>/quad_dk/Source/startup.c</ExpandedNode><ExpandedNode>quad_dk</ExpandedNode><ExpandedNode>quad_dk/Output</ExpandedNode><ExpandedNode>quad_dk/Source</ExpandedNode><ExpandedNode>quad_dk/Source/quad_dk.c</ExpandedNode><ExpandedNode>quad_dk/Source/startup.c</ExpandedNode></NodeDict></Session>
+          </Tab>
+        </Tabs>
+        
+      <SelectedTab>0</SelectedTab></Wnd2><Wnd3><Tabs><Tab><Identity>TabID-12600-18466</Identity><TabName>Build</TabName><Factory>Build</Factory><Session/></Tab><Tab><Identity>TabID-32647-17458</Identity><TabName>Debug Log</TabName><Factory>Debug-Log</Factory><Session/></Tab></Tabs><SelectedTab>0</SelectedTab></Wnd3></Windows>
+    <Editor>
+      
+      
+      
+      
+    <Pane><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\quad_dk.c</Filename><XPos>0</XPos><YPos>58</YPos><SelStart>1438</SelStart><SelEnd>1438</SelEnd></Tab><ActiveTab>0</ActiveTab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\init.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>868</SelStart><SelEnd>868</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\init.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>245</SelStart><SelEnd>245</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\drivers\set_pinout.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>1214</SelStart><SelEnd>1214</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\imu.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>4177</SelStart><SelEnd>4177</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\imu.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>105</SelStart><SelEnd>105</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\driverlib\gpio.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>7836</SelStart><SelEnd>7852</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\driverlib\timer.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\driverlib\sysctl.h</Filename><XPos>0</XPos><YPos>99</YPos><SelStart>6666</SelStart><SelEnd>6676</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\inc\hw_gpio.h</Filename><XPos>0</XPos><YPos>45</YPos><SelStart>3679</SelStart><SelEnd>3679</SelEnd></Tab></Pane><ActivePane>0</ActivePane><Pane><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\driverlib\adc.c</Filename><XPos>0</XPos><YPos>654</YPos><SelStart>24216</SelStart><SelEnd>24216</SelEnd></Tab><ActiveTab>0</ActiveTab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\driverlib\adc.h</Filename><XPos>0</XPos><YPos>45</YPos><SelStart>2994</SelStart><SelEnd>3005</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\driverlib\i2c.c</Filename><XPos>0</XPos><YPos>57</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\driverlib\i2c.h</Filename><XPos>0</XPos><YPos>97</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\inc\hw_adc.h</Filename><XPos>0</XPos><YPos>273</YPos><SelStart>16487</SelStart><SelEnd>16487</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\inc\lm3s9b96.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>1395</SelStart><SelEnd>1395</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\startup.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\grlib\grlib.h</Filename><XPos>0</XPos><YPos>996</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd></Tab></Pane><Sizes><Pane><X>524311</X><Y>1000000</Y></Pane><Pane><X>475688</X><Y>1000000</Y></Pane></Sizes><SplitMode>4</SplitMode></Editor>
+    <Positions>
+      
+      
+      
+      
+      
+    <Top><Row0><Sizes><Toolbar-00cb11f8><key>iaridepm.enu1</key></Toolbar-00cb11f8></Sizes></Row0></Top><Left><Row0><Sizes><Wnd2><Rect><Top>-2</Top><Left>-2</Left><Bottom>904</Bottom><Right>220</Right><x>-2</x><y>-2</y><xscreen>164</xscreen><yscreen>196</yscreen><sizeHorzCX>102500</sizeHorzCX><sizeHorzCY>173759</sizeHorzCY><sizeVertCX>138750</sizeVertCX><sizeVertCY>803191</sizeVertCY></Rect></Wnd2></Sizes></Row0></Left><Right><Row0><Sizes/></Row0></Right><Bottom><Row0><Sizes><Wnd3><Rect><Top>-2</Top><Left>-2</Left><Bottom>179</Bottom><Right>1602</Right><x>-2</x><y>-2</y><xscreen>1604</xscreen><yscreen>181</yscreen><sizeHorzCX>1002500</sizeHorzCX><sizeHorzCY>160461</sizeHorzCY><sizeVertCX>102500</sizeVertCX><sizeVertCY>173759</sizeVertCY></Rect></Wnd3></Sizes></Row0></Bottom><Float><Sizes/></Float></Positions>
+  </Desktop>
+</Workspace>
+
+

@@ -1,0 +1,42 @@
+[DebugChecksum]
+Checksum=-1102509899
+[Exceptions]
+StopOnUncaught=_ 0
+StopOnThrow=_ 0
+[DisAssemblyWindow]
+NumStates=_ 0
+[InstructionProfiling]
+Enabled=_ 0
+[CodeCoverage]
+Enabled=_ 0
+[StackPlugin]
+Enabled=1
+OverflowWarningsEnabled=1
+WarningThreshold=90
+SpWarningsEnabled=1
+WarnHow=0
+UseTrigger=1
+TriggerName=main
+LimitSize=0
+ByteLimit=50
+[Disassemble mode]
+mode=0
+[Breakpoints]
+Count=0
+[Log file]
+LoggingEnabled=_ 0
+LogFile=_ ""
+Category=_ 0
+[Aliases]
+Count=0
+SuppressDialog=0
+[CallStackLog]
+Enabled=0
+[DriverProfiling]
+Enabled=0
+Mode=0
+Graph=0
+Symbiont=0
+[TermIOLog]
+LoggingEnabled=_ 0
+LogFile=_ ""

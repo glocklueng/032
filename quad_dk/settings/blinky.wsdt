@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<Workspace>
+  <ConfigDictionary>
+    
+    
+    
+  <CurrentConfigs><Project>blinky/Debug</Project><Project>driverlib/Debug</Project></CurrentConfigs><CurrentProj>blinky</CurrentProj><OverviewSelected>1</OverviewSelected></ConfigDictionary>
+  <Desktop>
+    <Static>
+      <Workspace>
+        <ColumnWidths>
+          
+          
+          
+          
+        <Column0>345</Column0><Column1>27</Column1><Column2>27</Column2><Column3>27</Column3></ColumnWidths>
+      </Workspace>
+      <Build>
+        
+        
+        
+        
+      <ColumnWidth0>20</ColumnWidth0><ColumnWidth1>1395</ColumnWidth1><ColumnWidth2>372</ColumnWidth2><ColumnWidth3>93</ColumnWidth3></Build>
+    <Debug-Log><ColumnWidth0>20</ColumnWidth0><ColumnWidth1>1541</ColumnWidth1></Debug-Log><TerminalIO/></Static>
+    <Windows>
+      
+      
+    <Wnd0>
+        <Tabs>
+          <Tab>
+            <Identity>TabID-15949-3792</Identity>
+            <TabName>Workspace</TabName>
+            <Factory>Workspace</Factory>
+            <Session>
+              
+            <NodeDict><ExpandedNode>&lt;ws></ExpandedNode><ExpandedNode>&lt;ws>/blinky</ExpandedNode><ExpandedNode>&lt;ws>/blinky/Output</ExpandedNode><ExpandedNode>&lt;ws>/blinky/Output/blinky.out</ExpandedNode><ExpandedNode>&lt;ws>/blinky/Output/blinky.out/Output</ExpandedNode><ExpandedNode>&lt;ws>/blinky/Source</ExpandedNode><ExpandedNode>&lt;ws>/blinky/Source/blinky.c</ExpandedNode><ExpandedNode>&lt;ws>/blinky/Source/blinky.c/Output</ExpandedNode><ExpandedNode>&lt;ws>/driverlib</ExpandedNode><ExpandedNode>&lt;ws>/driverlib/Output</ExpandedNode><ExpandedNode>&lt;ws>/driverlib/Source</ExpandedNode></NodeDict></Session>
+          </Tab>
+        </Tabs>
+        
+      <SelectedTab>0</SelectedTab></Wnd0><Wnd1>
+        <Tabs>
+          <Tab>
+            <Identity>TabID-5787-4188</Identity>
+            <TabName>Build</TabName>
+            <Factory>Build</Factory>
+            <Session/>
+          </Tab>
+        <Tab><Identity>TabID-5192-13301</Identity><TabName>Debug Log</TabName><Factory>Debug-Log</Factory><Session/></Tab></Tabs>
+        
+      <SelectedTab>0</SelectedTab></Wnd1></Windows>
+    <Editor>
+      
+      
+      
+      
+    <Pane><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\blinky.c</Filename><XPos>0</XPos><YPos>42</YPos><SelStart>2699</SelStart><SelEnd>2699</SelEnd></Tab><ActiveTab>0</ActiveTab></Pane><Pane><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\inc\lm3s9b96.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>360</SelStart><SelEnd>360</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\startup.c</Filename><XPos>0</XPos><YPos>155</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd></Tab><ActiveTab>1</ActiveTab></Pane><ActivePane>1</ActivePane><Sizes><Pane><X>500000</X><Y>500000</Y></Pane><Pane><X>500000</X><Y>500000</Y></Pane></Sizes><SplitMode>4</SplitMode></Editor>
+    <Positions>
+      
+      
+      
+      
+      
+    <Top><Row0><Sizes><Toolbar-00265db8><key>iaridepm.enu1</key></Toolbar-00265db8></Sizes></Row0></Top><Left><Row0><Sizes><Wnd0><Rect><Top>-2</Top><Left>-2</Left><Bottom>911</Bottom><Right>436</Right><x>-2</x><y>-2</y><xscreen>270</xscreen><yscreen>289</yscreen><sizeHorzCX>140625</sizeHorzCX><sizeHorzCY>256206</sizeHorzCY><sizeVertCX>228125</sizeVertCX><sizeVertCY>809397</sizeVertCY></Rect></Wnd0></Sizes></Row0></Left><Right><Row0><Sizes/></Row0></Right><Bottom><Row0><Sizes><Wnd1><Rect><Top>-2</Top><Left>-2</Left><Bottom>172</Bottom><Right>1922</Right><x>-2</x><y>-2</y><xscreen>1924</xscreen><yscreen>174</yscreen><sizeHorzCX>1002083</sizeHorzCX><sizeHorzCY>154255</sizeHorzCY><sizeVertCX>140625</sizeVertCX><sizeVertCY>256206</sizeVertCY></Rect></Wnd1></Sizes></Row0></Bottom><Float><Sizes/></Float></Positions>
+  </Desktop>
+</Workspace>
+
+
