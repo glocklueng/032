@@ -24,14 +24,23 @@
 void InitADC()
 {
     SysCtlClockSet(SYSCTL_SYSDIV_10 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN | SYSCTL_XTAL_16MHZ);
-    SysCtlPeripheralEnable(SYSCTL_PERIPH_ADC0);
-    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOB);
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_ADC);
     
-    GPIOPinTypeADC(GPIO_PORTB_BASE, GPIO_PIN_4);
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOB);   
+    GPIOPinTypeADC(GPIO_PORTB_BASE, GPIO_PIN_4);   //ADC 10        PB4
+        
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOE);
+    GPIOPinTypeADC(GPIO_PORTE_BASE, GPIO_PIN_6);   //ADC 1         PE6
+    
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOE);
+    GPIOPinTypeADC(GPIO_PORTE_BASE, GPIO_PIN_7);   //ADC 0         PE7
     
     ADCSequenceDisable(ADC_BASE, 0);
-    ADCSequenceConfigure(ADC0_BASE, 0, ADC_TRIGGER_PROCESSOR, 0);
-    ADCSequenceStepConfigure(ADC0_BASE, 0, 0, ADC_CTL_CH10 | ADC_CTL_IE | ADC_CTL_END);  //PB4
-    ADCSequenceEnable(ADC0_BASE, 0);
-    ADCIntClear(ADC0_BASE, 0);
+    ADCSequenceConfigure(ADC_BASE, 0, ADC_TRIGGER_PROCESSOR, 0);
+    ADCSequenceStepConfigure(ADC_BASE, 0 , 0 , ADC_CTL_CH0);   // PE7
+    ADCSequenceStepConfigure(ADC_BASE, 0 , 1 , ADC_CTL_CH1);   // PE6
+    ADCSequenceStepConfigure(ADC_BASE, 0 , 2 , ADC_CTL_CH10 | ADC_CTL_IE | ADC_CTL_END);  //PB4
+    ADCSequenceEnable(ADC_BASE, 0);
+    ADCIntEnable(ADC_BASE, 0);
+    ADCIntClear(ADC_BASE, 0);
 }

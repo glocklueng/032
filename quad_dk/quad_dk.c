@@ -64,26 +64,27 @@ int main(void)
     // --------------------------
                      
     
-    unsigned long adc_values[2];
-    
+    unsigned long adc_values[3];
+    unsigned long blink_delay = 0;
     
     // MAIN LOOP           
     while(1)
     {
-        //
+
         // Trigger the sample sequence.
-        //
         ADCProcessorTrigger(ADC_BASE, 0);
-        //
+
         // Wait until the sample sequence has completed.
-        //
-        while(!ADCIntStatus(ADC_BASE, 0, false))
-        {
-        }
+        while(!ADCIntStatus(ADC_BASE, 0, false)){}
         
+        // Grab ADC values and load to buffer
         ADCSequenceDataGet(ADC_BASE,0,adc_values);
-      
-        adc_values[0] = adc_values[0] * 200;
+        
+        // Clear ADC sequencer
+        ADCIntClear(ADC_BASE, 0);
+        
+        
+        blink_delay = adc_values[2] * 200;
         //                                          
         // Turn on the LED.
         //
@@ -92,7 +93,7 @@ int main(void)
         //
         // Delay for a bit.
         //
-        for(ulLoop = 0; ulLoop < adc_values[0]; ulLoop++)
+        for(ulLoop = 0; ulLoop < blink_delay; ulLoop++)
         {
         }
 
@@ -106,7 +107,7 @@ int main(void)
         //
         // Delay for a bit.
         //
-        for(ulLoop = 0; ulLoop < adc_values[0]; ulLoop++)
+        for(ulLoop = 0; ulLoop < blink_delay; ulLoop++)
         {
         }
         
