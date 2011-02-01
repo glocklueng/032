@@ -44,7 +44,8 @@ int main(void)
     // INIT - Initialization Code 
     // -------------------------- 
     InitADC();
-    
+    InitPWM();
+    //InitI2C();
     
     volatile unsigned long ulLoop;
 
@@ -73,25 +74,7 @@ int main(void)
     // -----------------------------------------   
     
     
-    SysCtlPWMClockSet(SYSCTL_PWMDIV_64);
-    
-    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
-    SysCtlPeripheralEnable(SYSCTL_PERIPH_PWM);
-    
-    GPIOPadConfigSet(GPIO_PORTF_BASE, GPIO_PIN_3, GPIO_STRENGTH_8MA, GPIO_PIN_TYPE_STD);
-    
-    GPIOPinConfigure(GPIO_PF3_PWM3);
-    GPIOPinTypePWM(GPIO_PORTF_BASE, GPIO_PIN_3);
-    
-    PWMGenConfigure(PWM_BASE, PWM_GEN_1, PWM_GEN_MODE_UP_DOWN | PWM_GEN_MODE_NO_SYNC);
-    
-    PWMGenPeriodSet(PWM_BASE, PWM_GEN_1, 7812);
-    PWMPulseWidthSet(PWM_BASE, PWM_OUT_3, 7812 / 4);
-    
-    
-    PWMOutputState(PWM_BASE, PWM_OUT_3_BIT, true);
-    
-    PWMGenEnable(PWM_BASE, PWM_GEN_1);
+
     
     
     // MAIN LOOP           
@@ -113,9 +96,10 @@ int main(void)
         
         blink_delay = adc_values[2] * 20;
         
+        // 20460
         if(blink_delay != 0 && blink_delay < 20460)
         {
-          PWMGenPeriodSet(PWM_BASE, PWM_GEN_1, 20460);
+          PWMGenPeriodSet(PWM_BASE, PWM_GEN_1, 20460);   // get this to 16kHz
           PWMPulseWidthSet(PWM_BASE, PWM_OUT_3, blink_delay);
         }
         

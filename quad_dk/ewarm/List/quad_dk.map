@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR ELF Linker V6.10.2.52244/W32 for ARM              28/Jan/2011  00:12:33 #
+# IAR ELF Linker V6.10.2.52244/W32 for ARM              29/Jan/2011  00:48:25 #
 # Copyright 2007-2010 IAR Systems AB.                                         #
 #                                                                             #
 #    Output file  =  C:\Users\Arko\Documents\IAR Embedded                     #
@@ -69,21 +69,21 @@ __SystemLibrary = DLib
   .intvec  const    0x00000000  0x11c  startup.o [1]
                   - 0x0000011c  0x11c
 
-"P1":                           0x634
+"P1":                           0x644
   .text    ro code  0x0000011c  0x180  gpio.o [4]
   .text    ro code  0x0000029c  0x170  sysctl.o [4]
-  .text    ro code  0x0000040c   0xf0  quad_dk.o [1]
-  .text    ro code  0x000004fc   0xac  init.o [1]
-  .text    ro code  0x000005a8   0x80  pwm.o [4]
-  .text    ro code  0x00000628   0xd2  adc.o [4]
-  .text    ro code  0x000006fa    0x6  startup.o [1]
-  .text    ro code  0x00000700   0x16  cmain.o [7]
-  .text    ro code  0x00000716    0x4  low_level_init.o [3]
-  .text    ro code  0x0000071a    0x8  exit.o [3]
-  .text    ro code  0x00000724    0xa  cexit.o [7]
-  .text    ro code  0x00000730   0x14  exit.o [8]
-  .text    ro code  0x00000744    0xc  cstartup_M.o [7]
-                  - 0x00000750  0x634
+  .text    ro code  0x0000040c  0x128  init.o [1]
+  .text    ro code  0x00000534   0xd2  adc.o [4]
+  .text    ro code  0x00000606    0x6  startup.o [1]
+  .text    ro code  0x0000060c   0x80  pwm.o [4]
+  .text    ro code  0x0000068c   0x84  quad_dk.o [1]
+  .text    ro code  0x00000710   0x16  cmain.o [7]
+  .text    ro code  0x00000726    0x4  low_level_init.o [3]
+  .text    ro code  0x0000072a    0x8  exit.o [3]
+  .text    ro code  0x00000734    0xa  cexit.o [7]
+  .text    ro code  0x00000740   0x14  exit.o [8]
+  .text    ro code  0x00000754    0xc  cstartup_M.o [7]
+                  - 0x00000760  0x644
 
 "P2":                           0x100
   .noinit  uninit   0x20000000  0x100  startup.o [1]
@@ -97,11 +97,11 @@ __SystemLibrary = DLib
     Module            ro code  ro data  rw data
     ------            -------  -------  -------
 C:\Users\Arko\Documents\IAR Embedded Workbench\arm\examples\TexasInstruments\Stellaris\boards\dk-lm3s9b96\quad_dk\ewarm\Obj: [1]
-    init.o                172
-    quad_dk.o             240
+    init.o                296
+    quad_dk.o             132
     startup.o               6      284      256
     -------------------------------------------
-    Total:                418      284      256
+    Total:                434      284      256
 
 command line: [2]
     -------------------------------------------
@@ -143,7 +143,7 @@ shb_l.a: [8]
 
     Gaps                    4
 -----------------------------------------------
-    Grand Total:        1 588      284      256
+    Grand Total:        1 604      284      256
 
 
 *******************************************************************************
@@ -152,49 +152,50 @@ shb_l.a: [8]
 
 Entry                      Address   Size  Type      Object
 -----                      -------   ----  ----      ------
-?main                   0x00000701         Code  Gb  cmain.o [7]
-ADCIntClear             0x00000649    0xa  Code  Gb  adc.o [4]
-ADCIntEnable            0x00000629    0xe  Code  Gb  adc.o [4]
-ADCIntStatus            0x00000637   0x12  Code  Gb  adc.o [4]
-ADCProcessorTrigger     0x000006f1    0xa  Code  Gb  adc.o [4]
-ADCSequenceConfigure    0x00000671   0x30  Code  Gb  adc.o [4]
-ADCSequenceDataGet      0x000006d3   0x1e  Code  Gb  adc.o [4]
-ADCSequenceDisable      0x00000661    0x2  Code  Gb  adc.o [4]
-ADCSequenceEnable       0x00000653    0x8  Code  Gb  adc.o [4]
+?main                   0x00000711         Code  Gb  cmain.o [7]
+ADCIntClear             0x00000555    0xa  Code  Gb  adc.o [4]
+ADCIntEnable            0x00000535    0xe  Code  Gb  adc.o [4]
+ADCIntStatus            0x00000543   0x12  Code  Gb  adc.o [4]
+ADCProcessorTrigger     0x000005fd    0xa  Code  Gb  adc.o [4]
+ADCSequenceConfigure    0x0000057d   0x30  Code  Gb  adc.o [4]
+ADCSequenceDataGet      0x000005df   0x1e  Code  Gb  adc.o [4]
+ADCSequenceDisable      0x0000056d    0x2  Code  Gb  adc.o [4]
+ADCSequenceEnable       0x0000055f    0x8  Code  Gb  adc.o [4]
 ADCSequenceStepConfigure
-                        0x000006a1   0x32  Code  Gb  adc.o [4]
-FaultISR                0x000006fd    0x2  Code  Lc  startup.o [1]
+                        0x000005ad   0x32  Code  Gb  adc.o [4]
+FaultISR                0x00000609    0x2  Code  Lc  startup.o [1]
 GPIODirModeSet          0x0000011d   0x28  Code  Gb  gpio.o [4]
 GPIOPadConfigSet        0x00000145   0x98  Code  Gb  gpio.o [4]
 GPIOPinConfigure        0x0000020d   0x40  Code  Gb  gpio.o [4]
 GPIOPinTypeADC          0x000001dd    0x4  Code  Gb  gpio.o [4]
 GPIOPinTypePWM          0x000001fb    0xa  Code  Gb  gpio.o [4]
-InitADC                 0x000004fd   0x88  Code  Gb  init.o [1]
-IntDefaultHandler       0x000006ff    0x2  Code  Lc  startup.o [1]
-NmiSR                   0x000006fb    0x2  Code  Lc  startup.o [1]
-PWMGenConfigure         0x000005a9   0x2c  Code  Gb  pwm.o [4]
-PWMGenEnable            0x000005ed    0x6  Code  Gb  pwm.o [4]
-PWMGenPeriodSet         0x000005d9   0x14  Code  Gb  pwm.o [4]
-PWMOutputState          0x00000617   0x12  Code  Gb  pwm.o [4]
-PWMPulseWidthSet        0x000005f3   0x1c  Code  Gb  pwm.o [4]
+InitADC                 0x0000040d   0x88  Code  Gb  init.o [1]
+InitPWM                 0x0000049d   0x6c  Code  Gb  init.o [1]
+IntDefaultHandler       0x0000060b    0x2  Code  Lc  startup.o [1]
+NmiSR                   0x00000607    0x2  Code  Lc  startup.o [1]
+PWMGenConfigure         0x0000060d   0x2c  Code  Gb  pwm.o [4]
+PWMGenEnable            0x00000651    0x6  Code  Gb  pwm.o [4]
+PWMGenPeriodSet         0x0000063d   0x14  Code  Gb  pwm.o [4]
+PWMOutputState          0x0000067b   0x12  Code  Gb  pwm.o [4]
+PWMPulseWidthSet        0x00000657   0x1c  Code  Gb  pwm.o [4]
 Region$$Table$$Base     0x00000000          --   Gb  - Linker created -
 Region$$Table$$Limit    0x00000000          --   Gb  - Linker created -
 SysCtlClockSet          0x000002c5  0x10e  Code  Gb  sysctl.o [4]
 SysCtlDelay             0x000002bd    0x8  Code  Gb  sysctl.o [4]
 SysCtlPWMClockSet       0x000003d3    0xa  Code  Gb  sysctl.o [4]
 SysCtlPeripheralEnable  0x0000029d    0x8  Code  Gb  sysctl.o [4]
-__cmain                 0x00000701         Code  Gb  cmain.o [7]
-__exit                  0x00000731   0x14  Code  Gb  exit.o [8]
-__iar_program_start     0x00000745         Code  Gb  cstartup_M.o [7]
-__low_level_init        0x00000717    0x4  Code  Gb  low_level_init.o [3]
+__cmain                 0x00000711         Code  Gb  cmain.o [7]
+__exit                  0x00000741   0x14  Code  Gb  exit.o [8]
+__iar_program_start     0x00000755         Code  Gb  cstartup_M.o [7]
+__low_level_init        0x00000727    0x4  Code  Gb  low_level_init.o [3]
 __vector_table          0x00000000  0x11c  Data  Gb  startup.o [1]
-_call_main              0x0000070d         Code  Gb  cmain.o [7]
-_exit                   0x00000725         Code  Gb  cexit.o [7]
-_main                   0x00000713         Code  Gb  cmain.o [7]
-exit                    0x0000071b    0x8  Code  Gb  exit.o [3]
+_call_main              0x0000071d         Code  Gb  cmain.o [7]
+_exit                   0x00000735         Code  Gb  cexit.o [7]
+_main                   0x00000723         Code  Gb  cmain.o [7]
+exit                    0x0000072b    0x8  Code  Gb  exit.o [3]
 g_pulGPIOBaseAddrs      0x00000254   0x48  Data  Lc  gpio.o [4]
 g_pulRCGCRegs           0x00000400    0xc  Data  Lc  sysctl.o [4]
-main                    0x0000040d   0xf0  Code  Gb  quad_dk.o [1]
+main                    0x0000068d   0x84  Code  Gb  quad_dk.o [1]
 pulStack                0x20000000  0x100  Data  Lc  startup.o [1]
 
 
@@ -207,7 +208,7 @@ pulStack                0x20000000  0x100  Data  Lc  startup.o [1]
 [7] = rt7M_tl.a
 [8] = shb_l.a
 
-  1 588 bytes of readonly  code memory
+  1 604 bytes of readonly  code memory
     284 bytes of readonly  data memory
     256 bytes of readwrite data memory
 
