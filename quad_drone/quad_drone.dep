@@ -2,106 +2,93 @@
 
 <project>
   <fileVersion>2</fileVersion>
-  <fileChecksum>3692142293</fileChecksum>
+  <fileChecksum>317625662</fileChecksum>
   <configuration>
     <name>Debug</name>
     <outputs>
       <file>$PROJ_DIR$\imu.c</file>
-      <file>$PROJ_DIR$\ewarm\Obj\display.pbi</file>
-      <file>$PROJ_DIR$\display.c</file>
-      <file>$PROJ_DIR$\..\..\..\inc\hw_types.h</file>
+      <file>$PROJ_DIR$\..\..\..\driverlib\pwm.c</file>
       <file>$PROJ_DIR$\init.c</file>
+      <file>$PROJ_DIR$\display.c</file>
       <file>$PROJ_DIR$\quad_drone.c</file>
       <file>$PROJ_DIR$\..\drivers\set_pinout.c</file>
       <file>$PROJ_DIR$\startup.c</file>
       <file>$PROJ_DIR$\..\..\..\driverlib\ewarm\Exe\driverlib.a</file>
       <file>$PROJ_DIR$\..\..\..\grlib\ewarm\Exe\grlib.a</file>
-      <file>$TOOLKIT_DIR$\lib\dl7M_tln.a</file>
-      <file>$PROJ_DIR$\ewarm\Obj\display.o</file>
-      <file>$PROJ_DIR$\ewarm\Obj\quad_drone.pbd</file>
-      <file>$PROJ_DIR$\..\..\..\inc\hw_gpio.h</file>
-      <file>$PROJ_DIR$\..\..\..\grlib\grlib.h</file>
+      <file>$PROJ_DIR$\..\..\..\inc\hw_types.h</file>
+      <file>$PROJ_DIR$\ewarm\List\quad_drone.map</file>
+      <file>$PROJ_DIR$\quad_drone.icf</file>
+      <file>$PROJ_DIR$\..\..\..\driverlib\uart.h</file>
+      <file>$PROJ_DIR$\..\..\..\driverlib\gpio.h</file>
+      <file>$PROJ_DIR$\..\..\..\grlib\widget.h</file>
+      <file>$PROJ_DIR$\..\drivers\set_pinout.h</file>
+      <file>$PROJ_DIR$\..\..\..\inc\hw_memmap.h</file>
+      <file>$PROJ_DIR$\ewarm\Exe\quad_drone.bin</file>
+      <file>$TOOLKIT_DIR$\lib\shb_l.a</file>
+      <file>$PROJ_DIR$\imu.h</file>
+      <file>$PROJ_DIR$\..\drivers\kitronix320x240x16_ssd2119_8bit.h</file>
+      <file>$TOOLKIT_DIR$\lib\rt7M_tl.a</file>
+      <file>$PROJ_DIR$\..\..\..\driverlib\timer.h</file>
+      <file>$TOOLKIT_DIR$\lib\m7M_tl.a</file>
       <file>$PROJ_DIR$\..\..\..\inc\hw_timer.h</file>
-      <file>$PROJ_DIR$\ewarm\Obj\quad_drone.pbi</file>
+      <file>$PROJ_DIR$\ewarm\Obj\init.o</file>
+      <file>$PROJ_DIR$\..\..\..\inc\hw_ints.h</file>
+      <file>$PROJ_DIR$\ewarm\Obj\imu.o</file>
+      <file>$PROJ_DIR$\ewarm\Obj\set_pinout.pbi</file>
       <file>$PROJ_DIR$\ewarm\Obj\imu.pbi</file>
+      <file>$PROJ_DIR$\..\..\..\grlib\grlib.h</file>
+      <file>$PROJ_DIR$\..\..\..\inc\hw_gpio.h</file>
+      <file>$PROJ_DIR$\..\..\..\driverlib\i2c.h</file>
+      <file>$PROJ_DIR$\ewarm\Obj\init.pbi</file>
+      <file>$PROJ_DIR$\ewarm\Obj\set_pinout.o</file>
+      <file>$PROJ_DIR$\..\..\..\inc\lm3s9b96.h</file>
+      <file>$PROJ_DIR$\ewarm\Obj\display.o</file>
+      <file>$PROJ_DIR$\..\..\..\driverlib\sysctl.h</file>
+      <file>$TOOLKIT_DIR$\lib\dl7M_tln.a</file>
+      <file>$PROJ_DIR$\..\..\..\driverlib\adc.h</file>
+      <file>$PROJ_DIR$\ewarm\Obj\quad_drone.pbi</file>
+      <file>$PROJ_DIR$\ewarm\Obj\display.pbi</file>
+      <file>$PROJ_DIR$\..\..\..\driverlib\pwm.h</file>
       <file>$PROJ_DIR$\display.h</file>
       <file>$PROJ_DIR$\ewarm\Obj\startup.pbi</file>
       <file>$PROJ_DIR$\ewarm\Exe\quad_drone.out</file>
       <file>$PROJ_DIR$\init.h</file>
+      <file>$PROJ_DIR$\ewarm\Obj\quad_drone.o</file>
       <file>$PROJ_DIR$\..\..\..\driverlib\debug.h</file>
       <file>$PROJ_DIR$\ewarm\Obj\startup.o</file>
+      <file>$PROJ_DIR$\ewarm\Obj\quad_drone.pbd</file>
       <file>$PROJ_DIR$\..\..\..\inc\hw_adc.h</file>
-      <file>$PROJ_DIR$\..\..\..\inc\lm3s9b96.h</file>
-      <file>$PROJ_DIR$\..\..\..\driverlib\adc.h</file>
-      <file>$PROJ_DIR$\ewarm\List\quad_drone.map</file>
-      <file>$PROJ_DIR$\..\..\..\driverlib\uart.h</file>
-      <file>$PROJ_DIR$\quad_drone.icf</file>
-      <file>$PROJ_DIR$\..\..\..\driverlib\gpio.h</file>
-      <file>$PROJ_DIR$\ewarm\Obj\init.o</file>
-      <file>$PROJ_DIR$\ewarm\Exe\quad_drone.bin</file>
-      <file>$PROJ_DIR$\ewarm\Obj\quad_drone.o</file>
-      <file>$TOOLKIT_DIR$\lib\shb_l.a</file>
-      <file>$PROJ_DIR$\ewarm\Obj\set_pinout.pbi</file>
-      <file>$PROJ_DIR$\imu.h</file>
-      <file>$PROJ_DIR$\..\..\..\driverlib\i2c.h</file>
-      <file>$PROJ_DIR$\..\drivers\kitronix320x240x16_ssd2119_8bit.h</file>
-      <file>$PROJ_DIR$\ewarm\Obj\init.pbi</file>
-      <file>$TOOLKIT_DIR$\lib\rt7M_tl.a</file>
-      <file>$PROJ_DIR$\ewarm\Obj\set_pinout.o</file>
-      <file>$PROJ_DIR$\..\..\..\driverlib\timer.h</file>
-      <file>$PROJ_DIR$\..\..\..\driverlib\sysctl.h</file>
-      <file>$TOOLKIT_DIR$\lib\m7M_tl.a</file>
       <file>$PROJ_DIR$\..\..\..\driverlib\interrupt.h</file>
-      <file>$PROJ_DIR$\..\..\..\grlib\widget.h</file>
-      <file>$PROJ_DIR$\..\..\..\driverlib\pwm.h</file>
-      <file>$PROJ_DIR$\..\drivers\set_pinout.h</file>
-      <file>$PROJ_DIR$\ewarm\Obj\imu.o</file>
-      <file>$PROJ_DIR$\..\..\..\inc\hw_memmap.h</file>
-      <file>$PROJ_DIR$\..\..\..\inc\hw_ints.h</file>
     </outputs>
+    <file>
+      <name>[ROOT_NODE]</name>
+      <outputs>
+        <tool>
+          <name>ILINK</name>
+          <file> 45 10</file>
+        </tool>
+      </outputs>
+    </file>
     <file>
       <name>$PROJ_DIR$\imu.c</name>
       <outputs>
         <tool>
-          <name>BICOMP</name>
-          <file> 17</file>
+          <name>ICCARM</name>
+          <file> 27</file>
         </tool>
         <tool>
-          <name>ICCARM</name>
-          <file> 49</file>
+          <name>BICOMP</name>
+          <file> 29</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
-          <name>BICOMP</name>
-          <file> 36</file>
-        </tool>
-        <tool>
           <name>ICCARM</name>
-          <file> 36</file>
+          <file> 19</file>
         </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\display.c</name>
-      <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 1</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 11</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 18 24 13 51 50 15 3 26 22 30 45 43 42 28 14 46 38 48</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 18 24 13 51 50 15 3 26 22 30 45 43 42 28 14 46 38 48</file>
+          <file> 19</file>
         </tool>
       </inputs>
     </file>
@@ -109,22 +96,45 @@
       <name>$PROJ_DIR$\init.c</name>
       <outputs>
         <tool>
-          <name>BICOMP</name>
-          <file> 39</file>
+          <name>ICCARM</name>
+          <file> 25</file>
         </tool>
         <tool>
-          <name>ICCARM</name>
-          <file> 31</file>
+          <name>BICOMP</name>
+          <file> 33</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
-          <name>BICOMP</name>
-          <file> 21 24 13 51 50 15 3 26 30 45 47 37 43 42 14 46 38 48</file>
+          <name>ICCARM</name>
+          <file> 46 51 31 26 16 24 9 39 13 52 42 32 37 22 30 14 20 15</file>
         </tool>
         <tool>
+          <name>BICOMP</name>
+          <file> 46 51 31 26 16 24 9 39 13 52 42 32 37 22 30 14 20 15</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\display.c</name>
+      <outputs>
+        <tool>
           <name>ICCARM</name>
-          <file> 21 24 13 51 50 15 3 26 30 45 47 37 43 42 14 46 38 48</file>
+          <file> 36</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 41</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 43 51 31 26 16 24 9 39 48 13 52 37 22 12 30 14 20 15</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 43 51 31 26 16 24 9 39 48 13 52 37 22 12 30 14 20 15</file>
         </tool>
       </inputs>
     </file>
@@ -132,22 +142,22 @@
       <name>$PROJ_DIR$\quad_drone.c</name>
       <outputs>
         <tool>
-          <name>BICOMP</name>
-          <file> 16</file>
+          <name>ICCARM</name>
+          <file> 47</file>
         </tool>
         <tool>
-          <name>ICCARM</name>
-          <file> 33</file>
+          <name>BICOMP</name>
+          <file> 40</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
-          <name>BICOMP</name>
-          <file> 25 24 13 51 50 15 3 26 22 30 45 47 43 42 28 14 46 38 48 21 36 18</file>
+          <name>ICCARM</name>
+          <file> 35 51 31 26 16 24 9 39 48 13 52 42 37 22 12 30 14 20 15 46 19 43</file>
         </tool>
         <tool>
-          <name>ICCARM</name>
-          <file> 25 24 13 51 50 15 3 26 22 30 45 47 43 42 28 14 46 38 48 21 36 18</file>
+          <name>BICOMP</name>
+          <file> 35 51 31 26 16 24 9 39 48 13 52 42 37 22 12 30 14 20 15 46 19 43</file>
         </tool>
       </inputs>
     </file>
@@ -155,22 +165,22 @@
       <name>$PROJ_DIR$\..\drivers\set_pinout.c</name>
       <outputs>
         <tool>
-          <name>BICOMP</name>
-          <file> 35</file>
+          <name>ICCARM</name>
+          <file> 34</file>
         </tool>
         <tool>
-          <name>ICCARM</name>
-          <file> 41</file>
+          <name>BICOMP</name>
+          <file> 28</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
-          <name>BICOMP</name>
-          <file> 50 3 13 43 48</file>
+          <name>ICCARM</name>
+          <file> 16 9 31 37 15</file>
         </tool>
         <tool>
-          <name>ICCARM</name>
-          <file> 50 3 13 43 48</file>
+          <name>BICOMP</name>
+          <file> 16 9 31 37 15</file>
         </tool>
       </inputs>
     </file>
@@ -178,51 +188,42 @@
       <name>$PROJ_DIR$\startup.c</name>
       <outputs>
         <tool>
-          <name>BICOMP</name>
-          <file> 19</file>
+          <name>ICCARM</name>
+          <file> 49</file>
         </tool>
         <tool>
-          <name>ICCARM</name>
-          <file> 23</file>
+          <name>BICOMP</name>
+          <file> 44</file>
         </tool>
       </outputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\ewarm\Obj\quad_drone.pbd</name>
-      <inputs>
-        <tool>
-          <name>BILINK</name>
-          <file> 1 17 39 16 35 19</file>
-        </tool>
-      </inputs>
     </file>
     <file>
       <name>$PROJ_DIR$\ewarm\Exe\quad_drone.out</name>
       <outputs>
         <tool>
           <name>ILINK</name>
-          <file> 27</file>
+          <file> 10</file>
         </tool>
         <tool>
           <name>OBJCOPY</name>
-          <file> 32</file>
+          <file> 17</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>ILINK</name>
-          <file> 29 11 49 31 33 41 23 8 9 34 40 44 10</file>
+          <file> 11 27 25 47 34 49 7 8 18 21 23 38</file>
         </tool>
       </inputs>
     </file>
     <file>
-      <name>[ROOT_NODE]</name>
-      <outputs>
+      <name>$PROJ_DIR$\ewarm\Obj\quad_drone.pbd</name>
+      <inputs>
         <tool>
-          <name>ILINK</name>
-          <file> 20 27</file>
+          <name>BILINK</name>
+          <file> 29 33 40 28 44</file>
         </tool>
-      </outputs>
+      </inputs>
     </file>
   </configuration>
 </project>

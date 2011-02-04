@@ -44,7 +44,7 @@ int main(void)
     // INIT - Initialization Code 
     // -------------------------- 
     InitADC();
-    InitPWM();
+    InitPWM();         // Make sure to comment out the LED Code
     //InitI2C();
     
     volatile unsigned long ulLoop;
@@ -52,7 +52,7 @@ int main(void)
     //
     // Enable the GPIO port that is used for the on-board LED.
     //
-    //SYSCTL_RCGC2_R = SYSCTL_RCGC2_GPIOF;
+    SYSCTL_RCGC2_R = SYSCTL_RCGC2_GPIOF;
 
     //
     // Do a dummy read to insert a few cycles after enabling the peripheral.
@@ -63,14 +63,20 @@ int main(void)
     // Enable the GPIO pin for the LED (PF3).  Set the direction as output, and
     // enable the GPIO pin for digital function.
     //
-    //GPIO_PORTF_DIR_R = 0x08;
-    //GPIO_PORTF_DEN_R = 0x08;
+    GPIO_PORTF_DIR_R = 0x0e;
+    GPIO_PORTF_DEN_R = 0x0e;
     // --------------------------
                      
+    // ADC Value Matrix:
+    // [0] : Temperature
+    // [1] : Y - Axis Accelerometer
+    // [2] : Z - Axis Accelerometer
+    // [3] : X - Axis Accelerometer
+    unsigned long adc_values[4];
     
-    unsigned long adc_values[3];
+    // Some value that will eventually go away..
     unsigned long blink_delay = 0;
-     
+    unsigned long motor_dutycycle = 0; 
     // -----------------------------------------   
     
     
@@ -93,41 +99,48 @@ int main(void)
         // Clear ADC sequencer
         ADCIntClear(ADC_BASE, 0);
         
+        // Read ADC and write accordingly
+        blink_delay = adc_values[1] * 300;
+        motor_dutycycle = adc_values[1] * 20;
         
-        blink_delay = adc_values[2] * 20;
         
         // 20460
-        if(blink_delay != 0 && blink_delay < 20460)
+        if(motor_dutycycle < 20460)
         {
-          PWMGenPeriodSet(PWM_BASE, PWM_GEN_1, 20460);   // get this to 16kHz
-          PWMPulseWidthSet(PWM_BASE, PWM_OUT_3, blink_delay);
+          PWMGenPeriodSet(PWM_BASE, PWM_GEN_0, 20460);   // get this to 20kHz
+          PWMPulseWidthSet(PWM_BASE, PWM_OUT_1, motor_dutycycle);   // Motor 1 - PWM1 - Pin 35
+          PWMPulseWidthSet(PWM_BASE, PWM_OUT_0, motor_dutycycle);   // Motor 2 - PWM0 - Pin 34
+          
+          PWMGenPeriodSet(PWM_BASE, PWM_GEN_3, 20460);   // get this to 20kHz
+          PWMPulseWidthSet(PWM_BASE, PWM_OUT_7, motor_dutycycle);   // Motor 3 - PWM7 - Pin 31
+          PWMPulseWidthSet(PWM_BASE, PWM_OUT_6, motor_dutycycle);   // Motor 4 - PWM6 - Pin 30
         }
         
-        //                                          
-        // Turn on the LED.
-        //
-        //GPIO_PORTF_DATA_R |= 0x08;
-
-        //
-        // Delay for a bit.
-        //
+        
+        
+        // Cylon Mode
+        GPIO_PORTF_DATA_R |= 0x04;
         for(ulLoop = 0; ulLoop < blink_delay; ulLoop++)
         {
         }
-
-        //UpdateDisplay(); 
+        GPIO_PORTF_DATA_R &= ~(0x04);
+        GPIO_PORTF_DATA_R |= 0x08;
+        for(ulLoop = 0; ulLoop < blink_delay; ulLoop++)
+        {
+        }
+        GPIO_PORTF_DATA_R &= ~(0x08);
+        GPIO_PORTF_DATA_R |= 0x02; 
+        for(ulLoop = 0; ulLoop < blink_delay; ulLoop++)
+        {
+        }
+        GPIO_PORTF_DATA_R &= ~(0x02);
+        GPIO_PORTF_DATA_R |= 0x08;        
+        for(ulLoop = 0; ulLoop < blink_delay; ulLoop++)
+        {
+        }
+        GPIO_PORTF_DATA_R &= ~(0x08);
         
-        //
-        // Turn off the LED.
-        //
-        //GPIO_PORTF_DATA_R &= ~(0x08);
-
-        //
-        // Delay for a bit.
-        //
-        //for(ulLoop = 0; ulLoop < blink_delay; ulLoop++)
-        //{
-        //}
+        
         
     }
 }

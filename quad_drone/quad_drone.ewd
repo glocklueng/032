@@ -85,7 +85,7 @@
         </option>
         <option>
           <name>OCDynDriverList</name>
-          <state>LMIFTDI_ID</state>
+          <state>JLINK_ID</state>
         </option>
         <option>
           <name>OCLastSavedByProductVersion</name>
