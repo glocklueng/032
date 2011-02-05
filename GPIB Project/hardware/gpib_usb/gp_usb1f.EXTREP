@@ -1,0 +1,26 @@
+------------------------------------------------------------------------------------------
+Gerber File Extension Report For: gp_usb1f.GBR   2/4/2011  11:44:27 PM
+------------------------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------------------------
+Layer Extension     Layer Description                      
+------------------------------------------------------------------------------------------
+.GTL                TopLayer                                
+.G1                 MidLayer1                               
+.GBL                BottomLayer                             
+.GPB                Bottom Pad Master                       
+.GPT                Top Pad Master                          
+.GTO                TopOverlay                              
+.GTP                TopPaste                                
+.GTS                TopSolder                               
+.GBS                BottomSolder                            
+.GBP                BottomPaste                             
+.GBO                BottomOverlay                           
+.GM1                Mechanical1                             
+.GM2                Mechanical2                             
+.GM4                Mechanical4                             
+.GKO                KeepOutLayer                            
+.GD1                Drill Drawing                           
+.GG1                Drill Guide                             
+------------------------------------------------------------------------------------------

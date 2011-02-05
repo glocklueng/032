@@ -1,0 +1,29 @@
+Output: Gerber Files
+Type  : Gerber
+From  : Project [Free Documents]
+   Generated File[gp_usb1f.GTL]
+   Generated File[gp_usb1f.G1]
+   Generated File[gp_usb1f.GBL]
+   Generated File[gp_usb1f.GPB]
+   Generated File[gp_usb1f.GPT]
+   Generated File[gp_usb1f.GTO]
+   Generated File[gp_usb1f.GTP]
+   Generated File[gp_usb1f.GTS]
+   Generated File[gp_usb1f.GBS]
+   Generated File[gp_usb1f.GBP]
+   Generated File[gp_usb1f.GBO]
+   Generated File[gp_usb1f.GM1]
+   Generated File[gp_usb1f.GM2]
+   Generated File[gp_usb1f.GM4]
+   Generated File[gp_usb1f.GKO]
+   Generated File[gp_usb1f.GD1]
+   Generated File[gp_usb1f.GG1]
+   Generated File[gp_usb1f.RUL]
+   Generated File[gp_usb1f.EXTREP]
+   Generated File[gp_usb1f.REP]
+
+
+Files Generated   : 20
+Documents Printed : 0
+
+Finished Output Generation At 11:44:30 PM On 2/4/2011

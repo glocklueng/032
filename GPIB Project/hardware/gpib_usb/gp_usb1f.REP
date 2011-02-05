@@ -1,0 +1,485 @@
+*************************************************************
+FileName = gp_usb1f.GBR
+AutoAperture = True
+*************************************************************
+Generating : TopLayer
+      File : gp_usb1f.GTL
+
+    Adding Layer      : TopLayer
+
+    Adding Layer      : Mechanical1
+
+    Adding Layer      : Mechanical2
+
+    Adding Layer      : Mechanical4
+
+    Adding Layer      : MultiLayer
+
+
+Used DCodes :
+    D10
+    D11
+    D12
+    D13
+    D14
+    D15
+    D16
+    D17
+    D18
+    D19
+    D20
+    D21
+    D22
+    D23
+    D24
+    D25
+    D26
+    D27
+    D28
+    D29
+    D30
+    D31
+    D32
+    D33
+    D34
+    D35
+    D36
+    D37
+    D38
+    D39
+    D40
+    D41
+*************************************************************
+
+*************************************************************
+Generating : MidLayer1
+      File : gp_usb1f.G1
+
+    Adding Layer      : MidLayer1
+
+    Adding Layer      : Mechanical1
+
+    Adding Layer      : Mechanical2
+
+    Adding Layer      : Mechanical4
+
+    Adding Layer      : MultiLayer
+
+
+Used DCodes :
+    D27
+    D30
+    D31
+*************************************************************
+
+*************************************************************
+Generating : BottomLayer
+      File : gp_usb1f.GBL
+
+    Adding Layer      : BottomLayer
+
+    Adding Layer      : Mechanical1
+
+    Adding Layer      : Mechanical2
+
+    Adding Layer      : Mechanical4
+
+    Adding Layer      : MultiLayer
+
+
+Used DCodes :
+    D10
+    D26
+    D27
+    D30
+    D31
+    D32
+    D33
+    D34
+    D35
+    D36
+    D37
+    D38
+    D39
+    D40
+    D41
+*************************************************************
+
+*************************************************************
+Generating : Bottom Pad Master
+      File : gp_usb1f.GPB
+
+    Adding Layer      : BottomLayer
+
+    Adding Layer      : MultiLayer
+
+    Adding Layer      : Mechanical1
+
+    Adding Layer      : Mechanical2
+
+    Adding Layer      : Mechanical4
+
+
+Used DCodes :
+    D27
+    D30
+    D31
+    D32
+    D33
+    D34
+    D35
+    D36
+    D37
+    D38
+    D39
+    D40
+*************************************************************
+
+*************************************************************
+Generating : Top Pad Master
+      File : gp_usb1f.GPT
+
+    Adding Layer      : TopLayer
+
+    Adding Layer      : MultiLayer
+
+    Adding Layer      : Mechanical1
+
+    Adding Layer      : Mechanical2
+
+    Adding Layer      : Mechanical4
+
+
+Used DCodes :
+    D11
+    D12
+    D13
+    D14
+    D15
+    D16
+    D17
+    D18
+    D19
+    D20
+    D21
+    D22
+    D23
+    D24
+    D25
+    D27
+    D30
+    D31
+    D32
+    D33
+    D34
+    D35
+    D36
+    D37
+    D38
+    D39
+    D40
+*************************************************************
+
+*************************************************************
+Generating : TopOverlay
+      File : gp_usb1f.GTO
+
+    Adding Layer      : TopOverlay
+
+    Adding Layer      : Mechanical1
+
+    Adding Layer      : Mechanical2
+
+    Adding Layer      : Mechanical4
+
+
+Used DCodes :
+    D10
+    D27
+    D30
+    D31
+    D42
+*************************************************************
+
+*************************************************************
+Generating : TopPaste
+      File : gp_usb1f.GTP
+
+    Adding Layer      : TopPaste
+
+    Adding Layer      : Mechanical1
+
+    Adding Layer      : Mechanical2
+
+    Adding Layer      : Mechanical4
+
+    Adding Layer      : TopLayer
+
+    Adding Layer      : MultiLayer
+
+
+Used DCodes :
+    D11
+    D12
+    D13
+    D14
+    D15
+    D16
+    D17
+    D18
+    D19
+    D20
+    D21
+    D22
+    D23
+    D24
+    D25
+    D27
+    D30
+    D31
+*************************************************************
+
+*************************************************************
+Generating : TopSolder
+      File : gp_usb1f.GTS
+
+    Adding Layer      : TopSolder
+
+    Adding Layer      : Mechanical1
+
+    Adding Layer      : Mechanical2
+
+    Adding Layer      : Mechanical4
+
+    Adding Layer      : TopLayer
+
+    Adding Layer      : MultiLayer
+
+
+Used DCodes :
+    D27
+    D30
+    D31
+    D33
+    D39
+    D43
+    D44
+    D45
+    D46
+    D47
+    D48
+    D49
+    D50
+    D51
+    D52
+    D53
+    D54
+    D55
+    D56
+    D57
+    D58
+    D59
+    D60
+    D61
+    D62
+    D63
+    D64
+    D65
+*************************************************************
+
+*************************************************************
+Generating : BottomSolder
+      File : gp_usb1f.GBS
+
+    Adding Layer      : BottomSolder
+
+    Adding Layer      : Mechanical1
+
+    Adding Layer      : Mechanical2
+
+    Adding Layer      : Mechanical4
+
+    Adding Layer      : BottomLayer
+
+    Adding Layer      : MultiLayer
+
+
+Used DCodes :
+    D27
+    D30
+    D31
+    D33
+    D39
+    D58
+    D59
+    D60
+    D61
+    D62
+    D63
+    D64
+    D65
+*************************************************************
+
+*************************************************************
+Generating : BottomPaste
+      File : gp_usb1f.GBP
+
+    Adding Layer      : BottomPaste
+
+    Adding Layer      : Mechanical1
+
+    Adding Layer      : Mechanical2
+
+    Adding Layer      : Mechanical4
+
+    Adding Layer      : BottomLayer
+
+    Adding Layer      : MultiLayer
+
+
+Used DCodes :
+    D27
+    D30
+    D31
+*************************************************************
+
+*************************************************************
+Generating : BottomOverlay
+      File : gp_usb1f.GBO
+
+    Adding Layer      : BottomOverlay
+
+    Adding Layer      : Mechanical1
+
+    Adding Layer      : Mechanical2
+
+    Adding Layer      : Mechanical4
+
+
+Used DCodes :
+    D27
+    D30
+    D31
+*************************************************************
+
+*************************************************************
+Generating : Mechanical1
+      File : gp_usb1f.GM1
+
+    Adding Layer      : Mechanical1
+
+    Adding Layer      : Mechanical1
+
+    Adding Layer      : Mechanical2
+
+    Adding Layer      : Mechanical4
+
+
+Used DCodes :
+    D27
+    D30
+    D31
+*************************************************************
+
+*************************************************************
+Generating : Mechanical2
+      File : gp_usb1f.GM2
+
+    Adding Layer      : Mechanical2
+
+    Adding Layer      : Mechanical1
+
+    Adding Layer      : Mechanical2
+
+    Adding Layer      : Mechanical4
+
+
+Used DCodes :
+    D27
+    D30
+    D31
+*************************************************************
+
+*************************************************************
+Generating : Mechanical4
+      File : gp_usb1f.GM4
+
+    Adding Layer      : Mechanical4
+
+    Adding Layer      : Mechanical1
+
+    Adding Layer      : Mechanical2
+
+    Adding Layer      : Mechanical4
+
+
+Used DCodes :
+    D27
+    D30
+    D31
+*************************************************************
+
+*************************************************************
+Generating : KeepOutLayer
+      File : gp_usb1f.GKO
+
+    Adding Layer      : KeepOutLayer
+
+    Adding Layer      : Mechanical1
+
+    Adding Layer      : Mechanical2
+
+    Adding Layer      : Mechanical4
+
+
+Used DCodes :
+    D27
+    D30
+    D31
+*************************************************************
+
+*************************************************************
+Generating : Drill Drawing
+      File : gp_usb1f.GD1
+
+    Adding Layer      : Mechanical1
+
+    Adding Layer      : Mechanical2
+
+    Adding Layer      : Mechanical4
+
+    Adding Drill Pair : BottomLayer-TopLayer
+
+    Adding Layer      : DrillDrawing
+
+
+Used DCodes :
+    D27
+    D30
+    D31
+    D42
+    D66
+*************************************************************
+
+*************************************************************
+Generating : Drill Guide
+      File : gp_usb1f.GG1
+
+    Adding Layer      : Mechanical1
+
+    Adding Layer      : Mechanical2
+
+    Adding Layer      : Mechanical4
+
+    Adding Drill Pair : BottomLayer-TopLayer
+
+    Adding Layer      : DrillGuide
+
+
+Used DCodes :
+    D27
+    D30
+    D31
+    D66
+*************************************************************
+
