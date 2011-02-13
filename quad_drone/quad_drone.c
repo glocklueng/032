@@ -11,6 +11,7 @@
 #include "driverlib/gpio.h"
 #include "driverlib/interrupt.h"
 #include "driverlib/pwm.h"
+#include "driverlib/i2c.h"
 #include "driverlib/sysctl.h"
 #include "driverlib/timer.h"
 #include "driverlib/uart.h"
@@ -44,8 +45,8 @@ int main(void)
     // INIT - Initialization Code 
     // -------------------------- 
     InitADC();
-    InitPWM();         // Make sure to comment out the LED Code
-    //InitI2C();
+    InitPWM();         
+    InitI2C();
     
     volatile unsigned long ulLoop;
 
@@ -67,43 +68,19 @@ int main(void)
     GPIO_PORTF_DEN_R = 0x0e;
     // --------------------------
                      
-    // ADC Value Matrix:
-    // [0] : Temperature
-    // [1] : Y - Axis Accelerometer
-    // [2] : Z - Axis Accelerometer
-    // [3] : X - Axis Accelerometer
-    unsigned long adc_values[4];
-    
     // Some value that will eventually go away..
-    unsigned long blink_delay = 0;
-    unsigned long motor_dutycycle = 0; 
-    // -----------------------------------------   
-    
-    
+    unsigned long blink_delay = 200000;
+    unsigned long motor_dutycycle = 16000; 
 
-    
     
     // MAIN LOOP           
     while(1)
-    {
-
-        // Trigger the sample sequence.
-        ADCProcessorTrigger(ADC_BASE, 0);
-
-        // Wait until the sample sequence has completed.
-        while(!ADCIntStatus(ADC_BASE, 0, false)){}
+    {   
+        readAccel();
+        readGyro();
+        //readCompass();
         
-        // Grab ADC values and load to buffer
-        ADCSequenceDataGet(ADC_BASE,0,adc_values);
-        
-        // Clear ADC sequencer
-        ADCIntClear(ADC_BASE, 0);
-        
-        // Read ADC and write accordingly
-        blink_delay = adc_values[1] * 300;
-        motor_dutycycle = adc_values[1] * 20;
-        
-        
+        /*
         // 20460
         if(motor_dutycycle < 20460)
         {
@@ -115,9 +92,9 @@ int main(void)
           PWMPulseWidthSet(PWM_BASE, PWM_OUT_7, motor_dutycycle);   // Motor 3 - PWM7 - Pin 31
           PWMPulseWidthSet(PWM_BASE, PWM_OUT_6, motor_dutycycle);   // Motor 4 - PWM6 - Pin 30
         }
-        
-        
-        
+        */
+
+       
         // Cylon Mode
         GPIO_PORTF_DATA_R |= 0x04;
         for(ulLoop = 0; ulLoop < blink_delay; ulLoop++)
@@ -140,6 +117,15 @@ int main(void)
         }
         GPIO_PORTF_DATA_R &= ~(0x08);
         
+        // Increment motors
+        if(motor_dutycycle < 20460)
+        {
+          motor_dutycycle = motor_dutycycle + 20;
+        }
+        else
+        {
+          motor_dutycycle = 16000;
+        }
         
         
     }
