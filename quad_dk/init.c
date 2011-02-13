@@ -76,15 +76,15 @@ void InitPWM()
 
 void InitI2C()
 {
-     // Initialize the I2C channel the sensor is connected to
-    SysCtlPeripheralEnable( SYSCTL_PERIPH_I2C0 );
-    SysCtlPeripheralEnable( SYSCTL_PERIPH_GPIOB );
-    GPIOPinConfigure( GPIO_PB2_I2C0SCL );
-    GPIOPinConfigure( GPIO_PB3_I2C0SDA );
-    GPIOPinTypeI2C( GPIO_PORTB_BASE, GPIO_PIN_2 | GPIO_PIN_3 );
+     // Initialize the I2C channel for Gyro and Compass
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_I2C0);    // Enable I2C Channel 0
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOB);   // Enable GPIO Port B
+    GPIOPinConfigure(GPIO_PB2_I2C0SCL);            // Set SCL to pin PB2 - I2C Channel 0
+    GPIOPinConfigure(GPIO_PB3_I2C0SDA);            // Set SDA to pin PB3 - I2C Channel 0
+    GPIOPinTypeI2C(GPIO_PORTB_BASE, GPIO_PIN_2 | GPIO_PIN_3);   // Configure Pins to I2C
 
     // Set the clock (false = "slow" = 100kbps)
-    I2CMasterInitExpClk( I2C0_MASTER_BASE, SysCtlClockGet(), false );
-    I2CMasterEnable( I2C0_MASTER_BASE );
+    I2CMasterInitExpClk(I2C0_MASTER_BASE, SysCtlClockGet(), false);   // Set I2C0 Clk
+    I2CMasterEnable(I2C0_MASTER_BASE);             // Enable I2C Channel 0
   
 }

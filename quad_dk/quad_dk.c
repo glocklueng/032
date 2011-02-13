@@ -45,7 +45,7 @@ int main(void)
     // -------------------------- 
     InitADC();
     InitPWM();
-    //InitI2C();
+    InitI2C();
     
     volatile unsigned long ulLoop;
 
@@ -102,6 +102,10 @@ int main(void)
           PWMGenPeriodSet(PWM_BASE, PWM_GEN_1, 20460);   // get this to 16kHz
           PWMPulseWidthSet(PWM_BASE, PWM_OUT_3, blink_delay);
         }
+        
+        // Connect to I2C Channel 0 Slave Device
+        I2CSlaveInit();
+        
         
         //                                          
         // Turn on the LED.
