@@ -1,5 +1,5 @@
 [DebugChecksum]
-Checksum=1356535821
+Checksum=-1167542971
 [Exceptions]
 StopOnUncaught=_ 0
 StopOnThrow=_ 0
@@ -37,8 +37,7 @@ Symbiont=0
 [Disassemble mode]
 mode=0
 [Breakpoints]
-Bp0=_ "STD_CODE" "{$PROJ_DIR$\imu.c}.379.5@1" 0 0 0 0 "" 0 "" 0
-Count=1
+Count=0
 [Aliases]
 Count=0
 SuppressDialog=0

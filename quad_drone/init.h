@@ -13,4 +13,7 @@ void InitPWM();
 
 // Initalize I2C
 void InitI2C();
+
+// Initalize UART
+void InitUART();
 //============================================================================//

@@ -13,6 +13,7 @@
 #include "driverlib/i2c.h"
 #include "driverlib/sysctl.h"
 #include "driverlib/timer.h"
+#include "driverlib/uart.h"
 #include "grlib/grlib.h"
 #include "grlib/widget.h"
 
@@ -54,6 +55,10 @@ void InitADC()
     // 3.3v reference.
 }
 
+
+//============================================================================//
+// 
+// Initalize PWM
 void InitPWM()
 {
     
@@ -101,6 +106,10 @@ void InitPWM()
     
 }
 
+
+//============================================================================//
+// 
+// Initalize I2C
 void InitI2C()
 { 
     // TRY FAST MODE AT 400Kpbs!!!! (ONLY ON GYRO)
@@ -116,30 +125,27 @@ void InitI2C()
     I2CMasterInitExpClk(I2C0_MASTER_BASE, SysCtlClockGet(), false);
     I2CMasterEnable(I2C0_MASTER_BASE); 
     
-    
-    // Set Mode Register to 0x02 and clear the MD1 bit
     #define I2C_SEND false
     #define I2C_RECV true
-    
-    #define COMP_ADDRESS 0x1e         // Compass Address         00011110b  
-    #define COMP_WRITE_ADDRESS 0x3C   // Compass Write Address   00111100b
-    #define COMP_MODE_REG 0x02        // Compass Mode Register   00000010b
-    
-    I2CMasterSlaveAddrSet(I2C0_MASTER_BASE, COMP_ADDRESS, I2C_SEND);        
-    I2CMasterDataPut(I2C0_MASTER_BASE, COMP_WRITE_ADDRESS);                  
-    I2CMasterControl(I2C0_MASTER_BASE, I2C_MASTER_CMD_BURST_SEND_START);         
-    /*
-    while(I2CMasterBusy(I2C0_MASTER_BASE)){}                                
-   
-    I2CMasterDataPut(I2C0_MASTER_BASE, COMP_MODE_REG);                  
-    I2CMasterControl(I2C0_MASTER_BASE, I2C_MASTER_CMD_BURST_SEND_CONT);  
-    
-    while(I2CMasterBusy(I2C0_MASTER_BASE)){}                                
-    
-    I2CMasterDataPut(I2C0_MASTER_BASE, 0x00);                  
-    I2CMasterControl(I2C0_MASTER_BASE, I2C_MASTER_CMD_BURST_SEND_FINISH); 
-    */
+                             
   
+    #define COMP_ADDRESS 0x1e         // Compass Address         00011110b  
+    #define COMP_READ_ADDRESS 0x3d    // Compass Read Address    00111101b
+    #define COMP_WRITE_ADDRESS 0x3c   // Compass Write Address   00111100b 
+    #define COMP_MODE_REG 0x02        // Compass Mode Register   00000010b 
+    
+    I2CMasterSlaveAddrSet(I2C0_MASTER_BASE, COMP_ADDRESS, I2C_SEND);        // Set I2C to send  (WRITE)
+    I2CMasterDataPut(I2C0_MASTER_BASE, COMP_MODE_REG);                      // Setup to start writing Mode Register 
+    I2CMasterControl(I2C0_MASTER_BASE, I2C_MASTER_CMD_BURST_SEND_START);    // Start Sending      
+
+    while(I2CMasterBusy(I2C0_MASTER_BASE)){}                                // Wait for SAK
+    
+    I2CMasterDataPut(I2C0_MASTER_BASE, 0x00);                               // Clear Bit 1 - MD1 Bit  
+    I2CMasterControl(I2C0_MASTER_BASE, I2C_MASTER_CMD_BURST_SEND_FINISH);   // Start Sending      
+
+    while(I2CMasterBusy(I2C0_MASTER_BASE)){}                                // Wait for SAK
+    
+    
     // Initialize the I2C - Channel 1 - Gyro
     SysCtlPeripheralEnable(SYSCTL_PERIPH_I2C1);
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOG);
@@ -150,4 +156,40 @@ void InitI2C()
     // Set the clock 100kbps
     I2CMasterInitExpClk(I2C1_MASTER_BASE, SysCtlClockGet(), false);
     I2CMasterEnable(I2C1_MASTER_BASE); 
+}
+
+
+//============================================================================//
+// 
+// Initalize UART
+void InitUART()
+{  
+    //
+    // Enable the (non-GPIO) peripherals used by this example.  PinoutSet()
+    // already enabled GPIO Port A.
+    //
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_UART0);
+
+    //
+    // Enable processor interrupts.
+    //
+    IntMasterEnable();
+
+    //
+    // Set GPIO A0 and A1 as UART pins.
+    //
+    GPIOPinTypeUART(GPIO_PORTA_BASE, GPIO_PIN_0 | GPIO_PIN_1);
+
+    //
+    // Configure the UART for 9600, 8-N-1 operation.
+    //
+    UARTConfigSetExpClk(UART0_BASE, SysCtlClockGet(), 9600,
+                            (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE |
+                             UART_CONFIG_PAR_NONE));
+
+    //
+    // Enable the UART interrupt.
+    //
+    IntEnable(INT_UART0);
+    UARTIntEnable(UART0_BASE, UART_INT_RX | UART_INT_RT);
 }

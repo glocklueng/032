@@ -267,7 +267,6 @@ void readAccel()
     
     // Clear ADC sequencer
     ADCIntClear(ADC_BASE, 0);
-    
 }
 
 // -----------------------------------------   
@@ -336,8 +335,8 @@ void readCompass()
                              
   
     #define COMP_ADDRESS 0x1e         // Compass Address         00011110b  
-    #define COMP_READ_ADDRESS 0x3D    // Compass Read Address    00111101b
-    #define COMP_WRITE_ADDRESS 0x3C   // Compass Write Address   00111100b 
+    #define COMP_READ_ADDRESS 0x3d    // Compass Read Address    00111101b
+    #define COMP_WRITE_ADDRESS 0x3c   // Compass Write Address   00111100b 
     
     #define COMP_CONFIG_A 0x00        // Compass Config Reg A    00000000b  
     #define COMP_CONFIG_B 0x01        // Compass Config Reg B    00000001b
@@ -353,19 +352,14 @@ void readCompass()
     #define COMP_ID_REG_B 0x0b        // Compass ID Reg B        00001011b
     #define COMP_ID_REG_C 0x0c        // Compass ID Reg C        00001100b 
   
-  
-    I2CMasterSlaveAddrSet(I2C0_MASTER_BASE, COMP_ADDRESS, I2C_SEND);       // Set I2C to send
-    I2CMasterDataPut(I2C0_MASTER_BASE, COMP_WRITE_ADDRESS);                // Setup to Write to compass  
-    I2CMasterControl(I2C0_MASTER_BASE, I2C_MASTER_CMD_BURST_SEND_START);   // Start Sending      
     
-    while(I2CMasterBusy(I2C0_MASTER_BASE)){}                               // Wait for SAK 
-    
-    I2CMasterDataPut(I2C0_MASTER_BASE, COMP_DATA_X_MSB);                   // Set it to start reading from X MSB
-    I2CMasterControl(I2C0_MASTER_BASE, I2C_MASTER_CMD_BURST_SEND_FINISH);  // Finish Sending
-    
+    I2CMasterSlaveAddrSet(I2C0_MASTER_BASE, COMP_ADDRESS, I2C_SEND);        // Set I2C to send (WRITE)
+    I2CMasterDataPut(I2C0_MASTER_BASE, COMP_DATA_X_MSB);                    // Setup to start reading at X MSB  
+    I2CMasterControl(I2C0_MASTER_BASE, I2C_MASTER_CMD_SINGLE_SEND);         // Start Sending      
+
     while(I2CMasterBusy(I2C0_MASTER_BASE)){}                                // Wait for SAK
     
-    I2CMasterSlaveAddrSet(I2C0_MASTER_BASE, COMP_ADDRESS, I2C_RECV);        // Set I2C to recieve
+    I2CMasterSlaveAddrSet(I2C0_MASTER_BASE, COMP_ADDRESS, I2C_RECV);        // Set I2C to recieve  (READ)
     I2CMasterControl(I2C0_MASTER_BASE, I2C_MASTER_CMD_BURST_RECEIVE_START); // Set to recieve multiple
     
     while(I2CMasterBusy(I2C0_MASTER_BASE)){}                                // Wait for SAK
@@ -401,4 +395,5 @@ void readCompass()
     while(I2CMasterBusy(I2C0_MASTER_BASE)){}                                // Wait for SAK
     
     compass_values[5] = (unsigned char)I2CMasterDataGet(I2C0_MASTER_BASE);  // Get Data Z LSB
+    
 }
