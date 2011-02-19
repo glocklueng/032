@@ -274,24 +274,18 @@ void readAccel()
 // Read Gyroscope
 //
 //    CAUTION: THE X,Y,Z IS NOT ACCURATE YET!!!
-// [0] : X - Axis Gyroscope
-// [1] : Y - Axis Gyroscope
-// [2] : Z - Axis Gyroscope
-unsigned long gyro_values[3];
+// [0] : X - Axis Gyroscope L
+// [1] : X - Axis Gyroscope H
+// [2] : Y - Axis Gyroscope L
+// [3] : Y - Axis Gyroscope H
+// [4] : Z - Axis Gyroscope L
+// [5] : Z - Axis Gyroscope H
+unsigned long gyro_values[6];
 // -----------------------------------------   
 void readGyro()
-{       
-    #define I2C_SEND false
-    #define I2C_RECV true
-                                      // CHECK THIS ADDRESS LSB in the new board revision - SDO pin will be held high..
-    #define GYRO_ADDRESS 0x69         // Gyroscope Address         01101001b  
-    #define GYRO_MULT_REGISTER 0x80   // Gyroscope Multi Register  10000000b
-    #define GYRO_X_REGISTER 0x00      // Gyroscope X-Axis Register 00000000b
-    #define GYRO_Y_REGISTER 0x01      // Gyroscope Y-Axis Register 00000001b
-    #define GYRO_Z_REGISTER 0x02      // Gyroscope Z-Axis Register 00000010b
-                                                                               
+{                                                                              
     I2CMasterSlaveAddrSet(I2C1_MASTER_BASE, GYRO_ADDRESS, I2C_SEND);        // ST - SAD+W  
-    I2CMasterDataPut(I2C1_MASTER_BASE, GYRO_MULT_REGISTER);                 // SUB
+    I2CMasterDataPut(I2C1_MASTER_BASE, L3G4_OUT_X_L | 0x80);                // SUB - send contin
     I2CMasterControl(I2C1_MASTER_BASE, I2C_MASTER_CMD_SINGLE_SEND);         // Set to send
     
     while(I2CMasterBusy(I2C1_MASTER_BASE)){}                                // Wait for SAK
@@ -301,19 +295,37 @@ void readGyro()
     
     while(I2CMasterBusy(I2C1_MASTER_BASE)){}                                // Wait for SAK
     
-    gyro_values[0] = (unsigned char)I2CMasterDataGet(I2C1_MASTER_BASE);     // Get Data
+    gyro_values[0] = (unsigned char)I2CMasterDataGet(I2C1_MASTER_BASE);     // Get X - Axis Gyroscope L
     
     I2CMasterControl(I2C1_MASTER_BASE, I2C_MASTER_CMD_BURST_RECEIVE_CONT);  // Set to recieve
     
     while(I2CMasterBusy(I2C1_MASTER_BASE)){}                                // Wait for SAK
     
-    gyro_values[1] = (unsigned char)I2CMasterDataGet(I2C1_MASTER_BASE);     // Get Data
+    gyro_values[1] = (unsigned char)I2CMasterDataGet(I2C1_MASTER_BASE);     // Get X - Axis Gyroscope H
+    
+    I2CMasterControl(I2C1_MASTER_BASE, I2C_MASTER_CMD_BURST_RECEIVE_CONT);  // Set to recieve
+    
+    while(I2CMasterBusy(I2C1_MASTER_BASE)){}                                // Wait for SAK
+    
+    gyro_values[2] = (unsigned char)I2CMasterDataGet(I2C1_MASTER_BASE);     // Get Y - Axis Gyroscope L
+    
+    I2CMasterControl(I2C1_MASTER_BASE, I2C_MASTER_CMD_BURST_RECEIVE_CONT);  // Set to recieve
+    
+    while(I2CMasterBusy(I2C1_MASTER_BASE)){}                                // Wait for SAK
+    
+    gyro_values[3] = (unsigned char)I2CMasterDataGet(I2C1_MASTER_BASE);     // Get Y - Axis Gyroscope H
+    
+    I2CMasterControl(I2C1_MASTER_BASE, I2C_MASTER_CMD_BURST_RECEIVE_CONT);  // Set to recieve
+    
+    while(I2CMasterBusy(I2C1_MASTER_BASE)){}                                // Wait for SAK
+    
+    gyro_values[4] = (unsigned char)I2CMasterDataGet(I2C1_MASTER_BASE);     // Get Z - Axis Gyroscope L
     
     I2CMasterControl(I2C1_MASTER_BASE, I2C_MASTER_CMD_BURST_RECEIVE_FINISH);// Set to recieve
     
     while(I2CMasterBusy(I2C1_MASTER_BASE)){}                                // Wait for SAK
     
-    gyro_values[2] = (unsigned char)I2CMasterDataGet(I2C1_MASTER_BASE);     // Get Data
+    gyro_values[5] = (unsigned char)I2CMasterDataGet(I2C1_MASTER_BASE);     // Get Z - Axis Gyroscope H
 }
 
 // -----------------------------------------   
@@ -330,29 +342,6 @@ unsigned long compass_values[6];
 // ----------------------------------------- 
 void readCompass()
 {       
-    #define I2C_SEND false
-    #define I2C_RECV true
-                             
-  
-    #define COMP_ADDRESS 0x1e         // Compass Address         00011110b  
-    #define COMP_READ_ADDRESS 0x3d    // Compass Read Address    00111101b
-    #define COMP_WRITE_ADDRESS 0x3c   // Compass Write Address   00111100b 
-    
-    #define COMP_CONFIG_A 0x00        // Compass Config Reg A    00000000b  
-    #define COMP_CONFIG_B 0x01        // Compass Config Reg B    00000001b
-    #define COMP_MODE_REG 0x02        // Compass Mode Register   00000010b 
-    #define COMP_DATA_X_MSB 0x03      // Compass Output X MSB    00000011b  
-    #define COMP_DATA_X_LSB 0x04      // Compass Output X LSB    00000100b
-    #define COMP_DATA_Y_MSB 0x05      // Compass Output Y MSB    00000101b 
-    #define COMP_DATA_Y_LSB 0x06      // Compass Output Y LSB    00000110b  
-    #define COMP_DATA_Z_MSB 0x07      // Compass Output Z MSB    00000111b
-    #define COMP_DATA_Z_LSB 0x08      // Compass Output Z LSB    00001000b 
-    #define COMP_STATUS_REG 0x09      // Compass Status Reg      00001001b 
-    #define COMP_ID_REG_A 0x0a        // Compass ID Reg A        00001010b  
-    #define COMP_ID_REG_B 0x0b        // Compass ID Reg B        00001011b
-    #define COMP_ID_REG_C 0x0c        // Compass ID Reg C        00001100b 
-  
-    
     I2CMasterSlaveAddrSet(I2C0_MASTER_BASE, COMP_ADDRESS, I2C_SEND);        // Set I2C to send (WRITE)
     I2CMasterDataPut(I2C0_MASTER_BASE, COMP_DATA_X_MSB);                    // Setup to start reading at X MSB  
     I2CMasterControl(I2C0_MASTER_BASE, I2C_MASTER_CMD_SINGLE_SEND);         // Start Sending      

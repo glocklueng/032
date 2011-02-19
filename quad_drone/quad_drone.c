@@ -50,6 +50,8 @@ int main(void)
     
     // INIT - Initialization Code 
     // -------------------------- 
+    SysCtlClockSet(SYSCTL_SYSDIV_10 | SYSCTL_USE_PLL 
+                  | SYSCTL_OSC_MAIN | SYSCTL_XTAL_16MHZ);
     InitADC();
     InitPWM();         
     InitI2C();
@@ -105,6 +107,17 @@ int main(void)
           PWMGenPeriodSet(PWM_BASE, PWM_GEN_3, 20460);   // get this to 20kHz
           PWMPulseWidthSet(PWM_BASE, PWM_OUT_7, motor_dutycycle_l);   // Motor 3 - PWM7 - Pin 31
           PWMPulseWidthSet(PWM_BASE, PWM_OUT_6, motor_dutycycle_r);   // Motor 4 - PWM6 - Pin 30
+        }
+        
+        if(motor_dutycycle_l < 20000)
+        {
+           motor_dutycycle_l += 50;
+           motor_dutycycle_r += 50;
+        }
+        else
+        {
+           motor_dutycycle_l = 16000;
+           motor_dutycycle_r = 16000;
         }
         */
         

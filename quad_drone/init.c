@@ -26,7 +26,6 @@
 // Initalize ADC
 void InitADC()
 {
-    SysCtlClockSet(SYSCTL_SYSDIV_10 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN | SYSCTL_XTAL_16MHZ);
     SysCtlPeripheralEnable(SYSCTL_PERIPH_ADC);
     
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOE);   
@@ -112,8 +111,6 @@ void InitPWM()
 // Initalize I2C
 void InitI2C()
 { 
-    // TRY FAST MODE AT 400Kpbs!!!! (ONLY ON GYRO)
-  
     // Initialize the I2C - Channel 0 - Compass
     SysCtlPeripheralEnable(SYSCTL_PERIPH_I2C0);
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOB);
@@ -125,25 +122,17 @@ void InitI2C()
     I2CMasterInitExpClk(I2C0_MASTER_BASE, SysCtlClockGet(), false);
     I2CMasterEnable(I2C0_MASTER_BASE); 
     
-    #define I2C_SEND false
-    #define I2C_RECV true
-                             
-  
-    #define COMP_ADDRESS 0x1e         // Compass Address         00011110b  
-    #define COMP_READ_ADDRESS 0x3d    // Compass Read Address    00111101b
-    #define COMP_WRITE_ADDRESS 0x3c   // Compass Write Address   00111100b 
-    #define COMP_MODE_REG 0x02        // Compass Mode Register   00000010b 
-    
-    I2CMasterSlaveAddrSet(I2C0_MASTER_BASE, COMP_ADDRESS, I2C_SEND);        // Set I2C to send  (WRITE)
-    I2CMasterDataPut(I2C0_MASTER_BASE, COMP_MODE_REG);                      // Setup to start writing Mode Register 
-    I2CMasterControl(I2C0_MASTER_BASE, I2C_MASTER_CMD_BURST_SEND_START);    // Start Sending      
+    I2CMasterSlaveAddrSet(I2C0_MASTER_BASE, COMP_ADDRESS, I2C_SEND);         // Set I2C to send  (WRITE)
+    I2CMasterDataPut(I2C0_MASTER_BASE, COMP_MODE_REG);                       // Setup to start writing Mode Register 
+    I2CMasterControl(I2C0_MASTER_BASE, I2C_MASTER_CMD_BURST_SEND_START);     // Start Sending      
 
-    while(I2CMasterBusy(I2C0_MASTER_BASE)){}                                // Wait for SAK
+    while(I2CMasterBusy(I2C0_MASTER_BASE)){}                                 // Wait for SAK
     
-    I2CMasterDataPut(I2C0_MASTER_BASE, 0x00);                               // Clear Bit 1 - MD1 Bit  
-    I2CMasterControl(I2C0_MASTER_BASE, I2C_MASTER_CMD_BURST_SEND_FINISH);   // Start Sending      
+    I2CMasterDataPut(I2C0_MASTER_BASE, 0x00);                                // Clear Bit 1 - MD1 Bit  
+    I2CMasterControl(I2C0_MASTER_BASE, I2C_MASTER_CMD_BURST_SEND_FINISH);    // Start Sending      
 
-    while(I2CMasterBusy(I2C0_MASTER_BASE)){}                                // Wait for SAK
+    while(I2CMasterBusy(I2C0_MASTER_BASE)){}                                 // Wait for SAK
+                                      
     
     
     // Initialize the I2C - Channel 1 - Gyro
@@ -153,9 +142,20 @@ void InitI2C()
     GPIOPinConfigure(GPIO_PG1_I2C1SDA);
     GPIOPinTypeI2C(GPIO_PORTG_BASE, GPIO_PIN_0 | GPIO_PIN_1 );
 
-    // Set the clock 100kbps
-    I2CMasterInitExpClk(I2C1_MASTER_BASE, SysCtlClockGet(), false);
+    // Set the clock 400kbps
+    I2CMasterInitExpClk(I2C1_MASTER_BASE, SysCtlClockGet(), true);
     I2CMasterEnable(I2C1_MASTER_BASE); 
+    
+    I2CMasterSlaveAddrSet(I2C1_MASTER_BASE, GYRO_ADDRESS, I2C_SEND);         // ST - SAD+W  
+    I2CMasterDataPut(I2C1_MASTER_BASE, L3G4_CTRL_REG1);                      // SUB
+    I2CMasterControl(I2C1_MASTER_BASE, I2C_MASTER_CMD_BURST_SEND_START);     // Set to send
+    
+    while(I2CMasterBusy(I2C1_MASTER_BASE)){}                                 // Wait for SAK
+    
+    I2CMasterDataPut(I2C1_MASTER_BASE, ENABLE_GYRO);                         // SUB
+    I2CMasterControl(I2C1_MASTER_BASE, I2C_MASTER_CMD_BURST_SEND_FINISH);    // Set to send
+    
+    while(I2CMasterBusy(I2C1_MASTER_BASE)){}                                 // Wait for SAK
 }
 
 
