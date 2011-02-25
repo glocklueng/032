@@ -31,13 +31,13 @@ unsigned long x_acc_raw = 0;		// X Accelerometer Reading
 unsigned long y_acc_raw = 0;		// Y Accelerometer Reading
 unsigned long z_acc_raw = 0;		// Z Accelerometer Reading
 
-const int x_acc_offset = 0;		// X Accelerometer Offset
-const int y_acc_offset = 0;		// Y Accelerometer Offset
-const int z_acc_offset = 0;		// Z Accelerometer Offset
+const float x_acc_offset = 3.6;		// X Accelerometer Offset
+const float y_acc_offset = 3.6;		// Y Accelerometer Offset
+const float z_acc_offset = 3.6;		// Z Accelerometer Offset
 
-const float x_acc_scale = 0.0;		// X Accelerometer Scale
-const float y_acc_scale = 0.0;		// Y Accelerometer Scale
-const float z_acc_scale = 0.0;		// Z Accelerometer Scale
+const float x_acc_scale = 0.007038;     // X Accelerometer Scale
+const float y_acc_scale = 0.007038;	// Y Accelerometer Scale
+const float z_acc_scale = 0.007038;	// Z Accelerometer Scale
 
 float x_acc_rad = 0.0;			// X Axis Angle - Raw angle in radians
 float y_acc_rad = 0.0;			// Y Axis Angle - Raw angle in radians
@@ -51,17 +51,17 @@ float x_bias = 0.0;			// X Bias for State Matrix
 float y_bias = 0.0;			// Y Bias for State Matrix
 float z_bias = 0.0;			// Z Bias for State Matrix
 
-int x_gyro_raw = 0;			// X Gyro Reading
-int y_gyro_raw = 0;			// Y Gyro Reading
-int z_gyro_raw = 0;		        // Z Gyro Reading
+signed long x_gyro_raw = 0;		// X Gyro Reading
+signed long y_gyro_raw = 0;		// Y Gyro Reading
+signed long z_gyro_raw = 0;		// Z Gyro Reading
 
-const int x_gyro_offset = 0;		// X Gyro Offset
-const int y_gyro_offset = 0;		// Y Gyro Offset
-const int z_gyro_offset = 0;		// Z Gyro Offset
+int x_gyro_offset = -200;		// X Gyro Offset
+int y_gyro_offset = 49;		        // Y Gyro Offset
+int z_gyro_offset = 9;		        // Z Gyro Offset
 
-const float x_gyro_scale = 0.0;		// X Gyro Scale
-const float y_gyro_scale = 0.0;		// Y Gyro Scale
-const float z_gyro_scale = 0.0;		// Z Gyro Scale
+float x_gyro_scale = 0.007629;	        // X Gyro Scale
+float y_gyro_scale = 0.007629;	        // Y Gyro Scale
+float z_gyro_scale = 0.007629;	        // Z Gyro Scale
 
 float x_gyro_rad_sec = 0.0 ;		// X Gyro - Radians/Second - State Estimation	
 float x_gyro_rad_sec_1 = 0.0;		// X Gyro - Runge-Kutta Integration - Itteration 1
@@ -110,28 +110,79 @@ float zK_0;				// K Matrix - Z Axis
 float zK_1;				// K Matrix - Z Axis
 float zP_00,zP_01,zP_10,zP_11;		// P Matrix - Z Axis
 
+// Compass Variables
+signed long x_comp_raw = 0;		// X Compass Reading
+signed long y_comp_raw = 0;		// Y Compass Reading
+signed long z_comp_raw = 0;		// Z Compass Reading
+
+// Temperature Variables
+unsigned long temp_raw;
+float temperature;
 
 
-// THIS SHOULD NOT BE VOID, CHANGE IT LATER
-void readIMU()
-{
+// Testing Variables and Constants
+float rate_integrated = 0;
+
+// -----------------------------------------  
+//
+// IMU - Filtered results
+//
+// [0] : X Angle
+// [1] : Y Angle
+// [2] : Z Angle
+// [3] : X Rate
+// [4] : Y Rate
+// [5] : Z Rate
+// [6] : Magnetic North Heading
+// [7] : Temperature
+void readIMU(float *imu)
+{ 
+    // Read ADC - X Axis Acc
+    // Read ADC - Y Axis Acc
+    // Read ADC - Z Axis Acc
+    readAccel(&temp_raw, &x_acc_raw, &y_acc_raw, &z_acc_raw);
     
-    //x_acc_raw = 0x08;                 // Read ADC - X Axis Acc
-    //y_acc_raw = 0x08;			// Read ADC - Y Axis Acc
-    //z_acc_raw = 0x08;			// Read ADC - Z Axis Acc
+    // Read I2C - X Axis Gyro
+    // Read I2C - Y Axis Gyro
+    // Read I2C - Z Axis Gyro
+    readGyro(&x_gyro_raw, &y_gyro_raw, &z_gyro_raw);
     
-    x_gyro_raw = 0x08;                  // Read ADC - X Axis Gyro
-    y_gyro_raw = 0x08;                  // Read ADC - Y Axis Gyro
-    z_gyro_raw = 0x08;	                // Read ADC - Z Axis Gyro
+    // Read Raw - X Axis Compass
+    // Read Raw - Y Axis Compass
+    // Read Raw - Z Axis Compass
+    readCompass(&x_comp_raw, &y_comp_raw, &z_comp_raw);
     
-    x_acc_rad  = ((float)(x_acc_raw - x_acc_offset)* x_acc_scale);		 // Convert raw data bytes to angle - X Axis
-    y_acc_rad  = ((float)(y_acc_raw - y_acc_offset)* y_acc_scale);		 // Convert raw data bytes to angle - Y Axis
-    z_acc_rad  = ((float)(z_acc_raw - z_acc_offset)* z_acc_scale);	         // Convert raw data bytes to angle - Z Axis
+    // This is raw data
+    imu[0] = (float)x_acc_raw;
+    imu[1] = (float)y_acc_raw;
+    imu[2] = (float)z_acc_raw;
+    imu[3] = (float)x_gyro_raw;
+    imu[4] = (float)y_gyro_raw;
+    imu[5] = (float)z_gyro_raw;
+    imu[6] = (float)x_comp_raw;
+    imu[7] = (float)temp_raw;  
+      
+    x_acc_rad  = ((float)(x_acc_raw * x_acc_scale) - x_acc_offset);		 // Convert raw data bytes to angle - X Axis
+    y_acc_rad  = ((float)(y_acc_raw * y_acc_scale) - y_acc_offset);		 // Convert raw data bytes to angle - Y Axis
+    z_acc_rad  = ((float)(z_acc_raw * z_acc_scale) - z_acc_offset);	         // Convert raw data bytes to angle - Z Axis
+    
+    
     
     x_gyro_rad_sec  = ((float)(x_gyro_raw - x_gyro_offset)* x_gyro_scale);	 // Convert raw data bytes to angular velocity - X Axis
     y_gyro_rad_sec  = ((float)(y_gyro_raw - y_gyro_offset)* y_gyro_scale);	 // Convert raw data bytes to angular velocity - Y Axis
     z_gyro_rad_sec  = ((float)(z_gyro_raw - z_gyro_offset)* z_gyro_scale);	 // Convert raw data bytes to angular velocity - Z Axis
     
+    // This is rad_sec data
+    imu[0] = (float)x_acc_rad;
+    imu[1] = (float)y_acc_rad;
+    imu[2] = (float)z_acc_rad;
+    imu[3] = (float)x_gyro_rad_sec;
+    imu[4] = (float)y_gyro_rad_sec;
+    imu[5] = (float)z_gyro_rad_sec;
+    imu[6] = (float)x_comp_raw;
+    imu[7] = (float)temp_raw;  
+    
+    rate_integrated += x_gyro_rad_sec;
     
     // Runge-Kutta Integration 
     // -----------------------
@@ -240,7 +291,18 @@ void readIMU()
     zP_10 -= zK_1 * zP_00; 
     zP_11 -= zK_1 * zP_01;
     
+    /*   Replace raw with the filtered values
+    imu[0] = x_acc_raw;
+    imu[1] = y_acc_raw;
+    imu[2] = z_acc_raw;
+    imu[3] = x_gyro_raw;
+    imu[4] = y_gyro_raw;
+    imu[5] = z_gyro_raw;
+    imu[6] = 12345;
+    imu[7] = temp_raw; 
+    */
     
+    sensorsSelfTest();
 }
 
 // -----------------------------------------   
@@ -249,12 +311,13 @@ void readIMU()
 //
 // ADC Value Matrix:
 // [0] : Temperature
-// [1] : Y - Axis Accelerometer
-// [2] : Z - Axis Accelerometer
-// [3] : X - Axis Accelerometer
+// [1] : X - Axis Accelerometer
+// [2] : Y - Axis Accelerometer
+// [3] : Z - Axis Accelerometer
 unsigned long adc_values[4];
 // -----------------------------------------   
-void readAccel()
+void readAccel(unsigned long *temp, unsigned long *x_acc,
+               unsigned long *y_acc, unsigned long *z_acc)
 {
      // Trigger the sample sequence.
     ADCProcessorTrigger(ADC_BASE, 0);
@@ -267,22 +330,27 @@ void readAccel()
     
     // Clear ADC sequencer
     ADCIntClear(ADC_BASE, 0);
+    
+    *temp = adc_values[0];
+    *x_acc = adc_values[1];
+    *y_acc = adc_values[2];
+    *z_acc = adc_values[3];
 }
 
 // -----------------------------------------   
 //
 // Read Gyroscope
 //
-//    CAUTION: THE X,Y,Z IS NOT ACCURATE YET!!!
 // [0] : X - Axis Gyroscope L
 // [1] : X - Axis Gyroscope H
 // [2] : Y - Axis Gyroscope L
 // [3] : Y - Axis Gyroscope H
 // [4] : Z - Axis Gyroscope L
 // [5] : Z - Axis Gyroscope H
-unsigned long gyro_values[6];
+signed char gyro_values[6];
 // -----------------------------------------   
-void readGyro()
+void readGyro(signed long *x_gyro, signed long *y_gyro,
+              signed long *z_gyro)
 {                                                                              
     I2CMasterSlaveAddrSet(I2C1_MASTER_BASE, GYRO_ADDRESS, I2C_SEND);        // ST - SAD+W  
     I2CMasterDataPut(I2C1_MASTER_BASE, L3G4_OUT_X_L | 0x80);                // SUB - send contin
@@ -295,37 +363,41 @@ void readGyro()
     
     while(I2CMasterBusy(I2C1_MASTER_BASE)){}                                // Wait for SAK
     
-    gyro_values[0] = (unsigned char)I2CMasterDataGet(I2C1_MASTER_BASE);     // Get X - Axis Gyroscope L
+    gyro_values[0] = (signed char)I2CMasterDataGet(I2C1_MASTER_BASE);     // Get X - Axis Gyroscope L
     
     I2CMasterControl(I2C1_MASTER_BASE, I2C_MASTER_CMD_BURST_RECEIVE_CONT);  // Set to recieve
     
     while(I2CMasterBusy(I2C1_MASTER_BASE)){}                                // Wait for SAK
     
-    gyro_values[1] = (unsigned char)I2CMasterDataGet(I2C1_MASTER_BASE);     // Get X - Axis Gyroscope H
+    gyro_values[1] = (signed char)I2CMasterDataGet(I2C1_MASTER_BASE);     // Get X - Axis Gyroscope H
     
     I2CMasterControl(I2C1_MASTER_BASE, I2C_MASTER_CMD_BURST_RECEIVE_CONT);  // Set to recieve
     
     while(I2CMasterBusy(I2C1_MASTER_BASE)){}                                // Wait for SAK
     
-    gyro_values[2] = (unsigned char)I2CMasterDataGet(I2C1_MASTER_BASE);     // Get Y - Axis Gyroscope L
+    gyro_values[2] = (signed char)I2CMasterDataGet(I2C1_MASTER_BASE);     // Get Y - Axis Gyroscope L
     
     I2CMasterControl(I2C1_MASTER_BASE, I2C_MASTER_CMD_BURST_RECEIVE_CONT);  // Set to recieve
     
     while(I2CMasterBusy(I2C1_MASTER_BASE)){}                                // Wait for SAK
     
-    gyro_values[3] = (unsigned char)I2CMasterDataGet(I2C1_MASTER_BASE);     // Get Y - Axis Gyroscope H
+    gyro_values[3] = (signed char)I2CMasterDataGet(I2C1_MASTER_BASE);     // Get Y - Axis Gyroscope H
     
     I2CMasterControl(I2C1_MASTER_BASE, I2C_MASTER_CMD_BURST_RECEIVE_CONT);  // Set to recieve
     
     while(I2CMasterBusy(I2C1_MASTER_BASE)){}                                // Wait for SAK
     
-    gyro_values[4] = (unsigned char)I2CMasterDataGet(I2C1_MASTER_BASE);     // Get Z - Axis Gyroscope L
+    gyro_values[4] = (signed char)I2CMasterDataGet(I2C1_MASTER_BASE);     // Get Z - Axis Gyroscope L
     
     I2CMasterControl(I2C1_MASTER_BASE, I2C_MASTER_CMD_BURST_RECEIVE_FINISH);// Set to recieve
     
     while(I2CMasterBusy(I2C1_MASTER_BASE)){}                                // Wait for SAK
     
-    gyro_values[5] = (unsigned char)I2CMasterDataGet(I2C1_MASTER_BASE);     // Get Z - Axis Gyroscope H
+    gyro_values[5] = (signed char)I2CMasterDataGet(I2C1_MASTER_BASE);     // Get Z - Axis Gyroscope H
+    
+    *x_gyro = (gyro_values[1] << 8) | gyro_values[0];
+    *y_gyro = (gyro_values[3] << 8) | gyro_values[2];
+    *z_gyro = (gyro_values[5] << 8) | gyro_values[4];
 }
 
 // -----------------------------------------   
@@ -338,9 +410,10 @@ void readGyro()
 // [3] : Y - Axis LSB Compass
 // [4] : Z - Axis MSB Compass
 // [5] : Z - Axis LSB Compass
-unsigned long compass_values[6];
+signed char compass_values[6];
 // ----------------------------------------- 
-void readCompass()
+void readCompass(signed long *x_axis, signed long *y_axis,
+                 signed long *z_axis)
 {       
     I2CMasterSlaveAddrSet(I2C0_MASTER_BASE, COMP_ADDRESS, I2C_SEND);        // Set I2C to send (WRITE)
     I2CMasterDataPut(I2C0_MASTER_BASE, COMP_DATA_X_MSB);                    // Setup to start reading at X MSB  
@@ -353,36 +426,147 @@ void readCompass()
     
     while(I2CMasterBusy(I2C0_MASTER_BASE)){}                                // Wait for SAK
     
-    compass_values[0] = (unsigned char)I2CMasterDataGet(I2C0_MASTER_BASE);  // Get Data X MSB
+    compass_values[0] = (signed char)I2CMasterDataGet(I2C0_MASTER_BASE);  // Get Data X MSB
     
     I2CMasterControl(I2C0_MASTER_BASE, I2C_MASTER_CMD_BURST_RECEIVE_CONT);  // Set to recieve
     
     while(I2CMasterBusy(I2C0_MASTER_BASE)){}                                // Wait for SAK
     
-    compass_values[1] = (unsigned char)I2CMasterDataGet(I2C0_MASTER_BASE);  // Get Data X LSB
+    compass_values[1] = (signed char)I2CMasterDataGet(I2C0_MASTER_BASE);  // Get Data X LSB
     
     I2CMasterControl(I2C0_MASTER_BASE, I2C_MASTER_CMD_BURST_RECEIVE_CONT);  // Set to recieve
     
     while(I2CMasterBusy(I2C0_MASTER_BASE)){}                                // Wait for SAK
     
-    compass_values[2] = (unsigned char)I2CMasterDataGet(I2C0_MASTER_BASE);  // Get Data Y MSB
+    compass_values[2] = (signed char)I2CMasterDataGet(I2C0_MASTER_BASE);  // Get Data Y MSB
     
     I2CMasterControl(I2C0_MASTER_BASE, I2C_MASTER_CMD_BURST_RECEIVE_CONT);  // Set to recieve
     
     while(I2CMasterBusy(I2C0_MASTER_BASE)){}                                // Wait for SAK
     
-    compass_values[3] = (unsigned char)I2CMasterDataGet(I2C0_MASTER_BASE);  // Get Data Y LSB
+    compass_values[3] = (signed char)I2CMasterDataGet(I2C0_MASTER_BASE);  // Get Data Y LSB
     
     I2CMasterControl(I2C0_MASTER_BASE, I2C_MASTER_CMD_BURST_RECEIVE_CONT);  // Set to recieve
     
     while(I2CMasterBusy(I2C0_MASTER_BASE)){}                                // Wait for SAK
     
-    compass_values[4] = (unsigned char)I2CMasterDataGet(I2C0_MASTER_BASE);  // Get Data Z MSB
+    compass_values[4] = (signed char)I2CMasterDataGet(I2C0_MASTER_BASE);  // Get Data Z MSB
     
     I2CMasterControl(I2C0_MASTER_BASE, I2C_MASTER_CMD_BURST_RECEIVE_FINISH);  // Set to recieve
     
     while(I2CMasterBusy(I2C0_MASTER_BASE)){}                                // Wait for SAK
     
-    compass_values[5] = (unsigned char)I2CMasterDataGet(I2C0_MASTER_BASE);  // Get Data Z LSB
+    compass_values[5] = (signed char)I2CMasterDataGet(I2C0_MASTER_BASE);  // Get Data Z LSB
+    
+    *x_axis = (compass_values[0] << 8) | compass_values[1];
+    *y_axis = (compass_values[2] << 8) | compass_values[3];
+    *z_axis = (compass_values[4] << 8) | compass_values[5];
+}
+
+
+// -----------------------------------------   
+// SELF TEST SYSTEM
+// -----------------------------------------   
+// [0] : X - Axis Gyroscope Positive
+// [1] : Y - Axis Gyroscope Positive
+// [2] : Z - Axis Gyroscope Positive
+// [3] : X - Axis Gyroscope Negative
+// [4] : Y - Axis Gyroscope Negative
+// [5] : Z - Axis Gyroscope Negative
+// [6] : X - Axis Accelerometer
+// [7] : Y - Axis Accelerometer 
+// [8] : Z - Axis Accelerometer 
+signed long imu_st_cal[9];
+
+// [0] : X - Axis Gyroscope Calib Zero
+// [1] : Y - Axis Gyroscope Calib Zero
+// [2] : Z - Axis Gyroscope Calib Zero
+// [3] : X - Axis Accelerometer Calib Zero
+// [4] : Y - Axis Accelerometer Calib Zero
+// [5] : Z - Axis Accelerometer Calib Zero
+signed long imu_st_cal_zero[6];
+
+void sensorsSelfTest()
+{                                                                              
+    I2CMasterSlaveAddrSet(I2C1_MASTER_BASE, GYRO_ADDRESS, I2C_SEND);         // ST - SAD+W  
+    I2CMasterDataPut(I2C1_MASTER_BASE, L3G4_CTRL_REG4);                      // SUB
+    I2CMasterControl(I2C1_MASTER_BASE, I2C_MASTER_CMD_BURST_SEND_START);     // Set to send
+    
+    while(I2CMasterBusy(I2C1_MASTER_BASE)){}                                 // Wait for SAK
+    
+    I2CMasterDataPut(I2C1_MASTER_BASE, CTRL_REG_4_STPLUS);                   // SUB - POS
+    I2CMasterControl(I2C1_MASTER_BASE, I2C_MASTER_CMD_BURST_SEND_FINISH);    // Set to send
+    
+    while(I2CMasterBusy(I2C1_MASTER_BASE)){}                                 // Wait for SAK
+    
+    for(int ulLoop = 0; ulLoop < 1000000; ulLoop++){}                        // Wait for physics
+    
+    
+    readGyro(&x_gyro_raw, &y_gyro_raw, &z_gyro_raw);
+    
+    while(x_gyro_raw > -10000 || y_gyro_raw < 10000 || z_gyro_raw > -10000)
+    {
+        readGyro(&x_gyro_raw, &y_gyro_raw, &z_gyro_raw);
+    }
+    // Calibration Variables for Gyro for Self Test Positive
+    imu_st_cal[0] = x_gyro_raw;
+    imu_st_cal[1] = y_gyro_raw;
+    imu_st_cal[2] = z_gyro_raw;
+    
+    I2CMasterSlaveAddrSet(I2C1_MASTER_BASE, GYRO_ADDRESS, I2C_SEND);         // ST - SAD+W  
+    I2CMasterDataPut(I2C1_MASTER_BASE, L3G4_CTRL_REG4);                      // SUB
+    I2CMasterControl(I2C1_MASTER_BASE, I2C_MASTER_CMD_BURST_SEND_START);     // Set to send
+    
+    while(I2CMasterBusy(I2C1_MASTER_BASE)){}                                 // Wait for SAK
+    
+    I2CMasterDataPut(I2C1_MASTER_BASE, CTRL_REG_4_STMINUS);                  // SUB - NEG
+    I2CMasterControl(I2C1_MASTER_BASE, I2C_MASTER_CMD_BURST_SEND_FINISH);    // Set to send
+    
+    while(I2CMasterBusy(I2C1_MASTER_BASE)){}                                 // Wait for SAK
+    
+    for(int ulLoop = 0; ulLoop < 1000000; ulLoop++){}                        // Wait for physics
+    
+    readGyro(&x_gyro_raw, &y_gyro_raw, &z_gyro_raw);
+    
+    while(x_gyro_raw < 10000 || y_gyro_raw > -10000 || z_gyro_raw < 10000)
+    {
+        readGyro(&x_gyro_raw, &y_gyro_raw, &z_gyro_raw);
+    }
+    
+    // Calibration Variables for Gyro for Self Test Negative
+    imu_st_cal[3] = x_gyro_raw;
+    imu_st_cal[4] = y_gyro_raw;
+    imu_st_cal[5] = z_gyro_raw;
+   
+    for(int ulLoop = 0; ulLoop < 1000000; ulLoop++){}                         // Wait for physics
+    
+    // Set Gyro back to default
+    I2CMasterSlaveAddrSet(I2C1_MASTER_BASE, GYRO_ADDRESS, I2C_SEND);         // ST - SAD+W  
+    I2CMasterDataPut(I2C1_MASTER_BASE, L3G4_CTRL_REG4);                      // SUB
+    I2CMasterControl(I2C1_MASTER_BASE, I2C_MASTER_CMD_BURST_SEND_START);     // Set to send
+    
+    while(I2CMasterBusy(I2C1_MASTER_BASE)){}                                 // Wait for SAK
+    
+    I2CMasterDataPut(I2C1_MASTER_BASE, CTRL_REG_4_DEFAULT);                  // SUB - NEG
+    I2CMasterControl(I2C1_MASTER_BASE, I2C_MASTER_CMD_BURST_SEND_FINISH);    // Set to send
+    
+    while(I2CMasterBusy(I2C1_MASTER_BASE)){}                                 // Wait for SAK
+    
+    for(int ulLoop = 0; ulLoop < 1000000; ulLoop++){}                         // Wait for physics
+    
+    //x_gyro_offset = (int)((250/130)*imu_st_cal[0])+((250/130)*imu_st_cal[3]);
+    //y_gyro_offset = (int)((250/130)*imu_st_cal[1])+((250/130)*imu_st_cal[4]);
+    //z_gyro_offset = (int)((250/130)*imu_st_cal[2])+((250/130)*imu_st_cal[5]);
+    
+    x_gyro_offset = (int)((imu_st_cal[0])+(imu_st_cal[3]));
+    y_gyro_offset = (int)((imu_st_cal[1])+(imu_st_cal[4]));
+    z_gyro_offset = (int)((imu_st_cal[2])+(imu_st_cal[5]));
+    
+    x_gyro_scale = (float)(130/(float)imu_st_cal[3]);
+    y_gyro_scale = (float)(130/(float)imu_st_cal[1]);
+    z_gyro_scale = (float)(130/(float)imu_st_cal[5]);
+    
+    
+    // Calibrate Accelerometer
     
 }

@@ -38,7 +38,6 @@ Archecture: ARM Cortex M3
 
 */
 
-
 //***************************************************************************** 
 // 
 // Main Loop 
@@ -87,14 +86,23 @@ int main(void)
     //unsigned long motor_dutycycle_l = 16000; 
     //unsigned long motor_dutycycle_r = 16000; 
     
-
+    // IMU Values
+    // [0] : X Angle
+    // [1] : Y Angle
+    // [2] : Z Angle
+    // [3] : X Rate
+    // [4] : Y Rate
+    // [5] : Z Rate
+    // [6] : Magnetic North Heading
+    // [7] : Temperature
+    float imu[8];
+    
     // MAIN LOOP
     // --------------------------
     while(1)
     {   
-        readAccel();
-        readGyro();
-        readCompass();
+        
+        readIMU(&imu[0]);
         
         /*
         // 20460
@@ -143,6 +151,7 @@ int main(void)
         }
         GPIO_PORTF_DATA_R &= ~(0x08);  
         
+    
         //UARTSend((unsigned char *)"Enter text: ", 12);
     }
     // --------------------------

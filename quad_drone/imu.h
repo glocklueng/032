@@ -15,7 +15,7 @@
     #define L3G4_CTRL_REG1          0x20
     #define L3G4_CTRL_REG2          0x21
     #define L3G4_CTRL_REG3          0x22
-    #define L3G4_CTRL_REG4          0x23
+    #define L3G4_CTRL_REG4          0x23     // Default to 250dps
     #define L3G4_CTRL_REG5          0x24
     #define L3G4_REFERENCE          0x25
     #define L3G4_OUT_TEMP           0x26
@@ -37,6 +37,10 @@
     #define L3G4_INT1_THS_ZH        0x36
     #define L3G4_INT1_THS_ZL        0x37
     #define L3G4_INT1_DURATION      0x38
+
+    #define CTRL_REG_4_DEFAULT      0x00   // Default Settings (250dps)
+    #define CTRL_REG_4_STPLUS       0x02   // Self Test Positive (+130dps)
+    #define CTRL_REG_4_STMINUS      0x06   // Self Test Negative (-130dps)
 
 // Compass Definitions                             
   
@@ -60,8 +64,16 @@
 
 
 //============================================================================//
-void readIMU();
-void readAccel();
-void readGyro();
-void readCompass();
+void readIMU(float *imu);
+
+void readAccel(unsigned long *temp, unsigned long *x_acc,
+               unsigned long *y_acc, unsigned long *z_acc);
+
+void readGyro(signed long *x_gyro, signed long *y_gyro,
+              signed long *z_gyro);
+
+void readCompass(signed long *x_axis, signed long *y_axis,
+                 signed long *z_axis);
+
+void sensorsSelfTest();
 //============================================================================//
