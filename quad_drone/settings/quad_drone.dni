@@ -20,10 +20,6 @@ UseTrigger=1
 TriggerName=main
 LimitSize=0
 ByteLimit=50
-[Log file]
-LoggingEnabled=_ 0
-LogFile=_ ""
-Category=_ 0
 [TermIOLog]
 LoggingEnabled=_ 0
 LogFile=_ ""
@@ -34,6 +30,10 @@ Enabled=0
 Mode=2122219134
 Graph=0
 Symbiont=0
+[Log file]
+LoggingEnabled=_ 0
+LogFile=_ ""
+Category=_ 0
 [Disassemble mode]
 mode=0
 [Breakpoints]

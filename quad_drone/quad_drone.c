@@ -23,6 +23,7 @@
 #include "../drivers/set_pinout.h"
 #include "init.h"
 #include "imu.h"
+#include "control.h"
 #include "display.h"
 
  /*  

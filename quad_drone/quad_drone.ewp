@@ -872,6 +872,9 @@
   <group>
     <name>Source</name>
     <file>
+      <name>$PROJ_DIR$\control.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$\imu.c</name>
     </file>
     <file>
