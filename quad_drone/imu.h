@@ -75,5 +75,7 @@ void readGyro(signed long *x_gyro, signed long *y_gyro,
 void readCompass(signed long *x_axis, signed long *y_axis,
                  signed long *z_axis);
 
+void imuStartup();
+
 void sensorsSelfTest();
 //============================================================================//

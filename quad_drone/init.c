@@ -29,23 +29,23 @@ void InitADC()
     SysCtlPeripheralEnable(SYSCTL_PERIPH_ADC);
     
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOE);   
-    GPIOPinTypeADC(GPIO_PORTE_BASE, GPIO_PIN_4);   //ADC 3         PE4    X
+    GPIOPinTypeADC(GPIO_PORTE_BASE, GPIO_PIN_4);   //ADC 3         PE4    Z
     
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOE);
-    GPIOPinTypeADC(GPIO_PORTE_BASE, GPIO_PIN_6);   //ADC 1         PE6    Y
+    GPIOPinTypeADC(GPIO_PORTE_BASE, GPIO_PIN_6);   //ADC 1         PE6    X
     
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOE);
-    GPIOPinTypeADC(GPIO_PORTE_BASE, GPIO_PIN_5);   //ADC 2         PE5    Z
+    GPIOPinTypeADC(GPIO_PORTE_BASE, GPIO_PIN_5);   //ADC 2         PE5    Y
     
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOE);
     GPIOPinTypeADC(GPIO_PORTE_BASE, GPIO_PIN_3);   //ADC 8         PE3    Temperature
     
     ADCSequenceDisable(ADC_BASE, 0);
     ADCSequenceConfigure(ADC_BASE, 0, ADC_TRIGGER_PROCESSOR, 0);
-    ADCSequenceStepConfigure(ADC_BASE, 0 , 0 , ADC_CTL_CH8);   // PE3
-    ADCSequenceStepConfigure(ADC_BASE, 0 , 1 , ADC_CTL_CH1);   // PE6
-    ADCSequenceStepConfigure(ADC_BASE, 0 , 2 , ADC_CTL_CH2);   // PE5
-    ADCSequenceStepConfigure(ADC_BASE, 0 , 3 , ADC_CTL_CH3 | ADC_CTL_IE | ADC_CTL_END);  //PE4
+    ADCSequenceStepConfigure(ADC_BASE, 0 , 0 , ADC_CTL_CH8);   // PE3    Temp
+    ADCSequenceStepConfigure(ADC_BASE, 0 , 1 , ADC_CTL_CH1);   // PE6    X
+    ADCSequenceStepConfigure(ADC_BASE, 0 , 2 , ADC_CTL_CH2);   // PE5    Y
+    ADCSequenceStepConfigure(ADC_BASE, 0 , 3 , ADC_CTL_CH3 | ADC_CTL_IE | ADC_CTL_END);  //PE4   Z
     ADCSequenceEnable(ADC_BASE, 0);
     ADCIntEnable(ADC_BASE, 0);
     ADCIntClear(ADC_BASE, 0);

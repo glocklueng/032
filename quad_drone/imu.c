@@ -1,4 +1,5 @@
 #include "inc/lm3s9b96.h"
+#include "math.h"
 
 #include "imu.h"
 
@@ -20,6 +21,7 @@
 #include "grlib/grlib.h"
 #include "grlib/widget.h"
 
+
 //  Natural Constants
 const float pi = 3.141592f;		    // Pi
 const float convert_pi_180 = 0.017453f;	    // Pi/180 - Convert Degrees to Radians
@@ -34,6 +36,10 @@ unsigned long z_acc_raw = 0;		// Z Accelerometer Reading
 int x_acc_offset = 0;		        // X Accelerometer Offset
 int y_acc_offset = 0;		        // Y Accelerometer Offset
 int z_acc_offset = 0;		        // Z Accelerometer Offset
+
+float x_angle_offset = -15.0f;          // X Angle Offset
+float y_angle_offset = -15.0f;          // Y Angle Offset
+float z_angle_offset = -15.0f;          // Z Angle Offset
 
 const float x_acc_shift = 1.65f;	// X Accelerometer Voltage Shift
 const float y_acc_shift = 1.65f;	// Y Accelerometer Voltage Shift
@@ -59,9 +65,9 @@ float x_angle = 0.0f;			// X Axis Angle - State Estimation
 float y_angle = 0.0f;			// Y Axis Angle - State Estimation	
 float z_angle = 0.0f;			// Z Axis Angle - State Estimation	
 
-float x_bias = 0.0f;			// X Bias for State Matrix
-float y_bias = 0.0f;			// Y Bias for State Matrix
-float z_bias = 0.0f;			// Z Bias for State Matrix
+float x_bias = 4.5f;			// X Bias for State Matrix
+float y_bias = -1.5f;			// Y Bias for State Matrix
+float z_bias = -1.5f;			// Z Bias for State Matrix
 
 signed long x_gyro_raw = 0;		// X Gyro Reading
 signed long y_gyro_raw = 0;		// Y Gyro Reading
@@ -99,8 +105,8 @@ float z_cent_force = 0.0f;		// Centreptial Force - Z Axis
 
 
 //  Kalman Variables and Constants
-const float dt = 0.02f;			// dt = 0.02 seconds per sample
-const float Q_angle =  0.001f;		// 0.001 - Q constant for angle
+const float dt = 0.002f;		// dt = 0.002 seconds per sample
+const float Q_angle = 0.001f;		// 0.001 - Q constant for angle
 const float Q_gyro = 0.003f;		// 0.003 - Q constant for gyro
 const float R_angle = 0.7f;		// 0.7   - R constant for noise    
 
@@ -131,9 +137,8 @@ signed long z_comp_raw = 0;		// Z Compass Reading
 unsigned long temp_raw;
 float temperature;
 
-
-// Testing Variables and Constants
-float rate_integrated = 0;
+// Test Values
+float y_ang = 0;
 
 // -----------------------------------------  
 //
@@ -148,7 +153,7 @@ float rate_integrated = 0;
 // [6] : Magnetic North Heading
 // [7] : Temperature
 void readIMU(float *imu)
-{ 
+{     
     // Read ADC - X Axis Acc
     // Read ADC - Y Axis Acc
     // Read ADC - Z Axis Acc
@@ -164,50 +169,20 @@ void readIMU(float *imu)
     // Read Raw - Z Axis Compass
     readCompass(&x_comp_raw, &y_comp_raw, &z_comp_raw);
     
-    // This is raw data
-    // - DEGUG -
-    imu[0] = (float)x_acc_raw;
-    imu[1] = (float)y_acc_raw;
-    imu[2] = (float)z_acc_raw;
-    imu[3] = (float)x_gyro_raw;
-    imu[4] = (float)y_gyro_raw;
-    imu[5] = (float)z_gyro_raw;
-    imu[6] = (float)x_comp_raw;
-    imu[7] = (float)temp_raw;  
-    // - DEGUG -
-    
-    
-    // Make sure to go from g's to theta!!!
-    // Make sure to go from g's to theta!!!
-    // Make sure to go from g's to theta!!!
+    // Convert raw adc values to acceleration
     x_accel = ((x_acc_v_convert*(float)((int)(x_acc_raw) - x_acc_offset))-x_acc_shift)*x_acc_g_convert; // Convert raw data bytes to acceleration - X Axis
     y_accel = ((y_acc_v_convert*(float)((int)(y_acc_raw) - y_acc_offset))-y_acc_shift)*y_acc_g_convert; // Convert raw data bytes to acceleration - Y Axis
     z_accel = ((z_acc_v_convert*(float)((int)(z_acc_raw) - z_acc_offset))-z_acc_shift)*z_acc_g_convert; // Convert raw data bytes to acceleration - Z Axis
     
-    // Make sure to go from g's to theta!!!
-    // Make sure to go from g's to theta!!!
-    // Make sure to go from g's to theta!!!
-    // x_acc_deg = ;
-    // y_acc_deg = ;
-    // z_acc_deg = ;
+    // Convert acceleration to angles
+    x_acc_deg = (((float)atan(x_accel/sqrt(y_accel*y_accel + z_accel*z_accel)))*convert_180_Pi) + x_angle_offset;
+    y_acc_deg = (((float)atan(y_accel/sqrt(x_accel*x_accel + z_accel*z_accel)))*convert_180_Pi) + y_angle_offset;
+    z_acc_deg += z_gyro_deg_sec*dt;  // Integrate Z Angular Velocity to obtain yaw angle 
     
     x_gyro_deg_sec  = ((float)(x_gyro_raw - x_gyro_offset)* x_gyro_scale);	 // Convert raw data bytes to angular velocity - X Axis
     y_gyro_deg_sec  = ((float)(y_gyro_raw - y_gyro_offset)* y_gyro_scale);	 // Convert raw data bytes to angular velocity - Y Axis
     z_gyro_deg_sec  = ((float)(z_gyro_raw - z_gyro_offset)* z_gyro_scale);	 // Convert raw data bytes to angular velocity - Z Axis
     
-    // This is deg_sec data
-    // - DEGUG -
-    imu[0] = (float)x_acc_deg;
-    imu[1] = (float)y_acc_deg;
-    imu[2] = (float)z_acc_deg;
-    imu[3] = (float)x_gyro_deg_sec;
-    imu[4] = (float)y_gyro_deg_sec;
-    imu[5] = (float)z_gyro_deg_sec;
-    imu[6] = (float)x_comp_raw;
-    imu[7] = (float)temp_raw;  
-    // - DEGUG -       
-    
-    rate_integrated += x_gyro_deg_sec;
     
     // Runge-Kutta Integration 
     // -----------------------
@@ -237,6 +212,16 @@ void readIMU(float *imu)
     x_angle += ((x_gyro_deg_sec - x_bias)) * dt;			// integrate x axis gyro with bias then add to x angle
     y_angle += ((y_gyro_deg_sec - y_bias)) * dt;			// integrate y axis gyro with bias then add to y angle
     z_angle += ((z_gyro_deg_sec - z_bias)) * dt;			// integrate z axis gyro with bias then add to z angle
+
+    //  Pre-Kalman Values
+    imu[0] = x_acc_deg;
+    imu[1] = y_acc_deg;
+    imu[2] = z_acc_deg;
+    imu[3] = (x_gyro_deg_sec - x_bias);
+    imu[4] = (y_gyro_deg_sec - y_bias);
+    imu[5] = (z_gyro_deg_sec - z_bias);
+    imu[6] = 12345;
+    imu[7] = temp_raw; 
     
     
     // Kalman Filter 
@@ -316,19 +301,21 @@ void readIMU(float *imu)
     zP_10 -= zK_1 * zP_00; 
     zP_11 -= zK_1 * zP_01;
     
-    /*   Replace raw with the filtered values
-    imu[0] = x_acc_raw;
-    imu[1] = y_acc_raw;
-    imu[2] = z_acc_raw;
-    imu[3] = x_gyro_raw;
-    imu[4] = y_gyro_raw;
-    imu[5] = z_gyro_raw;
+    // Kalman Filtered Values
+    /*
+    imu[0] = x_angle;
+    imu[1] = y_angle;
+    imu[2] = z_angle;
+    imu[3] = (x_gyro_deg_sec - x_bias);
+    imu[4] = (y_gyro_deg_sec - y_bias);
+    imu[5] = (z_gyro_deg_sec - z_bias);
     imu[6] = 12345;
     imu[7] = temp_raw; 
     */
     
-    sensorsSelfTest();
 }
+// ----------------------------------------- 
+
 
 // -----------------------------------------   
 //
@@ -361,6 +348,8 @@ void readAccel(unsigned long *temp, unsigned long *x_acc,
     *y_acc = adc_values[2];
     *z_acc = adc_values[3];
 }
+// ----------------------------------------- 
+
 
 // -----------------------------------------   
 //
@@ -423,7 +412,10 @@ void readGyro(signed long *x_gyro, signed long *y_gyro,
     *x_gyro = (gyro_values[1] << 8) | gyro_values[0];
     *y_gyro = (gyro_values[3] << 8) | gyro_values[2];
     *z_gyro = (gyro_values[5] << 8) | gyro_values[4];
+    
 }
+// ----------------------------------------- 
+
 
 // -----------------------------------------   
 //
@@ -487,6 +479,18 @@ void readCompass(signed long *x_axis, signed long *y_axis,
     *y_axis = (compass_values[2] << 8) | compass_values[3];
     *z_axis = (compass_values[4] << 8) | compass_values[5];
 }
+// ----------------------------------------- 
+
+
+// -----------------------------------------   
+// IMU STARTUP
+// -----------------------------------------  
+// Start up the IMU by calibrating
+void imuStartup()
+{
+   sensorsSelfTest();
+}
+// ----------------------------------------- 
 
 
 // -----------------------------------------   
@@ -498,13 +502,18 @@ void readCompass(signed long *x_axis, signed long *y_axis,
 // [3] : X - Axis Gyroscope Negative (+) Calibration Reading
 // [4] : Y - Axis Gyroscope Negative (-) Calibration Reading
 // [5] : Z - Axis Gyroscope Negative (+) Calibration Reading
-// [6] : X - Axis Accelerometer Calibration Reading
-// [7] : Y - Axis Accelerometer Calibration Reading 
-// [8] : Z - Axis Accelerometer Calibration Reading 
-signed long imu_st_cal[9];
+// [6] : X - Axis Accelerometer Calibration Reading - Initial
+// [7] : Y - Axis Accelerometer Calibration Reading - Initial
+// [8] : Z - Axis Accelerometer Calibration Reading - Initial
+// [9] : X - Axis Accelerometer Calibration Reading - ST
+// [10]: Y - Axis Accelerometer Calibration Reading - ST
+// [11]: Z - Axis Accelerometer Calibration Reading - ST
+
+signed long imu_st_cal[12];
 
 void sensorsSelfTest()
 {                                                                              
+    
     // Calibrate Gyroscope
     // -------------------
     I2CMasterSlaveAddrSet(I2C1_MASTER_BASE, GYRO_ADDRESS, I2C_SEND);         // ST - SAD+W  
@@ -523,7 +532,7 @@ void sensorsSelfTest()
     
     readGyro(&x_gyro_raw, &y_gyro_raw, &z_gyro_raw);
     
-    while(x_gyro_raw > -10000 || y_gyro_raw < 10000 || z_gyro_raw > -10000)
+    while(x_gyro_raw > -8000 || y_gyro_raw < 8000 || z_gyro_raw > -8000)
     {
         readGyro(&x_gyro_raw, &y_gyro_raw, &z_gyro_raw);
     }
@@ -547,7 +556,7 @@ void sensorsSelfTest()
     
     readGyro(&x_gyro_raw, &y_gyro_raw, &z_gyro_raw);
     
-    while(x_gyro_raw < 10000 || y_gyro_raw > -10000 || z_gyro_raw < 10000)
+    while(x_gyro_raw < 8000 || y_gyro_raw > -8000 || z_gyro_raw < 8000)
     {
         readGyro(&x_gyro_raw, &y_gyro_raw, &z_gyro_raw);
     }
@@ -584,22 +593,37 @@ void sensorsSelfTest()
     
     // Calibrate Accelerometer
     // -----------------------
-    // Pull ST line high                
-    // FIX AND TEST!!!
-    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOE);    // Enable GPIO Port E
-    GPIO_PORTE_DATA_R |= 0x02;      // <--- that number is wrong (maybe)
     
     readAccel(&temp_raw, &x_acc_raw, &y_acc_raw, &z_acc_raw);
     
     imu_st_cal[6] = x_acc_raw; 
     imu_st_cal[7] = y_acc_raw;
-    imu_st_cal[8] = z_acc_raw; 
+    imu_st_cal[8] = z_acc_raw;
     
-    x_acc_offset = imu_st_cal[6] - 401;
-    y_acc_offset = imu_st_cal[7] - 623;
-    z_acc_offset = imu_st_cal[8] - 700;
+    
+    // Pull ST line high                
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOE);
+    
+    GPIODirModeSet(GPIO_PORTE_BASE, GPIO_PIN_7, GPIO_DIR_MODE_OUT);
+    GPIOPadConfigSet(GPIO_PORTE_BASE, GPIO_PIN_7, GPIO_STRENGTH_2MA, GPIO_PIN_TYPE_STD);
+    
+    GPIOPinWrite(GPIO_PORTE_BASE, GPIO_PIN_7, 0xff);            
+
+    for(int ulLoop = 0; ulLoop < 10000000; ulLoop++){} // Wait for physics                         
+    
+    readAccel(&temp_raw, &x_acc_raw, &y_acc_raw, &z_acc_raw);
+    
+    imu_st_cal[9] = x_acc_raw; 
+    imu_st_cal[10] = y_acc_raw;
+    imu_st_cal[11] = z_acc_raw; 
+    
+    x_acc_offset = imu_st_cal[6] - imu_st_cal[9] - 127;
+    y_acc_offset = imu_st_cal[7] - imu_st_cal[10] + 127;
+    z_acc_offset = imu_st_cal[8] - imu_st_cal[11] +  230;
     
     // Pull ST line low                
-    // FIX AND TEST!!!
-    GPIO_PORTF_DATA_R &= ~(0x02);   // <--- that number is wrong (maybe)
+    GPIOPinWrite(GPIO_PORTE_BASE, GPIO_PIN_7, 0x00);
+    
+    for(int ulLoop = 0; ulLoop < 1000000; ulLoop++){}   // Wait for physics                      
 }
+// ----------------------------------------- 

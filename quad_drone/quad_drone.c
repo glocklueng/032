@@ -1,4 +1,5 @@
 #include "inc/lm3s9b96.h"
+#include "math.h"
 
 #include "inc/hw_adc.h"
 #include "inc/hw_gpio.h"
@@ -63,7 +64,7 @@ int main(void)
     // Cylon Init
     // --------------------------
     // Some value that will eventually go away..
-    unsigned long blink_delay = 200000;
+    //unsigned long blink_delay = 200000;
     volatile unsigned long ulLoop;
     //
     // Enable the GPIO port that is used for the on-board LED.
@@ -83,10 +84,6 @@ int main(void)
     GPIO_PORTF_DEN_R = 0x0e;
     // --------------------------
     
-    
-    //unsigned long motor_dutycycle_l = 16000; 
-    //unsigned long motor_dutycycle_r = 16000; 
-    
     // IMU Values
     // [0] : X Angle
     // [1] : Y Angle
@@ -98,39 +95,25 @@ int main(void)
     // [7] : Temperature
     float imu[8];
     
+    GPIO_PORTF_DATA_R |= 0x08;        // Turn red LED on (Calibrating Light)
+    imuStartup();                     // Start up the IMU by calibrating
+    GPIO_PORTF_DATA_R &= ~(0x08);     // Turn red LED off (Calibrating Light)
+    
+    GPIO_PORTF_DATA_R |= 0x02;        // Turn blue LED on (Motor Spinup Light)
+    motorSpinup();                    // Start up the motors
+    GPIO_PORTF_DATA_R &= ~(0x02);     // Turn blue LED off (Motor Spinup Light)
+    
     // MAIN LOOP
     // --------------------------
     while(1)
     {   
-        
+        GPIO_PORTF_DATA_R |= 0x04;
         readIMU(&imu[0]);
-        
-        /*
-        // 20460
-        if(motor_dutycycle_l < 20000 && motor_dutycycle_r < 20000)
-        {
-          //PWMGenPeriodSet(PWM_BASE, PWM_GEN_0, 20460);   // get this to 20kHz
-          //PWMPulseWidthSet(PWM_BASE, PWM_OUT_1, motor_dutycycle);   // Motor 1 - PWM1 - Pin 35
-          //PWMPulseWidthSet(PWM_BASE, PWM_OUT_0, motor_dutycycle);   // Motor 2 - PWM0 - Pin 34
+
+        Control(imu[1],imu[4]);
           
-          PWMGenPeriodSet(PWM_BASE, PWM_GEN_3, 20460);   // get this to 20kHz
-          PWMPulseWidthSet(PWM_BASE, PWM_OUT_7, motor_dutycycle_l);   // Motor 3 - PWM7 - Pin 31
-          PWMPulseWidthSet(PWM_BASE, PWM_OUT_6, motor_dutycycle_r);   // Motor 4 - PWM6 - Pin 30
-        }
-        
-        if(motor_dutycycle_l < 20000)
-        {
-           motor_dutycycle_l += 50;
-           motor_dutycycle_r += 50;
-        }
-        else
-        {
-           motor_dutycycle_l = 16000;
-           motor_dutycycle_r = 16000;
-        }
-        */
-        
         // Cylon Mode
+        /*
         GPIO_PORTF_DATA_R |= 0x04;
         for(ulLoop = 0; ulLoop < blink_delay; ulLoop++)
         {
@@ -151,7 +134,7 @@ int main(void)
         {
         }
         GPIO_PORTF_DATA_R &= ~(0x08);  
-        
+        */
     
         //UARTSend((unsigned char *)"Enter text: ", 12);
     }
