@@ -80,7 +80,7 @@ int main(void)
     // MAIN LOOP           
     while(1)
     {
-
+        /*
         // Trigger the sample sequence.
         ADCProcessorTrigger(ADC_BASE, 0);
 
@@ -104,7 +104,7 @@ int main(void)
         }
         
         // Connect to I2C Channel 0 Slave Device
-        I2CSlaveInit();
+        //I2CSlaveInit();
         
         
         //                                          
@@ -118,21 +118,22 @@ int main(void)
         for(ulLoop = 0; ulLoop < blink_delay; ulLoop++)
         {
         }
+        */
+    //SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOE);
+    //GPIODirModeSet(GPIO_PORTE_BASE, GPIO_PIN_7, GPIO_DIR_MODE_OUT );
+    //GPIOPinTypeGPIOOutput(GPIO_PORTE_BASE, GPIO_PIN_7);   
+   
+    GPIODirModeSet(GPIO_PORTE_BASE, GPIO_PIN_7, GPIO_DIR_MODE_OUT );
 
-        //UpdateDisplay(); 
-        
-        //
-        // Turn off the LED.
-        //
-        //GPIO_PORTF_DATA_R &= ~(0x08);
+    GPIOPadConfigSet(GPIO_PORTE_BASE, GPIO_PIN_7, GPIO_STRENGTH_2MA, GPIO_PIN_TYPE_STD );
+    
+    GPIOPinWrite(GPIO_PORTE_BASE, GPIO_PIN_7, 0x80);
+    
+    for(int ulLoop = 0; ulLoop < 10000000; ulLoop++){}                        // Wait for physics              
 
-        //
-        // Delay for a bit.
-        //
-        //for(ulLoop = 0; ulLoop < blink_delay; ulLoop++)
-        //{
-        //}
-        
+    GPIOPinWrite(GPIO_PORTE_BASE, GPIO_PIN_7, 0x00);
+
+    for(int ulLoop = 0; ulLoop < 10000000; ulLoop++){}  
     }
 }
  
