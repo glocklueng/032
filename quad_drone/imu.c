@@ -1,7 +1,9 @@
 #include "inc/lm3s9b96.h"
 #include "math.h"
 
+
 #include "imu.h"
+#include "xbee.h"
 
 #include "inc/hw_adc.h"
 #include "inc/hw_gpio.h"
@@ -40,6 +42,10 @@ int z_acc_offset = 0;		        // Z Accelerometer Offset
 float x_angle_offset = -15.0f;          // X Angle Offset
 float y_angle_offset = -15.0f;          // Y Angle Offset
 float z_angle_offset = -15.0f;          // Z Angle Offset
+
+float x_angle_scale = 1.5f;             // X Angle Scale
+float y_angle_scale = 1.5f;             // Y Angle Scale
+float z_angle_scale = 1.5f;             // Z Angle Scale
 
 const float x_acc_shift = 1.65f;	// X Accelerometer Voltage Shift
 const float y_acc_shift = 1.65f;	// Y Accelerometer Voltage Shift
@@ -105,9 +111,13 @@ float z_cent_force = 0.0f;		// Centreptial Force - Z Axis
 
 
 //  Kalman Variables and Constants
-const float dt = 0.002f;		// dt = 0.002 seconds per sample
+unsigned int previousTimer;             // The previous time from the timer
+unsigned int currentTimer;              // The current time from the timer
+unsigned long startFlag = 0;            // Flag for when dt clock starts
+float measuredDt;                       // Measured dt
+float dt = 0.0005f;		        // dt = 0.002 seconds per sample
 const float Q_angle = 0.001f;		// 0.001 - Q constant for angle
-const float Q_gyro = 0.003f;		// 0.003 - Q constant for gyro
+const float Q_gyro = 0.009f;		// 0.003 - Q constant for gyro
 const float R_angle = 0.7f;		// 0.7   - R constant for noise    
 
 float x_y;				// Difference between previous raw angle reading and previous state angle - X-Axis
@@ -137,8 +147,11 @@ signed long z_comp_raw = 0;		// Z Compass Reading
 unsigned long temp_raw;
 float temperature;
 
+// UART Variables
+unsigned long uartDelay = 0;
+
 // Test Values
-float y_ang = 0;
+float x_ang = 0;
 
 // -----------------------------------------  
 //
@@ -154,6 +167,30 @@ float y_ang = 0;
 // [7] : Temperature
 void readIMU(float *imu)
 {     
+    // Calculate dt for integration
+    // ----------------------------
+    if(startFlag == 0)
+    {
+        startFlag = 1;  // dt calculation starts
+        
+        previousTimer = TimerValueGet(TIMER0_BASE, TIMER_A);
+    }
+    else
+    {
+        currentTimer = TimerValueGet(TIMER0_BASE, TIMER_A);
+        
+        measuredDt = (float)SysCtlClockGet();
+        measuredDt = (float)((float)(previousTimer - currentTimer)/(float)SysCtlClockGet());  
+        
+        if(measuredDt > 0.0000000f)
+        {
+          dt = measuredDt;
+        }
+        
+        previousTimer = currentTimer;
+    }
+    // ----------------------------
+    
     // Read ADC - X Axis Acc
     // Read ADC - Y Axis Acc
     // Read ADC - Z Axis Acc
@@ -174,9 +211,9 @@ void readIMU(float *imu)
     y_accel = ((y_acc_v_convert*(float)((int)(y_acc_raw) - y_acc_offset))-y_acc_shift)*y_acc_g_convert; // Convert raw data bytes to acceleration - Y Axis
     z_accel = ((z_acc_v_convert*(float)((int)(z_acc_raw) - z_acc_offset))-z_acc_shift)*z_acc_g_convert; // Convert raw data bytes to acceleration - Z Axis
     
-    // Convert acceleration to angles
-    x_acc_deg = (((float)atan(x_accel/sqrt(y_accel*y_accel + z_accel*z_accel)))*convert_180_Pi) + x_angle_offset;
-    y_acc_deg = (((float)atan(y_accel/sqrt(x_accel*x_accel + z_accel*z_accel)))*convert_180_Pi) + y_angle_offset;
+    // Convert acceleration to angles    
+    x_acc_deg = (float)(x_angle_scale*((((float)atan(y_accel/sqrt(x_accel*x_accel + z_accel*z_accel)))*convert_180_Pi) + x_angle_offset));
+    y_acc_deg = (float)(y_angle_scale*((((float)atan(x_accel/sqrt(y_accel*y_accel + z_accel*z_accel)))*convert_180_Pi) + y_angle_offset));
     z_acc_deg += z_gyro_deg_sec*dt;  // Integrate Z Angular Velocity to obtain yaw angle 
     
     x_gyro_deg_sec  = ((float)(x_gyro_raw - x_gyro_offset)* x_gyro_scale);	 // Convert raw data bytes to angular velocity - X Axis
@@ -214,6 +251,7 @@ void readIMU(float *imu)
     z_angle += ((z_gyro_deg_sec - z_bias)) * dt;			// integrate z axis gyro with bias then add to z angle
 
     //  Pre-Kalman Values
+    /*
     imu[0] = x_acc_deg;
     imu[1] = y_acc_deg;
     imu[2] = z_acc_deg;
@@ -222,11 +260,43 @@ void readIMU(float *imu)
     imu[5] = (z_gyro_deg_sec - z_bias);
     imu[6] = 12345;
     imu[7] = temp_raw; 
+    */
+    
+    // Complementary Filter
+    x_ang = ((0.9)*((x_ang) + ((x_gyro_deg_sec - x_bias)*dt)) + (0.1)*(x_acc_deg));
+    
+    imu[0] = x_acc_deg;
+    imu[1] = y_acc_deg;
+    imu[2] = z_acc_deg;
+    imu[3] = (x_gyro_deg_sec - x_bias);
+    imu[4] = (y_gyro_deg_sec - y_bias);
+    imu[5] = (z_gyro_deg_sec - z_bias);
+    imu[6] = 12345;
+    imu[7] = temp_raw;
+    
+    if(uartDelay > 1000)
+    {
+      uartDelay = 0;
+      for(int i=0; i < 8; i++)
+      {
+        //unsigned char sendBuf[32];
+        //UARTprintf("Number of sensors is: %f", imu[i]);
+        //sendBuf = toString(imu[0]);
+        //UARTSend((unsigned char*)"z", 1);
+        //UARTSend((unsigned char*)sendBuf, 10);
+        //UARTSend((unsigned char*)" ", 1);
+      }
+      UARTSend((unsigned char*)"\n", 1);
+    }
+    else
+    {
+      uartDelay++; 
+    }
     
     
     // Kalman Filter 
     // ----------------------
-    
+    /*
     // Filter X Axis
     // ----------------------
     // Predict 
@@ -302,7 +372,7 @@ void readIMU(float *imu)
     zP_11 -= zK_1 * zP_01;
     
     // Kalman Filtered Values
-    /*
+    
     imu[0] = x_angle;
     imu[1] = y_angle;
     imu[2] = z_angle;
@@ -312,6 +382,7 @@ void readIMU(float *imu)
     imu[6] = 12345;
     imu[7] = temp_raw; 
     */
+    
     
 }
 // ----------------------------------------- 
@@ -513,6 +584,7 @@ signed long imu_st_cal[12];
 
 void sensorsSelfTest()
 {                                                                              
+    volatile unsigned long delayVar;
     
     // Calibrate Gyroscope
     // -------------------
@@ -525,10 +597,14 @@ void sensorsSelfTest()
     I2CMasterDataPut(I2C1_MASTER_BASE, CTRL_REG_4_STPLUS);                   // SUB - POS
     I2CMasterControl(I2C1_MASTER_BASE, I2C_MASTER_CMD_BURST_SEND_FINISH);    // Set to send
     
-    while(I2CMasterBusy(I2C1_MASTER_BASE)){}                                 // Wait for SAK
-    
-    for(int ulLoop = 0; ulLoop < 1000000; ulLoop++){}                        // Wait for physics
-    
+    while(I2CMasterBusy(I2C1_MASTER_BASE)){}                                 // Wait for SAK 
+   
+    for(unsigned long ulLoop = 0; ulLoop < 100000; ulLoop++)
+    {
+       delayVar = 0;
+       delayVar = delayVar + 100;
+       delayVar = delayVar - 100;
+    }  
     
     readGyro(&x_gyro_raw, &y_gyro_raw, &z_gyro_raw);
     
@@ -552,7 +628,12 @@ void sensorsSelfTest()
     
     while(I2CMasterBusy(I2C1_MASTER_BASE)){}                                 // Wait for SAK
     
-    for(int ulLoop = 0; ulLoop < 1000000; ulLoop++){}                        // Wait for physics
+    for(unsigned long ulLoop = 0; ulLoop < 100000; ulLoop++)
+    {
+       delayVar = 0;
+       delayVar = delayVar + 100;
+       delayVar = delayVar - 100;
+    }  
     
     readGyro(&x_gyro_raw, &y_gyro_raw, &z_gyro_raw);
     
@@ -565,8 +646,7 @@ void sensorsSelfTest()
     imu_st_cal[3] = x_gyro_raw;
     imu_st_cal[4] = y_gyro_raw;
     imu_st_cal[5] = z_gyro_raw;
-   
-    for(int ulLoop = 0; ulLoop < 1000000; ulLoop++){}                         // Wait for physics
+  
     
     // Set Gyro back to default
     I2CMasterSlaveAddrSet(I2C1_MASTER_BASE, GYRO_ADDRESS, I2C_SEND);         // ST - SAD+W  
@@ -580,7 +660,12 @@ void sensorsSelfTest()
     
     while(I2CMasterBusy(I2C1_MASTER_BASE)){}                                 // Wait for SAK
     
-    for(int ulLoop = 0; ulLoop < 1000000; ulLoop++){}                         // Wait for physics
+    for(unsigned long ulLoop = 0; ulLoop < 100000; ulLoop++)
+    {
+       delayVar = 0;
+       delayVar = delayVar + 100;
+       delayVar = delayVar - 100;
+    }  
     
     x_gyro_offset = (int)((imu_st_cal[0])+(imu_st_cal[3]));   // Add the +130 and -130 for offset
     y_gyro_offset = (int)((imu_st_cal[1])+(imu_st_cal[4]));   // Add the +130 and -130 for offset
@@ -609,7 +694,12 @@ void sensorsSelfTest()
     
     GPIOPinWrite(GPIO_PORTE_BASE, GPIO_PIN_7, 0xff);            
 
-    for(int ulLoop = 0; ulLoop < 10000000; ulLoop++){} // Wait for physics                         
+    for(unsigned long ulLoop = 0; ulLoop < 100000; ulLoop++)
+    {
+       delayVar = 0;
+       delayVar = delayVar + 100;
+       delayVar = delayVar - 100;
+    }                       
     
     readAccel(&temp_raw, &x_acc_raw, &y_acc_raw, &z_acc_raw);
     
@@ -624,6 +714,11 @@ void sensorsSelfTest()
     // Pull ST line low                
     GPIOPinWrite(GPIO_PORTE_BASE, GPIO_PIN_7, 0x00);
     
-    for(int ulLoop = 0; ulLoop < 1000000; ulLoop++){}   // Wait for physics                      
+    for(unsigned long ulLoop = 0; ulLoop < 100000; ulLoop++)
+    {
+       delayVar = 0;
+       delayVar = delayVar + 100;
+       delayVar = delayVar - 100;
+    }                       
 }
 // ----------------------------------------- 

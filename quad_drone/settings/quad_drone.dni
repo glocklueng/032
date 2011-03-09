@@ -1,5 +1,5 @@
 [DebugChecksum]
-Checksum=-496337467
+Checksum=-1450584024
 [Exceptions]
 StopOnUncaught=_ 0
 StopOnThrow=_ 0
@@ -23,8 +23,7 @@ ByteLimit=50
 [Disassemble mode]
 mode=0
 [Breakpoints]
-Bp0=_ "STD_CODE" "{$PROJ_DIR$\control.c}.58.5@1" 1 0 0 0 "" 0 "" 0
-Count=1
+Count=0
 [Log file]
 LoggingEnabled=_ 0
 LogFile=_ ""
@@ -39,6 +38,6 @@ SuppressDialog=0
 Enabled=0
 [DriverProfiling]
 Enabled=0
-Mode=2122219134
+Mode=-2147483640
 Graph=0
 Symbiont=0

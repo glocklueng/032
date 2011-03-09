@@ -21,69 +21,73 @@
 #include "grlib/grlib.h"
 #include "grlib/widget.h"
 
-float y_Pterm;
-float y_Iterm;
-float y_Dterm;
-float y_angle_vel_term;
+float x_Pterm;
+float x_Iterm;
+float x_Dterm;
+float x_angle_vel_term;
 
-const float y_Pgain = 120.0f;
-const float y_Igain = 0.001f;
-const float y_Dgain = 120.0f;   
-const float y_Fgain = 60.0f;
+const float x_Pgain = 120.0f;
+const float x_Igain = 0.0001f;
+const float x_Dgain = 120.0f;   
+const float x_Fgain = 4.0f;
 
-float y_angle_error = 0;
-float y_cmd_angle = 0;
-float y_old_angle = 0;
+float x_angle_error = 0;
+float x_cmd_angle = 0;
+float x_old_angle = 0;
 
-float y_torque = 0;
+float x_torque = 0;
 
-unsigned long motor_dutycycle_l = 16000; 
-unsigned long motor_dutycycle_r = 16000; 
+unsigned long motor_dutycycle_l = 64000; 
+unsigned long motor_dutycycle_r = 64000; 
 
-void Control(float y_angle, float y_ang_vel)
+void Control(float x_angle, float x_ang_vel)
 { 
-    y_angle_error = (y_cmd_angle - y_angle);
+    x_angle_error = (x_cmd_angle - x_angle);
     
-    y_Pterm = y_Pgain*y_angle_error;
-    y_Iterm = ((y_Igain*y_angle_error) + y_Iterm) * 0.9999;
-    y_Dterm = y_Dgain*(y_angle_error - y_old_angle);
+    x_Pterm = x_Pgain*x_angle_error;
+    x_Iterm = ((x_Igain*x_angle_error) + x_Iterm) * 0.9999;
+    x_Dterm = x_Dgain*(x_angle_error - x_old_angle);
     
-    y_old_angle = y_angle_error;
+    x_old_angle = x_angle_error;
     
-    y_angle_vel_term = y_Fgain*y_ang_vel;  
+    x_angle_vel_term = x_Fgain*x_ang_vel;  
     
-    y_torque = y_Pterm + y_Iterm + y_Dterm + y_angle_vel_term;
+    x_torque = x_Pterm + x_Iterm + x_Dterm + x_angle_vel_term;
     
     
-    motor_dutycycle_l = (unsigned long)((float)motor_dutycycle_l + y_torque);
-    //motor_dutycycle_r = (unsigned long)((float)motor_dutycycle_r + y_torque);
+    motor_dutycycle_l = (unsigned long)((float)77500 + x_torque);
+    motor_dutycycle_r = (unsigned long)((float)77500 - x_torque);
     
-    if(motor_dutycycle_l > 20000)
+    if(motor_dutycycle_l > 80000)
     {
-      motor_dutycycle_l = 20000;
+      motor_dutycycle_l = 80000;
     }
     
-    if(motor_dutycycle_l < 18750)
+    if(motor_dutycycle_l < 75000)
     {
-      motor_dutycycle_l = 18750;
+      motor_dutycycle_l = 75000;
     }
     
-    /*
-    if(motor_dutycycle_r > 20000)
+    
+    if(motor_dutycycle_r > 80000)
     {
-      motor_dutycycle_r = 20000;
+      motor_dutycycle_r = 80000;
     }
-    if(motor_dutycycle_r < 18750)
+    if(motor_dutycycle_r < 75000)
     {
-      motor_dutycycle_r = 18750;
+      motor_dutycycle_r = 75000;
     }
+    
+    /*   UNCOMMENT TO ENABLE MOTORS
+    PWMGenPeriodSet(PWM_BASE, PWM_GEN_3, 81840);   // get this to 20kHz
+    PWMPulseWidthSet(PWM_BASE, PWM_OUT_7, motor_dutycycle_l);   // Motor 3 - PWM7 - Pin 31
+    PWMPulseWidthSet(PWM_BASE, PWM_OUT_6, motor_dutycycle_r);   // Motor 4 - PWM6 - Pin 30
     */
     
+    ///PWMGenPeriodSet(PWM_BASE, PWM_GEN_3, 20460);   // get this to 20kHz
+    ///PWMPulseWidthSet(PWM_BASE, PWM_OUT_7, motor_dutycycle_l);   // Motor 3 - PWM7 - Pin 31
     
-    PWMGenPeriodSet(PWM_BASE, PWM_GEN_3, 20460);   // get this to 20kHz
-    PWMPulseWidthSet(PWM_BASE, PWM_OUT_7, motor_dutycycle_l);   // Motor 3 - PWM7 - Pin 31
     
-    //PWMPulseWidthSet(PWM_BASE, PWM_OUT_6, motor_dutycycle_r);   // Motor 4 - PWM6 - Pin 30
     
 }
 
@@ -91,24 +95,34 @@ void Control(float y_angle, float y_ang_vel)
 
 void motorSpinup()
 {
-  while(motor_dutycycle_l < 19375)
+  volatile unsigned long delay;
+  
+  while(motor_dutycycle_l < 77500)   
   {
-    if(motor_dutycycle_l < 20000 && motor_dutycycle_r < 20000)
+    if(motor_dutycycle_l < 80000 && motor_dutycycle_r < 80000)
     {
       //PWMGenPeriodSet(PWM_BASE, PWM_GEN_0, 20460);   // get this to 20kHz
       //PWMPulseWidthSet(PWM_BASE, PWM_OUT_1, motor_dutycycle);   // Motor 1 - PWM1 - Pin 35
       //PWMPulseWidthSet(PWM_BASE, PWM_OUT_0, motor_dutycycle);   // Motor 2 - PWM0 - Pin 34
       
-      PWMGenPeriodSet(PWM_BASE, PWM_GEN_3, 20460);   // get this to 20kHz
+      /*   UNCOMMENT TO ENABLE MOTORS
+      PWMGenPeriodSet(PWM_BASE, PWM_GEN_3, 81840);   // get this to 20kHz
       PWMPulseWidthSet(PWM_BASE, PWM_OUT_7, motor_dutycycle_l);   // Motor 3 - PWM7 - Pin 31
       PWMPulseWidthSet(PWM_BASE, PWM_OUT_6, motor_dutycycle_r);   // Motor 4 - PWM6 - Pin 30
+      */
     }
+    
     
     for(unsigned long ulLoop = 0; ulLoop < 20000; ulLoop++)
     {
+       delay = 0;
+       delay = delay + 100;
+       delay = delay - 100;
     }
+
+    
+    motor_dutycycle_l += 40;
+    motor_dutycycle_r += 40;
+  }
   
-    motor_dutycycle_l += 10;
-    motor_dutycycle_r += 10;
-  } 
 }

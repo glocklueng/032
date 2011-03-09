@@ -18,6 +18,11 @@
     #define L3G4_CTRL_REG1     0x20   // Control Register 1
     #define ENABLE_GYRO        0x0f   // Enable PD, Zen, Yen, Xen
 
+// Timer Init
+// --------------------------
+// extern unsigned int gTimeMS;
+// --------------------------
+
 //============================================================================//
 // Initalize ADC
 void InitADC();
@@ -30,4 +35,7 @@ void InitI2C();
 
 // Initalize UART
 void InitUART();
+         
+// Initalize Timer
+void InitTIMER();
 //============================================================================//

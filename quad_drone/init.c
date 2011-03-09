@@ -1,5 +1,7 @@
 #include "init.h"
 
+#include "imu.h"
+
 #include "inc/hw_adc.h"
 #include "inc/hw_gpio.h"
 #include "inc/hw_ints.h"
@@ -16,6 +18,7 @@
 #include "driverlib/uart.h"
 #include "grlib/grlib.h"
 #include "grlib/widget.h"
+
 
 #include "../drivers/kitronix320x240x16_ssd2119_8bit.h"
 #include "../drivers/set_pinout.h"
@@ -133,29 +136,36 @@ void InitI2C()
 
     while(I2CMasterBusy(I2C0_MASTER_BASE)){}                                 // Wait for SAK
                                       
-    
-    
-    // Initialize the I2C - Channel 1 - Gyro
-    SysCtlPeripheralEnable(SYSCTL_PERIPH_I2C1);
-    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOG);
-    GPIOPinConfigure(GPIO_PG0_I2C1SCL);
-    GPIOPinConfigure(GPIO_PG1_I2C1SDA);
-    GPIOPinTypeI2C(GPIO_PORTG_BASE, GPIO_PIN_0 | GPIO_PIN_1 );
+    signed long x_gyro_sample = 0;	// X Gyro Reading
+    signed long y_gyro_sample = 0;	// Y Gyro Reading
+    signed long z_gyro_sample = 0;	// Z Gyro Reading
 
-    // Set the clock 400kbps
-    I2CMasterInitExpClk(I2C1_MASTER_BASE, SysCtlClockGet(), true);
-    I2CMasterEnable(I2C1_MASTER_BASE); 
-    
-    I2CMasterSlaveAddrSet(I2C1_MASTER_BASE, GYRO_ADDRESS, I2C_SEND);         // ST - SAD+W  
-    I2CMasterDataPut(I2C1_MASTER_BASE, L3G4_CTRL_REG1);                      // SUB
-    I2CMasterControl(I2C1_MASTER_BASE, I2C_MASTER_CMD_BURST_SEND_START);     // Set to send
-    
-    while(I2CMasterBusy(I2C1_MASTER_BASE)){}                                 // Wait for SAK
-    
-    I2CMasterDataPut(I2C1_MASTER_BASE, ENABLE_GYRO);                         // SUB
-    I2CMasterControl(I2C1_MASTER_BASE, I2C_MASTER_CMD_BURST_SEND_FINISH);    // Set to send
-    
-    while(I2CMasterBusy(I2C1_MASTER_BASE)){}                                 // Wait for SAK
+    while(x_gyro_sample == 0 && y_gyro_sample == 0 && z_gyro_sample == 0)
+    {
+      // Initialize the I2C - Channel 1 - Gyro
+      SysCtlPeripheralEnable(SYSCTL_PERIPH_I2C1);
+      SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOG);
+      GPIOPinConfigure(GPIO_PG0_I2C1SCL);
+      GPIOPinConfigure(GPIO_PG1_I2C1SDA);
+      GPIOPinTypeI2C(GPIO_PORTG_BASE, GPIO_PIN_0 | GPIO_PIN_1 );
+  
+      // Set the clock 400kbps
+      I2CMasterInitExpClk(I2C1_MASTER_BASE, SysCtlClockGet(), true);
+      I2CMasterEnable(I2C1_MASTER_BASE); 
+      
+      I2CMasterSlaveAddrSet(I2C1_MASTER_BASE, GYRO_ADDRESS, I2C_SEND);         // ST - SAD+W  
+      I2CMasterDataPut(I2C1_MASTER_BASE, L3G4_CTRL_REG1);                      // SUB
+      I2CMasterControl(I2C1_MASTER_BASE, I2C_MASTER_CMD_BURST_SEND_START);     // Set to send
+      
+      while(I2CMasterBusy(I2C1_MASTER_BASE)){}                                 // Wait for SAK
+      
+      I2CMasterDataPut(I2C1_MASTER_BASE, ENABLE_GYRO);                         // SUB
+      I2CMasterControl(I2C1_MASTER_BASE, I2C_MASTER_CMD_BURST_SEND_FINISH);    // Set to send
+      
+      while(I2CMasterBusy(I2C1_MASTER_BASE)){}                                 // Wait for SAK
+      
+      readGyro(&x_gyro_sample, &y_gyro_sample, &z_gyro_sample);
+    }
 }
 
 
@@ -192,4 +202,40 @@ void InitUART()
     //
     IntEnable(INT_UART0);
     UARTIntEnable(UART0_BASE, UART_INT_RX | UART_INT_RT);
+}
+
+//============================================================================//
+// 
+// Initalize dt Timer
+void InitTIMER() 
+{
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER0);
+    
+    volatile unsigned long somethingelse;
+    for(unsigned long ulLoop = 0; ulLoop < 1000000; ulLoop++)
+    {
+       somethingelse = 0;
+       somethingelse = somethingelse + 100;
+       somethingelse = somethingelse - 100;
+    }  
+        
+    TimerConfigure(TIMER0_BASE, TIMER_CFG_32_BIT_PER);  // Down Periodic Counter 
+    
+    for(unsigned long ulLoop = 0; ulLoop < 1000000; ulLoop++)
+    {
+       somethingelse = 0;
+       somethingelse = somethingelse + 100;
+       somethingelse = somethingelse - 100;
+    }
+    
+    TimerControlStall(TIMER0_BASE, TIMER_A, true);      // Stop timer in debug
+
+    for(unsigned long ulLoop = 0; ulLoop < 1000000; ulLoop++)
+    {
+       somethingelse = 0;
+       somethingelse = somethingelse + 100;
+       somethingelse = somethingelse - 100;
+    }
+    
+    TimerEnable(TIMER0_BASE, TIMER_A);                  // Start Timer
 }

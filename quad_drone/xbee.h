@@ -1,9 +1,10 @@
-// control.h
+// xbee.h
 //
 //
-
 //============================================================================//
-void Control(float y_angle, float y_ang_vel);
+extern void 
+UARTSend(const unsigned char *pucBuffer, unsigned long ulCount); 
 //============================================================================//
-void motorSpinup();
+extern void 
+UARTSendFloat(const unsigned char *pucBuffer, unsigned long ulCount); 
 //============================================================================//

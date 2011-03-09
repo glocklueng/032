@@ -22,10 +22,12 @@
 
 #include "../drivers/kitronix320x240x16_ssd2119_8bit.h"
 #include "../drivers/set_pinout.h"
+
 #include "init.h"
 #include "imu.h"
 #include "control.h"
 #include "display.h"
+#include "xbee.h"
 
  /*  
 
@@ -40,6 +42,7 @@ Archecture: ARM Cortex M3
 
 */
 
+
 //***************************************************************************** 
 // 
 // Main Loop 
@@ -51,12 +54,24 @@ int main(void)
     
     // INIT - Initialization Code 
     // -------------------------- 
-    SysCtlClockSet(SYSCTL_SYSDIV_10 | SYSCTL_USE_PLL 
+  
+    // Set system clock to 20Mhz
+    //SysCtlClockSet(SYSCTL_SYSDIV_10 | SYSCTL_USE_PLL 
+    //              | SYSCTL_OSC_MAIN | SYSCTL_XTAL_16MHZ);
+  
+    // Set system clock to 50Mhz
+    //SysCtlClockSet(SYSCTL_SYSDIV_4 | SYSCTL_USE_PLL 
+    //              | SYSCTL_OSC_MAIN | SYSCTL_XTAL_16MHZ);
+  
+    // Set system clock to 80Mhz
+    SysCtlClockSet(SYSCTL_SYSDIV_2_5 | SYSCTL_USE_PLL 
                   | SYSCTL_OSC_MAIN | SYSCTL_XTAL_16MHZ);
+    
     InitADC();
     InitPWM();         
     InitI2C();
     InitUART();
+    InitTIMER();
     //
     // --------------------------
     
@@ -83,6 +98,7 @@ int main(void)
     GPIO_PORTF_DIR_R = 0x0e;
     GPIO_PORTF_DEN_R = 0x0e;
     // --------------------------
+   
     
     // IMU Values
     // [0] : X Angle
@@ -110,7 +126,7 @@ int main(void)
         GPIO_PORTF_DATA_R |= 0x04;
         readIMU(&imu[0]);
 
-        Control(imu[1],imu[4]);
+        Control(imu[0],imu[3]);
           
         // Cylon Mode
         /*
@@ -173,29 +189,7 @@ UARTIntHandler(void)
         UARTCharPutNonBlocking(UART0_BASE,
                                    UARTCharGetNonBlocking(UART0_BASE));
     }
-} 
- 
-//***************************************************************************** 
-// 
-// Send a string to the UART. 
-// 
-//***************************************************************************** 
-void 
-UARTSend(const unsigned char *pucBuffer, unsigned long ulCount) 
-{ 
-    //
-    // Loop while there are more characters to send.
-    //
-    while(ulCount--)
-    {
-        //
-        // Write the next character to the UART.
-        //
-        UARTCharPutNonBlocking(UART0_BASE, *pucBuffer++);
-    }
-} 
-
-   
+}   
 
 //*****************************************************************************
 //
