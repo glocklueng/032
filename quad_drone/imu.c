@@ -23,7 +23,6 @@
 #include "grlib/grlib.h"
 #include "grlib/widget.h"
 
-
 //  Natural Constants
 const float pi = 3.141592f;		    // Pi
 const float convert_pi_180 = 0.017453f;	    // Pi/180 - Convert Degrees to Radians
@@ -71,9 +70,9 @@ float x_angle = 0.0f;			// X Axis Angle - State Estimation
 float y_angle = 0.0f;			// Y Axis Angle - State Estimation	
 float z_angle = 0.0f;			// Z Axis Angle - State Estimation	
 
-float x_bias = 4.5f;			// X Bias for State Matrix
-float y_bias = -1.5f;			// Y Bias for State Matrix
-float z_bias = -1.5f;			// Z Bias for State Matrix
+float x_bias = 0.0785385f;		// X Bias for State Matrix - +4.5
+float y_bias = -0.0261795f;		// Y Bias for State Matrix - -1.5
+float z_bias = -0.0261795f;		// Z Bias for State Matrix - -1.5
 
 signed long x_gyro_raw = 0;		// X Gyro Reading
 signed long y_gyro_raw = 0;		// Y Gyro Reading
@@ -118,7 +117,7 @@ float measuredDt;                       // Measured dt
 float dt = 0.0005f;		        // dt = 0.002 seconds per sample
 const float Q_angle = 0.001f;		// 0.001 - Q constant for angle
 const float Q_gyro = 0.009f;		// 0.003 - Q constant for gyro
-const float R_angle = 0.7f;		// 0.7   - R constant for noise    
+const float R_angle = 0.3f;		// 0.7   - R constant for noise    
 
 float x_y;				// Difference between previous raw angle reading and previous state angle - X-Axis
 float xS;				// S Variable - X Axis
@@ -147,8 +146,6 @@ signed long z_comp_raw = 0;		// Z Compass Reading
 unsigned long temp_raw;
 float temperature;
 
-// UART Variables
-unsigned long uartDelay = 0;
 
 // Test Values
 float x_ang = 0;
@@ -212,13 +209,13 @@ void readIMU(float *imu)
     z_accel = ((z_acc_v_convert*(float)((int)(z_acc_raw) - z_acc_offset))-z_acc_shift)*z_acc_g_convert; // Convert raw data bytes to acceleration - Z Axis
     
     // Convert acceleration to angles    
-    x_acc_deg = (float)(x_angle_scale*((((float)atan(y_accel/sqrt(x_accel*x_accel + z_accel*z_accel)))*convert_180_Pi) + x_angle_offset));
-    y_acc_deg = (float)(y_angle_scale*((((float)atan(x_accel/sqrt(y_accel*y_accel + z_accel*z_accel)))*convert_180_Pi) + y_angle_offset));
+    x_acc_deg = (float)(x_angle_scale*((((float)atan(y_accel/sqrt(x_accel*x_accel + z_accel*z_accel)))*convert_180_Pi) + x_angle_offset))*convert_pi_180;
+    y_acc_deg = (float)(y_angle_scale*((((float)atan(x_accel/sqrt(y_accel*y_accel + z_accel*z_accel)))*convert_180_Pi) + y_angle_offset))*convert_pi_180;
     z_acc_deg += z_gyro_deg_sec*dt;  // Integrate Z Angular Velocity to obtain yaw angle 
     
-    x_gyro_deg_sec  = ((float)(x_gyro_raw - x_gyro_offset)* x_gyro_scale);	 // Convert raw data bytes to angular velocity - X Axis
-    y_gyro_deg_sec  = ((float)(y_gyro_raw - y_gyro_offset)* y_gyro_scale);	 // Convert raw data bytes to angular velocity - Y Axis
-    z_gyro_deg_sec  = ((float)(z_gyro_raw - z_gyro_offset)* z_gyro_scale);	 // Convert raw data bytes to angular velocity - Z Axis
+    x_gyro_deg_sec  = ((float)(x_gyro_raw - x_gyro_offset)* x_gyro_scale)*convert_pi_180;	 // Convert raw data bytes to angular velocity - X Axis
+    y_gyro_deg_sec  = ((float)(y_gyro_raw - y_gyro_offset)* y_gyro_scale)*convert_pi_180;	 // Convert raw data bytes to angular velocity - Y Axis
+    z_gyro_deg_sec  = ((float)(z_gyro_raw - z_gyro_offset)* z_gyro_scale)*convert_pi_180;	 // Convert raw data bytes to angular velocity - Z Axis
     
     
     // Runge-Kutta Integration 
@@ -263,8 +260,9 @@ void readIMU(float *imu)
     */
     
     // Complementary Filter
-    x_ang = ((0.9)*((x_ang) + ((x_gyro_deg_sec - x_bias)*dt)) + (0.1)*(x_acc_deg));
+    //x_ang = ((0.9)*((x_ang) + ((x_gyro_deg_sec - x_bias)*dt)) + (0.1)*(x_acc_deg));
     
+    /*
     imu[0] = x_acc_deg;
     imu[1] = y_acc_deg;
     imu[2] = z_acc_deg;
@@ -273,30 +271,15 @@ void readIMU(float *imu)
     imu[5] = (z_gyro_deg_sec - z_bias);
     imu[6] = 12345;
     imu[7] = temp_raw;
+    */
     
-    if(uartDelay > 1000)
-    {
-      uartDelay = 0;
-      for(int i=0; i < 8; i++)
-      {
-        //unsigned char sendBuf[32];
-        //UARTprintf("Number of sensors is: %f", imu[i]);
-        //sendBuf = toString(imu[0]);
-        //UARTSend((unsigned char*)"z", 1);
-        //UARTSend((unsigned char*)sendBuf, 10);
-        //UARTSend((unsigned char*)" ", 1);
-      }
-      UARTSend((unsigned char*)"\n", 1);
-    }
-    else
-    {
-      uartDelay++; 
-    }
-    
+    // Send Data Telemetry
+    //sendDataTelemetry(&imu[0], dt);
+
     
     // Kalman Filter 
     // ----------------------
-    /*
+    
     // Filter X Axis
     // ----------------------
     // Predict 
@@ -373,16 +356,18 @@ void readIMU(float *imu)
     
     // Kalman Filtered Values
     
-    imu[0] = x_angle;
-    imu[1] = y_angle;
-    imu[2] = z_angle;
-    imu[3] = (x_gyro_deg_sec - x_bias);
-    imu[4] = (y_gyro_deg_sec - y_bias);
-    imu[5] = (z_gyro_deg_sec - z_bias);
+    imu[0] = x_angle*convert_180_Pi;
+    imu[1] = y_angle*convert_180_Pi;
+    imu[2] = z_angle*convert_180_Pi;
+    imu[3] = (x_gyro_deg_sec - x_bias)*convert_180_Pi;
+    imu[4] = (y_gyro_deg_sec - y_bias)*convert_180_Pi;
+    imu[5] = (z_gyro_deg_sec - z_bias)*convert_180_Pi;
     imu[6] = 12345;
     imu[7] = temp_raw; 
-    */
     
+    
+    // Send Data Telemetry
+    sendDataTelemetry(&imu[0], dt);
     
 }
 // ----------------------------------------- 

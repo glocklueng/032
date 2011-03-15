@@ -127,32 +127,7 @@ int main(void)
         readIMU(&imu[0]);
 
         Control(imu[0],imu[3]);
-          
-        // Cylon Mode
-        /*
-        GPIO_PORTF_DATA_R |= 0x04;
-        for(ulLoop = 0; ulLoop < blink_delay; ulLoop++)
-        {
-        }
-        GPIO_PORTF_DATA_R &= ~(0x04);
-        GPIO_PORTF_DATA_R |= 0x08;
-        for(ulLoop = 0; ulLoop < blink_delay; ulLoop++)
-        {
-        }
-        GPIO_PORTF_DATA_R &= ~(0x08);
-        GPIO_PORTF_DATA_R |= 0x02; 
-        for(ulLoop = 0; ulLoop < blink_delay; ulLoop++)
-        {
-        }
-        GPIO_PORTF_DATA_R &= ~(0x02);
-        GPIO_PORTF_DATA_R |= 0x08;        
-        for(ulLoop = 0; ulLoop < blink_delay; ulLoop++)
-        {
-        }
-        GPIO_PORTF_DATA_R &= ~(0x08);  
-        */
     
-        //UARTSend((unsigned char *)"Enter text: ", 12);
     }
     // --------------------------
 }

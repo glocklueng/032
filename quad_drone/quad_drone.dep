@@ -2,18 +2,19 @@
 
 <project>
   <fileVersion>2</fileVersion>
-  <fileChecksum>1906586058</fileChecksum>
+  <fileChecksum>2738774866</fileChecksum>
   <configuration>
     <name>Debug</name>
     <outputs>
-      <file>$PROJ_DIR$\control.c</file>
       <file>$PROJ_DIR$\..\..\..\driverlib\gpio.h</file>
+      <file>$PROJ_DIR$\control.c</file>
       <file>$PROJ_DIR$\imu.c</file>
       <file>$PROJ_DIR$\..\..\..\grlib\widget.h</file>
       <file>$PROJ_DIR$\init.c</file>
       <file>$PROJ_DIR$\quad_drone.c</file>
       <file>$PROJ_DIR$\..\drivers\set_pinout.c</file>
       <file>$PROJ_DIR$\startup.c</file>
+      <file>$PROJ_DIR$\xbee.c</file>
       <file>$PROJ_DIR$\..\..\..\driverlib\ewarm\Exe\driverlib.a</file>
       <file>$PROJ_DIR$\..\..\..\grlib\ewarm\Exe\grlib.a</file>
       <file>$PROJ_DIR$\..\..\..\inc\hw_memmap.h</file>
@@ -35,21 +36,8 @@
       <file>$PROJ_DIR$\..\..\..\driverlib\i2c.h</file>
       <file>$PROJ_DIR$\ewarm\Obj\init.pbi</file>
       <file>$PROJ_DIR$\ewarm\Obj\set_pinout.o</file>
-      <file>$PROJ_DIR$\..\..\..\inc\lm3s9b96.h</file>
-      <file>$TOOLKIT_DIR$\lib\rt7M_tl.a</file>
-      <file>$TOOLKIT_DIR$\lib\shb_l.a</file>
-      <file>$PROJ_DIR$\ewarm\Obj\startup.o</file>
-      <file>$PROJ_DIR$\ewarm\Obj\quad_drone.pbd</file>
-      <file>$PROJ_DIR$\..\..\..\inc\hw_adc.h</file>
-      <file>$PROJ_DIR$\..\..\..\driverlib\interrupt.h</file>
-      <file>$PROJ_DIR$\quad_drone.icf</file>
-      <file>$PROJ_DIR$\ewarm\List\quad_drone.map</file>
-      <file>$TOOLKIT_DIR$\lib\dl7M_tln.a</file>
-      <file>$TOOLKIT_DIR$\lib\m7M_tl.a</file>
-      <file>$PROJ_DIR$\ewarm\Obj\control.o</file>
-      <file>$PROJ_DIR$\ewarm\Obj\control.pbi</file>
-      <file>$PROJ_DIR$\control.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\DLib_Config_Full.h</file>
+      <file>$PROJ_DIR$\ewarm\Obj\startup.pbi</file>
+      <file>$PROJ_DIR$\ewarm\Exe\quad_drone.out</file>
       <file>$TOOLKIT_DIR$\inc\c\math.h</file>
       <file>$TOOLKIT_DIR$\inc\c\yvals.h</file>
       <file>$TOOLKIT_DIR$\inc\c\DLib_Product.h</file>
@@ -64,48 +52,51 @@
       <file>$PROJ_DIR$\ewarm\Obj\quad_drone.pbi</file>
       <file>$PROJ_DIR$\..\..\..\driverlib\pwm.h</file>
       <file>$PROJ_DIR$\display.h</file>
-      <file>$PROJ_DIR$\ewarm\Obj\startup.pbi</file>
-      <file>$PROJ_DIR$\ewarm\Exe\quad_drone.out</file>
+      <file>$TOOLKIT_DIR$\lib\dl7M_tlf.a</file>
+      <file>$TOOLKIT_DIR$\inc\c\ystdio.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\stdio.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\ysizet.h</file>
       <file>$PROJ_DIR$\init.h</file>
       <file>$PROJ_DIR$\ewarm\Obj\quad_drone.o</file>
       <file>$PROJ_DIR$\..\..\..\driverlib\debug.h</file>
-      <file>$PROJ_DIR$\..\..\..\driverlib\uart.c</file>
       <file>$PROJ_DIR$\ewarm\Obj\xbee.pbi</file>
       <file>$PROJ_DIR$\ewarm\Obj\xbee.o</file>
-      <file>$PROJ_DIR$\xbee.c</file>
-      <file>$PROJ_DIR$\..\..\..\driverlib\gpio.c</file>
-      <file>$PROJ_DIR$\..\..\..\utils\ewarm\Exe\utils.a</file>
       <file>$PROJ_DIR$\xbee.h</file>
+      <file>$PROJ_DIR$\..\..\..\inc\lm3s9b96.h</file>
+      <file>$TOOLKIT_DIR$\lib\rt7M_tl.a</file>
+      <file>$TOOLKIT_DIR$\lib\shb_l.a</file>
+      <file>$PROJ_DIR$\ewarm\Obj\startup.o</file>
+      <file>$PROJ_DIR$\ewarm\Obj\quad_drone.pbd</file>
+      <file>$PROJ_DIR$\..\..\..\inc\hw_adc.h</file>
+      <file>$PROJ_DIR$\..\..\..\driverlib\interrupt.h</file>
+      <file>$PROJ_DIR$\quad_drone.icf</file>
+      <file>$PROJ_DIR$\ewarm\List\quad_drone.map</file>
+      <file>$TOOLKIT_DIR$\lib\m7M_tl.a</file>
+      <file>$PROJ_DIR$\ewarm\Obj\control.o</file>
+      <file>$PROJ_DIR$\ewarm\Obj\control.pbi</file>
+      <file>$PROJ_DIR$\control.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Config_Full.h</file>
     </outputs>
-    <file>
-      <name>[ROOT_NODE]</name>
-      <outputs>
-        <tool>
-          <name>ILINK</name>
-          <file> 59 37</file>
-        </tool>
-      </outputs>
-    </file>
     <file>
       <name>$PROJ_DIR$\control.c</name>
       <outputs>
         <tool>
-          <name>ICCARM</name>
-          <file> 40</file>
+          <name>BICOMP</name>
+          <file> 67</file>
         </tool>
         <tool>
-          <name>BICOMP</name>
-          <file> 41</file>
+          <name>ICCARM</name>
+          <file> 66</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
-          <name>ICCARM</name>
-          <file> 29 44 52 53 45 47 43 46 49 50 51 42 34 25 20 10 18 14 54 62 1 35 56 26 48 17 15 24 3</file>
+          <name>BICOMP</name>
+          <file> 56 32 40 41 33 35 34 37 38 39 68 55 61 26 21 11 19 15 42 52 0 62 44 27 36 18 16 25 3</file>
         </tool>
         <tool>
-          <name>BICOMP</name>
-          <file> 29 44 52 53 45 47 46 49 50 51 42 34 25 20 10 18 14 54 62 1 35 56 26 48 17 15 24 3</file>
+          <name>ICCARM</name>
+          <file> 56 32 40 41 33 35 69 34 37 38 39 68 55 61 26 21 11 19 15 42 52 0 62 44 27 36 18 16 25 3</file>
         </tool>
       </inputs>
     </file>
@@ -113,22 +104,22 @@
       <name>$PROJ_DIR$\imu.c</name>
       <outputs>
         <tool>
-          <name>ICCARM</name>
-          <file> 21</file>
+          <name>BICOMP</name>
+          <file> 24</file>
         </tool>
         <tool>
-          <name>BICOMP</name>
-          <file> 23</file>
+          <name>ICCARM</name>
+          <file> 22</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
-          <name>ICCARM</name>
-          <file> 29 44 52 53 45 47 43 46 49 50 51 12 69 34 25 20 10 18 14 54 62 1 35 56 26 48 17 15 24 3</file>
+          <name>BICOMP</name>
+          <file> 56 32 40 41 33 35 34 37 38 39 13 55 61 26 21 11 19 15 42 52 0 62 44 27 36 18 16 25 3</file>
         </tool>
         <tool>
-          <name>BICOMP</name>
-          <file> 29 44 52 53 45 47 46 49 50 51 12 69 34 25 20 10 18 14 54 62 1 35 56 26 48 17 15 24 3</file>
+          <name>ICCARM</name>
+          <file> 56 32 40 41 33 35 69 34 37 38 39 13 55 61 26 21 11 19 15 42 52 0 62 44 27 36 18 16 25 3</file>
         </tool>
       </inputs>
     </file>
@@ -136,22 +127,22 @@
       <name>$PROJ_DIR$\init.c</name>
       <outputs>
         <tool>
-          <name>ICCARM</name>
-          <file> 19</file>
+          <name>BICOMP</name>
+          <file> 28</file>
         </tool>
         <tool>
-          <name>BICOMP</name>
-          <file> 27</file>
+          <name>ICCARM</name>
+          <file> 20</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
-          <name>ICCARM</name>
-          <file> 60 12 34 25 20 10 18 14 54 1 35 56 26 48 17 15 24 3 16 11</file>
+          <name>BICOMP</name>
+          <file> 50 13 61 26 21 11 19 15 42 0 62 44 27 36 18 16 25 3 17 12</file>
         </tool>
         <tool>
-          <name>BICOMP</name>
-          <file> 60 12 34 25 20 10 18 14 54 1 35 56 26 48 17 15 24 3 16 11</file>
+          <name>ICCARM</name>
+          <file> 50 13 61 26 21 11 19 15 42 0 62 44 27 36 18 16 25 3 17 12</file>
         </tool>
       </inputs>
     </file>
@@ -159,22 +150,22 @@
       <name>$PROJ_DIR$\quad_drone.c</name>
       <outputs>
         <tool>
-          <name>ICCARM</name>
-          <file> 61</file>
+          <name>BICOMP</name>
+          <file> 43</file>
         </tool>
         <tool>
-          <name>BICOMP</name>
-          <file> 55</file>
+          <name>ICCARM</name>
+          <file> 51</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
-          <name>ICCARM</name>
-          <file> 29 44 52 53 45 47 43 46 49 50 51 34 25 20 10 18 14 54 62 1 35 56 26 48 17 15 24 3 16 11 60 12 42 57 69</file>
+          <name>BICOMP</name>
+          <file> 56 32 40 41 33 35 34 37 38 39 61 26 21 11 19 15 42 52 0 62 44 27 36 18 16 25 3 17 12 50 13 68 45 55</file>
         </tool>
         <tool>
-          <name>BICOMP</name>
-          <file> 29 44 52 53 45 47 46 49 50 51 34 25 20 10 18 14 54 62 1 35 56 26 48 17 15 24 3 16 11 60 12 42 57 69</file>
+          <name>ICCARM</name>
+          <file> 56 32 40 41 33 35 69 34 37 38 39 61 26 21 11 19 15 42 52 0 62 44 27 36 18 16 25 3 17 12 50 13 68 45 55</file>
         </tool>
       </inputs>
     </file>
@@ -182,22 +173,22 @@
       <name>$PROJ_DIR$\..\drivers\set_pinout.c</name>
       <outputs>
         <tool>
-          <name>ICCARM</name>
-          <file> 28</file>
+          <name>BICOMP</name>
+          <file> 23</file>
         </tool>
         <tool>
-          <name>BICOMP</name>
-          <file> 22</file>
+          <name>ICCARM</name>
+          <file> 29</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
-          <name>ICCARM</name>
-          <file> 10 14 25 48 11</file>
+          <name>BICOMP</name>
+          <file> 11 15 26 36 12</file>
         </tool>
         <tool>
-          <name>BICOMP</name>
-          <file> 10 14 25 48 11</file>
+          <name>ICCARM</name>
+          <file> 11 15 26 36 12</file>
         </tool>
       </inputs>
     </file>
@@ -205,21 +196,35 @@
       <name>$PROJ_DIR$\startup.c</name>
       <outputs>
         <tool>
-          <name>ICCARM</name>
-          <file> 32</file>
+          <name>BICOMP</name>
+          <file> 30</file>
         </tool>
         <tool>
-          <name>BICOMP</name>
-          <file> 58</file>
+          <name>ICCARM</name>
+          <file> 59</file>
         </tool>
       </outputs>
     </file>
     <file>
-      <name>$PROJ_DIR$\ewarm\Obj\quad_drone.pbd</name>
+      <name>$PROJ_DIR$\xbee.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 53</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 54</file>
+        </tool>
+      </outputs>
       <inputs>
         <tool>
-          <name>BILINK</name>
-          <file> 41 23 27 55 22 58 64</file>
+          <name>BICOMP</name>
+          <file> 56 32 40 41 33 35 34 37 38 39 55 61 26 21 11 19 15 42 52 0 62 44 27 36 18 16 25 3 48 49 47</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 56 32 40 41 33 35 69 34 37 38 39 55 61 26 21 11 19 15 42 52 0 62 44 27 36 18 16 25 3 48 49 47</file>
         </tool>
       </inputs>
     </file>
@@ -228,40 +233,35 @@
       <outputs>
         <tool>
           <name>ILINK</name>
-          <file> 37</file>
+          <file> 64</file>
         </tool>
         <tool>
           <name>OBJCOPY</name>
-          <file> 13</file>
+          <file> 14</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>ILINK</name>
-          <file> 36 40 21 19 61 28 32 65 8 9 31 30 39 38</file>
+          <file> 63 66 22 20 51 29 59 54 9 10 58 57 65 46</file>
         </tool>
       </inputs>
     </file>
     <file>
-      <name>$PROJ_DIR$\xbee.c</name>
+      <name>[ROOT_NODE]</name>
       <outputs>
         <tool>
-          <name>ICCARM</name>
-          <file> 65</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 64</file>
+          <name>ILINK</name>
+          <file> 31 64</file>
         </tool>
       </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\ewarm\Obj\quad_drone.pbd</name>
       <inputs>
         <tool>
-          <name>ICCARM</name>
-          <file> 29 44 52 53 45 47 43 46 49 50 51 69 34 25 20 10 18 14 54 62 1 35 56 26 48 17 15 24 3</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 29 44 52 53 45 47 46 49 50 51 69 34 25 20 10 18 14 54 62 1 35 56 26 48 17 15 24 3</file>
+          <name>BILINK</name>
+          <file> 67 24 28 43 23 30 53</file>
         </tool>
       </inputs>
     </file>

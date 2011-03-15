@@ -6,5 +6,8 @@ extern void
 UARTSend(const unsigned char *pucBuffer, unsigned long ulCount); 
 //============================================================================//
 extern void 
-UARTSendFloat(const unsigned char *pucBuffer, unsigned long ulCount); 
+sendDataTelemetry(float *imu, float dt); 
+//============================================================================//
+extern void 
+sendControlTelemetry(float torque); 
 //============================================================================//
