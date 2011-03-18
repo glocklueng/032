@@ -1,5 +1,5 @@
 [DebugChecksum]
-Checksum=48690183
+Checksum=1476488758
 [Exceptions]
 StopOnUncaught=_ 0
 StopOnThrow=_ 0
@@ -31,7 +31,7 @@ LogFile=_ ""
 Enabled=0
 [DriverProfiling]
 Enabled=0
-Mode=0
+Mode=15
 Graph=0
 Symbiont=0
 [Disassemble mode]

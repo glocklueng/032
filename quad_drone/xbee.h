@@ -9,5 +9,5 @@ extern void
 sendDataTelemetry(float *imu, float dt); 
 //============================================================================//
 extern void 
-sendControlTelemetry(float torque); 
+sendControlTelemetry(float torque, float P, float I, float D); 
 //============================================================================//

@@ -126,7 +126,7 @@ int main(void)
         GPIO_PORTF_DATA_R |= 0x04;
         readIMU(&imu[0]);
 
-        Control(imu[0],imu[3]);
+        Control(&imu[0]);
     
     }
     // --------------------------

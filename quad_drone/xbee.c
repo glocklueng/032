@@ -54,13 +54,13 @@ void sendDataTelemetry(float *imu, float dt)
     if(uartDelay > 10)
     {
       uartDelay = 0;
-      for(int i=0; i < 7; i++)
+      for(int i=0; i < 8; i++)
       {
         char sendBuf[32];
         unsigned long n = 0;
         volatile unsigned long delay = 0;
         
-        if(i <= 5)
+        if(i <= 6)
         {
           int imumeasure = (int)imu[i];
           if(imumeasure < 0)
@@ -93,6 +93,9 @@ void sendDataTelemetry(float *imu, float dt)
           case 5:
             UARTSend((unsigned char*)"Z-Omega: ", 9);
             break;
+          case 6:
+            UARTSend((unsigned char*)"X-Raw: ", 7);
+            break;
           default:
             UARTSend((unsigned char*)"ERROR", 5);
             break;
@@ -106,6 +109,7 @@ void sendDataTelemetry(float *imu, float dt)
           UARTSend((unsigned char*)"dt: ", 4);
         }
 
+        
         UARTSend((unsigned char*)sendBuf, n);
         UARTSend((unsigned char*)"  ", 1);
       }                                   
@@ -119,37 +123,90 @@ void sendDataTelemetry(float *imu, float dt)
 }
 
 //*****************************************************************************
-void sendControlTelemetry(float torque)
+void sendControlTelemetry(float torque, float P, float I, float D)
 {
     if(controlDelay > 10)
     {
-        controlDelay = 0;
-      
+      controlDelay = 0;
+      for(int i=0; i < 4; i++)
+      {
         char sendBuf[32];
         unsigned long n = 0;
         volatile unsigned long delay = 0;
+        int gainterm;
         
-        int torq;
-        if(torque < 0)
+        if(i <= 2)
         {
-          torq = (int)(-1*torque);
-          n = sprintf(sendBuf, "  Torque:  -%i", torq);
+          
+          switch(i)
+          {
+          case 0: 
+            UARTSend((unsigned char*)"P: ", 3); 
+            break;
+          case 1:
+            UARTSend((unsigned char*)"I: ", 3);
+            break;
+          case 2:
+            UARTSend((unsigned char*)"D: ", 3);
+            break;
+          default:
+            UARTSend((unsigned char*)"ERROR", 5);
+            break;
+          }
+          
+          switch(i)
+          {
+            case 0: 
+              gainterm = (int)P;
+              break;
+            case 1:
+              gainterm = (int)I;
+              break;
+            case 2:
+              gainterm = (int)D;
+              break;
+            default:
+              UARTSend((unsigned char*)"ERROR", 5);
+              break;
+          }
+          
+      
+          if(gainterm < 0)
+          {
+            gainterm = -1*gainterm;
+            n = sprintf(sendBuf, "-%i", gainterm);
+          }
+          else
+          {
+            n = sprintf(sendBuf, "%i", gainterm);
+          }
+          
+          UARTSend((unsigned char*)sendBuf, n);
+          UARTSend((unsigned char*)"  ", 1);
         }
         else
         {
-          torq = (int)(torque);
-          n = sprintf(sendBuf, "  Torque:  %i", torq);
+            int torq;
+            if(torque < 0)
+            {
+              torq = (int)(-1*torque);
+              n = sprintf(sendBuf, "  Torque:  -%i", torq);
+            }
+            else
+            {
+              torq = (int)(torque);
+              n = sprintf(sendBuf, "  Torque:  %i", torq);
+            }
+      
+            UARTSend((unsigned char*)sendBuf, n);
+            UARTSend((unsigned char*)"  ", 1);
         }
-  
-        UARTSend((unsigned char*)sendBuf, n);
-        UARTSend((unsigned char*)"  ", 1);
-                                         
-        UARTSend((unsigned char*)"\n", 1);
+
+      }                                   
+      UARTSend((unsigned char*)"\n", 1);
     }
     else
     {
       controlDelay++; 
     }
-  
-  
 }
