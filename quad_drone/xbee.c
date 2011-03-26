@@ -35,6 +35,7 @@ unsigned long controlDelay = 0;
 void 
 UARTSend(const unsigned char *pucBuffer, unsigned long ulCount) 
 { 
+  
     //
     // Loop while there are more characters to send.
     //
@@ -46,7 +47,9 @@ UARTSend(const unsigned char *pucBuffer, unsigned long ulCount)
         UARTCharPutNonBlocking(UART0_BASE, *pucBuffer++);
         while(UARTBusy(UART0_BASE));
     }
+  
 } 
+  
 
 //*****************************************************************************
 void sendDataTelemetry(float *imu, float dt)

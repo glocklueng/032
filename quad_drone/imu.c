@@ -72,7 +72,7 @@ float z_angle = 0.0f;			// Z Axis Angle - State Estimation
 
 float x_bias = 0.0785385f;		// X Bias for State Matrix - +4.5 degrees
 float y_bias = -0.0261795f;		// Y Bias for State Matrix - -1.5 degrees
-float z_bias = -0.0261795f;		// Z Bias for State Matrix - -1.5 degrees
+float z_bias = -0.0261795f;		// Z Bias for State Matrix - -1.5 degrees  
 
 signed long x_gyro_raw = 0;		// X Gyro Reading
 signed long y_gyro_raw = 0;		// Y Gyro Reading
@@ -80,7 +80,7 @@ signed long z_gyro_raw = 0;		// Z Gyro Reading
 
 int x_gyro_offset = -200;		// X Gyro Offset
 int y_gyro_offset = 49;		        // Y Gyro Offset
-int z_gyro_offset = 9;		        // Z Gyro Offset
+int z_gyro_offset = 9;		        // Z Gyro Offset     
 
 float x_gyro_scale = 0.007629f;	        // X Gyro Scale
 float y_gyro_scale = 0.007629f;	        // Y Gyro Scale
@@ -117,8 +117,8 @@ float measuredDt;                       // Measured dt
 float dt = 0.0005f;		        // dt = 0.002 seconds per sample
 
 const float Q_angle = 0.001f;		// 0.001 - Q constant for angle
-const float Q_gyro = 0.012f;		// 0.003 - Q constant for gyro
-const float R_angle = 0.1f;		// 0.7   - R constant for noise    
+const float Q_gyro = 0.012f;		// 0.012 - Q constant for gyro
+const float R_angle = 0.1f;		// 0.1   - R constant for noise    
 
 float x_y;				// Difference between previous raw angle reading and previous state angle - X-Axis
 float xS;				// S Variable - X Axis

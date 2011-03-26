@@ -143,6 +143,8 @@ UARTIntHandler(void)
 { 
    unsigned long ulStatus;
 
+   char readCmd;
+   
     //
     // Get the interrrupt status.
     //
@@ -161,9 +163,11 @@ UARTIntHandler(void)
         //
         // Read the next character from the UART and write it back to the UART.
         //
-        UARTCharPutNonBlocking(UART0_BASE,
-                                   UARTCharGetNonBlocking(UART0_BASE));
+        readCmd = (char)UARTCharGetNonBlocking(UART0_BASE);
+        PIDTune(readCmd);
     }
+    
+    
 }   
 
 //*****************************************************************************
