@@ -1,0 +1,17 @@
+Project Library Creation Log File 4/18/2011 4:20:45 PM
+EAGLE Version 5.10.0 Copyright (c) 1988-2010 CadSoft
+Created from: untitled.sch
+
+LIBRARY: untitled.lbr
+   PAC: 1X05
+   PAC: 1X05-1.27MM
+   PAC: 1X05_LOCK
+   PAC: 1X05_LOCK_LONGPADS
+   PAC: 1X05_LONGPADS
+   PAC: 2X3
+   PAC: 2X3-NS
+   PAC: 2X3_OFFSET
+   SYM: AVR_SPI_PROGRAMMER_6
+   SYM: M05
+   DEV: AVR_SPI_PRG_6
+   DEV: M05
