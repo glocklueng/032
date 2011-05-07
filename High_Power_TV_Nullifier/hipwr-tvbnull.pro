@@ -1,25 +1,25 @@
 EAGLE AutoRouter Statistics:
 
-Job           : C:/Program Files/EAGLE-5.11.0/projects/User_projects/High_Power_TV_Nullifier/hipwr-tvbnull.brd
+Job           : E:/032/High_Power_TV_Nullifier/hipwr-tvbnull.brd
 
-Start at      : 22:12:38 (3/25/2011)
-End at        : 22:12:39 (3/25/2011)
-Elapsed time  : 00:00:01
+Start at      : 23:20:42 (4/4/2011)
+End at        : 23:20:56 (4/4/2011)
+Elapsed time  : 00:00:14
 
-Signals       :    15   RoutingGrid: 20 mil  Layers: 2
-Connections   :    46   predefined:  20 ( 2 Vias )
+Signals       :    15   RoutingGrid: 4 mil  Layers: 2
+Connections   :    46   predefined:  15 ( 0 Vias )
 
-Router memory :   88192
+Router memory :   1320860
 
 Passname          :    Busses     Route Optimize1 Optimize2 Optimize3 Optimize4
 
-Time per pass     :  00:00:00  00:00:00  00:00:01  00:00:00  00:00:00  00:00:00
+Time per pass     :  00:00:00  00:00:02  00:00:03  00:00:02  00:00:03  00:00:04
 Number of Ripups  :         0         0         0         0         0         0
-max. Level        :         0         0         0         0         0         0
+max. Level        :         0         1         0         0         0         0
 max. Total        :         0         0         0         0         0         0
 
-Routed            :         2        26        26        26        26        26
-Vias              :         0        23         5         1         1         1
-Resolution        :    47.8 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %
+Routed            :         1        28        28        28        28        28
+Vias              :         0        31        14         2         1         3
+Resolution        :    34.8 %    93.5 %    93.5 %    93.5 %    93.5 %    93.5 %
 
-Final             : 100.0% finished
+Final             : 93.5% finished
