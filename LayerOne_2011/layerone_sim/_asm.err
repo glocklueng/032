@@ -1,0 +1,17 @@
+Creating   'layerone.eep'
+Creating   'layerone.hex'
+Creating   'layerone.obj'
+Creating   'layerone.lis'
+Creating   'layerone.map'
+
+Assembling 'layerone.asm'
+Including  'c:\vmlab\include\m64def.inc'
+layerone.asm(91) : layerone.asm(92) : 
+Program memory usage:
+Code             : 2119 words
+Constants (dw/db):  250 words
+Unused           :    0 words
+Total            : 2369 words
+
+Assembly complete with no errors.
+Deleting   'layerone.eep'

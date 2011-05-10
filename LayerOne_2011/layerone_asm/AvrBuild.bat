@@ -1,0 +1,2 @@
+@ECHO OFF
+"C:\Program Files (x86)\Atmel\AVR Tools\AvrAssembler2\avrasm2.exe" -S "E:\eagle\projects\LayerOne_2011\layerone_asm\labels.tmp" -fI -W+ie -C V2E -o "E:\eagle\projects\LayerOne_2011\layerone_asm\layerone_asm.hex" -d "E:\eagle\projects\LayerOne_2011\layerone_asm\layerone_asm.obj" -e "E:\eagle\projects\LayerOne_2011\layerone_asm\layerone_asm.eep" -m "E:\eagle\projects\LayerOne_2011\layerone_asm\layerone_asm.map" "E:\eagle\projects\LayerOne_2011\layerone_asm\layerone_asm.asm"

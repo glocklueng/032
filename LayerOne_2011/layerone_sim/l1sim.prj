@@ -1,0 +1,51 @@
+; ************************************************************
+; PROJECT:  layerOne 2011 user badge
+; AUTHOR:  charliex
+; ************************************************************
+
+; Micro + software running
+; ------------------------------------------------------------
+.MICRO "ATmega64"
+.PROGRAM "layerone.asm"
+.TARGET "l1sim.hex"
+
+.TRACE              ; Activate micro trace
+
+; Following lines are optional; if not included
+; exactly these values are taken by default
+; ------------------------------------------------------------
+.POWER VDD=5 VSS=0  ; Power nodes
+.CLOCK 16meg         ; Micro clock
+.STORE 250m         ; Trace (micro+signals) storage time
+
+; Micro nodes: RESET, AREF, PA0-PA7, PB0-PB7, PC0-PC7, PD0-PD7, PE0-PE7, PF0-PF7, PG0-PG4, TIM1OVF
+; Define here the hardware around the micro
+; ------------------------------------------------------------
+;-------------------------------------------------------------------------------------------------------------------
+
+V PF0 VSS SLIDER_1(0 5)
+V PF1 VSS SLIDER_2(0 5)
+V PF2 VSS SLIDER_3(0 5)
+
+D1 VDD PA0 ; x: Panel LEDs 1 - 8
+
+;; connect AREF/AVCC to VDD via 0.1uF cap
+C1 AREF VSS 0.1
+C2 AVCC VSS 0.1
+
+; oopsie
+R1 AREF VDD 0.001
+R2 AREF VDD 0.001
+
+Xserial TTY(28800) pe0 pe1
+
+XkeyPad KEY4x4 PB0 PB1 PB2 PB3 PD7 PD6 PD5 PD4
+
+XD2A D2A8 PC0 PC1 PC2 PC3 PC4 PC5 PC6 PC7 anaout
+
+
+.PLOT v(anaout) v(PB0) v(PD7) v(PF0) v(PF1)
+
+
+
+
