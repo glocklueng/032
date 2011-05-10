@@ -1,0 +1,3763 @@
+
+AVRASM ver. 1.74  layerone.asm Sat Mar 19 13:05:08 2011
+
+
+warning : Register already defined by the .DEF directive
+warning : Register already defined by the .DEF directive
+         ;----------------------------"---------------------------------------------------------------------------------------
+         ;	MeeBlip - The Hackable Digital Synthesiser
+         ;
+         ;Changelog
+         ;
+         ;
+         ;V1.05 2011.02.04 - Save dual parameter knob values to eeprom and reload on power up.
+         ;V1.04 2011.01.19 - MIDI CC RAM table added.
+         ;		 		  - PWM waveform with dedicated fixed sweep LFO
+         ; 	     		  - 8-bit multiplies optimized in main loop
+         ;				  - LFO Sync switch now retriggers LFO on each keypress
+         ;				  - Initialize FM Depth to zero on power up
+         ;V1.03	 		  - VCA and VCF level tables extended to reduce stairstepping
+         ;V1.02	 		  - Flip DAC write line high immediately after outputting sample
+         ;V1.01	 		  - Optimized DCOA+DCOB summer, outputs signed value
+         ;V1.00   		  - Power/MIDI status LED remains on unless receiving MIDI
+         ;        		  - Sustain level of ADSR envelope is exponentially scaled
+         ;        		  - Non-resonant highpass filter implemented
+         ;        		  - Filter Q level compensation moved outside audio sample calc interrupt
+         ;        		  - Filter calculations increased to 16x8-bit to reduce noise floor
+         ;        		  - DCA output level calculations are rounded
+         ;        		  - Mod wheel no longer overrides LFO level knob when less than knob value
+         ;V0.90   		  - Initial release
+         ;
+         ;-------------------------------------------------------------------------------------------------------------------
+         ;
+         ;	MeeBlip Contributors
+         ;
+         ;	Jarek Ziembicki	- Created the original AVRsynth, upon which this project is based.
+         ; 	Laurie Biddulph	- Worked with Jarek to translate his comments into English, ported to Atmega16
+         ;	Daniel Kruszyna	- Extended AVRsynth (several of his ideas are incorporated in MeeBlip)
+         ;  	Julian Schmidt	- Filter algorithm
+         ;	James Grahame 	- Ported and extended the AVRsynth code to MeeBlip hardware.
+         ;
+         ;-------------------------------------------------------------------------------------------------------------------
+         ;
+         ;	Port Mapping
+         ;
+         ;	PF0..7		8 potentiometers
+         ;	PB0-PB4		Control Panel Switches - ROWS
+         ;	PE0-PE1		ISP programming header
+         ;	PB7			DAC LDAC signal (load both DAC ports synchronously) (NA)
+         ;	PC0-PC7		DATA port for R2R
+         ;	PE0		    RxD (MIDI IN)
+         ;	PD1		    Power ON/MIDI LED (NA)
+         ;	PD2		    Select DAC port A or B (NA)
+         ;	PD3		    DAC Write line (NA)
+         ;	PD4-PD7		Control Panel Switches - COLUMNS
+         ;
+         ;
+         ;	Timers	
+         ;
+         ;	Timer0		not used
+         ;	Timer1		Time counter: CK/400      --> TCNT1
+         ;	Timer2		Sample timer: (CK/8) / 32 --> 40.00 kHz
+         ;
+         ;-------------------------------------------------------------------------------------------------------------------
+         
+                              .NOLIST
+                              .LISTMAC
+         
+                              .SET cpu_frequency = 16000000
+                              .SET baud_rate     = 31250
+          		            .SET KBDSCAN       = 6250	
+         ;
+         ;-------------------------------------------------------------------------------------------------------------------
+         ;			V A R I A B L E S   &  D E F I N I T I O N S
+         ;-------------------------------------------------------------------------------------------------------------------
+         ;registers:
+         
+         ;current phase of DCO A:
+          .DEF PHASEA_0	    = 	R2
+          .DEF PHASEA_1	    = 	R3
+          .DEF PHASEA_2	    = 	R4
+         
+         ;current phase of DCO B:
+          .DEF PHASEB_0	    = 	R5
+          .DEF PHASEB_1	    = 	R6
+          .DEF PHASEB_2	    = 	R7
+         
+          .DEF ZERO           =   R8
+         
+         ;DCF:
+         
+          .def a_L 			= r9
+          .def a_H 			= r10
+          .def z_L 			= r18
+          .def z_H 			= r19
+          .def temp	 		= r30
+          .def temp2			= r31
+         
+          .DEF OSC_OUT_L  = 	R14 ; pre-filter audio
+          .DEF OSC_OUT_H  = 	R15
+         
+          .def LDAC			= R16
+          .def HDAC			= R17
+         
+         ;RAM (0060h...025Fh):
+         
+                              .DSEG
+         ;MIDI:
+000060      MIDIPHASE:          .BYTE 1
+000061      MIDICHANNEL:        .BYTE 1
+000062      MIDIDATA0:	        .BYTE 1
+000063      MIDIVELOCITY:	    .BYTE 1
+000064      MIDINOTE:	        .BYTE 1
+000065      MIDINOTEPREV:	    .BYTE 1		        ; buffer for MIDI note
+000066      MIDIPBEND_L:        .BYTE 1		        ;\
+000067      MIDIPBEND_H:        .BYTE 1		        ;/ -32768..+32766
+         
+         ;current sound parameters:
+000068      LFOFREQ:	        .BYTE 1	            ; 0..255
+000069      LFOLEVEL:	        .BYTE 1	            ; 0..255
+00006a      PANEL_LFOLEVEL:		.BYTE 1				; 0..255 as read from the panel pot
+         
+00006b      LFO2FREQ:			.BYTE 1
+         
+         
+         
+00006c      KNOB_SHIFT:			.BYTE 1				; 0 = Bank 0 (lower), 1 = Bank 1 (upper).
+00006d      POWER_UP:			.BYTE 1				; 255 = Synth just turned on, 0 = normal operation
+00006e      KNOB_STATUS:		.BYTE 1				; Each bit corresponds to a panel knob.
+         										; 0 = pot not updated since Knob Shift switch change
+         										; 1 = pot has been updated.
+         
+00006f      SWITCH1:	        .BYTE 1	            ; bit meanings for switch-bank 1:
+         					                    ; b0: SW16 LFO norm/rand
+         					                    ; b1: SW15 LFO WAVE: 0=tri, 1=squ
+         					                    ; b2: SW14 knob bank shift shift 0 = lower, 1 = upper
+             					                ; b3: SW13 DCO Distortion on/off
+         					                    ; b4: SW12 LFO KBD SYNC off/on
+         					                    ; b5: SW11 LFO MODE: 0=DCF, 1=DCO
+             					                ; b6: SW10 (dcf mode hp/lp)
+         					                    ; b7: SW9  DCF KBD TRACK: 0=off, 1=on
+         
+         
+000070      SWITCH2:	        .BYTE 1	            ; bit meanings for switch-bank 2:
+         					                    ; b0: SW8  DCA gate/env
+         					                    ; b1: SW7  OSCA noise waveform 0=normal, 1=noise
+             					                ; b2: SW6  octave B down/up
+         					                    ; b3: SW5  wave B saw/squ
+             					                ; b4: SW4  transpose down/up
+         					                    ; b5: SW3  MODWHEEL disable/enable
+         					                    ; b6: SW2  osc B off/on
+         					                    ; b7: SW1  wave A saw/squ
+         
+         
+000071      SWITCH3:	        .BYTE 1		    	; b0: MIDI SWITCH 1
+         					                    ; b1: MIDI SWITCH 2
+         					                    ; b2: MIDI SWITCH 3
+         					                    ; b3: MIDI SWITCH 4
+         
+000072      MODEFLAGS1:	        .BYTE 1	
+         
+         										; b0 = DCO DIST: 0=off, 1=on
+         					                    ; b1 = wave A: 0=saw, 1=squ
+         					                    ; b2 = wave B: 0=saw, 1=squ
+         					                    ; b3 = osc B: 0=off, 1=on
+         					                    ; b4 = DCA mode: 0=gate, 1=env
+         					                    ; b5 = transpose: 0=down, 1=up
+         					                    ; b6 = (noise)
+         					                    ; b7 = octave B: 0=down, 1=up
+000073      MODEFLAGS2:	        .BYTE 1	
+         										; b0 = LFO MODE: 0=DCF, 1=DCO
+         					                    ; b1 = LFO WAVE: 0=tri, 1=squ
+         					                    ; b2 = DCF KBD TRACK: 0=off, 1=on
+             					                ; b3 = (dcf mode hp/lp)
+         					                    ; b4 = (knob shift)
+         					                    ; b5 = MODWHEEL Enable
+         					                    ; b6 = LFO KBD SYNC: 0=off, 1=on
+         					                    ; b7 = LFO: 0=norm, 1=rand
+         
+000074      SETMIDICHANNEL:	    .BYTE 1             ; selected MIDI channel: 0 for OMNI or 1..15
+000075      DETUNEB_FRAC:	    .BYTE 1	            ;\
+000076      DETUNEB_INTG:	    .BYTE 1	            ;/ -128,000..+127,996
+000077      CUTOFF:		        .BYTE 1	            ; 0..255
+000078      VCFENVMOD:	        .BYTE 1	            ; 0..255
+000079      PORTAMENTO:	        .BYTE 1	            ; 0..255
+00007a      ATTACKTIME:	        .BYTE 1	            ; 0..255
+00007b      DECAYTIME:			.BYTE 1				; 0..255
+00007c      SUSTAINLEVEL:		.BYTE 1				; 0..255
+00007d      RELEASETIME:        .BYTE 1	            ; 0..255
+00007e      NOTE_L:		        .BYTE 1
+00007f      NOTE_H:		        .BYTE 1
+000080      NOTE_INTG:	        .BYTE 1
+000081      PORTACNT:	        .BYTE 1		        ; 2 / 1 / 0
+000082      LPF_I:		        .BYTE 1
+000083      HPF_I:				.BYTE 1
+000084      LEVEL:		        .BYTE 1		        ; 0..255
+000085      PITCH:		        .BYTE 1		        ; 0..96
+000086      ADC_CHAN:	        .BYTE 1		        ; 0..7
+000087      ADC_0:		        .BYTE 1				; Panel knob values.
+000088      ADC_1:		        .BYTE 1
+000089      ADC_2:		        .BYTE 1
+00008a      ADC_3:		        .BYTE 1
+00008b      ADC_4:		        .BYTE 1
+00008c      ADC_5:		        .BYTE 1
+00008d      ADC_6:		        .BYTE 1
+00008e      ADC_7:		        .BYTE 1
+00008f      OLD_ADC_0:			.BYTE 1				; Previous panel knob value
+000090      OLD_ADC_1:			.BYTE 1
+000091      OLD_ADC_2:			.BYTE 1
+000092      OLD_ADC_3:			.BYTE 1
+000093      OLD_ADC_4:			.BYTE 1
+000094      OLD_ADC_5:			.BYTE 1
+000095      OLD_ADC_6:			.BYTE 1
+000096      OLD_ADC_7:			.BYTE 1
+000097      GATE:		        .BYTE 1		        ; 0 / 1
+000098      GATEEDGE:	        .BYTE 1		        ; 0 / 1
+000099      TPREV_KBD_L:	    .BYTE 1
+00009a      TPREV_KBD_H:	    .BYTE 1
+00009b      TPREV_L:	        .BYTE 1
+00009c      TPREV_H:	        .BYTE 1
+00009d      DELTAT_L:	        .BYTE 1		        ;\ Time from former course
+00009e      DELTAT_H:	        .BYTE 1		        ;/ of the main loop (1 bit = 32 µs)
+00009f      ENVPHASE:	        .BYTE 1		        ; 0=stop 1=attack 2=decay 3=sustain 4=release
+0000a0      ENV_FRAC_L:	        .BYTE 1
+0000a1      ENV_FRAC_H:	        .BYTE 1
+0000a2      ENV_INTEGR:	        .BYTE 1
+         
+0000a3      LFOPHASE:	        .BYTE 1		        ; 0=up 1=down
+0000a4      LFO_FRAC_L:	        .BYTE 1		        ;\
+0000a5      LFO_FRAC_H:	        .BYTE 1		        ; > -128,000..+127,999
+0000a6      LFO_INTEGR:	        .BYTE 1		        ;/
+0000a7      LFOVALUE:	        .BYTE 1		        ; -128..+127
+         
+0000a8      LFO2PHASE:	        .BYTE 1		        ; 0=up 1=down
+0000a9      LFO2_FRAC_L:	    .BYTE 1		        ;\
+0000aa      LFO2_FRAC_H:	    .BYTE 1		        ; > -128,000..+127,999
+0000ab      LFO2_INTEGR:	    .BYTE 1		        ;/
+0000ac      LFO2VALUE:	        .BYTE 1		        ; -128..+127
+         
+0000ad      OLDWAVEA:	        .BYTE 1
+0000ae      OLDWAVEB:	        .BYTE 1
+0000af      SHIFTREG_0:	        .BYTE 1		        ;\
+0000b0      SHIFTREG_1:	        .BYTE 1		        ; > shift register for
+0000b1      SHIFTREG_2:	        .BYTE 1		        ;/  pseudo-random generator
+0000b2      LFOBOTTOM_0:        .BYTE 1		        ;\
+0000b3      LFOBOTTOM_1:        .BYTE 1		        ; > bottom level of LFO
+0000b4      LFOBOTTOM_2:        .BYTE 1		        ;/
+0000b5      LFOTOP_0:	        .BYTE 1		        ;\
+0000b6      LFOTOP_1:	        .BYTE 1		        ; > top level of LFO
+0000b7      LFOTOP_2:	        .BYTE 1		        ;/
+0000b8      LFO2BOTTOM_0:       .BYTE 1		        ;\
+0000b9      LFO2BOTTOM_1:       .BYTE 1		        ; > bottom level of LFO2
+0000ba      LFO2BOTTOM_2:       .BYTE 1		        ;/
+0000bb      LFO2TOP_0:	        .BYTE 1		        ;\
+0000bc      LFO2TOP_1:	        .BYTE 1		        ; > top level of LFO2
+0000bd      LFO2TOP_2:	        .BYTE 1		        ;/
+         
+0000be      DCOA_LEVEL:			.BYTE 1
+0000bf      DCOB_LEVEL:			.BYTE 1
+         
+0000c0      KNOB_DEADZONE:		.BYTE 1
+         
+         ; increase phase for DCO A
+0000c1      DELTAA_0: .byte 1
+0000c2      DELTAA_1: .byte 1
+0000c3      DELTAA_2: .byte 1
+         
+         ; increase phase for DCO B
+0000c4      DELTAB_0: .byte 1
+0000c5      DELTAB_1: .byte 1
+0000c6      DELTAB_2: .byte 1
+         
+         ; oscillator pulse width
+0000c7      PULSE_WIDTH: .byte 1
+         
+         ; fm
+0000c8      WAVEB:	  .byte 1
+0000c9      FMDEPTH:  .byte 1
+         
+         ; eeprom
+0000ca      WRITE_MODE:	.byte 1
+0000cb      WRITE_OFFSET:	.byte 1
+         
+         ; filter
+0000cc      RESONANCE:	.byte 1
+0000cd      SCALED_RESONANCE: .byte 1
+0000ce      b_L:		.byte 1
+0000cf      b_H:		.byte 1
+         
+         
+         ;-------------------------------------------------------------------------------------------------------------------
+         ; MIDI Control Change parameter table
+         ;-------------------------------------------------------------------------------------------------------------------
+         ;
+         ; Add your own MIDI CC parameters here with an offset from MIDICC. They will be automatically
+         ; stored for use.
+         
+         
+0000d0      MIDICC:         	.byte $80
+            .equ MIDIMODWHEEL = MIDICC + $01
+            .equ PWMDEPTH 	= MIDICC + $30
+         
+         ;-------------------------------------------------------------------------------------------------------------------
+         
+         
+         
+         ;stack: 0x0A3..0x25F
+                      .ESEG
+         
+         ;-------------------------------------------------------------------------------------------------------------------
+         ;			V E C T O R   T A B L E
+         ;-------------------------------------------------------------------------------------------------------------------
+                      .CSEG
+         
+000000 940c 03df 		    jmp	RESET		            ; RESET
+         
+         ;; IRQ 0 -7
+000002 940c 0046 		    jmp	IRQ_NONE	            ; INT0
+000004 940c 0046 		    jmp	IRQ_NONE	            ; INT1
+000006 940c 0046 		    jmp	IRQ_NONE	            ; INT2
+000008 940c 0046 		    jmp	IRQ_NONE	            ; INT3
+         
+00000a 940c 0046 		    jmp	IRQ_NONE	            ; INT4
+00000c 940c 0046 		    jmp	IRQ_NONE	            ; INT5
+00000e 940c 0046 		    jmp	IRQ_NONE	            ; INT6
+000010 940c 0046 		    jmp	IRQ_NONE	            ; INT7
+         
+         
+000012 940c 0141 		    jmp	TIM2_CMP				; TIMER2 COMPARE
+000014 940c 0046 		    jmp	IRQ_NONE	            ; TIMER2 OVERFLOW
+         
+         			
+000016 940c 0046 		    jmp	IRQ_NONE	            ; TIMER1 CAPTURE
+000018 940c 0046 		    jmp	IRQ_NONE	            ; TIMER1 COMPA
+00001a 940c 0046 		    jmp	IRQ_NONE	            ; TIMER1 COMPB
+00001c 940c 0046     		jmp	IRQ_NONE	            ; TIMER1 OVF
+         
+00001e 940c 0046 		    jmp	IRQ_NONE	            ; TIMER0 COMPA
+000020 940c 0046 		    jmp	IRQ_NONE	            ; TIMER0 OVF
+         
+000022 940c 0046 		    jmp	IRQ_NONE	            ; SPI,STC Transfer complete
+         
+000024 940c 0248 		    jmp	UART_RXC	            ; UART, RX COMPLETE
+000026 940c 0046 		    jmp	IRQ_NONE	            ; UART,UDRE data register empty
+000028 940c 0046 		    jmp	IRQ_NONE	            ; UART, TX COMPLETE
+         
+00002a 940c 0046 		    jmp	IRQ_NONE	            ; ADC CONVERSION COMPLETE
+         
+00002c 940c 0046 		    jmp	IRQ_NONE	            ; EEPROM READY
+         
+00002e 940c 0046 		    jmp	IRQ_NONE	            ; ANALOG COMPARATOR
+         
+000030 940c 0046 			jmp IRQ_NONE				; TIMER1 COMPAREC
+000032 940c 0046 			jmp IRQ_NONE				; TIMER3 CAPTURE
+000034 940c 0046 			jmp IRQ_NONE				; TIMER3 COMPAREA
+000036 940c 0046 			jmp IRQ_NONE				; TIMER3 COMPAREB
+000038 940c 0046 			jmp IRQ_NONE				; TIMER3 COMPAREC
+00003a 940c 0046 			jmp IRQ_NONE				; TIMER3 OVERFLOW
+         
+00003c 940c 0046 			jmp IRQ_NONE				; USART1 RX, COMPLETE
+00003e 940c 0046 			jmp IRQ_NONE				; USART1 UDR EMPTY
+000040 940c 0046 			jmp IRQ_NONE				; USART1 TX COMPLETE
+         
+000042 940c 0046             jmp IRQ_NONE                ; 2-Wire Serial Interface
+         
+000044 940c 0046             jmp IRQ_NONE                ; STORE PROGRAM MEMORY READY
+         
+         
+          IRQ_NONE:
+000046 9518                  reti
+         ;-------------------------------------------------------------------------------------------------------------------
+         ;			R O M   T A B L E S
+         ;-------------------------------------------------------------------------------------------------------------------
+         ;
+         ; Phase Deltas at 40 kHz sample rate
+         ;
+         ;  				NOTE PHASE DELTA = 2 ^ 24 * Freq / SamplingFreq
+         ;   	So... 	Note zero calc: 2 ^ 24 * 8.175799 / 40000 = 3429.17864 (stored as 00 0D 65.2E)
+         ;-------------------------------------------------------------------------------------------------------------------
+         
+         
+          DELTA_C:
+                      .DW	0x652E		            ;\
+000047 652e
+          		    .DW	0x000D		            ;/ note  0 ( 8.175799 Hz)
+000048 000d
+         
+          DELTA_CIS:
+                      .DW	0x3117		            ;\
+000049 3117
+          		    .DW	0x000E		            ;/ note  1 ( 8.661957 Hz)
+00004a 000e
+         
+          DELTA_D:
+                      .DW	0x091F		            ;\
+00004b 091f
+          		    .DW	0x000F		            ;/ note  2 ( 9.177024 Hz)
+00004c 000f
+         
+          DELTA_DIS:
+                      .DW	0xEE01		            ;\
+00004d ee01
+          		    .DW	0x000F		            ;/ note  3 ( 9.722718 Hz)
+00004e 000f
+         
+          DELTA_E:
+                      .DW	0xE07F		            ;\
+00004f e07f
+          		    .DW	0x0010		            ;/ note  4 (10.300861 Hz)
+000050 0010
+         
+          DELTA_F:
+                      .DW	0xE167		            ;\
+000051 e167
+          		    .DW	0x0011		            ;/ note  5 (10.913382 Hz)
+000052 0011
+         
+          DELTA_FIS:
+                      .DW	0xF197		            ;\
+000053 f197
+          		    .DW	0x0012		            ;/ note  6 (11.562326 Hz)
+000054 0012
+         
+          DELTA_G:
+                      .DW	0x11F6		            ;\
+000055 11f6
+          		    .DW	0x0014		            ;/ note  7 (12.249857 Hz)
+000056 0014
+         
+          DELTA_GIS:
+                      .DW	0x437B		            ;\
+000057 437b
+          		    .DW	0x0015		            ;/ note  8 (12.978272 Hz)
+000058 0015
+         
+          DELTA_A:
+                      .DW	0x872B		            ;\
+000059 872b
+          		    .DW	0x0016		            ;/ note  9 (13.750000 Hz)
+00005a 0016
+         
+          DELTA_AIS:
+                      .DW	0xDE1A		            ;\
+00005b de1a
+          		    .DW	0x0017		            ;/ note 10 (14.567618 Hz)
+00005c 0017
+         
+          DELTA_H:
+                      .DW	0x496D		            ;\
+00005d 496d
+          		    .DW	0x0019		            ;/ note 11 (15.433853 Hz)
+00005e 0019
+         
+          DELTA_C1:
+                      .DW	0xCA5B		            ;\
+00005f ca5b
+          		    .DW	0x001A		            ;/ note 12 (16.351598 Hz)
+000060 001a
+         
+         ;-----------------------------------------------------------------------------
+         ;
+         ; Lookup Tables
+         ;
+         ; VCF filter cutoff - 128 bytes
+         ; Time to Rate table for calculating amplitude envelopes - 64 bytes
+         ; VCA non-linear level conversion - 256 bytes
+         ;
+         ;-----------------------------------------------------------------------------
+         ; VCF Filter Cutoff
+         ;
+         ; Log table for calculating filter cutoff levels so they sound linear
+         ; to our non-linear ears.
+         
+         
+          TAB_VCF:
+               .DW 0x0101
+000061 0101
+               .DW 0x0101
+000062 0101
+               .DW 0x0101
+000063 0101
+               .DW 0x0101
+000064 0101
+               .DW 0x0101
+000065 0101
+               .DW 0x0202
+000066 0202
+               .DW 0x0202
+000067 0202
+               .DW 0x0202
+000068 0202
+               .DW 0x0202
+000069 0202
+               .DW 0x0202
+00006a 0202
+               .DW 0x0202
+00006b 0202
+               .DW 0x0202
+00006c 0202
+               .DW 0x0202
+00006d 0202
+               .DW 0x0202
+00006e 0202
+               .DW 0x0202
+00006f 0202
+               .DW 0x0403
+000070 0403
+               .DW 0x0404
+000071 0404
+               .DW 0x0404
+000072 0404
+               .DW 0x0505
+000073 0505
+               .DW 0x0505
+000074 0505
+               .DW 0x0606
+000075 0606
+               .DW 0x0606
+000076 0606
+               .DW 0x0606
+000077 0606
+               .DW 0x0807
+000078 0807
+               .DW 0x0808
+000079 0808
+               .DW 0x0909
+00007a 0909
+               .DW 0x0A0A
+00007b 0a0a
+               .DW 0x0A0A
+00007c 0a0a
+               .DW 0x0C0B
+00007d 0c0b
+               .DW 0x0C0C
+00007e 0c0c
+               .DW 0x0D0C
+00007f 0d0c
+               .DW 0x0F0E
+000080 0f0e
+               .DW 0x1110
+000081 1110
+               .DW 0x1212
+000082 1212
+               .DW 0x1413
+000083 1413
+               .DW 0x1615
+000084 1615
+               .DW 0x1817
+000085 1817
+               .DW 0x1A19
+000086 1a19
+               .DW 0x1C1B
+000087 1c1b
+               .DW 0x201E
+000088 201e
+               .DW 0x2221
+000089 2221
+               .DW 0x2423
+00008a 2423
+               .DW 0x2826
+00008b 2826
+               .DW 0x2C2A
+00008c 2c2a
+               .DW 0x302E
+00008d 302e
+               .DW 0x3432
+00008e 3432
+               .DW 0x3836
+00008f 3836
+               .DW 0x403A
+000090 403a
+               .DW 0x4442
+000091 4442
+               .DW 0x4C48
+000092 4c48
+               .DW 0x524F
+000093 524f
+               .DW 0x5855
+000094 5855
+               .DW 0x615D
+000095 615d
+               .DW 0x6865
+000096 6865
+               .DW 0x706C
+000097 706c
+               .DW 0x7E76
+000098 7e76
+               .DW 0x8A85
+000099 8a85
+               .DW 0x9690
+00009a 9690
+               .DW 0xA49D
+00009b a49d
+               .DW 0xB0AB
+00009c b0ab
+               .DW 0xC4BA
+00009d c4ba
+               .DW 0xD8CE
+00009e d8ce
+               .DW 0xE8E0
+00009f e8e0
+               .DW 0xFFF4
+0000a0 fff4
+         
+         ;-----------------------------------------------------------------------------
+         ;Time to Rate conversion table for envelope timing.
+         
+          TIMETORATE:
+                      .DW	65535		            ; 8.192 mS
+0000a1 ffff
+          		    .DW	50957		            ; 10.54 mS
+0000a2 c70d
+          		    .DW	39621		            ; 13.55 mS
+0000a3 9ac5
+          		    .DW	30807		            ; 17.43 mS
+0000a4 7857
+          		    .DW	23953		            ; 22.41 mS
+0000a5 5d91
+          		    .DW	18625		            ; 28.83 mS
+0000a6 48c1
+          		    .DW	14481		            ; 37.07 mS
+0000a7 3891
+          		    .DW	11260		            ; 47.68 mS
+0000a8 2bfc
+          		    .DW	 8755		            ; 61.32 mS
+0000a9 2233
+              		.DW	 6807		            ; 78.87 mS
+0000aa 1a97
+          		    .DW	 5293		            ; 101.4 mS
+0000ab 14ad
+          		    .DW	 4115		            ; 130.5 mS
+0000ac 1013
+          		    .DW	 3200		            ; 167.8 mS
+0000ad 0c80
+          		    .DW	 2488		            ; 215.8 mS
+0000ae 09b8
+          		    .DW	 1935		            ; 277.5 mS
+0000af 078f
+              		.DW	 1504		            ; 356.9 mS
+0000b0 05e0
+          		    .DW	 1170		            ; 459.0 mS
+0000b1 0492
+          		    .DW	  909		            ; 590.4 mS
+0000b2 038d
+          		    .DW	  707		            ; 759.3 mS
+0000b3 02c3
+          		    .DW	  550		            ; 976.5 mS
+0000b4 0226
+          		    .DW	  427		            ; 1.256 S
+0000b5 01ab
+              		.DW	  332		            ; 1.615 S
+0000b6 014c
+              		.DW   258		            ; 2.077 S
+0000b7 0102
+          		    .DW	  201		            ; 2.672 S
+0000b8 00c9
+          		    .DW	  156		            ; 3.436 S
+0000b9 009c
+          		    .DW	  121		            ; 4.419 S
+0000ba 0079
+          		    .DW	   94		            ; 5.684 S
+0000bb 005e
+          		    .DW	   73		            ; 7.310 S
+0000bc 0049
+          		    .DW	   57		            ; 9.401 S
+0000bd 0039
+          		    .DW	   44		            ; 12.09 S
+0000be 002c
+          		    .DW	   35		            ; 15.55 S
+0000bf 0023
+          		    .DW	   27		            ; 20.00 S
+0000c0 001b
+         
+         ;-----------------------------------------------------------------------------
+         ;
+         ; VCA non-linear level conversion
+         ;
+         ; Amplitude level lookup table. Envelopes levels are calculated as linear
+         ; and then converted to approximate an exponential saturation curve.
+         
+          TAB_VCA:
+               .DW 0x0000
+0000c1 0000
+               .DW 0x0101
+0000c2 0101
+               .DW 0x0101
+0000c3 0101
+               .DW 0x0101
+0000c4 0101
+               .DW 0x0101
+0000c5 0101
+               .DW 0x0101
+0000c6 0101
+               .DW 0x0202
+0000c7 0202
+               .DW 0x0202
+0000c8 0202
+               .DW 0x0202
+0000c9 0202
+               .DW 0x0302
+0000ca 0302
+               .DW 0x0303
+0000cb 0303
+               .DW 0x0303
+0000cc 0303
+               .DW 0x0404
+0000cd 0404
+               .DW 0x0404
+0000ce 0404
+               .DW 0x0404
+0000cf 0404
+               .DW 0x0505
+0000d0 0505
+               .DW 0x0505
+0000d1 0505
+               .DW 0x0606
+0000d2 0606
+               .DW 0x0606
+0000d3 0606
+               .DW 0x0606
+0000d4 0606
+               .DW 0x0707
+0000d5 0707
+               .DW 0x0707
+0000d6 0707
+               .DW 0x0707
+0000d7 0707
+               .DW 0x0808
+0000d8 0808
+               .DW 0x0808
+0000d9 0808
+               .DW 0x0808
+0000da 0808
+               .DW 0x0909
+0000db 0909
+               .DW 0x0909
+0000dc 0909
+               .DW 0x0909
+0000dd 0909
+               .DW 0x0A0A
+0000de 0a0a
+               .DW 0x0B0B
+0000df 0b0b
+               .DW 0x0C0C
+0000e0 0c0c
+               .DW 0x0C0C
+0000e1 0c0c
+               .DW 0x0D0D
+0000e2 0d0d
+               .DW 0x0E0E
+0000e3 0e0e
+               .DW 0x0F0F
+0000e4 0f0f
+               .DW 0x1010
+0000e5 1010
+               .DW 0x1111
+0000e6 1111
+               .DW 0x1212
+0000e7 1212
+               .DW 0x1313
+0000e8 1313
+               .DW 0x1414
+0000e9 1414
+               .DW 0x1515
+0000ea 1515
+               .DW 0x1716
+0000eb 1716
+               .DW 0x1818
+0000ec 1818
+               .DW 0x1A19
+0000ed 1a19
+               .DW 0x1C1B
+0000ee 1c1b
+               .DW 0x1D1D
+0000ef 1d1d
+               .DW 0x1F1E
+0000f0 1f1e
+               .DW 0x2020
+0000f1 2020
+               .DW 0x2121
+0000f2 2121
+               .DW 0x2222
+0000f3 2222
+               .DW 0x2423
+0000f4 2423
+               .DW 0x2525
+0000f5 2525
+               .DW 0x2726
+0000f6 2726
+               .DW 0x2828
+0000f7 2828
+               .DW 0x2A29
+0000f8 2a29
+               .DW 0x2C2B
+0000f9 2c2b
+               .DW 0x2D2D
+0000fa 2d2d
+               .DW 0x2F2E
+0000fb 2f2e
+               .DW 0x3030
+0000fc 3030
+               .DW 0x3131
+0000fd 3131
+               .DW 0x3232
+0000fe 3232
+               .DW 0x3433
+0000ff 3433
+               .DW 0x3535
+000100 3535
+               .DW 0x3736
+000101 3736
+               .DW 0x3838
+000102 3838
+               .DW 0x3939
+000103 3939
+               .DW 0x3B3A
+000104 3b3a
+               .DW 0x3C3C
+000105 3c3c
+               .DW 0x3E3D
+000106 3e3d
+               .DW 0x403F
+000107 403f
+               .DW 0x4342
+000108 4342
+               .DW 0x4444
+000109 4444
+               .DW 0x4645
+00010a 4645
+               .DW 0x4747
+00010b 4747
+               .DW 0x4948
+00010c 4948
+               .DW 0x4A4A
+00010d 4a4a
+               .DW 0x4C4B
+00010e 4c4b
+               .DW 0x4E4D
+00010f 4e4d
+               .DW 0x504F
+000110 504f
+               .DW 0x5251
+000111 5251
+               .DW 0x5453
+000112 5453
+               .DW 0X5655
+000113 5655
+               .DW 0x5857
+000114 5857
+               .DW 0x5A59
+000115 5a59
+               .DW 0x5C5B
+000116 5c5b
+               .DW 0x5F5E
+000117 5f5e
+               .DW 0x6160
+000118 6160
+               .DW 0x6462
+000119 6462
+               .DW 0x6564
+00011a 6564
+               .DW 0x6766
+00011b 6766
+               .DW 0x6A68
+00011c 6a68
+               .DW 0x6D6B
+00011d 6d6b
+               .DW 0x6F6E
+00011e 6f6e
+               .DW 0x7370
+00011f 7370
+               .DW 0x7573
+000120 7573
+               .DW 0x7877
+000121 7877
+               .DW 0x7B7A
+000122 7b7a
+               .DW 0x7E7D
+000123 7e7d
+               .DW 0x807F
+000124 807f
+               .DW 0x8382
+000125 8382
+               .DW 0x8785
+000126 8785
+               .DW 0x8988
+000127 8988
+               .DW 0x8E8C
+000128 8e8c
+               .DW 0x9190
+000129 9190
+               .DW 0x9493
+00012a 9493
+               .DW 0x9896
+00012b 9896
+               .DW 0x9C9A
+00012c 9c9a
+               .DW 0xA09E
+00012d a09e
+               .DW 0xA4A2
+00012e a4a2
+               .DW 0xA8A6
+00012f a8a6
+               .DW 0xAEAB
+000130 aeab
+               .DW 0xB3B1
+000131 b3b1
+               .DW 0xB8B6
+000132 b8b6
+               .DW 0xBBBA
+000133 bbba
+               .DW 0xBFBD
+000134 bfbd
+               .DW 0xC3C1
+000135 c3c1
+               .DW 0xC9C6
+000136 c9c6
+               .DW 0xCECC
+000137 cecc
+               .DW 0xD3D1
+000138 d3d1
+               .DW 0xD9D6
+000139 d9d6
+               .DW 0xE0DD
+00013a e0dd
+               .DW 0xE5E3
+00013b e5e3
+               .DW 0xEBE8
+00013c ebe8
+               .DW 0xF0EE
+00013d f0ee
+               .DW 0xF4F2
+00013e f4f2
+               .DW 0xF9F6
+00013f f9f6
+               .DW 0xFFFC
+000140 fffc
+         
+         ;-------------------------------------------------------------------------------------------------------------------
+         ;		I N T E R R U P T   S U B R O U T I N E S
+         ;-------------------------------------------------------------------------------------------------------------------
+         ; Timer 2 compare interrupt (sampling)
+         ;
+         ; This is where sound is generated. This interrupt is called 40,000 times per second
+         ; to calculate a single 16-bit value for audio output. There are 400 instruction cycles
+         ; (16MHZ/40K) between samples, and these have to be shared between this routine and the
+         ; main program loop that scans controls, receives MIDI commands and calculates envelope,
+         ; LFO, and DCA/DCF levels.
+         ;
+         ; If you use too many clock cycles here there won't be sufficient time left over for
+         ; general housekeeping tasks. The result will be sluggish and lost notes, weird timing and sadness.
+         ;-------------------------------------------------------------------------------------------------------------------
+         
+         ; Push contents of registers onto the stack
+         ;
+          TIM2_CMP:
+000141 930f      		    push	R16
+000142 b70f      		    in	    R16, SREG		    ;\
+000143 930f          		push	R16			        ;/ push SREG
+000144 931f      		    push	R17
+000145 932f      			push    r18
+000146 933f      			push	r19
+000147 934f      			push 	r20
+000148 935f      			push    r21
+000149 936f      			push	r22
+00014a 937f      			push	r23
+00014b 93ef      			push	R30
+00014c 93ff      			push	R31
+00014d 920f        			push r0
+00014e 921f        			push r1
+         
+00014f 91e0 0072 		    lds	R30, MODEFLAGS1			; Load the mode flag settings so we can check the selected waveform,
+         										; noise and distortion settings.
+         
+         ;-------------------------------------------------------------------------------------------------------------------
+         ;
+         ; Oscillator A & B
+         ;
+         ; This design uses direct frequency synthesis. A three-byte counter (= phase) is being
+         ; incremented by a value which is proportional to the sound frequency (= phase delta). The
+         ; increment takes place every sampling period. The most significant byte of
+         ; the counter is the sawtooth wave.  The square wave is a result of comparing the sawtooth wave to 128.
+         ; Each oscillator has its own phase and phase delta registers. The contents of each phase delta
+         ; register depends on the frequency being generated:
+         ;
+         ;                   PHASE DELTA = 2 ^ 24 * Freq / SamplingFreq
+         ;
+         ; where:
+         ;       SamplingFreq = 40000 Hz
+         ;       Freq = 440 * 2 ^ ((n - 69 + d) / 12)
+         ;       where in turn:
+         ;           n = MIDI note number. Range limited to 36 to 96 (5 octaves)
+         ;           d = transpose/detune (in halftones)
+         ;
+         ;-------------------------------------------------------------------------------------------------------------------
+         
+         
+         ;Calculate DCO A							
+         										; If Noise switch is on, use pseudo-random shift register value
+000151 ffe6      			sbrs R30,6 					; Use noise if bit set, otherwise jump to calculate DCO.
+000152 940c 0162 			jmp CALC_DCOA 		
+000154 ef1f        			ser r17
+000155 9110 00b1 			lds  R17, SHIFTREG_2
+000157 fc43        			sbrc PHASEA_2,3
+000158 9510      			com r17
+000159 fc44      			sbrc PHASEA_2,4
+00015a 9510      			com r17
+00015b fc46      			sbrc PHASEA_2,6
+00015c 9510      			com r17
+00015d fc47      			sbrc PHASEA_2,7
+00015e 9510      			com r17
+00015f 0f11      			lsl r17
+000160 940c 016c 			jmp CALC_DCOB				; skip sample calc for DCO A if noise bit set
+         
+         
+          CALC_DCOA:
+000162 2d14      		    mov	    R17, PHASEA_2		; sawtooth ramp for OSCA
+         ;PWM wave
+000163 9160 00c7 			lds		R22, PULSE_WIDTH	
+000165 1716      			cp		R17, R22			
+000166 f010      			brlo	PULSE_ZERO	
+000167 ef1f      			ldi		R17, 255
+000168 c001      			rjmp	SAW_CHECK
+          PULSE_ZERO:
+000169 e010      			ldi		R17, 0
+          SAW_CHECK:
+00016a ffe1      			sbrs	R30, 1			    ; 0/1 (DCO A = saw/squ)
+00016b 2d14      		    mov	    R17, PHASEA_2	    ; only when sawtooth
+         
+         ;Calculate DCO B
+          CALC_DCOB:
+00016c 2d07      		    mov	    R16, PHASEB_2
+00016d 1f00      		    rol	    R16			        ; R16.7 --> Cy
+00016e 0b00      		    sbc	    R16, R16	        ; R16 = 0 or 255 (square wave)
+00016f ffe2      		    sbrs	R30, 2			    ; 0/1 (DCO B = saw/squ)
+000170 2d07      		    mov	    R16, PHASEB_2	    ; only when sawtooth
+         
+         
+          CALC_DIST:
+000171 fde0      			sbrc	R30, 0			    ; 0/1 (OSC DIST = off/on)
+000172 2710          		eor	    R17, R16
+000173 ffe3      		    sbrs	R30, 3
+000174 e800      		    ldi	    R16, 128	        ; when DCO B = off
+         
+         ;-------------------------------------------------------------------------------------------------------------------
+         ; Sum Oscillators
+         ;
+         ; Combines DCOA (in r17) and DCOB (in r16) waves. Convert both oscillators to 8-bit signed values, multiplies each
+         ; by its DCO scaling level and sums them to produce a 16-bit signed result in HDAC:LDAC (r17:r16)
+         ;
+         ;-------------------------------------------------------------------------------------------------------------------
+         ;
+000175 9160 00be 			lds		r22, DCOA_LEVEL	    ;
+000177 5810      			subi    r17, $80			; -127..127
+000178 0316      			mulsu	r17, r22			; signed DCO A wave * level
+000179 01f0      			movw	r30, r0				; store value in temp register
+00017a 9160 00bf 			lds		r22, DCOB_LEVEL
+00017c 5800      			subi	r16, $80			; -127..127
+00017d 0306      			mulsu	r16, r22			; signed DCO B wave * level
+00017e 0de0      			add		r30, r0
+00017f 1df1      			adc 	r31, r1				; sum scaled waves
+000180 9300 00c8   			sts 	WAVEB,r16			; store signed DCO B wave for fm
+000182 018f      			movw	r16, r30			; place signed output in HDAC:LDAC
+000183 0178      			movw	OSC_OUT_L, r16		; keep a copy for highpass filter
+         
+         ;DCF:
+         
+         ;-------------------------------------------------------------------------------------------------------------------
+         ; Digitally Controlled Filter
+         ;
+         ; A 2-pole resonant low pass filter:
+         ;
+         ; a += f * ((in - a) + q * (a - b));
+         ; b += f * (a - b);
+         ;
+         ; Input 16-Bit signed HDAC:LDAC (r17:r16), already scaled to minimize clipping (reduced to 25% of full code).
+         ;-------------------------------------------------------------------------------------------------------------------
+         
+                                     		;calc (in - a) ; both signed
+000184 9488              clc							;clear carry
+000185 1909      		sub     LDAC, a_L
+000186 091a              sbc     HDAC, a_H
+                                     		;check for overflow / do hard clipping
+000187 f413              brvc OVERFLOW_1     		;if overflow bit is clear jump to OVERFLOW_1
+         
+                 							;sub overflow happened -> set to min
+                                     		;b1000.0000 b0000.0001 -> min
+                                     		;0b0111.1111 0b1111.1111 -> max
+         
+000188 e001              ldi    	LDAC, 0b00000001 	
+000189 e810              ldi 	HDAC, 0b10000000	
+         
+          OVERFLOW_1: 						;when overflow is clear
+         
+                 							;(in-a) is now in HDAC:LDAC as signed
+                 							;now calc q*(a-b)
+         
+00018a 9160 00cd         lds    r22,SCALED_RESONANCE	;load filter Q value, unsigned
+         
+         
+          OVERFLOW_2:
+         
+00018c 2d49              mov    r20, a_L        	  	;\
+00018d 2d5a              mov    r21, a_H            	;/ load 'a' , signed
+         
+00018e 9130 00cf         lds    z_H, b_H            	;\
+000190 9120 00ce         lds    z_L, b_L            	;/ load 'b', signed
+         
+000192 1b42              sub    r20, z_L            	;\
+000193 0b53              sbc    r21, z_H            	;/ (a-b) signed
+         
+000194 f413              brvc OVERFLOW_3            	;if overflow is clear jump to OVERFLOW_3
+         
+                 							;b1000.0000 b0000.0001 -> min
+                 							;0b0111.1111 0b1111.1111 -> max
+         
+000195 e041              ldi   r20, 0b00000001
+000196 e850              ldi   r21, 0b10000000
+         
+          OVERFLOW_3:
+         
+000197 9120 0073 		lds		r18, MODEFLAGS2		; Check Low Pass/High Pass panel switch.
+000199 ff23      		sbrs 	r18, 3				
+00019a c002      		rjmp	CALC_LOWPASS						
+00019b 019a      		movw    z_L,r20				; High Pass selected, so just load r21:r20 into z_H:z_L to disable Q
+00019c c00f      		rjmp	DCF_ADD				; Skip lowpass calc
+         
+          CALC_LOWPASS:
+         									; mul signed:unsigned -> (a-b) * Q
+         									; 16x8 into 16-bit
+         									; r19:r18 = r21:r20 (ah:al)	* r22 (b)
+         		
+00019d 0356      		mulsu	r21, r22			; (signed)ah * b
+00019e 0190      		movw	r18, r0
+00019f 9f46      		mul 	r20, r22			; al * b
+0001a0 0d21      		add		r18, r1	
+0001a1 1d38      		adc		r19, ZERO
+0001a2 1c00      		rol 	r0					; r0.7 --> Cy
+0001a3 f408      		brcc	NO_ROUND			; LSByte < $80, so don't round up
+0001a4 9523      		inc 	r18			
+          NO_ROUND:
+0001a5 9488              clc
+0001a6 0f22              lsl     r18
+0001a7 1f33              rol     r19
+0001a8 9488              clc
+0001a9 0f22              lsl     r18
+0001aa 1f33              rol     r19
+0001ab 0199      		movw    z_L,r18        		;Q*(a-b) in z_H:z_L as signed
+         
+                 ;add both
+                 ;both signed
+                 ;((in-a)+q*(a-b))
+                 ;=> HDAC:LDAC + z_H:z_L
+         
+           DCF_ADD:
+         
+0001ac 0f02              add     LDAC, z_L
+0001ad 1f13              adc     HDAC, z_H
+         
+0001ae f413              brvc OVERFLOW_4            	;if overflow is clear
+                 						   	;b1000.0000 b0000.0001 -> min
+         								   	;0b0111.1111 0b1111.1111 -> max
+         
+0001af ef0f              ldi    LDAC, 0b11111111
+0001b0 e71f              ldi    HDAC, 0b01111111
+         
+          OVERFLOW_4:
+         
+                 							;Result is a signed value in HDAC:LDAC
+                 							;calc * f
+                 							;((in-a)+q*(a-b))*f
+         
+0001b1 9140 0082         lds    r20, LPF_I         	;load lowpass 'F' value
+0001b3 9120 0073 		lds	   r18, MODEFLAGS2		
+0001b5 fd23      		sbrc   r18, 3				; Check LP/HP switch.
+0001b6 9140 0083 		lds    r20, HPF_I			; Switch set, so load 'F' for HP
+         
+         									; mul signed unsigned HDAC*F
+         									; 16x8 into 16-bit
+         									; r19:r18 = HDAC:LDAC (ah:al) * r20 (b)
+         
+0001b8 0314      		mulsu	HDAC, r20			; (signed)ah * b
+0001b9 0190      		movw	r18, r0
+0001ba 9f04      		mul 	LDAC, r20			; al * b
+0001bb 0d21      		add		r18, r1				; signed result in r19:r18
+0001bc 1d38      		adc		r19, ZERO
+0001bd 1c00      		rol 	r0					; r0.7 --> Cy
+0001be f408      		brcc	NO_ROUND2			; LSByte < $80, so don't round up
+0001bf 9523      		inc 	r18			
+          NO_ROUND2:
+                 							;Add result to 'a'
+                 							;a+=f*((in-a)+q*(a-b))
+         
+0001c0 0e92              add        a_L, r18
+0001c1 1ea3              adc        a_H, r19
+0001c2 f423              brvc OVERFLOW_5           	;if overflow is clear
+                                         	;b1000.0000 b0000.0001 -> min
+                                         	;0b0111.1111 0b1111.1111 -> max
+         
+0001c3 ef3f              ldi z_H, 0b11111111
+0001c4 e72f              ldi z_L, 0b01111111
+0001c5 2e93              mov    a_L, z_H
+0001c6 2ea2              mov    a_H, z_L
+         
+          OVERFLOW_5:
+         
+                 							;calculated a+=f*((in-a)+q*(a-b)) as signed value and saved in a_H:a_L
+                 							;calc 'b'
+                 							;b += f * (a*0.5 - b);
+         
+0001c7 2d3a      		mov	z_H, a_H				;\
+0001c8 2d29              mov z_L, a_L         		;/ load 'a' as signed
+         
+0001c9 91e0 00ce         lds temp, b_L        		;\
+0001cb 91f0 00cf         lds temp2, b_H        		;/ load b as signed
+         
+0001cd 1b2e              sub z_L, temp        		;\    			
+0001ce 0b3f              sbc z_H, temp2				;/ (a - b) signed
+         
+0001cf f413              brvc OVERFLOW_6    			;if overflow is clear
+                                  			;b1000.0000 b0000.0001 -> min
+         						 			;0b0111.1111 0b1111.1111 -> max
+         
+0001d0 e021              ldi z_L, 0b00000001
+0001d1 e830              ldi z_H, 0b10000000
+         
+          OVERFLOW_6:
+         
+0001d2 9140 0082         lds    r20, LPF_I         	;load lowpass 'F' value
+0001d4 9120 0073 		lds	   r18, MODEFLAGS2		
+0001d6 fd23      		sbrc   r18, 3				; Check LP/HP switch.
+0001d7 9140 0083 		lds    r20, HPF_I			; Switch set to HP, so load 'F' for HP
+         
+         		;mulsu  z_H, r20 			;mul signed unsigned (a-b) * F
+         
+         								    ; mul signed unsigned (a-b) * F
+         								    ; 16x8 into 16-bit
+         								    ; r19:r18 = z_H:z_L (ah:al) * r20 (b)
+0001d9 0334      		mulsu	z_H, r20		    ; (signed)ah * b
+0001da 0190      		movw	r18, r0
+0001db 9f24      		mul 	z_L, r20		    ; al * b
+0001dc 0d21      		add		r18, r1			    ; signed result in r19:r18
+0001dd 1d38      		adc		r19, ZERO
+                                          	
+         
+0001de 0fe2              add temp,  r18          	;\ add result to 'b' , signed
+0001df 1ff3              adc temp2, r19         		;/ b +=(a-b)*f
+         
+0001e0 f413              brvc OVERFLOW_7          	;if overflow is clear
+         
+         							   		;b1000.0000 b0000.0001 -> min
+         							   		;0b0111.1111 0b1111.1111 -> max
+         
+0001e1 efef              ldi temp,  0b11111111
+0001e2 e7ff              ldi temp2, 0b01111111
+         
+          OVERFLOW_7:
+         
+0001e3 93e0 00ce 		sts b_L, temp         		;\
+0001e5 93f0 00cf         sts b_H, temp2        		;/ save value of 'b'
+         
+         									
+0001e7 2f0e              mov LDAC, temp				;B now contains the filtered signal in HDAC:LDAC
+0001e8 2f1f              mov HDAC, temp2
+         
+         
+         		; If in HP filter mode, just use (filter input - filter output)
+         			
+0001e9 9120 0073 		lds		r18, MODEFLAGS2		; Check if LP or HP filter
+0001eb ff23      		sbrs 	r18, 3				
+0001ec c003      		rjmp	DCA					; LP, so jump to DCA
+0001ed 1ae0      		sub		OSC_OUT_L, LDAC		; HP filter, so output = filter input - output
+0001ee 0af1      		sbc		OSC_OUT_H, HDAC
+0001ef 0187      		movw	LDAC, OSC_OUT_L
+         
+         									
+         ;-------------------------------------------------------------------------------------------------------------------
+         ; Digitally Controlled Amplifier
+         ;
+         ; Multiply the output waveform by the 8-bit value in LEVEL.
+         ;-------------------------------------------------------------------------------------------------------------------
+         ;
+         
+          DCA:
+0001f0 e0e0      		    ldi	    R30, 0
+0001f1 e0f0      		    ldi	    R31, 0
+0001f2 9120 0084 		    lds	    R18, LEVEL
+0001f4 3f2f      		    cpi	    R18, 255
+0001f5 f449      		    brne	T2_ACHECK		    ; multiply when LEVEL!=255
+0001f6 2fe0      		    mov	    R30, R16
+0001f7 2ff1      		    mov	    R31, R17
+0001f8 c008      		    rjmp	T2_AEXIT
+         
+          T2_ALOOP:
+0001f9 9515                  asr	    R17		            ;\
+0001fa 9507      		    ror	    R16		            ;/ R17:R16 = R17:R16 asr 1
+0001fb 0f22      		    lsl	    R18		            ; Cy <-- R31 <-- 0
+0001fc f410      		    brcc	T2_ACHECK
+0001fd 0fe0          		add	    R30, R16
+0001fe 1ff1      		    adc	    R31, R17
+         
+          T2_ACHECK:
+0001ff 2322                  tst	    R18
+000200 f7c1      		    brne	T2_ALOOP
+         
+          T2_AEXIT:
+         
+         ;-------------------------------------------------------------------------------------------------------------------
+         ; Output Sample
+         ;
+         ; Write the 16-bit signed output of the DCA to the DAC.
+         ;-------------------------------------------------------------------------------------------------------------------
+         ;
+         
+         
+         ;write sample (R31:R30) to DAC:
+         
+000201 9a93      			sbi		PORTD, 3			; Set WR high
+000202 58f0      		    subi	R31, 128		    ; U2 --> PB
+000203 9892      			cbi		PORTD, 2			; Select DAC port A
+         			;ldi 	r31,ADC_0
+000204 bbf5      			out	    PORTC, R31	        ; output most significant byte
+000205 9893      			cbi		PORTD, 3			; Pull WR low to load buffer A
+000206 9a93      			sbi		PORTD, 3			; Set WR high
+000207 9a92      			sbi		PORTD, 2			; Select DAC port B
+         			;ldi 	r30,0
+000208 bbe5      			out	    PORTC, R30	        ; output least significant byte
+000209 9893      			cbi		PORTD, 3			; Pull WR low to load buffer B
+00020a 9a93      			sbi		PORTD, 3			; Set WR high again
+         
+         ; Increment Oscillator A & B phase
+         
+00020b ece1        			ldi 	r30, low(DELTAA_0)
+00020c e0f0        			ldi 	r31, high(DELTAA_0)
+00020d 9101        			ld 		r16, z+
+00020e 0e20        			add 	PHASEA_0, r16
+00020f 9101        			ld 		r16,z+
+000210 1e30        			adc 	PHASEA_1, r16
+000211 9101        			ld 		r16,z+
+000212 1e40        			adc 	PHASEA_2, r16
+000213 9101        			ld 		r16,z+
+000214 0e50        			add 	PHASEB_0, r16
+000215 9101        			ld 		r16,z+
+000216 1e60        			adc 	PHASEB_1, r16
+000217 9101        			ld 		r16, z+
+000218 1e70        			adc 	PHASEB_2,r16
+         
+         ;-------------------------------------------------------------------------------------------------------------------
+         ; Frequency Modulation
+         ;-------------------------------------------------------------------------------------------------------------------
+         ;
+         
+          dco_fm:
+         
+000219 91e0 0072 		    lds		R30, MODEFLAGS1
+00021b fde6      			sbrc 	R30, 6 					;
+00021c 940c 0239 			jmp 	END_SAMPLE_LOOP 		; If DCOA waveform is set to Noise, skip FM
+         
+         			; mod * depth
+00021e 9100 00c8 			lds 	r16, WAVEB
+000220 9110 00c9 			lds 	r17, FMDEPTH
+000222 3010      			cpi 	R17, 0 					; skip if FM depth is zero
+000223 f0a9      			breq	END_SAMPLE_LOOP		
+         
+000224 0301      			mulsu 	r16, r17
+000225 0190      			movw 	r18, r0
+         
+         			; delta * mod * depth
+000226 9100 00c1 			lds 	r16, DELTAA_0
+000228 2711      			clr 	r17
+000229 0330      			mulsu 	r19, r16
+00022a 0b11      			sbc 	r17, r17
+00022b 0c21      			add 	PHASEA_0, r1
+00022c 1e31      			adc 	PHASEA_1, r17
+00022d 1e41      			adc 	PHASEA_2, r17
+         
+00022e 9100 00c2 			lds 	r16, DELTAA_1
+000230 0330      			mulsu 	r19, r16
+000231 0c20      			add 	PHASEA_0, r0
+000232 1c31      			adc 	PHASEA_1, r1
+000233 1e41      			adc 	PHASEA_2, r17
+         
+000234 9100 00c3 			lds 	r16, DELTAA_2
+000236 0330      			mulsu 	r19, r16
+000237 0c30      			add 	PHASEA_1, r0
+000238 1c41      			adc 	PHASEA_2, r1
+         
+         ;-------------------------------------------------------------------------------------------------------------------
+         ; End of Sample Interrupt
+         ;
+         ; Pop register values off stack and return to our regularly scheduled programming.
+         ;-------------------------------------------------------------------------------------------------------------------
+         ;
+         
+          END_SAMPLE_LOOP:
+         
+000239 901f      			pop 	r1
+00023a 900f        			pop 	r0
+00023b 91ff      			pop		r31
+00023c 91ef      			pop		r30
+00023d 917f      			pop		r23
+00023e 916f      			pop		r22
+00023f 915f      			pop		r21
+000240 914f      			pop		r20
+000241 913f      			pop		r19
+000242 912f      			pop     r18
+000243 911f      		    pop	    r17
+000244 910f      		    pop	    r16		            ;\
+000245 bf0f      		    out	    SREG, R16	        ;/ pop SREG
+000246 910f      		    pop	    R16
+000247 9518      		    reti
+         
+         ;------------------------
+         ; UART receiver (MIDI IN)
+         ;------------------------
+          UART_RXC:
+         
+         ;			out		PORTC,R16
+000248 930f                  push	R16
+000249 b70f      		    in	    R16, SREG	        ;\
+00024a 930f      		    push	R16			        ;/ push SREG
+         
+00024b b10c      		    in	    R16, UDR0	        ; read received byte in R16
+00024c 9857      		    cbi	    UCSR0B, 7		    ; RXCIE=0 (disable UART interrupts)
+00024d 9478      		    sei				            ; enable other interrupts
+00024e 931f      		    push	R17
+         
+00024f 2300      		    tst	    R16		            ;\ jump when
+000250 f4f2      		    brpl	INTRX_DATA		    ;/ R16.7 == 0 (MIDI data byte)
+         
+         ;MIDI status byte (1xxxxxxx):
+000251 2f10      		    mov	    R17, R16
+000252 7f10      		    andi	R17, 0xF0
+000253 3810      		    cpi	    R17, 0x80
+000254 f051      		    breq	INTRX_ACCEPT	    ; 8x note off
+000255 3910      		    cpi	    R17, 0x90
+000256 f041      		    breq	INTRX_ACCEPT	    ; 9x note on
+000257 3b10      		    cpi	    R17, 0xB0
+000258 f031      		    breq	INTRX_ACCEPT	    ; Bx control change
+000259 3e10      		    cpi	    R17, 0xE0
+00025a f021      		    breq	INTRX_ACCEPT	    ; Ex pitch bend
+00025b e010      		    ldi	    R17, 0		        ;\
+00025c 9310 0060 		    sts	    MIDIPHASE, R17	    ;/ MIDIPHASE = 0
+00025e c095      		    rjmp	INTRX_EXIT		    ; Ax polyphonic aftertouch
+         						                ; Cx program change
+         						                ; Dx channel aftertouch
+         						                ; Fx system
+         
+          INTRX_ACCEPT:
+00025f 9310 0060             sts	    MIDIPHASE, R17	    ; phase = 80 90 B0 E0
+000261 700f      		    andi	R16, 0x0F		    ;\
+000262 9503      		    inc	    R16			        ; > store MIDI channel 1..16
+000263 9300 0061 		    sts	    MIDICHANNEL, R16	;/
+000265 9110 0074 		    lds	    R17, SETMIDICHANNEL	;0 for OMNI or 1..15
+000267 2311      		    tst	    R17
+000268 f029      		    breq	INTRX_ACPT_X		; end when OMNI
+000269 1710      		    cp	    R17, R16			; compare set channel to the incoming channel
+00026a f019      		    breq	INTRX_ACPT_X		; end when right channel
+00026b e010      		    ldi	    R17, 0			    ;\ otherwise:
+00026c 9310 0060 		    sts	    MIDIPHASE, R17		;/ MIDIPHASE = 0 (no data service)
+         
+          INTRX_ACPT_X:
+00026e c085                  rjmp	INTRX_EXIT
+         
+         ;MIDI data byte (0xxxxxxx):
+          INTRX_DATA:
+00026f 9110 0060             lds	    R17, MIDIPHASE
+000271 3810      		    cpi	    R17, 0x80		    ;\
+000272 f019      		    breq	INTRX_NOFF1		    ; \
+000273 3811      		    cpi	    R17, 0x81		    ; / note off
+000274 f039      		    breq	INTRX_NOFF2		    ;/
+000275 c00a      		    rjmp	INTRX_NOTEON
+         
+          INTRX_NOFF1:
+000276 9513                  inc	    R17			        ;\
+000277 9310 0060 		    sts	    MIDIPHASE, R17	    ;/ MIDIPHASE = 0x81
+000279 9300 0062 		    sts	    MIDIDATA0, R16	    ; MIDIDATA0 = d
+00027b c078      		    rjmp	INTRX_EXIT
+         
+          INTRX_NOFF2:
+00027c 951a                  dec	    R17			        ;\
+00027d 9310 0060 		    sts	    MIDIPHASE, R17	    ;/ MIDIPHASE = 0x80
+00027f c010      		    rjmp	INTRXNON2_OFF
+         
+         ;9x note on:
+          INTRX_NOTEON:
+000280 3910                  cpi	    R17, 0x90		    ;\
+000281 f019      		    breq	INTRX_NON1		    ; \
+000282 3911      		    cpi	    R17, 0x91		    ; / note on
+000283 f039      		    breq	INTRX_NON2		    ;/
+000284 c03b      		    rjmp	INTRX_CTRL
+         
+          INTRX_NON1:
+000285 9513                  inc     R17			        ;\
+000286 9310 0060 		    sts	    MIDIPHASE, R17	    ;/ MIDIPHASE = 0x91
+000288 9300 0062 		    sts	    MIDIDATA0, R16	    ; MIDIDATA0 = d
+00028a c069      		    rjmp	INTRX_EXIT
+         
+          INTRX_NON2:
+00028b 951a                  dec	    R17			        ;\
+00028c 9310 0060 		    sts	    MIDIPHASE, R17	    ;/ MIDIPHASE = 0x90
+00028e 2300      		    tst	    R16			        ;\
+00028f f4f9      		    brne	INTRXNON2_ON	    ;/ jump when velocity != 0
+         
+         ;turn note off:
+          INTRXNON2_OFF:
+000290 9100 0062             lds	    R16, MIDIDATA0
+000292 9110 0065 		    lds	    R17, MIDINOTEPREV
+000294 1701      		    cp	    R16, R17
+000295 f419      		    brne	INTRXNON2_OFF1
+000296 ef1f      		    ldi	    R17, 255		    ;\ remove previous note
+000297 9310 0065 		    sts	    MIDINOTEPREV, R17	;/ from buffer
+         
+          INTRXNON2_OFF1:
+000299 9110 0064             lds	    R17, MIDINOTE
+00029b 1701      		    cp	    R16, R17		    ;\
+00029c f449      		    brne	INTRXNON2_OFF3	    ;/ exit when not the same note
+00029d 9110 0065 		    lds	    R17, MIDINOTEPREV
+00029f 3f1f      		    cpi	    R17, 255
+0002a0 f031      		    breq	INTRXNON2_OFF2
+0002a1 9310 0064 		    sts	    MIDINOTE, R17		; previous note is valid
+0002a3 ef1f      		    ldi	    R17, 255		    ;\ remove previous note
+0002a4 9310 0065 		    sts	    MIDINOTEPREV, R17	;/ from buffer
+         
+          INTRXNON2_OFF3:
+0002a6 c04d                  rjmp	INTRX_EXIT
+         
+          INTRXNON2_OFF2:
+0002a7 ef1f                  ldi	    R17, 255		    ;\ remove last note
+0002a8 9310 0064 		    sts	    MIDINOTE, R17		;/
+0002aa e010      		    ldi	    R17, 0			    ;\
+0002ab 9310 0097 		    sts	    GATE, R17		    ;/ GATE = 0
+         		
+         
+0002ad 9a91      			sbi	    PORTD, 1		    ; LED on
+0002ae c045      		    rjmp	INTRX_EXIT
+         
+         ;turn note on:
+          INTRXNON2_ON:
+0002af 9300 0063             sts	    MIDIVELOCITY, R16	; store velocity
+0002b1 9110 0064 		    lds	    R17, MIDINOTE		;\ move previous note
+0002b3 9310 0065 		    sts	    MIDINOTEPREV, R17	;/ into buffer
+0002b5 9110 0062 		    lds	    R17, MIDIDATA0		;\
+0002b7 9310 0064 		    sts	    MIDINOTE, R17		;/ MIDINOTE = note#
+0002b9 e011      		    ldi	    R17, 1
+0002ba 9310 0097 		    sts	    GATE, R17		    ; GATE = 1
+0002bc 9310 0098 		    sts	    GATEEDGE, R17		; GATEEDGE = 1
+         		
+0002be 9891      			cbi	    PORTD, 1		    ; LED off
+0002bf c034      		    rjmp	INTRX_EXIT
+         
+         ;Bx control change:
+          INTRX_CTRL:
+0002c0 3b10                  cpi	    R17, 0xB0		    ;\
+0002c1 f019      		    breq	INTRX_CC1		    ; \
+0002c2 3b11      		    cpi	    R17, 0xB1		    ; / control change
+0002c3 f039      		    breq	INTRX_CC2		    ;/
+0002c4 c016      		    rjmp	INTRX_PBEND
+         
+          INTRX_CC1:
+0002c5 9513                  inc     R17			        ;\
+0002c6 9310 0060 		    sts	    MIDIPHASE, R17		;/ MIDIPHASE = 0xB1
+0002c8 9300 0062 		    sts	    MIDIDATA0, R16		; MIDIDATA0 = controller#
+0002ca c029      		    rjmp	INTRX_EXIT
+         
+          INTRX_CC2:
+0002cb 951a                  dec     R17			        ;\
+0002cc 9310 0060 		    sts	    MIDIPHASE, R17		;/ MIDIPHASE = 0xB0
+0002ce 9110 0062 		    lds	    R17, MIDIDATA0
+         
+         ;Store MIDI CC in table
+0002d0 93af      			push 	r26					; store contents of r27 and r26 on stack
+0002d1 93bf      			push	r27
+         
+0002d2 eda0      			ldi 	r26,low(MIDICC)			
+0002d3 e0b0        			ldi 	r27,high(MIDICC)
+0002d4 0fa1        			add 	r26,r17
+0002d5 1db8        			adc 	r27,zero
+0002d6 0f00        			lsl 	r16					; shift MIDI data to 0..254 to match knob value
+0002d7 930c        			st 		x,r16				; store in MIDI CC table
+         
+0002d8 91bf      			pop		r27					; reload old contents of r27 and r 26
+0002d9 91af      			pop		r26
+         
+         
+0002da c019      		    rjmp	INTRX_EXIT
+         
+         ;Ex pitch bender:
+          INTRX_PBEND:
+0002db 3e10                  cpi	    R17, 0xE0		    ;\
+0002dc f019      		    breq	INTRX_PB1		    ; \
+0002dd 3e11      		    cpi	    R17, 0xE1		    ; / pitch bend
+0002de f039      		    breq	INTRX_PB2		    ;/
+0002df c014      		    rjmp	INTRX_EXIT
+         
+          INTRX_PB1:
+0002e0 9513                  inc     R17			        ;\
+0002e1 9310 0060 		    sts	    MIDIPHASE, R17		;/ MIDIPHASE = 0xE1
+0002e3 9300 0062 		    sts	    MIDIDATA0, R16		; MIDIDATA0 = dFine	0..127
+0002e5 c00e      		    rjmp	INTRX_EXIT
+         
+          INTRX_PB2:
+0002e6 951a                  dec	    R17			        ;\
+0002e7 9310 0060 		    sts	    MIDIPHASE, R17		;/ MIDIPHASE = 0xE0
+0002e9 9110 0062 		    lds	    R17,MIDIDATA0		;\
+0002eb 0f11      		    lsl	    R17			        ;/ R17 = dFine*2	0..254
+0002ec 0f11      		    lsl	    R17			        ;\ R16,R17 = P.B.data
+0002ed 1f00      		    rol	    R16			        ;/ 0..255,996
+0002ee 5800      		    subi	R16, 128		    ; R16,R17 = -128,000..+127,996
+0002ef 9310 0066 		    sts	    MIDIPBEND_L, R17	;\
+0002f1 9300 0067 		    sts	    MIDIPBEND_H, R16	;/ store P.BEND value
+0002f3 c000      		    rjmp	INTRX_EXIT
+         
+          INTRX_EXIT:
+0002f4 911f                  pop	    R17
+0002f5 910f      		    pop	    R16			        ;\
+0002f6 bf0f      		    out	    SREG, R16		    ;/ pop SREG
+0002f7 910f      		    pop	    R16
+0002f8 9a57      		    sbi	    UCSR0B, 7			    ; RXCIE=1
+0002f9 9518      		    reti
+         
+         ;-------------------------------------------------------------------------------------------------------------------
+         ;		M A I N   L E V E L   S U B R O U T I N E S
+         ;-------------------------------------------------------------------------------------------------------------------
+         
+         ;=============================================================================
+         ;			Delay subroutines
+         ;=============================================================================
+         
+          WAIT_10US:
+0002fa 930f                  push	R16		            ; 3+2
+0002fb e302      		    ldi	    R16, 50		        ; 1
+         
+          W10U_LOOP:
+0002fc 950a                  dec	    R16		            ; 1\
+0002fd f7f1      		    brne	W10U_LOOP	        ; 2/1	/ 49*3 + 2
+0002fe 910f      		    pop	    R16		            ; 2
+0002ff 9508      		    ret			                ; 4
+         
+         ;=============================================================================
+         ;			I/O subroutines
+         ;=============================================================================
+         
+         ;-----------------------------------------------------------------------------
+         ;A/D conversion (start)
+         ;- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+         ;In:	    R18 = channel #	        0..7
+         ;Out:	-
+         ;Used:	-
+         ;-----------------------------------------------------------------------------
+          ADC_START:
+000300 b927                  out	    ADMUX, R18	        ; set multiplexer
+000301 9a36      		    sbi	    ADCSRA, 6	        ; ADSC=1
+000302 9508      		    ret
+         
+         ;-----------------------------------------------------------------------------
+         ;A/D conversion (end)
+         ;- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+         ;In:	-
+         ;Out:	    R16 = result		            0..255
+         ;Used:	    SREG,R17
+         ;-----------------------------------------------------------------------------
+          ADC_END:
+          ADCE_LOOP:
+000303 9b34                  sbis	ADCSRA, 4 	        ;\
+000304 cffe      		    rjmp	ADCE_LOOP	        ;/ wait for ADIF==1
+000305 9a34      		    sbi	    ADCSRA, 4 		    ; clear ADIF
+000306 b104      		    in	    R16, ADCL	        ;\
+000307 b115      		    in	    R17, ADCH	        ;/ R17:R16 = 000000Dd:dddddddd
+000308 9516      		    lsr	    R17		            ;\
+000309 9507      		    ror	    R16		            ;/ R17:R16 = 0000000D:dddddddd
+00030a 9516      		    lsr	    R17		            ;\
+00030b 9507      		    ror	    R16		            ;/ R16 = Dddddddd
+00030c 9508      		    ret
+         
+         ;=============================================================================
+         ;			arithmetic subroutines
+         ;=============================================================================
+         
+         ;-----------------------------------------------------------------------------
+         ; 16 bit arithmetical shift right (division by 2^n)
+         ;- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+         ;In:	    R17:R16 = x
+         ;	        R18 = n (shift count)		0..16
+         ;Out:	    R17:R16 = x asr n
+         ;Used:	    SREG
+         ;-----------------------------------------------------------------------------
+          ASR16:
+00030d 2322                  tst	    R18
+00030e f031      		    breq	ASR16_EXIT
+00030f 932f      		    push	R18
+         
+          ASR16_LOOP:
+000310 9515                  asr	    R17		            ;\
+000311 9507      		    ror	    R16		            ;/ R17,R16 = R17,R16 asr 1
+000312 952a      		    dec	    R18
+000313 f7e1      		    brne	ASR16_LOOP
+000314 912f      		    pop	    R18
+         
+          ASR16_EXIT:
+000315 9508                  ret
+         
+         ;-----------------------------------------------------------------------------
+         ; 32 bit logical shift right
+         ;- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+         ;In:	    R19:R18:R17:R16 = x
+         ;	        R20 = n (shift count)
+         ;Out:	    R19:R18:R17:R16 = x >> n
+         ;Used:	    SREG
+         ;-----------------------------------------------------------------------------
+          SHR32:
+000316 2344                  tst	    R20
+000317 f041      		    breq	SHR32_EXIT
+000318 934f      		    push	R20
+         
+          SHR32_LOOP:
+000319 9536                  lsr	    R19
+00031a 9527      		    ror	    R18
+00031b 9517      		    ror	    R17
+00031c 9507      		    ror	    R16
+00031d 954a      		    dec	    R20
+00031e f7d1      		    brne	SHR32_LOOP
+00031f 914f      		    pop	    R20
+         
+          SHR32_EXIT:
+000320 9508                  ret
+         
+         ;-----------------------------------------------------------------------------
+         ; 32 bit logical shift left
+         ;- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+         ;In:	    R19:R18:R17:R16 = x
+         ;	        R20 = n (shift count)
+         ;Out:	    R19:R18:R17:R16 = x << n
+         ;Used:	    SREG
+         ;-----------------------------------------------------------------------------
+          SHL32:
+000321 2344                  tst	    R20
+000322 f041      		    breq	SHL32_EXIT
+000323 934f      		    push	R20
+         
+          SHL32_LOOP:
+000324 0f00                  lsl	    R16
+000325 1f11      		    rol	    R17
+000326 1f22      		    rol	    R18
+000327 1f33      		    rol	    R19
+000328 954a      		    dec	    R20
+000329 f7d1      		    brne	SHL32_LOOP
+00032a 914f      		    pop	    R20
+         
+          SHL32_EXIT:
+00032b 9508                  ret
+         
+         ;-----------------------------------------------------------------------------
+         ;8 bit x 8 bit multiplication (unsigned)
+         ;- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+         ;In:	    R16 = x					    0..255
+         ;	        R17 = y					    0,000..0,996
+         ;Out:	    R17,R16 = x * y				0,000..254,004
+         ;Used:	    SREG,R18-R20
+         ;-----------------------------------------------------------------------------
+          MUL8X8U:
+         
+00032c 9f01      			MUL		r16, r17
+00032d 0180      			movw 	r16,r0
+00032e 9508      			ret
+         
+         ;-----------------------------------------------------------------------------
+         ;8 bit x 8 bit multiplication (signed)
+         ;- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+         ;In:	    R16 = x					    -128..+127
+         ;	        R17 = y					    0,000..0,996
+         ;Out:	    R17,R16 = x * y				-127,500..+126,504
+         ;Used:	    SREG,R18-R20
+         ;-----------------------------------------------------------------------------
+          MUL8X8S:
+00032f fb07                  bst	    R16, 7			    ; T = sign: 0=plus, 1=minus
+000330 fd07      		    sbrc	R16, 7			    ;\
+000331 9501      		    neg	    R16			        ;/ R16 = abs(R16)	0..128
+000332 9f01      			mul		r16, r17
+000333 0180      			movw 	r16,r0			    ; R17,R16 = LFO * LFOMOD
+000334 f42e      		    brtc	M8X8S_EXIT		    ; exit if x >= 0
+000335 9500      		    com	    R16			        ;\
+000336 9510      		    com	    R17			        ; \
+000337 9408      		    sec				            ;  > R17:R16 = -R17:R16
+000338 1d08      		    adc	    R16, ZERO	        ; /
+000339 1d18      		    adc	    R17, ZERO	        ;/
+         
+          M8X8S_EXIT:
+00033a 9508                  ret
+         
+         ;-----------------------------------------------------------------------------
+         ;32 bit x 16 bit multiplication (unsigned)
+         ;- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+         ;In:	    R19:R18:R17:R16 = x			0..2^32-1
+         ;	        R23:R22 = y			        0,yyyyyyyyyyyyyyyy	0..0,9999847
+         ;Out:	    R19:R18:R17:R16 = x * y		0..2^32-1
+         ;Used:	    SREG,R20-R29
+         ;-----------------------------------------------------------------------------
+          MUL32X16:
+00033b 93ef                  push	R30
+00033c 2744      		    clr	    R20		            ;\
+00033d 2755      		    clr	    R21		            ;/ XX = x
+00033e 2788      		    clr	    R24		            ;\
+00033f 2799      		    clr	    R25		            ; \
+000340 27aa      		    clr	    R26		            ;  \
+000341 27bb      		    clr	    R27		            ;  / ZZ = 0
+000342 27cc      		    clr	    R28		            ; /
+000343 27dd      		    clr	    R29		            ;/
+000344 c00f      		    rjmp	M3216_CHECK
+         
+          M3216_LOOP:
+000345 9576                  lsr	    R23		            ;\
+000346 9567      		    ror	    R22		            ;/ y:Carry = y >> 1
+000347 f430      		    brcc	M3216_SKIP
+000348 0f80      		    add	    R24,R16		        ;\
+000349 1f91      		    adc	    R25,R17		        ; \
+00034a 1fa2      		    adc	    R26,R18		        ;  \
+00034b 1fb3      		    adc	    R27,R19		        ;  / ZZ = ZZ + XX
+00034c 1fc4      		    adc	    R28,R20		        ; /
+00034d 1fd5      		    adc	    R29,R21		        ;/
+         
+          M3216_SKIP:
+00034e 0f00                  lsl	    R16		            ;\
+00034f 1f11      		    rol	    R17		            ; \
+000350 1f22      		    rol	    R18		            ;  \
+000351 1f33      		    rol	    R19		            ;  / YY = YY << 1
+000352 1f44      		    rol	    R20		            ; /
+000353 1f55      		    rol	    R21		            ;/
+         
+          M3216_CHECK:
+000354 2fe6                  mov	    R30,R22		        ;\
+000355 2be7      		    or	    R30,R23		        ;/ check if y == 0
+000356 f771      		    brne	M3216_LOOP
+000357 2f0a      		    mov	    R16,R26		        ;\
+000358 2f1b          		mov	    R17,R27		        ; \
+000359 2f2c      		    mov	    R18,R28		        ; / x * y
+00035a 2f3d      		    mov	    R19,R29		        ;/
+00035b 91ef      		    pop	    R30
+00035c 9508      		    ret
+         
+         ;-----------------------------------------------------------------------------
+         ; Load 32 bit phase value from ROM
+         ;- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+         ;In:	    R30 = index
+         ;Out:	    R19:R18:R17:R16 = value
+         ;Used:	    SREG,R0,R30,R31
+         ;-----------------------------------------------------------------------------
+          LOAD_32BIT:
+00035d 0fee                  lsl	    R30			        ; R30 *= 2 ( ZL )
+00035e 2f0e      			mov		R16,R30				; R16 = R30 ( index * 2  )
+         
+00035f e0f0      		    ldi	    ZH, high(DELTA_C)
+000360 e4e7      		    ldi		ZL, low(DELTA_C)	    ; Z = ROM address
+         
+000361 0fe0      			add		R30,R16				; add (index*2)
+         
+000362 0fee      		    add	    R30, R30
+000363 1fff          		adc	    R31, R31
+000364 95c8      		    lpm
+         
+000365 2d00      		    mov	    R16, R0
+000366 9631      		    adiw	R30, 1
+000367 95c8      		    lpm
+000368 2d10      		    mov	    R17, R0
+000369 9631      		    adiw	R30, 1
+00036a 95c8      		    lpm
+00036b 2d20      		    mov	    R18, R0
+00036c 9631      		    adiw	R30, 1
+00036d 95c8      		    lpm
+00036e 2d30      		    mov	    R19, R0
+00036f 9508      		    ret
+         
+         ;-----------------------------------------------------------------------------
+         ; Load phase delta from ROM
+         ;- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+         ;In:	    R23,R22 = indexs = 0,0..12,0 = n,octave
+         ;Out:	    R19:R18:R17:R16 = delta
+         ;Used:	    SREG,R0,R21,R24-R31
+         ;-----------------------------------------------------------------------------
+          LOAD_DELTA:
+000370 936f                  push	R22
+000371 937f      		    push	R23
+000372 2fe7      		    mov	    R30, R23
+000373 dfe9          		rcall	LOAD_32BIT
+000374 2f80      		    mov	    R24, R16
+000375 2f91      		    mov	    R25, R17
+000376 2fa2      		    mov	    R26, R18
+000377 2fb3      		    mov	    R27, R19		    ; R27-R24 = delta[n]
+000378 2fe7      		    mov	    R30, R23
+000379 95e3      		    inc	    R30
+00037a dfe2      		    rcall	LOAD_32BIT
+00037b 1b08      		    sub	    R16, R24
+00037c 0b19      		    sbc	    R17, R25
+00037d 0b2a      		    sbc	    R18, R26
+00037e 0b3b      		    sbc	    R19, R27
+00037f 938f      		    push	R24
+000380 939f      		    push	R25
+000381 93af      		    push	R26
+000382 93bf      		    push	R27
+000383 2f76      		    mov	    R23, R22
+000384 e060      		    ldi	    R22, 0
+000385 934f      		    push	R20
+000386 dfb4      		    rcall	MUL32X16
+000387 914f      		    pop	    R20
+000388 91bf      		    pop	    R27
+000389 91af      		    pop	    R26
+00038a 919f      		    pop	    R25
+00038b 918f      		    pop	    R24
+00038c 0f08          		add	    R16, R24
+00038d 1f19      		    adc	    R17, R25
+00038e 1f2a          		adc	    R18, R26
+00038f 1f3b      		    adc	    R19, R27
+000390 917f      		    pop	    R23
+000391 916f      		    pop	    R22
+000392 9508      		    ret
+         
+         ;-----------------------------------------------------------------------------
+         ;note number recalculation
+         ;- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+         ;In:	    R23 = n	                    0..139 = m12 + 12*n12
+         ;Out:	    R23 = m12                   0..11
+         ;	        R20 = n12                   0..11
+         ;Used:	    SREG
+         ;-----------------------------------------------------------------------------
+          NOTERECALC:
+000393 e040                  ldi	R20,0			        ; n12 = 0
+000394 c002      		    rjmp	NRC_2
+         
+          NRC_1:
+000395 507c                  subi	R23, 12			    ; m12 -= 12
+000396 9543      		    inc	    R20			        ; n12++
+         
+          NRC_2:
+000397 307c                  cpi	    R23, 12
+000398 f7e0      		    brsh	NRC_1			    ; repeat while m12 >= 12
+000399 9508      		    ret
+         
+         ;-----------------------------------------------------------------------------
+         ;read a byte from a table
+         ;- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+         ;In:	    R16 = i		                0..255
+         ;	        R31:R30 = &Tab
+         ;Out:	    R0 = Tab[i]	                0..255
+         ;Used:	    SREG,R30,R31
+         ;-----------------------------------------------------------------------------
+          TAB_BYTE:
+00039a 0fee                  add	    R30, R30			;\
+00039b 1fff      		    adc	    R31, R31		    ;/ Z = 2 * &Tab
+00039c 0fe0      		    add	    R30, R16
+00039d 1df8      		    adc	    R31, ZERO
+00039e 95c8      		    lpm
+00039f 9508      		    ret
+         
+         ;-----------------------------------------------------------------------------
+         ;read a word from a table
+         ;- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+         ;In:	    R16 = i			            0..255
+         ;	        R31:R30 = &Tab
+         ;Out:	    R19:R18 = Tab[i]            0..65535
+         ;Used:	    SREG,R0,R30,R31
+         ;-----------------------------------------------------------------------------
+          TAB_WORD:
+0003a0 0fe0                  add	    R30, R16
+0003a1 1df8      		    adc	    R31, ZERO
+0003a2 0fee      		    add	    R30, R30		    ;\
+0003a3 1fff      		    adc	    R31, R31		    ;/ Z = 2 * &Tab
+0003a4 95c8      		    lpm
+0003a5 2d20      		    mov	    R18, R0			    ; LSByte
+0003a6 9631      		    adiw	R30, 1			    ; Z++
+0003a7 95c8      		    lpm
+0003a8 2d30      		    mov	    R19, R0			    ; MSByte
+0003a9 9508      		    ret
+         
+         ;-----------------------------------------------------------------------------
+         ;"time" --> "rate" conversion
+         ;- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+         ;In:	    R16 = time			        0..255
+         ;Out:	    R19:R18:R17:R16 = rate		0x001B0000..0xFFFF0000
+         ;Used:	    SREG,R0,R30,R31
+         ;-----------------------------------------------------------------------------
+          ADCTORATE:
+0003aa 9506                  lsr	    R16
+0003ab 9506      		    lsr	    R16
+0003ac 9506      		    lsr	    R16			        ;0..31
+0003ad eae1      		    ldi	    R30, TIMETORATE
+0003ae e0f0      		    ldi	    R31, 0
+0003af dff0      		    rcall	TAB_WORD		    ;R19:R18 = rate
+0003b0 2700      		    clr	    R16
+0003b1 2711      		    clr	    R17
+0003b2 9508      		    ret
+         
+         ;-----------------------------------------------------------------------------
+         ;conversion of the "detune B" potentiometer function
+         ;- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+         ;In:	    R16 = x		                0..255
+         ;Out:	    R17,R16 = y	                0,000..255,996
+         ;Used:	    SREG,R18-R30
+         ;-----------------------------------------------------------------------------
+          NONLINPOT:
+0003b3 e060                  ldi	    R22, 0
+0003b4 2f70      		    mov	    R23, R16
+0003b5 3770          		cpi	    R23, 112
+0003b6 f018      		    brlo	NLP_I
+0003b7 3970      		    cpi	    R23, 144
+0003b8 f038      		    brlo	NLP_II
+0003b9 c00c      		    rjmp	NLP_III
+         
+          NLP_I:
+0003ba e000                  ldi	    R16, 0			    ;\  R18,R17:R16 = m =
+0003bb e210      		    ldi	    R17, 32			    ; > = 126/112 =
+0003bc e021      		    ldi	    R18, 1			    ;/  = 1,125
+0003bd e0e0          		ldi	    R30, 0			    ;\ R31,R30 = n =
+0003be e0f0      		    ldi	    R31, 0			    ;/ = 0,0
+0003bf c00b      		    rjmp	NLP_CONT
+         
+          NLP_II:
+0003c0 e008                  ldi	    R16, 8			    ;\  R18,R17:R16 = m =
+0003c1 e211      		    ldi	    R17, 33			    ; > = (130-126)/(143-112) =
+0003c2 e020          		ldi	    R18, 0			    ;/  = 0,129032258
+0003c3 e8ec      		    ldi	    R30, 140		    ;\ R31,R30 = n =
+0003c4 e6ff      		    ldi	    R31, 111		    ;/ = 126 - m*112 = 111,5483871
+0003c5 c005      		    rjmp	NLP_CONT
+         
+          NLP_III:
+0003c6 eb07                  ldi	    R16, 183		    ;\  R18,R17:R16 = m =
+0003c7 e11d      		    ldi	    R17, 29			    ; > = (255-130)/(255-143) =
+0003c8 e021      		    ldi	    R18, 1			    ;/  = 1,116071429
+0003c9 e6e7          		ldi	    R30, 103		    ;\ R31,R30 = n =
+0003ca eef2      		    ldi	    R31, 226		    ;/ 255 - m*255 = -29,59821429
+         
+          NLP_CONT:
+0003cb e030                  ldi	    R19, 0
+0003cc df6e      		    rcall	MUL32X16
+0003cd 0f0e      		    add	    R16, R30
+0003ce 1f1f      		    adc	    R17, R31
+0003cf 9508      		    ret
+         
+         ;-----------------------------------------------------------------------------
+         ; Write byte to eeprom memory
+         ;- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+         ;In:	    R16 	= value		                0..255
+         ;			r18:r17 = eeprom memory address
+         ;Used:	    R16, R17, R18
+         ;-----------------------------------------------------------------------------
+          EEPROM_write:
+         										; Wait for completion of previous write
+0003d0 99e1      			sbic 	EECR,EEWE
+0003d1 cffe      			rjmp 	EEPROM_write
+         										; Set up address (r18:r17) in address register
+0003d2 bb2f      			out 	EEARH, r18
+0003d3 bb1e      			out 	EEARL, r17
+         										; Write data (r16) to data register
+0003d4 bb0d      			out 	EEDR,r16
+         										; Write logical one to EEMWE
+0003d5 9ae2      			sbi 	EECR,EEMWE
+         										; Start eeprom write by setting EEWE
+0003d6 9ae1      			sbi 	EECR,EEWE
+0003d7 9508      			ret
+         
+         ;-----------------------------------------------------------------------------
+         ; Read byte from eeprom memory
+         ;- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+         ;In:	    r18:r17 = eeprom memory address
+         ;Out:		r16 	= value		                0..255
+         ;Used:	    R16, R17, R18
+         ;-----------------------------------------------------------------------------
+          EEPROM_read:
+         										; Wait for completion of previous write
+0003d8 99e1      			sbic 	EECR,EEWE
+0003d9 cffe      			rjmp 	EEPROM_read
+         										; Set up address (r18:r17) in address register
+0003da bb2f      			out 	EEARH, r18
+0003db bb1e      			out 	EEARL, r17
+         										; Start eeprom read by writing EERE
+0003dc 9ae0      			sbi 	EECR,EERE
+         										; Read data from data register
+0003dd b30d      			in 		r16,EEDR
+0003de 9508      			ret
+         
+         ;-------------------------------------------------------------------------------------------------------------------
+         ;			M A I N   P R O G R A M
+         ;-------------------------------------------------------------------------------------------------------------------
+          RESET:
+0003df 94f8                  cli				            ; disable interrupts
+         
+         ;JTAG Disable - Set JTD in MCSCSR
+0003e0 9100 0034             lds     R16, MCUCSR         ; Read MCUCSR
+0003e2 6800                  sbr     R16, 1 << JTD       ; Set jtag disable flag
+0003e3 bf04                  out     MCUCSR, R16         ; Write MCUCSR
+0003e4 bf04                  out     MCUCSR, R16         ; and again as per datasheet
+         
+         ;initialize stack:
+0003e5 ef0f        			ldi 	R16, low(RAMEND)
+0003e6 e110      			ldi 	R17, high(RAMEND)
+0003e7 bf0d      		    out	    SPL, R16
+0003e8 bf1e      		    out	    SPH, R17
+         
+         ;initialize variables:
+0003e9 2488      		    clr	    ZERO
+0003ea 2422      		    clr	    PHASEA_0
+0003eb 2433          		clr	    PHASEA_1
+0003ec 2444      		    clr	    PHASEA_2
+0003ed 2455      		    clr	    PHASEB_0
+0003ee 2466      		    clr	    PHASEB_1
+0003ef 2477      		    clr	    PHASEB_2
+         
+0003f0 2499      			clr 	a_L					; clear DCF registers
+0003f1 24aa      			clr 	a_H					;
+0003f2 2722      			clr		z_L					;
+0003f3 2733      			clr 	z_H					;
+0003f4 27ee      			clr 	temp				;
+0003f5 27ff      			clr 	temp2				;
+0003f6 e005      			ldi		R16, 5
+0003f7 9300 00c0 			sts 	KNOB_DEADZONE, R16	
+0003f9 e000      		    ldi	    R16, 0
+0003fa 9300 00c9 			sts		FMDEPTH, R16		; FM Depth = 0
+0003fc 9300 00cc 			sts		RESONANCE, R16		; Resonance = 0
+0003fe 9300 0079 			sts		PORTAMENTO, R16		; Portamento = 0
+000400 9300 0097 		    sts	    GATE, R16		    ; GATE = 0
+000402 9300 0098 		    sts	    GATEEDGE, R16	    ; GATEEDGE = 0
+000404 9300 0084 		    sts	    LEVEL, R16		    ; LEVEL = 0
+000406 9300 00a0 		    sts	    ENV_FRAC_L, R16	    ;\
+000408 9300 00a1 		    sts	    ENV_FRAC_H, R16	    ; > ENV = 0
+00040a 9300 00a2 		    sts	    ENV_INTEGR, R16	    ;/
+00040c 9300 0086 		    sts	    ADC_CHAN, R16	    ;ADC_CHAN = 0
+00040e 9300 007e 		    sts	    NOTE_L, R16		    ;\
+000410 9300 007f 		    sts	    NOTE_H, R16		    ; >
+000412 9300 0080 		    sts	    NOTE_INTG, R16	    ;/
+000414 9300 0066 		    sts	    MIDIPBEND_L, R16    ;\
+000416 9300 0067 		    sts	    MIDIPBEND_H, R16    ;/ P.BEND = 0
+000418 9300 00d1 		    sts	    MIDIMODWHEEL, R16   ; MOD.WHEEL = 0
+00041a e002      		    ldi	    R16, 2
+00041b 9300 0081 		    sts	    PORTACNT, R16	    ; PORTACNT = 2
+00041d ef0f      		    ldi	    R16, 255
+00041e 9300 006c 			sts		KNOB_SHIFT, R16		; Initialize panel shift knob in unknown state to force update
+000420 9300 006d 			sts		POWER_UP, R16		; Set power_up flag to 255 to force first initialization of panel switches
+000422 9300 0082 		    sts	    LPF_I, R16		    ; no DCF
+000424 9300 0083 			sts		HPF_I, R16			
+000426 9300 0064 		    sts	    MIDINOTE, R16	    ; note# = 255
+000428 9300 0065 		    sts	    MIDINOTEPREV, R16   ; note# = 255
+00042a e50e      		    ldi	    R16, 0x5E		    ;\
+00042b eb14      		    ldi	    R17, 0xB4		    ; \
+00042c e726      		    ldi	    R18, 0x76		    ;  \ initialising of
+00042d 9300 00af 		    sts	    SHIFTREG_0, R16		;  / shift register
+00042f 9310 00b0 		    sts	    SHIFTREG_1, R17		; /
+000431 9320 00b1 		    sts	    SHIFTREG_2, R18		;/
+000433 e000      		    ldi	    R16, 0			    ;\
+000434 e010          		ldi	    R17, 0			    ; > Amin = 0
+000435 e020      		    ldi	    R18, 0			    ;/
+000436 9300 00b2 		    sts	    LFOBOTTOM_0, R16	;\
+000438 9310 00b3 		    sts	    LFOBOTTOM_1, R17	; > store Amin for LFO
+00043a 9320 00b4 		    sts	    LFOBOTTOM_2, R18	;/
+00043c e127      			ldi		R18, 23
+00043d 9300 00b8 			sts	    LFO2BOTTOM_0, R16	;\
+00043f 9310 00b9 		    sts	    LFO2BOTTOM_1, R17	; > store Amin for LFO2
+000441 9320 00ba 			sts	    LFO2BOTTOM_2, R18	;/
+000443 ef0f      		    ldi	    R16, 255		    ;\
+000444 ef1f      		    ldi	    R17, 255		    ; > Amax = 255,999
+000445 ef2f      		    ldi	    R18, 255		    ;/
+000446 9300 00b5 		    sts	    LFOTOP_0, R16		;\
+000448 9310 00b6 		    sts	    LFOTOP_1, R17		; > store Amax for LFO
+00044a 9320 00b7 		    sts	    LFOTOP_2, R18		;/
+00044c ee21      			ldi		R18, 225
+00044d 9300 00bb 			sts	    LFO2TOP_0, R16		;\
+00044f 9310 00bc 		    sts	    LFO2TOP_1, R17		; > store Amax for LFO2
+000451 9320 00bd 		    sts	    LFO2TOP_2, R18		;/
+         
+         
+         ;initialize sound parameters:
+000453 e000      		    ldi	    R16,0
+000454 9300 00cb 			sts		WRITE_OFFSET, R16	; Initialize eeprom offset
+000456 9310 00ca 			sts		WRITE_MODE, R17		; Initialize eeprom WRITE_MODE to "No Write" (255)
+         
+000458 9300 006e 			sts		KNOB_STATUS, R16	; No knobs have been moved yet
+00045a 9300 00a3 		    sts	    LFOPHASE, R16		;
+00045c 9300 00a8 			sts	    LFO2PHASE, R16		;
+00045e 9300 009f 		    sts	    ENVPHASE, R16		;
+000460 9300 0075 		    sts	    DETUNEB_FRAC, R16	;\
+000462 9300 0076 		    sts	    DETUNEB_INTG, R16	;/ detune = 0
+000464 9300 0069 		    sts	    LFOLEVEL, R16		;
+000466 9300 0078 		    sts	    VCFENVMOD, R16		;
+000468 e504      		    ldi	    R16, 84			    ;\
+000469 9300 0068 		    sts	    LFOFREQ, R16	    ;/
+00046b e004      			ldi	    R16, 4				;\ Set LFO to slow sweep for PWM modulation	
+00046c 9300 006b 			sts	    LFO2FREQ, R16	    ;/
+00046e e108      		    ldi	    R16, 0x18    		;\
+00046f 9300 0072 		    sts	    MODEFLAGS1, R16		;/ DCO B = on, DCA = env
+000471 e100      		    ldi	    R16, 0x10    		;\ LFO = DCO
+000472 9300 0073 		    sts	    MODEFLAGS2, R16		;/ ENV mode: A-S-R
+000474 e800      		    ldi	    R16, 128		
+000475 9300 007a 		    sts	    ATTACKTIME, R16		;
+000477 9300 007b 			sts		DECAYTIME, R16		
+000479 9300 007c 			sts		SUSTAINLEVEL, R16
+00047b 9300 007d 		    sts	    RELEASETIME, R16	
+         
+         ; Load saved knob parameter values from eeprom
+         
+00047d b70f      			in 		r16, SREG 			; store SREG value
+00047e e020      			ldi		r18, 0
+00047f e010      			ldi		r17, 0				; Set eeprom memory offset to zero, then read 10 bytes...
+000480 df57      			rcall	EEPROM_read
+000481 9300 00be 			sts 	DCOA_LEVEL, r16
+000483 9513      			inc		r17
+000484 df53      			rcall	EEPROM_read
+000485 9300 00bf 			sts		DCOB_LEVEL, r16
+000487 9513      			inc		r17
+000488 df4f      			rcall	EEPROM_read
+000489 9300 0075 			sts		DETUNEB_FRAC, r16
+00048b 9513      			inc		r17
+00048c df4b      			rcall	EEPROM_read
+00048d 9300 0076 			sts 	DETUNEB_INTG, r16
+00048f 9513      			inc		r17
+000490 df47      			rcall	EEPROM_read
+000491 9300 0077 			sts		CUTOFF, r16
+000493 9513      			inc		r17
+000494 df43      			rcall	EEPROM_read
+000495 9300 00cc 			sts		RESONANCE, r16
+000497 9513      			inc		r17
+000498 df3f      			rcall	EEPROM_read
+000499 9300 0079 			sts		PORTAMENTO, r16
+00049b 9513      			inc		r17
+00049c df3b      			rcall	EEPROM_read
+00049d 9300 00c9 			sts		FMDEPTH, r16
+00049f 9513      			inc		r17
+0004a0 df37      			rcall	EEPROM_read
+0004a1 9300 006a 			sts		PANEL_LFOLEVEL, r16
+0004a3 9513      			inc		r17
+0004a4 df33      			rcall	EEPROM_read
+0004a5 9300 0068 			sts		LFOFREQ, r16
+0004a7 bf0f      			out 	SREG, r16 				; restore SREG value (I-bit)
+         
+         ;initialize port A:
+0004a8 e000      		    ldi	    R16, 0x00    		;\
+0004a9 bb0b      		    out	    PORTA, R16		    ;/ PA = zzzzzzzz
+0004aa e000      		    ldi	    R16, 0x00    		;\
+0004ab bb0a      		    out	    DDRA, R16		    ;/ PA = iiiiiiii    all inputs (panel pots)
+         
+         ;initialize port B:
+0004ac ef0f      		    ldi	    R16, 0xFF    		;\
+0004ad bb08      		    out	    PORTB, R16		    ;/ PB = pppppppp
+0004ae e000      		    ldi	    R16, 0x00    	    ;\
+0004af bb07      		    out	    DDRB, R16		    ;/ PB = iiiiiiii    all inputs
+         
+         ;initialize port C:
+0004b0 e000      		    ldi	    R16, 0x00     	    ;\
+0004b1 bb05      		    out	    PORTC, R16		    ;/ PC = 00000000
+0004b2 ef0f          		ldi	    R16, 0xFF    		;\
+0004b3 bb04      		    out	    DDRC, R16		    ;/ PC = oooooooo    all outputs (DAC)
+         
+         ;initialize port D:
+0004b4 ef0c      		    ldi	    R16, 0xFC    		;\
+0004b5 bb02      		    out	    PORTD, R16		    ;/ PD = 1111110z
+0004b6 ef0e      		    ldi	    R16, 0xFE    		;\
+0004b7 bb01      		    out	    DDRD, R16		    ;/ PD = oooooooi    all outputs except PD0 (MIDI-IN)
+         
+         ; Turn Power/MIDI LED on at power up
+         			
+0004b8 9a91      			sbi	    PORTD, 1		    ; LED on
+         
+         ; initialize DAC port pins
+         
+0004b9 9a93      			sbi		PORTD, 3			; Set WR high
+0004ba 9892      			cbi		PORTD, 2			; Pull DAC AB port select low
+         
+         
+         ;initialize Timer0:
+0004bb e000      		    ldi	    R16, 0x00    		;\
+0004bc bf03      		    out	    TCCR0, R16		    ;/ stop Timer 0
+         
+         ;initialize Timer1:
+0004bd e004      		    ldi	    R16, 0x04    		;\ prescaler = CK/256
+0004be bd0e      		    out	    TCCR1B, R16		    ;/ (clock = 32µs)
+         
+         ;initialize Timer2:
+0004bf e301                  ldi     R16, 49             ;\
+0004c0 bd03                  out     OCR2, R16           ;/ OCR2 = 49 gives 40kHz sample rate at 400 cycles per sample loop.
+0004c1 e00a                  ldi     R16, 0x0A           ;\ clear timer on compare,
+0004c2 bd05                  out     TCCR2, R16          ;/ set prescaler = CK/8
+         
+         ;initialize UART:
+0004c3 e000      		    ldi	    R16, high((cpu_frequency / (baud_rate * 16)) - 1)
+0004c4 9300 0090 		    sts	    UBRR0H, R16
+0004c6 e10f          		ldi	    R16, low((cpu_frequency / (baud_rate * 16)) - 1)
+0004c7 b909                  out     UBRR0L, R16
+         
+         ; enable receiver and receiver interrupt
+0004c8 e900          		ldi	    R16, (1<<RXCIE0)|(1<<RXEN0)   ;\
+0004c9 b90a      		    out	    UCSR0B, R16		            ;/ RXCIE=1, RXEN=1
+         
+         ;initialize ADC:
+0004ca e806      		    ldi	    R16, 0x86    		;\
+0004cb b906      		    out	    ADCSRA, R16		    ;/ ADEN=1, clk = 125 kHz
+         
+         ;initialize interrupts:
+0004cc e800      		    ldi	    R16, 0x80    		;\
+0004cd bf07      		    out	    TIMSK, R16		    ;/ OCIE2=1
+         
+0004ce 9478          		sei				            ; Interrupt Enable
+         
+         ;start conversion of the first A/D channel:
+0004cf 9120 0086 		    lds	    R18, ADC_CHAN
+0004d1 de2e      		    rcall	ADC_START
+         
+         ;store initial pot positions as OLD_ADC values to avoid snapping to new value unless knob has been moved.
+         
+         										; Store value of Pot ADC0
+0004d2 de30      		    rcall	ADC_END			    ; R16 = AD(i)
+         
+         		
+0004d3 9120 0086 			lds	    R18, ADC_CHAN		;\
+         
+0004d5 e8c7      		    ldi	    R28, low(ADC_0)		    ; \  ADC_0 is outside range for LDI
+0004d6 e0d0      			ldi		R29, high( ADC_0)
+0004d7 0fc2      			add	    R28, R18		    ; / Y = &ADC_i
+0004d8 e0d0      		    ldi	    R29, 0			    ;/
+         
+         
+         
+0004d9 8308      		    st	    Y, R16			    ; AD(i) --> ADC_i
+         
+0004da 9523      		    inc	    R18					; Now do ADC1
+0004db de24      		    rcall	ADC_START	        ; start conversion of next channel
+         			
+0004dc de26      			rcall	ADC_END			    ; R16 = AD(i)
+0004dd e8c7      		    ldi	    R28, low(ADC_0)		    ; \  ADC_0 is outside range for LDI
+0004de e0d0      			ldi		R29, high( ADC_0)
+0004df 0fc2      		    add	    R28, R18		    ; / Y = &ADC_i
+0004e0 e0d0      		    ldi	    R29, 0			    ;/
+0004e1 8308      		    st	    Y, R16			    ; AD(i) --> ADC_i
+         			
+0004e2 e026      			ldi	    R18, 6				; Now do ADC6
+0004e3 de1c      		    rcall	ADC_START	        ; start conversion of next channel
+         			
+0004e4 de1e      			rcall	ADC_END			    ; R16 = AD(i)
+0004e5 e8c7      		    ldi	    R28, low(ADC_0)		    ; \  ADC_0 is outside range for LDI
+0004e6 e0d0      			ldi		R29, high( ADC_0)
+0004e7 0fc2      		    add	    R28, R18		    ; / Y = &ADC_i
+0004e8 e0d0      		    ldi	    R29, 0			    ;/
+0004e9 8308      		    st	    Y, R16			    ; AD(i) --> ADC_i
+         
+0004ea 9523      			inc	    R18					; Now do ADC7
+0004eb de14      		    rcall	ADC_START	        ; start conversion of next channel
+         			
+0004ec de16      			rcall	ADC_END			    ; R16 = AD(i)
+0004ed e8c7      		    ldi	    R28, low(ADC_0)		    ; \  ADC_0 is outside range for LDI
+0004ee e0d0      			ldi		R29, high( ADC_0)
+0004ef 0fc2      		    add	    R28, R18		    ; / Y = &ADC_i
+0004f0 e0d0      		    ldi	    R29, 0			    ;/
+0004f1 8308      		    st	    Y, R16			    ; AD(i) --> ADC_i
+0004f2 e022      			ldi		R18, 2
+0004f3 9320 0086 			sts	    ADC_CHAN,R18
+0004f5 de0a      		    rcall	ADC_START	        ; start conversion of ADC2
+         
+0004f6 9100 0087 			lds	    R16, ADC_0			; Save dual knob positions for future comparison (ADC0, 1, 6, 7)
+0004f8 9300 008f 			sts	    OLD_ADC_0,R16
+0004fa 9100 0088 			lds	    R16, ADC_1			
+0004fc 9300 0090 			sts	    OLD_ADC_1,R16
+0004fe 9100 008d 			lds	    R16, ADC_6			
+000500 9300 0095 			sts	    OLD_ADC_6,R16
+000502 9100 008e 			lds	    R16, ADC_7			
+000504 9300 0096 			sts	    OLD_ADC_7,R16	
+         
+         
+         ;initialize the keyboard scan time
+000506 b50c      		    in	R16, TCNT1L		        ;\
+000507 b51d      		    in	R17, TCNT1H		        ;/ R17:R16 = TCNT1 = t
+000508 9300 0099 		    sts	TPREV_KBD_L, R16
+00050a 9310 009a 		    sts	TPREV_KBD_H, R17
+         				
+         ;-------------------------------------------------------------------------------------------------------------------
+         ; Main Program Loop
+         ;
+         ; This is where everything but sound generation happens. This loop is interrupted 40,000 times per second by the
+         ; sample interrupt routine. When it's actually allowed to get down to work, it scans the panel switches every 100ms,
+         ; scans the knobs a lot more than that, and calculates envelopes, LFO and parses MIDI input.
+         ;
+         ; In its spare time, Main Program Loop likes to go for long walks, listen to classical music and enjoy
+         ; existential bit flipping.
+         ;-------------------------------------------------------------------------------------------------------------------
+         ;
+         
+         
+          MAINLOOP:
+                     ;---------------------
+                     ; scan panel switches:
+                     ;---------------------
+         ;begin:
+         
+00050c b50c      		    in	    R16, TCNT1L		    ;\
+00050d b51d      		    in	    R17, TCNT1H		    ;/ R17:R16 = t
+00050e 9120 0099 		    lds	    R18, TPREV_KBD_L	;\
+000510 9130 009a 		    lds	    R19, TPREV_KBD_H	;/ R19:R18 = t0
+000512 1b02      		    sub	    R16, R18			;\
+000513 0b13      		    sbc	    R17, R19			;/ R17:R16 = t - t0
+000514 560a      		    subi	R16, LOW(KBDSCAN)	;\
+000515 4118      		    sbci	R17, HIGH(KBDSCAN)	;/ R17:R16 = (t-t0) - 100ms
+000516 f408      		    brsh	MLP_SCAN		    ;\
+000517 c093      		    rjmp	MLP_WRITE			;/ skip scanning if (t-t0) < 100ms
+         
+          MLP_SCAN:
+000518 b50c                  in	    R16, TCNT1L
+000519 b51d      		    in	    R17, TCNT1H
+00051a 9300 0099 		    sts	    TPREV_KBD_L, R16	;\
+00051c 9310 009a 		    sts	    TPREV_KBD_H, R17	;/ t0 = t
+         
+         ;reading:
+00051e e100          		ldi	    R16, 0x10    		; inverted state of PD outputs
+00051f e011      		    ldi	    R17, 0x01    		; mask
+000520 e120      		    ldi	    R18, 0x10    		; mask
+000521 e030      		    ldi	    R19, 0x00    		; bits of SWITCH1
+000522 e040      		    ldi	    R20, 0x00    		; bits of SWITCH2
+000523 e050      		    ldi	    R21, 0x00			; bits of SWITCH3
+         
+          MLP_SWLOOP:
+         
+000524 b3e2                  in	    R30, PORTD
+000525 6fe0      		    ori	    R30, 0xF0
+000526 27e0      		    eor	    R30, R16
+000527 bbe2      		    out	    PORTD, R30          ; `set' keyboard ROW to scan
+000528 ddd1      		    rcall	WAIT_10US
+000529 b3e6      		    in	    R30, PINB           ; `read' keyboard COL for key status
+00052a ffe0      		    sbrs	R30, 0			    ;\
+00052b 2b31      		    or	    R19, R17		    ;/ set bit when PB0==0
+00052c ffe1      		    sbrs	R30, 1			    ;\
+00052d 2b32      		    or	    R19, R18		    ;/ set bit when PB1==0
+00052e ffe2      		    sbrs	R30, 2			    ;\
+00052f 2b41      		    or	    R20, R17		    ;/ set bit when PB2==0
+000530 ffe3      		    sbrs	R30, 3			    ;\
+000531 2b42      		    or	    R20, R18		    ;/ set bit when PB3==0
+000532 ffe4      		    sbrs	R30, 4				;\
+000533 2b51      		    or	    R21, R17	        ;/ set bit when PB4==0
+000534 0f11      		    lsl	    R17
+000535 0f22      		    lsl	    R18
+000536 0f00      		    lsl 	R16
+000537 f761      		    brne	MLP_SWLOOP
+000538 b302      			in	    R16, PORTD
+000539 6f00      		    ori	    R16, 0xF0			; OR 1111 0000
+00053a bb02      			out     PORTD, R16			; just resets the ROW selector bits
+00053b 9330 006f 		    sts	    SWITCH1, R19
+00053d 9340 0070 		    sts	    SWITCH2, R20
+00053f 9350 0071     		sts	    SWITCH3, R21		; V04
+         
+         ;service:
+000541 9100 006f 		    lds	    R16, SWITCH1
+000543 9110 0070 		    lds	    R17, SWITCH2
+000545 9120 0072 		    lds	    R18, MODEFLAGS1
+000547 9130 0073 		    lds	    R19, MODEFLAGS2
+         
+000549 fb00      		    bst	    R16, 0	 			;\
+00054a f937      		    bld	    R19, 7	 			;/ PD4.PB0. SW16 LFO normal/random
+         
+00054b fb01        		    bst	    R16, 1		        ;\
+00054c f931      		    bld	    R19, 1		        ;/ PD5.PB0. SW15 LFO Wave tri/squ
+         
+00054d fb02      		    bst	    R16, 2		        ;\
+00054e f934      		    bld	    R19, 4		        ;/ PD6.PB0. SW14 Control knob shift
+         
+00054f fb03      		    bst	    R16, 3		        ;\
+000550 f920      		    bld	    R18, 0		        ;/ PD7.PB0. SW13 DCO Distortion off/on
+         
+000551 fb04      		    bst	    R16, 4		        ;\
+000552 f936          		bld	    R19, 6		        ;/ PD4.PB1. SW12 LFO keyboard sync off/on
+         
+000553 fb05      		    bst	    R16, 5		        ;\
+000554 f930      		    bld	    R19, 0		        ;/ PD5.PB1. SW11 LFO Mode 0=DCF, 1 = DCO
+         
+000555 fb06      		    bst	    R16, 6		        ;\
+000556 f933      		    bld	    R19, 3		        ;/ PD6.PB1. SW10 DCF mode 0=LP, 1=HP
+         
+000557 fb07          		bst	    R16, 7		        ;\
+000558 f932      		    bld	    R19, 2		        ;/ PD7.PB1. SW9  DCF key track 0=off, 1=on
+         
+000559 fb10      		    bst	    R17, 0		        ;\
+00055a f924      		    bld	    R18, 4		        ;/ PD4.PB2. SW8  DCA gate/env
+         
+00055b fb11      		    bst	    R17, 1		        ;\
+00055c f926      		    bld	    R18, 6		        ;/ PD5.PB2. SW7  Osc A Noise
+         
+00055d fb12      		    bst	    R17, 2		        ;\
+00055e f927      		    bld	    R18, 7		        ;/ PD6.PB2. SW6  Octave B down/up
+         
+00055f fb13      		    bst	    R17, 3		        ;\
+000560 f922      		    bld	    R18, 2		        ;/ PD7.PB2. SW5  Osc B wave saw/square
+         
+000561 fb14      		    bst	    R17, 4		        ;\
+000562 f925      		    bld	    R18, 5		        ;/ PD4.PB3. SW4  Transpose down/up
+         
+000563 fb15      		    bst	    R17, 5		        ;\
+000564 f935      		    bld	    R19, 5		        ;/ PD5.PB3. SW3  Modwheel disable/enable
+         
+000565 fb16      		    bst	    R17, 6		        ;\
+000566 f923      		    bld	    R18, 3		        ;/ PD6.PB3. SW2  Osc B on/off
+         
+000567 fb17      		    bst	    R17, 7		        ;\
+000568 f921      		    bld	    R18, 1		        ;/ PD7.PB3. SW1  Osc A wave saw/square
+         
+000569 9320 0072 		    sts	    MODEFLAGS1, R18
+00056b 9330 0073 		    sts	    MODEFLAGS2, R19
+         
+         ; MIDI channel will be set:
+         
+         ;			lds	    R16, SWITCH3
+00056d e000      			ldi	    R16, 0				; For LayerOne, always midi zero
+00056e 9300 0074 		    sts	    SETMIDICHANNEL, R16	; 0 for OMNI or 1..15
+         
+         
+         
+         ; Check if knob shift switch has changed:
+         
+         ; At power up, set previous knob shift value to current switch setting and jump tp read knobs
+000570 9110 006d 			lds		R17, POWER_UP		; Is this the first time through this code since synth was turned on?
+000572 ff10      			sbrs	R17, 0				; No: skip to read the 'knob shift' switch and see if it's changed.
+000573 c00a      			rjmp	MLP_SHIFT			
+000574 ff34      			sbrs	R19, 4				; Yes: Store current knob shift switch value as previous value
+000575 e000      			ldi		R16, 0				; Test if 'knob shift' bit is set
+000576 fd34      			sbrc	R19, 4
+000577 e001      			ldi		R16, 1
+000578 9300 006c 			sts		KNOB_SHIFT, R16		
+00057a 2711      			clr		R17					
+00057b 9310 006d 			sts		POWER_UP, R17		; Clear the POWER_UP flag so we don't reinitialize
+00057d c02d      			rjmp	MLP_WRITE			; and skip switch check this time
+         
+          MLP_SHIFT:
+00057e ff34      			sbrs	R19, 4				; Test if 'knob shift' bit is set
+00057f e000      			ldi		R16, 0
+000580 fd34      			sbrc	R19, 4
+000581 e001      			ldi		R16, 1
+000582 9110 006c 			lds		R17, KNOB_SHIFT
+000584 1701      			cp		R16, R17
+000585 f409      			brne	MLP_SWITCHSCAN
+000586 c024      			rjmp	MLP_WRITE			; skip if switch unchanged
+         
+          MLP_SWITCHSCAN:
+000587 9300 006c 			sts		KNOB_SHIFT, R16		; Store new position of shift switch and write knob parameters to eeprom.
+         		
+         										; If shift switch is down, write upper parameters to eeprom
+000589 fd34      			sbrc	R19, 4
+00058a c007      			rjmp	SWITCH_UP
+00058b e001      			ldi		r16, 1				;
+00058c 9300 00ca 			sts		WRITE_MODE, r16		; Select the upper bank to write to eeprom
+00058e e000      			ldi		r16, 0				; eeprom byte offset is zero
+00058f 9300 00cb 			sts		WRITE_OFFSET, r16
+000591 c006      			rjmp	EXIT_EEPROM						
+         
+          SWITCH_UP:								
+000592 e000      			ldi		r16, 0				;
+000593 9300 00ca 			sts		WRITE_MODE, r16		; If shift switch is up, select lower bank for eeprom write
+000595 e006      			ldi		r16, 6
+000596 9300 00cb 			sts		WRITE_OFFSET, r16	; eeprom offset is 6 (7th byte)
+         
+          EXIT_EEPROM:
+000598 2700      			clr		R16
+000599 9300 006e 			sts		KNOB_STATUS,R16		; Clear status bits to indicate no knobs have changed
+00059b 9100 0087 			lds	    R16, ADC_0			; Save current pot 0, 1, 6 and 7 positions for future comparison
+00059d 9300 008f 			sts	    OLD_ADC_0,R16
+00059f 9100 0088 			lds	    R16, ADC_1			
+0005a1 9300 0090 			sts	    OLD_ADC_1,R16
+0005a3 9100 008d 			lds	    R16, ADC_6			
+0005a5 9300 0095 			sts	    OLD_ADC_6,R16
+0005a7 9100 008e 			lds	    R16, ADC_7			
+0005a9 9300 0096 			sts	    OLD_ADC_7,R16	
+         
+         ; ------------------------------------------------------------------------------------------------------------------------
+         ; Asynchronous EEPROM write
+         ;
+         ; Because EEPROM writes are slow, MeeBlip executes the main program and audio interrupts while eeprom writes happen in the
+         ; background. A new byte is only written if the eeprom hardware flags that it's finished the previous write.
+         ; ------------------------------------------------------------------------------------------------------------------------
+         ;
+         	
+          MLP_WRITE:
+0005ab 9100 00ca 			lds		r16, WRITE_MODE
+0005ad fd07      			sbrc	r16,7			
+0005ae c04d      			rjmp	MLP_SKIPSCAN		; Nothing to write, so skip
+         
+0005af 99e1      			sbic 	EECR,EEWE
+0005b0 c04b      			rjmp	MLP_SKIPSCAN		; Skip if we're not finished the last write
+0005b1 fd00      			sbrc	r16, 0	
+0005b2 c014      			rjmp	WRITE_UPPER
+         
+         ; ------------------------------------------------------------------------------------------------------------------------
+         ; Load a single lower knob bank value for eeprom
+         ; ------------------------------------------------------------------------------------------------------------------------
+         ; 	
+0005b3 9100 00cb 			lds		r16, WRITE_OFFSET
+0005b5 3006      			cpi		r16, 6
+0005b6 f039      			breq	WRITE_GLIDE
+0005b7 3007      			cpi		r16, 7
+0005b8 f041      			breq	WRITE_FM
+0005b9 3008      			cpi		r16, 8
+0005ba f049      			breq	WRITE_LFODEPTH
+         
+         ; LFOFREQ
+0005bb 9110 0068 			lds		r17, LFOFREQ		; Fetch LFO Speed value									
+0005bd c026      			rjmp	WRITE_BYTE
+         
+          WRITE_GLIDE:
+0005be 9110 0079 			lds		r17, PORTAMENTO		; Fetch glide value									
+0005c0 c023      			rjmp	WRITE_BYTE
+         
+          WRITE_FM:
+0005c1 9110 00c9 			lds		r17, FMDEPTH		; Fetch FM value									
+0005c3 c020      			rjmp	WRITE_BYTE
+         
+          WRITE_LFODEPTH:
+0005c4 9110 006a 			lds		r17, PANEL_LFOLEVEL	; Fetch LFO depth value									
+0005c6 c01d      			rjmp	WRITE_BYTE
+         
+         
+         ; ------------------------------------------------------------------------------------------------------------------------
+         ; Load a single upper knob bank value for eeprom
+         ; ------------------------------------------------------------------------------------------------------------------------
+         ;
+         
+          WRITE_UPPER:							
+0005c7 9100 00cb 			lds		r16, WRITE_OFFSET
+0005c9 3000      			cpi		r16, 0
+0005ca f059      			breq	WRITE_DCOA
+0005cb 3001      			cpi		r16, 1
+0005cc f061      			breq	WRITE_DCOB
+0005cd 3002      			cpi		r16, 2
+0005ce f069      			breq	WRITE_DETUNEF
+0005cf 3003      			cpi		r16, 3
+0005d0 f071      			breq	WRITE_DETUNEI
+0005d1 3004      			cpi		r16, 4
+0005d2 f079      			breq	WRITE_CUTOFF
+         
+         ; Resonance
+0005d3 9110 00cc 			lds		r17, RESONANCE		; Fetch filter resonance
+0005d5 c00e      			rjmp	WRITE_BYTE		
+         									
+          WRITE_DCOA:
+0005d6 9110 00be 			lds		r17, DCOA_LEVEL		; Fetch DCO A volume									
+0005d8 c00b      			rjmp	WRITE_BYTE				
+         
+          WRITE_DCOB:
+0005d9 9110 00bf 			lds		r17, DCOB_LEVEL 	; Fetch DCO B volume
+0005db c008      			rjmp	WRITE_BYTE	
+         
+          WRITE_DETUNEF:
+0005dc 9110 0075 			lds		r17, DETUNEB_FRAC	; Fetch DCO B fractional detune value
+0005de c005      			rjmp	WRITE_BYTE	
+         
+          WRITE_DETUNEI:
+0005df 9110 0076 			lds		r17, DETUNEB_INTG	; Fetch DCO B integer detune value
+0005e1 c002      			rjmp	WRITE_BYTE	
+         
+          WRITE_CUTOFF:
+0005e2 9110 0077 			lds		r17, CUTOFF			; Fetch filter cutoff
+         								
+         
+         ; ------------------------------------------------------------------------------------------------------------------------
+         ; Store a single parameter value to eeprom
+         ; ------------------------------------------------------------------------------------------------------------------------
+         ;
+         										
+          WRITE_BYTE:								
+         									
+0005e4 e030      			ldi		r19, 0														
+0005e5 bb3f      			out 	EEARH, r19
+0005e6 bb0e      			out 	EEARL, r16			; single byte offset from WRITE_OFFSET
+0005e7 bb1d      			out 	EEDR,r17			; Write data (r17) to data register
+0005e8 b71f      			in 		r17, SREG 			; store SREG value
+0005e9 94f8      			cli 						; disable interrupts during timed eeprom write sequence
+0005ea 9ae2      			sbi 	EECR,EEMWE			; Write logical one to EEMWE
+0005eb 9ae1      			sbi 	EECR,EEWE			; Start eeprom write by setting EEWE
+0005ec bf1f      			out 	SREG, r17 			; restore SREG value (I-bit)
+0005ed 9478      			sei 						; set global interrupt enable
+         
+0005ee 3005      			cpi		r16, 5				; If eeprom write offset is at the end of knob bank 0 or bank 1, turn off write mode
+0005ef f031      			breq	CLEAR_WRITE
+0005f0 3009      			cpi		r16, 9
+0005f1 f021      			breq 	CLEAR_WRITE
+0005f2 9503      			inc		r16
+0005f3 9300 00cb 			sts		WRITE_OFFSET, r16 	; increment and store eeprom offset for next parameter
+0005f5 c006      			rjmp	MLP_SKIPSCAN
+         
+          CLEAR_WRITE:
+0005f6 e010      			ldi		r17, 0
+0005f7 9310 00cb 			sts		WRITE_OFFSET, r17	; Set offset to zero
+0005f9 ef1f      			ldi		r17, 255
+0005fa 9310 00ca 			sts		WRITE_MODE, r17		; Set write mode to 255 (off)
+         
+         
+         ; ------------------------------------------------------------------------------------------------------------------------
+         ; Read potentiometer values
+         ; ------------------------------------------------------------------------------------------------------------------------
+         ;
+         
+         
+          MLP_SKIPSCAN:
+         
+                     ;--------------------
+                     ;read potentiometers:
+                     ;--------------------
+         
+         
+0005fc dd06      		    rcall	ADC_END			    ; R16 = AD(i)
+0005fd 9120 0086 		    lds	    R18, ADC_CHAN		;\
+         
+0005ff e8c7      		    ldi	    R28, low(ADC_0)		    ; \  ADC_0 is outside range for LDI
+000600 e0d0      			ldi		R29, high( ADC_0)
+         
+         
+000601 0fc2      		    add	    R28, R18		    ; / Y = &ADC_i
+000602 e0d0      		    ldi	    R29, 0			    ;/
+000603 8308      		    st	    Y, R16			    ; AD(i) --> ADC_i
+         
+         ;next channel:
+000604 9523      		    inc	    R18
+000605 7027      		    andi	R18, 0x07
+000606 9320 0086 		    sts	    ADC_CHAN,R18
+000608 dcf7      		    rcall	ADC_START	        ; start conversion of next channel
+         			
+         ;-------------------------------------------------------------------------------------------------------------------
+         ; Store knob values based on KNOB SHIFT switch setting
+         ;
+         ; Pots 0, 1, 6, 7 have two parameters with the KNOB SHIFT
+         ; switch used to select knob bank 0 or 1. When the switch is changed, the synth
+         ; saves the current pot position and only updates the parameter in the new bank when
+         ; the knob has moved. Otherwise, all parameters would snap to the
+         ; current pot values when the shift switch is used.
+         ;
+         ; To make things more challenging, the ADC value read from each pot might fluctuate
+         ; through several values. This will cause the synth to think the pot has been moved and update
+         ; the parameter value. To avoid this, require the pot to be moved a level of at least
+         ; X before updating (deadzone check). To reduce processing time, a knob status byte
+         ; tracks whether the pots have been moved since the KNOB SHIFT switch was updated.
+         ; If the status bit is set, we can just skip the deadzone check and update.		
+         ;-------------------------------------------------------------------------------------------------------------------
+         
+         ; Check which bank of knob parameters we're updating.
+         
+000609 9130 0073 			lds	    R19, MODEFLAGS2
+00060b 9120 006e 			lds		R18, KNOB_STATUS	; Load knob status bits from RAM
+00060d fd34      			sbrc	R19, 4				; If knob Shift bit set, jump to process bank 1
+00060e 940c 0654 			jmp		KNOB_BANK_1
+         
+         ;-------------------------------------------------------------------------------------------------------------------
+         ; KNOB BANK 0
+         ;-------------------------------------------------------------------------------------------------------------------
+         
+         		
+000610 9100 0087 			lds	    R16, ADC_0
+000612 fd20      			sbrc	R18, 0						; Check bit 0
+000613 940c 061e 			jmp		LOAD_ADC_0					; ADC_0 status bit is set, so just update parameter
+000615 2f30      			mov		R19, R16
+000616 9110 008f 			lds		R17, OLD_ADC_0
+000618 1b31      			sub		R19, R17
+000619 f40a      			brpl	DEAD_CHECK_0
+00061a 9531      			neg		R19		
+          DEAD_CHECK_0:
+00061b 3035      			cpi		R19, 5				
+00061c f018      			brlo	KNOB_10						; Skip ahead if pot change is < the deadzone limit
+00061d 6021      			sbr 	r18,1						; Update knob status bit and continue -- pot moved
+         
+         ;-------------------------------------------------------------------------------------------------------------------
+         ; Knob 0 --> LFO speed
+         ;-------------------------------------------------------------------------------------------------------------------
+         
+          LOAD_ADC_0:	
+00061e 9300 0068 		    sts	    LFOFREQ,R16		    ; AD0.0 --> LFO speed
+         ;-------------------------------------------------------------------------------------------------------------------
+         
+         												; Now repeat for ADC_1. This code is repeated to avoid
+         												; the overhead of calling and returning from a subroutine (or at least
+         												; that's my excuse). In all honesty, we have plenty of flash memory
+         												; so I don't mind a bit of cut and paste to shave a few clock cycles.
+          KNOB_10:
+000620 9100 0088 			lds	    R16, ADC_1
+000622 fd21      			sbrc	R18, 1						; Check bit 1
+000623 940c 062e 			jmp		LOAD_ADC_10			;		 ADC_1 status bit is set, so just update parameter
+000625 2f30      			mov		R19, R16
+000626 9110 0090 			lds		R17, OLD_ADC_1
+000628 1b31      			sub		R19, R17
+000629 f40a      			brpl	DEAD_CHECK_10
+00062a 9531      			neg		R19		
+          DEAD_CHECK_10:
+00062b 3035      			cpi		R19, 5				
+00062c f028      			brlo	KNOB_60			
+00062d 6022      			sbr 	r18,2				
+         
+         ;-------------------------------------------------------------------------------------------------------------------
+         ; Knob 1 --> LFO depth
+         ;-------------------------------------------------------------------------------------------------------------------
+         
+          LOAD_ADC_10:	
+00062e 9300 0069 		    sts	    LFOLEVEL,R16		
+000630 9300 006a 			sts		PANEL_LFOLEVEL, r16	
+         ;-------------------------------------------------------------------------------------------------------------------
+         	
+          KNOB_60:
+000632 9100 008d 			lds	    R16, ADC_6
+000634 fd26      			sbrc	R18, 6						; Check bit 6
+000635 940c 0640 			jmp		LOAD_ADC_60					; ADC_6 status bit is set, so just update parameter
+000637 2f30      			mov		R19, R16
+000638 9110 0095 			lds		R17, OLD_ADC_6
+00063a 1b31      			sub		R19, R17
+00063b f40a      			brpl	DEAD_CHECK_60
+00063c 9531      			neg		R19		
+          DEAD_CHECK_60:
+00063d 3035      			cpi		R19, 5				
+00063e f018      			brlo	KNOB_70			
+00063f 6420      			sbr 	r18,64				
+         
+         ;-------------------------------------------------------------------------------------------------------------------
+         ; Knob 6 --> FM depth
+         ;-------------------------------------------------------------------------------------------------------------------
+         
+          LOAD_ADC_60:
+         
+000640 9300 00c9 		    sts	    FMDEPTH, R16			
+         
+         ;-------------------------------------------------------------------------------------------------------------------
+         
+          KNOB_70:
+000642 9100 008e 			lds	    R16, ADC_7
+000644 fd27      			sbrc	R18, 7						; Check bit 7
+000645 940c 0650 			jmp		LOAD_ADC_70					; ADC_7 status bit is set, so just update parameter
+000647 2f30      			mov		R19, R16
+000648 9110 0096 			lds		R17, OLD_ADC_7
+00064a 1b31      			sub		R19, R17
+00064b f40a      			brpl	DEAD_CHECK_70
+00064c 9531      			neg		R19		
+          DEAD_CHECK_70:
+00064d 3035      			cpi		R19, 5							
+00064e f018      			brlo	EXIT_KNOB_BANK_0						
+00064f 6820      			sbr 	r18,128				
+         
+         ;-------------------------------------------------------------------------------------------------------------------
+         ; Knob 7 --> Portamento (key glide)
+         ;-------------------------------------------------------------------------------------------------------------------
+         
+          LOAD_ADC_70:	
+000650 9300 0079 		    sts	    PORTAMENTO,R16		
+         
+         ;-------------------------------------------------------------------------------------------------------------------
+         ;
+          EXIT_KNOB_BANK_0:
+         											; Finished knob bank 0
+000652 940c 06a7 			jmp		ENV_KNOBS				; Skip the second bank
+         
+         
+         ;-------------------------------------------------------------------------------------------------------------------
+         ; KNOB BANK 1
+         ;-------------------------------------------------------------------------------------------------------------------
+         
+         	
+          KNOB_BANK_1:
+         			
+         ;KNOB_01:
+000654 9100 0087 			lds	    R16, ADC_0
+000656 fd20      			sbrc	R18, 0						; Check knob status bit 0
+000657 940c 0662 			jmp		LOAD_ADC_01					; ADC_0 status bit is set, so just update parameter
+000659 2f30      			mov		R19, R16
+00065a 9110 008f 			lds		R17, OLD_ADC_0
+00065c 1b31      			sub		R19, R17
+00065d f40a      			brpl	DEAD_CHECK_01
+00065e 9531      			neg		R19		
+          DEAD_CHECK_01:
+00065f 3035      			cpi		R19, 5	;
+000660 f030      			brlo	KNOB_11						; Skip ahead if pot change is within the deadzone
+000661 6021      			sbr 	r18,1						; Update knob status bit and continue -- pot moved
+         
+          LOAD_ADC_01:	
+000662 3f06      			cpi		R16, 0xf6					;\
+000663 f008      			BRLO	LOAD_REZ					; | Limit resonance to >= 0xf6
+000664 ef06      			ldi		R16, 0xf6					;/
+         
+         ;-------------------------------------------------------------------------------------------------------------------
+         ; Knob 0 --> DCF resonance (Q)
+         ;-------------------------------------------------------------------------------------------------------------------
+         
+          LOAD_REZ:
+000665 9300 00cc 		    sts	    RESONANCE,R16		
+         ;-------------------------------------------------------------------------------------------------------------------
+         
+          KNOB_11:
+000667 9100 0088 			lds	    R16, ADC_1
+000669 fd21      			sbrc	R18, 1						; Check bit 1
+00066a 940c 0675 			jmp		LOAD_ADC_11					; ADC_1 status bit is set, so just update
+00066c 2f30      			mov		R19, R16
+00066d 9110 0090 			lds		R17, OLD_ADC_1
+00066f 1b31      			sub		R19, R17
+000670 f40a      			brpl	DEAD_CHECK_11
+000671 9531      			neg		R19		
+          DEAD_CHECK_11:
+000672 3035      			cpi		R19, 5	;
+000673 f018      			brlo	KNOB_61						
+000674 6022      			sbr 	r18,2						
+         
+         ;-------------------------------------------------------------------------------------------------------------------
+         ; Knob 1 --> DCF cutoff (F)
+         ;-------------------------------------------------------------------------------------------------------------------
+         
+          LOAD_ADC_11:
+000675 9300 0077 			sts	    CUTOFF,R16		    					
+         ;-------------------------------------------------------------------------------------------------------------------
+         
+          KNOB_61:
+000677 9100 008d 			lds	    R16, ADC_6
+000679 fd26      			sbrc	R18, 6						; Check bit 6
+00067a 940c 0685 			jmp		LOAD_ADC_61					; ADC_6 status bit is set, so just update
+00067c 2f30      			mov		R19, R16
+00067d 9110 0095 			lds		R17, OLD_ADC_6
+00067f 1b31      			sub		R19, R17
+000680 f40a      			brpl	DEAD_CHECK_61
+000681 9531      			neg		R19		
+          DEAD_CHECK_61:
+000682 3035      			cpi		R19, 5	;
+000683 f038      			brlo	KNOB_71						
+000684 6420      			sbr 	r18,64						
+         
+         ;-------------------------------------------------------------------------------------------------------------------
+         ; Knob 6 --> DCO B detune with non-linear knob (center is tuned)
+         ;-------------------------------------------------------------------------------------------------------------------
+         
+          LOAD_ADC_61:							
+000685 dd2d      		    rcall	NONLINPOT		    		; AD6.1 --> DCO B detune with non-linear knob (center is tuned)
+000686 5810      		    subi	R17, 128		
+000687 9300 0075 		    sts	    DETUNEB_FRAC, R16			; Value -128.000..+127.996
+000689 9310 0076 		    sts	    DETUNEB_INTG, R17	
+         ;-------------------------------------------------------------------------------------------------------------------
+         
+          KNOB_71:
+00068b 9100 008e 			lds	    R16, ADC_7
+00068d fd27      			sbrc	R18, 7						; Check bit 7
+00068e 940c 0699 			jmp		LOAD_ADC_71					; ADC_1 status bit is set, so just update
+000690 2f30      			mov		R19, R16
+000691 9110 0096 			lds		R17, OLD_ADC_7
+000693 1b31      			sub		R19, R17
+000694 f40a      			brpl	DEAD_CHECK_71
+000695 9531      			neg		R19		
+          DEAD_CHECK_71:
+000696 3035      			cpi		R19, 5	;
+000697 f078      			brlo	ENV_KNOBS		
+000698 6820      			sbr 	r18,128						
+         
+         ;-------------------------------------------------------------------------------------------------------------------
+         ; Knob 7 --> OSC A/B mix
+         ;-------------------------------------------------------------------------------------------------------------------
+         
+          LOAD_ADC_71:							
+         										
+000699 9506      			lsr		r16					; scale knob 0..63 for DCOB volume calcs
+00069a 9506      			lsr		r16
+00069b e410      			ldi		r17, $40
+00069c 1b10      			sub		r17, r16			; scale knob 63..0 for DCOA volume calcs
+00069d 3210      			cpi		R17, $20							
+00069e f008      			BRLO	SET_DCOA			
+00069f e210      			ldi		R17, $20							
+          SET_DCOA:
+0006a0 9310 00be 			sts 	DCOA_LEVEL, R17		; Store DCOA level (0..31)
+         
+0006a2 3200      			cpi		R16, $20						
+0006a3 f008      			BRLO	SET_DCOB			
+0006a4 e200      			ldi		R16, $20							
+          SET_DCOB:
+0006a5 9300 00bf 			sts 	DCOB_LEVEL, R16		; Store DCOB level (0..31)
+         
+         
+         ;-------------------------------------------------------------------------------------------------------------------
+         ; Update ADSR Amplitude Envelope Values
+         ;
+         ; Read values straight from the Attack, Decay, Sustain and Release knobs. These aren't bank switched.
+         ;-------------------------------------------------------------------------------------------------------------------
+         
+         
+          ENV_KNOBS:
+         
+         ; Load ADSR envelope pots. These have only a single value.
+         ;
+         ;-------------------------------------------------------------------------------------------------------------------
+         ; Knob 2 --> Release Time
+         ;-------------------------------------------------------------------------------------------------------------------
+         
+          KNOB_20:
+0006a7 9100 0089 		    lds	    R16, ADC_2		
+0006a9 9300 007d 		    sts	    RELEASETIME, R16	
+         ;-------------------------------------------------------------------------------------------------------------------
+         ;
+          KNOB_30:			
+0006ab 9100 008a 			lds	    R16, ADC_3
+0006ad fd23      			sbrc	R18, 3						; Check bit 3
+0006ae 940c 06b9 			jmp		LOAD_ADC_30					; ADC_1 status bit is set, so just update parameter
+0006b0 2f30      			mov		R19, R16
+0006b1 9110 0092 			lds		R17, OLD_ADC_3
+0006b3 1b31      			sub		R19, R17
+0006b4 f40a      			brpl	DEAD_CHECK_30
+0006b5 9531      			neg		R19		
+          DEAD_CHECK_30:
+0006b6 3035      			cpi		R19, 5				
+0006b7 f038      			brlo	KNOB_40			
+0006b8 6024      			sbr 	r18,4				
+         
+         ;-------------------------------------------------------------------------------------------------------------------
+         ; Knob 3 --> Sustain Level
+         ;-------------------------------------------------------------------------------------------------------------------
+         
+          LOAD_ADC_30:	
+0006b9 ece1      		    ldi	    R30, TAB_VCA	    		;\
+0006ba e0f0      		    ldi	    R31, 0			    		;/ Z = &Tab
+0006bb dcde      		    rcall	TAB_BYTE		    		; R0 = 0..255
+0006bc 2d00      		    mov	    R16, R0
+0006bd 9300 007c 		    sts	    SUSTAINLEVEL,R16	; AD3.0 --> Scaled sustain level
+         
+         ;-------------------------------------------------------------------------------------------------------------------
+         ; Knob 4 --> Decay Time
+         ;-------------------------------------------------------------------------------------------------------------------
+         
+          KNOB_40:
+0006bf 9100 008b 		    lds	    R16, ADC_4		
+0006c1 9300 007b 		    sts	    DECAYTIME, R16		
+         
+         ;-------------------------------------------------------------------------------------------------------------------
+         ; Knob 4 --> Attack Time
+         ;-------------------------------------------------------------------------------------------------------------------
+         
+          KNOB_50:
+0006c3 9100 008c 		    lds	    R16, ADC_5		
+0006c5 9300 007a 		    sts	    ATTACKTIME, R16		
+         			
+0006c7 9320 006e 			sts		KNOB_STATUS, R18	; Save updated knob status for all pots.
+         
+         ;-------------------------------------------------------------------------------------------------------------------
+         ; Set Filter Envelope modulation from MIDI velocity
+         ;-------------------------------------------------------------------------------------------------------------------
+         			
+          MIDI_VELOCITY:
+0006c9 9100 0063 			lds 	R16, MIDIVELOCITY	
+0006cb 0f00      			LSL		R16					; Scale to 0..254
+0006cc 9300 0078 		    sts	    VCFENVMOD, R16		; MIDI Velocity --> DCF ENV MOD
+         		
+         		
+         ;-------------------------------------------------------------------------------------------------------------------
+         ; Scale Filter Q value to compensate for resonance loss				
+         ; Doing this here to get it out of the sample loop
+         ;-------------------------------------------------------------------------------------------------------------------
+         
+0006ce 9120 00cc    	 	 lds    r18, RESONANCE
+0006d0 9100 0082          lds    r16, LPF_I    			;load 'F' value
+0006d2 ef1f               ldi    r17, 0xff
+         
+0006d3 1b10               sub r17, r16 ; 1-F
+0006d4 9516               lsr r17
+0006d5 e034               ldi r19, 0x04
+0006d6 0f13               add r17, r19
+         
+         
+0006d7 1b21               sub    r18, r17     			; Q-(1-f)
+0006d8 f408               brcc REZ_OVERFLOW_CHECK      	; if no overflow occured
+0006d9 e020               ldi    r18, 0x00    			;0x00 because of unsigned
+         
+          REZ_OVERFLOW_CHECK:
+         
+0006da 9320 00cd   		 sts	   SCALED_RESONANCE, r18
+         
+         
+                     ;-------------
+                     ;calculate dT:
+                     ;-------------
+0006dc b56c      		    in	    R22, TCNT1L		    ;\
+0006dd b57d      		    in	    R23, TCNT1H		    ;/ R23:R22 = TCNT1 = t
+0006de 2f26      		    mov	    R18, R22		    ;\
+0006df 2f37          		mov	    R19, R23		    ;/ R19:R18 = t
+0006e0 9100 009b 		    lds	    R16, TPREV_L	    ;\
+0006e2 9110 009c 		    lds	    R17, TPREV_H	    ;/ R17:R16 = t0
+0006e4 1b60      		    sub	    R22, R16		    ;\ R23:R22 = t - t0 = dt
+0006e5 0b71      		    sbc	    R23, R17		    ;/ (1 bit = 32 µs)
+0006e6 9320 009b 		    sts	    TPREV_L, R18	    ;\
+0006e8 9330 009c 		    sts	    TPREV_H, R19	    ;/ t0 = t
+0006ea 9360 009d     		sts	    DELTAT_L, R22		;\
+0006ec 9370 009e 		    sts	    DELTAT_H, R23		;/ R23:R22 = dT
+         
+                     ;----
+                     ;LFO:
+                     ;----
+         
+         ;calculate dA:
+0006ee 9100 0068 		    lds	    R16, LFOFREQ	    ;\
+0006f0 9500      		    com	    R16			        ;/ R16 = 255 - ADC0
+0006f1 dcb8      		    rcall	ADCTORATE           ; R19:R18:R17:R16 = rate of rise/fall
+0006f2 9160 009d 		    lds	    R22, DELTAT_L		;\
+0006f4 9170 009e     		lds	    R23, DELTAT_H		;/ R23:R22 = dT
+0006f6 dc44      		    rcall	MUL32X16		    ; R18:R17:R16 = dA
+0006f7 9130 00a4 		    lds	    R19, LFO_FRAC_L
+0006f9 9140 00a5 		    lds	    R20, LFO_FRAC_H
+0006fb 9150 00a6     		lds	    R21, LFO_INTEGR
+0006fd 5850      		    subi    R21, 128
+0006fe e0f0      		    ldi	    R31, 0			    ; flag = 0
+0006ff 91e0 00a3 		    lds	    R30, LFOPHASE
+000701 23ee      		    tst	    R30
+000702 f4a1      		    brne	MLP_LFOFALL
+         
+         ;rising phase:
+         
+          MLP_LFORISE:
+000703 9160 00b5             lds	    R22, LFOTOP_0		;\
+000705 9170 00b6 		    lds	    R23, LFOTOP_1		; > R24:R23:R22 = Amax
+000707 9180 00b7 		    lds	    R24, LFOTOP_2		;/
+000709 0f30      		    add	    R19, R16		    ;\
+00070a 1f41          		adc	    R20, R17		    ; > A += dA
+00070b 1f52      		    adc	    R21, R18		    ;/
+00070c f020      		    brcs	MLP_LFOTOP
+00070d 1736      		    cp	    R19, R22		    ;\
+00070e 0747      		    cpc	    R20, R23		    ; > A - Amax
+00070f 0758      		    cpc	    R21, R24		    ;/
+000710 f0c8      		    brlo	MLP_LFOX		    ; skip when A < Amax
+         
+         ;A reached top limit:
+         
+          MLP_LFOTOP:
+000711 2f36                  mov	    R19, R22		    ;\
+000712 2f47      		    mov	    R20, R23		    ; > A = Amax
+000713 2f58      		    mov	    R21, R24		   	;/
+000714 e0e1      		    ldi	    R30, 1			    ; begin of falling
+000715 e0f1      		    ldi	    R31, 1			    ; flag = 1
+000716 c013      		    rjmp	MLP_LFOX
+         
+         ;falling phase:
+         
+          MLP_LFOFALL:
+000717 9160 00b2             lds	    R22, LFOBOTTOM_0	;\
+000719 9170 00b3 		    lds	    R23, LFOBOTTOM_1	; > R24:R23:R22 = Amin
+00071b 9180 00b4 		    lds	    R24, LFOBOTTOM_2	;/
+00071d 1b30          		sub	    R19, R16		    ;\
+00071e 0b41      		    sbc	    R20, R17		    ; > A -= dA
+00071f 0b52      		    sbc	    R21, R18		    ;/
+000720 f020      		    brcs	MLP_LFOBOTTOM
+000721 1763      		    cp	    R22, R19		    ;\
+000722 0774      		    cpc	    R23, R20		    ; > Amin - A
+000723 0785      		    cpc 	R24, R21		    ;/
+000724 f028      		    brlo	MLP_LFOX		    ; skip when A > Amin
+         
+         ;A reached bottom limit:
+         
+          MLP_LFOBOTTOM:
+000725 2f36                  mov	    R19, R22		    ;\
+000726 2f47      		    mov	    R20, R23		    ; > A = Amin
+000727 2f58      		    mov	    R21, R24		    ;/
+000728 e0e0      		    ldi	    R30, 0			    ; begin of rising
+000729 e0f1      		    ldi	    R31, 1			    ; flag = 1
+         
+          MLP_LFOX:
+00072a 93e0 00a3             sts	    LFOPHASE, R30
+00072c 5850      		    subi	R21, 128		    ; R21,R20:R19 = LFO tri wave
+00072d 9330 00a4 		    sts	    LFO_FRAC_L, R19		;\
+00072f 9340 00a5 		    sts	    LFO_FRAC_H, R20		; > store LFO value
+000731 9350 00a6     		sts	    LFO_INTEGR, R21		;/
+         
+         ;switch norm/rand:
+         
+         ;determine Amin i Amax:
+000733 e000      		    ldi	    R16, 0			    ;\
+000734 e010      		    ldi	    R17, 0			    ; > Amin when not LFO==tri
+000735 e020          		ldi	    R18, 0			    ;/  and not LFO==rand
+000736 91e0 0073 		    lds	    R30, MODEFLAGS2
+000738 78e2      		    andi	R30, 0x82
+000739 38e0      		    cpi	    R30, 0x80    		; Z = ((LFO==tri)&&(LFO==rand))
+00073a f449          		brne	MLP_LFOAWR
+00073b 23ff      		    tst	    R31
+00073c f0b1          		breq	MLP_LFOAX
+00073d 9100 00af 		    lds	    R16, SHIFTREG_0		;\
+00073f 9110 00b0 		    lds	    R17, SHIFTREG_1		; \ Amin = pseudo-random number
+000741 9120 00b1 		    lds	    R18, SHIFTREG_2		; /	0,000..127,999
+000743 772f      		    andi	R18, 0x7F		    ;/
+         
+          MLP_LFOAWR:
+000744 9300 00b2             sts	    LFOBOTTOM_0, R16	;\
+000746 9310 00b3 		    sts	    LFOBOTTOM_1, R17	; > store Amin
+000748 9320 00b4 		    sts	    LFOBOTTOM_2, R18	;/
+00074a 9500      		    com	    R16			        ;\
+00074b 9510      		    com	    R17			        ; > Amax = 255,999 - Amin
+00074c 9520      		    com	    R18			        ;/	128,000..255,999
+00074d 9300 00b5 		    sts	    LFOTOP_0, R16		;\
+00074f 9310 00b6 		    sts	    LFOTOP_1, R17		; > store Amax
+000751 9320 00b7 		    sts	    LFOTOP_2, R18		;/
+         
+          MLP_LFOAX:
+000753 9100 0073 		    lds	    R16, MODEFLAGS2
+000755 7802      		    andi	R16, 0x82
+000756 3802      		    cpi	    R16, 0x82    		; Z = ((LFO==squ)&&(LFO==rand))
+000757 f429      		    brne	MLP_LFONORM
+000758 23ff      		    tst	    R31			        ; flag == 1 ?
+000759 f061      		    breq	MLP_LFONWR		    ; jump when not
+00075a 9150 00b1 		    lds	    R21, SHIFTREG_2
+00075c c007      		    rjmp	MLP_LFOWR
+         
+          MLP_LFONORM:
+         
+         ;switch tri/squ:
+00075d 9100 0073 		    lds	    R16, MODEFLAGS2		;\ Z=0: triangle
+00075f 7002      		    andi	R16, 0x02    		;/ Z=1: square
+000760 f019          		breq	MLP_LFOWR
+000761 0f55      		    lsl	    R21			        ; Cy = (LFO < 0)
+000762 e75f      		    ldi	    R21, 127		    ;\
+000763 1d58      		    adc	    R21, ZERO		    ;/ R21 = -128 or +127
+         
+          MLP_LFOWR:
+000764 9350 00a7             sts	    LFOVALUE, R21
+         
+          MLP_LFONWR:
+000766 9150 00a7             lds	    R21, LFOVALUE
+000768 9100 0073             lds	    R16, MODEFLAGS2
+00076a 7200                  andi	R16, 0x20
+00076b f049                  breq	MLP_LFOMWX		    ; skip when MOD.WHEEL = off
+00076c 9100 006a 		    lds	    R16, PANEL_LFOLEVEL
+00076e 9110 00d1 		    lds	    R17,MIDIMODWHEEL
+000770 1701      		    cp	    R16, R17
+000771 f408          		brsh	MLP_LFOLWR
+000772 2f01      		    mov	    R16, R17		    ; MOD.WHEEL is greater
+         
+          MLP_LFOLWR:
+000773 9300 0069             sts	    LFOLEVEL, R16
+         
+          MLP_LFOMWX:
+         
+                     ;----
+                     ;LFO2 (Used to sweep PWM waveform)
+                     ;----
+         
+         ;calculate dA:
+000775 9100 006b 		    lds	    R16, LFO2FREQ	    ;\
+000777 9500      		    com	    R16			        ;/ R16 = 255 - ADC0
+000778 dc31      		    rcall	ADCTORATE           ; R19:R18:R17:R16 = rate of rise/fall
+000779 9160 009d 		    lds	    R22, DELTAT_L		;\
+00077b 9170 009e     		lds	    R23, DELTAT_H		;/ R23:R22 = dT
+00077d dbbd      		    rcall	MUL32X16		    ; R18:R17:R16 = dA
+00077e 9130 00a9 		    lds	    R19, LFO2_FRAC_L
+000780 9140 00aa 		    lds	    R20, LFO2_FRAC_H
+000782 9150 00ab     		lds	    R21, LFO2_INTEGR
+000784 5850      		    subi    R21, 128
+000785 e0f0      		    ldi	    R31, 0			    ; flag = 0
+000786 91e0 00a8 		    lds	    R30, LFO2PHASE
+000788 23ee      		    tst	    R30
+000789 f4a1      		    brne	MLP_LFO2FALL
+         
+         ;rising phase:
+         
+          MLP_LFO2RISE:
+00078a 9160 00bb             lds	    R22, LFO2TOP_0		;\
+00078c 9170 00bc 		    lds	    R23, LFO2TOP_1		; > R24:R23:R22 = Amax
+00078e 9180 00bd 		    lds	    R24, LFO2TOP_2		;/
+000790 0f30      		    add	    R19, R16		    ;\
+000791 1f41          		adc	    R20, R17		    ; > A += dA
+000792 1f52      		    adc	    R21, R18		    ;/
+000793 f020      		    brcs	MLP_LFO2TOP
+000794 1736      		    cp	    R19, R22		    ;\
+000795 0747      		    cpc	    R20, R23		    ; > A - Amax
+000796 0758      		    cpc	    R21, R24		    ;/
+000797 f0c8      		    brlo	MLP_LFO2X		    ; skip when A < Amax
+         
+         ;A reached top limit:
+         
+          MLP_LFO2TOP:
+000798 2f36                  mov	    R19, R22		    ;\
+000799 2f47      		    mov	    R20, R23		    ; > A = Amax
+00079a 2f58      		    mov	    R21, R24		   	;/
+00079b e0e1      		    ldi	    R30, 1			    ; begin of falling
+00079c e0f1      		    ldi	    R31, 1			    ; flag = 1
+00079d c013      		    rjmp	MLP_LFO2X
+         
+         ;falling phase:
+         
+          MLP_LFO2FALL:
+00079e 9160 00b8             lds	    R22, LFO2BOTTOM_0	;\
+0007a0 9170 00b9 		    lds	    R23, LFO2BOTTOM_1	; > R24:R23:R22 = Amin
+0007a2 9180 00ba 		    lds	    R24, LFO2BOTTOM_2	;/
+0007a4 1b30          		sub	    R19, R16		    ;\
+0007a5 0b41      		    sbc	    R20, R17		    ; > A -= dA
+0007a6 0b52      		    sbc	    R21, R18		    ;/
+0007a7 f020      		    brcs	MLP_LFO2BOTTOM
+0007a8 1763      		    cp	    R22, R19		    ;\
+0007a9 0774      		    cpc	    R23, R20		    ; > Amin - A
+0007aa 0785      		    cpc 	R24, R21		    ;/
+0007ab f028      		    brlo	MLP_LFO2X		    ; skip when A > Amin
+         
+         ;A reached bottom limit:
+         
+          MLP_LFO2BOTTOM:
+0007ac 2f36                  mov	    R19, R22		    ;\
+0007ad 2f47      		    mov	    R20, R23		    ; > A = Amin
+0007ae 2f58      		    mov	    R21, R24		    ;/
+0007af e0e0      		    ldi	    R30, 0			    ; begin of rising
+0007b0 e0f1      		    ldi	    R31, 1			    ; flag = 1
+         
+          MLP_LFO2X:
+0007b1 93e0 00a8             sts	    LFO2PHASE, R30
+0007b3 5850      		    subi	R21, 128		    ; R21,R20:R19 = LFO2 tri wave
+0007b4 9330 00a9 		    sts	    LFO2_FRAC_L, R19	;\
+0007b6 9340 00aa 		    sts	    LFO2_FRAC_H, R20	; > store LFO2 value
+0007b8 9350 00ab     		sts	    LFO2_INTEGR, R21	;/
+         
+0007ba 5850      			subi	r21, $80			; remove sign
+0007bb 9350 00c7             sts	    PULSE_WIDTH, R21	; Update pulse width value
+         
+         
+         			;----
+                     ;ENV:
+                     ;----
+         ;check envelope phase:
+0007bd 9110 009f 		    lds	    R17, ENVPHASE
+0007bf 9100 007a 		    lds	    R16, ATTACKTIME
+0007c1 3011          		cpi	    R17, 1
+0007c2 f049      		    breq    MLP_ENVAR		    ; when "attack"
+0007c3 9100 007b 			lds		R16, DECAYTIME
+0007c5 3012      			cpi		R17, 2
+0007c6 f029      			breq	MLP_ENVAR			; when "decay"
+0007c7 9100 007d 		    lds	    R16, RELEASETIME
+0007c9 3014      		    cpi	    R17, 4
+0007ca f009      		    breq	MLP_ENVAR		    ; when "release"
+0007cb c035      		    rjmp	MLP_EEXIT		    ; when "stop" or "sustain"
+         
+         ;calculate dL:
+         
+          MLP_ENVAR:
+0007cc dbdd                  rcall	ADCTORATE           ; R19:R18:R17:R16 = rate of rise/fall
+0007cd 9160 009d 		    lds	    R22, DELTAT_L		;\
+0007cf 9170 009e 		    lds	    R23, DELTAT_H		;/ R23:R22 = dT
+0007d1 db69      		    rcall	MUL32X16		    ; R18:R17:R16 = dL
+         
+         ;add/subtract dL to/from L:
+0007d2 9130 00a0 		    lds	    R19, ENV_FRAC_L		;\
+0007d4 9140 00a1 		    lds	    R20, ENV_FRAC_H		; > R21:R20:R19 = L
+0007d6 9150 00a2     		lds	    R21, ENV_INTEGR		;/
+0007d8 9160 009f 		    lds	    R22, ENVPHASE
+0007da 3064      		    cpi	    R22, 4
+0007db f0a9      		    breq    MLP_ERELEASE
+         
+          MLP_EATTACK:
+0007dc 3062      			cpi	    R22, 2				
+0007dd f049      		    breq    MLP_EDECAY			
+0007de 0f30      		    add	    R19, R16		    ;\
+0007df 1f41      		    adc	    R20, R17		    ; > R21:R20:R19 = L + dL
+0007e0 1f52      		    adc	    R21, R18		    ;/
+0007e1 f4c8      		    brcc	MLP_ESTORE
+         
+         ;L reached top limit:
+0007e2 ef3f      		    ldi	    R19, 255		    ;\
+0007e3 ef4f      		    ldi	    R20, 255		    ; > L = Lmax
+0007e4 ef5f      		    ldi	    R21, 255		    ;/
+0007e5 e002      		    ldi	    R16, 2			    ; now decay
+0007e6 c012      		    rjmp	MLP_ESTOREP
+         
+          MLP_EDECAY:
+0007e7 1b30                  sub	    R19, R16		    ;\
+0007e8 0b41      		    sbc	    R20, R17		    ; > R21:R20:R19 = L - dL
+0007e9 0b52      		    sbc	    R21, R18		    ;/		
+0007ea f050      			brcs	MLP_BOTTOM 			; Exit if we went past bottom level
+0007eb 9160 007c 			lds 	R22, SUSTAINLEVEL
+0007ed 1765      			cp		r22, R21				
+0007ee f060      			brlo 	MLP_ESTORE			; Keep going if we haven't hit sustain level
+0007ef e003      			ldi	    R16, 3			    ; now sustain
+0007f0 c008      		    rjmp	MLP_ESTOREP
+         			
+          MLP_ERELEASE:
+0007f1 1b30                  sub	    R19, R16		    ;\
+0007f2 0b41      		    sbc	    R20, R17		    ; > R21:R20:R19 = L - dL
+0007f3 0b52      		    sbc	    R21, R18		    ;/
+0007f4 f430      		    brcc	MLP_ESTORE
+         
+         ;L reached bottom limit:
+          MLP_BOTTOM:
+0007f5 e030      		    ldi	    R19, 0			    ;\
+0007f6 e040      		    ldi	    R20, 0			    ; > L = 0
+0007f7 e050      		    ldi	    R21, 0			    ;/
+0007f8 e000      		    ldi	    R16, 0			    ; stop
+         
+          MLP_ESTOREP:
+0007f9 9300 009f             sts	ENVPHASE, R16		    ; store phase
+         
+          MLP_ESTORE:
+0007fb 9330 00a0             sts	    ENV_FRAC_L, R19		;\
+0007fd 9340 00a1 		    sts	    ENV_FRAC_H, R20		; > store L
+0007ff 9350 00a2 		    sts	    ENV_INTEGR, R21		;/
+         
+          MLP_EEXIT:
+                     ;-----
+                     ;GATE:
+                     ;-----
+000801 9100 0097 		    lds	    R16, GATE
+000803 2300      		    tst	    R16			        ; check GATE
+000804 f421      		    brne	MLP_KEYON
+         
+         ;no key is pressed:
+         
+          MLP_KEYOFF:
+000805 e004                  ldi	    R16,4			    ;\
+000806 9300 009f 		    sts	    ENVPHASE, R16		;/ "release"
+000808 c02e      		    rjmp	MLP_NOTEON
+         
+         ;key is pressed:
+         
+          MLP_KEYON:
+000809 9100 0098             lds	    R16, GATEEDGE
+00080b 2300      		    tst	    R16		            ; Z=0 when key has just been pressed
+00080c f151      		    breq	MLP_NOTEON
+         
+         ;key has just been pressed:
+00080d e000      		    ldi	    R16, 0			    ;\
+00080e 9300 0098 		    sts	    GATEEDGE, R16		;/ GATEEDGE = 0
+000810 2e90      			mov		a_L, R16			; Make sure there's nothing in filter.
+000811 2ea0      			mov 	a_H, r16			; Set filter parameters to zero
+000812 9300 00ce 			sts		b_L, r16	
+000814 9300 00cf 			sts		b_H, r16			
+000816 9100 0081 		    lds	    R16, PORTACNT		;\
+000818 2300      		    tst	    R16			        ; \
+000819 f019      		    breq	MLP_KEYON1		    ;  > if ( PORTACNT != 0 )
+00081a 950a      		    dec	    R16			        ; /    PORTACNT--
+00081b 9300 0081 		    sts	    PORTACNT, R16		;/
+         
+          MLP_KEYON1:
+         
+         ;envelope starts:
+00081d e001      		    ldi	    R16, 1			    ;\
+00081e 9300 009f 		    sts	    ENVPHASE, R16		;/ attack
+000820 e000      		    ldi	    R16, 0
+         
+000821 9300 00a0 			sts	    ENV_FRAC_L, R16		;\
+000823 9300 00a1 		    sts	    ENV_FRAC_H, R16		; > ENV = 0
+000825 9300 00a2 		    sts	    ENV_INTEGR, R16		;/
+         
+         ; LFO starts (only when LFO KBD SYNC = on):
+000827 9100 0073 		    lds	    R16, MODEFLAGS2
+000829 ff06      		    sbrs 	R16,6			
+00082a c00c      		    rjmp	MLP_NOTEON		    ; skip when LFO KBD SYNC = off
+00082b ef0f      		    ldi	    R16, 255		    ;\
+00082c ef1f      		    ldi	    R17, 255		    ; > A = Amax
+00082d e72f      		    ldi	    R18, 127		    ;/
+00082e 9300 00a4 		    sts	    LFO_FRAC_L, R16		;\
+000830 9310 00a5 		    sts	    LFO_FRAC_H, R17		; > store A
+000832 9320 00a6 		    sts	    LFO_INTEGR, R18		;/
+000834 e001      		    ldi	    R16, 1			    ;\
+000835 9300 00a3 		    sts	    LFOPHASE, R16		;/ begin of falling
+         
+          MLP_NOTEON:
+                     ;-------------
+                     ;DCO A, DCO B:
+                     ;-------------
+000837 e090      		    ldi	    R25, 0			    ;\
+000838 e060      		    ldi	    R22, 0			    ; > R23,R22:R25 = note# 0..127
+000839 9170 0064 		    lds	    R23, MIDINOTE		;/
+00083b 3f7f      		    cpi	    R23, 255
+00083c f411      		    brne	MLP_NLIM2
+00083d c09b      		    rjmp	MLP_VCOX
+         
+         ;note# limited to 36..96:
+         
+          MLP_NLIM1:
+00083e 507c                  subi	R23, 12
+         
+          MLP_NLIM2:
+00083f 3671                  cpi	    R23, 97
+000840 f7e8      		    brsh	MLP_NLIM1
+000841 c001      		    rjmp	MLP_NLIM4
+         
+          MLP_NLIM3:
+000842 5f74                  subi	R23, 244
+         
+          MLP_NLIM4:
+000843 3274                  cpi	    R23, 36
+000844 f3e8      		    brlo	MLP_NLIM3
+         
+         ;transpose 1 octave down:
+000845 507c      		    subi	R23, 12			    ; n -= 12		24..84
+         
+         ;portamento:
+000846 9190 007e 		    lds	    R25, NOTE_L		    ;\
+000848 91a0 007f 		    lds	    R26, NOTE_H		    ; > R27,R26:R25 = nCurr
+00084a 91b0 0080 		    lds	    R27, NOTE_INTG		;/
+00084c 9100 0081 		    lds	    R16, PORTACNT		;\
+00084e 2300          		tst	    R16			        ; > jump when it's the first note
+00084f f581      		    brne	MLP_PORTAWR	        ;/  (PORTACNT != 0)
+000850 9100 0079 		    lds	    R16, PORTAMENTO
+000852 db57          		rcall	ADCTORATE
+000853 936f      		    push    R22
+000854 937f      		    push	R23
+000855 2f62      		    mov	    R22, R18		    ;\ R23:R22 = portamento rate
+000856 2f73      		    mov	    R23, R19		    ;/ 65535..27
+000857 e000      		    ldi	    R16, 0
+000858 e010      		    ldi	    R17, 0
+000859 9120 009d 		    lds	    R18, DELTAT_L
+00085b 9130 009e 		    lds	    R19, DELTAT_H
+00085d e043      		    ldi	    R20, 3
+00085e dab7      		    rcall	SHR32
+00085f dadb      		    rcall	MUL32X16		    ; R18,R17:R16 = nDelta
+000860 917f      		    pop	    R23
+000861 916f      		    pop	    R22
+000862 2f30      		    mov	    R19, R16		    ;\
+000863 2f41      		    mov	    R20, R17		    ; > R21,R20:R19 = nDelta
+000864 2f52      		    mov	    R21, R18		    ;/
+000865 9190 007e 		    lds	    R25, NOTE_L		    ;\
+000867 91a0 007f 		    lds	    R26, NOTE_H		    ; > R27,R26:R25 = nCurr
+000869 91b0 0080 		    lds	    R27, NOTE_INTG		;/
+00086b 176a      		    cp	    R22, R26		    ;\ nEnd - nCurr
+00086c 077b      		    cpc	    R23, R27		    ;/ Cy = (nEnd < nCurr)
+00086d f438      		    brsh	MLP_PORTAADD
+         
+          MLP_PORTAMIN:
+00086e 1b93                  sub	    R25, R19			;\
+00086f 0ba4      		    sbc	    R26, R20			; > nCurr -= nDelta
+000870 0bb5      		    sbc	    R27, R21			;/
+000871 176a      		    cp	    R22, R26			;\ nEnd - nCurr;
+000872 077b      		    cpc	    R23, R27		    ;/ Cy = (nEnd < nCurr)
+000873 f050      		    brlo	MLP_PORTA1
+000874 c006      		    rjmp	MLP_PORTAEND
+         
+          MLP_PORTAADD:
+000875 0f93                  add	    R25, R19		    ;\
+000876 1fa4      		    adc	    R26, R20		    ; > nCurr += nDelta
+000877 1fb5      		    adc	    R27, R21		    ;/
+000878 176a      		    cp	    R22, R26		    ;\ nEnd - nCurr;
+000879 077b      		    cpc	    R23, R27		    ;/ Cy = (nEnd < nCurr)
+00087a f418      		    brsh	MLP_PORTA1
+         
+          MLP_PORTAEND:
+00087b e090                  ldi	    R25, 0			    ;\
+00087c 2fa6      		    mov	    R26, R22			; > nCurr = nEnd
+00087d 2fb7          		mov	    R27, R23			;/
+         
+          MLP_PORTA1:
+00087e 2f6a                  mov	    R22, R26
+00087f 2f7b      		    mov	    R23, R27
+         
+          MLP_PORTAWR:
+000880 9390 007e         	sts	NOTE_L, R25
+000882 9360 007f 		    sts	    NOTE_H, R22
+000884 9370 0080 		    sts	    NOTE_INTG, R23
+         
+         ;"transpose" switch:
+000886 9100 0072 		    lds	    R16, MODEFLAGS1		; b5 = transpose: 0=down, 1=up
+000888 ff05      		    sbrs	R16, 5			    ;\			24..96
+000889 507c      		    subi	R23, 12		        ;/ n -= 12	12..84
+         
+         ;pitch bender (-12..+12):
+00088a 9100 0066 		    lds	    R16, MIDIPBEND_L	;\ R17,R16 = P.BEND
+00088c 9110 0067     		lds	    R17, MIDIPBEND_H	;/	-128,000..+127,996
+00088e e025      		    ldi	    R18, 5			    ;\ R17,R16 = P.BEND/32
+00088f da7d      		    rcall	ASR16			    ;/	-4,000..+3,999
+000890 2f20      		    mov	    R18, R16		    ;\ R19,R18 = P.BEND/32
+000891 2f31      		    mov	    R19, R17		    ;/	-4,000..+3,999
+000892 0f02      		    add	    R16, R18		    ;\ R17,R16 = 2/32*P.BEND
+000893 1f13      		    adc	    R17, R19		    ;/	-8,000..+7,999
+000894 0f02      		    add	    R16, R18		    ;\ R17,R16 = 3/32*P.BEND
+000895 1f13      		    adc	    R17, R19		    ;/	-12,000..+11,999
+000896 0f60      		    add	    R22, R16		    ;\
+000897 1f71      		    adc	    R23, R17		    ;/ add P.BEND
+         
+          MLP_PBX:
+         ;for "DCF KBD TRACK":
+000898 9370 0085 		    sts	    PITCH, R23		    ; n = 0..108
+         
+         
+         ;LFO modulation:
+00089a 9100 0073 		    lds	    R16, MODEFLAGS2		; Check LFO destination bit.
+00089c ff00      		    sbrs	R16, 0				; DCF is 0, DCO is 1
+00089d 940c 08b7 		    jmp		MLP_VCOLFOX		    ; exit when LFO=DCF
+00089f 9100 00a7 		    lds	    R16, LFOVALUE		; R16 = LFO	    -128..+127
+0008a1 9110 0069     		lds	    R17, LFOLEVEL		; R17 = LFO level	0..255
+         
+         ;nonlinear potentiometer function:
+0008a3 2f21      		    mov	    R18, R17		    ; R18 = LL
+0008a4 9516      		    lsr	    R17			        ; R17 = LL/2
+0008a5 3820      		    cpi	    R18, 128
+0008a6 f010      		    brlo	MLP_OM1			    ; skip if LL = 0..127
+0008a7 5810      		    subi	R17, 128		    ; R17 = 0,5*LL-128    -64..-1
+0008a8 0f12      		    add	    R17, R18		    ; R17 = 1,5*LL-128    +64..254
+         
+          MLP_OM1:
+0008a9 da85                  rcall	MUL8X8S			    ; R17,R16 = LFO*mod
+0008aa e024      		    ldi	    R18, 4			    ;\
+0008ab da61      		    rcall	ASR16			    ;/ R17,R16 = LFO*mod / 16
+0008ac 0f60      		    add	    R22, R16		    ;\
+0008ad 1f71      		    adc	    R23, R17		    ;/ add LFO to note #
+         
+         ;limiting to 0..108
+0008ae 2377      		    tst	    R23
+0008af f41a      		    brpl	MLP_VCOLFO1
+0008b0 e060      		    ldi	    R22, 0
+0008b1 e070      		    ldi	    R23, 0
+0008b2 c004      		    rjmp	MLP_VCOLFOX
+         
+          MLP_VCOLFO1:
+0008b3 367d                  cpi	    R23, 109
+0008b4 f010      		    brlo	MLP_VCOLFOX
+0008b5 e060      		    ldi	    R22, 0
+0008b6 e67c      		    ldi	    R23, 108
+         
+          MLP_VCOLFOX:
+0008b7 936f                  push	R22			        ;\ note# = 0..108
+0008b8 937f      		    push	R23			        ;/ store for phase delta B
+         
+         ;phase delta A:
+         ;octave A:
+0008b9 dad9      		    rcall	NOTERECALC		    ; R23,R22 = m12 (0,0..11,996),
+         						                ; R20 = n12 (0..11)
+0008ba dab5      		    rcall	LOAD_DELTA		    ; R19:R18:R17:R16 = delta
+0008bb da65      		    rcall	SHL32			    ; R19:R18:R17:R16 = delta*(2^exp)
+         
+         			  ; store delta
+0008bc 9310 00c1   			sts DELTAA_0,r17
+0008be 9320 00c2   			sts DELTAA_1,r18
+0008c0 9330 00c3   			sts DELTAA_2,r19
+         
+         ;phase delta B:
+0008c2 917f      		    pop	    R23			        ;\
+0008c3 916f      		    pop	    R22			        ;/ n
+         
+         ;detune B:
+0008c4 9100 0075 		    lds	    R16, DETUNEB_FRAC	;\ R17,R16 = detuneB
+0008c6 9110 0076 		    lds	    R17, DETUNEB_INTG	;/ -128,000..+127,996
+0008c8 e024      		    ldi	    R18, 4			    ;\ R17,R16 = detuneB / 16
+0008c9 da43          		rcall	ASR16			    ;/ -8,0000..+7,9998
+0008ca 0f60      		    add	    R22, R16		    ;\
+0008cb 1f71      		    adc	    R23, R17		    ;/
+         
+         ;octave B:
+0008cc 9100 0072             lds	    R16, MODEFLAGS1		; b7 = octave B: 0=down, 1=up
+0008ce fd07      		    sbrc	R16, 7
+0008cf 5f74      		    subi	R23, 244		    ; n += 12
+0008d0 dac2      		    rcall	NOTERECALC		    ; R23,R22 = m12 (0,0..11,996),
+         						                ; R20 = n12 (0..11)
+0008d1 da9e      		    rcall	LOAD_DELTA		    ; R19:R18:R17:R16 = delta
+0008d2 da4e      		    rcall	SHL32			    ; R19:R18:R17:R16 = delta*(2^exp)
+         		
+         			;mov	    DELTAB_0, R17
+         		    ;mov	    DELTAB_1, R18
+         		    ;mov	    DELTAB_2, R19
+         
+0008d3 9310 00c4 			sts DELTAB_0,r17
+0008d5 9320 00c5   			sts DELTAB_1,r18
+0008d7 9330 00c6   			sts DELTAB_2,r19
+         
+         
+          MLP_VCOX:
+         
+                     ;----
+                     ;DCF:
+                     ;----
+         	        ;LFO mod:
+0008d9 e0e0      		    ldi	    R30, 0			    ;\
+0008da e0f0      		    ldi	    R31, 0			    ;/ sum = 0
+         
+0008db 9100 0073 		    lds	    R16, MODEFLAGS2		; Check LFO destination bit.
+0008dd fd00      		    sbrc	R16, 0				; DCF is 0, DCO is 1
+0008de 940c 08e9 		    jmp		MLP_DCF0		    ; exit when LFO=DCO
+0008e0 9100 00a7 		    lds	    R16, LFOVALUE		; R16 = LFO	    -128..+127
+0008e2 9110 0069 		    lds	    R17, LFOLEVEL		; R17 = DCF LFO MOD	0..255
+0008e4 da4a      		    rcall	MUL8X8S			    ; R17,R16 = LFO * VCFLFOMOD
+0008e5 2fe1      		    mov	    R30, R17
+0008e6 e0f0      		    ldi	    R31, 0
+0008e7 1f11      		    rol	    R17			        ; R17.7 --> Cy (sign)
+0008e8 0bff      		    sbc	    R31, R31		    ; sign extension to R31
+         
+          MLP_DCF0:
+         
+         ;ENV mod:
+0008e9 9100 00a2             lds	    R16, ENV_INTEGR
+0008eb 9110 0078 		    lds	    R17, VCFENVMOD
+0008ed 9f01      			mul		r16, r17
+0008ee 0180      			movw 	r16,r0				; R17,R16 = ENV * ENVMOD		
+0008ef 1f00          		rol	    R16			        ; Cy = R16.7 (for rounding)
+0008f0 1fe1      		    adc	    R30, R17
+0008f1 1df8      		    adc	    R31, ZERO
+         
+         ;KBD TRACK:
+0008f2 9100 0073             lds	    R16, MODEFLAGS2		;\ Z=0: KBD TRACK on
+0008f4 7004      		    andi	R16, 0x04    		;/ Z=1: KBD TRACK off
+0008f5 f059      		    breq	MLP_DCF3
+0008f6 9100 0085 		    lds	    R16, PITCH		    ; R16 = n (12/octave)	0..96
+0008f8 0f00      		    lsl	    R16			        ; R16 = 2*n (24/octave)	0..192
+0008f9 5600      		    subi	R16, 96	        	; R16 = 2*(n-48) (24/octave)   -96..+96
+0008fa ea1b      		    ldi	    R17, 171
+         
+0008fb da33      		    rcall	MUL8X8S		        ; R17 = 1,5*(n-48) (16/octave) -64..+64
+0008fc e020      		    ldi	    R18, 0			    ;\
+0008fd fd17      		    sbrc	R17, 7			    ; > R18 = sign extension
+0008fe ef2f      		    ldi	    R18, 255		    ;/  of R17
+0008ff 0fe1      		    add	    R30, R17
+000900 1ff2      		    adc	    R31, R18
+         
+          MLP_DCF3:
+         ;CUTOFF:
+000901 9100 0077 		    lds	    R16, CUTOFF
+000903 2711      		    clr	    R17
+000904 0f0e      		    add	    R16, R30
+000905 1f1f          		adc	    R17, R31
+000906 2311      		    tst	    R17
+000907 f412      		    brpl	MLP_DCF1
+000908 e000      		    ldi	    R16, 0
+000909 c002      		    rjmp	MLP_DCF2
+         
+          MLP_DCF1:
+00090a f009                  breq	MLP_DCF2
+00090b ef0f      		    ldi	    R16, 255
+         
+          MLP_DCF2:
+00090c 9506      		    lsr	    R16			        ; 0..127
+00090d e6e1      		    ldi	    R30, TAB_VCF	    ;\
+00090e e0f0          		ldi	    R31, 0			    ;/ Z = &Tab
+00090f da8a      		    rcall	TAB_BYTE		    ; R0 = 1.. 255
+000910 9200 0082 		    sts	    LPF_I, r0			; Store Lowpass F value
+000912 e00a      			ldi		r16, 10
+000913 1a00      			sub 	r0, r16				; Offset HP knob value
+000914 f410      			brcc	STORE_HPF
+000915 e000      			ldi		r16, 0x00			; Limit HP to min of 0
+000916 2e00      			mov		r0, r16
+          STORE_HPF:
+000917 9200 0083 			sts		HPF_I, r0
+         			
+         
+         
+                     ;---------------
+                     ;sound level:
+                     ;---------------
+000919 9110 0072 		    lds	    R17, MODEFLAGS1		;\ check DCA mode:
+00091b 7110      		    andi	R17, 0x10    		;/ Z=1 (gate), Z=0 (env)
+00091c f431      		    brne	MLP_VCAENV		    ; jump when mode==env
+00091d 9100 0097 		    lds	    R16, GATE		    ;\
+00091f 9507      		    ror	    R16			        ;/ GATE --> Cy
+000920 e000      		    ldi	    R16, 0			    ;\ R16 =   0 (when GATE == 0),
+000921 0b00      		    sbc	    R16, R16		    ;/ R16 = 255 (when GATE == 1)
+000922 c006      		    rjmp	MLP_VCAOK
+         
+          MLP_VCAENV:
+000923 9100 00a2             lds	    R16,ENV_INTEGR		;
+000925 ece1      		    ldi	    R30, TAB_VCA	    ;\
+000926 e0f0      		    ldi	    R31, 0			    ;/ Z = &Tab
+000927 da72      		    rcall	TAB_BYTE		    ; R0 = 2..255
+000928 2d00      		    mov	    R16, R0
+         
+          MLP_VCAOK:
+000929 9300 0084             sts	LEVEL,R16
+                     ;-----------------------------------
+                     ;pseudo-random shift register:
+                     ;-----------------------------------
+         	        ;BIT = SHIFTREG.23 xor SHIFTREG.18
+         	        ;SHIFTREG = (SHIFTREG << 1) + BIT
+00092b 9100 00af 		    lds	    R16, SHIFTREG_0
+00092d 9110 00b0 		    lds	    R17, SHIFTREG_1
+00092f 9120 00b1 		    lds	    R18, SHIFTREG_2
+000931 fb27          		bst	    R18, 7			    ;\
+000932 f930      		    bld	    R19, 0			    ;/ R19.0 = SHIFTREG.23
+000933 fb22      		    bst	    R18, 2			    ;\
+000934 f940      		    bld	    R20, 0			    ;/ R20.0 = SHIFTREG.18
+000935 2734      		    eor	    R19, R20			    ;R19.0 = BIT
+000936 9536      		    lsr	    R19			        ; Cy = BIT
+000937 1f00      		    rol	    R16			        ;\
+000938 1f11      		    rol	    R17			        ; > R18:R17:R16 =
+000939 1f22      		    rol	    R18			        ;/  = (SHIFTREG << 1) + BIT
+00093a 9300 00af 		    sts	    SHIFTREG_0, R16
+00093c 9310 00b0 		    sts	    SHIFTREG_1, R17
+00093e 9320 00b1 		    sts	    SHIFTREG_2, R18
+         
+         
+                     ;------------------------
+                     ;back to the main loop:
+                     ;------------------------
+000940 cbcb      		    rjmp	MAINLOOP
+         
+         ;-------------------------------------------------------------------------------------------------------------------
+                      .EXIT
+
+Assembly complete with no errors.
