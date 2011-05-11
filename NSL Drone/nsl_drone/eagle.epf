@@ -186,6 +186,8 @@ UsedLibrary="C:/Program Files (x86)/EAGLE-5.10.0/lbr/led-7-segment.lbr"
 UsedLibrary="C:/Program Files (x86)/EAGLE-5.10.0/lbr/led-citizen-electronics.lbr"
 UsedLibrary="C:/Program Files (x86)/EAGLE-5.10.0/lbr/led-lumiled.lbr"
 UsedLibrary="C:/Program Files (x86)/EAGLE-5.10.0/lbr/led.lbr"
+UsedLibrary="C:/Program Files (x86)/EAGLE-5.10.0/lbr/led_cree.lbr"
+UsedLibrary="C:/Program Files (x86)/EAGLE-5.10.0/lbr/led_cree_7x9.lbr"
 UsedLibrary="C:/Program Files (x86)/EAGLE-5.10.0/lbr/lem.lbr"
 UsedLibrary="C:/Program Files (x86)/EAGLE-5.10.0/lbr/linear-technology.lbr"
 UsedLibrary="C:/Program Files (x86)/EAGLE-5.10.0/lbr/linear.lbr"
@@ -344,11 +346,11 @@ UsedLibrary="C:/Program Files (x86)/EAGLE-5.10.0/lbr/zilog.lbr"
 
 [Win_1]
 Type="Schematic Editor"
-Loc="225 225 824 624"
+Loc="100 100 699 499"
 State=0
-Number=1
-File="nsl_drone.sch"
-View="-1242813 -1469020 4943805 3274844"
+Number=2
+File="C:/Users/Arko/Desktop/Tesla/nsl/NSL_Cylon/trunk/eagle/NSL_Cylon.sch"
+View="-310297 -366023 1301785 842439"
 WireWidths=" 0 3048 6096 8128 10160 12700 14224 16764 17780 19304 21844 25400 38100 64516 4064 1524"
 PadDiameters=" 2540 3048 4064 6096 8128 10160 12700 14224 16764 17780 19304 21844 25400 38100 64516 0"
 PadDrills=" 5000 6000 7000 9000 10000 11000 12000 13000 14000 15000 16000 20000 22000 28000 32000 8000"
@@ -380,15 +382,16 @@ ArcDirection=0
 AddLevel=2
 PadsSameType=0
 Layer=91
+Views=" 1: -310297 -366023 1301785 842439"
 Sheet=1
 
 [Win_2]
 Type="Control Panel"
-Loc="0 0 1279 747"
+Loc="290 115 1569 862"
 State=2
 Number=0
 
 [Desktop]
-Screen="3200 1080"
+Screen="3200 1200"
 Window="Win_1"
 Window="Win_2"
