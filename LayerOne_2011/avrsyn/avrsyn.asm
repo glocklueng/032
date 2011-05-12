@@ -512,27 +512,61 @@ ARPSTATE: .byte 1
 
   .cseg
 ;  .org	$0000
-  jmp reset
-  jmp IRQ_NONE        ; int0
-  jmp IRQ_NONE        ; int1
-  jmp IRQ_NONE        ; int2
-  jmp IRQ_NONE        ; timer2_compare
-  jmp IRQ_NONE        ; timer2_overflow
-  jmp IRQ_NONE        ; timer1_capture
-  jmp IRQ_NONE        ; timer1_compare_a
-  jmp IRQ_NONE        ; timer1_compare_b
-  jmp IRQ_NONE        ; timer1_overflow
-  jmp IRQ_NONE        ; timer0_compare
-  jmp timer0_overflow
-  jmp IRQ_NONE        ; spi_stc
-  jmp usart_rxc
-  jmp IRQ_NONE        ; usart_udre
-  jmp IRQ_NONE        ; usart_txc
-  jmp adc_complete
-  jmp IRQ_NONE        ; eeprom_ready
-  jmp IRQ_NONE        ; analog_comparator
-  jmp IRQ_NONE        ; twi
-  jmp IRQ_NONE        ; spm_ready
+
+		    jmp	reset		            ; RESET
+
+;; IRQ 0 -7
+		    jmp	IRQ_NONE	            ; INT0
+		    jmp	IRQ_NONE	            ; INT1
+		    jmp	IRQ_NONE	            ; INT2
+		    jmp	IRQ_NONE	            ; INT3
+
+		    jmp	IRQ_NONE	            ; INT4
+		    jmp	IRQ_NONE	            ; INT5
+		    jmp	IRQ_NONE	            ; INT6
+		    jmp	IRQ_NONE	            ; INT7
+
+
+		    jmp	IRQ_NONE				; TIMER2 COMPARE
+		    jmp	IRQ_NONE	            ; TIMER2 OVERFLOW
+
+			
+		    jmp	IRQ_NONE	            ; TIMER1 CAPTURE
+		    jmp	IRQ_NONE	            ; TIMER1 COMPA
+		    jmp	IRQ_NONE	            ; TIMER1 COMPB
+    		jmp	IRQ_NONE	            ; TIMER1 OVF
+
+		    jmp	IRQ_NONE	            ; TIMER0 COMPA
+		    jmp	timer0_overflow	        ; TIMER0 OVF
+
+		    jmp	IRQ_NONE	            ; SPI,STC Tranfer complete
+
+		    jmp	usart_rxc	            ; UART, RX COMPLETE
+		    jmp	IRQ_NONE	            ; UART,UDRE
+		    jmp	IRQ_NONE	            ; UART, TX COMPLETE
+
+		    jmp	adc_complete	        ; ADC CONVERSION COMPLETE
+
+		    jmp	IRQ_NONE	            ; EEPROM READY
+
+		    jmp	IRQ_NONE	            ; ANALOG COMPARATOR
+
+			jmp IRQ_NONE				; TIMER1 COMPAREC
+			jmp IRQ_NONE				; TIMER3 CAPTURE
+			jmp IRQ_NONE				; TIMER3 COMPAREA
+			jmp IRQ_NONE				; TIMER3 COMPAREB
+			jmp IRQ_NONE				; TIMER3 COMPAREC
+			jmp IRQ_NONE				; TIMER3 OVERFLOW
+
+			jmp IRQ_NONE				; USART1 RX, COMPLETE
+			jmp IRQ_NONE				; USART1 UDR EMPTY
+			jmp IRQ_NONE				; USART1 TX COMPLETE
+
+            jmp IRQ_NONE                ; 2-Wire Serial Interface
+
+            jmp IRQ_NONE                ; STORE PROGRAM MEMORY READY
+
+
 
 IRQ_NONE:
   reti
@@ -670,18 +704,18 @@ phase_table:
 .db $27,$2f,$61,$33
 
 ;-----------------------------------------------------------------------------
-TAB_VCF:	.DW	0x0101
+TAB_VCF:.DW	0x0101
 		.DW	0x0101
 		.DW	0x0201
 		.DW	0x0202
-    		.DW	0x0202
+    	.DW	0x0202
 		.DW	0x0202
 		.DW	0x0202
 		.DW	0x0402
 		.DW	0x0404
-	    	.DW	0x0505
-    		.DW	0x0606
-    		.DW	0x0806
+	    .DW	0x0505
+    	.DW	0x0606
+    	.DW	0x0806
 		.DW	0x0908
 		.DW	0x0A0A
 		.DW	0x0C0C
@@ -704,7 +738,7 @@ TAB_VCF:	.DW	0x0101
 		.DW	0xFFE8
 
 ;-----------------------------------------------------------------------------
-TAB_VCA:	.DW	0x0100		    ;-48.2dB,-oodB
+TAB_VCA:.DW	0x0100		    ;-48.2dB,-oodB
 		.DW	0x0302		    ;-38.6dB,-42.1dB
 		.DW	0x0504		    ;-34.2dB,-36.1dB
 		.DW	0x0706		    ;-31.3dB,-32.6dB
