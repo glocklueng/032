@@ -609,7 +609,7 @@ UART_RXC:
 		    push	R16			        ;/ push SREG
 
 		    in	    R16, UDR0	        ; read received byte in R16
-		    cbi	    UCSR0B, 7		        ; RXCIE=0 (disable UART interrupts)
+		    cbi	    UCSR0B, 7		    ; RXCIE=0 (disable UART interrupts)
 		    sei				            ; enable other interrupts
 		    push	R17
 
