@@ -3,9 +3,9 @@
 ;;;; original from http://jarek.synth.net/
 ;;;; this version lives at http://krue.net/avrsyn/
                .NOLIST
-                    .INCLUDE "m64def.inc"
-                    .LIST
-                    .LISTMAC
+               .INCLUDE "m64def.inc"
+               .LIST
+               .LISTMAC
 ;;; hardware
 ;;;
 ;;; pa7..pa0: a/d
