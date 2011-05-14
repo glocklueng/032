@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.1.42  E:\032\LayerOne_2011\avrsyn\avrsyn.asm Fri May 13 19:40:36 2011
+AVRASM ver. 2.1.42  E:\032\LayerOne_2011\avrsyn\avrsyn.asm Sat May 14 00:50:16 2011
 
 
 EQU  SIGNATURE_000 0000001e
@@ -880,13 +880,9 @@ EQU  CONFFILTERIIR 00000000
 EQU  CONFFILTERSVF 00000001
 EQU  CONFFILTERMOOG 00000002
 SET  CONFFILTER   00000002
-EQU  ramsize      00000800
-SET  regsize      00000020
-SET  regstart     00000000
-SET  regend       0000001f
+EQU  ramsize      00001000
 SET  iostart      00000020
 SET  ramstart     00000100
-SET  pagemask     ffffff80
 DEF  PHASEA_0     r2
 DEF  PHASEA_1     r3
 DEF  PHASEA_2     r4
