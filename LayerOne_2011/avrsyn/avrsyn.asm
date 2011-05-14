@@ -40,15 +40,11 @@
 
 ;;; atmega32 defines
 
-.equ ramsize = $800
+.equ ramsize = SRAM_SIZE
 ;;; memory boundaries
 
-.set regsize = $20
-.set regstart = $0
-.set regend = $1f
 .set iostart = $20
-.set ramstart = ioend + 1
-.set pagemask =  ~ ( pagesize - 1 )
+.set ramstart = SRAM_START
 
 ;;; t bit boolean
 
@@ -123,16 +119,17 @@
 .dseg
 
   ; MIDI
-MIDIPHASE:	.BYTE	1
+MIDIPHASE:		.BYTE	1
 MIDICHANNEL:	.BYTE	1
-MIDIDATA0:	.BYTE	1
+MIDIDATA0:		.BYTE	1
 MIDIVELOCITY:	.BYTE	1
-MIDINOTE:	.BYTE	1
+MIDINOTE:		.BYTE	1
 MIDINOTEPREV:	.BYTE	1		; buffer for MIDI note
 MIDIPBEND_L:	.BYTE	1		;\
 MIDIPBEND_H:	.BYTE	1		;/ -32768..+32766
 MIDIPRESSURE:   .byte 1   ; channel pressure
 MIDICC:         .byte $80 ; continuous controllers
+
   .equ MIDIMODWHEEL = MIDICC + $01
 ;  .equ MIDIEXPRESSION = MIDICC + $0b
   .equ MIDIEXPRESSION = MIDICC + $40
@@ -144,12 +141,13 @@ MIDICC:         .byte $80 ; continuous controllers
   .equ DCOBWAVE = MIDICC + $3b
   .equ RESONANCE = MIDICC + $3e
   .equ FMDEPTH = MIDICC + $3f
-ENV0: .byte 4
-ENV1: .byte 4
 
-LFO0: .byte $b
-LFOLEVEL: .byte 1
-LFO1: .byte $b
+ENV0: 		.byte 4
+ENV1: 		.byte 4
+
+LFO0: 		.byte $b
+LFOLEVEL: 	.byte 1
+LFO1: 		.byte $b
 
   ;current sound parameters:
 ;;;LFOFREQ:	.BYTE	1	    ;0..255
@@ -2023,11 +2021,12 @@ dcf_iir_done:
   ; reset latch clocks
   cbi PORTD,2
   cbi PORTD,3
-	
+
 	mov		r29,r30
 
 	push 	r30
 	push 	r31
+
 
 		ldi		ZL, low(reversebits<<1)	; AVR's are odd with their two byte memory layout
 		ldi		ZH, high(reversebits<<1)
@@ -2036,16 +2035,16 @@ dcf_iir_done:
 
 		lpm
 
+		out	DDRA,r30
+		out	PORTA,r0
+
 		; output low byte
 		out PORTC,r0
-	
-	
 
 	pop		r31
 	pop		r30
 
-		out	DDRA,r30
-		out	PORTA,r31
+
 	    
 ;; increment phase
 
@@ -2609,7 +2608,7 @@ midi_done:
 
 midi_noteoff:
 
-  sbi	    PORTE, 1		    ; LED on
+  sbi   PORTE, 1		    ; LED on
 
 
   lds r16,MIDIDATA0
