@@ -595,7 +595,7 @@ T2_AEXIT:
 			pop		R0
 
 		    pop	    R16		            ;\
-		    out	    SREG, R16	        ;/ pop SREG
+		    out	    SREG, R16	        ;/ pop ESREG
 		    pop	    R16
 		    ;;cbi	PORTB,0			    ; PB0 = 0 (DIAG)
 		    reti
