@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MIDIDevDemo v2", "MIDIDevDemo v2.vcproj", "{CFDCBF49-F473-4212-9DAA-EEE0E4EAAE81}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CFDCBF49-F473-4212-9DAA-EEE0E4EAAE81}.Debug|Win32.ActiveCfg = Debug|Win32
+		{CFDCBF49-F473-4212-9DAA-EEE0E4EAAE81}.Debug|Win32.Build.0 = Debug|Win32
+		{CFDCBF49-F473-4212-9DAA-EEE0E4EAAE81}.Release|Win32.ActiveCfg = Release|Win32
+		{CFDCBF49-F473-4212-9DAA-EEE0E4EAAE81}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
