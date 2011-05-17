@@ -9,12 +9,16 @@ Desktop="Desktop"
 AutoSaveProject=1
 
 [Win_1]
-Type="Schematic Editor"
-Loc="250 250 849 649"
-State=0
-Number=2
-File="speakerbadge_thruvias.sch"
-View="-1033569 -97177 2525793 1534873"
+Type="Control Panel"
+Loc="0 0 943 1121"
+State=2
+Number=0
+
+[Desktop]
+Screen="1920 1200"
+Window="Win_1"
+t_switches.sch"
+View="-85667 446116 1413795 1103196"
 WireWidths=" 0 3048 6096 8128 10160 12700 14224 16764 17780 19304 21844 25400 38100 64516 4064 2032"
 PadDiameters=" 2540 3048 4064 6096 8128 10160 12700 14224 16764 17780 19304 21844 25400 38100 64516 0"
 PadDrills=" 5000 6000 7000 9000 10000 11000 12000 13000 14000 15000 16000 20000 22000 28000 32000 8000"
@@ -46,12 +50,13 @@ ArcDirection=0
 AddLevel=2
 PadsSameType=0
 Layer=91
+Views=" 1: -85667 446116 1413795 1103196"
 Sheet=1
 
 [Win_2]
 Type="Control Panel"
-Loc="225 225 824 624"
-State=1
+Loc="0 0 943 1121"
+State=2
 Number=0
 
 [Desktop]

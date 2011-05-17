@@ -77,11 +77,11 @@
   <ARPPHASE><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>252</LINE></ARPPHASE>
   <ARPNOTE><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>253</LINE></ARPNOTE>
   <ARPSTATE><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>254</LINE></ARPSTATE>
-  <reset><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2921</LINE></reset>
+  <reset><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2922</LINE></reset>
   <IRQ_NONE><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>320</LINE></IRQ_NONE>
   <timer0_overflow><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>1726</LINE></timer0_overflow>
-  <usart_rxc><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2422</LINE></usart_rxc>
-  <adc_complete><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2640</LINE></adc_complete>
+  <usart_rxc><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2423</LINE></usart_rxc>
+  <adc_complete><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2641</LINE></adc_complete>
   <reversebits><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>316</LINE></reversebits>
   <phase_table><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>325</LINE></phase_table>
   <TAB_VCF><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>456</LINE></TAB_VCF>
@@ -122,12 +122,12 @@
   <portamento_sub><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>1149</LINE></portamento_sub>
   <portamento_done><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>1179</LINE></portamento_done>
   <portamento_limit><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>1173</LINE></portamento_limit>
-  <ASR16><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2687</LINE></ASR16>
+  <ASR16><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2688</LINE></ASR16>
   <dcomod_lfo_done><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>1271</LINE></dcomod_lfo_done>
   <dcomod_lfo_delta><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>1243</LINE></dcomod_lfo_delta>
   <dcomod_lfo_limit><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>1263</LINE></dcomod_lfo_limit>
-  <LOAD_DELTA><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2767</LINE></LOAD_DELTA>
-  <NONLINPOT><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2884</LINE></NONLINPOT>
+  <LOAD_DELTA><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2768</LINE></LOAD_DELTA>
+  <NONLINPOT><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2885</LINE></NONLINPOT>
   <dcfmod><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>1326</LINE></dcfmod>
   <dcfmod_lfo><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>1333</LINE></dcfmod_lfo>
   <dcfmod_env><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>1354</LINE></dcfmod_env>
@@ -135,7 +135,7 @@
   <dcfmod_cutoff_max><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>1403</LINE></dcfmod_cutoff_max>
   <dcfmod_cutoff_min><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>1399</LINE></dcfmod_cutoff_min>
   <dcfmod_done><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>1407</LINE></dcfmod_done>
-  <TAB_BYTE><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2851</LINE></TAB_BYTE>
+  <TAB_BYTE><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2852</LINE></TAB_BYTE>
   <dca><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>1422</LINE></dca>
   <dca_env><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>1437</LINE></dca_env>
   <dca_gate><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>1429</LINE></dca_gate>
@@ -147,81 +147,81 @@
   <arp_noteoff><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>1575</LINE></arp_noteoff>
   <arp_rest_done><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>1541</LINE></arp_rest_done>
   <arp_rest_start><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>1533</LINE></arp_rest_start>
-  <note_start><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2222</LINE></note_start>
+  <note_start><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2223</LINE></note_start>
   <arp_noteon_active><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>1558</LINE></arp_noteon_active>
   <arp_noteon_notactive><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>1550</LINE></arp_noteon_notactive>
-  <note_stop><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2207</LINE></note_stop>
+  <note_stop><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2208</LINE></note_stop>
   <arp_increment><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>1605</LINE></arp_increment>
   <arp_noteon_stop><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>1568</LINE></arp_noteon_stop>
   <arp_noteoff_active><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>1587</LINE></arp_noteoff_active>
   <arp_noteoff_notactive><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>1581</LINE></arp_noteoff_notactive>
   <arp_noteoff_start><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>1597</LINE></arp_noteoff_start>
-  <note_next><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2387</LINE></note_next>
+  <note_next><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2388</LINE></note_next>
   <note><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>1627</LINE></note>
   <note_normal><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>1634</LINE></note_normal>
   <note_normal_on><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>1653</LINE></note_normal_on>
   <note_normal_off><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>1640</LINE></note_normal_off>
   <note_normal_off_done><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>1650</LINE></note_normal_off_done>
-  <note_current><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2364</LINE></note_current>
+  <note_current><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2365</LINE></note_current>
   <note_normal_on_update><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>1663</LINE></note_normal_on_update>
   <matrix><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>1670</LINE></matrix>
-  <tanh_table><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>3116</LINE></tanh_table>
-  <dco_noise><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2100</LINE></dco_noise>
-  <dco_fm><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2071</LINE></dco_fm>
-  <control_signals><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2117</LINE></control_signals>
-  <timer0_overflow_done><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2187</LINE></timer0_overflow_done>
-  <timer0_overflow_control_done><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2175</LINE></timer0_overflow_control_done>
-  <note_start_nolfosync><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2242</LINE></note_start_nolfosync>
-  <note_start_lfosync><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2233</LINE></note_start_lfosync>
-  <note_find><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2264</LINE></note_find>
-  <note_find_loop><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2269</LINE></note_find_loop>
-  <note_find_true><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2280</LINE></note_find_true>
-  <note_find_false><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2276</LINE></note_find_false>
-  <note_allocate><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2285</LINE></note_allocate>
-  <note_add><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2291</LINE></note_add>
-  <note_add_done><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2314</LINE></note_add_done>
-  <note_delete><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2318</LINE></note_delete>
-  <note_delete_done><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2344</LINE></note_delete_done>
-  <note_shift><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2348</LINE></note_shift>
-  <note_shift_loop><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2351</LINE></note_shift_loop>
-  <note_shift_done><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2360</LINE></note_shift_done>
-  <note_current_loop><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2369</LINE></note_current_loop>
-  <note_current_true><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2381</LINE></note_current_true>
-  <note_current_false><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2376</LINE></note_current_false>
-  <note_next_loop><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2395</LINE></note_next_loop>
-  <note_next_check><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2402</LINE></note_next_check>
-  <note_next_done><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2415</LINE></note_next_done>
-  <note_next_valid><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2411</LINE></note_next_valid>
-  <midi_data><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2499</LINE></midi_data>
-  <midi_status><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2447</LINE></midi_status>
-  <midi_accept><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2469</LINE></midi_accept>
-  <midi_dont_accept><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2461</LINE></midi_dont_accept>
-  <midi_done><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2594</LINE></midi_done>
-  <midi_accept_done><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2494</LINE></midi_accept_done>
-  <midi_data_80><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2502</LINE></midi_data_80>
-  <midi_data_81><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2510</LINE></midi_data_81>
-  <midi_data_90><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2517</LINE></midi_data_90>
-  <midi_noteoff><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2609</LINE></midi_noteoff>
-  <midi_data_91><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2525</LINE></midi_data_91>
-  <midi_data_b0><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2534</LINE></midi_data_b0>
-  <midi_noteon><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2620</LINE></midi_noteon>
-  <midi_data_b1><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2542</LINE></midi_data_b1>
-  <midi_data_d0><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2562</LINE></midi_data_d0>
-  <midi_data_e0><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2569</LINE></midi_data_e0>
-  <midi_data_e1><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2577</LINE></midi_data_e1>
-  <ASR16_EXIT><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2697</LINE></ASR16_EXIT>
-  <ASR16_LOOP><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2691</LINE></ASR16_LOOP>
-  <MUL32X16><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2707</LINE></MUL32X16>
-  <NOTERECALC><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2833</LINE></NOTERECALC>
-  <NRC_2><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2839</LINE></NRC_2>
-  <NRC_1><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2836</LINE></NRC_1>
-  <TAB_WORD><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2866</LINE></TAB_WORD>
-  <NLP_I><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2892</LINE></NLP_I>
-  <NLP_II><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2899</LINE></NLP_II>
-  <NLP_III><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2906</LINE></NLP_III>
-  <NLP_CONT><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2912</LINE></NLP_CONT>
-  <reset_ram_loop><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2934</LINE></reset_ram_loop>
-  <reset_notes_init><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>3014</LINE></reset_notes_init>
-  <main><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>3111</LINE></main>
+  <tanh_table><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>3117</LINE></tanh_table>
+  <dco_noise><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2101</LINE></dco_noise>
+  <dco_fm><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2072</LINE></dco_fm>
+  <control_signals><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2118</LINE></control_signals>
+  <timer0_overflow_done><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2188</LINE></timer0_overflow_done>
+  <timer0_overflow_control_done><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2176</LINE></timer0_overflow_control_done>
+  <note_start_nolfosync><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2243</LINE></note_start_nolfosync>
+  <note_start_lfosync><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2234</LINE></note_start_lfosync>
+  <note_find><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2265</LINE></note_find>
+  <note_find_loop><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2270</LINE></note_find_loop>
+  <note_find_true><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2281</LINE></note_find_true>
+  <note_find_false><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2277</LINE></note_find_false>
+  <note_allocate><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2286</LINE></note_allocate>
+  <note_add><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2292</LINE></note_add>
+  <note_add_done><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2315</LINE></note_add_done>
+  <note_delete><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2319</LINE></note_delete>
+  <note_delete_done><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2345</LINE></note_delete_done>
+  <note_shift><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2349</LINE></note_shift>
+  <note_shift_loop><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2352</LINE></note_shift_loop>
+  <note_shift_done><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2361</LINE></note_shift_done>
+  <note_current_loop><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2370</LINE></note_current_loop>
+  <note_current_true><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2382</LINE></note_current_true>
+  <note_current_false><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2377</LINE></note_current_false>
+  <note_next_loop><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2396</LINE></note_next_loop>
+  <note_next_check><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2403</LINE></note_next_check>
+  <note_next_done><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2416</LINE></note_next_done>
+  <note_next_valid><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2412</LINE></note_next_valid>
+  <midi_data><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2500</LINE></midi_data>
+  <midi_status><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2448</LINE></midi_status>
+  <midi_accept><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2470</LINE></midi_accept>
+  <midi_dont_accept><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2462</LINE></midi_dont_accept>
+  <midi_done><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2595</LINE></midi_done>
+  <midi_accept_done><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2495</LINE></midi_accept_done>
+  <midi_data_80><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2503</LINE></midi_data_80>
+  <midi_data_81><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2511</LINE></midi_data_81>
+  <midi_data_90><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2518</LINE></midi_data_90>
+  <midi_noteoff><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2610</LINE></midi_noteoff>
+  <midi_data_91><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2526</LINE></midi_data_91>
+  <midi_data_b0><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2535</LINE></midi_data_b0>
+  <midi_noteon><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2621</LINE></midi_noteon>
+  <midi_data_b1><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2543</LINE></midi_data_b1>
+  <midi_data_d0><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2563</LINE></midi_data_d0>
+  <midi_data_e0><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2570</LINE></midi_data_e0>
+  <midi_data_e1><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2578</LINE></midi_data_e1>
+  <ASR16_EXIT><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2698</LINE></ASR16_EXIT>
+  <ASR16_LOOP><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2692</LINE></ASR16_LOOP>
+  <MUL32X16><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2708</LINE></MUL32X16>
+  <NOTERECALC><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2834</LINE></NOTERECALC>
+  <NRC_2><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2840</LINE></NRC_2>
+  <NRC_1><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2837</LINE></NRC_1>
+  <TAB_WORD><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2867</LINE></TAB_WORD>
+  <NLP_I><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2893</LINE></NLP_I>
+  <NLP_II><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2900</LINE></NLP_II>
+  <NLP_III><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2907</LINE></NLP_III>
+  <NLP_CONT><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2913</LINE></NLP_CONT>
+  <reset_ram_loop><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>2935</LINE></reset_ram_loop>
+  <reset_notes_init><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>3015</LINE></reset_notes_init>
+  <main><FILE>E:\032\LayerOne_2011\avrsyn\avrsyn.asm</FILE><LINE>3112</LINE></main>
  </LABELS>
 </ASSEMBLER_INFO>

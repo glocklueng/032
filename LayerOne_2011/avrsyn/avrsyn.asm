@@ -1805,7 +1805,7 @@ timer0_overflow:
   ror r0
   movw r30,r0
 
-  lds r19,DCOBLEVEL
+  ldi r19, 255; DCOBLEVEL
   subi r16,$80
   mulsu r16,r19
   asr r1
@@ -2002,7 +2002,7 @@ dcf_iir_done:
 
 ;; dca
 
-  lds r18,LEVEL
+  ldi r18,200;LEVEL
 
   mul r16,r18
   mov r30,r1
@@ -2022,29 +2022,30 @@ dcf_iir_done:
   cbi PORTD,2
   cbi PORTD,3
 
-	mov		r29,r30
+;	mov		r29,r30
 
-	push 	r30
-	push 	r31
+;	push 	r30
+;	push 	r31
 
 
-		ldi		ZL, low(reversebits<<1)	; AVR's are odd with their two byte memory layout
-		ldi		ZH, high(reversebits<<1)
+;		ldi		ZL, low(reversebits<<1)	; AVR's are odd with their two byte memory layout
+;		ldi		ZH, high(reversebits<<1)
 
-		add		ZL,r29
+;		adc		ZL,r29
 
-		lpm
+;		lpm
 
-		out	DDRA,r30
-		out	PORTA,r0
+;		out	DDRA,r30
+;		out	PORTA,r0
 
 		; output low byte
-		out PORTC,r0
+;		out PORTC,r0
 
-	pop		r31
-	pop		r30
+;	pop		r31
+;	pop		r30
+;
 
-
+	out PORTC,r31
 	    
 ;; increment phase
 
