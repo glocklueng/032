@@ -1,3 +1,4 @@
+
 ;;;; avrsyn (2007.12.22)
 ;;;;
 ;;;; original from http://jarek.synth.net/
@@ -1805,7 +1806,7 @@ timer0_overflow:
   ror r0
   movw r30,r0
 
-  ldi r19, 255; DCOBLEVEL
+  lds r19, DCOBLEVEL
   subi r16,$80
   mulsu r16,r19
   asr r1
@@ -2604,6 +2605,8 @@ midi_done:
 
   ; reenable usart_rxc interrupt
   sbi UCSR0B,RXCIE0
+
+
   reti
 
 
