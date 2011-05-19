@@ -58,7 +58,7 @@
 ;-------------------------------------------------------------------------------------------------------------------
 
                     .NOLIST
-                    .INCLUDE "m64def.inc"
+                    .INCLUDE "m128def.inc"
                     .LIST
                     .LISTMAC
 
@@ -572,9 +572,10 @@ T2_AEXIT:
 
 				adc 	ZH,zero					; add carry if it exists
 
-			   	lpm								; -> r0  (uses Z) with lsb as index into byte
+			   	;lpm								; -> r0  (uses Z) with lsb as index into byte
 	    
-				out	    PORTC, r0	        	; MSByte
+				out	    PORTC, r29
+					        	; MSByte
 
 			pop		r31
 			pop		r30
