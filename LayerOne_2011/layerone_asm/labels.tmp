@@ -1,13 +1,13 @@
 <ASSEMBLER_INFO>
  <VERSION>2.1.42</VERSION>
- <DEVICE>ATmega64</DEVICE>
+ <DEVICE>ATmega128</DEVICE>
  <WORKING_DIR>E:\032\LayerOne_2011\layerone_asm</WORKING_DIR>
  <INCLUDE_PATH>
   <DIR>C:\Program Files (x86)\Atmel\AVR Tools\AvrAssembler2\Appnotes</DIR>
  </INCLUDE_PATH>
  <SOURCE_FILE>E:\032\LayerOne_2011\layerone_asm\layerone_mee.asm</SOURCE_FILE>
  <INCLUDED_FILES>
-  <FILE>C:\Program Files (x86)\Atmel\AVR Tools\AvrAssembler2\Appnotes\m64def.inc</FILE>
+  <FILE>C:\Program Files (x86)\Atmel\AVR Tools\AvrAssembler2\Appnotes\m128def.inc</FILE>
  </INCLUDED_FILES>
  <OBJECT_FILES>
   <FILE>E:\032\LayerOne_2011\layerone_asm\layerone_asm.obj</FILE>
