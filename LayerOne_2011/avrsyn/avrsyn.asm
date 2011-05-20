@@ -1,12 +1,8 @@
-
-;;;; avrsyn (2007.12.22)
+;;;; avrsyn (2009.09.05)
 ;;;;
 ;;;; original from http://jarek.synth.net/
 ;;;; this version lives at http://krue.net/avrsyn/
-               .NOLIST
-               .INCLUDE "m64def.inc"
-               .LIST
-               .LISTMAC
+
 ;;; hardware
 ;;;
 ;;; pa7..pa0: a/d
@@ -41,11 +37,24 @@
 
 ;;; atmega32 defines
 
-.equ ramsize = SRAM_SIZE
+.equ iosize = $40
+.equ ramsize = $800
+.equ flashsize = $4000
+.equ eepromsize = $400
+.equ pagesize = $40
+
 ;;; memory boundaries
 
+.set regsize = $20
+.set regstart = $0
+.set regend = $1f
 .set iostart = $20
-.set ramstart = SRAM_START
+.set ioend = iostart + iosize - 1
+.set ramstart = ioend + 1
+.set ramend = ioend + ramsize
+.set flashstart = $0
+.set flashend = flashsize - 1
+.set pagemask =  ~ ( pagesize - 1 )
 
 ;;; t bit boolean
 
@@ -71,7 +80,252 @@
   .org (pc | (exp2(@0) - 1)) + 1
 .endmacro
  
+;;; io registers
 
+.equ TWBR = $00
+.equ TWSR = $01
+  .equ TWS7 = 7
+  .equ TWS6 = 6
+  .equ TWS5 = 5
+  .equ TWS4 = 4
+  .equ TWS3 = 3
+  .equ TWPS1 = 1
+  .equ TWPS0 = 0
+.equ TWAR = $02
+  .equ TWA6 = 7
+  .equ TWA5 = 6
+  .equ TWA4 = 5
+  .equ TWA3 = 4
+  .equ TWA2 = 3
+  .equ TWA1 = 2
+  .equ TWA0 = 1
+  .equ TWGCE = 0
+.equ TWDR = $03
+.equ ADCL = $04
+.equ ADCH = $05
+.equ ADCSRA = $06
+  .equ ADEN = 7
+  .equ ADSC = 6
+  .equ ADATE = 5
+  .equ ADIF = 4
+  .equ ADIE = 3
+  .equ ADPS2 = 2
+  .equ ADPS1 = 1
+  .equ ADPS0 = 0
+.equ ADMUX = $07
+  .equ REFS1 = 7
+  .equ REFS0 = 6
+  .equ ADLAR = 5
+  .equ MUX4 = 4
+  .equ MUX3 = 3
+  .equ MUX2 = 2
+  .equ MUX1 = 1
+  .equ MUX0 = 0
+.equ ACSR = $08
+  .equ ACD = 7
+  .equ ACBG = 6
+  .equ ACO = 5
+  .equ ACI = 4
+  .equ ACIE = 3
+  .equ ACIC = 2
+  .equ ACIS1 = 1
+  .equ ACIS0 = 0
+.equ UBRRL = $09
+.equ UCSRB = $0a
+  .equ RXCIE = 7
+  .equ TXCIE = 6
+  .equ UDRIE = 5
+  .equ RXEN = 4
+  .equ TXEN = 3
+  .equ UCSZ2 = 2
+  .equ RXB8 = 1
+  .equ TXB8 = 0
+.equ UCSRA = $0b
+  .equ RXC = 7
+  .equ TXC = 6
+  .equ UDRE = 5
+  .equ FE = 4
+  .equ DOR = 3
+  .equ PE = 2
+  .equ U2X = 1
+  .equ MPCM = 0
+.equ UDR = $0c
+.equ SPCR = $0d
+  .equ SPIE = 7
+  .equ SPE = 6
+  .equ DORD = 5
+  .equ MSTR = 4
+  .equ CPOL = 3
+  .equ CPHA = 2
+  .equ SPR1 = 1
+  .equ SPR0 = 0
+.equ SPSR = $0e
+  .equ SPIF = 7
+  .equ WCOL = 6
+  .equ SPI2X = 0
+.equ SPDR = $0f
+.equ PIND = $10
+.equ DDRD = $11
+.equ PORTD = $12
+.equ PINC = $13
+.equ DDRC = $14
+.equ PORTC = $15
+.equ PINB = $16
+.equ DDRB = $17
+.equ PORTB = $18
+.equ PINA = $19
+.equ DDRA = $1a
+.equ PORTA = $1b
+.equ EECR = $1c
+  .equ EERIE = 3
+  .equ EEMWE = 2
+  .equ EEWE = 1
+  .equ EERE = 0
+.equ EEDR = $1d
+.equ EEARL = $1e
+.equ EEARH = $1f
+.equ UBRRH = $20
+.equ UCSRC = $20
+  .equ URSEL = 7
+  .equ UMSEL = 6
+  .equ UPM1 = 5
+  .equ UPM0 = 4
+  .equ USBS = 3
+  .equ UCSZ1 = 2
+  .equ UCSZ0 = 1
+  .equ UCPOL = 0
+.equ WDTCR = $21
+  .equ WDTOE = 4
+  .equ WDE = 3
+  .equ WDP2 = 2
+  .equ WDP1 = 1
+  .equ WDP0 = 0
+.equ ASSR = $22
+  .equ AS2 = 3
+  .equ TCN2UB = 2
+  .equ OCR2UB = 1
+  .equ TCR2UB = 0
+.equ OCR2 = $23
+.equ TCNT2 = $24
+.equ TCCR2 = $25
+  .equ FOC2 = 7
+  .equ WGM20 = 6
+  .equ COM21 = 5
+  .equ COM20 = 4
+  .equ WGM21 = 3
+  .equ CS22 = 2
+  .equ CS21 = 1
+  .equ CS20 = 0
+.equ ICR1L = $26
+.equ ICR1H = $27
+.equ OCR1BL = $28
+.equ OCR1BH = $29
+.equ OCR1AL = $2a
+.equ OCR1AH = $2b
+.equ TCNT1L = $2c
+.equ TCNT1H = $2d
+.equ TCCR1B = $2e
+  .equ ICNC1 = 7
+  .equ ICES1 = 6
+  .equ WGM13 = 4
+  .equ WGM12 = 3
+  .equ CS12 = 2
+  .equ CS11 = 1
+  .equ CS10 = 0
+.equ TCCR1A = $2f
+  .equ COM1A1 = 7
+  .equ COM1A0 = 6
+  .equ COM1B1 = 5
+  .equ COM1B0 = 4
+  .equ FOC1A = 3
+  .equ FOC1B = 2
+  .equ WGM11 = 1
+  .equ WGM10 = 0
+.equ SFIOR = $30
+  .equ ADTS2 = 7
+  .equ ADTS1 = 6
+  .equ ADTS0 = 5
+  .equ ACME = 3
+  .equ PUD = 2
+  .equ PSR2 = 1
+  .equ PSR10 = 0
+.equ OSCCA = $31
+.equ OCDR = $31
+.equ TCNT0 = $32
+.equ TCCR0 = $33
+  .equ FOC0 = 7
+  .equ WGM00 = 6
+  .equ COM01 = 5
+  .equ COM00 = 4
+  .equ WGM01 = 3
+  .equ CS02 = 2
+  .equ CS01 = 1
+  .equ CS00 = 0
+.equ MCUCSR = $34
+  .equ JTD = 7
+  .equ ISC2 = 6
+  .equ JTRF = 4
+  .equ WDRF = 3
+  .equ BORF = 2
+  .equ EXTRF = 1
+  .equ PORF = 0
+.equ MCUCR = $35
+  .equ SE = 7
+  .equ SM2 = 6
+  .equ SM1 = 5
+  .equ SM0 = 4
+  .equ ISC11 = 3
+  .equ ISC10 = 2
+  .equ ISC01 = 1
+  .equ ISC00 = 0
+.equ TWCR = $36
+  .equ TWINT = 7
+  .equ TWEA = 6
+  .equ TWSTA = 5
+  .equ TWSTO = 4
+  .equ TWWC = 3
+  .equ TWEN = 2
+  .equ TWIE = 0
+.equ SPMCR = $37
+  .equ SPMIE = 7
+  .equ RWWSB = 6
+  .equ RWWSRE = 4
+  .equ BLBSET = 3
+  .equ PGWRT = 2
+  .equ PGERS = 1
+  .equ SPMEN = 0
+.equ TIFR = $38
+  .equ OCF2 = 7
+  .equ TOV2 = 6
+  .equ ICF1 = 5
+  .equ OCF1A = 4
+  .equ OCF1B = 3
+  .equ TOV1 = 2
+  .equ OCF0 = 1
+  .equ TOV0 = 0
+.equ TIMSK = $39
+  .equ OCIE2 = 7
+  .equ TOIE2 = 6
+  .equ TICIE1 = 5
+  .equ OCIE1A = 4
+  .equ OCIE1B = 3
+  .equ TOIE1 = 2
+  .equ OCIE0 = 1
+  .equ TOIE0 = 0
+.equ GIFR = $3a
+  .equ INTF1 = 7
+  .equ INTF0 = 6
+  .equ INTF2 = 5
+.equ GIRC = $3b
+  .equ INT1 = 7
+  .equ INT0 = 6
+  .equ INT2 = 5
+  .equ IVSEL = 1
+  .equ IVCE = 0
+.equ OCR0 = $3c
+.equ SPL = $3d
+.equ SPH = $3e
+.equ SREG = $3f
 
 ;;; registers
 
@@ -119,86 +373,40 @@
 ;;; ram
 .dseg
 
-  ; MIDI
-MIDIPHASE:		.BYTE	1
+; midi
+MIDIPHASE:	.BYTE	1
 MIDICHANNEL:	.BYTE	1
-MIDIDATA0:		.BYTE	1
+MIDIDATA0:	.BYTE	1
 MIDIVELOCITY:	.BYTE	1
-MIDINOTE:		.BYTE	1
+MIDINOTE:	.BYTE	1
 MIDINOTEPREV:	.BYTE	1		; buffer for MIDI note
 MIDIPBEND_L:	.BYTE	1		;\
 MIDIPBEND_H:	.BYTE	1		;/ -32768..+32766
 MIDIPRESSURE:   .byte 1   ; channel pressure
 MIDICC:         .byte $80 ; continuous controllers
-
   .equ MIDIMODWHEEL = MIDICC + $01
 ;  .equ MIDIEXPRESSION = MIDICC + $0b
   .equ MIDIEXPRESSION = MIDICC + $40
-  .equ ENV0PARAM = MIDICC + $30
-  .equ ENV1PARAM = MIDICC + $34
-  .equ DCOALEVEL = MIDICC + $38
-  .equ DCOBLEVEL = MIDICC + $39
-  .equ DCOAWAVE = MIDICC + $3a
-  .equ DCOBWAVE = MIDICC + $3b
-  .equ RESONANCE = MIDICC + $3e
-  .equ FMDEPTH = MIDICC + $3f
 
-ENV0: 		.byte 4
-ENV1: 		.byte 4
+ENV0: .byte 4
+ENV1: .byte 4
 
-LFO0: 		.byte $b
-LFOLEVEL: 	.byte 1
-LFO1: 		.byte $b
+LFO0: .byte $b
+LFOLEVEL: .byte 1
+LFO1: .byte $b
 
   ;current sound parameters:
 ;;;LFOFREQ:	.BYTE	1	    ;0..255
 ;;;LFOLEVEL:	.BYTE	1	    ;0..255
-MODEFLAGS1:	.BYTE	1
-  .equ sw_dco_distortion = 0 ;b0 = DCO DIST: 0=off, 1=on
-  .equ sw_dcoa_wave = 1      ;b1 = wave A: 0=saw, 1=squ
-  .equ sw_dcob_wave = 2      ;b2 = wave B: 0=saw, 1=squ
-  .equ sw_dcob_on = 3        ;b3 = osc B: 0=off, 1=on
-  .equ sw_dca_mode = 4       ;b4 = DCA mode: 0=gate, 1=env
-  .equ sw_transpose = 5      ;b5 = transpose: 0=down, 1=up
-  .equ sw_dcoa_octave = 6    ;b6 = octave A: 0=down, 1=up
-  .equ sw_dcob_octave = 7    ;b7 = octave B: 0=down, 1=up
-  
-MODEFLAGS2:	.BYTE	1
-  .equ sw_lfo_mode = 0       ;b0 = LFO MODE: 0=DCO, 1=DCF
-  .equ sw_lfo_wave = 1       ;b1 = LFO WAVE: 0=tri, 1=squ
-  .equ sw_dcf_track = 2      ;b2 = DCF KBD TRACK: 0=off, 1=on
-  .equ sw_env_loop = 3       ;b3 = ENV LOOP: 0=off, 1=on
-  .equ sw_dcoa_noise = 4
-  .equ sw_mod_wheel = 5      ;b5 = MODWHEEL: 0=off, 1=on
-  .equ sw_lfo_sync = 6       ;b6 = LFO KBD SYNC: 0=off, 1=on
-  .equ sw_lfo_random = 7     ;b7 = LFO: 0=norm, 1=rand
 
 SETMIDICHANNEL:	.BYTE	1		;selected MIDI channel: 0 for OMNI or 1..15
 ;;;DETUNEB_FRAC:	.BYTE	1	    ;\
 ;;;DETUNEB_INTG:	.BYTE	1	    ;/ -128,000..+127,996
   ;other variables:
-SWITCH1:	.BYTE	1	    ;bit meanings for switch-bank 1:
-					            ;b0: P.BEND disable/enable
-					            ;b1: MOD.WHEEL disable/enable
-					            ;b2: LFO KBD SYNC off/on
-    					        ;b3: LFO norm/rand
-					            ;b4: ENV LOOP off/on
-					            ;b5: transpose down/up
-    					        ;b6: octave A down/up
-					            ;b7: octave B down/up
-SWITCH2:	.BYTE	1	    ;bit meanings for switch-bank 2:
-				            ;b0: wave A saw/squ
-				            ;b1: wave B saw/squ
-    					    ;b2: osc B off/on
-					    ;b3: DCA gate/env
-    					    ;b4: env AR/ASR
-					    ;b5: LFO DCO/DCF
-					    ;b6: LFO tri/squ
-					    ;b7: DCF KBD TRACK
-SWITCH3:	.BYTE	1		;b0: MIDI SWITCH 1	050505
-					;b1: MIDI SWITCH 2
-					;b2: MIDI SWITCH 3
-					;b3: MIDI SWITCH 4
+SWITCH1: .byte 1
+SWITCH2: .byte 1
+SWITCH3: .byte 1
+
 NOTE_L:		.BYTE	1
 NOTE_H:		.BYTE	1
 NOTE_INTG:	.BYTE	1
@@ -207,17 +415,8 @@ LPF_I:		.BYTE	1
 LEVEL:		.BYTE	1		;0..255
 PITCH:		.BYTE	1		;0..96
 
-; potentiometer values
-; order determines which function each pot controls
-adc_data:
-LFOFREQ:       .byte 1
-LFOLEVELPANEL: .byte 1
-DETUNEB:       .byte 1
-CUTOFF:        .byte 1
-ARPTHRESHOLD: .byte 1
-ARPRATE:      .byte 1
-PORTAMENTO:    .byte 1
-VCFENVMOD:     .byte 1
+; potentiometers
+ADCDATA: .byte 8
 
 GATE:		.BYTE	1		;0 / 1
 
@@ -253,6 +452,70 @@ NOTESACTIVE: .byte 1
 ARPPHASE: .byte 3
 ARPNOTE: .byte 1
 ARPSTATE: .byte 1
+
+;; input configuration
+
+; boolean inputs
+.equ DCO_DISTORTION_REG = SWITCH1
+.equ DCO_DISTORTION_BIT = 0
+
+.equ DCA_ENV_ENABLE_REG = SWITCH1
+.equ DCA_ENV_ENABLE_BIT = 1
+
+.equ TRANSPOSE_REG = SWITCH1
+.equ TRANSPOSE_BIT = 2
+
+.equ DCOB_TRANSPOSE_REG = SWITCH1
+.equ DCOB_TRANSPOSE_BIT = 3
+
+.equ DCOA_TRANSPOSE_REG = SWITCH1
+.equ DCOA_TRANSPOSE_BIT = 4
+
+.equ LFO_MODE_REG = SWITCH1
+.equ LFO_MODE_BIT = 5
+
+.equ LFO_WAVE_REG = SWITCH1
+.equ LFO_WAVE_BIT = 6
+
+.equ LFO_RANDOM_REG = SWITCH1
+.equ LFO_RANDOM_BIT = 7
+
+.equ LFO_SYNC_REG = SWITCH2
+.equ LFO_SYNC_BIT = 0
+
+.equ DCF_TRACK_REG = SWITCH2
+.equ DCF_TRACK_BIT = 1
+
+.equ DCOA_NOISE_REG = SWITCH2
+.equ DCOA_NOISE_BIT = 2
+
+.equ MOD_WHEEL_REG = SWITCH2
+.equ MOD_WHEEL_BIT = 3
+
+.equ ARP_ENABLE_REG = SWITCH2
+.equ ARP_ENABLE_BIT = 4
+
+.equ ARP_SYNC_REG = SWITCH2
+.equ ARP_SYNC_BIT = 5
+
+; continuous inputs
+.equ LFOFREQ = ADCDATA + $0
+.equ LFOLEVELPANEL = ADCDATA + $1
+.equ DETUNEB = ADCDATA + $2
+.equ CUTOFF = ADCDATA + $3
+.equ ARPTHRESHOLD = ADCDATA + $4
+.equ ARPRATE = ADCDATA + $5
+.equ PORTAMENTO = ADCDATA + $6
+.equ VCFENVMOD = ADCDATA + $7
+
+.equ ENV0PARAM = MIDICC + $30
+.equ ENV1PARAM = MIDICC + $34
+.equ DCOALEVEL = MIDICC + $38
+.equ DCOBLEVEL = MIDICC + $39
+.equ DCOAWAVE = MIDICC + $3a
+.equ DCOBWAVE = MIDICC + $3b
+.equ RESONANCE = MIDICC + $3e
+.equ FMDEPTH = MIDICC + $3f
 
   .eseg
 
@@ -313,10 +576,6 @@ ARPSTATE: .byte 1
             jmp IRQ_NONE                ; 2-Wire Serial Interface
 
             jmp IRQ_NONE                ; STORE PROGRAM MEMORY READY
-
-reversebits:
-	.db	0x00,0x80,0x40,0xC0,0x20,0xA0,0x60,0xE0,0x10,0x90,0x50,0xD0,0x30,0xB0,0x70,0xF0,0x08,0x88,0x48,0xC8,0x28,0xA8,0x68,0xE8,0x18,0x98,0x58,0xD8,0x38,0xB8,0x78,0xF8,0x04,0x84,0x44,0xC4,0x24,0xA4,0x64,0xE4,0x14,0x94,0x54,0xD4,0x34,0xB4,0x74,0xF4 ,0x0C,0x8C,0x4C,0xCC,0x2C,0xAC,0x6C,0xEC,0x1C,0x9C,0x5C,0xDC,0x3C,0xBC,0x7C,0xFC,0x02,0x82,0x42,0xC2,0x22,0xA2,0x62,0xE2,0x12,0x92,0x52,0xD2,0x32,0xB2,0x72,0xF2,0x0A,0x8A,0x4A,0xCA,0x2A,0xAA,0x6A,0xEA,0x1A,0x9A,0x5A,0xDA,0x3A,0xBA,0x7A,0xFA,0x06,0x86,0x46,0xC6,0x26,0xA6,0x66,0xE6,0x16,0x96,0x56,0xD6,0x36,0xB6,0x76,0xF6,0x0E,0x8E,0x4E,0xCE,0x2E,0xAE,0x6E,0xEE,0x1E,0x9E,0x5E,0xDE,0x3E,0xBE,0x7E,0xFE,0x01,0x81,0x41,0xC1,0x21,0xA1,0x61,0xE1,0x11,0x91,0x51,0xD1,0x31,0xB1,0x71,0xF1,0x09,0x89,0x49,0xC9,0x29,0xA9,0x69,0xE9,0x19,0x99,0x59,0xD9,0x39,0xB9,0x79,0xF9,0x05,0x85,0x45,0xC5,0x25,0xA5,0x65,0xE5,0x15,0x95,0x55,0xD5,0x35,0xB5,0x75,0xF5,0x0D,0x8D,0x4D,0xCD,0x2D,0xAD,0x6D,0xED,0x1D,0x9D,0x5D,0xDD,0x3D,0xBD,0x7D,0xFD,0x03,0x83,0x43,0xC3,0x23,0xA3,0x63,0xE3,0x13,0x93,0x53,0xD3,0x33,0xB3,0x73,0xF3,0x0B,0x8B,0x4B,0xCB,0x2B,0xAB,0x6B,0xEB,0x1B,0x9B,0x5B,0xDB,0x3B,0xBB,0x7B,0xFB,0x07,0x87,0x47,0xC7,0x27,0xA7,0x67,0xE7,0x17,0x97,0x57,0xD7,0x37,0xB7,0x77,0xF7,0x0F,0x8F,0x4F,0xCF,0x2F,0xAF,0x6F,0xEF,0x1F,0x9F,0x5F,0xDF,0x3F,0xBF,0x7F,0xFF
-
 
 IRQ_NONE:
   reti
@@ -454,18 +713,18 @@ phase_table:
 .db $27,$2f,$61,$33
 
 ;-----------------------------------------------------------------------------
-TAB_VCF:.DW	0x0101
+TAB_VCF:	.DW	0x0101
 		.DW	0x0101
 		.DW	0x0201
 		.DW	0x0202
-    	.DW	0x0202
+    		.DW	0x0202
 		.DW	0x0202
 		.DW	0x0202
 		.DW	0x0402
 		.DW	0x0404
-	    .DW	0x0505
-    	.DW	0x0606
-    	.DW	0x0806
+	    	.DW	0x0505
+    		.DW	0x0606
+    		.DW	0x0806
 		.DW	0x0908
 		.DW	0x0A0A
 		.DW	0x0C0C
@@ -488,7 +747,7 @@ TAB_VCF:.DW	0x0101
 		.DW	0xFFE8
 
 ;-----------------------------------------------------------------------------
-TAB_VCA:.DW	0x0100		    ;-48.2dB,-oodB
+TAB_VCA:	.DW	0x0100		    ;-48.2dB,-oodB
 		.DW	0x0302		    ;-38.6dB,-42.1dB
 		.DW	0x0504		    ;-34.2dB,-36.1dB
 		.DW	0x0706		    ;-31.3dB,-32.6dB
@@ -953,7 +1212,7 @@ lfo_store_limits:
 
 lfo_value:
   ; test for square
-  bst r30,LFOFLAGSQUARE
+  bst r25,LFOFLAGSQUARE
   brtc lfo_store_value
 
 lfo_square:
@@ -972,8 +1231,8 @@ modwheel:
   lds r17,MIDIMODWHEEL
 
   ; check if mod wheel enabled
-  lds r30,MODEFLAGS2
-  bst r30,sw_mod_wheel
+  lds r30,MOD_WHEEL_REG
+  bst r30,MOD_WHEEL_BIT
   brtc modwheel_store
 
 lfo_mod_wheel:
@@ -1189,8 +1448,8 @@ portamento_write:
   sts NOTE_INTG,r23
 
 ;; transpose switch
-  lds r16,MODEFLAGS1
-  sbrs r16,sw_transpose
+  lds r16,TRANSPOSE_REG
+  sbrs r16,TRANSPOSE_BIT
   subi r23,12
 
 ;; pitch bend
@@ -1219,8 +1478,8 @@ portamento_write:
 ;; lfo modulation
 
   ; check lfo mode
-  lds r16,MODEFLAGS2
-  andi r16,(1<<sw_lfo_mode)
+  lds r16,LFO_MODE_REG
+  andi r16,(1<<LFO_MODE_BIT)
 
   ; skip when lfo mode = dcf
   brne dcomod_lfo_done
@@ -1277,8 +1536,8 @@ dcomod_lfo_done:
 ;; phase delta a
 
   ; octave transpose
-  lds r16,MODEFLAGS1
-  sbrc r16,sw_dcoa_octave
+  lds r16,DCOA_TRANSPOSE_REG
+  sbrc r16,DCOA_TRANSPOSE_BIT
   subi r23,-12
 
   ; calculate delta
@@ -1309,8 +1568,8 @@ dcomod_lfo_done:
   adc r23,r17
 
   ; octave transpose
-  lds r16,MODEFLAGS1
-  sbrc r16,sw_dcob_octave
+  lds r16,DCOB_TRANSPOSE_REG
+  sbrc r16,DCOB_TRANSPOSE_BIT
   subi r23,-12
 
   ; calculate delta 
@@ -1334,8 +1593,8 @@ dcfmod:
 dcfmod_lfo:
 
   ; skip when lfo mode = dco
-  lds r16,MODEFLAGS2
-  andi r16,sw_lfo_mode
+  lds r16,LFO_MODE_REG
+  andi r16,(1<<LFO_MODE_BIT)
   breq dcfmod_env
 
   ; get lfo parameters
@@ -1369,15 +1628,14 @@ dcfmod_env:
 ;; keyboard tracking
 
   ; skip when keyboard tracking is off
-  lds r16,MODEFLAGS2
-  andi r16,(1<<sw_dcf_track)
+  lds r16,DCF_TRACK_REG
+  andi r16,(1<<DCF_TRACK_BIT)
   breq dcfmod_cutoff
   
   lds r16,PITCH   ;R16 = n (12/octave)	0..96
   lsl r16         ;R16 = 2*n (24/octave)	0..192
   subi r16,96     ;R16 = 2*(n-48) (24/octave)   -96..+96
   ldi r17,171
-;  rcall MUL8X8S   ;R17 = 1,5*(n-48) (16/octave) -64..+64
   mulsu r16,r17   ;R1 = 1,5*(n-48) (16/octave) -64..+64
 
   ; sign extension
@@ -1423,8 +1681,8 @@ dcfmod_done:
 dca:
 
   ; check dca mode
-  lds r17,MODEFLAGS1
-  bst r17,sw_dca_mode
+  lds r17,DCA_ENV_ENABLE_REG
+  bst r17,DCA_ENV_ENABLE_BIT
   brts dca_env
 
 dca_gate:
@@ -1521,8 +1779,8 @@ arp_rest:
   breq arp_rest_done
 
   ; reset parameters
-  lds r17,SWITCH3
-  bst r17,3
+  lds r17,ARP_SYNC_REG
+  bst r17,ARP_SYNC_BIT
   brts arp_rest_start
 
   sts ARPPHASE+0,zero
@@ -1627,8 +1885,8 @@ arp_increment:
 
 note:
   ; check if arppegiator is enabled
-  lds r16,SWITCH3
-  bst r16,2
+  lds r16,ARP_ENABLE_REG
+  bst r16,ARP_ENABLE_BIT
   brtc note_normal
   rjmp arp
 
@@ -1718,9 +1976,6 @@ matrix:
   ori r30,$f0
   eor r30,r16
   out PORTD,r30
-		
-  sts MODEFLAGS1,r19
-  sts MODEFLAGS2,r20
   ret
 
 ;; main timer interrupt
@@ -1740,8 +1995,6 @@ timer0_overflow:
   push r1
 
 ;; dcos
-
-  lds r18,MODEFLAGS1
 
 ;; dco a
 
@@ -1784,19 +2037,9 @@ timer0_overflow:
 ;  ror r16
 
   ; apply XOR distortion if desired		    
-  sbrc r18,sw_dco_distortion
+  lds r18,DCO_DISTORTION_REG
+  sbrc r18,DCO_DISTORTION_BIT
   eor r17,r16
-
-  ; turn off dco b if desired
-;  sbrs r18,sw_dcob_on
-;  ldi r16,$80
-
-;;; sum of dco a and dco b
-;  add r17,r16     ;Cy:R17 = A + B
-;  ror r17         ;R17 = 0,5 * (A + B)
-;  lsr r17         ;R17 = 0,25 * (A + B)
-;  ldi r16,0       ;\ R17:R16 = A + B
-;  subi r17,64     ;/ -16384..+16383
 
 ;; mixer
   lds r19,DCOALEVEL
@@ -1806,7 +2049,7 @@ timer0_overflow:
   ror r0
   movw r30,r0
 
-  lds r19, DCOBLEVEL
+  lds r19,DCOBLEVEL
   subi r16,$80
   mulsu r16,r19
   asr r1
@@ -2003,7 +2246,7 @@ dcf_iir_done:
 
 ;; dca
 
-  ldi r18,200;LEVEL
+  lds r18,LEVEL
 
   mul r16,r18
   mov r30,r1
@@ -2023,31 +2266,14 @@ dcf_iir_done:
   cbi PORTD,2
   cbi PORTD,3
 
-;	mov		r29,r30
+  ; output low byte
+  out PORTC,r30
+  sbi PORTD,2
 
-;	push 	r30
-;	push 	r31
+  ; output high byte
+  out PORTC,r31
+  sbi PORTD,3
 
-
-;		ldi		ZL, low(reversebits<<1)	; AVR's are odd with their two byte memory layout
-;		ldi		ZH, high(reversebits<<1)
-
-;		adc		ZL,r29
-
-;		lpm
-
-;		out	DDRA,r30
-;		out	PORTA,r0
-
-		; output low byte
-;		out PORTC,r0
-
-;	pop		r31
-;	pop		r30
-;
-
-	out PORTC,r31
-	    
 ;; increment phase
 
   ldi r30,low(DELTAA_0)
@@ -2065,8 +2291,8 @@ dcf_iir_done:
   ld r16,z+
   adc PHASEB_2,r16
 
-  lds r16,MODEFLAGS2
-  bst r16,sw_dcoa_noise
+  lds r16,DCOA_NOISE_REG
+  bst r16,DCOA_NOISE_BIT
   brts dco_noise
 
 ;; fm
@@ -2141,10 +2367,13 @@ control_signals:
   ldi r28,low(LFO0)
   ldi r29,high(LFO0)
   lds r16,LFOFREQ
-  lds r17,MODEFLAGS2
-  bst r17,sw_lfo_random
+
+  lds r17,LFO_RANDOM_REG
+  bst r17,LFO_RANDOM_BIT
   bld r25,LFOFLAGRANDOM
-  bst r17,sw_lfo_wave
+
+  lds r17,LFO_WAVE_REG
+  bst r17,LFO_WAVE_BIT
   bld r25,LFOFLAGSQUARE
   rcall lfo
 
@@ -2228,8 +2457,8 @@ note_start:
   sts ENV1+ENVSTATE,r16
 
   ; lfo reset if sync is activated
-  lds r16,MODEFLAGS2
-  bst r16,sw_lfo_sync
+  lds r16,LFO_SYNC_REG
+  bst r16,LFO_SYNC_BIT
   brtc note_start_nolfosync
 
 note_start_lfosync:
@@ -2327,8 +2556,8 @@ note_delete:
   st x,r16
 
   ; in normal mode, shift other notes to fill in gap
-  lds r18,SWITCH3
-  sbrs r18,2
+  lds r18,ARP_ENABLE_REG
+  sbrs r18,ARP_ENABLE_BIT
   rcall note_shift
 
   ; decrement active note count
@@ -2427,10 +2656,10 @@ usart_rxc:
   push r16
 
   ; read received byte
-  in r16,UDR0
+  in r16,UDR
 
   ; disable further usart_rxc interrupts
-  cbi UCSR0B,RXCIE0
+  cbi UCSRB,RXCIE
 
   ; enable other interrupts
   sei
@@ -2439,12 +2668,11 @@ usart_rxc:
   push r18
   push r26
   push r27
- 
+  
   ; check for status byte (bit7)
   tst r16
   brpl midi_data
 
- 
 ;; status byte (1xxxxxxx)
 midi_status:
   mov r17,r16
@@ -2461,23 +2689,18 @@ midi_status:
   breq midi_accept ;Ex pitch bend
 
 midi_dont_accept:
-
-
   sts MIDIPHASE,zero
   rjmp midi_done		    ;Ax polyphonic aftertouch
 						                ;Cx program change
 						                ;Fx system
 
 midi_accept:
-
-  
-    ; set phase to x0
+  ; set phase to x0
   sts MIDIPHASE,r17
 
   ; store midi channel (1..16)
   andi r16,$0f
   inc r16
-;	ldi r16,0
   sts MIDICHANNEL,r16
 
   ; check for OMNI mode
@@ -2494,7 +2717,6 @@ midi_accept:
   sts MIDIPHASE,r17
 
 midi_accept_done:
-
   rjmp midi_done
 
 ;; data byte (0xxxxxxx)
@@ -2602,19 +2824,12 @@ midi_done:
   out SREG,r16
   pop r16
 
-
   ; reenable usart_rxc interrupt
-  sbi UCSR0B,RXCIE0
-
-
+  sbi UCSRB,RXCIE
   reti
 
 
 midi_noteoff:
-
-  sbi   PORTE, 1		    ; LED on
-
-
   lds r16,MIDIDATA0
   rcall note_delete
   rcall note_current
@@ -2624,7 +2839,6 @@ midi_noteoff:
 midi_noteon:
   ; store velocity
   sts MIDIVELOCITY,r16
-  cbi	    PORTE, 1		    ; LED off
 
   lds r16,MIDIDATA0
   rcall note_add
@@ -2642,39 +2856,39 @@ midi_noteon:
 
 ;; adc isr
 adc_complete:
-	push r16
-	in r16,SREG
-	push r16
-	push r26
-	push r27
+  push r16
+  in r16,SREG
+  push r16
+  push r26
+  push r27
+  
+  ; get address for current channel
+  ldi r26,low(ADCDATA)
+  ldi r27,high(ADCDATA)
+  in r16,ADMUX
+  andi r16,$07
+  add r26,r16
+  adc r27,zero
 
-	; get address for current channel
-	ldi r26,low(adc_data)
-	ldi r27,high(adc_data)
-	in r16,ADMUX
-	andi r16,$07
-	add r26,r16
-	adc r27,zero
+  ; save adc value in ram
+  in r16,ADCH
+  st x,r16
 
-	; save adc value in ram
-	in r16,ADCH
-	st x,r16
+  ; select next channel
+  in r16,ADMUX
+  inc r16
+  andi r16,(1<<ADLAR)|(1<<MUX2)|(1<<MUX1)|(1<<MUX0)
+  out ADMUX,r16
 
-	; select next channel
-	in r16,ADMUX
-	inc r16
-	andi r16,(1<<ADLAR)|(1<<MUX2)|(1<<MUX1)|(1<<MUX0)
-	out ADMUX,r16
-
-	; start next conversion
-	sbi ADCSRA,ADSC
-
-	pop r27
-	pop r26
-	pop r16
-	out SREG,r16
-	pop r16
-	reti
+  ; start next conversion
+  sbi ADCSRA,ADSC
+  
+  pop r27
+  pop r26
+  pop r16
+  out SREG,r16
+  pop r16
+  reti
   
 ;=============================================================================
 ;			arithmetic subroutines
@@ -2923,102 +3137,101 @@ NLP_CONT:	ldi	    R19,0
 ;			M A I N   P R O G R A M
 ;-------------------------------------------------------------------------------------------------------------------
 reset:
-		; disable interrupts
-		cli
+  ; disable interrupts
+  cli
 
-		; zero register
-		clr zero
+  ; zero register
+  clr zero
 
-		; clear ram
-		ldi r30,low(ramstart)
-		ldi r31,high(ramstart)
-		ldi r28,low(ramsize)
-		ldi r29,high(ramsize)
+  ; clear ram
+  ldi r30,low(ramstart)
+  ldi r31,high(ramstart)
+  ldi r28,low(ramsize)
+  ldi r29,high(ramsize)
 
 reset_ram_loop:
-		st z+,zero
-		sbiw r28,1
-		brne reset_ram_loop
+  st z+,zero
+  sbiw r28,1
+  brne reset_ram_loop
 
-		; initialize stack
-		ldi r16,low(ramend)
-		ldi r17,high(ramend)
-		out SPL,r16
-		out SPH,r17
+  ; initialize stack
+  ldi r16,low(ramend)
+  ldi r17,high(ramend)
+  out SPL,r16
+  out SPH,r17
 
-		; initialize variables
-		clr PHASEA_0
-		clr PHASEA_1
-		clr PHASEA_2
-		clr PHASEB_0
-		clr PHASEB_1
-		clr PHASEB_2
+  ; initialize variables
+  clr PHASEA_0
+  clr PHASEA_1
+  clr PHASEA_2
+  clr PHASEB_0
+  clr PHASEB_1
+  clr PHASEB_2
 
-		clr XN1_L
-		clr XN1_H
-		clr YN1_L
-		clr YN1_H
+  clr XN1_L
+  clr XN1_H
+  clr YN1_L
+  clr YN1_H
 
-		ldi	    R16,2
-		sts	    PORTACNT,R16	    ;PORTACNT = 2
-		ldi	    R16,255
-		sts	    LPF_I,R16		    ;no DCF
-		sts	    MIDINOTE,R16	    ;note# = 255
-		sts	    MIDINOTEPREV,R16    ;note# = 255
-		ldi	    R16,0x5E		    ;\
-		ldi	    R17,0xB4		    ; \
-		ldi	    R18,0x76		    ;  \ initialising of
-		sts	    SHIFTREG_0,R16		;  / shift register
-		sts	    SHIFTREG_1,R17		; /
-		sts	    SHIFTREG_2,R18		;/
+		    ldi	    R16,2
+		    sts	    PORTACNT,R16	    ;PORTACNT = 2
+		    ldi	    R16,255
+		    sts	    LPF_I,R16		    ;no DCF
+		    sts	    MIDINOTE,R16	    ;note# = 255
+		    sts	    MIDINOTEPREV,R16    ;note# = 255
+		    ldi	    R16,0x5E		    ;\
+		    ldi	    R17,0xB4		    ; \
+		    ldi	    R18,0x76		    ;  \ initialising of
+		    sts	    SHIFTREG_0,R16		;  / shift register
+		    sts	    SHIFTREG_1,R17		; /
+		    sts	    SHIFTREG_2,R18		;/
 
-		ldi r16,$10
-		sts KEYSTATE,r16
+  ldi r16,$10
+  sts KEYSTATE,r16
 
-		; initialize lfos
-		ldi r16,LFOSTATERISE
-		sts LFO0+LFOSTATE,r16
-		sts LFO1+LFOSTATE,r16
+  ; initialize lfos
+  ldi r16,LFOSTATERISE
+  sts LFO0+LFOSTATE,r16
+  sts LFO1+LFOSTATE,r16
 
-		sts LFO0+LFOBOTTOM0,zero
-		sts LFO0+LFOBOTTOM1,zero
-		sts LFO1+LFOBOTTOM0,zero
-		sts LFO1+LFOBOTTOM1,zero
-		ldi r16,$80
-		sts LFO0+LFOBOTTOM2,r16
-		sts LFO1+LFOBOTTOM2,r16
+  sts LFO0+LFOBOTTOM0,zero
+  sts LFO0+LFOBOTTOM1,zero
+  sts LFO1+LFOBOTTOM0,zero
+  sts LFO1+LFOBOTTOM1,zero
+  ldi r16,$80
+  sts LFO0+LFOBOTTOM2,r16
+  sts LFO1+LFOBOTTOM2,r16
 
-		ldi r16,$ff
-		sts LFO0+LFOTOP0,r16
-		sts LFO0+LFOTOP1,r16
-		sts LFO1+LFOTOP0,r16
-		sts LFO1+LFOTOP1,r16
-		ldi r16,$7f
-		sts LFO0+LFOTOP2,r16
-		sts LFO1+LFOTOP2,r16
+  ldi r16,$ff
+  sts LFO0+LFOTOP0,r16
+  sts LFO0+LFOTOP1,r16
+  sts LFO1+LFOTOP0,r16
+  sts LFO1+LFOTOP1,r16
+  ldi r16,$7f
+  sts LFO0+LFOTOP2,r16
+  sts LFO1+LFOTOP2,r16
+  
+  ; initialize envelopes
+  ldi r16,ENVSTATESTOP
+  sts ENV0+ENVSTATE,r16
+  sts ENV1+ENVSTATE,r16
 
-		; initialize envelopes
-		ldi r16,ENVSTATESTOP
-		sts ENV0+ENVSTATE,r16
-		sts ENV1+ENVSTATE,r16
+  sts ENV0+ENVL,zero
+  sts ENV0+ENVM,zero
+  sts ENV0+ENVH,zero
+  sts ENV1+ENVL,zero
+  sts ENV1+ENVM,zero
+  sts ENV1+ENVH,zero
 
-		sts ENV0+ENVL,zero
-		sts ENV0+ENVM,zero
-		sts ENV0+ENVH,zero
-		sts ENV1+ENVL,zero
-		sts ENV1+ENVM,zero
-		sts ENV1+ENVH,zero
-
-		; initialize notes
-		ldi r30,low(NOTES)
-		ldi r31,high(NOTES)
-		ldi r16,$ff
-		ldi r17,CONFNOTES
-
+  ; initialize notes
+  ldi r30,low(NOTES)
+  ldi r31,high(NOTES)
+  ldi r16,$ff
+  ldi r17,CONFNOTES
 reset_notes_init:
-		st z+,r16
-		dec r17
-		brne reset_notes_init
+  st z+,r16
+  dec r17
+  brne reset_notes_init
 
 ;initialise sound parameters:
 		    ldi	    R16,0
@@ -3030,21 +3243,17 @@ reset_notes_init:
 		    sts	    VCFENVMOD,R16		;
 		    ldi	    R16,84			    ;\
 		    sts	    LFOFREQ,R16		    ;/
-		    ldi	    R16,0x18			;\
-		    sts	    MODEFLAGS1,R16		;/ DCO B = on, DCA = env
-		    ldi	    R16,0x10			;\ LFO = DCO
-		    sts	    MODEFLAGS2,R16		;/ ENV mode: A-S-R
 		    ldi	    R16,128			    ;\
 ;		    sts	    ATTACKTIME,R16		; >
 ;		    sts	    RELEASETIME,R16		;/
 		    ldi r16,$7f<<1
 		    sts MIDIEXPRESSION,r16
 
-;initialise port A:
-		    ldi	    R16, 0x00    		;\
-		    out	    PORTA, R16		    ;/ PA = zzzzzzzz
-		    ldi	    R16, 0x00    		;\
-		    out	    DDRA, R16		    ;/ PA = iiiiiiii    all inputs (panel pots)
+  ; initialize porta (zzzzzzzz/iiiiiiii)
+  ldi r16,$00
+  out PORTA,r16
+  ldi r16,$00
+  out DDRA,r16
 
   ; initialize portb (pppppppp/iiiiiiii)
   ldi r16,$ff
@@ -3085,13 +3294,13 @@ reset_notes_init:
 
   ; set baud rate of uart
   ldi r16,high((cpu_frequency/(baud_rate*16))-1)
-  sts UBRR0H,r16
+  out UBRRH,r16
   ldi r16,low((cpu_frequency/(baud_rate*16))-1)
-  out UBRR0L,r16
+  out UBRRL,r16
 
   ; enable receiver and receiver interrupt
-  ldi r16,(1<<RXCIE0)|(1<<RXEN0)
-  out UCSR0B,r16
+  ldi r16,(1<<RXCIE)|(1<<RXEN)
+  out UCSRB,r16
 
   ; start ADC on channel 0, left justify result
   ldi r16,(1<<ADLAR)
@@ -3104,10 +3313,6 @@ reset_notes_init:
   ; timer interrupts
   ldi r16,(1<<TOIE0)
   out TIMSK,r16
-
-	ldi		R16,0xff
-    out	    DDRE, R16		    ;/ PC = oooooooo    all outputs (DAC)
-	sbi	    PORTE, 1		    ; LED on
 
   ; let's go
   sei
@@ -5403,3 +5608,4 @@ tanh_table:
 .db $f8, $f9, $fa, $fb, $fc, $fd, $fe, $ff
 
 .endif
+
