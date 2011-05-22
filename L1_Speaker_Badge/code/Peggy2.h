@@ -44,6 +44,9 @@
 
 #define PEGGY_ROW_OFF 0
 
+#define TIMER_CLOCK_FREQ (15625.0)	// 62.5kHz for /256 prescale from 16MHz
+#define DEFAULT_REFRESHRATE 30.0	// Default display refreshes per second
+
 class Peggy2
 { 
   public:
@@ -105,12 +108,15 @@ class Peggy2
 	//Draw a line from current cursor position to (xPos,yPos)
 	void LineTo(int8_t xPos, int8_t yPos);
 	 
-    
-    uint32_t* buffer;
-  private:
-    void SPI_TX(char);   
-    uint8_t _Xcursor;
-	uint8_t _Ycursor;
+
+	uint8_t SetupTimer2(void);
+
+    uint32_t* pbuffer;
+
+	private:
+	    void SPI_TX(char);   
+	    uint8_t _Xcursor;
+		uint8_t _Ycursor;
 };
 
 
