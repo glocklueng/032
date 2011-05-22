@@ -40,7 +40,7 @@ extern "C" {
 // Constructors ////////////////////////////////////////////////////////////////
 Peggy2::Peggy2()
 {
-  buffer = (uint32_t*)calloc(25, sizeof(uint32_t));
+  pbuffer = (uint32_t*)calloc(25, sizeof(uint32_t));
 }
 
  
@@ -121,7 +121,7 @@ void Peggy2::RefreshAll(unsigned int refreshNum)
 	  i++;
 	  }
 	  
-  	  mix.atemp = buffer[j];
+  	  mix.atemp = pbuffer[j];
 	  
 	  if( j <= 8 || j >= 15 ) {
 	      SPI_TX(mix.c[3]);
@@ -143,6 +143,30 @@ void Peggy2::RefreshAll(unsigned int refreshNum)
       j++;
     }
   }
+}
+
+// Set up Timer2
+//
+// Configures the ATMega168 8-Bit Timer2 to generate an interrupt
+// at the specified frequency.
+//
+// Returns the timer load value which must be loaded into TCNT2
+// inside the ISR routine.
+uint8_t Peggy2::SetupTimer2(void)
+{
+  uint8_t result; //The timer load value.
+
+  TCCR2A = 0;
+  TCCR2B = _BV(CS22) | _BV(CS21) | _BV(CS20);
+
+  // Timer2 Overflow Interrupt Enable
+  TIMSK2 = _BV(TOIE2);
+
+  // Load the timer for its first cycle
+	result = (uint8_t)((256 - (TIMER_CLOCK_FREQ / 25 / DEFAULT_REFRESHRATE)) + 0.5);
+  TCNT2 = result;
+
+  return(result);
 }
 
 
@@ -174,7 +198,7 @@ void Peggy2::RefreshAllFast(unsigned int refreshNum)
         PORTD = (j - 15) << 4;  
       
 	  
-  	  mix.atemp = buffer[j];
+  	  mix.atemp = pbuffer[j];
 	  
       SPI_TX(mix.c[3]);
       SPI_TX(mix.c[2]);
@@ -193,7 +217,7 @@ void Peggy2::RefreshAllFast(unsigned int refreshNum)
 
 void Peggy2::Clear() 
 {
-  memset(buffer, 0, 25*sizeof(uint32_t));
+  memset(pbuffer, 0, 25*sizeof(uint32_t));
 }
 
 
@@ -203,28 +227,21 @@ void Peggy2::WritePoint(uint8_t xPos, uint8_t yPos, uint8_t Value)
 	if (yPos > 8 ) yPos += 6;
 
   if (Value)
-    buffer[yPos] |= (uint32_t) 1 << xPos;
+    pbuffer[yPos] |= (uint32_t) 1 << xPos;
   else
-    buffer[yPos] &= ~((uint32_t) 1 << xPos);
+    pbuffer[yPos] &= ~((uint32_t) 1 << xPos);
 }
-
-
-
-
-
-
-
 
 void Peggy2::WriteRow(uint8_t yPos, uint32_t row)
 {
   if (yPos > 8 ) yPos += 6;
-  buffer[yPos] = row;
+  pbuffer[yPos] = row;
 }
 
 void Peggy2::SetRow(uint8_t yPos, uint32_t row = PEGGY_ROW_ON)
 {
   if (yPos > 8 ) yPos += 6;
-  buffer[yPos] |= row;
+  pbuffer[yPos] |= row;
 }
 
 // should ClearRow be implemented? if you only want to clear portions of the row, 
@@ -236,7 +253,7 @@ void Peggy2::SetPoint(uint8_t xPos, uint8_t yPos)
 	if (xPos > 8 ) xPos += 7;
 	if (yPos > 8 ) yPos += 6;
 
-	buffer[yPos] |= (uint32_t) 1 << xPos; 
+	pbuffer[yPos] |= (uint32_t) 1 << xPos; 
 }
 
 
@@ -245,7 +262,7 @@ uint8_t Peggy2::GetPoint(uint8_t xPos, uint8_t yPos)
 {
   if (xPos > 8 ) xPos += 7;
   if (yPos > 8 ) yPos += 6;
-  return ((buffer[yPos] & (uint32_t) 1 << xPos) > 0); 
+  return ((pbuffer[yPos] & (uint32_t) 1 << xPos) > 0); 
 }
 
 
@@ -254,7 +271,7 @@ void Peggy2::ClearPoint(uint8_t xPos, uint8_t yPos)
 {
   if (xPos > 8 ) xPos += 7;
   if (yPos > 8 ) yPos += 6;
-  buffer[yPos] &= ~((uint32_t) 1 << xPos);
+  pbuffer[yPos] &= ~((uint32_t) 1 << xPos);
 }
  
 void Peggy2::Line(int8_t x1, int8_t y1, int8_t x2, int8_t y2)
@@ -354,10 +371,4 @@ void Peggy2::LineTo(int8_t xPos, int8_t yPos)
  _Ycursor = yPos;
 }
 	    
-
-
-
-
-
-
 
