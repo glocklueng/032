@@ -56,9 +56,9 @@ extern "C" {
 
 // Set these 0/1 for each of the possible effects routines, memory can be a problem for all at once.
 
-#define	USE_SCROLLER		( 0 )
+#define	USE_SCROLLER		( 1 )
 #define USE_STARFIELD1		( 0 )
-#define USE_3DCUBE			( 0 )
+#define USE_3DCUBE			( 1 )
 #define USE_FADER			( 0 )
 #define USE_LINE			( 0 ) // simple line test
 #define USE_BLOCK			( 0 )
