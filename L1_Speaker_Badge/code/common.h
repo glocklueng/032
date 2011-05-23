@@ -18,7 +18,7 @@ extern "C" {
 
 #include <avr/io.h> 
 #include <avr/interrupt.h> 
-#include <stdlib.h> 
+#include <stdlib.h>
 #include <math.h> 
 #include <avr/eeprom.h>
 #include <avr/sleep.h>
@@ -40,9 +40,24 @@ extern "C" {
                                                                            
 */
 
-#define PI					( 3.14159265f  ) 
-#define TWO_PI 				( 6.283185307f )
+#ifndef RAND_MAX
+#define	RAND_MAX			( 32767 )
+#endif
 
+#ifndef PI
+#define PI					( 3.14159265f  ) 
+#endif
+
+#ifndef TWO_PI
+#define TWO_PI 				( 6.283185307f )
+#endif
+
+#ifndef ABS
+#define ABS(a)	   			(((a) < 0) ? -(a) : (a))
+#endif
+
+
+// number of framebuffers to define (min 4)
 #define FRAMES_MAX 			( 4 )
 
 
@@ -56,20 +71,20 @@ extern "C" {
 
 // Set these 0/1 for each of the possible effects routines, memory can be a problem for all at once.
 
-#define	USE_SCROLLER		( 1 )
-#define USE_STARFIELD1		( 0 )
-#define USE_3DCUBE			( 1 )
-#define USE_FADER			( 1 )
+#define	USE_SCROLLER		( 1 ) // scrolling text
+#define USE_STARFIELD1		( 1 ) // 3d starfield with intensity (very data hungry)
+#define USE_3DCUBE			( 1 ) // peggy rotating cube
+#define USE_FADER			( 1 ) // shows 4 fade leves
 #define USE_LINE			( 0 ) // simple line test
-#define USE_BLOCK			( 1 )
+#define USE_BLOCK			( 1 ) // shows 4 frame buffers
 #define USE_STARFIELD2		( 0 ) // not done (2d)
 
 #define USE_LIFE			( 0 ) // big
 #define USE_LIFE2			( 1 ) // much less memory than USE_LIFE, but still needs two (18*18) buffers
 
-#define USE_BOUNCER			( 1 )
+#define USE_BOUNCER			( 1 ) // bouncing ball
 #define USE_STARFIELD3		( 0 ) // not really finished
-#define	USE_SNAKE			( 1 )
+#define	USE_SNAKE			( 1 ) // snake!
 
 #define USE_FONT			( 1 ) // include font routines, needed for scroller etc
 
@@ -101,9 +116,9 @@ extern "C" {
                                                                                                                                
 */
 
-extern Peggy2 buffer[FRAMES_MAX];
-extern unsigned short gCount;
-extern unsigned char  scratchpad[100+(324*2)];
+extern Peggy2 buffer[FRAMES_MAX];					// Contains framebuffer and associated variables
+extern unsigned short gCount;						// Counter that when 0 is reached, moves to the next effect
+extern unsigned char  scratchpad[100+(324*2)];		// Scratchpad memory ( not implemented )
 
 
 /*                                                                                                     
@@ -119,7 +134,7 @@ extern unsigned char  scratchpad[100+(324*2)];
 */
                                                                                                      
 
-unsigned int qrand (void);
+unsigned int qrand (void);							// rand() replacement
 
 /* Ball bouncing example */
 void setup_bounce( void );
@@ -160,14 +175,13 @@ void loop_scroll(void);
 void setup_life2(void );
 void loop_life2(void );
 
-void setup_level(void);
+void init_snake(void);
 void snake_loop(void);
 
 void setup_keys(void );
 void loop_keys(void );
 
 /* general purpose */
-void SPI_TX (char cData);
 void Text8x6(short x,short y,const unsigned char *string);
 unsigned short pstrlen(const unsigned char * str);
 void DrawOutlineCircle( int xc,int yc, unsigned int radius  );

@@ -6,7 +6,7 @@
 
 // Member constants
 // Set this to the number of stars you would like in the starfield
-#define NUM_STARS		( 12 )
+#define NUM_STARS		( 10 )
 
 // Speed of the stars ranges from 0.1 to this.
 #define VELOCITY_MAX		(1.7f)
@@ -29,7 +29,7 @@
 
 // Set as per chart.  This could be automatically calculated with some macros
 // here (it is pow(2,FRAMES_MAX)) but it... isn't.  C'mon now. Really? Use the chart.
-#define BRIGHT_MAX 64
+#define BRIGHT_MAX (64)
 
 
 
@@ -221,9 +221,6 @@ void Redraw()
   
 void setup_star()
 { 
-  // Init frame buffer.  Only needs to be done once, no matter how many frames.
-  buffer[0].HardwareInit();
-
  
   // Pre-calc tbe LED brightness levels to save clocks
   // The madness of the casting and rounding is necessary with pow() otherwise

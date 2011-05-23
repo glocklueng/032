@@ -62,12 +62,12 @@ void loop_bounce(void)                     // run over and over again
 		xOld = -2;
 		yOld = -2; 
 
-		xOld = ((float)rand() / ((float)RAND_MAX + 1) * 25) ;   // Initial position: up to 24.
+		xOld = ((float)qrand() / ((float)RAND_MAX + 1) * 25) ;   // Initial position: up to 24.
 		yOld = (float) 25;
 
 		//Random initial x-velocity:
 
-		VxOld = ((float)rand() / ((float)RAND_MAX + 1) * 2*g) - g;   // Initial velocity: up to +/- g.
+		VxOld = ((float)qrand() / ((float)RAND_MAX + 1) * 2*g) - g;   // Initial velocity: up to +/- g.
 
 		//Zero initial y velocity:
 		VyOld = 0; 
@@ -153,8 +153,7 @@ void loop_bounce(void)                     // run over and over again
 	xp =      (uint8_t) round(Xnew);
 	yp = 18 - (uint8_t) round(Ynew);
 
-	// Write the point to the buffer
-//	buffer[0].SetPoint(xp, yp);
+	// Write the ball to the buffer
 	buffer[0].DrawOutlineCircle(xp,yp,2);
 
 
