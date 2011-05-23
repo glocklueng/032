@@ -111,7 +111,7 @@ class Peggy2
 
 	uint8_t SetupTimer2(void);
 
-    uint32_t* pbuffer;
+    uint32_t *pbuffer;
 
 	private:
 	    void SPI_TX(char);   
