@@ -91,6 +91,10 @@ extern "C" {
 #define USE_STARFIELD3		( 0 ) // not really finished
 #define	USE_SNAKE			( 1 ) // snake!
 
+#define	USE_MANDEL			( 1 ) // Simple mandelbrot
+
+#define USE_MAZE			( 1 ) // Maze Game
+
 #define USE_FONT			( 1 ) // include font routines, needed for scroller etc
 
 /*                                                                        
@@ -185,6 +189,10 @@ void snake_loop(void);
 
 void setup_keys(void );
 void loop_keys(void );
+void setup_mandel(void);
+void loop_mandel(void);
+
+
 
 /* general purpose */
 
