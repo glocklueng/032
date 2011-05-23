@@ -107,14 +107,19 @@ class Peggy2
 	
 	//Draw a line from current cursor position to (xPos,yPos)
 	void LineTo(int8_t xPos, int8_t yPos);
-	 
+
+	// Set a point and clip
+	void SetPointClip(uint8_t xPos, uint8_t yPos);
+
+	void DrawOutlineCircle( char xc,char yc, unsigned char radius  );
 
 	uint8_t SetupTimer2(void);
 
     uint32_t *pbuffer;
 
+    void SPI_TX(char);   
+
 	private:
-	    void SPI_TX(char);   
 	    uint8_t _Xcursor;
 		uint8_t _Ycursor;
 };

@@ -34,11 +34,6 @@ Copyright (c) 2008 Windell H Oskay.  All right reserved.
 
 void setup_bounce(void )                    // run once, when the sketch starts
 {
-	buffer[0].HardwareInit();  			 	// Call this once to init the hardware. 
-                                        	// (Only needed once, even if you've got lots of frames.
-	DDRB = 254;		//All outputs except B0, the "OFF/SELECT" button.
-	PORTB |= 1;            // Turn on PortB Pin 0 pull up!
-
 	// bounce runs quickly
 	gCount = 2500;
 
@@ -96,20 +91,22 @@ void loop_bounce(void)                     // run over and over again
 
 	// Bounce at walls
 
-	if (Xnew < 0)
+	if (Xnew < 2)
 	{
 		VxNew *= -1;
-		Xnew = 0;
+		Xnew = 2;
 	}
 
-	if (Xnew >= 17)
+	if (Xnew >= 17-2)
 	{
 		VxNew *= -1;
-		Xnew = 17;
+		Xnew = 17-2;
 	}
 
-	if (Ynew <= 0) {
-		Ynew = 0;
+	if (Ynew <= 2) {
+		Ynew = 2;
+
+
 
 	if (VyNew*VyNew < 0.1)  
 		NewBall++;   
@@ -157,7 +154,9 @@ void loop_bounce(void)                     // run over and over again
 	yp = 18 - (uint8_t) round(Ynew);
 
 	// Write the point to the buffer
-	buffer[0].SetPoint(xp, yp);
+//	buffer[0].SetPoint(xp, yp);
+	buffer[0].DrawOutlineCircle(xp,yp,2);
+
 
 	// Display the frame buffer
 	buffer[0].RefreshAll(4); //Draw frame buffer some number of times
@@ -170,10 +169,9 @@ void loop_bounce(void)                     // run over and over again
 	yOld = Ynew; 
 
 }
+#endif
 
-// end bounce
-
-// start star2 
+#if USE_STARFIELD2
 
 
 #define NUMBER_OF_STARS 	( 10 )
@@ -194,25 +192,23 @@ void init_star(STAR* star, int i)
 {
   /* randomly init stars, generate them around the center of the screen */
   
-  star->xpos =  -10.0 + (20.0 * (rand()/(RAND_MAX+1.0)));
-  star->ypos =  -10.0 + (20.0 * (rand()/(RAND_MAX+1.0)));
+  star->xpos =  -10.0f + (20.0f * (qrand()/(RAND_MAX+1.0)));
+  star->ypos =  -10.0f + (20.0f * (qrand()/(RAND_MAX+1.0)));
   
   star->xpos *= 3072.0; /*change viewpoint */
   star->ypos *= 3072.0;
 
   star->zpos =  i;
-  star->speed =  2 + (int)(2.0 * (rand()/(RAND_MAX+1.0)));
+  star->speed =  2 + (int)(2.0 * (qrand()/(RAND_MAX+1.0)));
 
   star->color = i >> 2; /*the closer to the viewer the brighter*/
 }
 
-static   unsigned short centerx, centery;
+static   unsigned char centerx, centery;
 
 void star2_start( void ) 
 {
-
-
- 	centerx = SCREEN_WIDTH >> 1;
+	centerx = SCREEN_WIDTH >> 1;
  	centery = SCREEN_HEIGHT >> 1;
 }
 

@@ -1,5 +1,61 @@
 #include "common.h"
 
+#if USE_SCROLLER
+
+static short textXPos[3] , textLength[3] ;;
+static const unsigned char text[] =  "    LAYERONE 2011 - SPEAKER BADGE";
+static const unsigned char text1[] = "    NULLSPACE LABS";
+static const unsigned char text2[] = "    032.LA DESIGN BY KRS TWSS";
+
+void setup_scroll(void)
+{
+	// Start off edge of display
+	textXPos[0] = -5;
+	textXPos[1] = -5;
+	textXPos[2] = -5;
+
+	buffer[0].Clear();
+
+	// pixel text length + a bit
+	textLength[0] = ( pstrlen( text  ) * 9 ) + 18;
+	textLength[1] = ( pstrlen( text1 ) * 9 ) + 18;
+	textLength[2] = ( pstrlen( text2 ) * 9 ) + 18;
+
+	gCount = 500;
+}
+
+void loop_scroll(void)
+{
+	unsigned char i;
+
+	buffer[0].Clear();
+
+	Text8x6(textXPos[0], 0,text);
+
+	Text8x6(textXPos[1], 6,text1);
+
+	Text8x6(textXPos[2],12,text2);
+
+	buffer[0].RefreshAll( 45 );
+
+	for ( i = 0 ;i  < 3;  i++ ){
+
+		textXPos[i] -= (i+1) ;
+
+		if ( textXPos[i] < -textLength[i]  )  {
+			textXPos[i] = -5;
+		}
+	}	
+}
+
+#if !USE_FONT
+#undef USE_FONT
+#define USE_FONT	 (1)
+#endif
+
+
+#endif
+
 
 #if USE_FONT
 
@@ -41,7 +97,7 @@ static const unsigned char font8x6[354] = {
 	0xf8,0x10,0x20,0x40,0xf8,0x00
 };
 
-unsigned short strlen(const unsigned char * str)
+unsigned short pstrlen(const unsigned char * str)
 {
     const unsigned char *s;
     for (s = str; *s; ++s);
@@ -50,7 +106,7 @@ unsigned short strlen(const unsigned char * str)
 
 
 /** 
- * Draw an 8 bit string using the builtin 8x6 font (this font is always available)  possibly using transparency
+ * Draw an 8 bit string using the builtin 8x6 font (this font is always available)
  *
  * @param x     - X position on screen, will be clipped.
  * @param y     - Y position on screen, will be clipped.
@@ -65,15 +121,24 @@ void Text8x6(short x,short y,const unsigned char *string)
 
 	if( x == -1 ) {
 		// center it
-		x =  ( (PEGGY2_WIDTH/2)-((strlen(string) * 7)/2) );
+		x =  ( (PEGGY2_WIDTH/2)-((pstrlen(string) * 7)/2) );
 	}
 	
+
+	// off right side
+	if( x > PEGGY2_WIDTH ) return;
+
+	//completely off top edge
+	if( y < -7  ) return;
+	
+	// off bottom edge
+	if( y > PEGGY2_HEIGHT ) return;
+
 	while(*string!='\0')										/* until the end of the string */
 	{
 		if(*string=='\n'){
 			x=oldx;y+=7;
 			l=0;
-			//adr=(unsigned short *)gfxFrameBuffer(x,y);        /* Where in the screen buffer */
 			string++;
 		}
 		
@@ -89,67 +154,15 @@ void Text8x6(short x,short y,const unsigned char *string)
 
 			for(j=0;j<8;j++) {
 				if(cur&(0x80>>j)) {
-					if ( x+j+l > 0 && (x+j+l) < (PEGGY2_WIDTH-1))
-						buffer[0].SetPoint(x+j+l,y+i);
+					if (( x+j+l) >= 0 && (x+j+l) < (PEGGY2_WIDTH-1))
+						if( (y+i) >= 0 && (y+i) < PEGGY2_HEIGHT-1 )
+							buffer[0].SetPoint(x+j+l,y+i);
 				}
 			}
 		}
-		//adr+=7;               
+              
 		l+=7;/* Next word */
 	}
 }
-
-#endif
-
-#if USE_SCROLLER
-
-static int textXPos[3] , textLength[3] ;;
-const unsigned char text[] = "LAYERONE 2011 - SPEAKER BADGE";
-const unsigned char text1[] = "NULLSPACE LABS";
-const unsigned char text2[] = "032.LA  BADGE BY KRS TWSS   ";
-
-void setup_scroll(void)
-{
-	// Start off display
-	textXPos[0] = ((PEGGY2_WIDTH+1)*2) ;
-	textXPos[1] = ((PEGGY2_WIDTH+1)*2) ;
-	textXPos[2] = ((PEGGY2_WIDTH+1)*2);
-
-	buffer[0].Clear();
-
-	textLength[0] = (strlen( text  ) * 9 ) + 18;
-	textLength[1] = (strlen( text1 ) * 9 ) + 18;
-	textLength[2] = (strlen( text2 ) * 9 ) + 18;
-
-	gCount = 450;
-	cli();
-}
-
-void loop_scroll(void)
-{
-	unsigned char i;
-
-	buffer[0].Clear();
-	
-	Text8x6(textXPos[0],0,text);
-
-	Text8x6(textXPos[1],6,text1);
-
-	Text8x6(textXPos[2],12,text2);
-
-	for ( i = 0 ;i  < 3;  i++ ){
-
-		textXPos[i] -- ;
-
-		if ( textXPos[i] < -textLength[i]  )  {
-			textXPos[i] = ((PEGGY2_WIDTH+1)*9);
-		}
-	}	
-
-	buffer[0].RefreshAll( 20 );
-
-
-}
-
 
 #endif

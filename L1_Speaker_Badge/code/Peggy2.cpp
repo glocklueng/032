@@ -28,15 +28,8 @@
 */
 
 
-extern "C" {
-  #include <stdlib.h>
-  #include <string.h>
-  #include <inttypes.h> 
-  #include <avr/io.h>
-}
+#include "common.h"
 
-//#include "WProgram.h"
-#include "Peggy2.h" 
 // Constructors ////////////////////////////////////////////////////////////////
 Peggy2::Peggy2()
 {
@@ -61,7 +54,9 @@ void Peggy2::HardwareInit()
   
   ////SET MOSI, SCK Output, all other SPI as input: 
   DDRB |= _BV(5) | _BV(3) | _BV(2) | _BV(1);
-  
+
+  DDRC = 0;		//All inputs
+
   //ENABLE SPI, MASTER, CLOCK RATE fck/4:  
   SPCR =  _BV(SPE) |  _BV(MSTR) ;
   
@@ -257,6 +252,19 @@ void Peggy2::SetPoint(uint8_t xPos, uint8_t yPos)
 	pbuffer[yPos] |= (uint32_t) 1 << xPos; 
 }
 
+// Turn a pixel on (clips)
+void Peggy2::SetPointClip(uint8_t xPos, uint8_t yPos)
+{
+	if( xPos < 0 || xPos > PEGGY2_WIDTH ) return; 
+	if( yPos < 0 || yPos > PEGGY2_HEIGHT) return; 
+
+	if (xPos > 8 ) xPos += 7;
+	if (yPos > 8 ) yPos += 6;
+
+
+	pbuffer[yPos] |= (uint32_t) 1 << xPos; 
+}
+
 
 // Determine if a pixel is on or off
 uint8_t Peggy2::GetPoint(uint8_t xPos, uint8_t yPos)
@@ -372,4 +380,48 @@ void Peggy2::LineTo(int8_t xPos, int8_t yPos)
  _Ycursor = yPos;
 }
 	    
+
+
+/**
+ *	Draw an outlined single colour circle 
+ *
+ * @param colour    - colour
+ * @param xc	    - x centre position
+ * @param yc		- y centre position
+ * @param radius	- radius of circle
+ *
+ */
+void Peggy2::DrawOutlineCircle( char xc,char yc, unsigned char radius  )
+{
+	short x, y, p;
+	
+	if ( !radius ) {
+		return;	
+	}
+
+	x = 0;
+	y = radius;
+	p = 3 - 2 * radius;
+
+	while ( x <= y ) {
+
+		buffer[0].SetPointClip(xc+x,yc+y);
+		buffer[0].SetPointClip(xc-x,yc+y);
+		buffer[0].SetPointClip(xc+x,yc-y);
+		buffer[0].SetPointClip(xc-x,yc-y);
+		buffer[0].SetPointClip(xc+y,yc+x);
+		buffer[0].SetPointClip(xc-y,yc+x);
+		buffer[0].SetPointClip(xc+y,yc-x);
+		buffer[0].SetPointClip(xc-y,yc-x);
+		
+		if (p < 0) {
+			p = p + 4 * x + 6;
+		} else {
+			p = p + 4 * ( x - y ) + 10;
+			y --;
+		}
+		
+		x++;
+	}
+}
 

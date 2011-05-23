@@ -25,41 +25,36 @@ Copyright (c) 2008 Windell H Oskay.  All right reserved.
 #if USE_FADER
 
 
-void setup_fade()                    // run once, when the sketch starts
+void setup_fade(void)
 {
-     buffer[0].HardwareInit();   // Call this once to init the hardware. 
-                              // (Only needed once, even if you've got lots of frames.)
-    
-   buffer[0].Clear();
-   buffer[1].Clear();
-   buffer[2].Clear();
-   buffer[3].Clear();
-   
-// Manually write sample patterns to buffers:
 
-	unsigned short x = 0; 
-	unsigned short y = 0;    
-	
-	while (y < 18 ) {
-  
-	  x = 0;
-	  while (x < 18) {
-  
-    
-	if (x < 5)    
-	  buffer[0].SetPoint(x, y);
-	else if (x < 10)  
-	    buffer[1].SetPoint(x, y);
-	else if (x < 15)  
-	    buffer[2].SetPoint(x, y);
-	 else  
-	    buffer[3].SetPoint(x, y);   
-	  x++;
-	  }
-	 y++;
+	ClearFrames();
+
+	// Manually write sample patterns to buffers:
+
+	unsigned char x = 0; 
+	unsigned char y = 0;    
+
+	while (y < PEGGY2_HEIGHT ) {
+
+		x = 0;
+
+		while (x < PEGGY2_WIDTH ) {
+
+
+			if (x < 5)    
+				buffer[0].SetPoint(x, y);
+			else if (x < 10)  
+				buffer[1].SetPoint(x, y);
+			else if (x < 15)  
+				buffer[2].SetPoint(x, y);
+			else  
+				buffer[3].SetPoint(x, y);   
+			x++;
+		}
+		y++;
 	}
 
-  
 }  // End void setup()  
 
 
@@ -123,22 +118,18 @@ void loop_line()                     // run over and over again
    
 void setup_block()                    // run once, when the sketch starts
 {
-	buffer[0].HardwareInit();   // Call this once to init the hardware. 
-                              // (Only needed once, even if you've got lots of frames.)
-   buffer[0].Clear();
-   buffer[1].Clear();
-   buffer[2].Clear();
-   buffer[3].Clear();
-   
+	                              // (Only needed once, even if you've got lots of frames.)
+	ClearFrames();
+	   
 // Manually write sample patterns to buffers:
 
-	unsigned short x = 0; 
-	unsigned short y = 0;    
+	unsigned char x = 0; 
+	unsigned char y = 0;    
 
-	while (y < 18) {
+	while (y < PEGGY2_HEIGHT ) {
   
 	  x = 0;
-	  while (x < 18) {
+	  while (x < PEGGY2_WIDTH ) {
   
     
 	if (x < 4)    
