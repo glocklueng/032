@@ -59,15 +59,15 @@ extern "C" {
 #define	USE_SCROLLER		( 1 )
 #define USE_STARFIELD1		( 0 )
 #define USE_3DCUBE			( 1 )
-#define USE_FADER			( 0 )
+#define USE_FADER			( 1 )
 #define USE_LINE			( 0 ) // simple line test
-#define USE_BLOCK			( 0 )
+#define USE_BLOCK			( 1 )
 #define USE_STARFIELD2		( 0 ) // not done (2d)
 
 #define USE_LIFE			( 0 ) // big
-#define USE_LIFE2			( 0 ) // much less memory than USE_LIFE, but still needs two (18*18) buffers
+#define USE_LIFE2			( 1 ) // much less memory than USE_LIFE, but still needs two (18*18) buffers
 
-#define USE_BOUNCER			( 0 )
+#define USE_BOUNCER			( 1 )
 #define USE_STARFIELD3		( 0 ) // not really finished
 #define	USE_SNAKE			( 1 )
 

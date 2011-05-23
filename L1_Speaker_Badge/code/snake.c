@@ -4,173 +4,151 @@
 #if USE_SNAKE
 
 /* prototypes */
-void draw_line(int col, int row);
-void add_segment();
-void setup_level();
-
-/* constants */
-const int maxrow=18, maxcol=18;
-const int snake_start_col=1,snake_start_row=18/2;
-
+void add_segment(void);
+void setup_level(void);
 
 /* global variables */
-int score, snake_length, speed, obstacles, level, high_score=0;
-char screen_grid[maxrow][maxcol];
+static int score, snake_length, speed, obstacles, level, high_score=0;
 
-char direction = 0 ;
+static char direction = 0 ;
 static unsigned char counter =0;
 
 struct snake_segment {
-  int row,col;
+	unsigned char row,col;
 } snake[100];
+
+void banner( const  char *text)
+{
+	buffer[0].Clear();
+	Text8x6(0,8,(const unsigned char *)text);
+	buffer[0].RefreshAll( 1500 );
+	buffer[0].Clear();
+}
 
 void snake_loop(void)
 {	
-	unsigned char  row,col;
-	char keypress;
+	if(buffer[0].keyLeft ){ direction = 1;}
+	if(buffer[0].keyRight ){ direction = 2;}
+	if(buffer[0].keyUp ){ direction = 3;}
+	if(buffer[0].keyDown ) {direction = 4;}
 
-	if(buffer[0].keyLeft ){ direction = 1;gCount+=100;}
-	if(buffer[0].keyRight ){ direction = 2;gCount+=100;}
-	if(buffer[0].keyUp ){ direction = 3;gCount+=100;}
-	if(buffer[0].keyDown ) {direction = 4;gCount+=100;}
+	// quit
+	if(buffer[0].keyA ){ 
+		gCount = 0;
+		banner("BYE");
+	}
 
-  /* Variable declarations within main() only */
+	/* Add a segment to the end of the snake */
+	add_segment();
+
+	/* Blank last segment of snake */
+	buffer[0].ClearPoint(snake[0].col,snake[0].row);
+
+	/* ... and remove it from the array */
+	for (int i=1;i<=snake_length;i++){
+		snake[i-1]=snake[i];
+	}
+
+	for (int i=0;i<=snake_length;i++) {
+		buffer[0].SetPoint(snake[i].col,snake[i].row);
+	}
 
 
+	/* Collision detection - walls (bad!) */
+	if ((snake[snake_length-1].row>PEGGY2_HEIGHT+1)||(snake[snake_length-1].row<1)||
+		(snake[snake_length-1].col>PEGGY2_WIDTH+1)||(snake[snake_length-1].col<1)) {
 
+			gCount=0; /* i.e. exit loop - game over */
+				
+			banner("FIN");
+			
+		}
 
-
-      /* Add a segment to the end of the snake */
-      add_segment();
-
-      /* Blank last segment of snake */
-	  buffer[0].ClearPoint(snake[0].col,snake[0].row);
-
-      /* ... and remove it from the array */
-        for (int i=1;i<=snake_length;i++)
-          snake[i-1]=snake[i];
-
-      for (int i=0;i<=snake_length;i++) {
-	 	buffer[0].SetPoint(snake[i].col,snake[i].row);
-      }
-      
-
-      /* Collision detection - walls (bad!) */
-      if ((snake[snake_length-1].row>maxrow+1)||(snake[snake_length-1].row<1)||
-          (snake[snake_length-1].col>maxcol+1)||(snake[snake_length-1].col<1)||
-   		/* Collision detection - obstacles (bad!) */
-        	  (screen_grid[snake[snake_length-1].row-2][snake[snake_length-1].col-2]=='x'))
-
-       	 gCount=0; /* i.e. exit loop - game over */
-
-      /* Collision detection - snake (bad!) */
-      for (int i=0;i<snake_length-1;i++)
-        if ( (snake[snake_length-1].row)==(snake[i].row) &&
-             (snake[snake_length-1].col)==(snake[i].col))
-        {
-          gCount=0; /* i.e. exit loop - game over */
-          break; /* no need to check any more segments */
-        }
+	/* Collision detection - snake (bad!) */
+	for (int i=0;i<snake_length-1;i++)
+		if ( (snake[snake_length-1].row)==(snake[i].row) &&
+			(snake[snake_length-1].col)==(snake[i].col))
+		{
+			gCount=0; /* i.e. exit loop - game over */
+			break; /* no need to check any more segments */
+		}
 
 		counter ++;
 
-      /* Collision detection - food (good!) */
-      if (screen_grid[snake[snake_length-1].row-2][snake[snake_length-1].col-2]=='.' || counter == 15 )
-     {
+		// every few frames, add a segment
+		if (counter == 15 )
+		{
 
-	 	counter = 0;
+			counter = 0;
 
-        /* increase score and length of snake */
-        score+=snake_length*obstacles;
-		 
-		 snake_length++; add_segment();
-        /* if length of snake reaches certain size, onto next level */
-        if (snake_length==(level+3)*2)
-       {
-          score+=level*1000; obstacles+=2; level++;  /* add to obstacles */
-          if ((level%5==0)&&(speed>1)) speed--; /* increase speed every 5 levels */
-			buffer[0].Clear();
-		  Text8x6(0,10,(const unsigned char*)"UP!");
-			buffer[0].RefreshAll( 1500 );
-			buffer[0].Clear();
+			/* increase score and length of snake */
+			score+=snake_length*obstacles;
 
-          //setup_level(); /* display next level */
-        }
-      }
+			snake_length++; add_segment();
+			/* if length of snake reaches certain size, onto next level */
+			if (snake_length==(level+3)*2)
+			{
+				score+=level*1000; obstacles+=2; level++;  /* add to obstacles */
+				if ((level%5==0)&&(speed>1)) speed--; /* increase speed every 5 levels */
+				
+				buffer[0].Clear();
+				Text8x6(0,8,(const unsigned char*)"UP!");
+				buffer[0].RefreshAll( 1500 );
+				buffer[0].Clear();
+			}
+		}
 
-	buffer[0].RefreshAll( 100 );
+		buffer[0].RefreshAll( 100 );
 }
 
-
-
-void setup_level()
+void init_snake(void)
 {
 	ClearFrames();
 	obstacles=4; level=1; score=0; speed=14;
+}
 
 
-	/* variables local to setup_level() */
-	int row,col;
+void setup_level(void)
+{
+	ClearFrames();
 
 	/* Set up global variables for new level */
 	snake_length=level+4; 
 
+	// go right
 	direction = 2;
-
-
-	/* Fill grid with blanks */
-
-	memset(screen_grid,0,maxrow*maxcol);
-#if 0
-	/* Fill grid with Xs and food */
-	for(int i=0;i<obstacles*2;i++)
-	{
-		row= qrand()%maxrow;
-		col= qrand()%maxcol;
-
-		if(i<obstacles)
-			screen_grid[row][col]='x';
-		else
-			screen_grid[row][col]='.';
-	}
-#endif
-
 	/* Create snake array of length snake_length */
 	for(int i=0;i<snake_length;i++)
 	{
-		snake[i].row=snake_start_row;
-		snake[i].col=snake_start_col+i;
+		snake[i].row=18/2;
+		snake[i].col=1+i;
 	}
 
 }
 
 
-void add_segment()
+void add_segment(void)
 {
+	switch( direction) { 
 
+		case 2:
+			snake[snake_length].row=snake[snake_length-1].row;
+			snake[snake_length].col=snake[snake_length-1].col+1;
+			break;
+		case 1:
+			snake[snake_length].row=snake[snake_length-1].row;
+			snake[snake_length].col=snake[snake_length-1].col-1;
+			break;
+		case 3:	
+			snake[snake_length].row=snake[snake_length-1].row-1;
+			snake[snake_length].col=snake[snake_length-1].col;
+			break;
 	
-    if( direction == 2 ) { 
-					snake[snake_length].row=snake[snake_length-1].row;
-                     snake[snake_length].col=snake[snake_length-1].col+1;
-                     }
-
-    if( direction == 1) {
-	                 snake[snake_length].row=snake[snake_length-1].row;
-                     snake[snake_length].col=snake[snake_length-1].col-1;
-                     }
-
-    if( direction == 3)   {
-			 snake[snake_length].row=snake[snake_length-1].row-1;
-             snake[snake_length].col=snake[snake_length-1].col;
-	}	
-
-    if( direction == 4) {
-					snake[snake_length].row=snake[snake_length-1].row+1;
-                     snake[snake_length].col=snake[snake_length-1].col;
-
+		case 4:
+			snake[snake_length].row=snake[snake_length-1].row+1;
+			snake[snake_length].col=snake[snake_length-1].col;
+			break;
 	}
-
- 
 }
 
 
