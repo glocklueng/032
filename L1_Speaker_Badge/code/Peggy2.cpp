@@ -30,10 +30,13 @@
 
 #include "common.h"
 
+
+
 // Constructors ////////////////////////////////////////////////////////////////
 
 Peggy2::Peggy2()
 {
+	// 100 bytes
 	pbuffer = (uint32_t*)calloc(25, sizeof(uint32_t));
 }
 
@@ -220,6 +223,7 @@ void Peggy2::Clear()
 
 void Peggy2::WritePoint(uint8_t xPos, uint8_t yPos, uint8_t Value)
 {
+	// this is for the badge, it  skips the missing LED's. Should really be in the refresh code.
 	if (xPos > 8 ) xPos += 7;
 	if (yPos > 8 ) yPos += 6;
 
@@ -231,7 +235,9 @@ void Peggy2::WritePoint(uint8_t xPos, uint8_t yPos, uint8_t Value)
 
 void Peggy2::WriteRow(uint8_t yPos, uint32_t row)
 {
-  if (yPos > 8 ) yPos += 6;
+  if (yPos > 8 ) 
+  	yPos += 6;
+
   pbuffer[yPos] = row;
 }
 
@@ -272,6 +278,7 @@ uint8_t Peggy2::GetPoint(uint8_t xPos, uint8_t yPos)
 {
   if (xPos > 8 ) xPos += 7;
   if (yPos > 8 ) yPos += 6;
+
   return ((pbuffer[yPos] & (uint32_t) 1 << xPos) > 0); 
 }
 
@@ -281,14 +288,15 @@ void Peggy2::ClearPoint(uint8_t xPos, uint8_t yPos)
 {
   if (xPos > 8 ) xPos += 7;
   if (yPos > 8 ) yPos += 6;
+
   pbuffer[yPos] &= ~((uint32_t) 1 << xPos);
 }
  
 void Peggy2::Line(int8_t x1, int8_t y1, int8_t x2, int8_t y2)
 {
   if ( (x1>=25 && x2>=25) || (y1>=25 && y2>=25) ) return;
-  int8_t dx = abs(x2 -x1);
-  int8_t dy = abs(y2 -y1);
+  int8_t dx = ABS(x2 -x1);
+  int8_t dy = ABS(y2 -y1);
 
   int8_t p1x,p1y,p2x,p2y,i;
 
@@ -364,8 +372,6 @@ void Peggy2::Line(int8_t x1, int8_t y1, int8_t x2, int8_t y2)
 }
 	
 	 
-	  
-
 //Set current cursor position to (xPos,yPos)
 void Peggy2::MoveTo(int8_t xPos, int8_t yPos)
 {
@@ -406,14 +412,14 @@ void Peggy2::DrawOutlineCircle( char xc,char yc, unsigned char radius  )
 
 	while ( x <= y ) {
 
-		buffer[0].SetPointClip(xc+x,yc+y);
-		buffer[0].SetPointClip(xc-x,yc+y);
-		buffer[0].SetPointClip(xc+x,yc-y);
-		buffer[0].SetPointClip(xc-x,yc-y);
-		buffer[0].SetPointClip(xc+y,yc+x);
-		buffer[0].SetPointClip(xc-y,yc+x);
-		buffer[0].SetPointClip(xc+y,yc-x);
-		buffer[0].SetPointClip(xc-y,yc-x);
+		SetPointClip(xc+x,yc+y);
+		SetPointClip(xc-x,yc+y);
+		SetPointClip(xc+x,yc-y);
+		SetPointClip(xc-x,yc-y);
+		SetPointClip(xc+y,yc+x);
+		SetPointClip(xc-y,yc+x);
+		SetPointClip(xc+y,yc-x);
+		SetPointClip(xc-y,yc-x);
 		
 		if (p < 0) {
 			p = p + 4 * x + 6;

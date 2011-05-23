@@ -111,7 +111,7 @@ const pFunction demoRoutines[]  = {
 //	loop_keys,
 
 #if USE_SNAKE
-	setup_level,
+	init_snake,
 	snake_loop,
 #endif
 
@@ -230,8 +230,7 @@ int main(void)
 			buffer[0].keyRight =  (!(PINC & 0x02)) ;
 
 
-
-			loop_keys();
+//			loop_keys();
 
 
 			// number of frames, we should do this in a timer int, since some routines take more time per frame than others.

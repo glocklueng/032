@@ -4,8 +4,8 @@
 #if USE_SNAKE
 
 /* prototypes */
-void add_segment(void);
-void setup_level(void);
+static void add_segment(void);
+static void setup_level(void);
 
 /* global variables */
 static int score, snake_length, speed, obstacles, level, high_score=0;
@@ -13,7 +13,8 @@ static int score, snake_length, speed, obstacles, level, high_score=0;
 static char direction = 0 ;
 static unsigned char counter =0;
 
-struct snake_segment {
+// 200 bytes...
+static struct snake_segment {
 	unsigned char row,col;
 } snake[100];
 
@@ -127,7 +128,7 @@ void setup_level(void)
 }
 
 
-void add_segment(void)
+static void add_segment(void)
 {
 	switch( direction) { 
 
