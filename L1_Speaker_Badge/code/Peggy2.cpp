@@ -78,13 +78,14 @@ void Peggy2::HardwareInit()
 
 void delay()
 {
-unsigned int delayvar;
+	unsigned int delayvar;
+	
 	delayvar = 0; 
-	while (delayvar <=  6000U)		
-		{ 
-			asm("nop");  
-			delayvar++;
-		}
+
+	while (delayvar <=  6000U) { 
+		asm("nop");  
+		delayvar++;
+	}
 }
 
 
