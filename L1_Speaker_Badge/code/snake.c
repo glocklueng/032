@@ -10,7 +10,7 @@ void setup_level();
 
 /* constants */
 const int maxrow=18, maxcol=18;
-const int snake_start_col=18/2,snake_start_row=18/2;
+const int snake_start_col=1,snake_start_row=18/2;
 
 
 /* global variables */
@@ -18,6 +18,7 @@ int score, snake_length, speed, obstacles, level, high_score=0;
 char screen_grid[maxrow][maxcol];
 
 char direction = 0 ;
+static unsigned char counter =0;
 
 struct snake_segment {
   int row,col;
@@ -28,27 +29,16 @@ void snake_loop(void)
 	unsigned char  row,col;
 	char keypress;
 
-	if(buffer[0].keyLeft ) direction = 1;
-	if(buffer[0].keyRight ) direction = 2;
-	if(buffer[0].keyUp ) direction = 3;
-	if(buffer[0].keyDown ) direction = 4;
+	if(buffer[0].keyLeft ){ direction = 1;gCount+=100;}
+	if(buffer[0].keyRight ){ direction = 2;gCount+=100;}
+	if(buffer[0].keyUp ){ direction = 3;gCount+=100;}
+	if(buffer[0].keyDown ) {direction = 4;gCount+=100;}
 
   /* Variable declarations within main() only */
 
 
-	// keeps game running
-	gCount = 2;
 
-	for(row = 0 ; row < maxrow ; row ++ ) {	
-		for(col = 0 ; col < maxcol ; col ++ ) {
-			if(screen_grid[row][col]) 
-				buffer[0].SetPoint(row,col);
-		}
-	}
-   	
-  
-      /* If key has been hit, then check it is a direction key - if so,
-         change direction */
+
 
       /* Add a segment to the end of the snake */
       add_segment();
@@ -60,15 +50,14 @@ void snake_loop(void)
         for (int i=1;i<=snake_length;i++)
           snake[i-1]=snake[i];
 
-      for (int i=0;i<=snake_length;i++)
-     {
+      for (int i=0;i<=snake_length;i++) {
 	 	buffer[0].SetPoint(snake[i].col,snake[i].row);
       }
       
 
       /* Collision detection - walls (bad!) */
-      if ((snake[snake_length-1].row>maxrow+1)||(snake[snake_length-1].row<=1)||
-          (snake[snake_length-1].col>maxcol+1)||(snake[snake_length-1].col<=1)||
+      if ((snake[snake_length-1].row>maxrow+1)||(snake[snake_length-1].row<1)||
+          (snake[snake_length-1].col>maxcol+1)||(snake[snake_length-1].col<1)||
    		/* Collision detection - obstacles (bad!) */
         	  (screen_grid[snake[snake_length-1].row-2][snake[snake_length-1].col-2]=='x'))
 
@@ -82,9 +71,15 @@ void snake_loop(void)
           gCount=0; /* i.e. exit loop - game over */
           break; /* no need to check any more segments */
         }
+
+		counter ++;
+
       /* Collision detection - food (good!) */
-      if (screen_grid[snake[snake_length-1].row-2][snake[snake_length-1].col-2]=='.')
+      if (screen_grid[snake[snake_length-1].row-2][snake[snake_length-1].col-2]=='.' || counter == 15 )
      {
+
+	 	counter = 0;
+
         /* increase score and length of snake */
         score+=snake_length*obstacles;
 		 
@@ -94,7 +89,12 @@ void snake_loop(void)
        {
           score+=level*1000; obstacles+=2; level++;  /* add to obstacles */
           if ((level%5==0)&&(speed>1)) speed--; /* increase speed every 5 levels */
-          setup_level(); /* display next level */
+			buffer[0].Clear();
+		  Text8x6(0,10,(const unsigned char*)"UP!");
+			buffer[0].RefreshAll( 1500 );
+			buffer[0].Clear();
+
+          //setup_level(); /* display next level */
         }
       }
 
@@ -121,7 +121,7 @@ void setup_level()
 	/* Fill grid with blanks */
 
 	memset(screen_grid,0,maxrow*maxcol);
-
+#if 0
 	/* Fill grid with Xs and food */
 	for(int i=0;i<obstacles*2;i++)
 	{
@@ -132,7 +132,8 @@ void setup_level()
 			screen_grid[row][col]='x';
 		else
 			screen_grid[row][col]='.';
-		}
+	}
+#endif
 
 	/* Create snake array of length snake_length */
 	for(int i=0;i<snake_length;i++)
