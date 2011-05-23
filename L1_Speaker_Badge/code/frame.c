@@ -24,10 +24,8 @@ Copyright (c) 2008 Windell H Oskay.  All right reserved.
 
 #if USE_FADER
 
-
 void setup_fade(void)
 {
-
 	ClearFrames();
 
 	// Manually write sample patterns to buffers:
@@ -54,10 +52,7 @@ void setup_fade(void)
 		}
 		y++;
 	}
-
-}  // End void setup()  
-
-
+} 
 
 void loop_fade()                     // run over and over again
 { 
@@ -67,6 +62,7 @@ void loop_fade()                     // run over and over again
 	buffer[1].RefreshAll(2); //Draw frame buffer 2 times
 	buffer[2].RefreshAll(4); //Draw frame buffer 4 times
 	buffer[3].RefreshAll(8); //Draw frame buffer 8 times
+
 }
 
 #endif

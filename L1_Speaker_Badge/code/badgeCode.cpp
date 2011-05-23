@@ -107,6 +107,14 @@ typedef void (*pFunction)(void);
 
 const pFunction demoRoutines[]  = {
 
+//	setup_keys,
+//	loop_keys,
+
+#if USE_SNAKE
+	setup_level,
+	snake_loop,
+#endif
+
 #if USE_SCROLLER
 	setup_scroll,
 	loop_scroll,
@@ -115,6 +123,8 @@ const pFunction demoRoutines[]  = {
 	&setup_life2,
 	&loop_life2,
 #endif
+
+
 
 #if USE_STARFIELD1
 	&setup_star,
@@ -208,6 +218,22 @@ int main(void)
 
 		while( gCount) {
 
+
+			buffer[0].keyB =  (!(PINB & 0x01));
+			
+			// reset
+			//buffer[0].keyA =  (!(PINB & 0x01));
+
+			buffer[0].keyUp =  (!(PINC & 0x10));
+			buffer[0].keyDown =  (!(PINC & 0x04)) ;
+			buffer[0].keyLeft =  (!(PINC & 0x08));
+			buffer[0].keyRight =  (!(PINC & 0x02)) ;
+
+
+
+			loop_keys();
+
+
 			// number of frames, we should do this in a timer int, since some routines take more time per frame than others.
 			gCount -- ;
 
@@ -230,7 +256,7 @@ int main(void)
 }
 
 
-void memset( unsigned char *dst,unsigned char data, int length) 
+void memset( unsigned char *dst,int data, int length) 
 {
 	int i;
 
@@ -252,3 +278,46 @@ void ClearFrames(void)
 
 }
 
+#if 1
+
+
+void setup_keys(void)
+
+{
+                                        // (Only needed once, even if you've got lots of frames.)
+    buffer[0].Clear();
+
+    DDRB = 0xFE;    // PORTB pin 0 is button 0, set it up as an input
+    PORTB |= 0x01;  // PORTB pin 0 pull up
+    DDRC = 0xE0;    // PORTC pins 0 - 4 set up as inputs corresponding to buttons 1 - 5
+    PORTC |= 0x1F;  // PORTC pins 0 - 4 pull ups
+
+
+	gCount= 9000;
+
+}  // End void setup()  
+
+void loop_keys(void )
+{
+  if (!(PINB & 0x01)) buffer[0].SetPoint(0,0);  // PORT B pin 0 is attached to button 0
+  else buffer[0].ClearPoint(0,0);
+  
+  if (!(PINC & 0x01)) buffer[0].SetPoint(0,1);  // PORT C pin 0 is attached to button 1
+  else buffer[0].ClearPoint(0,1);
+  
+  if (!(PINC & 0x02)) buffer[0].SetPoint(0,2);  // PORT C pin 1 is attached to button 2
+  else buffer[0].ClearPoint(0,2);
+  
+  if (!(PINC & 0x04)) buffer[0].SetPoint(0,3);  // PORT C pin 2 is attached to button 3
+  else buffer[0].ClearPoint(0,3);
+  
+  if (!(PINC & 0x08)) buffer[0].SetPoint(0,4);  // PORT C pin 3 is attached to button 4
+  else buffer[0].ClearPoint(0,4);
+  
+  if (!(PINC & 0x10)) buffer[0].SetPoint(0,5);  // PORT C pin 4 is attached to button 5
+  else buffer[0].ClearPoint(0,5);
+  
+ 
+}
+
+#endif

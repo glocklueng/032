@@ -31,43 +31,44 @@
 #include "common.h"
 
 // Constructors ////////////////////////////////////////////////////////////////
+
 Peggy2::Peggy2()
 {
-  pbuffer = (uint32_t*)calloc(25, sizeof(uint32_t));
+	pbuffer = (uint32_t*)calloc(25, sizeof(uint32_t));
 }
 
  
 void Peggy2::SPI_TX(char cData)
 {
-  SPDR = cData;
-  //Wait for transmission complete:
-  while (!(SPSR & _BV(SPIF))) ;
+	SPDR = cData;
+	//Wait for transmission complete:
+	while (!(SPSR & _BV(SPIF))) ;
 } 
 
 
 void Peggy2::HardwareInit()
 {
-  //  Hardware Initialization:
-  
-  PORTD = 0U;
-  DDRD = 255U;
-  
-  ////SET MOSI, SCK Output, all other SPI as input: 
-  DDRB |= _BV(5) | _BV(3) | _BV(2) | _BV(1);
+	//  Hardware Initialization:
 
-  DDRC = 0;		//All inputs
+	PORTD = 0U;
+	DDRD = 255U;
 
-  //ENABLE SPI, MASTER, CLOCK RATE fck/4:  
-  SPCR =  _BV(SPE) |  _BV(MSTR) ;
-  
-  //  Flush SPI LED drivers::
-  SPI_TX(0);
-  SPI_TX(0);
-  SPI_TX(0);
-  SPI_TX(0);
+	////SET MOSI, SCK Output, all other SPI as input: 
+	DDRB |= _BV(5) | _BV(3) | _BV(2) | _BV(1);
 
-  PORTB |= 2;    //Latch Pulse 
-  PORTB &= 253;  
+	DDRC = 0;		//All inputs
+
+	//ENABLE SPI, MASTER, CLOCK RATE fck/4:  
+	SPCR =  _BV(SPE) |  _BV(MSTR) ;
+
+	//  Flush SPI LED drivers::
+	SPI_TX(0);
+	SPI_TX(0);
+	SPI_TX(0);
+	SPI_TX(0);
+
+	PORTB |= 2;    //Latch Pulse 
+	PORTB &= 253;  
 }
 
 
@@ -368,18 +369,18 @@ void Peggy2::Line(int8_t x1, int8_t y1, int8_t x2, int8_t y2)
 //Set current cursor position to (xPos,yPos)
 void Peggy2::MoveTo(int8_t xPos, int8_t yPos)
 {
- _Xcursor = xPos;
- _Ycursor = yPos;
+	_Xcursor = xPos;
+	_Ycursor = yPos;
 }
 
 //Draw a line from current cursor position to (xPos,yPos)
 void Peggy2::LineTo(int8_t xPos, int8_t yPos)
 {
-  Line(_Xcursor, _Ycursor, xPos, yPos);
- _Xcursor = xPos;
- _Ycursor = yPos;
+	Line(_Xcursor, _Ycursor, xPos, yPos);
+	_Xcursor = xPos;
+	_Ycursor = yPos;
 }
-	    
+    
 
 
 /**

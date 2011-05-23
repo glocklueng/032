@@ -324,18 +324,17 @@ void setup_life(void)
 
 
 void loop_life(void)
-
-	{
+{
 	signed char x,y;
 
 	static unsigned long dtemp;  
-static		unsigned int brightness = 0;
+	static		unsigned int brightness = 0;
 
-static	unsigned char out1,out2,out3,out4;
+	static	unsigned char out1,out2,out3,out4;
 
-		static unsigned char generations=0;
+	static unsigned char generations=0;
 
-static 	unsigned char temp=0;
+	static 	unsigned char temp=0;
 	
 	
 	// Some routines follow to do things if the optional buttons are installed-- a simple editor is implemented.
