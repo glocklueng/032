@@ -59,13 +59,15 @@ extern "C" {
 #define USE_STARFIELD1		( 1 )
 #define USE_3DCUBE			( 1 )
 #define USE_FADER			( 1 )
-#define USE_LINE			( 0 )
+#define USE_LINE			( 1 )
 #define USE_BLOCK			( 1 )
 #define USE_STARFIELD2		( 0 )
 #define USE_LIFE			( 0 ) // big
 #define USE_BOUNCER			( 1 )
 #define USE_STARFIELD3		( 0 ) // not really finished
+#define	USE_SCROLLER		( 1 )
 
+#define USE_FONT			( 1 ) // include font routines
 
 /*                                                                        
 	  ,ad8888ba,   88               88                       88             
@@ -142,8 +144,13 @@ void loop_block(void);
 void setup_line(void);
 void loop_line(void);
 
+void setup_scroll(void);
+void loop_scroll(void);
+
 /* general purpose */
 void SPI_TX (char cData);
+void Text8x6(short x,short y,const char *string);
+
 
 #ifdef __cplusplus
 }

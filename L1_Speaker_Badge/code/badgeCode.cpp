@@ -1,4 +1,6 @@
-
+/*
+ * Keep Data: usage below 80%
+ */
 
 #include "common.h"
 
@@ -161,6 +163,11 @@ const pFunction demoRoutines[]  = {
 	&loop_star3,
 #endif
 
+#if USE_SCROLLER
+	setup_scroll,
+	loop_scroll,
+#endif
+
 	NULL,
 	NULL,
 };
@@ -194,6 +201,21 @@ int main(void)
 
 	PORTB |= _BV(1);		//Latch Pulse 
 	PORTB &= ~( _BV(1));
+
+
+ 	buffer[0].HardwareInit();   // Call this once to init the hardware. 
+
+
+/// Do a sweep forward and back on boot
+	setup_block();
+
+	buffer[0].RefreshAll(80); //Draw frame buffer 0
+		buffer[1].RefreshAll(80); //Draw frame buffer 1
+			buffer[2].RefreshAll(80); //Draw frame buffer 2
+				buffer[3].RefreshAll(80); //Draw frame buffer 3
+			buffer[2].RefreshAll(80); //Draw frame buffer 2
+		buffer[1].RefreshAll(80); //Draw frame buffer 1
+	buffer[0].RefreshAll(80); //Draw frame buffer 0
 
 
 	gameState = 0;

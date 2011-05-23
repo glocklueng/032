@@ -1,10 +1,12 @@
 #include "common.h"
 
+// This one is pretty memory hungry
+
 #if USE_STARFIELD1
 
 // Member constants
 // Set this to the number of stars you would like in the starfield
-#define NUM_STARS (20)
+#define NUM_STARS (10)
 
 // Speed of the stars ranges from 0.1 to this.
 #define VELOCITY_MAX 1.2
