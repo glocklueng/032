@@ -23,6 +23,7 @@ extern "C" {
 #include <avr/eeprom.h>
 #include <avr/sleep.h>
 #include <avr/power.h>
+#include <avr/pgmspace.h>
 
 #include "Peggy2.h"
 
@@ -61,13 +62,16 @@ extern "C" {
 #define FRAMES_MAX 			( 4 )
 
 
-// Badge dimensions ( Peggy2 is 25x25 )
+// Badge dimensions ( Peggy2 is 25x25 ), using them as unsigend adds +100 bytes to the code size
 #define PEGGY2_HEIGHT 		( 18 )
 #define PEGGY2_WIDTH 		( 18 )
 
 #define CENTERX 			( PEGGY2_WIDTH  >> 1 )
 #define CENTERY  			( PEGGY2_HEIGHT >> 1 )
 
+// get high/low nibble of a byte
+#define	HIGH(x)				(( x&0xf0)>>4)
+#define	LOW(x)				( x&0x0f)
 
 // Set these 0/1 for each of the possible effects routines, memory can be a problem for all at once.
 
@@ -75,12 +79,13 @@ extern "C" {
 #define USE_STARFIELD1		( 1 ) // 3d starfield with intensity (very data hungry)
 #define USE_3DCUBE			( 1 ) // peggy rotating cube
 #define USE_FADER			( 1 ) // shows 4 fade leves
-#define USE_LINE			( 0 ) // simple line test
+#define USE_LINE			( 1 ) // simple line test
 #define USE_BLOCK			( 1 ) // shows 4 frame buffers
 #define USE_STARFIELD2		( 0 ) // not done (2d)
 
-#define USE_LIFE			( 0 ) // big
-#define USE_LIFE2			( 1 ) // much less memory than USE_LIFE, but still needs two (18*18) buffers
+#define USE_LIFE			( 0 ) // conways life. Big footprint, uses 3402 Program, and 243 Data
+#define USE_LIFE2			( 1 ) // different implementation, much smaller than USE_LIFE, but still needs two (18*18) sram buffers. 678 Program, 6 Data
+
 
 #define USE_BOUNCER			( 1 ) // bouncing ball
 #define USE_STARFIELD3		( 0 ) // not really finished
@@ -182,8 +187,13 @@ void setup_keys(void );
 void loop_keys(void );
 
 /* general purpose */
+
+/* uses progmem */
 void Text8x6(short x,short y,const unsigned char *string);
+
+/* uses progmem */
 unsigned short pstrlen(const unsigned char * str);
+
 void DrawOutlineCircle( int xc,int yc, unsigned int radius  );
 void memset( void *dst,int  data,int length) ;
 void memcpy( unsigned char *dst,unsigned char*src, int length) ;

@@ -3,9 +3,10 @@
 #if USE_SCROLLER
 
 static short textXPos[3] , textLength[3] ;;
-static const unsigned char text[] =  "    LAYERONE 2011 - SPEAKER BADGE";
-static const unsigned char text1[] = "    NULLSPACE LABS";
-static const unsigned char text2[] = "    032.LA DESIGN BY KRS TWSS";
+
+static const PROGMEM unsigned char text[] =  "    LAYERONE 2011 - SPEAKER BADGE";
+static const PROGMEM unsigned char text1[] = "    NULLSPACE LABS";
+static const PROGMEM unsigned char text2[] = "    032.LA DESIGN BY KRS TWSS";
 
 void setup_scroll(void)
 {
@@ -64,7 +65,7 @@ void loop_scroll(void)
  * 8x6 font
  */
 
-static const unsigned char font8x6[354] = {
+static const unsigned char PROGMEM font8x6[354] = {
 	0x00,0x00,0x00,0x00,0x00,0x00, 0x30,0x30,0x30,0x00,0x30,0x00,
 	0xd8,0x90,0x00,0x00,0x00,0x00, 0x6c,0xfe,0x6c,0xfe,0x6c,0x00,
 	0x7e,0xd0,0x7c,0x16,0xfc,0x00, 0xcc,0x18,0x30,0x60,0xcc,0x00,
@@ -97,10 +98,19 @@ static const unsigned char font8x6[354] = {
 	0xf8,0x10,0x20,0x40,0xf8,0x00
 };
 
-unsigned short pstrlen(const unsigned char * str)
+
+/** 
+ * Get the length of a \0 terminated string in progmem
+ *
+ * @param str   - ASCIZ string
+ * @return      - length
+ *
+ * 
+ */
+unsigned short pstrlen(const unsigned char * const str)
 {
     const unsigned char *s;
-    for (s = str; *s; ++s);
+    for (s = str; pgm_read_byte(*s); ++s);
     return(s - str);
 }
 
@@ -111,6 +121,8 @@ unsigned short pstrlen(const unsigned char * str)
  * @param x     - X position on screen, will be clipped.
  * @param y     - Y position on screen, will be clipped.
  * @param string- 8 bit ASCIZ string
+ *
+ * Note: font and string are in progmem!
  */
 void Text8x6(short x,short y,const unsigned char *string)
 {
@@ -134,15 +146,15 @@ void Text8x6(short x,short y,const unsigned char *string)
 	// off bottom edge
 	if( y > PEGGY2_HEIGHT ) return;
 
-	while(*string!='\0')										/* until the end of the string */
+	while(pgm_read_byte(*string)!='\0')										/* until the end of the string */
 	{
-		if(*string=='\n'){
+		if(pgm_read_byte(*string)=='\n'){
 			x=oldx;y+=7;
 			l=0;
 			string++;
 		}
 		
-		nm=((*string++)-' ');									/* Starting from space */
+		nm=((pgm_read_byte(*string++))-' ');									/* Starting from space */
 		
 		if( nm > 58 ) 
 			nm-=' ';											/* to uppercase 58='Z'-' ' */
@@ -150,7 +162,7 @@ void Text8x6(short x,short y,const unsigned char *string)
 
 		for(i=0,l_adr=0;i<6;i++,l_adr++)
 		{
-			cur=font8x6[nm++];
+			cur=pgm_read_byte(font8x6[nm++]);
 
 			for(j=0;j<8;j++) {
 				if(cur&(0x80>>j)) {

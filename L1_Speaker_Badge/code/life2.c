@@ -12,7 +12,7 @@ static unsigned char *board= NULL;
 
 static void initialize_board (void) 
 {
-	int	i, j;
+	unsigned short	i, j;
 
 	//might not be able to get the memory needed
 	if( board == NULL) {
@@ -88,7 +88,7 @@ static void play (void)
 	3.DEATH : If the number of on neighbours is 0, 1, 4-8, the cell will 
 	be off in the next generation.
 */
-	int	i, j;
+	short i, j;
 	unsigned char a, *newboard;
 
 	// re-use framebuffer memory
