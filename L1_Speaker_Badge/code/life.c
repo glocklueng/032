@@ -276,11 +276,11 @@ void DisplayLEDs()
 			dtemp >>= 8;
 			out1 = dtemp & 255U; 	
 		
-			SPI_TX(out1);
-			SPI_TX(out2);
-			SPI_TX(out3);
+			buffer[0].SPI_TX(out1);
+			buffer[0].SPI_TX(out2);
+			buffer[0].SPI_TX(out3);
 			PORTD = 0;  				// Turn displays off
-			SPI_TX(out4);
+			buffer[0].SPI_TX(out4);
 
 
 			PORTB |= _BV(1);			// Latch Pulse 
@@ -314,42 +314,8 @@ return;
 void setup_life(void)
 {
 	int temp;
-
-
-
 	signed char x=0,y=0;
 	unsigned long dtemp;  
- 
-	srand(eeprom_read_word((uint16_t *) 2));
-
-	for(temp = 0; temp != 255; temp++)
-	{
-		TCNT0 = rand();
-	}
-
-	eeprom_write_word((uint16_t *) 2,rand());
-	  
-	PORTD = 0U;			//All B Input
-	DDRD = 255U;		// All D Output
-	
-	PORTB = 1;		// Pull up on ("OFF/SELECT" button)
-	PORTC = 255U;	// Pull-ups on C
-
-	DDRB = 254U;  // B0 is an input ("OFF/SELECT" button)
-	DDRC = 0;		//All inputs
-
-	////SET MOSI, SCK Output, all other SPI as input:
-	DDRB = ( 1 << 3 ) | (1 << 5) | (1 << 2) | (1 << 1);
-
-	//ENABLE SPI, MASTER, CLOCK RATE fck/4:		//TEMPORARY:: 1/128
-	SPCR = (1 << SPE) | ( 1 << MSTR );//| ( 1 << SPR0 );//| ( 1 << SPR1 ) | ( 1 << CPOL ); 
-
-	SPI_TX(0);
-	SPI_TX(0);
-	SPI_TX(0);
-
-	PORTB |= _BV(1);		//Latch Pulse 
-	PORTB &= ~( _BV(1));
  
 	fill_random_data(old_generation);
  	
@@ -478,10 +444,10 @@ if (EditMode)
 	dtemp >>= 8;
 	out1 = dtemp & 255U; 	
 		
-	SPI_TX(out1);
-	SPI_TX(out2);
-	SPI_TX(out3);
-	SPI_TX(out4);
+	buffer[0].SPI_TX(out1);
+	buffer[0].SPI_TX(out2);
+	buffer[0].SPI_TX(out3);
+	buffer[0].SPI_TX(out4);
 
 
 	PORTB |= _BV(1);		//Latch Pulse 
@@ -496,10 +462,10 @@ if (EditMode)
 
 	PORTD = 0;  // Turn displays off
 
-	SPI_TX(0);
-	SPI_TX(0);
-	SPI_TX(0);
-	SPI_TX(0);
+	buffer[0].SPI_TX(0);
+	buffer[0].SPI_TX(0);
+	buffer[0].SPI_TX(0);
+	buffer[0].SPI_TX(0);
 
 	PORTB |= _BV(1);		//Latch Pulse 
 	PORTB &= ~( _BV(1));

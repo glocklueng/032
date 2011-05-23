@@ -1,5 +1,5 @@
 /*
- * Keep Data: usage below 80%
+ * Keep Data section usage below 74% or so, otherwise it won't boot.
  */
 
 #include "common.h"
@@ -16,10 +16,12 @@
 	 "Y88888P"   88       88  `"8bbdP"Y8  88           `"Ybbd8"'   `"8bbdP"Y8      88888888Y"'    `"8bbdP"Y8    "Y888  `"8bbdP"Y8  
 */
 
+// scratchpad is 100 for fb0, then two 324 blocks for life2
+//unsigned char  scratchpad[100+(324*2)];
 
-Peggy2 buffer[FRAMES_MAX];   // The drawing frames supporting greyscale
 
-
+Peggy2 buffer[FRAMES_MAX];  // The drawing frames supporting greyscale
+unsigned short gCount = 250;	// Number of frames to run
 
 /*
                                                                                                                                     
@@ -49,16 +51,6 @@ unsigned int qrand (void)
    z4 = ((z4 & 4294967168U) << 13) ^ b;
    return (z1 ^ z2 ^ z3 ^ z4);
 }
-
-void SPI_TX(char cData)
-{
-	//Start Transmission
-	SPDR = cData;
-	
-	//Wait for transmission complete:
-	while (!(SPSR & _BV(SPIF))) ;
-}
-
 
 
 // Timer2 overflow interrupt vector handler
@@ -105,8 +97,6 @@ void sleep(void)
 
 typedef void (*pFunction)(void);
 
-static unsigned char routineIndex = 0;
-
 
 /* 
 
@@ -116,6 +106,15 @@ static unsigned char routineIndex = 0;
 */
 
 const pFunction demoRoutines[]  = {
+
+#if USE_SCROLLER
+	setup_scroll,
+	loop_scroll,
+#endif
+#if USE_LIFE2
+	&setup_life2,
+	&loop_life2,
+#endif
 
 #if USE_STARFIELD1
 	&setup_star,
@@ -153,6 +152,7 @@ const pFunction demoRoutines[]  = {
 	&loop_life,
 #endif
 
+
 #if USE_BOUNCER
 	&setup_bounce,
 	&loop_bounce,
@@ -163,48 +163,20 @@ const pFunction demoRoutines[]  = {
 	&loop_star3,
 #endif
 
-#if USE_SCROLLER
-	setup_scroll,
-	loop_scroll,
-#endif
 
+
+//Terminate list
 	NULL,
 	NULL,
 };
 
-unsigned int gCount = 250;
-
 int main(void)
 {
-	unsigned char temp=0;
 	unsigned char gameState = 0; 
- 
-	PORTD = 0U;			//All B Input
-	DDRD = 255U;		// All D Output
-	
-	PORTB = 1;		// Pull up on ("OFF/SELECT" button)
-	PORTC = 255U;	// Pull-ups on C
-
-	DDRB = 254U;  // B0 is an input ("OFF/SELECT" button)
-	DDRC = 0;		//All inputs
-
-	////SET MOSI, SCK Output, all other SPI as input:
-	DDRB = ( 1 << 3 ) | (1 << 5) | (1 << 2) | (1 << 1);
-
-	//ENABLE SPI, MASTER, CLOCK RATE fck/4:		//TEMPORARY:: 1/128
-	SPCR = (1 << SPE) | ( 1 << MSTR );//| ( 1 << SPR0 );//| ( 1 << SPR1 ) | ( 1 << CPOL ); 
-
-	// Cleard LED drivers
-	SPI_TX(0);
-	SPI_TX(0);
-	SPI_TX(0);
-
-	PORTB |= _BV(1);		//Latch Pulse 
-	PORTB &= ~( _BV(1));
-
 
  	buffer[0].HardwareInit();   // Call this once to init the hardware. 
 
+#if USE_BLOCK
 
 /// Do a sweep forward and back on boot
 	setup_block();
@@ -216,7 +188,7 @@ int main(void)
 			buffer[2].RefreshAll(80); //Draw frame buffer 2
 		buffer[1].RefreshAll(80); //Draw frame buffer 1
 	buffer[0].RefreshAll(80); //Draw frame buffer 0
-
+#endif
 
 	gameState = 0;
 
@@ -231,6 +203,7 @@ int main(void)
 		// can change the number of times to run, via gCount
 		(*demoRoutines[ gameState << 1 ])() ;
 
+
 		// loop drawing routines
 
 		while( gCount) {
@@ -238,21 +211,44 @@ int main(void)
 			// number of frames, we should do this in a timer int, since some routines take more time per frame than others.
 			gCount -- ;
 
-		
 			// call the drawing routine
 			(*demoRoutines[ (gameState << 1) + 1 ])();
 
+			// frame counter ran out
 			if ( gCount == 0 ){
 
 				// next state
 				gameState ++ ;
 
-				// wrap
+				// wrap if end of list
 				if ( demoRoutines[gameState <<1 ] == NULL  ) {
 					gameState = 0;
 				}
 			}
 		}
 	}
+}
+
+
+void memset( unsigned char *dst,unsigned char data, int length) 
+{
+	int i;
+
+	for( i = 0 ; i < length ; i++ ) {
+
+		dst[i] = data;
+	}
+}
+
+
+void ClearFrames(void)
+{
+	int i;
+
+	for( i = 0 ; i < FRAMES_MAX ;i++ )  {
+		buffer[i].Clear();
+	}
+
+
 }
 

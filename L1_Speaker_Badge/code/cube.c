@@ -287,7 +287,6 @@ Cube cube;
 
 void setup_cube()
 {
-  buffer[0].HardwareInit();   // Call this once to init the hardware. 
   cube.make(cubeWidth);    // Create vertices, edges, faces
 }
 

@@ -43,7 +43,7 @@ extern "C" {
 #define PI					( 3.14159265f  ) 
 #define TWO_PI 				( 6.283185307f )
 
-#define FRAMES_MAX 			( 5 )
+#define FRAMES_MAX 			( 4 )
 
 
 // Badge dimensions ( Peggy2 is 25x25 )
@@ -56,18 +56,21 @@ extern "C" {
 
 // Set these 0/1 for each of the possible effects routines, memory can be a problem for all at once.
 
+#define	USE_SCROLLER		( 1 )
 #define USE_STARFIELD1		( 1 )
 #define USE_3DCUBE			( 1 )
 #define USE_FADER			( 1 )
-#define USE_LINE			( 1 )
+#define USE_LINE			( 0 ) // simple line test
 #define USE_BLOCK			( 1 )
-#define USE_STARFIELD2		( 0 )
+#define USE_STARFIELD2		( 0 ) // not done (2d)
+
 #define USE_LIFE			( 0 ) // big
+#define USE_LIFE2			( 1 ) // much less memory than USE_LIFE, but still needs two (18*18) buffers
+
 #define USE_BOUNCER			( 1 )
 #define USE_STARFIELD3		( 0 ) // not really finished
-#define	USE_SCROLLER		( 1 )
 
-#define USE_FONT			( 1 ) // include font routines
+#define USE_FONT			( 1 ) // include font routines, needed for scroller etc
 
 /*                                                                        
 	  ,ad8888ba,   88               88                       88             
@@ -98,7 +101,8 @@ extern "C" {
 */
 
 extern Peggy2 buffer[FRAMES_MAX];
-extern unsigned int gCount;
+extern unsigned short gCount;
+extern unsigned char  scratchpad[100+(324*2)];
 
 
 /*                                                                                                     
@@ -125,10 +129,15 @@ void setup_life( void ) ;
 void loop_life( void);
 
 /* Star field */
+// large c++ with intensity
 void setup_star(void);
 void loop_star(void);
+//simple 3d
 void init_star3(void);
 void loop_star3(void);
+//2d 
+void setup_star2(void);
+void loop_star2(void);
 
 /* 3d cubes */
 void setup_cube(void);
@@ -147,10 +156,18 @@ void loop_line(void);
 void setup_scroll(void);
 void loop_scroll(void);
 
+void setup_life2(void );
+void loop_life2(void );
+
+
 /* general purpose */
 void SPI_TX (char cData);
-void Text8x6(short x,short y,const char *string);
-
+void Text8x6(short x,short y,const unsigned char *string);
+unsigned short pstrlen(const unsigned char * str);
+void DrawOutlineCircle( int xc,int yc, unsigned int radius  );
+void memset( void *dst,unsigned char data,int length) ;
+void memcpy( unsigned char *dst,unsigned char*src, int length) ;
+void ClearFrames(void);
 
 #ifdef __cplusplus
 }

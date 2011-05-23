@@ -6,10 +6,10 @@
 
 // Member constants
 // Set this to the number of stars you would like in the starfield
-#define NUM_STARS (10)
+#define NUM_STARS		( 12 )
 
 // Speed of the stars ranges from 0.1 to this.
-#define VELOCITY_MAX 1.2
+#define VELOCITY_MAX		(1.7f)
 
 // NOTE: BRIGHT_MAX is related to FRAME_MAX.
 // BRIGHT_MAX is the number of greyscale levels and FRAME_MAX is the number
@@ -29,7 +29,7 @@
 
 // Set as per chart.  This could be automatically calculated with some macros
 // here (it is pow(2,FRAMES_MAX)) but it... isn't.  C'mon now. Really? Use the chart.
-#define BRIGHT_MAX 32
+#define BRIGHT_MAX 64
 
 
 
@@ -60,7 +60,7 @@ class Star
   // Quick utility method to generate random floats  
   float CreateRandomFloat (float maxValue)
   {
-    return ((float)rand() / ((float)RAND_MAX +1.) * maxValue);
+    return ((float)qrand() / ((float)RAND_MAX +1.) * maxValue);
   }
   
   // Overloaded for ranges
@@ -76,7 +76,7 @@ class Star
       minValue = swap;
     }
     
-    return ((maxValue- minValue)*((float)rand()/RAND_MAX)) + minValue;
+    return ((maxValue- minValue)*((float)qrand()/RAND_MAX)) + minValue;
   }
   
   
@@ -152,7 +152,7 @@ class Star
     step_y = (float)(sin(angle) * velocity);
     
     // Integer brightness from 1 to BRIGHT_MAX-1
-    brightness = (int)random()%BRIGHT_MAX; 
+    brightness = (int)qrand()%BRIGHT_MAX; 
   }
   
   
@@ -173,9 +173,9 @@ class Star
 
 // Variables
 
-Star starfield[NUM_STARS];   // Starfield of n stars
+static Star starfield[NUM_STARS];   // Starfield of n stars
 
-short intensity[FRAMES_MAX];   // Stores LED intensity for greyscale
+static char intensity[FRAMES_MAX];   // Stores LED intensity for greyscale
 
 
 // Another quick utility method to round - this makes the stars
@@ -183,7 +183,7 @@ short intensity[FRAMES_MAX];   // Stores LED intensity for greyscale
 // on a 25x25 display. ;)
 int Round(float x)
 {
-  return ((int)(x > 0.0 ? x + 0.5 : x- 0.5));
+  return ((int)(x > 0.0 ? x + 0.5f : x- 0.5f));
 }
 
 
@@ -253,11 +253,6 @@ void loop_star()
   // Draw each frame for its intensity level
   Redraw();
     
-  // Pause display if Off/Select button pressed
-  while ((PINB & 1) == 0) 
-  {
-    Redraw();
-  }
 } 
 
 #endif
