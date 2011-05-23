@@ -1,8 +1,20 @@
 #include "common.h"
 
+/*
+                                                                                  
+										 ad88888ba                                        88  88                          
+										d8"     "8b                                       88  88                          
+										Y8,                                               88  88                          
+										`Y8aaaaa,     ,adPPYba,  8b,dPPYba,   ,adPPYba,   88  88   ,adPPYba,  8b,dPPYba,  
+										  `"""""8b,  a8"     ""  88P'   "Y8  a8"     "8a  88  88  a8P_____88  88P'   "Y8  
+										        `8b  8b          88          8b       d8  88  88  8PP"""""""  88          
+										Y8a     a8P  "8a,   ,aa  88          "8a,   ,a8"  88  88  "8b,   ,aa  88          
+										 "Y88888P"    `"Ybbd8"'  88           `"YbbdP"'   88  88   `"Ybbd8"'  88          
+*/
+                                                                               
 #if USE_SCROLLER
 
-static short textXPos[3] , textLength[3] ;;
+static short textXPos[3] , textLength[3];
 
 static const PROGMEM unsigned char text[] =  "    LAYERONE 2011 - SPEAKER BADGE";
 static const PROGMEM unsigned char text1[] = "    NULLSPACE LABS";
@@ -22,6 +34,7 @@ void setup_scroll(void)
 	textLength[1] = ( pstrlen( text1 ) * 9 ) + 18;
 	textLength[2] = ( pstrlen( text2 ) * 9 ) + 18;
 
+	// how long to run for (frames)
 	gCount = 500;
 }
 
@@ -49,16 +62,10 @@ void loop_scroll(void)
 	}	
 }
 
-#if !USE_FONT
-#undef USE_FONT
-#define USE_FONT	 (1)
 #endif
 
 
-#endif
-
-
-#if USE_FONT
+#if USE_FONT || USE_SCROLLER || USE_SNAKE
 
 
 /* 
@@ -122,7 +129,7 @@ unsigned short pstrlen(const unsigned char * const str)
  * @param y     - Y position on screen, will be clipped.
  * @param string- 8 bit ASCIZ string
  *
- * Note: font and string are in progmem!
+ * Note: font and string are in progmem!  x == -999, will center X
  */
 void Text8x6(short x,short y,const unsigned char *string)
 {
@@ -131,22 +138,22 @@ void Text8x6(short x,short y,const unsigned char *string)
 	int l_adr;
 	int l=0;
 
-	if( x == -1 ) {
+	if( x == -999 ) {
 		// center it
 		x =  ( (PEGGY2_WIDTH/2)-((pstrlen(string) * 7)/2) );
 	}
 	
 
 	// off right side
-	if( x > PEGGY2_WIDTH ) return;
+	if( x >= PEGGY2_WIDTH ) return;
 
 	//completely off top edge
 	if( y < -7  ) return;
 	
 	// off bottom edge
-	if( y > PEGGY2_HEIGHT ) return;
+	if( y >= PEGGY2_HEIGHT ) return;
 
-	while(pgm_read_byte(*string)!='\0')										/* until the end of the string */
+	while(pgm_read_byte(*string)!='\0')											/* until the end of the string */
 	{
 		if(pgm_read_byte(*string)=='\n'){
 			x=oldx;y+=7;
@@ -156,9 +163,11 @@ void Text8x6(short x,short y,const unsigned char *string)
 		
 		nm=((pgm_read_byte(*string++))-' ');									/* Starting from space */
 		
-		if( nm > 58 ) 
-			nm-=' ';											/* to uppercase 58='Z'-' ' */
-		nm *= 6;												/* 6 bytes per char */
+		if( nm > 58 ) {
+			nm-=' ';
+		}																		/* to uppercase 58='Z'-' ' */
+
+		nm *= 6;																/* 6 bytes per char */
 
 		for(i=0,l_adr=0;i<6;i++,l_adr++)
 		{

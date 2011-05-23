@@ -71,10 +71,6 @@ void loop_fade()                     // run over and over again
 
 void setup_line()                    // run once, when the sketch starts
 {
-     buffer[0].HardwareInit();   // Call this once to init the hardware. 
-                                        // (Only needed once, even if you've got lots of frames.)
-     
-   
    
    buffer[0].Clear();
 

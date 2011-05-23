@@ -1,5 +1,5 @@
 /*
- * Keep Data section usage below 74% or so, otherwise it won't boot.
+ * Keep Data section usage below 74% or so, otherwise it won't boot. 
  */
 
 #include "common.h"
@@ -15,9 +15,6 @@
 	Y8a     a8P  88       88  88,    ,88  88          "8b,   ,aa  "8a,   ,d88      88      .a8P   88,    ,88    88,    88,    ,88  
 	 "Y88888P"   88       88  `"8bbdP"Y8  88           `"Ybbd8"'   `"8bbdP"Y8      88888888Y"'    `"8bbdP"Y8    "Y888  `"8bbdP"Y8  
 */
-
-// scratchpad is 100 for fb0, then two 324 blocks for life2
-//unsigned char  scratchpad[100+(324*2)];
 
 
 Peggy2 buffer[FRAMES_MAX]; 		 // The drawing frames, 0 is always display  1..FRAMES_MAX can be used as scratchpad
@@ -52,6 +49,21 @@ unsigned int qrand (void)
    return (z1 ^ z2 ^ z3 ^ z4);
 }
 
+// random number generation
+// http://www.dragonsgate.net/pipermail/icc-avr/2005-January/004853.html
+
+static long seed = 1234;
+
+#define M 	0x7FFFFFFF  // 2^31-1, the modulus used by the psuedo-random
+            	          // number generator prng().
+// a good random number generator; call with 1 <= x <= M-1
+
+unsigned char prng(void)
+{
+  seed = (seed >> 16) + ((seed << 15) & M) - (seed >> 21) - ((seed << 10) & M);
+  if (seed < 0) seed += M;
+  return (unsigned char) seed;
+}
 
 // Timer2 overflow interrupt vector handler
 ISR(TIMER2_OVF_vect, ISR_NOBLOCK) 
@@ -122,6 +134,12 @@ const pFunction demoRoutines[]  = {
 #if USE_LIFE2
 	&setup_life2,
 	&loop_life2,
+#endif
+
+
+#if USE_MANDEL
+	setup_mandel,
+	loop_mandel,
 #endif
 
 
