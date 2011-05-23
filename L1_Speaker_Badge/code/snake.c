@@ -10,13 +10,14 @@ void setup_level();
 
 /* constants */
 const int maxrow=18, maxcol=18;
-const int snake_start_col=33,snake_start_row=7;
+const int snake_start_col=18/2,snake_start_row=18/2;
 
 
 /* global variables */
-int score, snake_length, speed, obstacles, level, firstpress, high_score=0;
+int score, snake_length, speed, obstacles, level, high_score=0;
 char screen_grid[maxrow][maxcol];
 
+char direction = 0 ;
 
 struct snake_segment {
   int row,col;
@@ -27,9 +28,15 @@ void snake_loop(void)
 	unsigned char  row,col;
 	char keypress;
 
+	if(buffer[0].keyLeft ) direction = 1;
+	if(buffer[0].keyRight ) direction = 2;
+	if(buffer[0].keyUp ) direction = 3;
+	if(buffer[0].keyDown ) direction = 4;
+
   /* Variable declarations within main() only */
 
 
+	// keeps game running
 	gCount = 2;
 
 	for(row = 0 ; row < maxrow ; row ++ ) {	
@@ -62,17 +69,17 @@ void snake_loop(void)
       /* Collision detection - walls (bad!) */
       if ((snake[snake_length-1].row>maxrow+1)||(snake[snake_length-1].row<=1)||
           (snake[snake_length-1].col>maxcol+1)||(snake[snake_length-1].col<=1)||
-      /* Collision detection - obstacles (bad!) */
-          (screen_grid[snake[snake_length-1].row-2][snake[snake_length-1].col-2]=='x'))
+   		/* Collision detection - obstacles (bad!) */
+        	  (screen_grid[snake[snake_length-1].row-2][snake[snake_length-1].col-2]=='x'))
 
-        keypress='x'; /* i.e. exit loop - game over */
+       	 gCount=0; /* i.e. exit loop - game over */
 
       /* Collision detection - snake (bad!) */
       for (int i=0;i<snake_length-1;i++)
         if ( (snake[snake_length-1].row)==(snake[i].row) &&
              (snake[snake_length-1].col)==(snake[i].col))
         {
-          keypress='x'; /* i.e. exit loop - game over */
+          gCount=0; /* i.e. exit loop - game over */
           break; /* no need to check any more segments */
         }
       /* Collision detection - food (good!) */
@@ -93,7 +100,8 @@ void snake_loop(void)
 
 	buffer[0].RefreshAll( 100 );
 }
-char direction = 0 ;
+
+
 
 void setup_level()
 {
@@ -109,7 +117,6 @@ void setup_level()
 
 	direction = 2;
 
-	firstpress = 1;
 
 	/* Fill grid with blanks */
 
@@ -139,10 +146,7 @@ void setup_level()
 
 void add_segment()
 {
-	if(buffer[0].keyLeft ) direction = 1;
-	if(buffer[0].keyRight ) direction = 2;
-	if(buffer[0].keyUp ) direction = 3;
-	if(buffer[0].keyDown ) direction = 4;
+
 	
     if( direction == 2 ) { 
 					snake[snake_length].row=snake[snake_length-1].row;
