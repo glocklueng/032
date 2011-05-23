@@ -20,7 +20,7 @@
 //unsigned char  scratchpad[100+(324*2)];
 
 
-Peggy2 buffer[FRAMES_MAX];  // The drawing frames supporting greyscale
+Peggy2 buffer[FRAMES_MAX]; 		 // The drawing frames, 0 is always display  1..FRAMES_MAX can be used as scratchpad
 unsigned short gCount = 250;	// Number of frames to run
 
 /*

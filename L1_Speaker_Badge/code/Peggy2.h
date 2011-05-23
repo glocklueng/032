@@ -119,6 +119,8 @@ class Peggy2
 
     void SPI_TX(char);   
 
+	// poor design choice, but 2AM monday 23rd..
+	// these are on/off for the the key state, keyB is the reset button,keyA the rightmost
 	unsigned char keyA,keyB,keyUp,keyDown,keyLeft,keyRight;
 
 	private:
