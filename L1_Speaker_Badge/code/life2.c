@@ -141,7 +141,7 @@ void setup_life2(void )
 	ClearFrames();
 
 	initialize_board();
-	gCount = 300;
+	gCount = 100;
 }
 
 void loop_life2(void )
@@ -155,7 +155,7 @@ void loop_life2(void )
 	play();
 	print();
 
-	buffer[0].RefreshAll( 400 );
+	buffer[0].RefreshAll( 40 );
 
 }
 

@@ -119,6 +119,8 @@ class Peggy2
 
     void SPI_TX(char);   
 
+	unsigned char keyA,keyB,keyUp,keyDown,keyLeft,keyRight;
+
 	private:
 	    uint8_t _Xcursor;
 		uint8_t _Ycursor;

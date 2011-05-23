@@ -56,19 +56,20 @@ extern "C" {
 
 // Set these 0/1 for each of the possible effects routines, memory can be a problem for all at once.
 
-#define	USE_SCROLLER		( 1 )
-#define USE_STARFIELD1		( 1 )
-#define USE_3DCUBE			( 1 )
-#define USE_FADER			( 1 )
+#define	USE_SCROLLER		( 0 )
+#define USE_STARFIELD1		( 0 )
+#define USE_3DCUBE			( 0 )
+#define USE_FADER			( 0 )
 #define USE_LINE			( 0 ) // simple line test
-#define USE_BLOCK			( 1 )
+#define USE_BLOCK			( 0 )
 #define USE_STARFIELD2		( 0 ) // not done (2d)
 
 #define USE_LIFE			( 0 ) // big
-#define USE_LIFE2			( 1 ) // much less memory than USE_LIFE, but still needs two (18*18) buffers
+#define USE_LIFE2			( 0 ) // much less memory than USE_LIFE, but still needs two (18*18) buffers
 
-#define USE_BOUNCER			( 1 )
+#define USE_BOUNCER			( 0 )
 #define USE_STARFIELD3		( 0 ) // not really finished
+#define	USE_SNAKE			( 1 )
 
 #define USE_FONT			( 1 ) // include font routines, needed for scroller etc
 
@@ -159,13 +160,18 @@ void loop_scroll(void);
 void setup_life2(void );
 void loop_life2(void );
 
+void setup_level(void);
+void snake_loop(void);
+
+void setup_keys(void );
+void loop_keys(void );
 
 /* general purpose */
 void SPI_TX (char cData);
 void Text8x6(short x,short y,const unsigned char *string);
 unsigned short pstrlen(const unsigned char * str);
 void DrawOutlineCircle( int xc,int yc, unsigned int radius  );
-void memset( void *dst,unsigned char data,int length) ;
+void memset( void *dst,int  data,int length) ;
 void memcpy( unsigned char *dst,unsigned char*src, int length) ;
 void ClearFrames(void);
 
