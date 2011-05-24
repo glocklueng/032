@@ -223,6 +223,10 @@ void Peggy2::Clear()
 
 void Peggy2::WritePoint(uint8_t xPos, uint8_t yPos, uint8_t Value)
 {
+	if( xPos < 0 || xPos > PEGGY2_WIDTH -1 ) return; 
+	if( yPos < 0 || yPos > PEGGY2_HEIGHT-1) return; 
+	
+	
 	// this is for the badge, it  skips the missing LED's. Should really be in the refresh code.
 	if (xPos > 8 ) xPos += 7;
 	if (yPos > 8 ) yPos += 6;
@@ -262,8 +266,8 @@ void Peggy2::SetPoint(uint8_t xPos, uint8_t yPos)
 // Turn a pixel on (clips)
 void Peggy2::SetPointClip(uint8_t xPos, uint8_t yPos)
 {
-	if( xPos < 0 || xPos > PEGGY2_WIDTH ) return; 
-	if( yPos < 0 || yPos > PEGGY2_HEIGHT) return; 
+	if( xPos < 0 || xPos > PEGGY2_WIDTH -1 ) return; 
+	if( yPos < 0 || yPos > PEGGY2_HEIGHT-1) return; 
 
 	if (xPos > 8 ) xPos += 7;
 	if (yPos > 8 ) yPos += 6;
@@ -276,10 +280,14 @@ void Peggy2::SetPointClip(uint8_t xPos, uint8_t yPos)
 // Determine if a pixel is on or off
 uint8_t Peggy2::GetPoint(uint8_t xPos, uint8_t yPos)
 {
-  if (xPos > 8 ) xPos += 7;
-  if (yPos > 8 ) yPos += 6;
+	if( xPos < 0 || xPos > PEGGY2_WIDTH -1 ) return 0; 
+	if( yPos < 0 || yPos > PEGGY2_HEIGHT-1) return 0;  
 
-  return ((pbuffer[yPos] & (uint32_t) 1 << xPos) > 0); 
+
+	if (xPos > 8 ) xPos += 7;
+	if (yPos > 8 ) yPos += 6;
+
+	return ((pbuffer[yPos] & (uint32_t) 1 << xPos) > 0); 
 }
 
 

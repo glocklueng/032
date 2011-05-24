@@ -6,7 +6,7 @@
 
 // Member constants
 // Set this to the number of stars you would like in the starfield
-#define NUM_STARS		( 10 )
+#define NUM_STARS		( 30 )
 
 // Speed of the stars ranges from 0.1 to this.
 #define VELOCITY_MAX		(1.7f)
@@ -175,59 +175,8 @@ class Star
 
 static Star starfield[NUM_STARS];   // Starfield of n stars
 
-static char intensity[FRAMES_MAX];   // Stores LED intensity for greyscale
-
-
-// Another quick utility method to round - this makes the stars
-// display smoother than just truncating... if anything can be "smooth"
-// on a 25x25 display. ;)
-int Round(float x)
-{
-  return ((int)(x > 0.0 ? x + 0.5f : x- 0.5f));
-}
-
-
-// This procedure implements the levels of greyscale by
-// drawing the stars onto each frame accordingly, as per this
-// chart
-/*
-        Greyscale
-Frame   0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15
-    0   -  x  -  x  -  x  -  x  -  x  -  x  -  x  -  x
-    1   -  -  x  x  -  -  x  x  -  -  x  x  -  -  x  x
-    2   -  -  -  -  x  x  x  x  -  -  -  -  x  x  x  x
-    3   -  -  -  -  -  -  -  -  x  x  x  x  x  x  x  x
-    
-    and so on.  32 levels of greyscale uses 5 frames (0-4).
-*/
-void SetPointGrey (int x, int y, int grey)
-{
-  for (int i=0; i<FRAMES_MAX; i++)
-  {
-    if ((grey & intensity[i]) == intensity[i])
-     buffer[i].SetPoint(x,y); 
-  }
-}
-  
-
-// Redraws frame buffers to create greyscale 
-void Redraw()
-{
-   for (int i=0; i<FRAMES_MAX; i++)
-    buffer[i].RefreshAll(intensity[i]);
-}
-  
-
-  
 void setup_star()
 { 
- 
-  // Pre-calc tbe LED brightness levels to save clocks
-  // The madness of the casting and rounding is necessary with pow() otherwise
-  // it produces unpredictable integer values.
-  for (int i=0; i<FRAMES_MAX; i++)
-    intensity[i] = Round(pow (2.f, (float)i));
-    
   // Create each star in the starfield.
   for (int i=0; i<NUM_STARS; i++)
     starfield[i].GenerateStar();

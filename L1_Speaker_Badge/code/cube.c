@@ -287,35 +287,37 @@ void setup_cube()
 {
   cube.make(cubeWidth);    // Create vertices, edges, faces
 }
-
+const unsigned char list[]= { 4,5,6,7,8,9,8,7,6,5};
 // ------------------------------------------------------------
 // loop
 // ------------------------------------------------------------
 void loop_cube()
 {
-  // Update values
-  Angx+=AngxSpeed;
-  Angy+=AngySpeed;
-  if (Angx>=TWO_PI)
-    Angx-=TWO_PI;
-  if (Angy>=TWO_PI)
-    Angy-=TWO_PI;
 
-  cube.rotate(Angx, Angy);
+	zCamera = 140.0f -  ( 40.0f * ( sin(Angx*4.0) ));
 
-  // Clear frames
-  buffer[0].Clear();
-  buffer[1].Clear();
+	// Update values
+	Angx+=AngxSpeed;
+	Angy+=AngySpeed;
+	if (Angx>=TWO_PI)
+		Angx-=TWO_PI;
+	if (Angy>=TWO_PI)
+		Angy-=TWO_PI;
 
-  // Draw cube
-  cube.draw();
+	cube.rotate(Angx, Angy);
 
-  // Flicker !
-  for (reps=0; reps< repNumber;reps++)
-  {
-    buffer[0].RefreshAll(1); //Draw frame buffer 1 time
-    buffer[1].RefreshAll(10); //Draw frame buffer 10 times
-  }
+	// Clear frames
+	buffer[0].Clear();
+	buffer[1].Clear();
+
+	// Draw cube
+	cube.draw();
+
+	// Flicker !
+	for (reps=0; reps< repNumber;reps++) {
+		buffer[0].RefreshAll(1); //Draw frame buffer 1 time
+		buffer[1].RefreshAll(10); //Draw frame buffer 10 times
+	}
 
 }
 

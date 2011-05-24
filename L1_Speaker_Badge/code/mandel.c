@@ -16,7 +16,7 @@
 */                                                                                                                  
 
 #define BAILOUT 			( 16 )
-#define MAX_ITERATIONS		( 1000 ) 
+#define MAX_ITERATIONS		( 16 ) 
 
 static short mandelbrot(float x, float y) 
 {
@@ -53,30 +53,42 @@ void setup_mandel(void)
 	ClearFrames();
 }
 
+
 void loop_mandel(void) 
 { 
 	char x,y; 
+	float fx,fy=-1.0f;
 	
 	for (y = 0; y < PEGGY2_HEIGHT; y++) { 
 
+		fx = -1.0f;
+
 		for (x = 0; x < PEGGY2_WIDTH; x++) {
 
-			int i = mandelbrot(x/40.0f, y/40.0f);
+			short i = mandelbrot( fx, fy);
+			
+			fx += 0.11111111111111111111111111111111f;
 
-			if ( i == 0 ) {
-				buffer[0].SetPoint(x,y);
+			if ( i != 0 ) {
+
+				SetPointGrey(x,y,i%16);
 			}
 		} 
 
+		fy += 0.11111111111111111111111111111111f;
+		
 		// Display the frame buffer as we draw each row
-		buffer[0].RefreshAll(1);  
+		Redraw();
+
 	}
 
-	// Hold last frame
-	buffer[0].RefreshAll(1500); 
+	x=255;
+	while(x--)
+		Redraw();
+
 
 	// done
-	gCount = 0;
+	gCount =0;
 
 }
 
