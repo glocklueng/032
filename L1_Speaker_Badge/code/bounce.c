@@ -23,7 +23,6 @@ Copyright (c) 2008 Windell H Oskay.  All right reserved.
 
 #include "common.h"
 
-
 #if USE_BOUNCER
 
 //////////////////////////////////////////////////////////
@@ -91,20 +90,20 @@ void loop_bounce(void)                     // run over and over again
 
 	// Bounce at walls
 
-	if (Xnew < 2)
+	if (Xnew < 3)
 	{
 		VxNew *= -1;
-		Xnew = 2;
+		Xnew = 3;
 	}
 
-	if (Xnew >= 17-2)
+	if (Xnew >= 17-3)
 	{
 		VxNew *= -1;
-		Xnew = 17-2;
+		Xnew = 17-3;
 	}
 
-	if (Ynew <= 2) {
-		Ynew = 2;
+	if (Ynew <= 3 ) {
+		Ynew = 3;
 
 
 
@@ -116,8 +115,8 @@ void loop_bounce(void)                     // run over and over again
 
 	}
 
-	if (Ynew >= 18) {
-		Ynew = 18; 
+	if (Ynew >= 18-4) {
+		Ynew = 18-4; 
 
 	if (VyNew > 0)  
 		VyNew *= -0.85;  
@@ -154,7 +153,7 @@ void loop_bounce(void)                     // run over and over again
 	yp = 18 - (uint8_t) round(Ynew);
 
 	// Write the ball to the buffer
-	buffer[0].DrawOutlineCircle(xp,yp,2);
+	buffer[0].DrawOutlineCircle(xp,yp,3);
 
 
 	// Display the frame buffer

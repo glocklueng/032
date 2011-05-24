@@ -84,7 +84,7 @@ extern "C" {
 #define USE_STARFIELD2		( 0 ) // not done (2d)
 
 #define USE_LIFE			( 0 ) // conways life. Big footprint, uses 3402 Program, and 243 Data
-#define USE_LIFE2			( 1 ) // different implementation, much smaller than USE_LIFE, but still needs two (18*18) sram buffers. 678 Program, 6 Data
+#define USE_LIFE2			( 0) // different implementation, much smaller than USE_LIFE, but still needs two (18*18) sram buffers. 678 Program, 6 Data
 
 
 #define USE_BOUNCER			( 1 ) // bouncing ball
@@ -93,7 +93,7 @@ extern "C" {
 
 #define	USE_MANDEL			( 1 ) // Simple mandelbrot
 
-#define USE_MAZE			( 1 ) // Maze Game
+#define USE_MAZE			( 0 ) // Maze Game
 
 #define USE_FONT			( 1 ) // include font routines, needed for scroller etc
 
@@ -131,19 +131,20 @@ extern unsigned char  scratchpad[100+(324*2)];		// Scratchpad memory ( not imple
 
 
 /*                                                                                                     
-		88888888888                                                 88                                       
-		88                                                   ,d     ""                                       
-		88                                                   88                                              
-		88aaaaa      88       88  8b,dPPYba,    ,adPPYba,  MM88MMM  88   ,adPPYba,   8b,dPPYba,   ,adPPYba,  
-		88"""""      88       88  88P'   `"8a  a8"     ""    88     88  a8"     "8a  88P'   `"8a  I8[    ""  
-		88           88       88  88       88  8b            88     88  8b       d8  88       88   `"Y8ba,   
-		88           "8a,   ,a88  88       88  "8a,   ,aa    88,    88  "8a,   ,a8"  88       88  aa    ]8I  
-		88            `"YbbdP'Y8  88       88   `"Ybbd8"'    "Y888  88   `"YbbdP"'   88       88  `"YbbdP"'  
-                                                                                                 
+	88888888888                                                 88                                       
+	88                                                   ,d     ""                                       
+	88                                                   88                                              
+	88aaaaa      88       88  8b,dPPYba,    ,adPPYba,  MM88MMM  88   ,adPPYba,   8b,dPPYba,   ,adPPYba,  
+	88"""""      88       88  88P'   `"8a  a8"     ""    88     88  a8"     "8a  88P'   `"8a  I8[    ""  
+	88           88       88  88       88  8b            88     88  8b       d8  88       88   `"Y8ba,   
+	88           "8a,   ,a88  88       88  "8a,   ,aa    88,    88  "8a,   ,a8"  88       88  aa    ]8I  
+	88            `"YbbdP'Y8  88       88   `"Ybbd8"'    "Y888  88   `"YbbdP"'   88       88  `"YbbdP"'  
+                                                                                             
 */
                                                                                                      
 
 unsigned int qrand (void);							// rand() replacement
+unsigned char prng(void);
 
 /* Ball bouncing example */
 void setup_bounce( void );
@@ -191,13 +192,15 @@ void setup_keys(void );
 void loop_keys(void );
 void setup_mandel(void);
 void loop_mandel(void);
-
+void setup_maze(void);
+void loop_maze(void);
 
 
 /* general purpose */
 
 /* uses progmem */
 void Text8x6(short x,short y,const unsigned char *string);
+void Text6x6(short x,short y,const unsigned char *string);
 
 /* uses progmem */
 unsigned short pstrlen(const unsigned char * str);
@@ -206,6 +209,9 @@ void DrawOutlineCircle( int xc,int yc, unsigned int radius  );
 void memset( void *dst,int  data,int length) ;
 void memcpy( unsigned char *dst,unsigned char*src, int length) ;
 void ClearFrames(void);
+void SetPointGrey (int x, int y, int grey);
+void Redraw(void );
+int Round(float x);
 
 #ifdef __cplusplus
 }

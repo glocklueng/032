@@ -19,6 +19,9 @@
 
 Peggy2 buffer[FRAMES_MAX]; 		 // The drawing frames, 0 is always display  1..FRAMES_MAX can be used as scratchpad
 unsigned short gCount = 250;	// Number of frames to run
+static char intensity[FRAMES_MAX];   // Stores LED intensity for greyscale
+
+const PROGMEM unsigned char text1[] = "NULLSPACE LABS";
 
 /*
                                                                                                                                     
@@ -122,15 +125,22 @@ const pFunction demoRoutines[]  = {
 //	setup_keys,
 //	loop_keys,
 
-#if USE_SNAKE
-	init_snake,
-	snake_loop,
-#endif
 
 #if USE_SCROLLER
 	setup_scroll,
 	loop_scroll,
 #endif
+
+#if USE_SNAKE
+	init_snake,
+	snake_loop,
+#endif
+
+#if USE_MAZE
+	loop_maze,
+	setup_maze,
+#endif
+
 #if USE_LIFE2
 	&setup_life2,
 	&loop_life2,
@@ -141,7 +151,6 @@ const pFunction demoRoutines[]  = {
 	setup_mandel,
 	loop_mandel,
 #endif
-
 
 
 #if USE_STARFIELD1
@@ -203,6 +212,13 @@ int main(void)
 	unsigned char gameState = 0; 
 
  	buffer[0].HardwareInit();   // Call this once to init the hardware. 
+
+  // Pre-calc tbe LED brightness levels to save clocks
+  // The madness of the casting and rounding is necessary with pow() otherwise
+  // it produces unpredictable integer values.
+	for (int i=0; i<FRAMES_MAX; i++)
+		intensity[i] = Round(pow (2.f, (float)i));
+
 
 #if USE_BLOCK
 
@@ -338,3 +354,56 @@ void loop_keys(void )
 }
 
 #endif
+
+
+
+// Redraws frame buffers to create greyscale 
+void Redraw(void )
+{
+   for (int i=0; i<FRAMES_MAX; i++)
+    buffer[i].RefreshAll(intensity[i]);
+}
+ 
+// This procedure implements the levels of greyscale by
+// drawing the stars onto each frame accordingly, as per this
+// chart
+/*
+        Greyscale
+Frame   0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15
+    0   -  x  -  x  -  x  -  x  -  x  -  x  -  x  -  x
+    1   -  -  x  x  -  -  x  x  -  -  x  x  -  -  x  x
+    2   -  -  -  -  x  x  x  x  -  -  -  -  x  x  x  x
+    3   -  -  -  -  -  -  -  -  x  x  x  x  x  x  x  x
+    
+    and so on.  32 levels of greyscale uses 5 frames (0-4).
+*/
+void SetPointGrey (int x, int y, int grey)
+{
+	unsigned char s;
+
+	s =   ( (grey) / 32.0f);
+	
+	if ( s== 0 ) s++;
+
+	if (  s > 8 ) {
+		s = 8;
+	}
+
+  for (int i=0; i<FRAMES_MAX; i++)
+  {
+    if ((grey & intensity[i]) == intensity[i]) {
+     	buffer[i].SetPoint(x,y); 
+	 }
+  }
+}
+  
+
+
+// Another quick utility method to round - this makes the stars
+// display smoother than just truncating... if anything can be "smooth"
+// on a 25x25 display. ;)
+int Round(float x)
+{
+  return ((int)(x > 0.0 ? x + 0.5f : x- 0.5f));
+}
+

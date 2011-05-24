@@ -63,35 +63,36 @@ int drill(int *ay, int *ax, int j)  // punches a path through the Maze to make i
 // Redraw refreshes the screen display to the user
 // in should be called about 30 times a second.
 
-static void SetTile(char x,char y, char v)
+static void SetTile( char x, char y, char v )
 {
-	if( v )
+	if( v ) {
 		buffer[0].SetPoint(x,y);
+	}
 }
 
-void redraw()
+void redraw( void )
 {
 	int ay,ax; 
 
 
-	for (ay=0;ay<Y_SIZE-1;ay++)   // go over the maze array depth
-		for (ax=0;ax<X_SIZE;ax++) // ...and across the width
-			switch (maze[ay][ax])
-		{
-			case WALL:
-				SetTile(ax+3,ay,0); break;  // for each case, check to see what the symbol in the maze is,
-			case BLANK:                     // then translate it to a tile from 'mazetiles[]'.  The numbers 
-				SetTile(ax+3,ay,5); break;  // are direct tile numbers as seen in Tile Studio
-			case EXIT:
-				SetTile(ax+3,ay,10); break;
-			case PLAYER:
-				SetTile(ax+3,ay,7); break;
-			default: 
-				SetTile(ax+3,ay,2); break;
-		};
+	for (ay=0;ay<Y_SIZE-1;ay++) {  // go over the maze array depth
+		for (ax=0;ax<X_SIZE;ax++) { // ...and across the width 
+			
+			switch (maze[ay][ax]) {
+				case WALL:
+					SetTile(ax+3,ay,0); break;  // for each case, check to see what the symbol in the maze is,
+				case BLANK:                     // then translate it to a tile from 'mazetiles[]'.  The numbers 
+					SetTile(ax+3,ay,5); break;  // are direct tile numbers as seen in Tile Studio
+				case EXIT:
+					SetTile(ax+3,ay,10); break;
+				case PLAYER:
+					SetTile(ax+3,ay,7); break;
+				default: 
+					SetTile(ax+3,ay,2); break;
+			};
+		}
+	}
 
-	for (ax=3;ax<40;ax++) // draw an 'empty' border along the bottom edge of the maze (cosmetics)
-		SetTile(ax,24,5);
 
 	// redraw display
 	buffer[0].RefreshAll(4);
@@ -151,14 +152,14 @@ void setup_maze(void)
 		corner=qrand()&0x03;
 		switch (corner)                              
 		{
-		case 0:
-			exit_x=2; exit_y=2; break;
-		case 1:
-			exit_x=X_SIZE-3; exit_y=2; break;
-		case 2:
-			exit_x=X_SIZE-3; exit_y=Y_SIZE-3;break;
-		case 3:
-			exit_x=2; exit_y=Y_SIZE-3; break;
+			case 0:
+				exit_x=2; exit_y=2; break;
+			case 1:
+				exit_x=X_SIZE-3; exit_y=2; break;
+			case 2:
+				exit_x=X_SIZE-3; exit_y=Y_SIZE-3;break;
+			case 3:
+				exit_x=2; exit_y=Y_SIZE-3; break;
 		}
 	}
 
@@ -201,18 +202,12 @@ void loop_maze(void)
 
 			gCount = 0;
 			return;
-
-	}
-
+		}
+	
 		maze[player_y][player_x]=PLAYER;           // after the movement calculations, put the player in the new spot
-	}
-	else
-	{
-		// check for idle time                     // use the frame counter to make the player graphic change if you wait around. ;-)
 	}
 
 	redraw();    // redraw the screen to update new player position
-
 } 
 
 #endif
