@@ -84,7 +84,7 @@ extern "C" {
 #define USE_STARFIELD2		( 0 ) // not done (2d)
 
 #define USE_LIFE			( 0 ) // conways life. Big footprint, uses 3402 Program, and 243 Data
-#define USE_LIFE2			( 0) // different implementation, much smaller than USE_LIFE, but still needs two (18*18) sram buffers. 678 Program, 6 Data
+#define USE_LIFE2			( 1 ) // different implementation, much smaller than USE_LIFE, but still needs two (18*18) sram buffers. 678 Program, 6 Data
 
 
 #define USE_BOUNCER			( 1 ) // bouncing ball
@@ -212,6 +212,7 @@ void ClearFrames(void);
 void SetPointGrey (int x, int y, int grey);
 void Redraw(void );
 int Round(float x);
+void banner( const unsigned char *text );
 
 #ifdef __cplusplus
 }

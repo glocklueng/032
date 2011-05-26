@@ -18,7 +18,7 @@
 *  written by Michael Kircher  2008-09-11
 */
 
-/* adapted for layerOne badge */
+/* adapted for layerOne badge, may not have had time to finish it :) */
 
 #include "common.h"
 
@@ -28,7 +28,7 @@
 #define X_SIZE (18-1)
 #define Y_SIZE (18-1)
 
-#define BLANK ' ' // these defines were used in testing a 'text' version of the game
+#define BLANK 0 // these defines were used in testing a 'text' version of the game
 #define WALL 'a'  // prior to the 'real' graphics.  No real need to change them.
 #define PLAYER '*'
 #define EXIT 'O'
@@ -78,7 +78,8 @@ void redraw( void )
 	for (ay=0;ay<Y_SIZE-1;ay++) {  // go over the maze array depth
 		for (ax=0;ax<X_SIZE;ax++) { // ...and across the width 
 			
-			switch (maze[ay][ax]) {
+			switch (maze[ay][ax])
+			{
 				case WALL:
 					SetTile(ax+3,ay,0); break;  // for each case, check to see what the symbol in the maze is,
 				case BLANK:                     // then translate it to a tile from 'mazetiles[]'.  The numbers 
@@ -95,7 +96,7 @@ void redraw( void )
 
 
 	// redraw display
-	buffer[0].RefreshAll(4);
+	buffer[0].RefreshAll(1500);
 
 }
 
@@ -103,10 +104,9 @@ static	unsigned char player_x, player_y;
 static	unsigned char exit_x=0, exit_y=0;
 
 
-void setup_maze(void)
+void setup_maze( void )
 {
 	int ay,ax,j; 
-
 	unsigned char corner;
 
 	ClearFrames();
@@ -164,8 +164,11 @@ void setup_maze(void)
 	}
 
 	while (ABS(player_x-exit_x)<16);                // we compare the distance from the player to the exit (horizontally)
+	
+	
 	// and only accept the corner if it's relatively far away from the player
 	// (could use both x and y distance for better effect)
+	
 	maze[exit_y][exit_x]=EXIT;                   // place the exit in the maze
 
 	redraw();                                    // draw the screen for the player
