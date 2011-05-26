@@ -35,7 +35,7 @@ void setup_scroll(void)
 	textLength[2] = ( pstrlen( text2 ) * 9 ) + 18;
 
 	// how long to run for (frames)
-	gCount = 100;
+	gCount = 500;
 }
 
 void loop_scroll(void)

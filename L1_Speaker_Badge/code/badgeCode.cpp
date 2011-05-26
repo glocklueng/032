@@ -23,6 +23,7 @@ static char intensity[FRAMES_MAX];   // Stores LED intensity for greyscale
 
 const PROGMEM unsigned char text1[] = "NULLSPACE LABS";
 
+
 /*
                                                                                                                                     
 	 ad88888ba   88                                                        88        ,ad8888ba,                         88              
@@ -207,32 +208,78 @@ const pFunction demoRoutines[]  = {
 	NULL,
 };
 
+const unsigned char PROGMEM tBST[] = "KB";
+const unsigned char PROGMEM tAST[] = "KA";
+const unsigned char PROGMEM tUST[] = "KU";
+const unsigned char PROGMEM tDST[] = "KD";
+const unsigned char PROGMEM tLST[] = "KL";
+const unsigned char PROGMEM tRST[] = "KR";
+
+
 int main(void)
 {
 	unsigned char gameState = 0; 
+	unsigned char loopCounter ;
+
+	loopCounter = 0;
 
  	buffer[0].HardwareInit();   // Call this once to init the hardware. 
 
   // Pre-calc tbe LED brightness levels to save clocks
   // The madness of the casting and rounding is necessary with pow() otherwise
   // it produces unpredictable integer values.
-	for (int i=0; i<FRAMES_MAX; i++)
+	for (int i=0; i<FRAMES_MAX; i++) {
 		intensity[i] = Round(pow (2.f, (float)i));
+	}
 
 
 #if USE_BLOCK
 
+#define  BLOCK_TIME		(40)
+
 /// Do a sweep forward and back on boot
 	setup_block();
 
-	buffer[0].RefreshAll(80); //Draw frame buffer 0
-		buffer[1].RefreshAll(80); //Draw frame buffer 1
-			buffer[2].RefreshAll(80); //Draw frame buffer 2
-				buffer[3].RefreshAll(80); //Draw frame buffer 3
-			buffer[2].RefreshAll(80); //Draw frame buffer 2
-		buffer[1].RefreshAll(80); //Draw frame buffer 1
-	buffer[0].RefreshAll(80); //Draw frame buffer 0
+	//while(1)
+	{
+		buffer[0].RefreshAll( BLOCK_TIME ); //Draw frame buffer 0
+			buffer[1].RefreshAll( BLOCK_TIME ); //Draw frame buffer 1
+				buffer[2].RefreshAll( BLOCK_TIME ); //Draw frame buffer 2
+					buffer[3].RefreshAll( BLOCK_TIME ); //Draw frame buffer 3
+				buffer[2].RefreshAll( BLOCK_TIME ); //Draw frame buffer 2
+			buffer[1].RefreshAll( BLOCK_TIME ); //Draw frame buffer 1
+		buffer[0].RefreshAll( BLOCK_TIME ); //Draw frame buffer 0
+	}
 #endif
+	buffer[0].keyB =  (!(PINB & 0x01));
+	
+	// reset
+	//buffer[0].keyA =  (!(PINB & 0x01));
+
+	buffer[0].keyUp =  (!(PINC & 0x10));
+	buffer[0].keyDown =  (!(PINC & 0x04)) ;
+	buffer[0].keyLeft =  (!(PINC & 0x08));
+	buffer[0].keyRight =  (!(PINC & 0x02)) ;
+
+	if( buffer[0].keyB ) {
+		banner( tBST );
+	}
+
+	if( buffer[0].keyUp ) {
+		banner( tUST );
+	}
+
+	if( buffer[0].keyDown ) {
+		banner( tDST );
+	}
+
+	if( buffer[0].keyLeft ) {
+		banner( tLST );
+	}
+
+	if( buffer[0].keyRight ) {
+		banner( tRST );
+	}
 
 	gameState = 0;
 
@@ -263,9 +310,24 @@ int main(void)
 			buffer[0].keyLeft =  (!(PINC & 0x08));
 			buffer[0].keyRight =  (!(PINC & 0x02)) ;
 
+#if 0
+			ClearFrames();
+	
+			int x;
+			for( int y = 0 ;y < PEGGY2_HEIGHT ; y++ ) {
+				for( x = 0 ;x < PEGGY2_WIDTH ; x++ ) {
 
-//			loop_keys();
+				
+					SetPointGrey(x,y,sin(sqrt((x*x)+(y*y)))*16.0f );
+				}
+			}
+	
+			x=255;
 
+			while(x--) {
+				Redraw();
+			}
+#endif
 
 			// number of frames, we should do this in a timer int, since some routines take more time per frame than others.
 			gCount -- ;
@@ -282,6 +344,13 @@ int main(void)
 				// wrap if end of list
 				if ( demoRoutines[gameState <<1 ] == NULL  ) {
 					gameState = 0;
+
+					loopCounter++ ; 
+
+					if( loopCounter == 20 ) { 
+						sleep();
+						loopCounter = 0;
+					}
 				}
 			}
 		}
