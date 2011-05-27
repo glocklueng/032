@@ -4,9 +4,11 @@
 
 ## General Flags
 PROJECT = avrsound
-MCU = atmega16
+MCU = atmega64
 TARGET = sound.elf
-CC = avr-gcc.exe
+CC = avr-gcc
+
+CPP = avr-g++
 
 ## Options common to compile, link and assembly rules
 COMMON = -mmcu=$(MCU)
@@ -27,7 +29,7 @@ LDFLAGS +=
 
 
 ## Intel Hex file production flags
-HEX_FLASH_FLAGS = -R .eeprom
+HEX_FLASH_FLAGS = -R .eeprom -R .fuse -R .lock -R .signature
 
 HEX_EEPROM_FLAGS = -j .eeprom
 HEX_EEPROM_FLAGS += --set-section-flags=.eeprom="alloc,load"
@@ -73,5 +75,5 @@ clean:
 	-rm -rf $(OBJECTS) sound.elf dep/* sound.hex sound.eep
 
 ## Other dependencies
--include $(shell mkdir dep 2>/dev/null) $(wildcard dep/*)
+-include $(shell mkdir dep 2>NUL) $(wildcard dep/*)
 

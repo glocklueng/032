@@ -3,29 +3,29 @@ bit1synth.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         0000001a  00800100  0000085c  000008f0  2**0
+  0 .data         0000001a  00800100  00000868  000008fc  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         0000085c  00000000  00000000  00000094  2**1
+  1 .text         00000868  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .bss          0000004e  0080011a  0080011a  0000090a  2**0
+  2 .bss          0000004f  0080011a  0080011a  00000916  2**0
                   ALLOC
-  3 .debug_aranges 00000020  00000000  00000000  0000090a  2**0
+  3 .debug_aranges 00000020  00000000  00000000  00000916  2**0
                   CONTENTS, READONLY, DEBUGGING
-  4 .debug_pubnames 000001e0  00000000  00000000  0000092a  2**0
+  4 .debug_pubnames 000001e0  00000000  00000000  00000936  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_info   000005a0  00000000  00000000  00000b0a  2**0
+  5 .debug_info   000005a0  00000000  00000000  00000b16  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_abbrev 00000236  00000000  00000000  000010aa  2**0
+  6 .debug_abbrev 00000236  00000000  00000000  000010b6  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_line   00000590  00000000  00000000  000012e0  2**0
+  7 .debug_line   00000598  00000000  00000000  000012ec  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_frame  000000b0  00000000  00000000  00001870  2**2
+  8 .debug_frame  000000b0  00000000  00000000  00001884  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    000002aa  00000000  00000000  00001920  2**0
+  9 .debug_str    0000029f  00000000  00000000  00001934  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_loc    000000ec  00000000  00000000  00001bca  2**0
+ 10 .debug_loc    000000ec  00000000  00000000  00001bd3  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 00000078  00000000  00000000  00001cb6  2**0
+ 11 .debug_ranges 00000078  00000000  00000000  00001cbf  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -97,7 +97,7 @@ Disassembly of section .text:
  198:	11 e0       	ldi	r17, 0x01	; 1
  19a:	a0 e0       	ldi	r26, 0x00	; 0
  19c:	b1 e0       	ldi	r27, 0x01	; 1
- 19e:	ec e5       	ldi	r30, 0x5C	; 92
+ 19e:	e8 e6       	ldi	r30, 0x68	; 104
  1a0:	f8 e0       	ldi	r31, 0x08	; 8
  1a2:	02 c0       	rjmp	.+4      	; 0x1a8 <.do_copy_data_start>
 
@@ -120,11 +120,11 @@ Disassembly of section .text:
  1b6:	1d 92       	st	X+, r1
 
 000001b8 <.do_clear_bss_start>:
- 1b8:	a8 36       	cpi	r26, 0x68	; 104
+ 1b8:	a9 36       	cpi	r26, 0x69	; 105
  1ba:	b1 07       	cpc	r27, r17
  1bc:	e1 f7       	brne	.-8      	; 0x1b6 <.do_clear_bss_loop>
- 1be:	0e 94 b7 03 	call	0x76e	; 0x76e <main>
- 1c2:	0c 94 2c 04 	jmp	0x858	; 0x858 <_exit>
+ 1be:	0e 94 bd 03 	call	0x77a	; 0x77a <main>
+ 1c2:	0c 94 32 04 	jmp	0x864	; 0x864 <_exit>
 
 000001c6 <__bad_interrupt>:
  1c6:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
@@ -136,8 +136,8 @@ uint16_t lfsr_rand()
 {
   static uint16_t lfsr = 0xACE1u;
   lfsr = (lfsr >> 1) ^ (-(lfsr & 1u) & 0xB400u);
- 1ca:	80 91 18 01 	lds	r24, 0x0118
- 1ce:	90 91 19 01 	lds	r25, 0x0119
+ 1ca:	80 91 17 01 	lds	r24, 0x0117
+ 1ce:	90 91 18 01 	lds	r25, 0x0118
  1d2:	9c 01       	movw	r18, r24
  1d4:	21 70       	andi	r18, 0x01	; 1
  1d6:	30 70       	andi	r19, 0x00	; 0
@@ -150,8 +150,8 @@ uint16_t lfsr_rand()
  1e4:	87 95       	ror	r24
  1e6:	28 27       	eor	r18, r24
  1e8:	39 27       	eor	r19, r25
- 1ea:	30 93 19 01 	sts	0x0119, r19
- 1ee:	20 93 18 01 	sts	0x0118, r18
+ 1ea:	30 93 18 01 	sts	0x0118, r19
+ 1ee:	20 93 17 01 	sts	0x0117, r18
   return lfsr;
 }
  1f2:	c9 01       	movw	r24, r18
@@ -232,14 +232,14 @@ ISR(USART0_RX_vect)
     {
       case 0x80:
         midimode = MIDI_NOTE_OFF;
- 24a:	80 93 59 01 	sts	0x0159, r24
+ 24a:	80 93 5a 01 	sts	0x015A, r24
  24e:	43 c0       	rjmp	.+134    	; 0x2d6 <__vector_18+0xca>
         midibytesleft = 2;
         break;
       case 0x90:
         midimode = MIDI_NOTE_ON;
  250:	82 e0       	ldi	r24, 0x02	; 2
- 252:	80 93 59 01 	sts	0x0159, r24
+ 252:	80 93 5a 01 	sts	0x015A, r24
  256:	40 c0       	rjmp	.+128    	; 0x2d8 <__vector_18+0xcc>
         break;
       case 0xFE: // active sense
@@ -247,12 +247,12 @@ ISR(USART0_RX_vect)
       case 0xFC: // stop
       case 0xFF: // reset
         noteon = 0;
- 258:	10 92 03 01 	sts	0x0103, r1
+ 258:	10 92 59 01 	sts	0x0159, r1
       default:
         midimode = MIDI_OTHER;
- 25c:	10 92 59 01 	sts	0x0159, r1
+ 25c:	10 92 5a 01 	sts	0x015A, r1
         midibytesleft = 0;
- 260:	10 92 5a 01 	sts	0x015A, r1
+ 260:	10 92 5b 01 	sts	0x015B, r1
  264:	3b c0       	rjmp	.+118    	; 0x2dc <__vector_18+0xd0>
     }
   }
@@ -260,30 +260,30 @@ ISR(USART0_RX_vect)
   {
     // save the second and third bytes
     if (midibytesleft > 0)
- 266:	20 91 5a 01 	lds	r18, 0x015A
+ 266:	20 91 5b 01 	lds	r18, 0x015B
  26a:	12 16       	cp	r1, r18
  26c:	4c f4       	brge	.+18     	; 0x280 <__vector_18+0x74>
     {
       midibuffer[0] = midibuffer[1];
- 26e:	80 91 67 01 	lds	r24, 0x0167
- 272:	80 93 66 01 	sts	0x0166, r24
+ 26e:	80 91 68 01 	lds	r24, 0x0168
+ 272:	80 93 67 01 	sts	0x0167, r24
       midibuffer[1] = byte;
- 276:	90 93 67 01 	sts	0x0167, r25
+ 276:	90 93 68 01 	sts	0x0168, r25
       midibytesleft--;
  27a:	21 50       	subi	r18, 0x01	; 1
- 27c:	20 93 5a 01 	sts	0x015A, r18
+ 27c:	20 93 5b 01 	sts	0x015B, r18
     }
 
     // got all bytes; parse message
     if (midibytesleft <= 0)
- 280:	80 91 5a 01 	lds	r24, 0x015A
+ 280:	80 91 5b 01 	lds	r24, 0x015B
  284:	18 16       	cp	r1, r24
  286:	54 f1       	brlt	.+84     	; 0x2dc <__vector_18+0xd0>
     {
       uint8_t note = midibuffer[0];
- 288:	20 91 66 01 	lds	r18, 0x0166
+ 288:	20 91 67 01 	lds	r18, 0x0167
       switch (midimode)
- 28c:	80 91 59 01 	lds	r24, 0x0159
+ 28c:	80 91 5a 01 	lds	r24, 0x015A
  290:	81 30       	cpi	r24, 0x01	; 1
  292:	31 f0       	breq	.+12     	; 0x2a0 <__vector_18+0x94>
  294:	82 30       	cpi	r24, 0x02	; 2
@@ -294,25 +294,25 @@ ISR(USART0_RX_vect)
         case MIDI_NOTE_ON:
           // turn note off if velocity is zero
           if (midibuffer[1] == 0 && note == midilastnote)
- 298:	80 91 67 01 	lds	r24, 0x0167
+ 298:	80 91 68 01 	lds	r24, 0x0168
  29c:	88 23       	and	r24, r24
  29e:	51 f4       	brne	.+20     	; 0x2b4 <__vector_18+0xa8>
- 2a0:	80 91 04 01 	lds	r24, 0x0104
+ 2a0:	80 91 03 01 	lds	r24, 0x0103
  2a4:	28 17       	cp	r18, r24
  2a6:	b9 f4       	brne	.+46     	; 0x2d6 <__vector_18+0xca>
           {
             noteon = 0;
- 2a8:	10 92 03 01 	sts	0x0103, r1
+ 2a8:	10 92 59 01 	sts	0x0159, r1
             midilastnote = 0xFF;
  2ac:	8f ef       	ldi	r24, 0xFF	; 255
- 2ae:	80 93 04 01 	sts	0x0104, r24
+ 2ae:	80 93 03 01 	sts	0x0103, r24
  2b2:	11 c0       	rjmp	.+34     	; 0x2d6 <__vector_18+0xca>
           }
           else if (midibuffer[1] != 0)
           {
             noteon = 1;
  2b4:	81 e0       	ldi	r24, 0x01	; 1
- 2b6:	80 93 03 01 	sts	0x0103, r24
+ 2b6:	80 93 59 01 	sts	0x0159, r24
             pitch = pgm_read_word(freqvals+note);
  2ba:	e2 2f       	mov	r30, r18
  2bc:	f0 e0       	ldi	r31, 0x00	; 0
@@ -325,11 +325,11 @@ ISR(USART0_RX_vect)
  2ca:	90 93 01 01 	sts	0x0101, r25
  2ce:	80 93 00 01 	sts	0x0100, r24
             midilastnote = note;
- 2d2:	20 93 04 01 	sts	0x0104, r18
+ 2d2:	20 93 03 01 	sts	0x0103, r18
           }
           midibytesleft = 2; // receive more note on events
  2d6:	82 e0       	ldi	r24, 0x02	; 2
- 2d8:	80 93 5a 01 	sts	0x015A, r24
+ 2d8:	80 93 5b 01 	sts	0x015B, r24
         default:
           break;
       }
@@ -376,26 +376,26 @@ ISR(TIMER1_COMPA_vect)
  318:	e1 f0       	breq	.+56     	; 0x352 <__vector_12+0x62>
   {
     shiftout = waveform & 1;
- 31a:	20 91 64 01 	lds	r18, 0x0164
- 31e:	30 91 65 01 	lds	r19, 0x0165
+ 31a:	20 91 65 01 	lds	r18, 0x0165
+ 31e:	30 91 66 01 	lds	r19, 0x0166
     waveform >>= 1;
- 322:	80 91 64 01 	lds	r24, 0x0164
- 326:	90 91 65 01 	lds	r25, 0x0165
+ 322:	80 91 65 01 	lds	r24, 0x0165
+ 326:	90 91 66 01 	lds	r25, 0x0166
  32a:	96 95       	lsr	r25
  32c:	87 95       	ror	r24
- 32e:	90 93 65 01 	sts	0x0165, r25
- 332:	80 93 64 01 	sts	0x0164, r24
+ 32e:	90 93 66 01 	sts	0x0166, r25
+ 332:	80 93 65 01 	sts	0x0165, r24
     if (shiftout)
  336:	32 2f       	mov	r19, r18
  338:	31 70       	andi	r19, 0x01	; 1
  33a:	20 ff       	sbrs	r18, 0
  33c:	0e c0       	rjmp	.+28     	; 0x35a <__vector_12+0x6a>
       waveform |= (1 << 15);
- 33e:	80 91 64 01 	lds	r24, 0x0164
- 342:	90 91 65 01 	lds	r25, 0x0165
+ 33e:	80 91 65 01 	lds	r24, 0x0165
+ 342:	90 91 66 01 	lds	r25, 0x0166
  346:	90 68       	ori	r25, 0x80	; 128
- 348:	90 93 65 01 	sts	0x0165, r25
- 34c:	80 93 64 01 	sts	0x0164, r24
+ 348:	90 93 66 01 	sts	0x0166, r25
+ 34c:	80 93 65 01 	sts	0x0165, r24
  350:	04 c0       	rjmp	.+8      	; 0x35a <__vector_12+0x6a>
   }
   else
@@ -408,769 +408,777 @@ ISR(TIMER1_COMPA_vect)
 
   // apply envelope
   shiftout &= envval;
- 35a:	90 91 05 01 	lds	r25, 0x0105
+ 35a:	20 91 04 01 	lds	r18, 0x0104
   
   // mute if note off
   shiftout &= noteon;
- 35e:	80 91 03 01 	lds	r24, 0x0103
+ 35e:	90 91 59 01 	lds	r25, 0x0159
+
+//	if(noteon)
+//		PORTC 	= waveform;
+
+	if (noteon) {
+ 362:	80 91 59 01 	lds	r24, 0x0159
+ 366:	88 23       	and	r24, r24
+ 368:	49 f0       	breq	.+18     	; 0x37c <__vector_12+0x8c>
   {
     shiftout = lfsr_rand() & 1;
   }
 
   // apply envelope
   shiftout &= envval;
- 362:	89 23       	and	r24, r25
-
-//	if(noteon)
+ 36a:	92 23       	and	r25, r18
 //		PORTC 	= waveform;
 
-  // update audio pin
+	if (noteon) {
+
+  // update audio pin (we're using all pins for more volume ), using  0xff-knobs[PITCH_KNOB].val; will let you use the pitch slider as volume
   if (shiftout) 
- 364:	83 23       	and	r24, r19
- 366:	19 f0       	breq	.+6      	; 0x36e <__vector_12+0x7e>
-    //set_bit(PORT(AUDIO), AUDIO_PIN);
-	PORTC =0xff;
- 368:	8f ef       	ldi	r24, 0xFF	; 255
- 36a:	85 bb       	out	0x15, r24	; 21
- 36c:	01 c0       	rjmp	.+2      	; 0x370 <__vector_12+0x80>
+ 36c:	93 23       	and	r25, r19
+ 36e:	29 f0       	breq	.+10     	; 0x37a <__vector_12+0x8a>
+    PORTC = 0xff-knobs[PITCH_KNOB].val;
+ 370:	80 91 33 01 	lds	r24, 0x0133
+ 374:	80 95       	com	r24
+ 376:	85 bb       	out	0x15, r24	; 21
+ 378:	01 c0       	rjmp	.+2      	; 0x37c <__vector_12+0x8c>
   else
 	PORTC =0;
- 36e:	15 ba       	out	0x15, r1	; 21
-//    clear_bit(PORT(AUDIO), AUDIO_PIN);
+ 37a:	15 ba       	out	0x15, r1	; 21
 }
- 370:	ff 91       	pop	r31
- 372:	ef 91       	pop	r30
- 374:	bf 91       	pop	r27
- 376:	af 91       	pop	r26
- 378:	9f 91       	pop	r25
- 37a:	8f 91       	pop	r24
- 37c:	7f 91       	pop	r23
- 37e:	6f 91       	pop	r22
- 380:	5f 91       	pop	r21
- 382:	4f 91       	pop	r20
- 384:	3f 91       	pop	r19
- 386:	2f 91       	pop	r18
- 388:	0f 90       	pop	r0
- 38a:	0f be       	out	0x3f, r0	; 63
- 38c:	0f 90       	pop	r0
- 38e:	1f 90       	pop	r1
- 390:	18 95       	reti
+}
+ 37c:	ff 91       	pop	r31
+ 37e:	ef 91       	pop	r30
+ 380:	bf 91       	pop	r27
+ 382:	af 91       	pop	r26
+ 384:	9f 91       	pop	r25
+ 386:	8f 91       	pop	r24
+ 388:	7f 91       	pop	r23
+ 38a:	6f 91       	pop	r22
+ 38c:	5f 91       	pop	r21
+ 38e:	4f 91       	pop	r20
+ 390:	3f 91       	pop	r19
+ 392:	2f 91       	pop	r18
+ 394:	0f 90       	pop	r0
+ 396:	0f be       	out	0x3f, r0	; 63
+ 398:	0f 90       	pop	r0
+ 39a:	1f 90       	pop	r1
+ 39c:	18 95       	reti
 
-00000392 <read_adc>:
+0000039e <read_adc>:
 
 // sample an ADC channel
 void read_adc(knob_t *k)
 {
- 392:	fc 01       	movw	r30, r24
+ 39e:	fc 01       	movw	r30, r24
 
   uint16_t val = ADCL;
- 394:	34 b1       	in	r19, 0x04	; 4
+ 3a0:	34 b1       	in	r19, 0x04	; 4
   val += (ADCH << 8);
- 396:	25 b1       	in	r18, 0x05	; 5
+ 3a2:	25 b1       	in	r18, 0x05	; 5
   // accumulate value
   k->accum += val;
- 398:	92 2f       	mov	r25, r18
- 39a:	80 e0       	ldi	r24, 0x00	; 0
- 39c:	83 0f       	add	r24, r19
- 39e:	91 1d       	adc	r25, r1
- 3a0:	9c 01       	movw	r18, r24
- 3a2:	40 e0       	ldi	r20, 0x00	; 0
- 3a4:	50 e0       	ldi	r21, 0x00	; 0
- 3a6:	82 81       	ldd	r24, Z+2	; 0x02
- 3a8:	93 81       	ldd	r25, Z+3	; 0x03
- 3aa:	a4 81       	ldd	r26, Z+4	; 0x04
- 3ac:	b5 81       	ldd	r27, Z+5	; 0x05
- 3ae:	28 0f       	add	r18, r24
- 3b0:	39 1f       	adc	r19, r25
- 3b2:	4a 1f       	adc	r20, r26
- 3b4:	5b 1f       	adc	r21, r27
- 3b6:	22 83       	std	Z+2, r18	; 0x02
- 3b8:	33 83       	std	Z+3, r19	; 0x03
- 3ba:	44 83       	std	Z+4, r20	; 0x04
- 3bc:	55 83       	std	Z+5, r21	; 0x05
+ 3a4:	92 2f       	mov	r25, r18
+ 3a6:	80 e0       	ldi	r24, 0x00	; 0
+ 3a8:	83 0f       	add	r24, r19
+ 3aa:	91 1d       	adc	r25, r1
+ 3ac:	9c 01       	movw	r18, r24
+ 3ae:	40 e0       	ldi	r20, 0x00	; 0
+ 3b0:	50 e0       	ldi	r21, 0x00	; 0
+ 3b2:	82 81       	ldd	r24, Z+2	; 0x02
+ 3b4:	93 81       	ldd	r25, Z+3	; 0x03
+ 3b6:	a4 81       	ldd	r26, Z+4	; 0x04
+ 3b8:	b5 81       	ldd	r27, Z+5	; 0x05
+ 3ba:	28 0f       	add	r18, r24
+ 3bc:	39 1f       	adc	r19, r25
+ 3be:	4a 1f       	adc	r20, r26
+ 3c0:	5b 1f       	adc	r21, r27
+ 3c2:	22 83       	std	Z+2, r18	; 0x02
+ 3c4:	33 83       	std	Z+3, r19	; 0x03
+ 3c6:	44 83       	std	Z+4, r20	; 0x04
+ 3c8:	55 83       	std	Z+5, r21	; 0x05
 
   // take average when timer overflows
   if (adctimer == 0)
- 3be:	80 91 1a 01 	lds	r24, 0x011A
- 3c2:	88 23       	and	r24, r24
- 3c4:	69 f4       	brne	.+26     	; 0x3e0 <read_adc+0x4e>
+ 3ca:	80 91 1a 01 	lds	r24, 0x011A
+ 3ce:	88 23       	and	r24, r24
+ 3d0:	69 f4       	brne	.+26     	; 0x3ec <read_adc+0x4e>
   {
     k->val = k->accum / NUM_ADC_SAMPLES;
- 3c6:	65 e0       	ldi	r22, 0x05	; 5
- 3c8:	56 95       	lsr	r21
- 3ca:	47 95       	ror	r20
- 3cc:	37 95       	ror	r19
- 3ce:	27 95       	ror	r18
- 3d0:	6a 95       	dec	r22
- 3d2:	d1 f7       	brne	.-12     	; 0x3c8 <read_adc+0x36>
- 3d4:	31 83       	std	Z+1, r19	; 0x01
- 3d6:	20 83       	st	Z, r18
+ 3d2:	65 e0       	ldi	r22, 0x05	; 5
+ 3d4:	56 95       	lsr	r21
+ 3d6:	47 95       	ror	r20
+ 3d8:	37 95       	ror	r19
+ 3da:	27 95       	ror	r18
+ 3dc:	6a 95       	dec	r22
+ 3de:	d1 f7       	brne	.-12     	; 0x3d4 <read_adc+0x36>
+ 3e0:	31 83       	std	Z+1, r19	; 0x01
+ 3e2:	20 83       	st	Z, r18
     k->accum = 0;
- 3d8:	12 82       	std	Z+2, r1	; 0x02
- 3da:	13 82       	std	Z+3, r1	; 0x03
- 3dc:	14 82       	std	Z+4, r1	; 0x04
- 3de:	15 82       	std	Z+5, r1	; 0x05
- 3e0:	08 95       	ret
+ 3e4:	12 82       	std	Z+2, r1	; 0x02
+ 3e6:	13 82       	std	Z+3, r1	; 0x03
+ 3e8:	14 82       	std	Z+4, r1	; 0x04
+ 3ea:	15 82       	std	Z+5, r1	; 0x05
+ 3ec:	08 95       	ret
 
-000003e2 <update_pitch>:
+000003ee <update_pitch>:
 
 // set new pitch
 void update_pitch()
 {
   uint16_t newpitch = (usemidi) ? pitch-(lfoval*4U)
                                 : 200U + ((pitch-lfoval)*4U);
- 3e2:	80 91 58 01 	lds	r24, 0x0158
- 3e6:	40 91 5e 01 	lds	r20, 0x015E
- 3ea:	50 91 5f 01 	lds	r21, 0x015F
- 3ee:	20 91 00 01 	lds	r18, 0x0100
- 3f2:	30 91 01 01 	lds	r19, 0x0101
- 3f6:	88 23       	and	r24, r24
- 3f8:	39 f0       	breq	.+14     	; 0x408 <update_pitch+0x26>
- 3fa:	44 0f       	add	r20, r20
- 3fc:	55 1f       	adc	r21, r21
- 3fe:	44 0f       	add	r20, r20
- 400:	55 1f       	adc	r21, r21
- 402:	24 1b       	sub	r18, r20
- 404:	35 0b       	sbc	r19, r21
- 406:	08 c0       	rjmp	.+16     	; 0x418 <update_pitch+0x36>
- 408:	2e 5c       	subi	r18, 0xCE	; 206
- 40a:	3f 4f       	sbci	r19, 0xFF	; 255
- 40c:	24 1b       	sub	r18, r20
- 40e:	35 0b       	sbc	r19, r21
- 410:	22 0f       	add	r18, r18
- 412:	33 1f       	adc	r19, r19
- 414:	22 0f       	add	r18, r18
- 416:	33 1f       	adc	r19, r19
+ 3ee:	80 91 58 01 	lds	r24, 0x0158
+ 3f2:	40 91 5f 01 	lds	r20, 0x015F
+ 3f6:	50 91 60 01 	lds	r21, 0x0160
+ 3fa:	20 91 00 01 	lds	r18, 0x0100
+ 3fe:	30 91 01 01 	lds	r19, 0x0101
+ 402:	88 23       	and	r24, r24
+ 404:	39 f0       	breq	.+14     	; 0x414 <update_pitch+0x26>
+ 406:	44 0f       	add	r20, r20
+ 408:	55 1f       	adc	r21, r21
+ 40a:	44 0f       	add	r20, r20
+ 40c:	55 1f       	adc	r21, r21
+ 40e:	24 1b       	sub	r18, r20
+ 410:	35 0b       	sbc	r19, r21
+ 412:	08 c0       	rjmp	.+16     	; 0x424 <update_pitch+0x36>
+ 414:	2e 5c       	subi	r18, 0xCE	; 206
+ 416:	3f 4f       	sbci	r19, 0xFF	; 255
+ 418:	24 1b       	sub	r18, r20
+ 41a:	35 0b       	sbc	r19, r21
+ 41c:	22 0f       	add	r18, r18
+ 41e:	33 1f       	adc	r19, r19
+ 420:	22 0f       	add	r18, r18
+ 422:	33 1f       	adc	r19, r19
   if (newpitch != outpitch)
- 418:	80 91 5b 01 	lds	r24, 0x015B
- 41c:	90 91 5c 01 	lds	r25, 0x015C
- 420:	28 17       	cp	r18, r24
- 422:	39 07       	cpc	r19, r25
- 424:	69 f0       	breq	.+26     	; 0x440 <update_pitch+0x5e>
+ 424:	80 91 5c 01 	lds	r24, 0x015C
+ 428:	90 91 5d 01 	lds	r25, 0x015D
+ 42c:	28 17       	cp	r18, r24
+ 42e:	39 07       	cpc	r19, r25
+ 430:	69 f0       	breq	.+26     	; 0x44c <update_pitch+0x5e>
   {
     outpitch = newpitch;
- 426:	30 93 5c 01 	sts	0x015C, r19
- 42a:	20 93 5b 01 	sts	0x015B, r18
+ 432:	30 93 5d 01 	sts	0x015D, r19
+ 436:	20 93 5c 01 	sts	0x015C, r18
     if (TCNT1 > outpitch)
- 42e:	8c b5       	in	r24, 0x2c	; 44
- 430:	9d b5       	in	r25, 0x2d	; 45
- 432:	28 17       	cp	r18, r24
- 434:	39 07       	cpc	r19, r25
- 436:	10 f4       	brcc	.+4      	; 0x43c <update_pitch+0x5a>
+ 43a:	8c b5       	in	r24, 0x2c	; 44
+ 43c:	9d b5       	in	r25, 0x2d	; 45
+ 43e:	28 17       	cp	r18, r24
+ 440:	39 07       	cpc	r19, r25
+ 442:	10 f4       	brcc	.+4      	; 0x448 <update_pitch+0x5a>
       TCNT1 = 0;
- 438:	1d bc       	out	0x2d, r1	; 45
- 43a:	1c bc       	out	0x2c, r1	; 44
+ 444:	1d bc       	out	0x2d, r1	; 45
+ 446:	1c bc       	out	0x2c, r1	; 44
     OCR1A = outpitch;
- 43c:	3b bd       	out	0x2b, r19	; 43
- 43e:	2a bd       	out	0x2a, r18	; 42
- 440:	08 95       	ret
+ 448:	3b bd       	out	0x2b, r19	; 43
+ 44a:	2a bd       	out	0x2a, r18	; 42
+ 44c:	08 95       	ret
 
-00000442 <update_lfo>:
+0000044e <update_lfo>:
 }
 
 // update lfo state
 void update_lfo()
 {
   switch (lfowavenum)
- 442:	40 91 02 01 	lds	r20, 0x0102
- 446:	43 30       	cpi	r20, 0x03	; 3
- 448:	09 f4       	brne	.+2      	; 0x44c <update_lfo+0xa>
- 44a:	5a c0       	rjmp	.+180    	; 0x500 <update_lfo+0xbe>
- 44c:	44 30       	cpi	r20, 0x04	; 4
- 44e:	60 f4       	brcc	.+24     	; 0x468 <update_lfo+0x26>
- 450:	41 30       	cpi	r20, 0x01	; 1
- 452:	b1 f1       	breq	.+108    	; 0x4c0 <update_lfo+0x7e>
- 454:	20 91 5d 01 	lds	r18, 0x015D
- 458:	60 91 60 01 	lds	r22, 0x0160
- 45c:	70 91 61 01 	lds	r23, 0x0161
- 460:	42 30       	cpi	r20, 0x02	; 2
- 462:	08 f0       	brcs	.+2      	; 0x466 <update_lfo+0x24>
- 464:	41 c0       	rjmp	.+130    	; 0x4e8 <update_lfo+0xa6>
- 466:	0d c0       	rjmp	.+26     	; 0x482 <update_lfo+0x40>
- 468:	45 30       	cpi	r20, 0x05	; 5
- 46a:	09 f4       	brne	.+2      	; 0x46e <update_lfo+0x2c>
- 46c:	6c c0       	rjmp	.+216    	; 0x546 <update_lfo+0x104>
- 46e:	45 30       	cpi	r20, 0x05	; 5
- 470:	08 f4       	brcc	.+2      	; 0x474 <update_lfo+0x32>
- 472:	53 c0       	rjmp	.+166    	; 0x51a <update_lfo+0xd8>
- 474:	46 30       	cpi	r20, 0x06	; 6
- 476:	09 f4       	brne	.+2      	; 0x47a <update_lfo+0x38>
- 478:	85 c0       	rjmp	.+266    	; 0x584 <update_lfo+0x142>
- 47a:	47 30       	cpi	r20, 0x07	; 7
- 47c:	09 f0       	breq	.+2      	; 0x480 <update_lfo+0x3e>
- 47e:	bb c0       	rjmp	.+374    	; 0x5f6 <update_lfo+0x1b4>
- 480:	aa c0       	rjmp	.+340    	; 0x5d6 <update_lfo+0x194>
+ 44e:	40 91 02 01 	lds	r20, 0x0102
+ 452:	43 30       	cpi	r20, 0x03	; 3
+ 454:	09 f4       	brne	.+2      	; 0x458 <update_lfo+0xa>
+ 456:	5a c0       	rjmp	.+180    	; 0x50c <update_lfo+0xbe>
+ 458:	44 30       	cpi	r20, 0x04	; 4
+ 45a:	60 f4       	brcc	.+24     	; 0x474 <update_lfo+0x26>
+ 45c:	41 30       	cpi	r20, 0x01	; 1
+ 45e:	b1 f1       	breq	.+108    	; 0x4cc <update_lfo+0x7e>
+ 460:	20 91 5e 01 	lds	r18, 0x015E
+ 464:	60 91 61 01 	lds	r22, 0x0161
+ 468:	70 91 62 01 	lds	r23, 0x0162
+ 46c:	42 30       	cpi	r20, 0x02	; 2
+ 46e:	08 f0       	brcs	.+2      	; 0x472 <update_lfo+0x24>
+ 470:	41 c0       	rjmp	.+130    	; 0x4f4 <update_lfo+0xa6>
+ 472:	0d c0       	rjmp	.+26     	; 0x48e <update_lfo+0x40>
+ 474:	45 30       	cpi	r20, 0x05	; 5
+ 476:	09 f4       	brne	.+2      	; 0x47a <update_lfo+0x2c>
+ 478:	6c c0       	rjmp	.+216    	; 0x552 <update_lfo+0x104>
+ 47a:	45 30       	cpi	r20, 0x05	; 5
+ 47c:	08 f4       	brcc	.+2      	; 0x480 <update_lfo+0x32>
+ 47e:	53 c0       	rjmp	.+166    	; 0x526 <update_lfo+0xd8>
+ 480:	46 30       	cpi	r20, 0x06	; 6
+ 482:	09 f4       	brne	.+2      	; 0x486 <update_lfo+0x38>
+ 484:	85 c0       	rjmp	.+266    	; 0x590 <update_lfo+0x142>
+ 486:	47 30       	cpi	r20, 0x07	; 7
+ 488:	09 f0       	breq	.+2      	; 0x48c <update_lfo+0x3e>
+ 48a:	bb c0       	rjmp	.+374    	; 0x602 <update_lfo+0x1b4>
+ 48c:	aa c0       	rjmp	.+340    	; 0x5e2 <update_lfo+0x194>
   {
     case 0: // triangle
       lfoval = (lfotimer*lfodelta) >> 8;
- 482:	30 e0       	ldi	r19, 0x00	; 0
- 484:	26 9f       	mul	r18, r22
- 486:	c0 01       	movw	r24, r0
- 488:	27 9f       	mul	r18, r23
- 48a:	90 0d       	add	r25, r0
- 48c:	36 9f       	mul	r19, r22
- 48e:	90 0d       	add	r25, r0
- 490:	11 24       	eor	r1, r1
- 492:	49 2f       	mov	r20, r25
- 494:	55 27       	eor	r21, r21
- 496:	50 93 5f 01 	sts	0x015F, r21
- 49a:	40 93 5e 01 	sts	0x015E, r20
+ 48e:	30 e0       	ldi	r19, 0x00	; 0
+ 490:	26 9f       	mul	r18, r22
+ 492:	c0 01       	movw	r24, r0
+ 494:	27 9f       	mul	r18, r23
+ 496:	90 0d       	add	r25, r0
+ 498:	36 9f       	mul	r19, r22
+ 49a:	90 0d       	add	r25, r0
+ 49c:	11 24       	eor	r1, r1
+ 49e:	49 2f       	mov	r20, r25
+ 4a0:	55 27       	eor	r21, r21
+ 4a2:	50 93 60 01 	sts	0x0160, r21
+ 4a6:	40 93 5f 01 	sts	0x015F, r20
       if (lfotimer >= lfofreq/2)
- 49e:	80 91 51 01 	lds	r24, 0x0151
- 4a2:	90 91 52 01 	lds	r25, 0x0152
- 4a6:	96 95       	lsr	r25
- 4a8:	87 95       	ror	r24
- 4aa:	28 17       	cp	r18, r24
- 4ac:	39 07       	cpc	r19, r25
- 4ae:	08 f4       	brcc	.+2      	; 0x4b2 <update_lfo+0x70>
- 4b0:	a2 c0       	rjmp	.+324    	; 0x5f6 <update_lfo+0x1b4>
+ 4aa:	80 91 51 01 	lds	r24, 0x0151
+ 4ae:	90 91 52 01 	lds	r25, 0x0152
+ 4b2:	96 95       	lsr	r25
+ 4b4:	87 95       	ror	r24
+ 4b6:	28 17       	cp	r18, r24
+ 4b8:	39 07       	cpc	r19, r25
+ 4ba:	08 f4       	brcc	.+2      	; 0x4be <update_lfo+0x70>
+ 4bc:	a2 c0       	rjmp	.+324    	; 0x602 <update_lfo+0x1b4>
         lfoval = lfodepth - lfoval;
- 4b2:	80 91 53 01 	lds	r24, 0x0153
- 4b6:	90 91 54 01 	lds	r25, 0x0154
- 4ba:	84 1b       	sub	r24, r20
- 4bc:	95 0b       	sbc	r25, r21
- 4be:	97 c0       	rjmp	.+302    	; 0x5ee <update_lfo+0x1ac>
+ 4be:	80 91 53 01 	lds	r24, 0x0153
+ 4c2:	90 91 54 01 	lds	r25, 0x0154
+ 4c6:	84 1b       	sub	r24, r20
+ 4c8:	95 0b       	sbc	r25, r21
+ 4ca:	97 c0       	rjmp	.+302    	; 0x5fa <update_lfo+0x1ac>
       break;
     case 1: // sawtooth up
       lfoval = (lfotimer*lfodelta) >> 8;
- 4c0:	80 91 5d 01 	lds	r24, 0x015D
- 4c4:	90 e0       	ldi	r25, 0x00	; 0
- 4c6:	20 91 60 01 	lds	r18, 0x0160
- 4ca:	30 91 61 01 	lds	r19, 0x0161
- 4ce:	ac 01       	movw	r20, r24
- 4d0:	42 9f       	mul	r20, r18
- 4d2:	c0 01       	movw	r24, r0
- 4d4:	43 9f       	mul	r20, r19
- 4d6:	90 0d       	add	r25, r0
- 4d8:	52 9f       	mul	r21, r18
- 4da:	90 0d       	add	r25, r0
- 4dc:	11 24       	eor	r1, r1
- 4de:	90 93 5e 01 	sts	0x015E, r25
- 4e2:	10 92 5f 01 	sts	0x015F, r1
- 4e6:	87 c0       	rjmp	.+270    	; 0x5f6 <update_lfo+0x1b4>
+ 4cc:	80 91 5e 01 	lds	r24, 0x015E
+ 4d0:	90 e0       	ldi	r25, 0x00	; 0
+ 4d2:	20 91 61 01 	lds	r18, 0x0161
+ 4d6:	30 91 62 01 	lds	r19, 0x0162
+ 4da:	ac 01       	movw	r20, r24
+ 4dc:	42 9f       	mul	r20, r18
+ 4de:	c0 01       	movw	r24, r0
+ 4e0:	43 9f       	mul	r20, r19
+ 4e2:	90 0d       	add	r25, r0
+ 4e4:	52 9f       	mul	r21, r18
+ 4e6:	90 0d       	add	r25, r0
+ 4e8:	11 24       	eor	r1, r1
+ 4ea:	90 93 5f 01 	sts	0x015F, r25
+ 4ee:	10 92 60 01 	sts	0x0160, r1
+ 4f2:	87 c0       	rjmp	.+270    	; 0x602 <update_lfo+0x1b4>
       break;
     case 2: // sawtooth down
       lfoval = lfodepth - ((lfotimer*lfodelta) >> 8);
- 4e8:	82 2f       	mov	r24, r18
- 4ea:	90 e0       	ldi	r25, 0x00	; 0
- 4ec:	86 9f       	mul	r24, r22
- 4ee:	90 01       	movw	r18, r0
- 4f0:	87 9f       	mul	r24, r23
- 4f2:	30 0d       	add	r19, r0
- 4f4:	96 9f       	mul	r25, r22
- 4f6:	30 0d       	add	r19, r0
- 4f8:	11 24       	eor	r1, r1
- 4fa:	23 2f       	mov	r18, r19
- 4fc:	33 27       	eor	r19, r19
- 4fe:	5f c0       	rjmp	.+190    	; 0x5be <update_lfo+0x17c>
+ 4f4:	82 2f       	mov	r24, r18
+ 4f6:	90 e0       	ldi	r25, 0x00	; 0
+ 4f8:	86 9f       	mul	r24, r22
+ 4fa:	90 01       	movw	r18, r0
+ 4fc:	87 9f       	mul	r24, r23
+ 4fe:	30 0d       	add	r19, r0
+ 500:	96 9f       	mul	r25, r22
+ 502:	30 0d       	add	r19, r0
+ 504:	11 24       	eor	r1, r1
+ 506:	23 2f       	mov	r18, r19
+ 508:	33 27       	eor	r19, r19
+ 50a:	5f c0       	rjmp	.+190    	; 0x5ca <update_lfo+0x17c>
       break;
     case 3: // square
       lfoval = (lfotimer >= lfofreq/2) ? lfodepth : 0;
- 500:	20 91 5d 01 	lds	r18, 0x015D
- 504:	30 e0       	ldi	r19, 0x00	; 0
- 506:	80 91 51 01 	lds	r24, 0x0151
- 50a:	90 91 52 01 	lds	r25, 0x0152
- 50e:	96 95       	lsr	r25
- 510:	87 95       	ror	r24
- 512:	28 17       	cp	r18, r24
- 514:	39 07       	cpc	r19, r25
- 516:	90 f4       	brcc	.+36     	; 0x53c <update_lfo+0xfa>
- 518:	0e c0       	rjmp	.+28     	; 0x536 <update_lfo+0xf4>
+ 50c:	20 91 5e 01 	lds	r18, 0x015E
+ 510:	30 e0       	ldi	r19, 0x00	; 0
+ 512:	80 91 51 01 	lds	r24, 0x0151
+ 516:	90 91 52 01 	lds	r25, 0x0152
+ 51a:	96 95       	lsr	r25
+ 51c:	87 95       	ror	r24
+ 51e:	28 17       	cp	r18, r24
+ 520:	39 07       	cpc	r19, r25
+ 522:	90 f4       	brcc	.+36     	; 0x548 <update_lfo+0xfa>
+ 524:	0e c0       	rjmp	.+28     	; 0x542 <update_lfo+0xf4>
       break;
     case 4: // half square
       lfoval = (lfotimer < lfofreq/4) ? lfodepth : 0;
- 51a:	20 91 5d 01 	lds	r18, 0x015D
- 51e:	30 e0       	ldi	r19, 0x00	; 0
- 520:	80 91 51 01 	lds	r24, 0x0151
- 524:	90 91 52 01 	lds	r25, 0x0152
- 528:	96 95       	lsr	r25
- 52a:	87 95       	ror	r24
- 52c:	96 95       	lsr	r25
- 52e:	87 95       	ror	r24
- 530:	28 17       	cp	r18, r24
- 532:	39 07       	cpc	r19, r25
- 534:	18 f0       	brcs	.+6      	; 0x53c <update_lfo+0xfa>
- 536:	80 e0       	ldi	r24, 0x00	; 0
- 538:	90 e0       	ldi	r25, 0x00	; 0
- 53a:	59 c0       	rjmp	.+178    	; 0x5ee <update_lfo+0x1ac>
- 53c:	80 91 53 01 	lds	r24, 0x0153
- 540:	90 91 54 01 	lds	r25, 0x0154
- 544:	54 c0       	rjmp	.+168    	; 0x5ee <update_lfo+0x1ac>
+ 526:	20 91 5e 01 	lds	r18, 0x015E
+ 52a:	30 e0       	ldi	r19, 0x00	; 0
+ 52c:	80 91 51 01 	lds	r24, 0x0151
+ 530:	90 91 52 01 	lds	r25, 0x0152
+ 534:	96 95       	lsr	r25
+ 536:	87 95       	ror	r24
+ 538:	96 95       	lsr	r25
+ 53a:	87 95       	ror	r24
+ 53c:	28 17       	cp	r18, r24
+ 53e:	39 07       	cpc	r19, r25
+ 540:	18 f0       	brcs	.+6      	; 0x548 <update_lfo+0xfa>
+ 542:	80 e0       	ldi	r24, 0x00	; 0
+ 544:	90 e0       	ldi	r25, 0x00	; 0
+ 546:	59 c0       	rjmp	.+178    	; 0x5fa <update_lfo+0x1ac>
+ 548:	80 91 53 01 	lds	r24, 0x0153
+ 54c:	90 91 54 01 	lds	r25, 0x0154
+ 550:	54 c0       	rjmp	.+168    	; 0x5fa <update_lfo+0x1ac>
       break;
     case 5: // half sawtooth up
       if (lfotimer < lfofreq/2)
- 546:	80 91 5d 01 	lds	r24, 0x015D
- 54a:	28 2f       	mov	r18, r24
- 54c:	30 e0       	ldi	r19, 0x00	; 0
- 54e:	80 91 51 01 	lds	r24, 0x0151
- 552:	90 91 52 01 	lds	r25, 0x0152
- 556:	96 95       	lsr	r25
- 558:	87 95       	ror	r24
- 55a:	28 17       	cp	r18, r24
- 55c:	39 07       	cpc	r19, r25
- 55e:	b0 f5       	brcc	.+108    	; 0x5cc <update_lfo+0x18a>
+ 552:	80 91 5e 01 	lds	r24, 0x015E
+ 556:	28 2f       	mov	r18, r24
+ 558:	30 e0       	ldi	r19, 0x00	; 0
+ 55a:	80 91 51 01 	lds	r24, 0x0151
+ 55e:	90 91 52 01 	lds	r25, 0x0152
+ 562:	96 95       	lsr	r25
+ 564:	87 95       	ror	r24
+ 566:	28 17       	cp	r18, r24
+ 568:	39 07       	cpc	r19, r25
+ 56a:	b0 f5       	brcc	.+108    	; 0x5d8 <update_lfo+0x18a>
         lfoval = (lfotimer*lfodelta) >> 7;
- 560:	80 91 60 01 	lds	r24, 0x0160
- 564:	90 91 61 01 	lds	r25, 0x0161
- 568:	ac 01       	movw	r20, r24
- 56a:	24 9f       	mul	r18, r20
- 56c:	c0 01       	movw	r24, r0
- 56e:	25 9f       	mul	r18, r21
- 570:	90 0d       	add	r25, r0
- 572:	34 9f       	mul	r19, r20
- 574:	90 0d       	add	r25, r0
- 576:	11 24       	eor	r1, r1
- 578:	88 0f       	add	r24, r24
- 57a:	89 2f       	mov	r24, r25
- 57c:	88 1f       	adc	r24, r24
- 57e:	99 0b       	sbc	r25, r25
- 580:	91 95       	neg	r25
- 582:	35 c0       	rjmp	.+106    	; 0x5ee <update_lfo+0x1ac>
+ 56c:	80 91 61 01 	lds	r24, 0x0161
+ 570:	90 91 62 01 	lds	r25, 0x0162
+ 574:	ac 01       	movw	r20, r24
+ 576:	24 9f       	mul	r18, r20
+ 578:	c0 01       	movw	r24, r0
+ 57a:	25 9f       	mul	r18, r21
+ 57c:	90 0d       	add	r25, r0
+ 57e:	34 9f       	mul	r19, r20
+ 580:	90 0d       	add	r25, r0
+ 582:	11 24       	eor	r1, r1
+ 584:	88 0f       	add	r24, r24
+ 586:	89 2f       	mov	r24, r25
+ 588:	88 1f       	adc	r24, r24
+ 58a:	99 0b       	sbc	r25, r25
+ 58c:	91 95       	neg	r25
+ 58e:	35 c0       	rjmp	.+106    	; 0x5fa <update_lfo+0x1ac>
       else
         lfoval = 0;
       break;
     case 6: // half sawtooth down
       if (lfotimer < lfofreq/2)
- 584:	80 91 5d 01 	lds	r24, 0x015D
- 588:	48 2f       	mov	r20, r24
- 58a:	50 e0       	ldi	r21, 0x00	; 0
- 58c:	80 91 51 01 	lds	r24, 0x0151
- 590:	90 91 52 01 	lds	r25, 0x0152
- 594:	96 95       	lsr	r25
- 596:	87 95       	ror	r24
- 598:	48 17       	cp	r20, r24
- 59a:	59 07       	cpc	r21, r25
- 59c:	b8 f4       	brcc	.+46     	; 0x5cc <update_lfo+0x18a>
+ 590:	80 91 5e 01 	lds	r24, 0x015E
+ 594:	48 2f       	mov	r20, r24
+ 596:	50 e0       	ldi	r21, 0x00	; 0
+ 598:	80 91 51 01 	lds	r24, 0x0151
+ 59c:	90 91 52 01 	lds	r25, 0x0152
+ 5a0:	96 95       	lsr	r25
+ 5a2:	87 95       	ror	r24
+ 5a4:	48 17       	cp	r20, r24
+ 5a6:	59 07       	cpc	r21, r25
+ 5a8:	b8 f4       	brcc	.+46     	; 0x5d8 <update_lfo+0x18a>
         lfoval = lfodepth - ((lfotimer*lfodelta) >> 7);
- 59e:	80 91 60 01 	lds	r24, 0x0160
- 5a2:	90 91 61 01 	lds	r25, 0x0161
- 5a6:	48 9f       	mul	r20, r24
- 5a8:	90 01       	movw	r18, r0
- 5aa:	49 9f       	mul	r20, r25
- 5ac:	30 0d       	add	r19, r0
- 5ae:	58 9f       	mul	r21, r24
- 5b0:	30 0d       	add	r19, r0
- 5b2:	11 24       	eor	r1, r1
- 5b4:	22 0f       	add	r18, r18
- 5b6:	23 2f       	mov	r18, r19
- 5b8:	22 1f       	adc	r18, r18
- 5ba:	33 0b       	sbc	r19, r19
- 5bc:	31 95       	neg	r19
- 5be:	80 91 53 01 	lds	r24, 0x0153
- 5c2:	90 91 54 01 	lds	r25, 0x0154
- 5c6:	82 1b       	sub	r24, r18
- 5c8:	93 0b       	sbc	r25, r19
- 5ca:	11 c0       	rjmp	.+34     	; 0x5ee <update_lfo+0x1ac>
+ 5aa:	80 91 61 01 	lds	r24, 0x0161
+ 5ae:	90 91 62 01 	lds	r25, 0x0162
+ 5b2:	48 9f       	mul	r20, r24
+ 5b4:	90 01       	movw	r18, r0
+ 5b6:	49 9f       	mul	r20, r25
+ 5b8:	30 0d       	add	r19, r0
+ 5ba:	58 9f       	mul	r21, r24
+ 5bc:	30 0d       	add	r19, r0
+ 5be:	11 24       	eor	r1, r1
+ 5c0:	22 0f       	add	r18, r18
+ 5c2:	23 2f       	mov	r18, r19
+ 5c4:	22 1f       	adc	r18, r18
+ 5c6:	33 0b       	sbc	r19, r19
+ 5c8:	31 95       	neg	r19
+ 5ca:	80 91 53 01 	lds	r24, 0x0153
+ 5ce:	90 91 54 01 	lds	r25, 0x0154
+ 5d2:	82 1b       	sub	r24, r18
+ 5d4:	93 0b       	sbc	r25, r19
+ 5d6:	11 c0       	rjmp	.+34     	; 0x5fa <update_lfo+0x1ac>
       else
         lfoval = 0;
- 5cc:	10 92 5f 01 	sts	0x015F, r1
- 5d0:	10 92 5e 01 	sts	0x015E, r1
- 5d4:	10 c0       	rjmp	.+32     	; 0x5f6 <update_lfo+0x1b4>
+ 5d8:	10 92 60 01 	sts	0x0160, r1
+ 5dc:	10 92 5f 01 	sts	0x015F, r1
+ 5e0:	10 c0       	rjmp	.+32     	; 0x602 <update_lfo+0x1b4>
       break;
     case 7: // random
       if (lfotimer == 0)
- 5d6:	80 91 5d 01 	lds	r24, 0x015D
- 5da:	88 23       	and	r24, r24
- 5dc:	61 f4       	brne	.+24     	; 0x5f6 <update_lfo+0x1b4>
+ 5e2:	80 91 5e 01 	lds	r24, 0x015E
+ 5e6:	88 23       	and	r24, r24
+ 5e8:	61 f4       	brne	.+24     	; 0x602 <update_lfo+0x1b4>
         lfoval = lfsr_rand() % lfodepth;
- 5de:	0e 94 e5 00 	call	0x1ca	; 0x1ca <lfsr_rand>
- 5e2:	60 91 53 01 	lds	r22, 0x0153
- 5e6:	70 91 54 01 	lds	r23, 0x0154
- 5ea:	0e 94 18 04 	call	0x830	; 0x830 <__udivmodhi4>
- 5ee:	90 93 5f 01 	sts	0x015F, r25
- 5f2:	80 93 5e 01 	sts	0x015E, r24
+ 5ea:	0e 94 e5 00 	call	0x1ca	; 0x1ca <lfsr_rand>
+ 5ee:	60 91 53 01 	lds	r22, 0x0153
+ 5f2:	70 91 54 01 	lds	r23, 0x0154
+ 5f6:	0e 94 1e 04 	call	0x83c	; 0x83c <__udivmodhi4>
+ 5fa:	90 93 60 01 	sts	0x0160, r25
+ 5fe:	80 93 5f 01 	sts	0x015F, r24
       break;
   }
 
   if (lfotimer < lfofreq/2)
- 5f6:	60 91 5d 01 	lds	r22, 0x015D
- 5fa:	40 91 51 01 	lds	r20, 0x0151
- 5fe:	50 91 52 01 	lds	r21, 0x0152
- 602:	26 2f       	mov	r18, r22
- 604:	30 e0       	ldi	r19, 0x00	; 0
- 606:	ca 01       	movw	r24, r20
- 608:	96 95       	lsr	r25
- 60a:	87 95       	ror	r24
- 60c:	28 17       	cp	r18, r24
- 60e:	39 07       	cpc	r19, r25
- 610:	10 f4       	brcc	.+4      	; 0x616 <update_lfo+0x1d4>
+ 602:	60 91 5e 01 	lds	r22, 0x015E
+ 606:	40 91 51 01 	lds	r20, 0x0151
+ 60a:	50 91 52 01 	lds	r21, 0x0152
+ 60e:	26 2f       	mov	r18, r22
+ 610:	30 e0       	ldi	r19, 0x00	; 0
+ 612:	ca 01       	movw	r24, r20
+ 614:	96 95       	lsr	r25
+ 616:	87 95       	ror	r24
+ 618:	28 17       	cp	r18, r24
+ 61a:	39 07       	cpc	r19, r25
+ 61c:	10 f4       	brcc	.+4      	; 0x622 <update_lfo+0x1d4>
     set_bit(PORT(LEDS), LFO_LED_PIN);
- 612:	da 9a       	sbi	0x1b, 2	; 27
- 614:	01 c0       	rjmp	.+2      	; 0x618 <update_lfo+0x1d6>
+ 61e:	da 9a       	sbi	0x1b, 2	; 27
+ 620:	01 c0       	rjmp	.+2      	; 0x624 <update_lfo+0x1d6>
   else
     clear_bit(PORT(LEDS), LFO_LED_PIN);
- 616:	da 98       	cbi	0x1b, 2	; 27
+ 622:	da 98       	cbi	0x1b, 2	; 27
 
   lfotimer++;
- 618:	86 2f       	mov	r24, r22
- 61a:	8f 5f       	subi	r24, 0xFF	; 255
- 61c:	80 93 5d 01 	sts	0x015D, r24
+ 624:	86 2f       	mov	r24, r22
+ 626:	8f 5f       	subi	r24, 0xFF	; 255
+ 628:	80 93 5e 01 	sts	0x015E, r24
   if (lfotimer >= lfofreq)
- 620:	90 e0       	ldi	r25, 0x00	; 0
- 622:	84 17       	cp	r24, r20
- 624:	95 07       	cpc	r25, r21
- 626:	10 f0       	brcs	.+4      	; 0x62c <update_lfo+0x1ea>
+ 62c:	90 e0       	ldi	r25, 0x00	; 0
+ 62e:	84 17       	cp	r24, r20
+ 630:	95 07       	cpc	r25, r21
+ 632:	10 f0       	brcs	.+4      	; 0x638 <update_lfo+0x1ea>
     lfotimer = 0;
- 628:	10 92 5d 01 	sts	0x015D, r1
- 62c:	08 95       	ret
+ 634:	10 92 5e 01 	sts	0x015E, r1
+ 638:	08 95       	ret
 
-0000062e <update_env>:
+0000063a <update_env>:
 
 // update envelope state
 void update_env()
 {
   // increment envelope timer and wrap around
   envtimer++;
- 62e:	80 91 62 01 	lds	r24, 0x0162
- 632:	8f 5f       	subi	r24, 0xFF	; 255
- 634:	80 93 62 01 	sts	0x0162, r24
+ 63a:	80 91 63 01 	lds	r24, 0x0163
+ 63e:	8f 5f       	subi	r24, 0xFF	; 255
+ 640:	80 93 63 01 	sts	0x0163, r24
   if (envtimer >= envfreq)
- 638:	90 91 55 01 	lds	r25, 0x0155
- 63c:	89 17       	cp	r24, r25
- 63e:	10 f0       	brcs	.+4      	; 0x644 <update_env+0x16>
+ 644:	90 91 55 01 	lds	r25, 0x0155
+ 648:	89 17       	cp	r24, r25
+ 64a:	10 f0       	brcs	.+4      	; 0x650 <update_env+0x16>
     envtimer = 0;
- 640:	10 92 62 01 	sts	0x0162, r1
+ 64c:	10 92 63 01 	sts	0x0163, r1
 
   // determine output value
   envval = (envtimer <= envwidth);
- 644:	20 e0       	ldi	r18, 0x00	; 0
- 646:	90 91 62 01 	lds	r25, 0x0162
- 64a:	80 91 56 01 	lds	r24, 0x0156
- 64e:	89 17       	cp	r24, r25
- 650:	08 f0       	brcs	.+2      	; 0x654 <update_env+0x26>
- 652:	21 e0       	ldi	r18, 0x01	; 1
- 654:	20 93 05 01 	sts	0x0105, r18
+ 650:	20 e0       	ldi	r18, 0x00	; 0
+ 652:	90 91 63 01 	lds	r25, 0x0163
+ 656:	80 91 56 01 	lds	r24, 0x0156
+ 65a:	89 17       	cp	r24, r25
+ 65c:	08 f0       	brcs	.+2      	; 0x660 <update_env+0x26>
+ 65e:	21 e0       	ldi	r18, 0x01	; 1
+ 660:	20 93 04 01 	sts	0x0104, r18
   if (envval)
- 658:	80 91 05 01 	lds	r24, 0x0105
- 65c:	88 23       	and	r24, r24
- 65e:	11 f0       	breq	.+4      	; 0x664 <update_env+0x36>
+ 664:	80 91 04 01 	lds	r24, 0x0104
+ 668:	88 23       	and	r24, r24
+ 66a:	11 f0       	breq	.+4      	; 0x670 <update_env+0x36>
     set_bit(PORT(LEDS),ENV_LED_PIN);
- 660:	db 9a       	sbi	0x1b, 3	; 27
- 662:	08 95       	ret
+ 66c:	db 9a       	sbi	0x1b, 3	; 27
+ 66e:	08 95       	ret
   else
     clear_bit(PORT(LEDS),ENV_LED_PIN);
- 664:	db 98       	cbi	0x1b, 3	; 27
- 666:	08 95       	ret
+ 670:	db 98       	cbi	0x1b, 3	; 27
+ 672:	08 95       	ret
 
-00000668 <update_synth_params>:
+00000674 <update_synth_params>:
 
 // update parameters based on knob values
 void update_synth_params()
 {
   // disregard pitch if midi enabled
   if (!usemidi)
- 668:	80 91 58 01 	lds	r24, 0x0158
- 66c:	88 23       	and	r24, r24
- 66e:	41 f4       	brne	.+16     	; 0x680 <update_synth_params+0x18>
+ 674:	80 91 58 01 	lds	r24, 0x0158
+ 678:	88 23       	and	r24, r24
+ 67a:	41 f4       	brne	.+16     	; 0x68c <update_synth_params+0x18>
     pitch = knobs[PITCH_KNOB].val;
- 670:	80 91 33 01 	lds	r24, 0x0133
- 674:	90 91 34 01 	lds	r25, 0x0134
- 678:	90 93 01 01 	sts	0x0101, r25
- 67c:	80 93 00 01 	sts	0x0100, r24
+ 67c:	80 91 33 01 	lds	r24, 0x0133
+ 680:	90 91 34 01 	lds	r25, 0x0134
+ 684:	90 93 01 01 	sts	0x0101, r25
+ 688:	80 93 00 01 	sts	0x0100, r24
   
   uint8_t newwavenum = knobs[AUDIO_WF_KNOB].val >> 7;
- 680:	20 91 3f 01 	lds	r18, 0x013F
- 684:	30 91 40 01 	lds	r19, 0x0140
- 688:	22 0f       	add	r18, r18
- 68a:	23 2f       	mov	r18, r19
- 68c:	22 1f       	adc	r18, r18
- 68e:	33 0b       	sbc	r19, r19
- 690:	31 95       	neg	r19
+ 68c:	20 91 3f 01 	lds	r18, 0x013F
+ 690:	30 91 40 01 	lds	r19, 0x0140
+ 694:	22 0f       	add	r18, r18
+ 696:	23 2f       	mov	r18, r19
+ 698:	22 1f       	adc	r18, r18
+ 69a:	33 0b       	sbc	r19, r19
+ 69c:	31 95       	neg	r19
   if (newwavenum != wavenum)
- 692:	80 91 57 01 	lds	r24, 0x0157
- 696:	82 17       	cp	r24, r18
- 698:	91 f0       	breq	.+36     	; 0x6be <update_synth_params+0x56>
+ 69e:	80 91 57 01 	lds	r24, 0x0157
+ 6a2:	82 17       	cp	r24, r18
+ 6a4:	91 f0       	breq	.+36     	; 0x6ca <update_synth_params+0x56>
   {
     wavenum = newwavenum;
- 69a:	20 93 57 01 	sts	0x0157, r18
+ 6a6:	20 93 57 01 	sts	0x0157, r18
     waveform = waveforms[wavenum];
- 69e:	e0 91 57 01 	lds	r30, 0x0157
- 6a2:	f0 e0       	ldi	r31, 0x00	; 0
- 6a4:	ee 0f       	add	r30, r30
- 6a6:	ff 1f       	adc	r31, r31
- 6a8:	ea 5f       	subi	r30, 0xFA	; 250
- 6aa:	fe 4f       	sbci	r31, 0xFE	; 254
- 6ac:	80 81       	ld	r24, Z
- 6ae:	91 81       	ldd	r25, Z+1	; 0x01
- 6b0:	90 93 65 01 	sts	0x0165, r25
- 6b4:	80 93 64 01 	sts	0x0164, r24
+ 6aa:	e0 91 57 01 	lds	r30, 0x0157
+ 6ae:	f0 e0       	ldi	r31, 0x00	; 0
+ 6b0:	ee 0f       	add	r30, r30
+ 6b2:	ff 1f       	adc	r31, r31
+ 6b4:	eb 5f       	subi	r30, 0xFB	; 251
+ 6b6:	fe 4f       	sbci	r31, 0xFE	; 254
+ 6b8:	80 81       	ld	r24, Z
+ 6ba:	91 81       	ldd	r25, Z+1	; 0x01
+ 6bc:	90 93 66 01 	sts	0x0166, r25
+ 6c0:	80 93 65 01 	sts	0x0165, r24
     ledpulse = 1;
- 6b8:	81 e0       	ldi	r24, 0x01	; 1
- 6ba:	80 93 63 01 	sts	0x0163, r24
+ 6c4:	81 e0       	ldi	r24, 0x01	; 1
+ 6c6:	80 93 64 01 	sts	0x0164, r24
   }
 
   uint8_t newlfowavenum = knobs[LFO_WF_KNOB].val >> 7;
- 6be:	20 91 1b 01 	lds	r18, 0x011B
- 6c2:	30 91 1c 01 	lds	r19, 0x011C
- 6c6:	22 0f       	add	r18, r18
- 6c8:	23 2f       	mov	r18, r19
- 6ca:	22 1f       	adc	r18, r18
- 6cc:	33 0b       	sbc	r19, r19
- 6ce:	31 95       	neg	r19
+ 6ca:	20 91 1b 01 	lds	r18, 0x011B
+ 6ce:	30 91 1c 01 	lds	r19, 0x011C
+ 6d2:	22 0f       	add	r18, r18
+ 6d4:	23 2f       	mov	r18, r19
+ 6d6:	22 1f       	adc	r18, r18
+ 6d8:	33 0b       	sbc	r19, r19
+ 6da:	31 95       	neg	r19
   if (newlfowavenum != lfowavenum)
- 6d0:	80 91 02 01 	lds	r24, 0x0102
- 6d4:	82 17       	cp	r24, r18
- 6d6:	29 f0       	breq	.+10     	; 0x6e2 <update_synth_params+0x7a>
+ 6dc:	80 91 02 01 	lds	r24, 0x0102
+ 6e0:	82 17       	cp	r24, r18
+ 6e2:	29 f0       	breq	.+10     	; 0x6ee <update_synth_params+0x7a>
   {
     lfowavenum = newlfowavenum;
- 6d8:	20 93 02 01 	sts	0x0102, r18
+ 6e4:	20 93 02 01 	sts	0x0102, r18
     ledpulse = 1;
- 6dc:	81 e0       	ldi	r24, 0x01	; 1
- 6de:	80 93 63 01 	sts	0x0163, r24
+ 6e8:	81 e0       	ldi	r24, 0x01	; 1
+ 6ea:	80 93 64 01 	sts	0x0164, r24
   }
 
   // pulse the power LED to indicate waveform changes
   if (ledpulse)
- 6e2:	80 91 63 01 	lds	r24, 0x0163
- 6e6:	88 23       	and	r24, r24
- 6e8:	29 f0       	breq	.+10     	; 0x6f4 <update_synth_params+0x8c>
+ 6ee:	80 91 64 01 	lds	r24, 0x0164
+ 6f2:	88 23       	and	r24, r24
+ 6f4:	29 f0       	breq	.+10     	; 0x700 <update_synth_params+0x8c>
   {
     clear_bit(PORT(LEDS), PWR_LED_PIN);
- 6ea:	dc 98       	cbi	0x1b, 4	; 27
+ 6f6:	dc 98       	cbi	0x1b, 4	; 27
     ledpulse--;
- 6ec:	81 50       	subi	r24, 0x01	; 1
- 6ee:	80 93 63 01 	sts	0x0163, r24
- 6f2:	01 c0       	rjmp	.+2      	; 0x6f6 <update_synth_params+0x8e>
+ 6f8:	81 50       	subi	r24, 0x01	; 1
+ 6fa:	80 93 64 01 	sts	0x0164, r24
+ 6fe:	01 c0       	rjmp	.+2      	; 0x702 <update_synth_params+0x8e>
   }
   else
     set_bit(PORT(LEDS), PWR_LED_PIN);    
- 6f4:	dc 9a       	sbi	0x1b, 4	; 27
+ 700:	dc 9a       	sbi	0x1b, 4	; 27
   
   lfofreq = knobs[LFO_FREQ_KNOB].val >> 2;
- 6f6:	60 91 2d 01 	lds	r22, 0x012D
- 6fa:	70 91 2e 01 	lds	r23, 0x012E
- 6fe:	76 95       	lsr	r23
- 700:	67 95       	ror	r22
- 702:	76 95       	lsr	r23
- 704:	67 95       	ror	r22
- 706:	70 93 52 01 	sts	0x0152, r23
- 70a:	60 93 51 01 	sts	0x0151, r22
+ 702:	60 91 2d 01 	lds	r22, 0x012D
+ 706:	70 91 2e 01 	lds	r23, 0x012E
+ 70a:	76 95       	lsr	r23
+ 70c:	67 95       	ror	r22
+ 70e:	76 95       	lsr	r23
+ 710:	67 95       	ror	r22
+ 712:	70 93 52 01 	sts	0x0152, r23
+ 716:	60 93 51 01 	sts	0x0151, r22
   lfodepth = knobs[LFO_DEPTH_KNOB].val >> 2;
- 70e:	20 91 27 01 	lds	r18, 0x0127
- 712:	30 91 28 01 	lds	r19, 0x0128
- 716:	36 95       	lsr	r19
- 718:	27 95       	ror	r18
- 71a:	36 95       	lsr	r19
- 71c:	27 95       	ror	r18
- 71e:	30 93 54 01 	sts	0x0154, r19
- 722:	20 93 53 01 	sts	0x0153, r18
+ 71a:	20 91 27 01 	lds	r18, 0x0127
+ 71e:	30 91 28 01 	lds	r19, 0x0128
+ 722:	36 95       	lsr	r19
+ 724:	27 95       	ror	r18
+ 726:	36 95       	lsr	r19
+ 728:	27 95       	ror	r18
+ 72a:	30 93 54 01 	sts	0x0154, r19
+ 72e:	20 93 53 01 	sts	0x0153, r18
   lfodelta = (lfofreq) ? (lfodepth*256U) / lfofreq : 0;
- 726:	61 15       	cp	r22, r1
- 728:	71 05       	cpc	r23, r1
- 72a:	19 f4       	brne	.+6      	; 0x732 <update_synth_params+0xca>
- 72c:	80 e0       	ldi	r24, 0x00	; 0
- 72e:	90 e0       	ldi	r25, 0x00	; 0
- 730:	05 c0       	rjmp	.+10     	; 0x73c <update_synth_params+0xd4>
- 732:	80 e0       	ldi	r24, 0x00	; 0
- 734:	92 2f       	mov	r25, r18
- 736:	0e 94 18 04 	call	0x830	; 0x830 <__udivmodhi4>
- 73a:	cb 01       	movw	r24, r22
- 73c:	90 93 61 01 	sts	0x0161, r25
- 740:	80 93 60 01 	sts	0x0160, r24
+ 732:	61 15       	cp	r22, r1
+ 734:	71 05       	cpc	r23, r1
+ 736:	19 f4       	brne	.+6      	; 0x73e <update_synth_params+0xca>
+ 738:	80 e0       	ldi	r24, 0x00	; 0
+ 73a:	90 e0       	ldi	r25, 0x00	; 0
+ 73c:	05 c0       	rjmp	.+10     	; 0x748 <update_synth_params+0xd4>
+ 73e:	80 e0       	ldi	r24, 0x00	; 0
+ 740:	92 2f       	mov	r25, r18
+ 742:	0e 94 1e 04 	call	0x83c	; 0x83c <__udivmodhi4>
+ 746:	cb 01       	movw	r24, r22
+ 748:	90 93 62 01 	sts	0x0162, r25
+ 74c:	80 93 61 01 	sts	0x0161, r24
   
   envfreq = knobs[ENV_FREQ_KNOB].val >> 2;
- 744:	80 91 39 01 	lds	r24, 0x0139
- 748:	90 91 3a 01 	lds	r25, 0x013A
- 74c:	96 95       	lsr	r25
- 74e:	87 95       	ror	r24
- 750:	96 95       	lsr	r25
- 752:	87 95       	ror	r24
- 754:	80 93 55 01 	sts	0x0155, r24
+ 750:	80 91 39 01 	lds	r24, 0x0139
+ 754:	90 91 3a 01 	lds	r25, 0x013A
+ 758:	96 95       	lsr	r25
+ 75a:	87 95       	ror	r24
+ 75c:	96 95       	lsr	r25
+ 75e:	87 95       	ror	r24
+ 760:	80 93 55 01 	sts	0x0155, r24
   envwidth = knobs[ENV_WIDTH_KNOB].val >> 2;
- 758:	80 91 21 01 	lds	r24, 0x0121
- 75c:	90 91 22 01 	lds	r25, 0x0122
- 760:	96 95       	lsr	r25
- 762:	87 95       	ror	r24
- 764:	96 95       	lsr	r25
- 766:	87 95       	ror	r24
- 768:	80 93 56 01 	sts	0x0156, r24
+ 764:	80 91 21 01 	lds	r24, 0x0121
+ 768:	90 91 22 01 	lds	r25, 0x0122
+ 76c:	96 95       	lsr	r25
+ 76e:	87 95       	ror	r24
+ 770:	96 95       	lsr	r25
+ 772:	87 95       	ror	r24
+ 774:	80 93 56 01 	sts	0x0156, r24
 }
- 76c:	08 95       	ret
+ 778:	08 95       	ret
 
-0000076e <main>:
+0000077a <main>:
 
 int main(void)
 {
- 76e:	ef 92       	push	r14
- 770:	ff 92       	push	r15
- 772:	1f 93       	push	r17
- 774:	cf 93       	push	r28
- 776:	df 93       	push	r29
+ 77a:	ef 92       	push	r14
+ 77c:	ff 92       	push	r15
+ 77e:	1f 93       	push	r17
+ 780:	cf 93       	push	r28
+ 782:	df 93       	push	r29
   // enable outputs
   DDR(AUDIO) |= _BV(AUDIO_PIN);
- 778:	a0 9a       	sbi	0x14, 0	; 20
+ 784:	a0 9a       	sbi	0x14, 0	; 20
   DDR(LEDS)  |= _BV(ENV_LED_PIN) | _BV(LFO_LED_PIN) | _BV(PWR_LED_PIN);
- 77a:	8a b3       	in	r24, 0x1a	; 26
- 77c:	8c 61       	ori	r24, 0x1C	; 28
- 77e:	8a bb       	out	0x1a, r24	; 26
+ 786:	8a b3       	in	r24, 0x1a	; 26
+ 788:	8c 61       	ori	r24, 0x1C	; 28
+ 78a:	8a bb       	out	0x1a, r24	; 26
   DDR(MUXCTL) |= _BV(MUXCTL_PIN);
- 780:	8d 9a       	sbi	0x11, 5	; 17
+ 78c:	8d 9a       	sbi	0x11, 5	; 17
 
   DDRC  = 0xff;
- 782:	8f ef       	ldi	r24, 0xFF	; 255
- 784:	84 bb       	out	0x14, r24	; 20
+ 78e:	8f ef       	ldi	r24, 0xFF	; 255
+ 790:	84 bb       	out	0x14, r24	; 20
   // turn on power LED
   set_bit(PORT(LEDS), PWR_LED_PIN);
- 786:	dc 9a       	sbi	0x1b, 4	; 27
+ 792:	dc 9a       	sbi	0x1b, 4	; 27
 
   // set up main oscillator
   TCCR1B |= _BV(WGM12);  // enable CTC
- 788:	8e b5       	in	r24, 0x2e	; 46
- 78a:	88 60       	ori	r24, 0x08	; 8
- 78c:	8e bd       	out	0x2e, r24	; 46
+ 794:	8e b5       	in	r24, 0x2e	; 46
+ 796:	88 60       	ori	r24, 0x08	; 8
+ 798:	8e bd       	out	0x2e, r24	; 46
   TIMSK |= _BV(OCIE1A); // enable CTC interrupt
- 78e:	87 b7       	in	r24, 0x37	; 55
- 790:	80 61       	ori	r24, 0x10	; 16
- 792:	87 bf       	out	0x37, r24	; 55
+ 79a:	87 b7       	in	r24, 0x37	; 55
+ 79c:	80 61       	ori	r24, 0x10	; 16
+ 79e:	87 bf       	out	0x37, r24	; 55
 
   // set up ADC
   ADCSRA |= _BV(ADPS2) | _BV(ADPS1) | _BV(ADPS0); // 1/128 prescaler
- 794:	86 b1       	in	r24, 0x06	; 6
- 796:	87 60       	ori	r24, 0x07	; 7
- 798:	86 b9       	out	0x06, r24	; 6
+ 7a0:	86 b1       	in	r24, 0x06	; 6
+ 7a2:	87 60       	ori	r24, 0x07	; 7
+ 7a4:	86 b9       	out	0x06, r24	; 6
   ADCSRA |= _BV(ADEN); // enable ADC
- 79a:	37 9a       	sbi	0x06, 7	; 6
+ 7a6:	37 9a       	sbi	0x06, 7	; 6
 
   // set up midi
   midi_init();
- 79c:	0e 94 fb 00 	call	0x1f6	; 0x1f6 <midi_init>
+ 7a8:	0e 94 fb 00 	call	0x1f6	; 0x1f6 <midi_init>
 
   sei(); // enable interrupts
- 7a0:	78 94       	sei
+ 7ac:	78 94       	sei
  
   lfowavenum = 0;
- 7a2:	10 92 02 01 	sts	0x0102, r1
+ 7ae:	10 92 02 01 	sts	0x0102, r1
   wavenum = 0;
- 7a6:	10 92 57 01 	sts	0x0157, r1
+ 7b2:	10 92 57 01 	sts	0x0157, r1
   waveform = waveforms[wavenum];
- 7aa:	e0 91 57 01 	lds	r30, 0x0157
- 7ae:	f0 e0       	ldi	r31, 0x00	; 0
- 7b0:	ee 0f       	add	r30, r30
- 7b2:	ff 1f       	adc	r31, r31
- 7b4:	ea 5f       	subi	r30, 0xFA	; 250
- 7b6:	fe 4f       	sbci	r31, 0xFE	; 254
- 7b8:	80 81       	ld	r24, Z
- 7ba:	91 81       	ldd	r25, Z+1	; 0x01
- 7bc:	90 93 65 01 	sts	0x0165, r25
- 7c0:	80 93 64 01 	sts	0x0164, r24
+ 7b6:	e0 91 57 01 	lds	r30, 0x0157
+ 7ba:	f0 e0       	ldi	r31, 0x00	; 0
+ 7bc:	ee 0f       	add	r30, r30
+ 7be:	ff 1f       	adc	r31, r31
+ 7c0:	eb 5f       	subi	r30, 0xFB	; 251
+ 7c2:	fe 4f       	sbci	r31, 0xFE	; 254
+ 7c4:	80 81       	ld	r24, Z
+ 7c6:	91 81       	ldd	r25, Z+1	; 0x01
+ 7c8:	90 93 66 01 	sts	0x0166, r25
+ 7cc:	80 93 65 01 	sts	0x0165, r24
 
   update_pitch();
- 7c4:	0e 94 f1 01 	call	0x3e2	; 0x3e2 <update_pitch>
+ 7d0:	0e 94 f7 01 	call	0x3ee	; 0x3ee <update_pitch>
   TCCR1B |= _BV(CS11); // set prescaler to 8; starts oscillator  
- 7c8:	8e b5       	in	r24, 0x2e	; 46
- 7ca:	82 60       	ori	r24, 0x02	; 2
- 7cc:	8e bd       	out	0x2e, r24	; 46
+ 7d4:	8e b5       	in	r24, 0x2e	; 46
+ 7d6:	82 60       	ori	r24, 0x02	; 2
+ 7d8:	8e bd       	out	0x2e, r24	; 46
 
   adctimer = 0;
- 7ce:	10 92 1a 01 	sts	0x011A, r1
+ 7da:	10 92 1a 01 	sts	0x011A, r1
     milliseconds can be achieved.
  */
 void
 _delay_loop_2(uint16_t __count)
 {
 	__asm__ volatile (
- 7d2:	70 e2       	ldi	r23, 0x20	; 32
- 7d4:	e7 2e       	mov	r14, r23
- 7d6:	73 e0       	ldi	r23, 0x03	; 3
- 7d8:	f7 2e       	mov	r15, r23
+ 7de:	70 e2       	ldi	r23, 0x20	; 32
+ 7e0:	e7 2e       	mov	r14, r23
+ 7e2:	73 e0       	ldi	r23, 0x03	; 3
+ 7e4:	f7 2e       	mov	r15, r23
   for (;;)
   {
     uint8_t adcchan = 0;
 
     adctimer++;
- 7da:	80 91 1a 01 	lds	r24, 0x011A
- 7de:	8f 5f       	subi	r24, 0xFF	; 255
- 7e0:	80 93 1a 01 	sts	0x011A, r24
+ 7e6:	80 91 1a 01 	lds	r24, 0x011A
+ 7ea:	8f 5f       	subi	r24, 0xFF	; 255
+ 7ec:	80 93 1a 01 	sts	0x011A, r24
     adctimer &= (NUM_ADC_SAMPLES-1);
- 7e4:	80 91 1a 01 	lds	r24, 0x011A
- 7e8:	8f 71       	andi	r24, 0x1F	; 31
- 7ea:	80 93 1a 01 	sts	0x011A, r24
+ 7f0:	80 91 1a 01 	lds	r24, 0x011A
+ 7f4:	8f 71       	andi	r24, 0x1F	; 31
+ 7f6:	80 93 1a 01 	sts	0x011A, r24
 
     // select mux channel group 0
     clear_bit(PORT(MUXCTL), MUXCTL_PIN);
- 7ee:	95 98       	cbi	0x12, 5	; 18
- 7f0:	cb e1       	ldi	r28, 0x1B	; 27
- 7f2:	d1 e0       	ldi	r29, 0x01	; 1
- 7f4:	10 e0       	ldi	r17, 0x00	; 0
+ 7fa:	95 98       	cbi	0x12, 5	; 18
+ 7fc:	cb e1       	ldi	r28, 0x1B	; 27
+ 7fe:	d1 e0       	ldi	r29, 0x01	; 1
+ 800:	10 e0       	ldi	r17, 0x00	; 0
 
     // read ADC channels
     for (adcchan = 0; adcchan < NUM_ADC_CHANNELS; adcchan++)
     {
       ADMUX = _BV(REFS0) | adcchan;
- 7f6:	81 2f       	mov	r24, r17
- 7f8:	80 64       	ori	r24, 0x40	; 64
- 7fa:	87 b9       	out	0x07, r24	; 7
+ 802:	81 2f       	mov	r24, r17
+ 804:	80 64       	ori	r24, 0x40	; 64
+ 806:	87 b9       	out	0x07, r24	; 7
       ADCSRA |= _BV(ADSC);
- 7fc:	36 9a       	sbi	0x06, 6	; 6
+ 808:	36 9a       	sbi	0x06, 6	; 6
       loop_until_bit_is_clear(ADCSRA, ADSC);
- 7fe:	36 99       	sbic	0x06, 6	; 6
- 800:	fe cf       	rjmp	.-4      	; 0x7fe <main+0x90>
+ 80a:	36 99       	sbic	0x06, 6	; 6
+ 80c:	fe cf       	rjmp	.-4      	; 0x80a <main+0x90>
 
       read_adc(knobs+adcchan);
- 802:	ce 01       	movw	r24, r28
- 804:	0e 94 c9 01 	call	0x392	; 0x392 <read_adc>
+ 80e:	ce 01       	movw	r24, r28
+ 810:	0e 94 cf 01 	call	0x39e	; 0x39e <read_adc>
 
     // select mux channel group 0
     clear_bit(PORT(MUXCTL), MUXCTL_PIN);
 
     // read ADC channels
     for (adcchan = 0; adcchan < NUM_ADC_CHANNELS; adcchan++)
- 808:	1f 5f       	subi	r17, 0xFF	; 255
- 80a:	26 96       	adiw	r28, 0x06	; 6
- 80c:	18 30       	cpi	r17, 0x08	; 8
- 80e:	99 f7       	brne	.-26     	; 0x7f6 <main+0x88>
+ 814:	1f 5f       	subi	r17, 0xFF	; 255
+ 816:	26 96       	adiw	r28, 0x06	; 6
+ 818:	18 30       	cpi	r17, 0x08	; 8
+ 81a:	99 f7       	brne	.-26     	; 0x802 <main+0x88>
       read_adc(knobs+adcchan);
     }
    
  
     // update values after we've read averaged values from all knobs
     if (adctimer == 0) {
- 810:	80 91 1a 01 	lds	r24, 0x011A
- 814:	88 23       	and	r24, r24
- 816:	11 f4       	brne	.+4      	; 0x81c <main+0xae>
+ 81c:	80 91 1a 01 	lds	r24, 0x011A
+ 820:	88 23       	and	r24, r24
+ 822:	11 f4       	brne	.+4      	; 0x828 <main+0xae>
       update_synth_params();
- 818:	0e 94 34 03 	call	0x668	; 0x668 <update_synth_params>
+ 824:	0e 94 3a 03 	call	0x674	; 0x674 <update_synth_params>
 	}
 
     update_lfo();
- 81c:	0e 94 21 02 	call	0x442	; 0x442 <update_lfo>
+ 828:	0e 94 27 02 	call	0x44e	; 0x44e <update_lfo>
     update_env();
- 820:	0e 94 17 03 	call	0x62e	; 0x62e <update_env>
+ 82c:	0e 94 1d 03 	call	0x63a	; 0x63a <update_env>
     update_pitch();
- 824:	0e 94 f1 01 	call	0x3e2	; 0x3e2 <update_pitch>
- 828:	c7 01       	movw	r24, r14
- 82a:	01 97       	sbiw	r24, 0x01	; 1
- 82c:	f1 f7       	brne	.-4      	; 0x82a <main+0xbc>
- 82e:	d5 cf       	rjmp	.-86     	; 0x7da <main+0x6c>
+ 830:	0e 94 f7 01 	call	0x3ee	; 0x3ee <update_pitch>
+ 834:	c7 01       	movw	r24, r14
+ 836:	01 97       	sbiw	r24, 0x01	; 1
+ 838:	f1 f7       	brne	.-4      	; 0x836 <main+0xbc>
+ 83a:	d5 cf       	rjmp	.-86     	; 0x7e6 <main+0x6c>
 
-00000830 <__udivmodhi4>:
- 830:	aa 1b       	sub	r26, r26
- 832:	bb 1b       	sub	r27, r27
- 834:	51 e1       	ldi	r21, 0x11	; 17
- 836:	07 c0       	rjmp	.+14     	; 0x846 <__udivmodhi4_ep>
+0000083c <__udivmodhi4>:
+ 83c:	aa 1b       	sub	r26, r26
+ 83e:	bb 1b       	sub	r27, r27
+ 840:	51 e1       	ldi	r21, 0x11	; 17
+ 842:	07 c0       	rjmp	.+14     	; 0x852 <__udivmodhi4_ep>
 
-00000838 <__udivmodhi4_loop>:
- 838:	aa 1f       	adc	r26, r26
- 83a:	bb 1f       	adc	r27, r27
- 83c:	a6 17       	cp	r26, r22
- 83e:	b7 07       	cpc	r27, r23
- 840:	10 f0       	brcs	.+4      	; 0x846 <__udivmodhi4_ep>
- 842:	a6 1b       	sub	r26, r22
- 844:	b7 0b       	sbc	r27, r23
+00000844 <__udivmodhi4_loop>:
+ 844:	aa 1f       	adc	r26, r26
+ 846:	bb 1f       	adc	r27, r27
+ 848:	a6 17       	cp	r26, r22
+ 84a:	b7 07       	cpc	r27, r23
+ 84c:	10 f0       	brcs	.+4      	; 0x852 <__udivmodhi4_ep>
+ 84e:	a6 1b       	sub	r26, r22
+ 850:	b7 0b       	sbc	r27, r23
 
-00000846 <__udivmodhi4_ep>:
- 846:	88 1f       	adc	r24, r24
- 848:	99 1f       	adc	r25, r25
- 84a:	5a 95       	dec	r21
- 84c:	a9 f7       	brne	.-22     	; 0x838 <__udivmodhi4_loop>
- 84e:	80 95       	com	r24
- 850:	90 95       	com	r25
- 852:	bc 01       	movw	r22, r24
- 854:	cd 01       	movw	r24, r26
- 856:	08 95       	ret
+00000852 <__udivmodhi4_ep>:
+ 852:	88 1f       	adc	r24, r24
+ 854:	99 1f       	adc	r25, r25
+ 856:	5a 95       	dec	r21
+ 858:	a9 f7       	brne	.-22     	; 0x844 <__udivmodhi4_loop>
+ 85a:	80 95       	com	r24
+ 85c:	90 95       	com	r25
+ 85e:	bc 01       	movw	r22, r24
+ 860:	cd 01       	movw	r24, r26
+ 862:	08 95       	ret
 
-00000858 <_exit>:
- 858:	f8 94       	cli
+00000864 <_exit>:
+ 864:	f8 94       	cli
 
-0000085a <__stop_program>:
- 85a:	ff cf       	rjmp	.-2      	; 0x85a <__stop_program>
+00000866 <__stop_program>:
+ 866:	ff cf       	rjmp	.-2      	; 0x866 <__stop_program>
