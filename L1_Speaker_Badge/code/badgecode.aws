@@ -1,1 +1,1 @@
-<AVRWorkspace><IOSettings><CurrentRegisters/></IOSettings><part name="ATmega328P"/><Files/></AVRWorkspace>
+<AVRWorkspace><IOSettings><CurrentRegisters/></IOSettings><part name="ATMEGA328P"/><Files><File00000 Name="E:\032\L1_Speaker_Badge\code\badgeCode.cpp" Position="267 97 1293 687" LineCol="11 27" State="Maximized"/><File00003 Name="E:\032\L1_Speaker_Badge\code\common.h" Position="292 122 1310 682" LineCol="0 0" State="Maximized"/><File00004 Name="E:\032\L1_Speaker_Badge\code\font.c" Position="259 67 1572 944" LineCol="18 70" State="Maximized"/></Files></AVRWorkspace>

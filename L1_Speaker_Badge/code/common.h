@@ -79,7 +79,7 @@ extern "C" {
 #define USE_STARFIELD1		( 1 ) // 3d starfield with intensity (very data hungry)
 #define USE_3DCUBE			( 1 ) // peggy rotating cube
 #define USE_FADER			( 1 ) // shows 4 fade leves
-#define USE_LINE			( 1 ) // simple line test
+#define USE_LINE			( 0 ) // simple line test
 #define USE_BLOCK			( 1 ) // shows 4 frame buffers
 #define USE_STARFIELD2		( 0 ) // not done (2d)
 

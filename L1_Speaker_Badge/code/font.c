@@ -16,7 +16,7 @@
 
 static short textXPos[3] , textLength[3];
 
-static const PROGMEM unsigned char text[] =  "LAYERONE 2011 - SPEAKER BADGE";
+static const PROGMEM unsigned char text[] =  "LAYERONE 2011 - SPEAKER BADGE ";
 const PROGMEM unsigned char text1[] = "NULLSPACE LABS";
 static const PROGMEM unsigned char text2[] = "032.LA DESIGN BY KRS TWSS";
 
