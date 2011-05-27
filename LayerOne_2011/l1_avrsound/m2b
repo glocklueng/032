@@ -1,0 +1,112 @@
+#!/usr/bin/perl
+
+$k = 57;
+while (<DATA>) {
+	chop;
+	$n{$k++} = $_;
+}
+
+my $transpose = 2;
+
+my $fprev = 0;
+while (<>) {
+	s/ //g;
+	@f = split(/,/);
+	if ($f[2] =~ /Note_on/) {
+		$note = $n{$f[4]+$transpose*12};
+		#print "$f[4] -> $note\n";
+		$time = $f[1]-$fprev;
+		if ($time>0) {
+		  push @notes,$note;
+		  $dur = int(4*(120/$time)+0.5);
+		  push @durations,$dur;
+		  $fprev = $f[1];
+		} else {
+		  #print  STDERR "suppressing ", $_ , __LINE__;
+		}
+	}
+	#2, 120, Note_on_c, 0, 65, 64
+}
+
+print<<'HEADER';
+const int newsong[] PROGMEM = 
+        {
+            2, 
+HEADER
+
+for ($i=0; $i<scalar(@notes); $i++) {
+	print "$durations[$i+1],$notes[$i], ";
+	print "\n" if ($i % 8 == 0) ;
+}
+print <<'TRAILER';
+            0, 1
+        };
+TRAILER
+
+
+exit;
+
+__DATA__
+a
+ax
+b
+c0
+cx0
+d0
+dx0
+e0
+f0
+fx0
+g0
+gx0
+a0
+ax0
+b0
+c1
+cx1
+d1
+dx1
+e1
+f1
+fx1
+g1
+gx1
+a1
+ax1
+b1
+c2
+cx2
+d2
+dx2
+e2
+f2
+fx2
+g2
+gx2
+a2
+ax2
+b2
+c3
+cx3
+d3
+dx3
+e3
+f3
+fx3
+g3
+gx3
+a3
+ax3
+b3
+c4
+cx4
+d4
+dx4
+e4
+f4
+fx4
+g4
+gx4
+a4
+ax4
+b4
