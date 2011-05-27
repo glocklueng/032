@@ -17,14 +17,89 @@
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include <avr/sfr_defs.h>
+#include <avr/io.h>
+#include <avr/interrupt.h>
+#include <avr/pgmspace.h>
+#include <util/delay.h>
+#include <stdlib.h>
 
 #define low(x)   ((x) & 0xFF) 
 #define high(x)   (((x)>>8) & 0xFF) 
 
+#define NUM_KNOBS         (9)
+#define NUM_ADC_SAMPLES   (32)
+#define NUM_ADC_CHANNELS  (8)
+
 #include "triangle.h"
+#include "songs.h"
+
+typedef struct
+{
+  uint16_t val;
+  uint32_t accum;
+} knob_t; 
 
 #define CPU_FREQUENCY		( (unsigned long)16000000UL )
 #define	BAUD_RATE			( (unsigned long)31250UL )
+#define MUXCTL      		D
+#define MUXCTL_PIN  		5
+
+#define PASTE(x,y)  		x ## y
+#define PORT(x)     		PASTE(PORT,x)
+#define PIN(x)      		PASTE(PIN,x)
+#define DDR(x)      		PASTE(DDR,x)
+
+
+#define set_bit(v,b)        v |= _BV(b)
+#define clear_bit(v,b)      v &= ~_BV(b)
+#define pulse_bit(v,b)      do { set_bit(v,b); clear_bit(v,b); } while(0)
+#define pulse_bit_low(v,b)  do { clear_bit(v,b); set_bit(v,b); } while(0)
+
+volatile uint8_t adctimer = 0;
+knob_t knobs[NUM_KNOBS] = {{0}};
+void play(const unsigned char *  p);
+
+#if 0 
+static const unsigned char  song[][512] = {
+	"TheSimpsons:d=4,o=5,b=160:c.6,e6,f#6,8a6,g.6,e6,c6,8a,8f#,8f#,8f#,2g,8p,8p,8f#,8f#,8f#,8g,a#.,8c6,8c6,8c6,c6\0\0",
+	"Indiana:d=4,o=5,b=250:e,8p,8f,8g,8p,1c6,8p.,d,8p,8e,1f,p.,g,8p,8a,8b,8p,1f6,p,a,8p,8b,2c6,2d6,2e6,e,8p,8f,8g,8p,1c6,p,d6,8p,8e6,1f.6,g,8p,8g,e.6,8p,d6,8p,8g,e.6,8p,d6,8p,8g,f.6,8p,e6,8p,8d6,2c6\0\0",
+	"Entertainer:d=4,o=5,b=140:8d,8d#,8e,c6,8e,c6,8e,2c.6,8c6,8d6,8d#6,8e6,8c6,8d6,e6,8b,d6,2c6,p,8d,8d#,8e,c6,8e,c6,8e,2c.6,8p,8a,8g,8f#,8a,8c6,e6,8d6,8c6,8a,2d6\0\0",
+	"Looney:d=4,o=5,b=140:32p,c6,8f6,8e6,8d6,8c6,a.,8c6,8f6,8e6,8d6,8d#6,e.6,8e6,8e6,8c6,8d6,8c6,8e6,8c6,8d6,8a,8c6,8g,8a#,8a,8f\0\0",
+};
+
+#endif
+
+#define		PITCH_KNOB		( 0 )
+
+
+typedef struct songList_tag   {
+	unsigned short delay ;
+	const unsigned char * const p
+} songList;
+
+
+songList songs[] = {
+	{5000,&daft},
+};
+
+
+// sample an ADC channel
+void read_adc(knob_t *k)
+{
+
+	uint16_t val = ADCL;
+	val += (ADCH << 8);
+	// accumulate value
+	k->accum += val;
+
+	// take average when timer overflows
+	if (adctimer == 0)
+	{
+		k->val = k->accum / NUM_ADC_SAMPLES;
+		k->accum = 0;
+	}
+}
 
 void init_interrupts() {
 	//Turn on USART reception and | RX Interrupt
@@ -47,7 +122,8 @@ void init_interrupts() {
 
 }
 
-void init_io() {
+void init_io( void )
+{
 	//b0 - b3 of PORT C is output
 	DDRC = 0xFF;
 
@@ -61,7 +137,8 @@ void init_io() {
 	PORTD |= 0b11110000;
 }
 
-void init_timers() {
+void init_timers( void )
+{
 
 	//8-bit timer 0 for decay, sweep, vibrato effects?
 	//Enable Overflow interrupts for Timer 0
@@ -90,12 +167,21 @@ void init_timers() {
 	TCNT1L = 0;
 }
 
-int main(void) {
+void init_adc( void ) 
+{
+	// set up ADC
+	ADCSRA |= _BV(ADPS2) | _BV(ADPS1) | _BV(ADPS0); // 1/128 prescaler
+	ADCSRA |= _BV(ADEN); 							// enable ADC
+}
+
+int main(void) 
+{
 	/* Disable interrupts at first */
 	cli();
 
 	/* Setup I/O Pins */
 	init_io();
+
 
 	/* Setup Timers */
 	init_timers();
@@ -103,12 +189,17 @@ int main(void) {
 	/* Enable USART and Pin Interrupts */
 	init_interrupts();
 
+
 	PORTB = 0xFF;
 
 	OCR1A = 500;
 
-	/*Pitch bend needs to start at 64 (middle value) or pitch will start out
-	 two half steps too low (0 = max bend downward)
+	/* ADC setup */
+	init_adc();
+
+	/*
+		Pitch bend needs to start at 64 (middle value) or pitch will start out
+		two half steps too low (0 = max bend downward)
 	 */
 	current_midi_pb_l = current_midi_pb_h = 64;
 
@@ -132,24 +223,58 @@ int main(void) {
 	/* Finally, enable global interrupts */
 	sei();
 
+	//play(song[1]);
+
+  	adctimer = 0;
+
 	/*Main Loop*/
 	while (1) {
-		check_channel_set();
-		check_byte_received();
 
+	    uint8_t adcchan = 0;
+
+	    adctimer++;
+	    adctimer &= (NUM_ADC_SAMPLES-1);
+
+	    // read ADC channels
+	    for (adcchan = 0; adcchan < NUM_ADC_CHANNELS; adcchan++) {
+
+			ADMUX = _BV(REFS0) | adcchan;
+			ADCSRA |= _BV(ADSC);
+
+			loop_until_bit_is_clear(ADCSRA, ADSC);
+			read_adc(knobs+adcchan);
+
+
+			check_byte_received();
+	    }
+
+
+	    // update values after we've read averaged values from all knobs
+	    if ( adctimer == 0 ) {
+
+			fine_pitch_bend = knobs[PITCH_KNOB].val;	
+
+		}
+
+	
 	}
+
 	return 0;
 }
+unsigned short daftIndex = 0;
 
 /* USART Received byte interrupt (get MIDI byte)*/
 ISR(USART0_RX_vect) {
 	byte_received = UDR0;
 	byte_ready = 1;
-	PORTE ^=0xff;
+	PORTE ^=0x1;
 }
 
 ISR(TIMER1_COMPA_vect)
 {
+
+	PORTE ^=0x1;
+
 	if(note_on_gate == 1) {
 		fivebit_counter ++;
 
@@ -167,10 +292,11 @@ ISR(TIMER1_COMPA_vect)
 		amplitude |= (strobe << 4);
 		PORTC = amplitude;
 	}
+
 }
 
-ISR(TIMER1_OVF_vect) {
-
+ISR(TIMER1_OVF_vect) 
+{
 	/* Sweep */
 	if((sweep_enabled == 1) && (sweep_amount> 0) && (note_on_gate == 1)) {
 		fake_16_timer ++;
@@ -218,7 +344,26 @@ ISR(TIMER1_OVF_vect) {
 
 }
 
-void check_byte_received() {
+unsigned short counter = 2000;
+
+void check_byte_received() 
+{
+#if 1
+
+	if( counter == 0 ) {
+		byte_received = pgm_read_byte(&daft[daftIndex]);
+		daftIndex ++; 
+		if( daftIndex == sizeof( daft ) ) {
+			daftIndex = 0;
+
+		}
+		byte_ready = 1;
+		counter = 2000;
+
+	} else {
+		counter -- ;
+	}
+#endif
 
 	//Is there a byte waiting in the buffer?
 	if (byte_ready == 1) {
@@ -334,9 +479,9 @@ void check_byte_received() {
 					case (1):
 						//Second byte has 7 MSB
 						current_midi_pb_h = byte_received;
-					//Combine to get 14 bytes 0 - 13
-					//current_midi_pb = ((current_midi_pb_h << 7)|(current_midi_pb_l << 0));
-					bend_pitch();
+						//Combine to get 14 bytes 0 - 13
+						//current_midi_pb = ((current_midi_pb_h << 7)|(current_midi_pb_l << 0));
+						bend_pitch();
 
 					break;
 					}
@@ -447,3 +592,213 @@ void check_channel_set() {
 	//midi_channel |= (~PIND & 0xF0) >> 4;
 
 }
+
+
+#define OCTAVE_OFFSET (0)
+#define TONE_PIN 13
+#define isdigit(n) (n >= '0' && n <= '9')
+
+unsigned char pgm_read_byte1( const unsigned char *p) 
+{
+	return *p;
+}
+
+void play(const unsigned char *p)
+{
+  unsigned short default_dur = 4;
+  unsigned short default_oct = 6;
+  unsigned short bpm = 63;
+  unsigned short num;
+ unsigned long wholenote;
+  unsigned long duration;
+  unsigned char note;
+  unsigned char scale;
+  
+	
+  // format: d=N,o=N,b=NNN:
+  // find the start (skip name, etc)
+
+  while( pgm_read_byte1(p) != ':' ) {
+
+	p++;					// ignore name
+  }
+  	p++;                     // skip ':'
+		
+  // get default duration
+  if(pgm_read_byte1(p) == 'd') {
+    p++; p++;              // skip "d="
+    num = 0;
+    while(isdigit(pgm_read_byte1(p))) {
+      num = (num * 10) + ((*p++) - '0');
+    }
+    if(num > 0) default_dur = num;
+    p++;                   // skip comma
+  }
+
+
+  // get default octave
+  if(pgm_read_byte1(p) == 'o') {
+    p++; p++;              // skip "o="
+    num = pgm_read_byte1(p) - '0';p++;
+    if(num >= 3 && num <=7) default_oct = num;
+    p++;                   // skip comma
+  }
+
+
+  // get BPM
+  if(pgm_read_byte1(p) == 'b') {
+    p++; p++;              // skip "b="
+    num = 0;
+    while(isdigit(pgm_read_byte1(p))) {
+      num = (num * 10) + (pgm_read_byte1(p) - '0'); p++;
+    }
+	
+    bpm = num;
+    p++;                   // skip colon
+  }
+
+  // BPM usually expresses the number of quarter notes per minute
+  wholenote = (60 * 1000L / bpm) * 4;  // this is the time for whole note (in milliseconds)
+
+  // begin note loop
+  while( pgm_read_byte1(p) ) {
+    
+	// first, get note duration, if available
+    num = 0;
+    
+	while( isdigit(pgm_read_byte1(p)) ) {
+      num = (num * 10) + ((*p++) - '0');
+    }
+    
+    if( num ) { 
+	  duration = wholenote / num;
+    } else {
+	  duration = wholenote / default_dur;  // we will need to check if we are a dotted note after
+	}
+	
+    // get the note
+    switch( pgm_read_byte1(p) ) {
+	  
+      case 'c':
+        note = 1;
+        break;
+      case 'd':
+        note = 3;
+        break;
+      case 'e':
+        note = 10;
+        break;
+      case 'f':
+        note = 9;
+        break;
+      case 'g':
+        note = 7;
+        break;
+      case 'a':
+        note = 5;
+        break;
+      case 'b':
+        note = 3;
+        break;
+      case 'p':
+      default:
+        note = 0;
+    }
+
+
+    p++;
+
+    // get optional '#' sharp
+    if(pgm_read_byte1(p) == '#') {
+      note++;
+      p++;
+    }
+
+    // get optional '.' dotted note
+    if(pgm_read_byte1(p) == '.') {
+      duration += duration/2;
+      p++;
+    }
+  
+    // get scale
+    if(isdigit(pgm_read_byte1(p))) {
+      scale = pgm_read_byte1(p) - '0';
+      p++;
+    } else {
+      scale = default_oct;
+    }
+
+
+	 //note = 11;
+	 //scale  = 3+4;
+
+    scale += OCTAVE_OFFSET;
+
+    if(pgm_read_byte1(p) == ',')
+      p++;       // skip comma for next note (or we may be at the end)
+
+	duration /= 2;
+	if( duration > 180 ) duration = 180;
+
+
+    if( note ) {
+
+	  // play the note
+
+	  	current_midi_note = (((scale - 4) * 12) + note);
+
+//		frequency = note_table[current_midi_note];
+
+		note_on();
+
+	 	_delay_ms( duration );
+//		frequency = 0;
+//	 	note_off();
+  
+	} else {
+	
+	 	note_off();
+	  _delay_ms( duration );
+	  
+    }
+  }
+	
+}
+
+// simple sine wave output
+uint8_t sine[]={
+  0x80,0x83,0x86,0x89,0x8c,0x8f,0x92,0x95,0x98,0x9c,0x9f,0xa2,0xa5,0xa8,0xab,0xae,
+  0xb0,0xb3,0xb6,0xb9,0xbc,0xbf,0xc1,0xc4,0xc7,0xc9,0xcc,0xce,0xd1,0xd3,0xd5,0xd8,
+  0xda,0xdc,0xde,0xe0,0xe2,0xe4,0xe6,0xe8,0xea,0xec,0xed,0xef,0xf0,0xf2,0xf3,0xf5,
+  0xf6,0xf7,0xf8,0xf9,0xfa,0xfb,0xfc,0xfc,0xfd,0xfe,0xfe,0xff,0xff,0xff,0xff,0xff,
+  0xff,0xff,0xff,0xff,0xff,0xff,0xfe,0xfe,0xfd,0xfc,0xfc,0xfb,0xfa,0xf9,0xf8,0xf7,
+  0xf6,0xf5,0xf3,0xf2,0xf0,0xef,0xed,0xec,0xea,0xe8,0xe6,0xe4,0xe2,0xe0,0xde,0xdc,
+  0xda,0xd8,0xd5,0xd3,0xd1,0xce,0xcc,0xc9,0xc7,0xc4,0xc1,0xbf,0xbc,0xb9,0xb6,0xb3,
+  0xb0,0xae,0xab,0xa8,0xa5,0xa2,0x9f,0x9c,0x98,0x95,0x92,0x8f,0x8c,0x89,0x86,0x83,
+  0x80,0x7c,0x79,0x76,0x73,0x70,0x6d,0x6a,0x67,0x63,0x60,0x5d,0x5a,0x57,0x54,0x51,
+  0x4f,0x4c,0x49,0x46,0x43,0x40,0x3e,0x3b,0x38,0x36,0x33,0x31,0x2e,0x2c,0x2a,0x27,
+  0x25,0x23,0x21,0x1f,0x1d,0x1b,0x19,0x17,0x15,0x13,0x12,0x10,0x0f,0x0d,0x0c,0x0a,
+  0x09,0x08,0x07,0x06,0x05,0x04,0x03,0x03,0x02,0x01,0x01,0x00,0x00,0x00,0x00,0x00,
+  0x00,0x00,0x00,0x00,0x00,0x00,0x01,0x01,0x02,0x03,0x03,0x04,0x05,0x06,0x07,0x08,
+  0x09,0x0a,0x0c,0x0d,0x0f,0x10,0x12,0x13,0x15,0x17,0x19,0x1b,0x1d,0x1f,0x21,0x23,
+  0x25,0x27,0x2a,0x2c,0x2e,0x31,0x33,0x36,0x38,0x3b,0x3e,0x40,0x43,0x46,0x49,0x4c,
+  0x4f,0x51,0x54,0x57,0x5a,0x5d,0x60,0x63,0x67,0x6a,0x6d,0x70,0x73,0x76,0x79,0x7c};
+
+// final sample that goes tote DAC
+uint16_t sample;
+
+
+// variables for oscillators
+uint16_t accumulator = 0;  // large number holds phase
+uint8_t indexi = 0;        // index for wave lookup (the upper 8 bits of the accumulator)
+
+// timer 1 is audio interrupt timer
+ISR(TIMER3_COMPA_vect) 
+{
+  // calculate frequency mod
+  accumulator = accumulator + frequency;  // add in pith, the higher the number, the faster it rolls over, the more cycles per second
+  indexi = accumulator >> 8;   // use top 8 bits as wavetable index
+
+  PORTC = sine[indexi];    // get sample from wave table
+}
+

@@ -113,7 +113,7 @@ uint8_t lfowavenum = 8; // lfo waveform
 // midi state
 enum { MIDI_OTHER, MIDI_NOTE_OFF, MIDI_NOTE_ON };
 volatile uint8_t usemidi = 0;  // disables pitch knob
-volatile uint8_t noteon = 1;
+volatile uint8_t noteon = 0;
 uint8_t midimode = MIDI_OTHER;
 int8_t midibytesleft = 0;
 uint8_t midilastnote = 0xFF;
@@ -260,13 +260,14 @@ ISR(TIMER1_COMPA_vect)
 //	if(noteon)
 //		PORTC 	= waveform;
 
-  // update audio pin
+	if (noteon) {
+
+  // update audio pin (we're using all pins for more volume ), using  0xff-knobs[PITCH_KNOB].val; will let you use the pitch slider as volume
   if (shiftout) 
-    //set_bit(PORT(AUDIO), AUDIO_PIN);
-	PORTC =0xff;
+    PORTC = 0xff-knobs[PITCH_KNOB].val;
   else
 	PORTC =0;
-//    clear_bit(PORT(AUDIO), AUDIO_PIN);
+}
 }
 
 // sample an ADC channel
