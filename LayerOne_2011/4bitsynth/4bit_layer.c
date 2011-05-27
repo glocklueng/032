@@ -60,6 +60,8 @@ volatile uint8_t adctimer = 0;
 knob_t knobs[NUM_KNOBS] = {{0}};
 void play(const unsigned char *  p);
 
+unsigned char selfPlay = 0;
+
 #if 0 
 static const unsigned char  song[][512] = {
 	"TheSimpsons:d=4,o=5,b=160:c.6,e6,f#6,8a6,g.6,e6,c6,8a,8f#,8f#,8f#,2g,8p,8p,8f#,8f#,8f#,8g,a#.,8c6,8c6,8c6,c6\0\0",
@@ -241,12 +243,13 @@ int main(void)
 			ADMUX = _BV(REFS0) | adcchan;
 			ADCSRA |= _BV(ADSC);
 
-			loop_until_bit_is_clear(ADCSRA, ADSC);
-			read_adc(knobs+adcchan);
+//			loop_until_bit_is_clear(ADCSRA, ADSC);
+//			read_adc(knobs+adcchan);
 
 
-			check_byte_received();
 	    }
+
+		check_byte_received();
 
 
 	    // update values after we've read averaged values from all knobs
@@ -350,19 +353,21 @@ void check_byte_received()
 {
 #if 1
 
-	if( counter == 0 ) {
-		byte_received = pgm_read_byte(&daft[daftIndex]);
-		daftIndex ++; 
-		if( daftIndex == sizeof( daft ) ) {
-			daftIndex = 0;
+	if( selfPlay ) {
+		if( counter == 0 ) {
+			byte_received = pgm_read_byte(&daft[daftIndex]);
+			daftIndex ++; 
+			if( daftIndex == sizeof( daft ) ) {
+				daftIndex = 0;
 
+			}
+			byte_ready = 1;
+			counter = 2000;
+
+		} else {
+			counter -- ;
 		}
-		byte_ready = 1;
-		counter = 2000;
-
-	} else {
-		counter -- ;
-	}
+		}
 #endif
 
 	//Is there a byte waiting in the buffer?
