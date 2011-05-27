@@ -6,7 +6,7 @@
 
 // Member constants
 // Set this to the number of stars you would like in the starfield
-#define NUM_STARS		( 30 )
+#define NUM_STARS		( 18 )
 
 // Speed of the stars ranges from 0.1 to this.
 #define VELOCITY_MAX		(1.7f)

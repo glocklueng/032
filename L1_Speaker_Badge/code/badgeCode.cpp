@@ -348,7 +348,7 @@ int main(void)
 					loopCounter++ ; 
 
 					if( loopCounter == 20 ) { 
-						sleep();
+						//sleep();
 						loopCounter = 0;
 					}
 				}
