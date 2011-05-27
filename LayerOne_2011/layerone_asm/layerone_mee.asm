@@ -269,12 +269,12 @@ DELTAB_2: 			.byte 1
 PULSE_WIDTH: .byte 1
 
 ; fm
-WAVEB:	  .byte 1
-FMDEPTH:  .byte 1
+WAVEB:			  	.byte 1
+FMDEPTH:		  	.byte 1
 
 ; eeprom 
-WRITE_MODE:	.byte 1
-WRITE_OFFSET:	.byte 1
+WRITE_MODE:			.byte 1
+WRITE_OFFSET:		.byte 1
 
 ; filter
 RESONANCE:	.byte 1

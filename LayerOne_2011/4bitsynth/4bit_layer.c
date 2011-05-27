@@ -18,7 +18,13 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
+#define low(x)   ((x) & 0xFF) 
+#define high(x)   (((x)>>8) & 0xFF) 
+
 #include "triangle.h"
+
+#define CPU_FREQUENCY		( (unsigned long)16000000UL )
+#define	BAUD_RATE			( (unsigned long)31250UL )
 
 void init_interrupts() {
 	//Turn on USART reception and | RX Interrupt
@@ -28,8 +34,13 @@ void init_interrupts() {
 	UCSR0C = (0 << UMSEL0) | (0 << UPM00) | (0 << USBS0) | (3 << UCSZ00);
 
 	/* Set the baud rate to 31250 for MIDI */
-	UBRR0L = 0x27; // For 20MHz Clock
+
+	// These were for the original synth, changed for the l1 human badge
+	//UBRR0L = 0x27; // For 20MHz Clock
 	//UBRR0L = 0x13;		// FOr 10MHz Clock
+
+	UBRR0H = high((CPU_FREQUENCY / (BAUD_RATE * 16)) - 1);
+	UBRR0L = low((CPU_FREQUENCY / (BAUD_RATE * 16)) - 1);
 
 	/* Enable USART Receive interrupt */
 	enable_USART_interrupts();
@@ -38,7 +49,10 @@ void init_interrupts() {
 
 void init_io() {
 	//b0 - b3 of PORT C is output
-	DDRC = 0x0F;
+	DDRC = 0xFF;
+
+	// for led
+	DDRE = 0xff;
 
 	//b4 0 v7 of PORT D is input (MIDI Channel selection)
 	DDRD &= 0b00001111;
@@ -63,7 +77,8 @@ void init_timers() {
 	TCNT0 = 0x00;
 
 	//16-bit timer 1 for main frequency generation
-	TIMSK |= 0b00000010; // Enable A and B compare interrupts
+	TIMSK |= _BV(TOIE1) | _BV( OCIE1A ) ;
+	//TIMSK |= 0b00100000; // Enable A and B compare interrupts
 
 	TCCR1A = 0b00000001;
 
@@ -127,9 +142,10 @@ int main(void) {
 }
 
 /* USART Received byte interrupt (get MIDI byte)*/
-ISR(USART_RX_vect) {
+ISR(USART0_RX_vect) {
 	byte_received = UDR0;
 	byte_ready = 1;
+	PORTE ^=0xff;
 }
 
 ISR(TIMER1_COMPA_vect)
@@ -153,7 +169,7 @@ ISR(TIMER1_COMPA_vect)
 	}
 }
 
-ISR(TIMER0_OVF_vect) {
+ISR(TIMER1_OVF_vect) {
 
 	/* Sweep */
 	if((sweep_enabled == 1) && (sweep_amount> 0) && (note_on_gate == 1)) {
@@ -212,7 +228,8 @@ void check_byte_received() {
 			if (byte_received >= 0x80) {
 				unsigned char temp_midi_channel = byte_received & 0x0F;
 				//Is this for one of our channels?
-				if (temp_midi_channel == midi_channel) {
+				if ( 1 ) // (temp_midi_channel == midi_channel) 
+				{
 					current_midi_channel = temp_midi_channel;
 
 					//What kind of status byte is this?
@@ -397,7 +414,8 @@ void process_cc() {
 	}
 }
 
-void update_frequency(unsigned int new_frequency) {
+void update_frequency(unsigned int new_frequency) 
+{
 	OCR1A = new_frequency + fine_pitch_bend;
 }
 
@@ -426,6 +444,6 @@ void clear_byte_received() {
 void check_channel_set() {
 	midi_channel = 0;
 	//Get 4-bit (0-16) MIDI CHannel from PORTD b4-b7)
-	midi_channel |= (~PIND & 0xF0) >> 4;
+	//midi_channel |= (~PIND & 0xF0) >> 4;
 
 }
