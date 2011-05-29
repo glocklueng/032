@@ -60,7 +60,7 @@ volatile uint8_t adctimer = 0;
 knob_t knobs[NUM_KNOBS] = {{0}};
 void play(const unsigned char *  p);
 
-unsigned char selfPlay = 0;
+unsigned char selfPlay = 1;
 
 #if 0 
 static const unsigned char  song[][512] = {
@@ -83,6 +83,86 @@ typedef struct songList_tag   {
 
 songList songs[] = {
 	{5000,&daft},
+};
+
+#define shortdelay(); 			asm("nop\n\tnop\n\t");
+
+#define MIN_OF(x,y) ((x) < (y) ? (x) : (y))
+#define MAX_OF(x,y) ((x) > (y) ? (x) : (y))
+
+#define GET_BIT(a,n)    ((a >> n) & 1)
+#define SET_BIT(a,n)    (a|=(1<<n))
+#define CLR_BIT(a,n)    (a&=~(1<<n))
+#define SWITCH_BIT(a,n) (a^=(1<<n))
+#define IS_BIT_SET(a,n) (a & (1<<n))
+#define IS_BIT_CLR(a,n) (~(a & (1<<n)))
+
+
+// 	PORTA,DDRA,PINA
+#define ddr_a(r,c)  charlieplex[ (r*(3*4)) + ((c*3)+1) ]
+#define pin_a(r,c)  charlieplex[ (r*(3*4)) + ((c*3)+2) ]
+#define port_a(r,c) charlieplex[ (r*(3*4)) + ((c*3)+0) ]
+
+#define HEX__(n) 0x##n##LU
+
+/* 8-bit conversion function */
+#define B8__(x)	((x&0x0000000FLU)?1:0)	\
+			   +((x&0x000000F0LU)?2:0)	\
+			   +((x&0x00000F00LU)?4:0)	\
+			   +((x&0x0000F000LU)?8:0)	\
+			   +((x&0x000F0000LU)?16:0)	\
+			   +((x&0x00F00000LU)?32:0)	\
+			   +((x&0x0F000000LU)?64:0)	\
+			   +((x&0xF0000000LU)?128:0)
+
+/* *** user macros ***/
+
+/* for up to 8-bit binary constants */
+#define B8(d) ((unsigned char)B8__(HEX__(d)))
+
+/* for up to 16-bit binary constants, MSB first */
+#define B16(dmsb,dlsb) (((unsigned short)B8(dmsb)<<	+ B8(dlsb)))
+
+/* for up to 32-bit binary constants, MSB first */
+#define B32(dmsb,db2,db3,dlsb) (((unsigned long)B8(dmsb)<<24)	 \
+							 + ((unsigned long)B8(db2)<<16)		 \
+							 + ((unsigned long)B8(db3)<<		 \
+							 + B8(dlsb))
+
+//  State Definitions for each individual LED
+//  A2  A1  A0  A4  A3
+//  PB0 PB1 PB2 PB3 PB4  
+//  PA2 PA1 PA0 PA4 PA3
+//
+//	00 = LOW
+//	01 = HIGH
+//	11 = X (input)
+static const unsigned char PROGMEM led30[] = 
+{
+	B8( 00) , B8(01111111 ),		// LED25
+	B8( 11) , B8(00011111 ),		// LED19
+	B8( 11) , B8(11000111 ),		// LED11
+	B8( 11) , B8(11110001 ),		// LED1
+	
+	B8( 01) , B8(00111111 ),		// LED26
+	B8( 11) , B8(01001111 ),		// LED20
+	B8( 11) , B8(11010011 ),		// LED12
+	B8( 11) , B8(11110100 ),		// LED2
+	
+	B8( 00) , B8(11110111 ),		// LED15
+	B8( 00),  B8(11011111 ),		// LED21
+	B8( 11) , B8(00110111 ),		// LED13
+	B8( 11) , B8(11001101 ),		// LED3
+	
+	B8( 01) , B8(11110011 ),		// LED16
+	B8( 01) , B8(11001111 ),		// LED22
+	B8( 11) , B8(01110011 ),		// LED14
+	B8( 11) , B8(11011100 ),		// LED4
+
+	B8( 01) , B8(11111100 ),		// LED8
+	B8( 00),  B8(11111101 ),		// LED7
+	B8( 11) , B8(01111100 ),		// LED6
+	B8( 11) , B8(00111101 ),		// LED5
 };
 
 
@@ -258,8 +338,11 @@ int main(void)
 			fine_pitch_bend = knobs[PITCH_KNOB].val;	
 
 		}
-
 	
+	
+		scrollLEDS();
+	
+		
 	}
 
 	return 0;
@@ -291,8 +374,9 @@ ISR(TIMER1_COMPA_vect)
 		} else {
 			amplitude = ~(fivebit_counter ^ 0b00000000);
 		}
-		amplitude &= 0b11101111;
-		amplitude |= (strobe << 4);
+		//amplitude &= 0b11111111;
+		//amplitude |= (strobe << 4);
+		
 		PORTC = amplitude;
 	}
 
@@ -300,6 +384,7 @@ ISR(TIMER1_COMPA_vect)
 
 ISR(TIMER1_OVF_vect) 
 {
+
 	/* Sweep */
 	if((sweep_enabled == 1) && (sweep_amount> 0) && (note_on_gate == 1)) {
 		fake_16_timer ++;
@@ -807,3 +892,177 @@ ISR(TIMER3_COMPA_vect)
   PORTC = sine[indexi];    // get sample from wave table
 }
 
+// Write to LED Array - Takes in a Row and Column
+// this routine is written to help understand how the process works, not fast.
+void SetRC( unsigned char R, unsigned char C ) 
+{	
+	unsigned char b1,b2;
+	unsigned char port_a, ddr_a;
+
+	if ( C  > 4  ) C = 0;
+	if ( R  > 5  ) R = 0;
+
+	// get current values, Can't cache PORTA/DDRA since the sound interrupt can change, 
+	// should cache DDRD6/PORTD6 instead
+	port_a = PORTA;
+	ddr_a = DDRA;
+
+	//	read two values from array, we use pgm_read_byte because the data is in program memory space
+	// its 4*2 because there are 4 leds in each column, and two bytes per led
+	b1 = pgm_read_byte(&led30[ (R*(4*2))+(C*2)   ] ) ;
+	b2 = pgm_read_byte(&led30[((R*(4*2))+(C*2))+1] ) ;
+
+	//	b1 = led30[ (R*(4*2))+(C*2)   ]  ;
+	//	b2 = led30[((R*(4*2))+(C*2))+1];
+	
+	// if 10 == 11 then set to don't care (input ) tristate for PB0
+	if( GET_BIT( b1,1 )==1 && GET_BIT( b1,0 )==1 ) {
+
+		CLR_BIT(ddr_a,2 );
+
+	} else { 
+
+		// otherwise its an output
+		SET_BIT(ddr_a ,2 );
+	}
+
+	// if 76 == 11 then set to don't care (input ) tristate  for PB1
+	if( GET_BIT( b2,7 )==1 && GET_BIT( b2,6 )==1 ) {
+
+		CLR_BIT(ddr_a,1 );
+
+	} else { 
+
+		// otherwise its an output
+		SET_BIT(ddr_a ,1 );
+	}
+
+	// if 54 == 11 then set to don't care (input ) tristate for PB2
+	if( GET_BIT( b2,5 )==1 && GET_BIT( b2,4 )==1 ) {
+
+		CLR_BIT(ddr_a,0 );
+
+	} else { 
+
+		// otherwise its an output
+		SET_BIT(ddr_a ,0 );
+	}
+
+	// if 32 == 11 then set to don't care (input ) tristate for PB3
+	if( GET_BIT( b2,3 )==1 && GET_BIT( b2,2 )==1 ) {
+
+		CLR_BIT(ddr_a,4 );
+
+	} else { 
+
+		// otherwise its an output
+		SET_BIT(ddr_a ,4 );
+	}
+
+	// if 10 == 11 then set to don't care (input ) tristate for PB4
+	if( GET_BIT( b2,1 )==1 && GET_BIT( b2,0 )==1 ) {
+
+		CLR_BIT(ddr_a,3 );
+
+	} else { 
+
+		// otherwise its an output
+		SET_BIT(ddr_a ,3 );
+	}
+
+	/// all of the DDR's are set
+
+
+	// if 10 == 00 then set to low for PB0
+	if( GET_BIT( b1,1 )==0 && GET_BIT( b1,0 )==0 ) {
+
+		CLR_BIT(port_a,2); //set to off
+
+	// if 32 == 01 then set to high for PB0
+	} else if( GET_BIT( b1,1 )==0 && GET_BIT( b1,0 )==1 ) { 
+
+		// set to on
+		SET_BIT(port_a ,2 );
+	}
+
+	// if 76 == 00 then set to low for PB1
+	if( GET_BIT( b2,7 )==0 && GET_BIT( b2,6 )==0 ) {
+
+		CLR_BIT(port_a,1); //set to off
+
+	// if 32 == 01 then set to high for PB1
+	} else if( GET_BIT( b2,7 )==0 && GET_BIT( b2,6 ) ==1 ) { 
+
+		// set to on
+		SET_BIT(port_a ,1 );
+	}
+
+
+	// if 54 == 00 then set to low for PB2
+	if( GET_BIT( b2,5 )==0 && GET_BIT( b2,4 )==0 ) {
+
+		CLR_BIT(port_a,0); //set to off
+
+	// if 32 == 01 then set to high for PB2
+	} else if( GET_BIT( b2,5 )==0 && GET_BIT( b2,4 )==1 ) { 
+
+		// set to on
+		SET_BIT(port_a ,0 );
+	}
+
+	// if 32 == 00 then set to low for PB3
+	if( GET_BIT( b2,3 )==0 && GET_BIT( b2,2 )==0 ) {
+
+		CLR_BIT(port_a,4); //set to off
+
+	// if 32 == 01 then set to high for PB3
+	} else if( GET_BIT( b2,3 ) ==0 && GET_BIT( b2,2 )==1 ) { 
+
+		// set to on
+		SET_BIT(port_a ,4 );
+	}
+
+	// if 10 == 00 then set to low for PB4
+	if( GET_BIT( b2,1 )==0 && GET_BIT( b2,0 )==0 ) {
+
+		CLR_BIT(port_a,3); //set to off
+
+	// if 32 == 01 then set to high for PB4
+	} else if( GET_BIT( b2,1)==0 && GET_BIT( b2,0 )==1 ) { 
+
+		// set to on
+		SET_BIT(port_a ,3 );
+	}
+
+	//set all at once.
+	PORTA = port_a;
+	DDRA = ddr_a;
+}
+
+void scrollLEDS(void)
+{
+	static int c = 0;
+	static int r = 0;
+
+	static unsigned short count = 0;
+
+	count ++ ;
+
+	if ( count < 800  ) return;
+
+	count = 0;
+
+	SetRC(r,c);
+
+	r++ ;
+
+	if ( r == 5 )  {
+		r = 0;
+		c++ ;
+	}
+
+	if ( c == 4 ) { 
+		c = 0;
+	}
+	 
+}
