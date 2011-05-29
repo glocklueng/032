@@ -15,6 +15,7 @@ bit1synth.o: ../bit1synth.c \
   c:/winavr-20100110/lib/gcc/../../avr/include/util/delay.h \
   c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h \
   c:/winavr-20100110/lib/gcc/../../avr/include/stdlib.h \
+  ../..\4bitsynth\songs.h \
   c:/winavr-20100110/lib/gcc/../../avr/include/util/setbaud.h
 
 c:/winavr-20100110/lib/gcc/../../avr/include/avr/sfr_defs.h:
@@ -48,5 +49,7 @@ c:/winavr-20100110/lib/gcc/../../avr/include/util/delay.h:
 c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h:
 
 c:/winavr-20100110/lib/gcc/../../avr/include/stdlib.h:
+
+../..\4bitsynth\songs.h:
 
 c:/winavr-20100110/lib/gcc/../../avr/include/util/setbaud.h:
