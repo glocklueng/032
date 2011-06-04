@@ -194,7 +194,9 @@ songList songs[] = {
 	{5000,&daft},
 };
 
-unsigned short counter = 25;
+#define PLAY_SPEED ( 45)
+
+unsigned short counter = PLAY_SPEED;
 static volatile unsigned short daftIndex = 0;
 
 int selfPlay =1 ;
@@ -349,9 +351,6 @@ void processMessage( unsigned char byte)
 // timer interrupt; update audio out
 ISR(TIMER1_COMPA_vect)
 {
-
-
-
 
   uint8_t shiftout;
   if (wavenum != 7)
@@ -591,16 +590,16 @@ int main(void)
 	{
 		if( counter == 0 ) {
 
-			processMessage(   pgm_read_byte(&daft[daftIndex]) );
+			processMessage(   pgm_read_byte(&smb[daftIndex]) );
 
 			daftIndex ++; 
 
-			if( daftIndex == sizeof( daft ) ) {
+			if( daftIndex == sizeof( smb ) ) {
 				daftIndex = 0;
 
 			}
 
-			counter = 25;
+			counter = PLAY_SPEED;
 
 		} else {
 			counter -- ;
