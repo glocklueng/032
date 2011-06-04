@@ -157,7 +157,7 @@ fprintf(fo, " (Trk: %02x RS: %02X : %d) ", *trk, evt, trk - strk);
 		trklen -= 2;
 		note = *trk++;
 		vel = *trk++;
-               if( channel ==1  )
+               if( channel  ==0)
 					fprintf(fo,"0x80, %d, %d,\n",note,vel);
 		continue;
 
@@ -173,7 +173,7 @@ fprintf(fo, " (Trk: %02x RS: %02X : %d) ", *trk, evt, trk - strk);
 		    in order to preserve the original structure of the
 		    MIDI file.	*/
 //                fprintf(fo, "Note_on_c, %d, %d, %d\n", channel, note, vel);
-               if( channel ==1  )
+               if( channel   ==0)
 					fprintf(fo,"0x90, %d, %d,\n",note,vel);
 		continue;
 

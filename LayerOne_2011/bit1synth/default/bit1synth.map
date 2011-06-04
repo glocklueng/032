@@ -125,7 +125,7 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000     0x1260
+.text           0x00000000     0x163e
  *(.vectors)
  .vectors       0x00000000       0x8c c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm64.o
                 0x00000000                __vectors
@@ -133,42 +133,42 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
  *(.vectors)
  *(.progmem.gcc*)
  *(.progmem*)
- .progmem.data  0x0000008c      0x8ae bit1synth.o
+ .progmem.data  0x0000008c      0xc8c bit1synth.o
                 0x0000008c                freqvals
-                0x0000093a                . = ALIGN (0x2)
-                0x0000093a                __trampolines_start = .
+                0x00000d18                . = ALIGN (0x2)
+                0x00000d18                __trampolines_start = .
  *(.trampolines)
- .trampolines   0x0000093a        0x0 linker stubs
+ .trampolines   0x00000d18        0x0 linker stubs
  *(.trampolines*)
-                0x0000093a                __trampolines_end = .
+                0x00000d18                __trampolines_end = .
  *(.jumptables)
  *(.jumptables*)
  *(.lowtext)
  *(.lowtext*)
-                0x0000093a                __ctors_start = .
+                0x00000d18                __ctors_start = .
  *(.ctors)
-                0x0000093a                __ctors_end = .
-                0x0000093a                __dtors_start = .
+                0x00000d18                __ctors_end = .
+                0x00000d18                __dtors_start = .
  *(.dtors)
-                0x0000093a                __dtors_end = .
+                0x00000d18                __dtors_end = .
  SORT(*)(.ctors)
  SORT(*)(.dtors)
  *(.init0)
- .init0         0x0000093a        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm64.o
-                0x0000093a                __init
+ .init0         0x00000d18        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm64.o
+                0x00000d18                __init
  *(.init0)
  *(.init1)
  *(.init1)
  *(.init2)
- .init2         0x0000093a        0xc c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm64.o
+ .init2         0x00000d18        0xc c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm64.o
  *(.init2)
  *(.init3)
  *(.init3)
  *(.init4)
- .init4         0x00000946       0x16 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_copy_data.o)
-                0x00000946                __do_copy_data
- .init4         0x0000095c       0x10 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_clear_bss.o)
-                0x0000095c                __do_clear_bss
+ .init4         0x00000d24       0x16 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_copy_data.o)
+                0x00000d24                __do_copy_data
+ .init4         0x00000d3a       0x10 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_clear_bss.o)
+                0x00000d3a                __do_clear_bss
  *(.init4)
  *(.init5)
  *(.init5)
@@ -179,73 +179,73 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
  *(.init8)
  *(.init8)
  *(.init9)
- .init9         0x0000096c        0x8 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm64.o
+ .init9         0x00000d4a        0x8 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm64.o
  *(.init9)
  *(.text)
- .text          0x00000974        0x4 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm64.o
-                0x00000974                __vector_22
-                0x00000974                __vector_28
-                0x00000974                __vector_1
-                0x00000974                __vector_32
-                0x00000974                __vector_34
-                0x00000974                __vector_24
-                0x00000974                __bad_interrupt
-                0x00000974                __vector_6
-                0x00000974                __vector_31
-                0x00000974                __vector_3
-                0x00000974                __vector_23
-                0x00000974                __vector_30
-                0x00000974                __vector_25
-                0x00000974                __vector_11
-                0x00000974                __vector_13
-                0x00000974                __vector_17
-                0x00000974                __vector_19
-                0x00000974                __vector_7
-                0x00000974                __vector_27
-                0x00000974                __vector_5
-                0x00000974                __vector_33
-                0x00000974                __vector_4
-                0x00000974                __vector_9
-                0x00000974                __vector_2
-                0x00000974                __vector_21
-                0x00000974                __vector_15
-                0x00000974                __vector_29
-                0x00000974                __vector_8
-                0x00000974                __vector_26
-                0x00000974                __vector_14
-                0x00000974                __vector_10
-                0x00000974                __vector_16
-                0x00000974                __vector_20
- .text          0x00000978      0x8bc bit1synth.o
-                0x00000b94                read_adc
-                0x00000f48                SetRC
-                0x000009a4                midi_init
-                0x00000ae6                __vector_12
-                0x00001090                scrollLEDS
-                0x00001110                main
-                0x00000978                lfsr_rand
-                0x00000be4                update_pitch
-                0x000009ba                processMessage
-                0x00000e48                update_synth_params
-                0x00000a94                __vector_18
-                0x00000c44                update_lfo
-                0x00000e18                update_env
- .text          0x00001234        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_udivmodhi4.o)
- .text          0x00001234        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
- .text          0x00001234        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_copy_data.o)
- .text          0x00001234        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_clear_bss.o)
-                0x00001234                . = ALIGN (0x2)
+ .text          0x00000d52        0x4 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm64.o
+                0x00000d52                __vector_22
+                0x00000d52                __vector_28
+                0x00000d52                __vector_1
+                0x00000d52                __vector_32
+                0x00000d52                __vector_34
+                0x00000d52                __vector_24
+                0x00000d52                __bad_interrupt
+                0x00000d52                __vector_6
+                0x00000d52                __vector_31
+                0x00000d52                __vector_3
+                0x00000d52                __vector_23
+                0x00000d52                __vector_30
+                0x00000d52                __vector_25
+                0x00000d52                __vector_11
+                0x00000d52                __vector_13
+                0x00000d52                __vector_17
+                0x00000d52                __vector_19
+                0x00000d52                __vector_7
+                0x00000d52                __vector_27
+                0x00000d52                __vector_5
+                0x00000d52                __vector_33
+                0x00000d52                __vector_4
+                0x00000d52                __vector_9
+                0x00000d52                __vector_2
+                0x00000d52                __vector_21
+                0x00000d52                __vector_15
+                0x00000d52                __vector_29
+                0x00000d52                __vector_8
+                0x00000d52                __vector_26
+                0x00000d52                __vector_14
+                0x00000d52                __vector_10
+                0x00000d52                __vector_16
+                0x00000d52                __vector_20
+ .text          0x00000d56      0x8bc bit1synth.o
+                0x00000f72                read_adc
+                0x00001326                SetRC
+                0x00000d82                midi_init
+                0x00000ec4                __vector_12
+                0x0000146e                scrollLEDS
+                0x000014ee                main
+                0x00000d56                lfsr_rand
+                0x00000fc2                update_pitch
+                0x00000d98                processMessage
+                0x00001226                update_synth_params
+                0x00000e72                __vector_18
+                0x00001022                update_lfo
+                0x000011f6                update_env
+ .text          0x00001612        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_udivmodhi4.o)
+ .text          0x00001612        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+ .text          0x00001612        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_copy_data.o)
+ .text          0x00001612        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_clear_bss.o)
+                0x00001612                . = ALIGN (0x2)
  *(.text.*)
- .text.libgcc   0x00001234       0x28 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_udivmodhi4.o)
-                0x00001234                __udivmodhi4
- .text.libgcc   0x0000125c        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
- .text.libgcc   0x0000125c        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_copy_data.o)
- .text.libgcc   0x0000125c        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_clear_bss.o)
-                0x0000125c                . = ALIGN (0x2)
+ .text.libgcc   0x00001612       0x28 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_udivmodhi4.o)
+                0x00001612                __udivmodhi4
+ .text.libgcc   0x0000163a        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+ .text.libgcc   0x0000163a        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_copy_data.o)
+ .text.libgcc   0x0000163a        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_clear_bss.o)
+                0x0000163a                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x0000125c        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
-                0x0000125c                exit
-                0x0000125c                _exit
+ .fini9         0x0000163a        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+                0x0000163a                exit
+                0x0000163a                _exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -264,11 +264,11 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x0000125c        0x4 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+ .fini0         0x0000163a        0x4 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
  *(.fini0)
-                0x00001260                _etext = .
+                0x0000163e                _etext = .
 
-.data           0x00800100       0x22 load address 0x00001260
+.data           0x00800100       0x22 load address 0x0000163e
                 0x00800100                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00800100        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm64.o
@@ -325,8 +325,8 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
                 0x00800176                waveform
                 0x00800178                midibuffer
                 0x0080017a                PROVIDE (__bss_end, .)
-                0x00001260                __data_load_start = LOADADDR (.data)
-                0x00001282                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x0000163e                __data_load_start = LOADADDR (.data)
+                0x00001660                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x0080017a        0x0
                 0x0080017a                PROVIDE (__noinit_start, .)
@@ -395,14 +395,14 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
  .debug_pubnames
                 0x00000000      0x22f bit1synth.o
 
-.debug_info     0x00000000      0x701
+.debug_info     0x00000000      0x785
  *(.debug_info)
- .debug_info    0x00000000      0x701 bit1synth.o
+ .debug_info    0x00000000      0x785 bit1synth.o
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev   0x00000000      0x1f2
+.debug_abbrev   0x00000000      0x1ff
  *(.debug_abbrev)
- .debug_abbrev  0x00000000      0x1f2 bit1synth.o
+ .debug_abbrev  0x00000000      0x1ff bit1synth.o
 
 .debug_line     0x00000000      0x73c
  *(.debug_line)
@@ -412,10 +412,10 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
  *(.debug_frame)
  .debug_frame   0x00000000       0xe0 bit1synth.o
 
-.debug_str      0x00000000      0x2df
+.debug_str      0x00000000      0x2f1
  *(.debug_str)
- .debug_str     0x00000000      0x2df bit1synth.o
-                                0x338 (size before relaxing)
+ .debug_str     0x00000000      0x2f1 bit1synth.o
+                                0x34a (size before relaxing)
 
 .debug_loc      0x00000000      0x169
  *(.debug_loc)

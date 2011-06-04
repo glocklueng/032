@@ -440,7 +440,7 @@ void check_byte_received()
 
 	if( selfPlay ) {
 		if( counter == 0 ) {
-			byte_received = pgm_read_byte(&daft[daftIndex]);
+			byte_received = pgm_read_byte(&black[daftIndex]);
 			daftIndex ++; 
 			if( daftIndex == sizeof( daft ) ) {
 				daftIndex = 0;
