@@ -53,7 +53,7 @@ int main(void)
 
     
     // INIT - Initialization Code 
-    // -------------------------- 
+    // **************************** 
   
     // Set system clock to 20Mhz
     //SysCtlClockSet(SYSCTL_SYSDIV_10 | SYSCTL_USE_PLL 
@@ -73,11 +73,11 @@ int main(void)
     InitUART();
     InitTIMER();
     //
-    // --------------------------
+    // ****************************
     
     
     // Cylon Init
-    // --------------------------
+    // ****************************
     // Some value that will eventually go away..
     //unsigned long blink_delay = 200000;
     volatile unsigned long ulLoop;
@@ -97,7 +97,7 @@ int main(void)
     //
     GPIO_PORTF_DIR_R = 0x0e;
     GPIO_PORTF_DEN_R = 0x0e;
-    // --------------------------
+    // ****************************
    
     
     // IMU Values
@@ -120,16 +120,17 @@ int main(void)
     GPIO_PORTF_DATA_R &= ~(0x02);     // Turn blue LED off (Motor Spinup Light)
     
     // MAIN LOOP
-    // --------------------------
+    // ****************************
     while(1)
     {   
-        GPIO_PORTF_DATA_R |= 0x04;
-        readIMU(&imu[0]);
+        GPIO_PORTF_DATA_R |= 0x04;    // Turn green LED on (Flight Mode)
+        
+        readIMU(&imu[0]);             // Read IMU and filter
 
-        Control(&imu[0]);
+        Control(&imu[0]);             // Control drone by feeding IMU data
     
     }
-    // --------------------------
+    // ****************************
 }
 
 
