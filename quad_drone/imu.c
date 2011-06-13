@@ -144,51 +144,54 @@ signed long y_comp_raw = 0;		// Y Compass Reading
 signed long z_comp_raw = 0;		// Z Compass Reading
 
 // Temperature Variables
-unsigned long temp_raw;
-float temperature;
+unsigned long temp_raw;                 // Raw Temperature Reading from ADC
+float temperature;                      // Temperature in C
 
 
-// Test Values
-float x_ang = 0;
 
-// -----------------------------------------  
-//
+//*****************************************************************************
 // IMU - Filtered results
 //
-// [0] : X Angle
-// [1] : Y Angle
-// [2] : Z Angle
-// [3] : X Rate
-// [4] : Y Rate
-// [5] : Z Rate
-// [6] : Magnetic North Heading
+// [0] : X Angle - roll   (deg)
+// [1] : Y Angle - pitch  (deg)
+// [2] : Z Angle - yaw    (deg)
+// [3] : X Rate  - roll angular speed  (deg/sec)
+// [4] : Y Rate  - pitch angular speed (deg/sec)
+// [5] : Z Rate  - yaw angular speed   (deg/sec)
+// [6] : dt
 // [7] : Temperature
+//
 void readIMU(float *imu)
 {     
     // Calculate dt for integration
-    // ----------------------------
+    // ****************************
     if(startFlag == 0)
     {
         startFlag = 1;  // dt calculation starts
         
-        previousTimer = TimerValueGet(TIMER0_BASE, TIMER_A);
+        previousTimer = TimerValueGet(TIMER0_BASE, TIMER_A);  // Grab First Time
     }
     else
     {
-        currentTimer = TimerValueGet(TIMER0_BASE, TIMER_A);
+        currentTimer = TimerValueGet(TIMER0_BASE, TIMER_A);   // Grab Current Time
         
-        measuredDt = (float)SysCtlClockGet();
+        measuredDt = (float)SysCtlClockGet();                 // Debug Reasons
+        
+        //Subtract Previous Timer by Current Timer then divide by system speed to obtain dt
         measuredDt = (float)((float)(previousTimer - currentTimer)/(float)SysCtlClockGet());  
         
-        if(measuredDt > 0.0000000f)
+        if(measuredDt > 0.0000000f)    // As long as time is positive set it to dt
         {
           dt = measuredDt;
         }
         
-        previousTimer = currentTimer;
+        previousTimer = currentTimer;  // Set Current Timer to Previous Timer for next loop
     }
-    // ----------------------------
+    // ****************************
+   
     
+    // Read Values then convert to real
+    // ****************************
     // Read ADC - X Axis Acc
     // Read ADC - Y Axis Acc
     // Read ADC - Z Axis Acc
@@ -217,7 +220,23 @@ void readIMU(float *imu)
     x_gyro_rad_sec  = (float)(((float)(x_gyro_raw - x_gyro_offset)* x_gyro_scale)*convert_pi_180);	 // Convert raw data bytes to angular velocity - X Axis
     y_gyro_rad_sec  = (float)(((float)(y_gyro_raw - y_gyro_offset)* y_gyro_scale)*convert_pi_180);	 // Convert raw data bytes to angular velocity - Y Axis
     z_gyro_rad_sec  = (float)(((float)(z_gyro_raw - z_gyro_offset)* z_gyro_scale)*convert_pi_180);	 // Convert raw data bytes to angular velocity - Z Axis
+    // ****************************
     
+    // Prefiltered Values
+    /*
+    imu[0] = x_acc_rad*convert_180_Pi;
+    imu[1] = y_acc_rad*convert_180_Pi;
+    imu[2] = z_acc_rad*convert_180_Pi;
+    imu[3] = x_gyro_rad_sec*convert_180_Pi;
+    imu[4] = y_gyro_rad_sec*convert_180_Pi;
+    imu[5] = z_gyro_rad_sec*convert_180_Pi;
+    imu[6] = dt;
+    imu[7] = temp_raw; 
+    */
+    // TODO: Add atan2 stuff and make it quaternion too!!
+    
+    // Filter
+    // ****************************
     
     // Runge-Kutta Integration 
     // -----------------------
@@ -242,39 +261,15 @@ void readIMU(float *imu)
     z_gyro_rad_sec_2 = z_gyro_rad_sec_1;
     z_gyro_rad_sec_3 = z_gyro_rad_sec_2;
     
+    
     // Integrate the gyro axis with a bias to convert to angle then add to angle
-    // To Do: Add weighting to this process
     x_angle += ((x_gyro_rad_sec - x_bias)) * dt;			// integrate x axis gyro with bias then add to x angle
     y_angle += ((y_gyro_rad_sec - y_bias)) * dt;			// integrate y axis gyro with bias then add to y angle
     z_angle += ((z_gyro_rad_sec - z_bias)) * dt;			// integrate z axis gyro with bias then add to z angle
 
-    //  Pre-Kalman Values
-    /*
-    imu[0] = x_acc_rad;
-    imu[1] = y_acc_rad;
-    imu[2] = z_acc_rad;
-    imu[3] = (x_gyro_rad_sec - x_bias);
-    imu[4] = (y_gyro_rad_sec - y_bias);
-    imu[5] = (z_gyro_rad_sec - z_bias);
-    imu[6] = x_acc_rad*convert_180_Pi;  
-    imu[7] = temp_raw; 
-    */
-   
-    /*
-    imu[0] = x_acc_rad;
-    imu[1] = y_acc_rad;
-    imu[2] = z_acc_rad;
-    imu[3] = (x_gyro_rad_sec - x_bias);
-    imu[4] = (y_gyro_rad_sec - y_bias);
-    imu[5] = (z_gyro_rad_sec - z_bias);
-    imu[6] = 12345;
-    imu[7] = temp_raw;
-    */
-    
-
-    
+        
     // Kalman Filter 
-    // ----------------------
+    // **********************
     
     // Filter X Axis
     // ----------------------
@@ -283,6 +278,8 @@ void readIMU(float *imu)
     xP_01 -=  dt * xP_11;
     xP_10 -=  dt * xP_11;
     xP_11 +=  Q_gyro * dt; 
+    
+    x_angle += (x_gyro_rad_sec - x_bias)*dt;
     
     // Update with new data
     x_y = x_acc_rad - x_angle;    
@@ -309,6 +306,8 @@ void readIMU(float *imu)
     yP_10 -=  dt * yP_11;
     yP_11 +=  Q_gyro * dt; 
     
+    y_angle += (y_gyro_rad_sec - y_bias)*dt;
+    
     // Update with new data
     y_y = y_acc_rad - y_angle;
     yS = yP_00 + R_angle;
@@ -334,6 +333,8 @@ void readIMU(float *imu)
     zP_10 -=  dt * zP_11;
     zP_11 +=  Q_gyro * dt; 
     
+    z_angle += (z_gyro_rad_sec - z_bias)*dt;
+    
     // Update with new data
     z_y = z_acc_rad - z_angle;
     zS = zP_00 + R_angle;
@@ -351,25 +352,31 @@ void readIMU(float *imu)
     zP_11 -= zK_1 * zP_01;
     
     // Kalman Filtered Values
+    // ----------------------
     imu[0] = x_angle*convert_180_Pi;
     imu[1] = y_angle*convert_180_Pi;
     imu[2] = z_angle*convert_180_Pi;
     imu[3] = (x_gyro_rad_sec - x_bias)*convert_180_Pi;
     imu[4] = (y_gyro_rad_sec - y_bias)*convert_180_Pi;
     imu[5] = (z_gyro_rad_sec - z_bias)*convert_180_Pi;
-    imu[6] = 12345;
+    imu[6] = dt;
     imu[7] = temp_raw; 
+    // ----------------------
     //
+    // **********************
+    // ****************************
     
     // Send Data Telemetry
+    //
     sendDataTelemetry(&imu[0], dt);
-    
+    //sendMAVLinkData(&imu[0], dt);
+    //
 }
-// ----------------------------------------- 
+//*****************************************************************************
 
 
-// -----------------------------------------   
-//
+
+//*****************************************************************************
 // Read Accelerometer
 //
 // ADC Value Matrix:
@@ -377,6 +384,7 @@ void readIMU(float *imu)
 // [1] : X - Axis Accelerometer
 // [2] : Y - Axis Accelerometer
 // [3] : Z - Axis Accelerometer
+//
 unsigned long adc_values[4];
 // -----------------------------------------   
 void readAccel(unsigned long *temp, unsigned long *x_acc,
@@ -399,11 +407,11 @@ void readAccel(unsigned long *temp, unsigned long *x_acc,
     *y_acc = adc_values[2];
     *z_acc = adc_values[3];
 }
-// ----------------------------------------- 
+//*****************************************************************************
 
 
-// -----------------------------------------   
-//
+
+//***************************************************************************** 
 // Read Gyroscope
 //
 // [0] : X - Axis Gyroscope L
@@ -465,12 +473,13 @@ void readGyro(signed long *x_gyro, signed long *y_gyro,
     *z_gyro = (gyro_values[5] << 8) | gyro_values[4];
     
 }
-// ----------------------------------------- 
+//*****************************************************************************
 
 
-// -----------------------------------------   
-//
+
+//*****************************************************************************   
 // Read Compass
+//
 //
 // [0] : X - Axis MSB Compass
 // [1] : X - Axis LSB Compass
@@ -530,23 +539,29 @@ void readCompass(signed long *x_axis, signed long *y_axis,
     *y_axis = (compass_values[2] << 8) | compass_values[3];
     *z_axis = (compass_values[4] << 8) | compass_values[5];
 }
-// ----------------------------------------- 
+//***************************************************************************** 
 
 
-// -----------------------------------------   
-// IMU STARTUP
-// -----------------------------------------  
+
+
+//*****************************************************************************
+// IMU Startup
+//
 // Start up the IMU by calibrating
+//
 void imuStartup()
 {
    sensorsSelfTest();
 }
-// ----------------------------------------- 
+//*****************************************************************************
 
 
-// -----------------------------------------   
-// SELF TEST SYSTEM
-// -----------------------------------------   
+
+
+//*****************************************************************************
+// Sensor Self Test
+//
+//
 // [0] : X - Axis Gyroscope Positive (-) Calibration Reading
 // [1] : Y - Axis Gyroscope Positive (+) Calibration Reading
 // [2] : Z - Axis Gyroscope Positive (-) Calibration Reading
@@ -559,9 +574,9 @@ void imuStartup()
 // [9] : X - Axis Accelerometer Calibration Reading - ST
 // [10]: Y - Axis Accelerometer Calibration Reading - ST
 // [11]: Z - Axis Accelerometer Calibration Reading - ST
-
+//
 signed long imu_st_cal[12];
-
+// ----------------------------------------- 
 void sensorsSelfTest()
 {                                                                              
     volatile unsigned long delayVar;
@@ -701,4 +716,4 @@ void sensorsSelfTest()
        delayVar = delayVar - 100;
     }                       
 }
-// ----------------------------------------- 
+//***************************************************************************** 

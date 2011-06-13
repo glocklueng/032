@@ -22,10 +22,15 @@
 #include "grlib/widget.h"
 
 #include <stdio.h>
+#include "pixhawk/mavlink.h"
 
 // UART Variables
 unsigned long uartDelay = 0;
 unsigned long controlDelay = 0;
+unsigned long  mavlinkDelay = 0;
+
+//  Natural Constants
+//static const float convert_pi_180 = 0.017453f;	    // Pi/180 - Convert Degrees to Radians
 
 //***************************************************************************** 
 // 
@@ -52,11 +57,16 @@ UARTSend(const unsigned char *pucBuffer, unsigned long ulCount)
   
 
 //*****************************************************************************
+//  Send Data Telemetry
+//  
+//  Sends the IMU and dt data through the Xbee (UART)
+//
 void sendDataTelemetry(float *imu, float dt)
 {
     if(uartDelay > 10)
     {
       uartDelay = 0;
+      
       for(int i=0; i < 8; i++)
       {
         char sendBuf[32];
@@ -122,10 +132,15 @@ void sendDataTelemetry(float *imu, float dt)
     {
       uartDelay++; 
     }
-  
+    
+   
 }
 
 //*****************************************************************************
+// Send Control Telemetry
+//
+// Sends the control systems data to through the Xbee (UART)
+//
 void sendControlTelemetry(float torque, float P, float I, float D)
 {
     if(controlDelay > 10)
@@ -213,3 +228,52 @@ void sendControlTelemetry(float torque, float P, float I, float D)
       controlDelay++; 
     }
 }
+
+//*****************************************************************************
+// Send MAVLink Data
+//  
+// Packets are constructed to send to QGroundControl for data
+// telemetry.
+//
+void sendMAVLinkData(float *imu, float dt)
+{
+    if(mavlinkDelay > 10)
+    {
+      mavlinkDelay = 0;
+      // Define the system type, in this case an airplane
+      int system_type = MAV_QUADROTOR;
+      int autopilot_type = MAV_AUTOPILOT_GENERIC;
+       
+      // Initialize the required buffers
+      mavlink_message_t msg;
+      uint8_t buf[MAVLINK_MAX_PACKET_LEN];
+      
+      // Pack the message
+      // mavlink_message_heartbeat_pack(system id, component id, message container, system type, MAV_AUTOPILOT_GENERIC)
+      // try 0x55 0x20
+      // else try 26 200
+      mavlink_msg_heartbeat_pack(100, 200, &msg, system_type, autopilot_type);
+      
+      // Copy the message to the send buffer
+      uint16_t len = mavlink_msg_to_send_buffer(buf, &msg);
+       
+      // Send the message with the standard UART send function
+      UARTSend((unsigned char*)buf, len);
+      
+      // SEND IMU DATA
+      mavlink_msg_scaled_imu_pack(100, 200, &msg, 0, (int16_t)imu[0], (int16_t)imu[1], (int16_t)imu[2], (int16_t)imu[3], (int16_t)imu[4], (int16_t)imu[5], 0, 0, 0);
+      
+      // Copy the message to the send buffer
+      len = mavlink_msg_to_send_buffer(buf, &msg);
+       
+      // Send the message with the standard UART send function
+      UARTSend((unsigned char*)buf, len);  
+     
+    }
+    else
+    {
+      mavlinkDelay++; 
+    }
+}
+
+

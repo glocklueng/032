@@ -2,14 +2,169 @@
 
 <project>
   <fileVersion>2</fileVersion>
-  <fileChecksum>2738774866</fileChecksum>
+  <fileChecksum>863233139</fileChecksum>
   <configuration>
     <name>Debug</name>
     <outputs>
       <file>$PROJ_DIR$\..\..\..\grlib\widget.h</file>
+      <file>$PROJ_DIR$\common\common.h</file>
+      <file>$PROJ_DIR$\..\..\..\inc\hw_ints.h</file>
+      <file>$PROJ_DIR$\..\..\..\inc\hw_types.h</file>
+      <file>$PROJ_DIR$\..\..\..\driverlib\uart.h</file>
+      <file>$PROJ_DIR$\..\..\..\driverlib\gpio.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_action.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_action_ack.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_attitude.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_attitude_controller_output.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_attitude_new.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_auth_key.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_boot.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_change_operator_control.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_change_operator_control_ack.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_command.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_command_ack.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_control_status.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_debug.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_debug_vect.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_global_position.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_global_position_int.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_gps_local_origin_set.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_gps_raw.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_gps_raw_int.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_gps_set_global_origin.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_gps_status.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_heartbeat.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_local_position.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_local_position_setpoint.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_local_position_setpoint_set.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_manual_control.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_named_value_float.h</file>
+      <file>$PROJ_DIR$\ewarm\Obj\set_pinout.pbi</file>
+      <file>$PROJ_DIR$\ewarm\Obj\control.o</file>
+      <file>$PROJ_DIR$\pixhawk\mavlink_msg_position_control_setpoint.h</file>
+      <file>$PROJ_DIR$\..\..\..\driverlib\interrupt.h</file>
+      <file>$PROJ_DIR$\ewarm\Obj\control.pbi</file>
+      <file>$PROJ_DIR$\pixhawk\mavlink_msg_point_of_interest_connection.h</file>
+      <file>$PROJ_DIR$\ewarm\Obj\xbee.o</file>
+      <file>$PROJ_DIR$\pixhawk\mavlink_msg_marker.h</file>
+      <file>$PROJ_DIR$\control.h</file>
+      <file>$PROJ_DIR$\pixhawk\mavlink_msg_image_triggered.h</file>
+      <file>$PROJ_DIR$\pixhawk\mavlink_msg_set_cam_shutter.h</file>
+      <file>$PROJ_DIR$\pixhawk\pixhawk.h</file>
+      <file>$PROJ_DIR$\protocol.h</file>
+      <file>$PROJ_DIR$\mavlink_types.h</file>
+      <file>$PROJ_DIR$\..\..\..\inc\hw_timer.h</file>
+      <file>$TOOLKIT_DIR$\lib\shb_l.a</file>
+      <file>$PROJ_DIR$\pixhawk\mavlink_msg_brief_feature.h</file>
+      <file>$PROJ_DIR$\pixhawk\mavlink_msg_encapsulated_data.h</file>
+      <file>$PROJ_DIR$\pixhawk\mavlink_msg_point_of_interest.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\ysizet.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\stdio.h</file>
+      <file>$PROJ_DIR$\init.h</file>
+      <file>$PROJ_DIR$\ewarm\Exe\quad_drone.bin</file>
+      <file>$TOOLKIT_DIR$\inc\c\string.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Product_string.h</file>
+      <file>$PROJ_DIR$\..\..\..\driverlib\timer.h</file>
+      <file>$PROJ_DIR$\pixhawk\mavlink_msg_watchdog_process_status.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Product.h</file>
+      <file>$PROJ_DIR$\..\..\..\driverlib\sysctl.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Defaults.h</file>
+      <file>$TOOLKIT_DIR$\lib\dl7M_tlf.a</file>
+      <file>$PROJ_DIR$\pixhawk\mavlink_msg_image_available.h</file>
+      <file>$PROJ_DIR$\checksum.h</file>
+      <file>$PROJ_DIR$\..\drivers\kitronix320x240x16_ssd2119_8bit.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\math.h</file>
+      <file>$PROJ_DIR$\pixhawk\mavlink_msg_raw_aux.h</file>
+      <file>$PROJ_DIR$\pixhawk\mavlink_msg_data_transmission_handshake.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\ystdio.h</file>
+      <file>$PROJ_DIR$\pixhawk\mavlink_msg_watchdog_process_info.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Config_Full.h</file>
+      <file>$PROJ_DIR$\imu.h</file>
+      <file>$PROJ_DIR$\xbee.h</file>
+      <file>$PROJ_DIR$\..\..\..\inc\lm3s9b96.h</file>
+      <file>$TOOLKIT_DIR$\lib\rt7M_tl.a</file>
+      <file>$PROJ_DIR$\..\..\..\inc\hw_memmap.h</file>
+      <file>$PROJ_DIR$\ewarm\Exe\quad_drone.out</file>
+      <file>$PROJ_DIR$\pixhawk\mavlink_msg_image_trigger_control.h</file>
+      <file>$PROJ_DIR$\ewarm\Obj\startup.pbi</file>
+      <file>$PROJ_DIR$\ewarm\Obj\quad_drone.pbd</file>
+      <file>$PROJ_DIR$\ewarm\Obj\startup.o</file>
+      <file>$PROJ_DIR$\ewarm\Obj\imu.o</file>
+      <file>$PROJ_DIR$\ewarm\Obj\init.o</file>
+      <file>$PROJ_DIR$\..\..\..\grlib\grlib.h</file>
+      <file>$PROJ_DIR$\..\..\..\driverlib\i2c.h</file>
+      <file>$PROJ_DIR$\quad_drone.icf</file>
+      <file>$PROJ_DIR$\pixhawk\mavlink.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\inttypes.h</file>
+      <file>$PROJ_DIR$\pixhawk\mavlink_msg_position_control_offset_set.h</file>
+      <file>$PROJ_DIR$\pixhawk\mavlink_msg_vicon_position_estimate.h</file>
+      <file>$PROJ_DIR$\ewarm\Obj\init.pbi</file>
+      <file>$PROJ_DIR$\ewarm\Obj\set_pinout.o</file>
+      <file>$PROJ_DIR$\..\..\..\driverlib\debug.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Threads.h</file>
+      <file>$PROJ_DIR$\ewarm\Obj\xbee.pbi</file>
+      <file>$TOOLKIT_DIR$\inc\c\yvals.h</file>
+      <file>$PROJ_DIR$\pixhawk\mavlink_msg_position_control_setpoint_set.h</file>
+      <file>$PROJ_DIR$\ewarm\List\quad_drone.map</file>
+      <file>$TOOLKIT_DIR$\lib\m7M_tl.a</file>
+      <file>$TOOLKIT_DIR$\inc\c\xencoding_limits.h</file>
+      <file>$PROJ_DIR$\pixhawk\mavlink_msg_watchdog_command.h</file>
+      <file>$PROJ_DIR$\pixhawk\mavlink_msg_pattern_detected.h</file>
+      <file>$PROJ_DIR$\pixhawk\mavlink_msg_watchdog_heartbeat.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\stdint.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\ymath.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\xtgmath.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\ycheck.h</file>
+      <file>$PROJ_DIR$\..\..\..\driverlib\adc.h</file>
+      <file>$PROJ_DIR$\pixhawk\mavlink_msg_vision_position_estimate.h</file>
+      <file>$PROJ_DIR$\ewarm\Obj\quad_drone.pbi</file>
+      <file>$PROJ_DIR$\..\..\..\inc\hw_gpio.h</file>
+      <file>$PROJ_DIR$\ewarm\Obj\imu.pbi</file>
+      <file>$PROJ_DIR$\ewarm\Obj\quad_drone.o</file>
+      <file>$PROJ_DIR$\pixhawk\mavlink_msg_aux_status.h</file>
+      <file>$PROJ_DIR$\..\..\..\inc\hw_adc.h</file>
+      <file>$PROJ_DIR$\..\..\..\driverlib\pwm.h</file>
+      <file>$PROJ_DIR$\display.h</file>
+      <file>$PROJ_DIR$\pixhawk\mavlink_msg_attitude_control.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_named_value_int.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_nav_controller_output.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_param_request_list.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_param_request_read.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_param_set.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_param_value.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_ping.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_position_controller_output.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_position_target.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_raw_imu.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_raw_pressure.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_rc_channels_raw.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_rc_channels_scaled.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_request_data_stream.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_safety_allowed_area.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_safety_set_allowed_area.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_scaled_imu.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_scaled_pressure.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_servo_output_raw.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_set_altitude.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_set_mode.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_set_nav_mode.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_state_correction.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_statustext.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_sys_status.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_system_time.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_system_time_utc.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_vfr_hud.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_waypoint.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_waypoint_ack.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_waypoint_clear_all.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_waypoint_count.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_waypoint_current.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_waypoint_reached.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_waypoint_request.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_waypoint_request_list.h</file>
+      <file>$PROJ_DIR$\common\mavlink_msg_waypoint_set_current.h</file>
       <file>$PROJ_DIR$\control.c</file>
       <file>$PROJ_DIR$\imu.c</file>
-      <file>$PROJ_DIR$\..\..\..\driverlib\gpio.h</file>
       <file>$PROJ_DIR$\init.c</file>
       <file>$PROJ_DIR$\quad_drone.c</file>
       <file>$PROJ_DIR$\..\drivers\set_pinout.c</file>
@@ -17,242 +172,33 @@
       <file>$PROJ_DIR$\xbee.c</file>
       <file>$PROJ_DIR$\..\..\..\driverlib\ewarm\Exe\driverlib.a</file>
       <file>$PROJ_DIR$\..\..\..\grlib\ewarm\Exe\grlib.a</file>
-      <file>$PROJ_DIR$\..\..\..\inc\hw_timer.h</file>
-      <file>$PROJ_DIR$\..\..\..\driverlib\timer.h</file>
-      <file>$PROJ_DIR$\..\drivers\kitronix320x240x16_ssd2119_8bit.h</file>
-      <file>$PROJ_DIR$\..\..\..\driverlib\uart.h</file>
-      <file>$PROJ_DIR$\..\..\..\inc\hw_types.h</file>
-      <file>$PROJ_DIR$\..\..\..\inc\hw_ints.h</file>
-      <file>$PROJ_DIR$\ewarm\Obj\imu.o</file>
-      <file>$PROJ_DIR$\ewarm\Obj\set_pinout.pbi</file>
-      <file>$PROJ_DIR$\ewarm\Obj\imu.pbi</file>
-      <file>$PROJ_DIR$\..\..\..\grlib\grlib.h</file>
-      <file>$PROJ_DIR$\..\..\..\inc\hw_gpio.h</file>
-      <file>$PROJ_DIR$\..\..\..\driverlib\i2c.h</file>
-      <file>$PROJ_DIR$\quad_drone.icf</file>
-      <file>$PROJ_DIR$\..\..\..\driverlib\interrupt.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\xencoding_limits.h</file>
-      <file>$PROJ_DIR$\..\..\..\driverlib\sysctl.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\DLib_Defaults.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\DLib_Product.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\yvals.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\math.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\DLib_Threads.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\xtgmath.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\ycheck.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\ymath.h</file>
-      <file>$PROJ_DIR$\..\..\..\driverlib\adc.h</file>
-      <file>$PROJ_DIR$\ewarm\Obj\quad_drone.pbi</file>
-      <file>$PROJ_DIR$\..\..\..\driverlib\debug.h</file>
-      <file>$PROJ_DIR$\..\..\..\driverlib\pwm.h</file>
-      <file>$TOOLKIT_DIR$\lib\m7M_tl.a</file>
-      <file>$PROJ_DIR$\ewarm\Obj\init.o</file>
-      <file>$PROJ_DIR$\ewarm\List\quad_drone.map</file>
-      <file>$PROJ_DIR$\ewarm\Exe\quad_drone.out</file>
-      <file>$PROJ_DIR$\ewarm\Obj\startup.pbi</file>
-      <file>$PROJ_DIR$\ewarm\Obj\set_pinout.o</file>
-      <file>$PROJ_DIR$\ewarm\Obj\init.pbi</file>
-      <file>$PROJ_DIR$\ewarm\Obj\control.o</file>
-      <file>$PROJ_DIR$\display.h</file>
-      <file>$TOOLKIT_DIR$\lib\dl7M_tlf.a</file>
-      <file>$PROJ_DIR$\control.h</file>
-      <file>$PROJ_DIR$\ewarm\Obj\control.pbi</file>
-      <file>$TOOLKIT_DIR$\lib\shb_l.a</file>
-      <file>$PROJ_DIR$\ewarm\Obj\startup.o</file>
-      <file>$PROJ_DIR$\ewarm\Obj\quad_drone.pbd</file>
-      <file>$PROJ_DIR$\..\..\..\inc\hw_adc.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\DLib_Config_Full.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\ystdio.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\stdio.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\ysizet.h</file>
-      <file>$PROJ_DIR$\init.h</file>
-      <file>$PROJ_DIR$\ewarm\Obj\quad_drone.o</file>
-      <file>$PROJ_DIR$\ewarm\Obj\xbee.pbi</file>
-      <file>$PROJ_DIR$\ewarm\Obj\xbee.o</file>
-      <file>$PROJ_DIR$\xbee.h</file>
-      <file>$PROJ_DIR$\..\..\..\inc\lm3s9b96.h</file>
-      <file>$TOOLKIT_DIR$\lib\rt7M_tl.a</file>
-      <file>$PROJ_DIR$\..\..\..\inc\hw_memmap.h</file>
       <file>$PROJ_DIR$\..\drivers\set_pinout.h</file>
-      <file>$PROJ_DIR$\imu.h</file>
-      <file>$PROJ_DIR$\ewarm\Exe\quad_drone.bin</file>
     </outputs>
     <file>
       <name>[ROOT_NODE]</name>
       <outputs>
         <tool>
           <name>ILINK</name>
-          <file> 42 41</file>
+          <file> 78 99</file>
         </tool>
       </outputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\control.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 50</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 46</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 64 30 33 34 29 27 28 25 31 32 49 63 54 21 16 66 11 15 35 37 3 24 38 22 26 12 14 20 0</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 64 30 33 34 29 27 55 28 25 31 32 49 63 54 21 16 66 11 15 35 37 3 24 38 22 26 12 14 20 0</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\imu.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 19</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 17</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 64 30 33 34 29 27 28 25 31 32 68 63 54 21 16 66 11 15 35 37 3 24 38 22 26 12 14 20 0</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 64 30 33 34 29 27 55 28 25 31 32 68 63 54 21 16 66 11 15 35 37 3 24 38 22 26 12 14 20 0</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\init.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 45</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 40</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 59 68 54 21 16 66 11 15 35 3 24 38 22 26 12 14 20 0 13 67</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 59 68 54 21 16 66 11 15 35 3 24 38 22 26 12 14 20 0 13 67</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\quad_drone.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 36</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 60</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 64 30 33 34 29 27 28 25 31 32 54 21 16 66 11 15 35 37 3 24 38 22 26 12 14 20 0 13 67 59 68 49 47 63</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 64 30 33 34 29 27 55 28 25 31 32 54 21 16 66 11 15 35 37 3 24 38 22 26 12 14 20 0 13 67 59 68 49 47 63</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\drivers\set_pinout.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 18</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 44</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 66 15 21 26 67</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 66 15 21 26 67</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\startup.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 43</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 52</file>
-        </tool>
-      </outputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\xbee.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 61</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 62</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 64 30 33 34 29 27 28 25 31 32 63 54 21 16 66 11 15 35 37 3 24 38 22 26 12 14 20 0 57 58 56</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 64 30 33 34 29 27 55 28 25 31 32 63 54 21 16 66 11 15 35 37 3 24 38 22 26 12 14 20 0 57 58 56</file>
-        </tool>
-      </inputs>
     </file>
     <file>
       <name>$PROJ_DIR$\ewarm\Exe\quad_drone.out</name>
       <outputs>
         <tool>
           <name>ILINK</name>
-          <file> 41</file>
+          <file> 99</file>
         </tool>
         <tool>
           <name>OBJCOPY</name>
-          <file> 69</file>
+          <file> 55</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>ILINK</name>
-          <file> 23 46 17 40 60 44 52 62 9 10 51 65 39 48</file>
+          <file> 87 34 83 84 114 93 82 39 164 165 48 76 100 63</file>
         </tool>
       </inputs>
     </file>
@@ -261,7 +207,158 @@
       <inputs>
         <tool>
           <name>BILINK</name>
-          <file> 50 19 45 36 18 43 61</file>
+          <file> 37 113 92 111 33 80 96</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\control.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 34</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 37</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 75 67 108 106 97 62 72 60 101 95 107 41 74 116 112 2 77 47 3 109 94 5 36 117 86 61 58 4 85 0</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 75 67 108 106 97 62 60 101 95 107 41 74 116 112 2 77 47 3 109 94 5 36 117 86 61 58 4 85 0</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\imu.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 83</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 113</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 75 67 108 106 97 62 72 60 101 95 107 73 74 116 112 2 77 47 3 109 94 5 36 117 86 61 58 4 85 0</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 75 67 108 106 97 62 60 101 95 107 73 74 116 112 2 77 47 3 109 94 5 36 117 86 61 58 4 85 0</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\init.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 84</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 92</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 54 73 116 112 2 77 47 3 109 5 36 117 86 61 58 4 85 0 66 166</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 54 73 116 112 2 77 47 3 109 5 36 117 86 61 58 4 85 0 66 166</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\quad_drone.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 114</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 111</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 75 67 108 106 97 62 72 60 101 95 107 116 112 2 77 47 3 109 94 5 36 117 86 61 58 4 85 0 66 166 54 73 41 118 74</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 75 67 108 106 97 62 60 101 95 107 116 112 2 77 47 3 109 94 5 36 117 86 61 58 4 85 0 66 166 54 73 41 118 74</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\drivers\set_pinout.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 93</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 33</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 77 3 112 61 166</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 77 3 112 61 166</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\startup.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 82</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 80</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\xbee.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 39</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 96</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 75 67 108 106 97 62 72 60 101 95 107 74 116 112 2 77 47 3 109 94 5 36 117 86 61 58 4 85 0 53 52 70 88 44 45 56 57 65 89 105 46 1 27 12 145 126 146 13 14 11 7 6 140 141 123 122 125 124 24 136 26 129 130 137 8 10 28 20 23 144 131 132 138 148 154 156 152 155 151 150 153 149 25 22 30 29 17 135 134 9 127 121 128 142 139 133 31 21 147 15 16 19 32 120 143 18 119 43 42 79 64 110 91 98 90 35 40 68 115 104 71 59 102 103 51 38 69 50 49</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 75 67 108 106 97 62 60 101 95 107 74 116 112 2 77 47 3 109 94 5 36 117 86 61 58 4 85 0 53 52 70 88 44 45 56 57 65 89 105 46 1 27 12 145 126 146 13 14 11 7 6 140 141 123 122 125 124 24 136 26 129 130 137 8 10 28 20 23 144 131 132 138 148 154 156 152 155 151 150 153 149 25 22 30 29 17 135 134 9 127 121 128 142 139 133 31 21 147 15 16 19 32 120 143 18 119 43 42 79 64 110 91 98 90 35 40 68 115 104 71 59 102 103 51 38 69 50 49</file>
         </tool>
       </inputs>
     </file>

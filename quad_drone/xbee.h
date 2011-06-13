@@ -11,3 +11,6 @@ sendDataTelemetry(float *imu, float dt);
 extern void 
 sendControlTelemetry(float torque, float P, float I, float D); 
 //============================================================================//
+extern void
+sendMAVLinkData(float *imu, float dt);
+//============================================================================//
