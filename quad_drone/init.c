@@ -64,7 +64,7 @@ void InitADC()
 void InitPWM()
 {
     
-    SysCtlPWMClockSet(SYSCTL_PWMDIV_1);             // Set PWM Clock
+    SysCtlPWMClockSet(SYSCTL_PWMDIV_16);             // Set PWM Clock
     
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);    // Enable GPIO Port A
     SysCtlPeripheralEnable(SYSCTL_PERIPH_PWM);      // Enable PWM
@@ -89,13 +89,13 @@ void InitPWM()
     PWMGenConfigure(PWM_BASE, PWM_GEN_0, PWM_GEN_MODE_UP_DOWN | PWM_GEN_MODE_NO_SYNC);
     PWMGenConfigure(PWM_BASE, PWM_GEN_3, PWM_GEN_MODE_UP_DOWN | PWM_GEN_MODE_NO_SYNC);
     
-    PWMGenPeriodSet(PWM_BASE, PWM_GEN_0, 7812);         // Set PWM Gen 0 Timer
-    PWMPulseWidthSet(PWM_BASE, PWM_OUT_0, 6000);        // Set PWM0 Duty Cycle
-    PWMPulseWidthSet(PWM_BASE, PWM_OUT_1, 6000);        // Set PWM1 Duty Cycle
+    PWMGenPeriodSet(PWM_BASE, PWM_GEN_0, 100000);         // Set PWM Gen 0 Timer  // 7812
+    PWMPulseWidthSet(PWM_BASE, PWM_OUT_0, 0);        // Set PWM0 Duty Cycle  // 6000
+    PWMPulseWidthSet(PWM_BASE, PWM_OUT_1, 0);        // Set PWM1 Duty Cycle  // 6000
     
-    PWMGenPeriodSet(PWM_BASE, PWM_GEN_3, 7812);         // Set PWM Gen 3 Timer
-    PWMPulseWidthSet(PWM_BASE, PWM_OUT_6, 6000);        // Set PWM6 Duty Cycle
-    PWMPulseWidthSet(PWM_BASE, PWM_OUT_7, 6000);        // Set PWM7 Duty Cycle
+    PWMGenPeriodSet(PWM_BASE, PWM_GEN_3, 100000);         // Set PWM Gen 3 Timer  // 7812
+    PWMPulseWidthSet(PWM_BASE, PWM_OUT_6, 0);        // Set PWM6 Duty Cycle  // 6000
+    PWMPulseWidthSet(PWM_BASE, PWM_OUT_7, 0);        // Set PWM7 Duty Cycle  // 6000
     
     PWMOutputState(PWM_BASE, PWM_OUT_0_BIT, true);      // Set the PWM0 pin to an output
     PWMOutputState(PWM_BASE, PWM_OUT_1_BIT, true);      // Set the PWM1 pin to an output
