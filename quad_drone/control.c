@@ -72,7 +72,7 @@ float y_torque = 0.0f;          // Y Axis - Rotational Torque
 //
 
 // Z-Axis Data
-float z_thrust = 76530.0f;      // Z Axis Thrust // Idle Thrust = 76530.0
+float z_thrust = 6000.0f;      // Z Axis Thrust // Idle Thrust = 76530.0
 //
 
 // IMU Data
@@ -89,13 +89,13 @@ static float dt;
 //
 
 // Motor Data
-unsigned long y_motor_dutycycle_m1 = 64000;    // Motor 1 - Y-Axis
-unsigned long y_motor_dutycycle_m2 = 64000;    // Motor 2 - Y-Axis
-unsigned long x_motor_dutycycle_m3 = 64000;    // Motor 3 - X-Axis
-unsigned long x_motor_dutycycle_m4 = 64000;    // Motor 4 - X-Axis
+unsigned long y_motor_dutycycle_m1 = 0;    // Motor 1 - Y-Axis - 64000
+unsigned long y_motor_dutycycle_m2 = 0;    // Motor 2 - Y-Axis - 64000
+unsigned long x_motor_dutycycle_m3 = 0;    // Motor 3 - X-Axis - 64000
+unsigned long x_motor_dutycycle_m4 = 0;    // Motor 4 - X-Axis - 64000
 
-unsigned long motor_upperbound = 80000;
-unsigned long motor_lowerbound = 74000;
+unsigned long motor_upperbound = 100000;        // 80000
+unsigned long motor_lowerbound = 0;          // 74000
 
 float m1_scale = 1.0018f;     //1.0018         // Motor 1 - Scalar - Y-Axis
 float m2_scale = 1.0000f;                      // Motor 2 - Scalar - Y-Axis
@@ -233,12 +233,12 @@ void Control(float *imu)
     // Set Motor PWM's
     //
     // Y-Axis Motor Control - Motor 1 & 2
-    PWMGenPeriodSet(PWM_BASE, PWM_GEN_0, 81840);   // get this to 20kHz
+    PWMGenPeriodSet(PWM_BASE, PWM_GEN_0, 100000);   // get this to 20kHz - 81840
     PWMPulseWidthSet(PWM_BASE, PWM_OUT_1, y_motor_dutycycle_m1);   // Motor 1 - PWM1 - Pin 35
     PWMPulseWidthSet(PWM_BASE, PWM_OUT_0, y_motor_dutycycle_m2);   // Motor 2 - PWM0 - Pin 34
     
     // X-Axis Motor Control - Motor 3 & 4
-    PWMGenPeriodSet(PWM_BASE, PWM_GEN_3, 81840);   // get this to 20kHz
+    PWMGenPeriodSet(PWM_BASE, PWM_GEN_3, 100000);   // get this to 20kHz - 81840
     PWMPulseWidthSet(PWM_BASE, PWM_OUT_7, x_motor_dutycycle_m3);   // Motor 3 - PWM7 - Pin 31
     PWMPulseWidthSet(PWM_BASE, PWM_OUT_6, x_motor_dutycycle_m4);   // Motor 4 - PWM6 - Pin 30
     // *************************
@@ -305,15 +305,14 @@ void motorSpinup()
   
   while(x_motor_dutycycle_m4 < z_thrust) //76530 
   {
-    PWMGenPeriodSet(PWM_BASE, PWM_GEN_0, 81840);   // get this to 20kHz
+    PWMGenPeriodSet(PWM_BASE, PWM_GEN_0, 100000);   // get this to 20kHz
     PWMPulseWidthSet(PWM_BASE, PWM_OUT_1, y_motor_dutycycle_m1);   // Motor 1 - PWM1 - Pin 35
     PWMPulseWidthSet(PWM_BASE, PWM_OUT_0, y_motor_dutycycle_m2);   // Motor 2 - PWM0 - Pin 34
            
-    PWMGenPeriodSet(PWM_BASE, PWM_GEN_3, 81840);   // get this to 20kHz
+    PWMGenPeriodSet(PWM_BASE, PWM_GEN_3, 100000);   // get this to 20kHz
     PWMPulseWidthSet(PWM_BASE, PWM_OUT_7, x_motor_dutycycle_m3);   // Motor 3 - PWM7 - Pin 31
     PWMPulseWidthSet(PWM_BASE, PWM_OUT_6, x_motor_dutycycle_m4);   // Motor 4 - PWM6 - Pin 30
-    
-    
+
     for(unsigned long ulLoop = 0; ulLoop < 20000; ulLoop++)       // Delay for motor spinup
     {
        delay = 0;
@@ -321,11 +320,11 @@ void motorSpinup()
        delay = delay - 100;
     }
 
-    y_motor_dutycycle_m1 += 40;                                   // Increment Motors for spinup
-    y_motor_dutycycle_m2 += 40;   
+    y_motor_dutycycle_m1 += 5;                                  // Increment Motors for spinup
+    y_motor_dutycycle_m2 += 5;   
 
-    x_motor_dutycycle_m3 += 40;
-    x_motor_dutycycle_m4 += 40;
+    x_motor_dutycycle_m3 += 5;
+    x_motor_dutycycle_m4 += 5;
   }
   
   

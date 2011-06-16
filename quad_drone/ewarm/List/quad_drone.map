@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR ELF Linker V6.10.2.52244/W32 for ARM              01/May/2011  00:34:43 #
+# IAR ELF Linker V6.10.2.52244/W32 for ARM              15/Jun/2011  01:52:45 #
 # Copyright 2007-2010 IAR Systems AB.                                         #
 #                                                                             #
 #    Output file  =  C:\Users\Arko\Documents\IAR Embedded                     #
@@ -72,7 +72,7 @@ __SystemLibrary = DLib
   .intvec            const    0x00000000   0x11c  startup.o [1]
                             - 0x0000011c   0x11c
 
-"P1":                                     0x3140
+"P1":                                     0x3130
   .text              ro code  0x0000011c   0xae2  imu.o [1]
   .text              ro code  0x00000bfe    0x22  zero_init3.o [6]
   .text              ro code  0x00000c20    0x56  timer.o [4]
@@ -125,8 +125,8 @@ __SystemLibrary = DLib
   .text              ro code  0x00003194     0xa  cexit.o [6]
   .text              ro code  0x000031a0    0x14  exit.o [7]
   .text              ro code  0x000031b4     0xc  cstartup_M.o [6]
-  Initializer bytes  ro data  0x000031c0    0x9a  <for P2 s0>
-                            - 0x0000325a  0x313e
+  Initializer bytes  ro data  0x000031c0    0x8a  <for P2 s0>
+                            - 0x0000324a  0x312e
 
 "P2", part 1 of 3:                         0x220
   P2 s0                       0x20000000   0x220  <Init block>
@@ -161,8 +161,8 @@ Zero (__iar_zero_init3)
           0x20000220   0x2c
 
 Copy/packbits (__iar_packbits_init3)
-    1 source range, total size 0x9a (28% of destination):
-          0x000031c0   0x9a
+    1 source range, total size 0x8a (25% of destination):
+          0x000031c0   0x8a
     1 destination range, total size 0x220:
           0x20000000  0x220
 
@@ -174,14 +174,14 @@ Copy/packbits (__iar_packbits_init3)
     Module            ro code  ro data  rw data
     ------            -------  -------  -------
 C:\Users\Arko\Documents\IAR Embedded Workbench\arm\examples\TexasInstruments\Stellaris\boards\dk-lm3s9b96\quad_drone\ewarm\Obj: [1]
-    control.o           1 048       55      192
-    imu.o               2 786       99      384
+    control.o           1 048       50      192
+    imu.o               2 786       88      384
     init.o                952
     quad_drone.o          180
     startup.o               6      284      256
     xbee.o                668                 8
     -------------------------------------------
-    Total:              5 640      438      840
+    Total:              5 640      422      840
 
 command line: [2]
     -------------------------------------------
@@ -255,7 +255,7 @@ shb_l.a: [7]
     Gaps                   28
     Linker created                  44
 -----------------------------------------------
-    Grand Total:       12 408      482      844
+    Grand Total:       12 408      466      844
 
 
 *******************************************************************************
@@ -294,10 +294,10 @@ I2CMasterEnable         0x00001bab    0xc  Code  Gb  i2c.o [4]
 I2CMasterInitExpClk     0x00001b85   0x26  Code  Gb  i2c.o [4]
 I2CMasterSlaveAddrSet   0x00001bc1    0x8  Code  Gb  i2c.o [4]
 InitADC                 0x00002b85   0x86  Code  Gb  init.o [1]
-InitI2C                 0x00002d43   0xf2  Code  Gb  init.o [1]
-InitPWM                 0x00002c21  0x106  Code  Gb  init.o [1]
-InitTIMER               0x00002e85   0x46  Code  Gb  init.o [1]
-InitUART                0x00002e49   0x3c  Code  Gb  init.o [1]
+InitI2C                 0x00002d3f   0xf2  Code  Gb  init.o [1]
+InitPWM                 0x00002c21  0x102  Code  Gb  init.o [1]
+InitTIMER               0x00002e81   0x46  Code  Gb  init.o [1]
+InitUART                0x00002e45   0x3c  Code  Gb  init.o [1]
 IntDefaultHandler       0x00001247    0x2  Code  Lc  startup.o [1]
 IntEnable               0x00002f47   0x4e  Code  Gb  interrupt.o [4]
 IntMasterEnable         0x00002f3d    0xa  Code  Gb  interrupt.o [4]
@@ -538,7 +538,7 @@ z_y                     0x200000c4    0x4  Data  Gb  imu.o [1]
 [7] = shb_l.a
 
   12 408 bytes of readonly  code memory
-     482 bytes of readonly  data memory
+     466 bytes of readonly  data memory
      844 bytes of readwrite data memory
 
 Errors: none

@@ -67,17 +67,13 @@ int main(void)
     SysCtlClockSet(SYSCTL_SYSDIV_2_5 | SYSCTL_USE_PLL 
                   | SYSCTL_OSC_MAIN | SYSCTL_XTAL_16MHZ);
     
+    // Initialize System Peripherals
     InitADC();
     InitPWM();         
     InitI2C();
     InitUART();
     InitTIMER();
-    //
-    // ****************************
-    
-    
-    // Cylon Init
-    // ****************************
+
     // Some value that will eventually go away..
     //unsigned long blink_delay = 200000;
     volatile unsigned long ulLoop;
@@ -98,7 +94,8 @@ int main(void)
     GPIO_PORTF_DIR_R = 0x0e;
     GPIO_PORTF_DEN_R = 0x0e;
     // ****************************
-   
+  
+    
     
     // IMU Values
     // [0] : X Angle
@@ -111,6 +108,7 @@ int main(void)
     // [7] : Temperature
     float imu[8];
     
+    // Boot-up IMU (Gyro, Acc, Compass)
     GPIO_PORTF_DATA_R |= 0x08;        // Turn red LED on (Calibrating Light)
     imuStartup();                     // Start up the IMU by calibrating
     GPIO_PORTF_DATA_R &= ~(0x08);     // Turn red LED off (Calibrating Light)
