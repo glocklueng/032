@@ -108,7 +108,6 @@ int main(void)
     // [7] : Temperature
     float imu[8];
     
-    // Boot-up IMU (Gyro, Acc, Compass)
     GPIO_PORTF_DATA_R |= 0x08;        // Turn red LED on (Calibrating Light)
     imuStartup();                     // Start up the IMU by calibrating
     GPIO_PORTF_DATA_R &= ~(0x08);     // Turn red LED off (Calibrating Light)
@@ -125,7 +124,7 @@ int main(void)
         
         readIMU(&imu[0]);             // Read IMU and filter
 
-        Control(&imu[0]);             // Control drone by feeding IMU data
+        control(&imu[0]);             // Control drone by feeding IMU data
     
     }
     // ****************************

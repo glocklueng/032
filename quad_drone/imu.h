@@ -66,6 +66,8 @@
 //============================================================================//
 void readIMU(float *imu);
 
+void updateState(float *eulerAngle);
+
 void readAccel(unsigned long *temp, unsigned long *x_acc,
                unsigned long *y_acc, unsigned long *z_acc);
 
