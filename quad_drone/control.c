@@ -95,11 +95,11 @@ unsigned long x_motor_dutycycle_m3 = 0;    // Motor 3 - X-Axis - 64000
 unsigned long x_motor_dutycycle_m4 = 0;    // Motor 4 - X-Axis - 64000
 
 unsigned long motor_upperbound = 100000;        // 80000
-unsigned long motor_lowerbound = 0;          // 74000
+unsigned long motor_lowerbound = 2400;          // 74000
 
-float m1_scale = 1.0018f;     //1.0018         // Motor 1 - Scalar - Y-Axis
+float m1_scale = 1.0000f;     //1.0018         // Motor 1 - Scalar - Y-Axis
 float m2_scale = 1.0000f;                      // Motor 2 - Scalar - Y-Axis
-float m3_scale = 1.0018f;     //1.0018         // Motor 3 - Scalar - X-Axis
+float m3_scale = 1.0000f;     //1.0018         // Motor 3 - Scalar - X-Axis
 float m4_scale = 1.0000f;                      // Motor 4 - Scalar - X-Axis
 //
 
@@ -117,7 +117,7 @@ float b_epsilon = 10.0f;                         // Epsilon - Balanced
 //
 // Control function to stabilize the drone
 //
-void Control(float *imu)
+void control(float *imu)
 {   
     // Load IMU data to Control
     x_angle = imu[0];                           // Load IMU X-Angle
@@ -253,6 +253,7 @@ void Control(float *imu)
     
     // Reinforcement Learning for PID
     // *************************
+    /*
     if(learnSample > 5)
     {
       learnSample = 0;
@@ -288,6 +289,7 @@ void Control(float *imu)
     {
       learnSample++;
     }
+    */
     // *************************
 }
 //
@@ -346,7 +348,7 @@ void PIDTune(char cmd)
   else if(cmd == '2')
   {
      x_Pgain -= 1.0f;     // Decrease P Gain
-  }
+  }                                             
   else if(cmd == '3')
   {
      x_Igain += 0.01f;   // Increase I Gain

@@ -1,6 +1,6 @@
 #include "inc/lm3s9b96.h"
 #include "math.h"
-
+#include "fixedmath.h"
 
 #include "imu.h"
 #include "xbee.h"
@@ -25,7 +25,8 @@
 
 //  Natural Constants
 const float pi = 3.141592f;		    // Pi
-const float convert_pi_180 = 0.017453f;	    // Pi/180 - Convert Degrees to Radians
+const float rad_byte = 40.584510;	    // Convert from Radians to Byte (0...255)
+const float convert_Pi_180 = 0.017453f;	    // Pi/180 - Convert Degrees to Radians
 const float convert_180_Pi = 57.29577f;	    // 180/Pi - Convert Radians to Degrees
 
 
@@ -107,6 +108,25 @@ float z_gyro_bias = 0.0f;		// Z Gyro - Bias for Integration
 float x_cent_force = 0.0f;		// Centreptial Force - X Axis
 float y_cent_force = 0.0f;		// Centreptial Force - Y Axis
 float z_cent_force = 0.0f;		// Centreptial Force - Z Axis
+
+// Quaternion Variables and Constants
+
+fm_fixed q0 = 0;
+fm_fixed q1 = 0;
+fm_fixed q2 = 0;
+fm_fixed q3 = 0;
+
+fm_fixed phi = 0;
+fm_fixed theta = 0;
+fm_fixed psi = 0;
+
+fm_fixed cos_phi = 0;
+fm_fixed cos_theta = 0;
+fm_fixed cos_psi = 0;
+
+fm_fixed sin_phi = 0;
+fm_fixed sin_theta = 0;
+fm_fixed sin_psi = 0;
 
 
 //  Kalman Variables and Constants
@@ -213,13 +233,13 @@ void readIMU(float *imu)
     z_accel = ((z_acc_v_convert*(float)((int)(z_acc_raw) - z_acc_offset))-z_acc_shift)*z_acc_g_convert; // Convert raw data bytes to acceleration - Z Axis
     
     // Convert acceleration to angles    
-    x_acc_rad = (float)((x_angle_scale*((((float)atan(y_accel/sqrt(x_accel*x_accel + z_accel*z_accel)))*convert_180_Pi) + x_angle_offset))*convert_pi_180);
-    y_acc_rad = (float)((y_angle_scale*((((float)atan(x_accel/sqrt(y_accel*y_accel + z_accel*z_accel)))*convert_180_Pi) + y_angle_offset))*convert_pi_180);
+    x_acc_rad = (float)((x_angle_scale*((((float)atan(y_accel/sqrt(x_accel*x_accel + z_accel*z_accel)))*convert_180_Pi) + x_angle_offset))*convert_Pi_180);
+    y_acc_rad = (float)((y_angle_scale*((((float)atan(x_accel/sqrt(y_accel*y_accel + z_accel*z_accel)))*convert_180_Pi) + y_angle_offset))*convert_Pi_180);
     z_acc_rad += z_gyro_rad_sec*dt;  // Integrate Z Angular Velocity to obtain yaw angle 
     
-    x_gyro_rad_sec  = (float)(((float)(x_gyro_raw - x_gyro_offset)* x_gyro_scale)*convert_pi_180);	 // Convert raw data bytes to angular velocity - X Axis
-    y_gyro_rad_sec  = (float)(((float)(y_gyro_raw - y_gyro_offset)* y_gyro_scale)*convert_pi_180);	 // Convert raw data bytes to angular velocity - Y Axis
-    z_gyro_rad_sec  = (float)(((float)(z_gyro_raw - z_gyro_offset)* z_gyro_scale)*convert_pi_180);	 // Convert raw data bytes to angular velocity - Z Axis
+    x_gyro_rad_sec  = (float)(((float)(x_gyro_raw - x_gyro_offset)* x_gyro_scale)*convert_Pi_180);	 // Convert raw data bytes to angular velocity - X Axis
+    y_gyro_rad_sec  = (float)(((float)(y_gyro_raw - y_gyro_offset)* y_gyro_scale)*convert_Pi_180);	 // Convert raw data bytes to angular velocity - Y Axis
+    z_gyro_rad_sec  = (float)(((float)(z_gyro_raw - z_gyro_offset)* z_gyro_scale)*convert_Pi_180);	 // Convert raw data bytes to angular velocity - Z Axis
     // ****************************
     
     // Prefiltered Values
@@ -366,6 +386,11 @@ void readIMU(float *imu)
     // **********************
     // ****************************
     
+    // Update the State of the Quadrotor
+    //
+    updateState(&imu[0]);
+    //
+    
     // Send Data Telemetry
     //
     sendDataTelemetry(&imu[0], dt);
@@ -374,6 +399,78 @@ void readIMU(float *imu)
 }
 //*****************************************************************************
 
+
+//*****************************************************************************
+// Update State
+//
+void updateState(float *eulerAngle)
+{
+    /*
+    // [0] - eulerAngle - Phi - X
+    // [1] - eulerAngle - Theta - Y
+    // [2] - eulerAngle - Psi - Z
+    float phi = eulerAngle[0]*convert_Pi_180;
+    float theta = eulerAngle[1]*convert_Pi_180; 
+    float psi = eulerAngle[2]*convert_Pi_180;
+    
+    float cos_phi = cos(phi/2);
+    float cos_theta = cos(theta/2);
+    float cos_psi = cos(psi/2);
+    
+    float sin_phi = sin(phi/2);
+    float sin_theta = sin(theta/2);
+    float sin_psi = sin(psi/2);
+    
+    // Convert Euler Angles into Quaternions
+    q0 = (signed long)(((cos_phi*cos_theta*cos_psi)+(sin_phi*sin_theta*sin_psi))*65536.0f);
+    q1 = (signed long)(((sin_phi*cos_theta*cos_psi)-(cos_phi*sin_theta*sin_psi))*65536.0f);
+    q2 = (signed long)(((cos_phi*sin_theta*cos_psi)+(sin_phi*cos_theta*sin_psi))*65536.0f);
+    q3 = (signed long)(((cos_phi*cos_theta*sin_psi)-(sin_phi*sin_theta*cos_psi))*65536.0f);
+    
+    // Cover Quaternions into Euler Angles
+    phi = ((float)(fixatan2((2*(q0*q1 + q2*q3)),1-(2*(q1*q1 + q2*q2))))/65536.0f*convert_180_Pi); 
+    theta = ((float)(asin(2*(q0*q2 - q3*q1)))/65536.0f*convert_180_Pi);
+    psi = ((float)(fixatan2((2*(q0*q3 + q1*q2)),1-(2*(q2*q2 + q3*q3))))/65536.0f*convert_180_Pi);
+    
+    phi = atan2((2*(q0*q1 + q2*q3)),1-(2*(pow(q1,2) + pow(q2,2)))); 
+    theta = asin(2*(q0*q2 - q3*q1));
+    psi = atan2((2*(q0*q3 + q1*q2)),1-(2*(pow(q2,2) + pow(q3,2))));
+    */
+  
+    // [0] - eulerAngle - Phi - X
+    // [1] - eulerAngle - Theta - Y
+    // [2] - eulerAngle - Psi - Z
+
+    // Convert Euler Angles into Quaternions  
+    phi =  ftofix(eulerAngle[0]*convert_Pi_180*rad_byte/2);	
+    theta = ftofix(eulerAngle[1]*convert_Pi_180*rad_byte/2); 
+    psi = ftofix(eulerAngle[2]*convert_Pi_180*rad_byte/2);
+    
+    cos_phi = fixcos(phi);
+    cos_theta = fixcos(theta);
+    cos_psi = fixcos(psi);
+
+    sin_phi = fixsin(phi);
+    sin_theta = fixsin(theta);
+    sin_psi = fixsin(psi);
+
+    q0 = fixadd((fixmul(fixmul(cos_phi,cos_theta),cos_psi)),(fixmul(fixmul(sin_phi,sin_theta),sin_psi)));
+    q1 = fixsub((fixmul(fixmul(sin_phi,cos_theta),cos_psi)),(fixmul(fixmul(cos_phi,sin_theta),sin_psi)));
+    q2 = fixadd((fixmul(fixmul(cos_phi,sin_theta),cos_psi)),(fixmul(fixmul(sin_phi,cos_theta),sin_psi)));
+    q3 = fixsub((fixmul(fixmul(cos_phi,cos_theta),sin_psi)),(fixmul(fixmul(sin_phi,sin_theta),cos_psi)));
+
+    // Convert Quaternions to Euler Angles
+    float f_phi = (fixtof(fixatan2((fixmul(ftofix(2),fixadd(fixmul(q0,q1),fixmul(q2,q3)))),fixsub(ftofix(1),(fixmul(ftofix(2),fixadd(fixmul(q1,q1),fixmul(q2,q2)))))))/(rad_byte))*convert_180_Pi;
+    float f_theta = (fixtof(fixasin(fixmul(ftofix(2),fixsub(fixmul(q0,q2),fixmul(q3,q1)))))/(rad_byte))*convert_180_Pi;
+    float f_psi = (fixtof(fixatan2((fixmul(ftofix(2),fixadd(fixmul(q0,q3),fixmul(q1,q2)))),fixsub(ftofix(1),(fixmul(ftofix(2),fixadd(fixmul(q2,q2),fixmul(q3,q3)))))))/(rad_byte))*convert_180_Pi;
+                             
+    
+    // TEST CODE - Set the quaternions back to the IMU matrix
+    eulerAngle[0] = f_phi;
+    eulerAngle[1] = f_theta;
+    eulerAngle[2] = f_psi;
+}
+//*****************************************************************************
 
 
 //*****************************************************************************
