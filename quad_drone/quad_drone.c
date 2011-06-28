@@ -98,15 +98,18 @@ int main(void)
     
     
     // IMU Values
-    // [0] : X Angle
-    // [1] : Y Angle
-    // [2] : Z Angle
-    // [3] : X Rate
-    // [4] : Y Rate
-    // [5] : Z Rate
-    // [6] : Magnetic North Heading
-    // [7] : Temperature
-    float imu[8];
+    // [0] : X Angle - roll   (deg)
+    // [1] : Y Angle - pitch  (deg)
+    // [2] : Z Angle - yaw    (deg)
+    // [3] : X Rate  - roll angular speed  (deg/sec)
+    // [4] : Y Rate  - pitch angular speed (deg/sec)
+    // [5] : Z Rate  - yaw angular speed   (deg/sec)    
+    // [6] : X Acceleration
+    // [7] : Y Acceleration
+    // [8] : Z Acceleration
+    // [9] : dt
+    // [10] : Temperature
+    float imu[11];
     
     GPIO_PORTF_DATA_R |= 0x08;        // Turn red LED on (Calibrating Light)
     imuStartup();                     // Start up the IMU by calibrating
