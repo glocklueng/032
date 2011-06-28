@@ -1,6 +1,21 @@
 #include <math.h>
 #include "fixedmath.h"
 
+/* Enum: fm_fixtorad_r
+ *  Ratios for converting between radians and fixed point angles.
+ *  2pi/256
+ */
+const fm_fixed fixtorad_r = (fm_fixed)1608;
+
+
+
+/* Enum: fm_radtofix_r
+ *  Ratios for converting between radians and fixed point angles.
+ *  256/2pi
+ */
+const fm_fixed radtofix_r = (fm_fixed)2670177;
+
+
 const unsigned int	PRECISION	=	( 16 );
 const fm_fixed		ONE	        =	(  1 << 16);
 const fm_fixed		ZERO		=	(  0 );
@@ -188,15 +203,45 @@ const fm_fixed _acos_tbl[513] =
    0x0L
 };
 
-// Fixed point CEIL function, does not work for negative numbers!
-fm_fixed	fixceil( fm_fixed y )
+// Integer convertion to Fixed Point 
+fm_fixed itofix(int x)
+{
+   if (x > 32767.0) {
+      return 0x7FFFFFFF;
+   }
+
+   if (x < -32767.0) {
+      return -0x7FFFFFFF;
+   }
+
+   return (fm_fixed)(x * 65536.0 + (x < 0 ? -0.5 : 0.5));
+};
+
+// Fixed Point convertion to Integer 
+int fixtoi(fm_fixed x)
+{
+    return fixfloor(x) + ((x & 0x8000) >> 15);
+};
+
+// Fixed Point Floor Function, does not work on negative numbers!
+int fixfloor(fm_fixed x)
+{
+   /* (x >> 16) is not portable */
+   if (x >= 0)
+      return (x >> 16);
+   else
+      return ~((~x) >> 16);
+};
+
+// Fixed Point Ceil Function, does not work for negative numbers!
+fm_fixed  fixceil(fm_fixed y)
 { 
 	y += 0xffff; 
 	return ( y >> 16 ); 
 };
 
-// fixed point addition
-fm_fixed	fixadd(fm_fixed x, fm_fixed y)
+// Fixed Point Addition
+fm_fixed  fixadd(fm_fixed x, fm_fixed y)
 {
    fm_fixed result = x + y;
 
@@ -216,8 +261,8 @@ fm_fixed	fixadd(fm_fixed x, fm_fixed y)
    }
 };
 
-// fixed point subtraction
-fm_fixed	fixsub(fm_fixed x, fm_fixed y)
+// Fixed Point Subtraction
+fm_fixed  fixsub(fm_fixed x, fm_fixed y)
 {
    fm_fixed result = x - y;
 
@@ -237,39 +282,39 @@ fm_fixed	fixsub(fm_fixed x, fm_fixed y)
    }
 };
 
-/// fixed point multiplier
-fm_fixed	fixmul(fm_fixed op1, fm_fixed op2) 
+// Fixed Point Multiplier
+fm_fixed  fixmul(fm_fixed op1, fm_fixed op2) 
 {
 	return  (fm_fixed)(((int64)op1 * op2) >> 16);     
 };
                                                                                        
-/// fixed point division
+// Fixed Point Division
 fm_fixed	fixdiv(fm_fixed op1, fm_fixed op2) 
 {
 	return (fm_fixed)( ((int64)op1 << 16) / op2);
 
 };
 
-/// fixed point cosine
-fm_fixed	fixcos(fm_fixed x)
+// Fixed Point Cosine
+fm_fixed  fixcos(fm_fixed x)
 {
 	return	_cos_tbl[((x + 0x4000) >> 15) & 0x1FF];
 };
 
-/// fixed point sine
-fm_fixed	fixsin(fm_fixed x)
+// Fixed Point Sine
+fm_fixed  fixsin(fm_fixed x)
 {
 	return _cos_tbl[((x - 0x400000 + 0x4000) >> 15) & 0x1FF];
 };
 
-/// fixed point tangent
-fm_fixed	fixtan(fm_fixed x)
+// Fixed Point Tangent
+fm_fixed  fixtan(fm_fixed x)
 {
 	return _tan_tbl[((x + 0x4000) >> 15) & 0xFF];
 };
 
-/// fixed point arccosine
-fm_fixed	fixacos(fm_fixed x)
+// Fixed Point Arccosine
+fm_fixed  fixacos(fm_fixed x)
 {
 	if ((x < -65536) || (x > 65536)) 
 	{
@@ -279,8 +324,8 @@ fm_fixed	fixacos(fm_fixed x)
 	return _acos_tbl[(x+65536+127)>>8];
 };
 
-/// fixed point arcsine
-fm_fixed	fixasin(fm_fixed x)
+// Fixed Point Arcsine
+fm_fixed  fixasin(fm_fixed x)
 {
    if ((x < -65536) || (x > 65536)) 
    {
@@ -290,10 +335,8 @@ fm_fixed	fixasin(fm_fixed x)
    return 0x00400000 - _acos_tbl[(x+65536+127)>>8];
 };
 
-/* Function: fm_fixsqrt
- *  Fixed point square root routine for non-i386.
- */
-fm_fixed fixsqrt(fm_fixed x)
+// Fixed Point Square Root
+fm_fixed  fixsqrt(fm_fixed x)
 {
    if (x > 0)
       return ftofix(sqrt(fixtof(x)));
@@ -301,8 +344,8 @@ fm_fixed fixsqrt(fm_fixed x)
    return 0;
 }
 
-/// Put in double, aquire fm_fixed
-fm_fixed	ftofix(double x)
+// Double conversion to Fixed Point
+fm_fixed  ftofix(double x)
 {
 	if (x > 32767.0) 
 	{
@@ -317,8 +360,8 @@ fm_fixed	ftofix(double x)
     return (fm_fixed)(x * 65536.0 + (x < 0 ? -0.5 : 0.5));
 };
 
-/// Put in fm_fixed, aquire double
-double		fixtof(fm_fixed x)
+// Fixed Point conversion to Double
+double  fixtof(fm_fixed x)
 {
 	return (double)x / 65536.0;
 };
@@ -327,10 +370,10 @@ double		fixtof(fm_fixed x)
 /**
  *  Fixed point inverse tangent. Does a binary search on the tan table.
  */
-fm_fixed fixatan(fm_fixed x)
+fm_fixed  fixatan(fm_fixed x)
 {
 	int a, b, c;            /* for binary search */
-	fm_fixed d;                /* difference value for search */
+	fm_fixed d;             /* difference value for search */
 	
 	if (x >= 0) {           /* search the first part of tan table */
 		a = 0;
@@ -389,21 +432,6 @@ fm_fixed fixatan2(fm_fixed y, fm_fixed x)
 	
 	return r - 0x00800000L;
 }
-
-
-/* Enum: fm_fixtorad_r
- *  Ratios for converting between radians and fixed point angles.
- *  2pi/256
- */
-const fm_fixed fixtorad_r = (fm_fixed)1608;
-
-
-
-/* Enum: fm_radtofix_r
- *  Ratios for converting between radians and fixed point angles.
- *  256/2pi
- */
-const fm_fixed radtofix_r = (fm_fixed)2670177;
 
 
 

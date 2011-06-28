@@ -24,6 +24,7 @@
 #include "grlib/widget.h"
 
 //  Natural Constants
+// *************************
 const float pi = 3.141592f;		    // Pi
 const float rad_byte = 40.584510;	    // Convert from Radians to Byte (0...255)
 const float convert_Pi_180 = 0.017453f;	    // Pi/180 - Convert Degrees to Radians
@@ -31,155 +32,203 @@ const float convert_180_Pi = 57.29577f;	    // 180/Pi - Convert Radians to Degre
 
 
 //  IMU Variables and Constants
-unsigned long x_acc_raw = 0;		// X Accelerometer Reading
-unsigned long y_acc_raw = 0;		// Y Accelerometer Reading
-unsigned long z_acc_raw = 0;		// Z Accelerometer Reading
+//*****************************************************************************
 
-int x_acc_offset = 0;		        // X Accelerometer Offset
-int y_acc_offset = 0;		        // Y Accelerometer Offset
-int z_acc_offset = 0;		        // Z Accelerometer Offset
+//  Accelerometer
+// *************************
+//  Accelerometer Voltage Shift
+const float acc_v_convert = 0.003222f;
 
-float x_angle_offset = -15.0f;          // X Angle Offset
-float y_angle_offset = -15.0f;          // Y Angle Offset
-float z_angle_offset = -15.0f;          // Z Angle Offset
+//  Accelerometer Convert Volts to G's
+const float acc_g_convert = 3.030303f; 
 
-float x_angle_scale = 1.5f;             // X Angle Scale
-float y_angle_scale = 1.5f;             // Y Angle Scale
-float z_angle_scale = 1.5f;             // Z Angle Scale
+//  Raw Accelerometer Readings
+//  [0] : X Accelerometer Reading
+//  [1] : Y Accelerometer Reading
+//  [2] : Z Accelerometer Reading
+unsigned long acc_raw[3] = {0,0,0};
 
-const float x_acc_shift = 1.65f;	// X Accelerometer Voltage Shift
-const float y_acc_shift = 1.65f;	// Y Accelerometer Voltage Shift
-const float z_acc_shift = 1.65f;	// Z Accelerometer Voltage Shift
+//  Accelerometer Offset
+//  [0] : X Accelerometer Offset
+//  [1] : Y Accelerometer Offset
+//  [2] : Z Accelerometer Offset
+int acc_offset[3] = {0,0,0};
 
-const float x_acc_v_convert = 0.003222f; // X Accelerometer Convert Raw to Volts
-const float y_acc_v_convert = 0.003222f; // Y Accelerometer Convert Raw to Volts
-const float z_acc_v_convert = 0.003222f; // Z Accelerometer Convert Raw to Volts
+//  Angle Scale
+//  [0] : X Angle Scale
+//  [1] : Y Angle Scale
+//  [2] : Z Angle Scale
+const float angle_scale[3] = {1.5f,1.5f,1.5f};
 
-const float x_acc_g_convert = 3.030303f; // X Accelerometer Convert Volts to G's
-const float y_acc_g_convert = 3.030303f; // Y Accelerometer Convert Volts to G's
-const float z_acc_g_convert = 3.030303f; // Z Accelerometer Convert Volts to G's
+//  Angle Offset
+//  [0] : X Angle Offset
+//  [1] : Y Angle Offset
+//  [2] : Z Angle Offset
+const float angle_offset[3] = {-15.0f,-15.0f,-15.0f};
 
-float x_accel = 0.0f;			// X Axis Acceleration - in G's
-float y_accel = 0.0f;			// Y Axis Acceleration - in G's
-float z_accel = 0.0f;			// Z Axis Acceleration - in G's
+//  Accelerometer Voltage Shift
+//  [0] : X Accelerometer Voltage Shift
+//  [1] : Y Accelerometer Voltage Shift
+//  [2] : Z Accelerometer Voltage Shift
+const float acc_shift[3] = {1.65f,1.65f,1.65f};
 
-float x_acc_rad = 0.0f;			// X Axis Angle - Raw angle in radians
-float y_acc_rad = 0.0f;			// Y Axis Angle - Raw angle in radians
-float z_acc_rad = 0.0f;			// Z Axis Angle - Raw angle in radians
+//  Acceleration in G's
+//  [0] : X Acceleration - in G's
+//  [1] : Y Acceleration - in G's
+//  [2] : Z Acceleration - in G's
+float accel[3] = {0.0f,0.0f,0.0f};
 
-float x_angle = 0.0f;			// X Axis Angle - State Estimation	
-float y_angle = 0.0f;			// Y Axis Angle - State Estimation	
-float z_angle = 0.0f;			// Z Axis Angle - State Estimation	
+//  Raw Angle in radians
+//  [0] : X Axis Angle - Raw angle in radians
+//  [1] : Y Axis Angle - Raw angle in radians
+//  [2] : Z Axis Angle - Raw angle in radians
+float acc_rad[3] = {0.0f,0.0f,0.0f};
 
-float x_bias = 0.0785385f;		// X Bias for State Matrix - +4.5 degrees
-float y_bias = -0.0261795f;		// Y Bias for State Matrix - -1.5 degrees
-float z_bias = -0.0261795f;		// Z Bias for State Matrix - -1.5 degrees  
+//  Angle State Estimation
+//  [0] : X Axis Angle - State Estimation
+//  [1] : Y Axis Angle - State Estimation
+//  [2] : Z Axis Angle - State Estimation
+float angle[3] = {0.0f,0.0f,0.0f};
 
-signed long x_gyro_raw = 0;		// X Gyro Reading
-signed long y_gyro_raw = 0;		// Y Gyro Reading
-signed long z_gyro_raw = 0;		// Z Gyro Reading
+//  Angle Bias for State Estimation
+//  [0] : X Bias for State Matrix - +4.5 degrees
+//  [1] : Y Bias for State Matrix - -1.5 degrees
+//  [2] : Z Bias for State Matrix - -1.5 degrees
+float bias[3] = {0.0785385f,-0.0261795f,-0.0261795f};
+// *************************
 
-int x_gyro_offset = -200;		// X Gyro Offset
-int y_gyro_offset = 49;		        // Y Gyro Offset
-int z_gyro_offset = 9;		        // Z Gyro Offset     
+//  Gyroscope
+// *************************
+//  Gyro Raw Reading
+//  [0] : X Gyro Raw Reading
+//  [1] : Y Gyro Raw Reading
+//  [2] : Z Gyro Raw Reading
+signed long gyro_raw[3] = {0,0,0};                            
 
-float x_gyro_scale = 0.007629f;	        // X Gyro Scale
-float y_gyro_scale = 0.007629f;	        // Y Gyro Scale
-float z_gyro_scale = 0.007629f;	        // Z Gyro Scale
+//  Gyro Offset
+//  [0] : X Gyro Offset
+//  [1] : Y Gyro Offset
+//  [2] : Z Gyro Offset
+int gyro_offset[3] = {-200,49,9};   
 
-float x_gyro_rad_sec = 0.0f;		// X Gyro - Radians/Second - State Estimation	
-float x_gyro_rad_sec_1 = 0.0f;		// X Gyro - Runge-Kutta Integration - Itteration 1
-float x_gyro_rad_sec_2 = 0.0f;		// X Gyro - Runge-Kutta Integration - Itteration 2
-float x_gyro_rad_sec_3 = 0.0f;		// X Gyro - Runge-Kutta Integration - Itteration 3
-float x_gyro_bias = 0.0f;		// X Gyro - Bias for Integration
+//  Gyro Scale
+float gyro_scale = 0.007629f;	        
 
-float y_gyro_rad_sec = 0.0f;		// Y Gyro - Radians/Second - State Estimation	
-float y_gyro_rad_sec_1 = 0.0f;		// Y Gyro - Runge-Kutta Integration - Itteration 1
-float y_gyro_rad_sec_2 = 0.0f;		// Y Gyro - Runge-Kutta Integration - Itteration 2
-float y_gyro_rad_sec_3 = 0.0f;		// Y Gyro - Runge-Kutta Integration - Itteration 3
-float y_gyro_bias = 0.0f;		// Y Gyro - Bias for Integration
+//  X Gyro State Estimation
+//  [0] : X Gyro - Radians/Second - State Estimation	
+//  [1] : X Gyro - Runge-Kutta Integration - Itteration 1
+//  [2] : X Gyro - Runge-Kutta Integration - Itteration 2
+//  [3] : X Gyro - Runge-Kutta Integration - Itteration 3
+float x_gyro_rad_sec[4] = {0.0f,0.0f,0.0f,0.0f};
 
-float z_gyro_rad_sec = 0.0f;		// Z Gyro - Radians/Second - State Estimation	
-float z_gyro_rad_sec_1 = 0.0f;		// Z Gyro - Runge-Kutta Integration - Itteration 1
-float z_gyro_rad_sec_2 = 0.0f;		// Z Gyro - Runge-Kutta Integration - Itteration 2
-float z_gyro_rad_sec_3 = 0.0f;		// Z Gyro - Runge-Kutta Integration - Itteration 3
-float z_gyro_bias = 0.0f;		// Z Gyro - Bias for Integration
+// Y Gyro State Estimation
+//  [0] : Y Gyro - Radians/Second - State Estimation	
+//  [1] : Y Gyro - Runge-Kutta Integration - Itteration 1
+//  [2] : Y Gyro - Runge-Kutta Integration - Itteration 2
+//  [3] : Y Gyro - Runge-Kutta Integration - Itteration 3
+float y_gyro_rad_sec[4] = {0.0f,0.0f,0.0f,0.0f};
 
-float x_cent_force = 0.0f;		// Centreptial Force - X Axis
-float y_cent_force = 0.0f;		// Centreptial Force - Y Axis
-float z_cent_force = 0.0f;		// Centreptial Force - Z Axis
+// Z Gyro State Estimation
+//  [0] : Z Gyro - Radians/Second - State Estimation	
+//  [1] : Z Gyro - Runge-Kutta Integration - Itteration 1
+//  [2] : Z Gyro - Runge-Kutta Integration - Itteration 2
+//  [3] : Z Gyro - Runge-Kutta Integration - Itteration 3
+float z_gyro_rad_sec[4] = {0.0f,0.0f,0.0f,0.0f};
+// *************************
 
-// Quaternion Variables and Constants
+//  Quaternion Variables and Constants
+// *************************
+//  State in Quaternions
+//  [0] : q0
+//  [1] : q1
+//  [2] : q2
+//  [0] : q3
+fm_fixed q[4] = {0,0,0,0};
 
-fm_fixed q0 = 0;
-fm_fixed q1 = 0;
-fm_fixed q2 = 0;
-fm_fixed q3 = 0;
+//  Readings in Euler Angles
+//  [0] : X Euler Angle - Phi
+//  [1] : Y Euler Angle - Theta
+//  [2] : Z Euler Angle - Psi
+fm_fixed euler_angle[3] = {0,0,0};
 
-fm_fixed phi = 0;
-fm_fixed theta = 0;
-fm_fixed psi = 0;
+//  Readings in Euler Angles
+//  [0][0] : X Euler Angle - Cosine Phi
+//  [1][0] : Y Euler Angle - Cosine Theta
+//  [2][0] : Z Euler Angle - Cosine Psi
+//  [0][1] : X Euler Angle - Sine Phi
+//  [1][1] : Y Euler Angle - Sine Theta
+//  [2][1] : Z Euler Angle - Sine Psi 
+fm_fixed euler_trig[3][2] = {{0,0},{0,0},{0,0}};
+// *************************
 
-fm_fixed cos_phi = 0;
-fm_fixed cos_theta = 0;
-fm_fixed cos_psi = 0;
-
-fm_fixed sin_phi = 0;
-fm_fixed sin_theta = 0;
-fm_fixed sin_psi = 0;
-
-
-//  Kalman Variables and Constants
+// Time Variables
+// *************************
 unsigned int previousTimer;             // The previous time from the timer
 unsigned int currentTimer;              // The current time from the timer
 unsigned long startFlag = 0;            // Flag for when dt clock starts
 float measuredDt;                       // Measured dt
 float dt = 0.0005f;		        // dt = 0.002 seconds per sample
+// *************************
 
+//  Kalman Variables and Constants
+// *************************
 const float Q_angle = 0.001f;		// 0.001 - Q constant for angle
 const float Q_gyro = 0.012f;		// 0.012 - Q constant for gyro
 const float R_angle = 0.1f;		// 0.1   - R constant for noise    
 
 float x_y;				// Difference between previous raw angle reading and previous state angle - X-Axis
 float xS;				// S Variable - X Axis
-float xK_0;				// K Matrix - X Axis
-float xK_1;				// K Matrix - X Axis
-float xP_00,xP_01,xP_10,xP_11;          // P Matrix - X Axis
+float xK[2];                            // K Matrix - X Axis
+float xP[2][2];                         // P Matrix - X Axis
 
 float y_y;				// Difference between previous raw angle reading and previous state angle - Y-Axis
 float yS;				// S Variable - Y Axis
-float yK_0;				// K Matrix - Y Axis
-float yK_1;				// K Matrix - Y Axis
-float yP_00,yP_01,yP_10,yP_11;		// P Matrix - Y Axis
+float yK[2];                            // K Matrix - Y Axis
+float yP[2][2];                         // P Matrix - Y Axis
 
 float z_y;				// Difference between previous raw angle reading and previous state angle - Z-Axis
 float zS;				// S Variable - Z Axis
-float zK_0;				// K Matrix - Z Axis
-float zK_1;				// K Matrix - Z Axis
-float zP_00,zP_01,zP_10,zP_11;		// P Matrix - Z Axis
+float zK[2];                            // K Matrix - Z Axis
+float zP[2][2];                         // P Matrix - Z Axis
+// *************************
 
 // Compass Variables
-signed long x_comp_raw = 0;		// X Compass Reading
-signed long y_comp_raw = 0;		// Y Compass Reading
-signed long z_comp_raw = 0;		// Z Compass Reading
+// *************************
+
+//  Compass Raw Values
+//  [0] : X Compass Reading
+//  [1] : Y Compass Reading
+//  [2] : Z Compass Reading
+signed long comp_raw[3] = {0,0,0};
+// *************************
 
 // Temperature Variables
+// *************************
 unsigned long temp_raw;                 // Raw Temperature Reading from ADC
 float temperature;                      // Temperature in C
+// *************************
+//*****************************************************************************
+
 
 
 
 //*****************************************************************************
-// IMU - Filtered results
+// Read IMU - Filtered results
 //
-// [0] : X Angle - roll   (deg)
-// [1] : Y Angle - pitch  (deg)
-// [2] : Z Angle - yaw    (deg)
-// [3] : X Rate  - roll angular speed  (deg/sec)
-// [4] : Y Rate  - pitch angular speed (deg/sec)
-// [5] : Z Rate  - yaw angular speed   (deg/sec)
-// [6] : dt
-// [7] : Temperature
+// [0]  : X Angle - roll   (deg)
+// [1]  : Y Angle - pitch  (deg)
+// [2]  : Z Angle - yaw    (deg)
+// [3]  : X Rate  - roll angular speed  (deg/sec)
+// [4]  : Y Rate  - pitch angular speed (deg/sec)
+// [5]  : Z Rate  - yaw angular speed   (deg/sec)    
+// [6]  : X Acceleration
+// [7]  : Y Acceleration
+// [8]  : Z Acceleration
+// [9]  : X Compass Gauss
+// [10] : Y Compass Gauss
+// [11] : Z Compass Gauss
+// [12] : dt
+// [13] : Temperature
 //
 void readIMU(float *imu)
 {     
@@ -215,45 +264,50 @@ void readIMU(float *imu)
     // Read ADC - X Axis Acc
     // Read ADC - Y Axis Acc
     // Read ADC - Z Axis Acc
-    readAccel(&temp_raw, &x_acc_raw, &y_acc_raw, &z_acc_raw);
+    readAccel(&temp_raw, &acc_raw[0], &acc_raw[1], &acc_raw[2]);
     
     // Read I2C - X Axis Gyro
     // Read I2C - Y Axis Gyro
     // Read I2C - Z Axis Gyro
-    readGyro(&x_gyro_raw, &y_gyro_raw, &z_gyro_raw);
+    readGyro(&gyro_raw[0], &gyro_raw[1], &gyro_raw[2]);
     
     // Read Raw - X Axis Compass
     // Read Raw - Y Axis Compass
     // Read Raw - Z Axis Compass
-    readCompass(&x_comp_raw, &y_comp_raw, &z_comp_raw);
+    readCompass(&comp_raw[0], &comp_raw[1], &comp_raw[2]);
     
     // Convert raw adc values to acceleration
-    x_accel = ((x_acc_v_convert*(float)((int)(x_acc_raw) - x_acc_offset))-x_acc_shift)*x_acc_g_convert; // Convert raw data bytes to acceleration - X Axis
-    y_accel = ((y_acc_v_convert*(float)((int)(y_acc_raw) - y_acc_offset))-y_acc_shift)*y_acc_g_convert; // Convert raw data bytes to acceleration - Y Axis
-    z_accel = ((z_acc_v_convert*(float)((int)(z_acc_raw) - z_acc_offset))-z_acc_shift)*z_acc_g_convert; // Convert raw data bytes to acceleration - Z Axis
+    accel[0] = ((acc_v_convert*(float)((int)(acc_raw[0]) - acc_offset[0]))-acc_shift[0])*acc_g_convert; // Convert raw data bytes to acceleration - X Axis
+    accel[1] = ((acc_v_convert*(float)((int)(acc_raw[1]) - acc_offset[1]))-acc_shift[1])*acc_g_convert; // Convert raw data bytes to acceleration - Y Axis
+    accel[2] = ((acc_v_convert*(float)((int)(acc_raw[2]) - acc_offset[2]))-acc_shift[2])*acc_g_convert; // Convert raw data bytes to acceleration - Z Axis
     
     // Convert acceleration to angles    
-    x_acc_rad = (float)((x_angle_scale*((((float)atan(y_accel/sqrt(x_accel*x_accel + z_accel*z_accel)))*convert_180_Pi) + x_angle_offset))*convert_Pi_180);
-    y_acc_rad = (float)((y_angle_scale*((((float)atan(x_accel/sqrt(y_accel*y_accel + z_accel*z_accel)))*convert_180_Pi) + y_angle_offset))*convert_Pi_180);
-    z_acc_rad += z_gyro_rad_sec*dt;  // Integrate Z Angular Velocity to obtain yaw angle 
+    acc_rad[0] = (float)((angle_scale[0]*((((float)atan(accel[1]/sqrt(accel[0]*accel[0] + accel[2]*accel[2])))*convert_180_Pi) + angle_offset[0]))*convert_Pi_180);
+    acc_rad[1] = (float)((angle_scale[1]*((((float)atan(accel[0]/sqrt(accel[1]*accel[1] + accel[2]*accel[2])))*convert_180_Pi) + angle_offset[1]))*convert_Pi_180);
+    acc_rad[2] += z_gyro_rad_sec[0]*dt;  // Integrate Z Angular Velocity to obtain yaw angle 
     
-    x_gyro_rad_sec  = (float)(((float)(x_gyro_raw - x_gyro_offset)* x_gyro_scale)*convert_Pi_180);	 // Convert raw data bytes to angular velocity - X Axis
-    y_gyro_rad_sec  = (float)(((float)(y_gyro_raw - y_gyro_offset)* y_gyro_scale)*convert_Pi_180);	 // Convert raw data bytes to angular velocity - Y Axis
-    z_gyro_rad_sec  = (float)(((float)(z_gyro_raw - z_gyro_offset)* z_gyro_scale)*convert_Pi_180);	 // Convert raw data bytes to angular velocity - Z Axis
+    x_gyro_rad_sec[0]  = (float)(((float)(gyro_raw[0] - gyro_offset[0])* gyro_scale)*convert_Pi_180);	 // Convert raw data bytes to angular velocity - X Axis
+    y_gyro_rad_sec[0]  = (float)(((float)(gyro_raw[1] - gyro_offset[1])* gyro_scale)*convert_Pi_180);	 // Convert raw data bytes to angular velocity - Y Axis
+    z_gyro_rad_sec[0]  = (float)(((float)(gyro_raw[2] - gyro_offset[2])* gyro_scale)*convert_Pi_180);	 // Convert raw data bytes to angular velocity - Z Axis
     // ****************************
     
     // Prefiltered Values
+    // ****************************
     /*
-    imu[0] = x_acc_rad*convert_180_Pi;
-    imu[1] = y_acc_rad*convert_180_Pi;
-    imu[2] = z_acc_rad*convert_180_Pi;
-    imu[3] = x_gyro_rad_sec*convert_180_Pi;
-    imu[4] = y_gyro_rad_sec*convert_180_Pi;
-    imu[5] = z_gyro_rad_sec*convert_180_Pi;
-    imu[6] = dt;
-    imu[7] = temp_raw; 
+    imu[0] = acc_rad[0]*convert_180_Pi;
+    imu[1] = acc_rad[1]*convert_180_Pi;
+    imu[2] = acc_rad[2]*convert_180_Pi;
+    imu[3] = x_gyro_rad_sec[0]*convert_180_Pi;
+    imu[4] = y_gyro_rad_sec[0]*convert_180_Pi;
+    imu[5] = z_gyro_rad_sec[0]*convert_180_Pi;
+    imu[6] = x_acc
+    imu[7] = y_acc
+    imu[8] = z_acc
+    imu[9] = dt;
+    imu[10] = temp_raw; 
     */
-    // TODO: Add atan2 stuff and make it quaternion too!!
+    // ****************************
+    
     
     // Filter
     // ****************************
@@ -264,28 +318,28 @@ void readIMU(float *imu)
     // out the gyroscope readings.
     
     // X-Axis Gyro - Runge-Kutta Integration 
-    x_gyro_rad_sec = (x_gyro_rad_sec_3 + (2 * x_gyro_rad_sec_2) + (2 * x_gyro_rad_sec_1) + x_gyro_rad_sec)/6.0;
-    x_gyro_rad_sec_1 = x_gyro_rad_sec;
-    x_gyro_rad_sec_2 = x_gyro_rad_sec_1;
-    x_gyro_rad_sec_3 = x_gyro_rad_sec_2;
+    x_gyro_rad_sec[0] = (x_gyro_rad_sec[3] + (2 * x_gyro_rad_sec[2]) + (2 * x_gyro_rad_sec[1]) + x_gyro_rad_sec[0])/6.0;
+    x_gyro_rad_sec[1] = x_gyro_rad_sec[0];
+    x_gyro_rad_sec[2] = x_gyro_rad_sec[1];
+    x_gyro_rad_sec[3] = x_gyro_rad_sec[2];
     
     // Y-Axis Gyro - Runge-Kutta Integration 
-    y_gyro_rad_sec = (y_gyro_rad_sec_3 + (2 * y_gyro_rad_sec_2) + (2 * y_gyro_rad_sec_1) + y_gyro_rad_sec)/6.0;
-    y_gyro_rad_sec_1 = y_gyro_rad_sec;
-    y_gyro_rad_sec_2 = y_gyro_rad_sec_1;
-    y_gyro_rad_sec_3 = y_gyro_rad_sec_2;
+    y_gyro_rad_sec[0] = (y_gyro_rad_sec[3] + (2 * y_gyro_rad_sec[2]) + (2 * y_gyro_rad_sec[1]) + y_gyro_rad_sec[0])/6.0;
+    y_gyro_rad_sec[1] = y_gyro_rad_sec[0];
+    y_gyro_rad_sec[2] = y_gyro_rad_sec[1];
+    y_gyro_rad_sec[3] = y_gyro_rad_sec[2];
     
     // Z-Axis Gyro - Runge-Kutta Integration 
-    z_gyro_rad_sec = (z_gyro_rad_sec_3 + (2 * z_gyro_rad_sec_2) + (2 * z_gyro_rad_sec_1) + z_gyro_rad_sec)/6.0;
-    z_gyro_rad_sec_1 = z_gyro_rad_sec;
-    z_gyro_rad_sec_2 = z_gyro_rad_sec_1;
-    z_gyro_rad_sec_3 = z_gyro_rad_sec_2;
+    z_gyro_rad_sec[0] = (z_gyro_rad_sec[3] + (2 * z_gyro_rad_sec[2]) + (2 * z_gyro_rad_sec[1]) + z_gyro_rad_sec[0])/6.0;
+    z_gyro_rad_sec[1] = z_gyro_rad_sec[0];
+    z_gyro_rad_sec[2] = z_gyro_rad_sec[1];
+    z_gyro_rad_sec[3] = z_gyro_rad_sec[2];
     
     
     // Integrate the gyro axis with a bias to convert to angle then add to angle
-    x_angle += ((x_gyro_rad_sec - x_bias)) * dt;			// integrate x axis gyro with bias then add to x angle
-    y_angle += ((y_gyro_rad_sec - y_bias)) * dt;			// integrate y axis gyro with bias then add to y angle
-    z_angle += ((z_gyro_rad_sec - z_bias)) * dt;			// integrate z axis gyro with bias then add to z angle
+    angle[0] += ((x_gyro_rad_sec[0] - bias[0])) * dt;			// integrate x axis gyro with bias then add to x angle
+    angle[1] += ((y_gyro_rad_sec[0] - bias[1])) * dt;			// integrate y axis gyro with bias then add to y angle
+    angle[2] += ((z_gyro_rad_sec[0] - bias[2])) * dt;			// integrate z axis gyro with bias then add to z angle
 
         
     // Kalman Filter 
@@ -294,93 +348,99 @@ void readIMU(float *imu)
     // Filter X Axis
     // ----------------------
     // Predict 
-    xP_00 -=  dt * (xP_10 + xP_01) + Q_angle * dt;
-    xP_01 -=  dt * xP_11;
-    xP_10 -=  dt * xP_11;
-    xP_11 +=  Q_gyro * dt; 
+    xP[0][0] -=  dt * (xP[1][0] + xP[0][1]) + Q_angle * dt;
+    xP[0][1] -=  dt * xP[1][1];
+    xP[1][0] -=  dt * xP[1][1];
+    xP[1][1] +=  Q_gyro * dt; 
     
-    x_angle += (x_gyro_rad_sec - x_bias)*dt;
+    angle[0] += (x_gyro_rad_sec[0] - bias[0])*dt;
     
     // Update with new data
-    x_y = x_acc_rad - x_angle;    
-    xS = xP_00 + R_angle;
-    xK_0 = xP_00 / xS;
-    xK_1 = xP_10 / xS;
+    x_y = acc_rad[0] - angle[0];    
+    xS = xP[0][0] + R_angle;
+    xK[0] = xP[0][0] / xS;
+    xK[1] = xP[1][0] / xS;
     
     // Update State
-    x_angle +=  xK_0 * x_y;
-    x_bias  +=  xK_1 * x_y;
+    angle[0] +=  xK[0] * x_y;
+    bias[0]  +=  xK[1] * x_y;
     
     // Update P Matrix
-    xP_00 -= xK_0 * xP_00;
-    xP_01 -= xK_0 * xP_01;
-    xP_10 -= xK_1 * xP_00;
-    xP_11 -= xK_1 * xP_01;
+    xP[0][0] -= xK[0] * xP[0][0];
+    xP[0][1] -= xK[0] * xP[0][1];
+    xP[1][0] -= xK[1] * xP[0][0];
+    xP[1][1] -= xK[1] * xP[0][1];
     
     
     // Filter Y Axis
     // ----------------------
     // Predict 
-    yP_00 -=  dt * (yP_10 + yP_01) + Q_angle * dt;
-    yP_01 -=  dt * yP_11;
-    yP_10 -=  dt * yP_11;
-    yP_11 +=  Q_gyro * dt; 
+    yP[0][0] -=  dt * (yP[1][0] + yP[0][1]) + Q_angle * dt;
+    yP[0][1] -=  dt * yP[1][1];
+    yP[1][0] -=  dt * yP[1][1];
+    yP[1][1] +=  Q_gyro * dt; 
     
-    y_angle += (y_gyro_rad_sec - y_bias)*dt;
+    angle[1] += (y_gyro_rad_sec[0] - bias[1])*dt;
     
     // Update with new data
-    y_y = y_acc_rad - y_angle;
-    yS = yP_00 + R_angle;
-    yK_0 = yP_00 / yS;
-    yK_1 = yP_10 / yS;
+    y_y = acc_rad[1] - angle[1];
+    yS = yP[0][0] + R_angle;
+    yK[0] = yP[0][0] / yS;
+    yK[1] = yP[1][0] / yS;
     
     // Update State
-    y_angle +=  yK_0 * y_y;
-    y_bias  +=  yK_1 * y_y;
+    angle[1] +=  yK[0] * y_y;
+    bias[1]  +=  yK[1] * y_y;
     
     // Update P Matrix
-    yP_00 -= yK_0 * yP_00;
-    yP_01 -= yK_0 * yP_01;
-    yP_10 -= yK_1 * yP_00; 
-    yP_11 -= yK_1 * yP_01;
+    yP[0][0] -= yK[0] * yP[0][0];
+    yP[0][1] -= yK[0] * yP[0][1];
+    yP[1][0] -= yK[1] * yP[0][0]; 
+    yP[1][1] -= yK[1] * yP[0][1];
     
     
     // Filter Z Axis
     // ----------------------
     // Predict 
-    zP_00 -=  dt * (zP_10 + zP_01) + Q_angle * dt;
-    zP_01 -=  dt * zP_11;
-    zP_10 -=  dt * zP_11;
-    zP_11 +=  Q_gyro * dt; 
+    zP[0][0] -=  dt * (zP[1][0] + zP[0][1]) + Q_angle * dt;
+    zP[0][1] -=  dt * zP[1][1];
+    zP[1][0] -=  dt * zP[1][1];
+    zP[1][1] +=  Q_gyro * dt; 
     
-    z_angle += (z_gyro_rad_sec - z_bias)*dt;
+    angle[2] += (z_gyro_rad_sec[0] - bias[2])*dt;
     
     // Update with new data
-    z_y = z_acc_rad - z_angle;
-    zS = zP_00 + R_angle;
-    zK_0 = zP_00 / zS;
-    zK_1 = zP_10 / zS;
+    z_y = acc_rad[2] - angle[2];
+    zS = zP[0][0] + R_angle;
+    zK[0] = zP[0][0] / zS;
+    zK[1] = zP[1][0] / zS;
     
     // Update State
-    z_angle +=  zK_0 * z_y;
-    z_bias  +=  zK_1 * z_y;
+    angle[2] +=  zK[0] * z_y;
+    bias[2]  +=  zK[1] * z_y;
     
     // Update P Matrix
-    zP_00 -= zK_0 * zP_00;
-    zP_01 -= zK_0 * zP_01;
-    zP_10 -= zK_1 * zP_00; 
-    zP_11 -= zK_1 * zP_01;
+    zP[0][0] -= zK[0] * zP[0][0];
+    zP[0][1] -= zK[0] * zP[0][1];
+    zP[1][0] -= zK[1] * zP[0][0]; 
+    zP[1][1] -= zK[1] * zP[0][1];
     
     // Kalman Filtered Values
     // ----------------------
-    imu[0] = x_angle*convert_180_Pi;
-    imu[1] = y_angle*convert_180_Pi;
-    imu[2] = z_angle*convert_180_Pi;
-    imu[3] = (x_gyro_rad_sec - x_bias)*convert_180_Pi;
-    imu[4] = (y_gyro_rad_sec - y_bias)*convert_180_Pi;
-    imu[5] = (z_gyro_rad_sec - z_bias)*convert_180_Pi;
-    imu[6] = dt;
-    imu[7] = temp_raw; 
+    imu[0] = angle[0]*convert_180_Pi;
+    imu[1] = angle[1]*convert_180_Pi;
+    imu[2] = angle[2]*convert_180_Pi;
+    imu[3] = (x_gyro_rad_sec[0] - bias[0])*convert_180_Pi;
+    imu[4] = (y_gyro_rad_sec[0] - bias[1])*convert_180_Pi;
+    imu[5] = (z_gyro_rad_sec[0] - bias[2])*convert_180_Pi;
+    imu[6] = acc_raw[0];
+    imu[7] = acc_raw[1];
+    imu[8] = acc_raw[2];
+    imu[9] = comp_raw[0];
+    imu[10] = comp_raw[1];
+    imu[11] = comp_raw[2];
+    imu[12] = dt;
+    imu[13] = temp_raw; 
     // ----------------------
     //
     // **********************
@@ -405,64 +465,32 @@ void readIMU(float *imu)
 //
 void updateState(float *eulerAngle)
 {
-    /*
-    // [0] - eulerAngle - Phi - X
-    // [1] - eulerAngle - Theta - Y
-    // [2] - eulerAngle - Psi - Z
-    float phi = eulerAngle[0]*convert_Pi_180;
-    float theta = eulerAngle[1]*convert_Pi_180; 
-    float psi = eulerAngle[2]*convert_Pi_180;
-    
-    float cos_phi = cos(phi/2);
-    float cos_theta = cos(theta/2);
-    float cos_psi = cos(psi/2);
-    
-    float sin_phi = sin(phi/2);
-    float sin_theta = sin(theta/2);
-    float sin_psi = sin(psi/2);
-    
-    // Convert Euler Angles into Quaternions
-    q0 = (signed long)(((cos_phi*cos_theta*cos_psi)+(sin_phi*sin_theta*sin_psi))*65536.0f);
-    q1 = (signed long)(((sin_phi*cos_theta*cos_psi)-(cos_phi*sin_theta*sin_psi))*65536.0f);
-    q2 = (signed long)(((cos_phi*sin_theta*cos_psi)+(sin_phi*cos_theta*sin_psi))*65536.0f);
-    q3 = (signed long)(((cos_phi*cos_theta*sin_psi)-(sin_phi*sin_theta*cos_psi))*65536.0f);
-    
-    // Cover Quaternions into Euler Angles
-    phi = ((float)(fixatan2((2*(q0*q1 + q2*q3)),1-(2*(q1*q1 + q2*q2))))/65536.0f*convert_180_Pi); 
-    theta = ((float)(asin(2*(q0*q2 - q3*q1)))/65536.0f*convert_180_Pi);
-    psi = ((float)(fixatan2((2*(q0*q3 + q1*q2)),1-(2*(q2*q2 + q3*q3))))/65536.0f*convert_180_Pi);
-    
-    phi = atan2((2*(q0*q1 + q2*q3)),1-(2*(pow(q1,2) + pow(q2,2)))); 
-    theta = asin(2*(q0*q2 - q3*q1));
-    psi = atan2((2*(q0*q3 + q1*q2)),1-(2*(pow(q2,2) + pow(q3,2))));
-    */
-  
     // [0] - eulerAngle - Phi - X
     // [1] - eulerAngle - Theta - Y
     // [2] - eulerAngle - Psi - Z
 
     // Convert Euler Angles into Quaternions  
-    phi =  ftofix(eulerAngle[0]*convert_Pi_180*rad_byte/2);	
-    theta = ftofix(eulerAngle[1]*convert_Pi_180*rad_byte/2); 
-    psi = ftofix(eulerAngle[2]*convert_Pi_180*rad_byte/2);
+    euler_angle[0] =  ftofix(eulerAngle[0]*convert_Pi_180*rad_byte/2);	
+    euler_angle[1] = ftofix(eulerAngle[1]*convert_Pi_180*rad_byte/2); 
+    euler_angle[2] = ftofix(eulerAngle[2]*convert_Pi_180*rad_byte/2);
     
-    cos_phi = fixcos(phi);
-    cos_theta = fixcos(theta);
-    cos_psi = fixcos(psi);
+    euler_trig[0][0] = fixcos(euler_angle[0]);
+    euler_trig[1][0] = fixcos(euler_angle[1]);
+    euler_trig[2][0] = fixcos(euler_angle[2]);
 
-    sin_phi = fixsin(phi);
-    sin_theta = fixsin(theta);
-    sin_psi = fixsin(psi);
+    euler_trig[0][1] = fixsin(euler_angle[0]);
+    euler_trig[1][1] = fixsin(euler_angle[1]);
+    euler_trig[2][1] = fixsin(euler_angle[2]);
 
-    q0 = fixadd((fixmul(fixmul(cos_phi,cos_theta),cos_psi)),(fixmul(fixmul(sin_phi,sin_theta),sin_psi)));
-    q1 = fixsub((fixmul(fixmul(sin_phi,cos_theta),cos_psi)),(fixmul(fixmul(cos_phi,sin_theta),sin_psi)));
-    q2 = fixadd((fixmul(fixmul(cos_phi,sin_theta),cos_psi)),(fixmul(fixmul(sin_phi,cos_theta),sin_psi)));
-    q3 = fixsub((fixmul(fixmul(cos_phi,cos_theta),sin_psi)),(fixmul(fixmul(sin_phi,sin_theta),cos_psi)));
+    q[0] = fixadd((fixmul(fixmul(euler_trig[0][0],euler_trig[1][0]),euler_trig[2][0])),(fixmul(fixmul(euler_trig[0][1],euler_trig[1][1]),euler_trig[2][1])));
+    q[1] = fixsub((fixmul(fixmul(euler_trig[0][1],euler_trig[1][0]),euler_trig[2][0])),(fixmul(fixmul(euler_trig[0][0],euler_trig[1][1]),euler_trig[2][1])));
+    q[2] = fixadd((fixmul(fixmul(euler_trig[0][0],euler_trig[1][1]),euler_trig[2][0])),(fixmul(fixmul(euler_trig[0][1],euler_trig[1][0]),euler_trig[2][1])));
+    q[3] = fixsub((fixmul(fixmul(euler_trig[0][0],euler_trig[1][0]),euler_trig[2][1])),(fixmul(fixmul(euler_trig[0][1],euler_trig[1][1]),euler_trig[2][0])));
 
     // Convert Quaternions to Euler Angles
-    float f_phi = (fixtof(fixatan2((fixmul(ftofix(2),fixadd(fixmul(q0,q1),fixmul(q2,q3)))),fixsub(ftofix(1),(fixmul(ftofix(2),fixadd(fixmul(q1,q1),fixmul(q2,q2)))))))/(rad_byte))*convert_180_Pi;
-    float f_theta = (fixtof(fixasin(fixmul(ftofix(2),fixsub(fixmul(q0,q2),fixmul(q3,q1)))))/(rad_byte))*convert_180_Pi;
-    float f_psi = (fixtof(fixatan2((fixmul(ftofix(2),fixadd(fixmul(q0,q3),fixmul(q1,q2)))),fixsub(ftofix(1),(fixmul(ftofix(2),fixadd(fixmul(q2,q2),fixmul(q3,q3)))))))/(rad_byte))*convert_180_Pi;
+    float f_phi = (fixtof(fixatan2((fixmul(ftofix(2),fixadd(fixmul(q[0],q[1]),fixmul(q[2],q[3])))),fixsub(ftofix(1),(fixmul(ftofix(2),fixadd(fixmul(q[1],q[1]),fixmul(q[2],q[2])))))))/(rad_byte))*convert_180_Pi;
+    float f_theta = (fixtof(fixasin(fixmul(ftofix(2),fixsub(fixmul(q[0],q[2]),fixmul(q[3],q[1])))))/(rad_byte))*convert_180_Pi;
+    float f_psi = (fixtof(fixatan2((fixmul(ftofix(2),fixadd(fixmul(q[0],q[3]),fixmul(q[1],q[2])))),fixsub(ftofix(1),(fixmul(ftofix(2),fixadd(fixmul(q[2],q[2]),fixmul(q[3],q[3])))))))/(rad_byte))*convert_180_Pi;
                              
     
     // TEST CODE - Set the quaternions back to the IMU matrix
@@ -698,16 +726,16 @@ void sensorsSelfTest()
        delayVar = delayVar - 100;
     }  
     
-    readGyro(&x_gyro_raw, &y_gyro_raw, &z_gyro_raw);
+    readGyro(&gyro_raw[0], &gyro_raw[1], &gyro_raw[2]);
     
-    while(x_gyro_raw > -8000 || y_gyro_raw < 8000 || z_gyro_raw > -8000)
+    while(gyro_raw[0] > -8000 || gyro_raw[1] < 8000 || gyro_raw[2] > -8000)
     {
-        readGyro(&x_gyro_raw, &y_gyro_raw, &z_gyro_raw);
+        readGyro(&gyro_raw[0], &gyro_raw[1], &gyro_raw[2]);
     }
     // Calibration Variables for Gyro for Self Test Positive
-    imu_st_cal[0] = x_gyro_raw;
-    imu_st_cal[1] = y_gyro_raw;
-    imu_st_cal[2] = z_gyro_raw;
+    imu_st_cal[0] = gyro_raw[0];
+    imu_st_cal[1] = gyro_raw[1];
+    imu_st_cal[2] = gyro_raw[2];
     
     I2CMasterSlaveAddrSet(I2C1_MASTER_BASE, GYRO_ADDRESS, I2C_SEND);         // ST - SAD+W  
     I2CMasterDataPut(I2C1_MASTER_BASE, L3G4_CTRL_REG4);                      // SUB
@@ -727,17 +755,17 @@ void sensorsSelfTest()
        delayVar = delayVar - 100;
     }  
     
-    readGyro(&x_gyro_raw, &y_gyro_raw, &z_gyro_raw);
+    readGyro(&gyro_raw[0], &gyro_raw[1], &gyro_raw[2]);
     
-    while(x_gyro_raw < 8000 || y_gyro_raw > -8000 || z_gyro_raw < 8000)
+    while(gyro_raw[0] < 8000 || gyro_raw[1] > -8000 || gyro_raw[2] < 8000)
     {
-        readGyro(&x_gyro_raw, &y_gyro_raw, &z_gyro_raw);
+        readGyro(&gyro_raw[0], &gyro_raw[1], &gyro_raw[2]);
     }
     
     // Calibration Variables for Gyro for Self Test Negative
-    imu_st_cal[3] = x_gyro_raw;
-    imu_st_cal[4] = y_gyro_raw;
-    imu_st_cal[5] = z_gyro_raw;
+    imu_st_cal[3] = gyro_raw[0];
+    imu_st_cal[4] = gyro_raw[1];
+    imu_st_cal[5] = gyro_raw[2];
   
     
     // Set Gyro back to default
@@ -759,23 +787,23 @@ void sensorsSelfTest()
        delayVar = delayVar - 100;
     }  
     
-    x_gyro_offset = (int)((imu_st_cal[0])+(imu_st_cal[3]));   // Add the +130 and -130 for offset
-    y_gyro_offset = (int)((imu_st_cal[1])+(imu_st_cal[4]));   // Add the +130 and -130 for offset
-    z_gyro_offset = (int)((imu_st_cal[2])+(imu_st_cal[5]));   // Add the +130 and -130 for offset
+    gyro_offset[0] = (int)((imu_st_cal[0])+(imu_st_cal[3]));   // Add the +130 and -130 for offset
+    gyro_offset[1] = (int)((imu_st_cal[1])+(imu_st_cal[4]));   // Add the +130 and -130 for offset
+    gyro_offset[2] = (int)((imu_st_cal[2])+(imu_st_cal[5]));   // Add the +130 and -130 for offset
     
-    x_gyro_scale = (float)(260/(float)(imu_st_cal[3]-imu_st_cal[0]));
-    y_gyro_scale = (float)(260/(float)(imu_st_cal[1]-imu_st_cal[4]));
-    z_gyro_scale = (float)(260/(float)(imu_st_cal[5]-imu_st_cal[2]));
+    gyro_scale = (float)(260/(float)(imu_st_cal[3]-imu_st_cal[0]));
+    gyro_scale = (float)(260/(float)(imu_st_cal[1]-imu_st_cal[4]));
+    gyro_scale = (float)(260/(float)(imu_st_cal[5]-imu_st_cal[2]));
     
     
     // Calibrate Accelerometer
     // -----------------------
     
-    readAccel(&temp_raw, &x_acc_raw, &y_acc_raw, &z_acc_raw);
+    readAccel(&temp_raw, &acc_raw[0], &acc_raw[1], &acc_raw[2]);
     
-    imu_st_cal[6] = x_acc_raw; 
-    imu_st_cal[7] = y_acc_raw;
-    imu_st_cal[8] = z_acc_raw;
+    imu_st_cal[6] = acc_raw[0]; 
+    imu_st_cal[7] = acc_raw[1];
+    imu_st_cal[8] = acc_raw[2];
     
     
     // Pull ST line high                
@@ -793,15 +821,15 @@ void sensorsSelfTest()
        delayVar = delayVar - 100;
     }                       
     
-    readAccel(&temp_raw, &x_acc_raw, &y_acc_raw, &z_acc_raw);
+    readAccel(&temp_raw, &acc_raw[0], &acc_raw[1], &acc_raw[2]);
     
-    imu_st_cal[9] = x_acc_raw; 
-    imu_st_cal[10] = y_acc_raw;
-    imu_st_cal[11] = z_acc_raw; 
+    imu_st_cal[9] = acc_raw[0]; 
+    imu_st_cal[10] = acc_raw[1];
+    imu_st_cal[11] = acc_raw[2]; 
     
-    x_acc_offset = imu_st_cal[6] - imu_st_cal[9] - 127;
-    y_acc_offset = imu_st_cal[7] - imu_st_cal[10] + 127;
-    z_acc_offset = imu_st_cal[8] - imu_st_cal[11] +  230;
+    acc_offset[0] = imu_st_cal[6] - imu_st_cal[9] - 127;
+    acc_offset[1] = imu_st_cal[7] - imu_st_cal[10] + 127;
+    acc_offset[2] = imu_st_cal[8] - imu_st_cal[11] +  230;
     
     // Pull ST line low                
     GPIOPinWrite(GPIO_PORTE_BASE, GPIO_PIN_7, 0x00);

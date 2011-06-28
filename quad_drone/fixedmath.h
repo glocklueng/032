@@ -5,8 +5,6 @@ typedef long long       int64;
 typedef signed long	fm_fixed;                // 16.16 
 
 
-/* These prototypes exist for documentation only. */
-
 /* Function: itofix
  */
 fm_fixed itofix(int x);
@@ -19,13 +17,9 @@ int fixtoi(fm_fixed x);
  */
 int fixfloor(fm_fixed x);
 
-/* Function: ftofix
+/* Function: fixceil
  */
-fm_fixed ftofix(double x);
-
-/* Function: fixtof
- */
-double fixtof(fm_fixed x);
+fm_fixed fixceil(fm_fixed y);
 
 /* Function: fixadd
  */
@@ -63,6 +57,17 @@ fm_fixed fixacos(fm_fixed x);
  */
 fm_fixed fixasin(fm_fixed x);
 
+/* Function: fm_fixsqrt
+ */
+fm_fixed fixsqrt(fm_fixed x);
+
+/* Function: ftofix
+ */
+fm_fixed ftofix(double x);
+
+/* Function: fixtof
+ */
+double fixtof(fm_fixed x);
 
 /**
  *  Fixed point inverse tangent. Does a binary search on the tan table.

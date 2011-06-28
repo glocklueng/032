@@ -1088,9 +1088,6 @@
       <name>$PROJ_DIR$\fixedmath.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\fixedmath.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$\imu.c</name>
     </file>
     <file>
