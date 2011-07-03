@@ -40,7 +40,8 @@ unsigned long  mavlinkDelay = 0;
 void 
 UARTSend(const unsigned char *pucBuffer, unsigned long ulCount) 
 { 
-  
+    IntMasterDisable();
+    
     //
     // Loop while there are more characters to send.
     //
@@ -53,6 +54,7 @@ UARTSend(const unsigned char *pucBuffer, unsigned long ulCount)
         while(UARTBusy(UART0_BASE));
     }
   
+    IntMasterEnable();
 } 
   
 
@@ -63,7 +65,9 @@ UARTSend(const unsigned char *pucBuffer, unsigned long ulCount)
 //
 void sendDataTelemetry(float *imu, float dt)
 {
-    if(uartDelay > 10)
+    IntMasterDisable();
+    
+    if(uartDelay > 1)
     {
       uartDelay = 0;
       
@@ -133,7 +137,7 @@ void sendDataTelemetry(float *imu, float dt)
       uartDelay++; 
     }
     
-   
+    IntMasterEnable();
 }
 
 //*****************************************************************************
@@ -143,7 +147,9 @@ void sendDataTelemetry(float *imu, float dt)
 //
 void sendControlTelemetry(float torque, float P, float I, float D)
 {
-    if(controlDelay > 10)
+    IntMasterDisable();
+    
+    if(controlDelay > 1)
     {
       controlDelay = 0;
       for(int i=0; i < 4; i++)
@@ -227,6 +233,8 @@ void sendControlTelemetry(float torque, float P, float I, float D)
     {
       controlDelay++; 
     }
+    
+    IntMasterEnable();
 }
 
 //*****************************************************************************
