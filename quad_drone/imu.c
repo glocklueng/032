@@ -167,7 +167,7 @@ unsigned int previousTimer;             // The previous time from the timer
 unsigned int currentTimer;              // The current time from the timer
 unsigned long startFlag = 0;            // Flag for when dt clock starts
 float measuredDt;                       // Measured dt
-float dt = 0.0005f;		        // dt = 0.002 seconds per sample
+extern float dt;		        // dt = 0.002 seconds per sample
 // *************************
 
 //  Kalman Variables and Constants
@@ -251,7 +251,7 @@ void readIMU(float *imu)
         
         if(measuredDt > 0.0000000f)    // As long as time is positive set it to dt
         {
-          dt = measuredDt;
+          //dt = measuredDt;
         }
         
         previousTimer = currentTimer;  // Set Current Timer to Previous Timer for next loop
@@ -453,7 +453,7 @@ void readIMU(float *imu)
     
     // Send Data Telemetry
     //
-    sendDataTelemetry(&imu[0], dt);
+    //sendDataTelemetry(&imu[0], dt);
     //sendMAVLinkData(&imu[0], dt);
     //
 }
@@ -515,7 +515,9 @@ unsigned long adc_values[4];
 void readAccel(unsigned long *temp, unsigned long *x_acc,
                unsigned long *y_acc, unsigned long *z_acc)
 {
-     // Trigger the sample sequence.
+    IntMasterDisable();
+    
+    // Trigger the sample sequence.
     ADCProcessorTrigger(ADC_BASE, 0);
 
     // Wait until the sample sequence has completed.
@@ -531,6 +533,8 @@ void readAccel(unsigned long *temp, unsigned long *x_acc,
     *x_acc = adc_values[1];
     *y_acc = adc_values[2];
     *z_acc = adc_values[3];
+    
+    IntMasterEnable();
 }
 //*****************************************************************************
 
@@ -549,7 +553,9 @@ signed char gyro_values[6];
 // -----------------------------------------   
 void readGyro(signed long *x_gyro, signed long *y_gyro,
               signed long *z_gyro)
-{                                                                              
+{   
+    IntMasterDisable();
+    
     I2CMasterSlaveAddrSet(I2C1_MASTER_BASE, GYRO_ADDRESS, I2C_SEND);        // ST - SAD+W  
     I2CMasterDataPut(I2C1_MASTER_BASE, L3G4_OUT_X_L | 0x80);                // SUB - send contin
     I2CMasterControl(I2C1_MASTER_BASE, I2C_MASTER_CMD_SINGLE_SEND);         // Set to send
@@ -597,6 +603,7 @@ void readGyro(signed long *x_gyro, signed long *y_gyro,
     *y_gyro = (gyro_values[3] << 8) | gyro_values[2];
     *z_gyro = (gyro_values[5] << 8) | gyro_values[4];
     
+    IntMasterEnable();
 }
 //*****************************************************************************
 
@@ -616,7 +623,9 @@ signed char compass_values[6];
 // ----------------------------------------- 
 void readCompass(signed long *x_axis, signed long *y_axis,
                  signed long *z_axis)
-{       
+{   
+    IntMasterDisable();
+    
     I2CMasterSlaveAddrSet(I2C0_MASTER_BASE, COMP_ADDRESS, I2C_SEND);        // Set I2C to send (WRITE)
     I2CMasterDataPut(I2C0_MASTER_BASE, COMP_DATA_X_MSB);                    // Setup to start reading at X MSB  
     I2CMasterControl(I2C0_MASTER_BASE, I2C_MASTER_CMD_SINGLE_SEND);         // Start Sending      
@@ -663,6 +672,8 @@ void readCompass(signed long *x_axis, signed long *y_axis,
     *x_axis = (compass_values[0] << 8) | compass_values[1];
     *y_axis = (compass_values[2] << 8) | compass_values[3];
     *z_axis = (compass_values[4] << 8) | compass_values[5];
+    
+    IntMasterEnable();
 }
 //***************************************************************************** 
 

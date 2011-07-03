@@ -43,6 +43,26 @@ Archecture: ARM Cortex M3
 */
 
 
+// IMU Values
+// [0] : X Angle - roll   (deg)
+// [1] : Y Angle - pitch  (deg)
+// [2] : Z Angle - yaw    (deg)
+// [3] : X Rate  - roll angular speed  (deg/sec)
+// [4] : Y Rate  - pitch angular speed (deg/sec)
+// [5] : Z Rate  - yaw angular speed   (deg/sec)    
+// [6] : X Acceleration
+// [7] : Y Acceleration
+// [8] : Z Acceleration
+// [9] : dt
+// [10] : Temperature
+//
+float imu[11];
+//
+// dt - Measurement of time per loop
+float dt = 0.05f;
+//
+
+unsigned char testvar = 0x00;
 //***************************************************************************** 
 // 
 // Main Loop 
@@ -72,8 +92,7 @@ int main(void)
     InitPWM();         
     InitI2C();
     InitUART();
-    InitTIMER();
-
+    
     // Some value that will eventually go away..
     //unsigned long blink_delay = 200000;
     volatile unsigned long ulLoop;
@@ -96,21 +115,6 @@ int main(void)
     // ****************************
   
     
-    
-    // IMU Values
-    // [0] : X Angle - roll   (deg)
-    // [1] : Y Angle - pitch  (deg)
-    // [2] : Z Angle - yaw    (deg)
-    // [3] : X Rate  - roll angular speed  (deg/sec)
-    // [4] : Y Rate  - pitch angular speed (deg/sec)
-    // [5] : Z Rate  - yaw angular speed   (deg/sec)    
-    // [6] : X Acceleration
-    // [7] : Y Acceleration
-    // [8] : Z Acceleration
-    // [9] : dt
-    // [10] : Temperature
-    float imu[11];
-    
     GPIO_PORTF_DATA_R |= 0x08;        // Turn red LED on (Calibrating Light)
     imuStartup();                     // Start up the IMU by calibrating
     GPIO_PORTF_DATA_R &= ~(0x08);     // Turn red LED off (Calibrating Light)
@@ -119,20 +123,64 @@ int main(void)
     motorSpinup();                    // Start up the motors
     GPIO_PORTF_DATA_R &= ~(0x02);     // Turn blue LED off (Motor Spinup Light)
     
+    // Initialize Timers and Start
+    InitTIMER();
+    
     // MAIN LOOP
     // ****************************
     while(1)
     {   
         GPIO_PORTF_DATA_R |= 0x04;    // Turn green LED on (Flight Mode)
         
+        // IMU
+        // ****************************
         readIMU(&imu[0]);             // Read IMU and filter
-
-        control(&imu[0]);             // Control drone by feeding IMU data
-    
+        // ****************************
     }
     // ****************************
 }
 
+
+
+//***************************************************************************** 
+// 
+// The interrupt handler for the control loop
+// 
+//***************************************************************************** 
+void 
+Timer1IntHandler(void) 
+{ 
+    //
+    // Clear the timer interrupt.
+    //
+    TimerIntClear(TIMER1_BASE, TIMER_TIMA_TIMEOUT);
+
+    IntMasterDisable();
+    
+    TimerLoadSet(TIMER1_BASE, TIMER_A, 0x00FFFFFF);                   // Load Timer
+    
+    // CONTROL
+    // ****************************
+    sendDataTelemetry(&imu[0], dt);
+    
+    control(&imu[0]);             // Control drone by feeding IMU data
+       
+    
+    if(testvar)
+    {
+      GPIO_PORTF_DATA_R |= 0x02;        // Turn blue LED on (Motor Spinup Light)
+      testvar = 0x00;
+    }
+    else
+    {
+      GPIO_PORTF_DATA_R &= ~(0x02);     // Turn blue LED off (Motor Spinup Light)
+      testvar = 0x01;
+    }
+    // ****************************
+    
+    
+    IntMasterEnable();
+}
 
 //***************************************************************************** 
 // 

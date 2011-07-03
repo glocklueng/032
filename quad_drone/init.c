@@ -209,6 +209,9 @@ void InitUART()
 // Initalize dt Timer
 void InitTIMER() 
 {
+    // Initialize Timer 0 : Subtimer A
+    // This is used to keep track of dt
+    // ****************************
     SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER0);
     
     volatile unsigned long somethingelse;
@@ -238,4 +241,24 @@ void InitTIMER()
     }
     
     TimerEnable(TIMER0_BASE, TIMER_A);                  // Start Timer
+    // ****************************
+                       
+    
+    // Initialize Timer 1 : Subtimer A
+    // Control Loop Timer Interrupt
+    // ****************************
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER1);                     // Enable Timer 1
+ 
+    TimerConfigure(TIMER1_BASE, TIMER_CFG_32_BIT_PER);                // Down Periodic Counter 
+    
+    TimerLoadSet(TIMER1_BASE, TIMER_A, 0x00FFFFFF);                   // Load Timer
+    
+    TimerControlStall(TIMER1_BASE, TIMER_A, true);                    // Stop timer in debug
+    
+    TimerIntEnable(TIMER1_BASE, TIMER_TIMA_TIMEOUT);                  // Set to Timeout
+
+    TimerEnable(TIMER1_BASE, TIMER_A);                                // Start Timer
+    
+    IntEnable(INT_TIMER1A);                                           // Enable Timer A Interrupt
+    // ****************************
 }
