@@ -131,7 +131,7 @@ int main(void)
     while(1)
     {   
         GPIO_PORTF_DATA_R |= 0x04;    // Turn green LED on (Flight Mode)
-        
+
         // IMU
         // ****************************
         readIMU(&imu[0]);             // Read IMU and filter
@@ -150,20 +150,13 @@ int main(void)
 void 
 Timer1IntHandler(void) 
 { 
-    //
-    // Clear the timer interrupt.
-    //
-    TimerIntClear(TIMER1_BASE, TIMER_TIMA_TIMEOUT);
-
     IntMasterDisable();
-    
-    TimerLoadSet(TIMER1_BASE, TIMER_A, 0x00FFFFFF);                   // Load Timer
     
     // CONTROL
     // ****************************
-    sendDataTelemetry(&imu[0], dt);
+    sendDataTelemetry(&imu[0], dt);     // Send Data Telemetry
     
-    control(&imu[0]);             // Control drone by feeding IMU data
+    control(&imu[0]);                   // Control drone by feeding IMU data
        
     
     if(testvar)
@@ -180,6 +173,13 @@ Timer1IntHandler(void)
     
     
     IntMasterEnable();
+
+    //
+    // Clear the timer interrupt.
+    //
+    TimerIntClear(TIMER1_BASE, TIMER_TIMA_TIMEOUT);
+    
+    TimerLoadSet(TIMER1_BASE, TIMER_A, 0x00FF0000);                   // Load Timer
 }
 
 //***************************************************************************** 

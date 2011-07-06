@@ -249,9 +249,9 @@ void readIMU(float *imu)
         //Subtract Previous Timer by Current Timer then divide by system speed to obtain dt
         measuredDt = (float)((float)(previousTimer - currentTimer)/(float)SysCtlClockGet());  
         
-        if(measuredDt > 0.0000000f)    // As long as time is positive set it to dt
+        if(measuredDt > 0.000000000f)    // As long as time is positive set it to dt
         {
-          //dt = measuredDt;
+          dt = measuredDt;
         }
         
         previousTimer = currentTimer;  // Set Current Timer to Previous Timer for next loop

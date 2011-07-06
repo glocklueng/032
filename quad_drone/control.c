@@ -31,8 +31,8 @@ float x_Dterm;                  // X-Axis - D Term
 float x_angle_vel_term;         // X-Axis - Angular Velocity Term
 
 float x_Pgain = 8.5f;           // X-Axis - P Gain - 8.5
-float x_Igain = 0.0f;           // X-Axis - I Gain - 0.01
-float x_Dgain = 0.0f;           // X-Axis - D Gain - 85.0
+float x_Igain = 1.0f;          // X-Axis - I Gain - 0.01
+float x_Dgain = 0.08f;           // X-Axis - D Gain - 85.0
 float x_Fgain = 0.0f;           // X-Axis - F Gain - 0.0
 
 float x_Dterm_1 = 0.0f;		// X-Axis - D Term Filter Interation 1 
@@ -75,7 +75,7 @@ float y_torque = 0.0f;          // Y Axis - Rotational Torque
 
 // Z-Axis Data
 // *************************
-float z_thrust = 5000.0f;       // Z Axis Thrust - Idle Thrust = 76530.0
+float z_thrust = 6000.0f;       // Z Axis Thrust - Idle Thrust = 76530.0
 // *************************
 //
 
@@ -113,7 +113,7 @@ unsigned long learnSample = 0;                  // Sample Rate
 float rho = 0.001;                              // Learning Rate
 float epsilon = 16.0f;                          // Epsilon - Acceptable Angle Error Range
 float vel_epsilon = 10.0f;                      // Velocity Epsilon - Acceptable Angular Velocity Error Range
-float b_epsilon = 10.0f;                         // Epsilon - Balanced
+float b_epsilon = 10.0f;                        // Epsilon - Balanced
 // *************************
 //
 
@@ -127,7 +127,6 @@ void control(float *imu)
 {   
     // Load dt Time Variable to Control
     dt = imu[12];                               // Load IMU dt
-    dt = dt*667;                                // Convert dt so gains are small
     //
     
     // PID Controller for X-Axis
