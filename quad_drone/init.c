@@ -191,9 +191,9 @@ void InitUART()
     GPIOPinTypeUART(GPIO_PORTA_BASE, GPIO_PIN_0 | GPIO_PIN_1);
 
     //
-    // Configure the UART for 9600, 8-N-1 operation.
+    // Configure the UART for 115200, 8-N-1 operation.
     //
-    UARTConfigSetExpClk(UART0_BASE, SysCtlClockGet(), 9600,
+    UARTConfigSetExpClk(UART0_BASE, SysCtlClockGet(), 115200,
                             (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE |
                              UART_CONFIG_PAR_NONE));
 
@@ -251,7 +251,7 @@ void InitTIMER()
  
     TimerConfigure(TIMER1_BASE, TIMER_CFG_32_BIT_PER);                // Down Periodic Counter 
     
-    TimerLoadSet(TIMER1_BASE, TIMER_A, 0x00FFFFFF);                   // Load Timer
+    TimerLoadSet(TIMER1_BASE, TIMER_A, 0x00FF0000);                   // Load Timer
     
     TimerControlStall(TIMER1_BASE, TIMER_A, true);                    // Stop timer in debug
     
