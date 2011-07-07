@@ -144,15 +144,16 @@ int main(void)
 
 //***************************************************************************** 
 // 
-// The interrupt handler for the control loop
+// The interrupt handler for the Control Loop
 // 
 //***************************************************************************** 
 void 
-Timer1IntHandler(void) 
+ControlLoopTimerInt(void) 
 { 
     IntMasterDisable();
     
-    // CONTROL
+    // CONTROL LOOP
+    // Timer clocked at 100Hz
     // ****************************
     sendDataTelemetry(&imu[0], dt);     // Send Data Telemetry
     
@@ -179,7 +180,7 @@ Timer1IntHandler(void)
     //
     TimerIntClear(TIMER1_BASE, TIMER_TIMA_TIMEOUT);
     
-    TimerLoadSet(TIMER1_BASE, TIMER_A, 0x00FF0000);                   // Load Timer
+    TimerLoadSet(TIMER1_BASE, TIMER_A, 0x000c3500);         // Load Timer - 100Hz
 }
 
 //***************************************************************************** 

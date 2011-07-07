@@ -49,7 +49,7 @@ static void IntDefaultHandler(void);
 //*****************************************************************************
 extern void __iar_program_start(void);
 extern void UARTIntHandler(void);
-extern void Timer1IntHandler(void);
+extern void ControlLoopTimerInt(void);
 //*****************************************************************************
 //
 // Reserve space for the system stack.
@@ -117,7 +117,7 @@ __root const uVectorEntry __vector_table[] @ ".intvec" =
     IntDefaultHandler,                      // Watchdog timer
     IntDefaultHandler,                      // Timer 0 subtimer A
     IntDefaultHandler,                      // Timer 0 subtimer B
-    Timer1IntHandler,                       // Timer 1 subtimer A
+    ControlLoopTimerInt,                    // Timer 1 subtimer A
     IntDefaultHandler,                      // Timer 1 subtimer B
     IntDefaultHandler,                      // Timer 2 subtimer A
     IntDefaultHandler,                      // Timer 2 subtimer B

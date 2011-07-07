@@ -251,7 +251,7 @@ void InitTIMER()
  
     TimerConfigure(TIMER1_BASE, TIMER_CFG_32_BIT_PER);                // Down Periodic Counter 
     
-    TimerLoadSet(TIMER1_BASE, TIMER_A, 0x00FF0000);                   // Load Timer
+    TimerLoadSet(TIMER1_BASE, TIMER_A, 0x000c3500);                   // Load Timer - 100Hz
     
     TimerControlStall(TIMER1_BASE, TIMER_A, true);                    // Stop timer in debug
     
