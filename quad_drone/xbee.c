@@ -67,7 +67,7 @@ void sendDataTelemetry(float *imu, float dt)
 {
     IntMasterDisable();
     
-    if(uartDelay > 1)
+    if(uartDelay > 20)
     {
       uartDelay = 0;
       
@@ -149,7 +149,7 @@ void sendControlTelemetry(float torque, float P, float I, float D)
 {
     IntMasterDisable();
     
-    if(controlDelay > 1)
+    if(controlDelay > 20)
     {
       controlDelay = 0;
       for(int i=0; i < 4; i++)

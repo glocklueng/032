@@ -23,6 +23,8 @@
 #include "grlib/grlib.h"
 #include "grlib/widget.h"
 
+
+
 // X-Axis PID Data
 // *************************
 float x_Pterm;                  // X-Axis - P Term                                                          
@@ -31,8 +33,8 @@ float x_Dterm;                  // X-Axis - D Term
 float x_angle_vel_term;         // X-Axis - Angular Velocity Term
 
 float x_Pgain = 8.5f;           // X-Axis - P Gain - 8.5
-float x_Igain = 1.0f;          // X-Axis - I Gain - 0.01
-float x_Dgain = 0.08f;           // X-Axis - D Gain - 85.0
+float x_Igain = 0.0f;           // X-Axis - I Gain - 0.01
+float x_Dgain = 0.0f;           // X-Axis - D Gain - 85.0
 float x_Fgain = 0.0f;           // X-Axis - F Gain - 0.0
 
 float x_Dterm_1 = 0.0f;		// X-Axis - D Term Filter Interation 1 
@@ -55,8 +57,8 @@ float y_Dterm;                  // Y-Axis - D Term
 float y_angle_vel_term;         // Y-Axis - Angular Velocity Term
 
 float y_Pgain = 8.5f;           // Y-Axis - P Gain - 8.5
-float y_Igain = 0.01f;          // Y-Axis - I Gain - 0.01
-float y_Dgain = 85.0f;          // Y-Axis - D Gain - 85.0
+float y_Igain = 0.0f;           // Y-Axis - I Gain - 0.01
+float y_Dgain = 0.0f;           // Y-Axis - D Gain - 85.0
 float y_Fgain = 0.0f;           // Y-Axis - F Gain - 0.0
 
 
@@ -122,7 +124,7 @@ float b_epsilon = 10.0f;                        // Epsilon - Balanced
 // Control
 //
 // Control function to stabilize the drone
-//
+// Refresh Rate: 100Hz
 void control(float *imu)
 {   
     // Load dt Time Variable to Control
