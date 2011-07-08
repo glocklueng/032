@@ -1,0 +1,222 @@
+###############################################################################
+#                                                                             #
+# IAR ELF Linker V6.10.2.52244/W32 for ARM              27/Feb/2011  21:31:50 #
+# Copyright 2007-2010 IAR Systems AB.                                         #
+#                                                                             #
+#    Output file  =  C:\Users\Arko\Documents\IAR Embedded                     #
+#                    Workbench\arm\examples\TexasInstruments\Stellaris\boards #
+#                    \dk-lm3s9b96\quad_dk\ewarm\Exe\quad_dk.out               #
+#    Map file     =  C:\Users\Arko\Documents\IAR Embedded                     #
+#                    Workbench\arm\examples\TexasInstruments\Stellaris\boards #
+#                    \dk-lm3s9b96\quad_dk\ewarm\List\quad_dk.map              #
+#    Command line =  "C:\Users\Arko\Documents\IAR Embedded                    #
+#                    Workbench\arm\examples\TexasInstruments\Stellaris\boards #
+#                    \dk-lm3s9b96\quad_dk\ewarm\Obj\display.o"                #
+#                    "C:\Users\Arko\Documents\IAR Embedded                    #
+#                    Workbench\arm\examples\TexasInstruments\Stellaris\boards #
+#                    \dk-lm3s9b96\quad_dk\ewarm\Obj\imu.o"                    #
+#                    "C:\Users\Arko\Documents\IAR Embedded                    #
+#                    Workbench\arm\examples\TexasInstruments\Stellaris\boards #
+#                    \dk-lm3s9b96\quad_dk\ewarm\Obj\init.o"                   #
+#                    "C:\Users\Arko\Documents\IAR Embedded                    #
+#                    Workbench\arm\examples\TexasInstruments\Stellaris\boards #
+#                    \dk-lm3s9b96\quad_dk\ewarm\Obj\quad_dk.o"                #
+#                    "C:\Users\Arko\Documents\IAR Embedded                    #
+#                    Workbench\arm\examples\TexasInstruments\Stellaris\boards #
+#                    \dk-lm3s9b96\quad_dk\ewarm\Obj\set_pinout.o"             #
+#                    "C:\Users\Arko\Documents\IAR Embedded                    #
+#                    Workbench\arm\examples\TexasInstruments\Stellaris\boards #
+#                    \dk-lm3s9b96\quad_dk\ewarm\Obj\startup.o"                #
+#                    "C:\Users\Arko\Documents\IAR Embedded                    #
+#                    Workbench\arm\examples\TexasInstruments\Stellaris\driver #
+#                    lib\ewarm\Exe\driverlib.a" "C:\Users\Arko\Documents\IAR  #
+#                    Embedded Workbench\arm\examples\TexasInstruments\Stellar #
+#                    is\grlib\ewarm\Exe\grlib.a" --redirect                   #
+#                    _Printf=_PrintfTiny --redirect _Scanf=_ScanfSmall -o     #
+#                    "C:\Users\Arko\Documents\IAR Embedded                    #
+#                    Workbench\arm\examples\TexasInstruments\Stellaris\boards #
+#                    \dk-lm3s9b96\quad_dk\ewarm\Exe\quad_dk.out" --map        #
+#                    "C:\Users\Arko\Documents\IAR Embedded                    #
+#                    Workbench\arm\examples\TexasInstruments\Stellaris\boards #
+#                    \dk-lm3s9b96\quad_dk\ewarm\List\quad_dk.map" --config    #
+#                    "C:\Users\Arko\Documents\IAR Embedded                    #
+#                    Workbench\arm\examples\TexasInstruments\Stellaris\boards #
+#                    \dk-lm3s9b96\quad_dk\quad_dk.icf" --semihosting --entry  #
+#                    __iar_program_start                                      #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+*******************************************************************************
+*** RUNTIME MODEL ATTRIBUTES
+***
+
+CppFlavor       = *
+__SystemLibrary = DLib
+
+
+*******************************************************************************
+*** PLACEMENT SUMMARY
+***
+
+"A1":  place at start of [0x00000000-0x0003ffff] { ro section .intvec };
+"P1":  place in [from 0x00000000 to 0x0003ffff] { ro };
+"P2":  place in [from 0x20000000 to 0x20017fff] { rw, block HEAP };
+
+  Section  Kind        Address   Size  Object
+  -------  ----        -------   ----  ------
+"A1":                           0x11c
+  .intvec  const    0x00000000  0x11c  startup.o [1]
+                  - 0x0000011c  0x11c
+
+"P1":                           0x850
+  .text    ro code  0x0000011c  0x34c  sysctl.o [4]
+  .text    ro code  0x00000468  0x190  gpio.o [4]
+  .text    ro code  0x000005f8  0x164  init.o [1]
+  .text    ro code  0x0000075c   0x98  adc.o [4]
+  .text    ro code  0x000007f4   0x80  pwm.o [4]
+  .text    ro code  0x00000874   0x3c  i2c.o [4]
+  .text    ro code  0x000008b0   0x68  quad_dk.o [1]
+  .text    ro code  0x00000918   0x16  cmain.o [7]
+  .text    ro code  0x0000092e    0x4  low_level_init.o [3]
+  .text    ro code  0x00000932    0x8  exit.o [3]
+  .text    ro code  0x0000093a    0x6  startup.o [1]
+  .text    ro code  0x00000940    0xa  cexit.o [7]
+  .text    ro code  0x0000094c   0x14  exit.o [8]
+  .text    ro code  0x00000960    0xc  cstartup_M.o [7]
+                  - 0x0000096c  0x850
+
+"P2":                           0x100
+  .noinit  uninit   0x20000000  0x100  startup.o [1]
+                  - 0x20000100  0x100
+
+
+*******************************************************************************
+*** MODULE SUMMARY
+***
+
+    Module            ro code  ro data  rw data
+    ------            -------  -------  -------
+C:\Users\Arko\Documents\IAR Embedded Workbench\arm\examples\TexasInstruments\Stellaris\boards\dk-lm3s9b96\quad_dk\ewarm\Obj: [1]
+    init.o                356
+    quad_dk.o             104
+    startup.o               6      284      256
+    -------------------------------------------
+    Total:                466      284      256
+
+command line: [2]
+    -------------------------------------------
+    Total:
+
+dl7M_tln.a: [3]
+    exit.o                  8
+    low_level_init.o        4
+    -------------------------------------------
+    Total:                 12
+
+driverlib.a: [4]
+    adc.o                 152
+    gpio.o                400
+    i2c.o                  60
+    pwm.o                 128
+    sysctl.o              844
+    -------------------------------------------
+    Total:              1 584
+
+grlib.a: [5]
+    -------------------------------------------
+    Total:
+
+m7M_tl.a: [6]
+    -------------------------------------------
+    Total:
+
+rt7M_tl.a: [7]
+    cexit.o                10
+    cmain.o                22
+    cstartup_M.o           12
+    -------------------------------------------
+    Total:                 44
+
+shb_l.a: [8]
+    exit.o                 20
+    -------------------------------------------
+    Total:                 20
+
+    Gaps                    2
+-----------------------------------------------
+    Grand Total:        2 128      284      256
+
+
+*******************************************************************************
+*** ENTRY LIST
+***
+
+Entry                      Address   Size  Type      Object
+-----                      -------   ----  ----      ------
+?main                   0x00000919         Code  Gb  cmain.o [7]
+ADCIntClear             0x0000076b    0xa  Code  Gb  adc.o [4]
+ADCIntEnable            0x0000075d    0xe  Code  Gb  adc.o [4]
+ADCSequenceConfigure    0x00000793   0x30  Code  Gb  adc.o [4]
+ADCSequenceDisable      0x00000783    0x2  Code  Gb  adc.o [4]
+ADCSequenceEnable       0x00000775    0x8  Code  Gb  adc.o [4]
+ADCSequenceStepConfigure
+                        0x000007c3   0x32  Code  Gb  adc.o [4]
+FaultISR                0x0000093d    0x2  Code  Lc  startup.o [1]
+GPIODirModeSet          0x00000469   0x28  Code  Gb  gpio.o [4]
+GPIOPadConfigSet        0x00000491   0x98  Code  Gb  gpio.o [4]
+GPIOPinConfigure        0x00000569   0x40  Code  Gb  gpio.o [4]
+GPIOPinTypeADC          0x0000052f    0x4  Code  Gb  gpio.o [4]
+GPIOPinTypeI2C          0x0000054d    0xa  Code  Gb  gpio.o [4]
+GPIOPinTypePWM          0x00000557    0xa  Code  Gb  gpio.o [4]
+GPIOPinWrite            0x00000529    0x6  Code  Gb  gpio.o [4]
+I2CMasterEnable         0x0000089b    0xc  Code  Gb  i2c.o [4]
+I2CMasterInitExpClk     0x00000875   0x26  Code  Gb  i2c.o [4]
+InitADC                 0x000005f9   0x8a  Code  Gb  init.o [1]
+InitI2C                 0x000006e9   0x3a  Code  Gb  init.o [1]
+InitPWM                 0x00000683   0x66  Code  Gb  init.o [1]
+IntDefaultHandler       0x0000093f    0x2  Code  Lc  startup.o [1]
+NmiSR                   0x0000093b    0x2  Code  Lc  startup.o [1]
+PWMGenConfigure         0x000007f5   0x2c  Code  Gb  pwm.o [4]
+PWMGenEnable            0x00000839    0x6  Code  Gb  pwm.o [4]
+PWMGenPeriodSet         0x00000825   0x14  Code  Gb  pwm.o [4]
+PWMOutputState          0x00000863   0x12  Code  Gb  pwm.o [4]
+PWMPulseWidthSet        0x0000083f   0x1c  Code  Gb  pwm.o [4]
+Region$$Table$$Base     0x00000000          --   Gb  - Linker created -
+Region$$Table$$Limit    0x00000000          --   Gb  - Linker created -
+SysCtlClockGet          0x00000253  0x15c  Code  Gb  sysctl.o [4]
+SysCtlClockSet          0x00000145  0x10e  Code  Gb  sysctl.o [4]
+SysCtlDelay             0x0000013d    0x8  Code  Gb  sysctl.o [4]
+SysCtlPWMClockSet       0x000003af    0xa  Code  Gb  sysctl.o [4]
+SysCtlPeripheralEnable  0x0000011d    0x8  Code  Gb  sysctl.o [4]
+__cmain                 0x00000919         Code  Gb  cmain.o [7]
+__exit                  0x0000094d   0x14  Code  Gb  exit.o [8]
+__iar_program_start     0x00000961         Code  Gb  cstartup_M.o [7]
+__low_level_init        0x0000092f    0x4  Code  Gb  low_level_init.o [3]
+__vector_table          0x00000000  0x11c  Data  Gb  startup.o [1]
+_call_main              0x00000925         Code  Gb  cmain.o [7]
+_exit                   0x00000941         Code  Gb  cexit.o [7]
+_main                   0x0000092b         Code  Gb  cmain.o [7]
+exit                    0x00000933    0x8  Code  Gb  exit.o [3]
+g_pulGPIOBaseAddrs      0x000005b0   0x48  Data  Lc  gpio.o [4]
+g_pulRCGCRegs           0x00000400    0xc  Data  Lc  sysctl.o [4]
+g_pulXtals              0x0000040c   0x5c  Data  Lc  sysctl.o [4]
+main                    0x000008b1   0x68  Code  Gb  quad_dk.o [1]
+pulStack                0x20000000  0x100  Data  Lc  startup.o [1]
+
+
+[1] = C:\Users\Arko\Documents\IAR Embedded Workbench\arm\examples\TexasInstruments\Stellaris\boards\dk-lm3s9b96\quad_dk\ewarm\Obj
+[2] = command line
+[3] = dl7M_tln.a
+[4] = driverlib.a
+[5] = grlib.a
+[6] = m7M_tl.a
+[7] = rt7M_tl.a
+[8] = shb_l.a
+
+  2 128 bytes of readonly  code memory
+    284 bytes of readonly  data memory
+    256 bytes of readwrite data memory
+
+Errors: none
+Warnings: none
