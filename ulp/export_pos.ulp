@@ -1,0 +1,39 @@
+#usage "<b>Export size and position information from a board to a script.</b>\n" 
+       "<p>" 
+       "<author>Author: Charlie Wallace</author>" 
+
+// THIS PROGRAM IS PROVIDED AS IS AND WITHOUT WARRANTY OF ANY KIND, EXPRESSED OR IMPLIED 
+
+real u2u(int x) { // resolution 1/100 mm 
+   x = round(x * 100)/100; 
+   return u2mm(x);  // if mm 
+} 
+
+real u2ang(real x) { 
+  if (x > 360) 
+     x = x -360; 
+  x = round(x * 10)/10; 
+  return x; 
+} 
+
+if (board) board(B) {
+
+          output("c:\\test.scr","wt") {    
+
+        // switch to metric 
+        printf("grid mm\n"); 
+
+        // iterate elements 
+        B.elements(E) { 
+            printf("move %s (%g %g)\n",E.name,u2u(E.x),u2u(E.y)); 
+        if(E.mirror) 
+            printf("rotate =MR%g %s\n",E.angle,E.name); 
+        else 
+            printf("rotate =R%g %s\n",E.angle,E.name); 
+
+         } 
+    } 
+} 
+
+else dlgMessageBox("Start this ULP in a Board!", "OK"); 
+exit (0);

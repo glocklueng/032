@@ -1,0 +1,79 @@
+int cons;
+int pols;
+int crs;
+int vias;
+int wirs;
+int emps=0;
+
+string info[];
+int i=0;
+
+project.board(B)
+{
+	clrgroup(B);
+	B.signals(S)
+	{
+		cons=0;
+		pols=0;
+		crs=0;
+		vias=0;
+		wirs=0;
+
+		S.polygons(P)
+		{
+			cons++;
+			pols++;
+		}
+		S.contactrefs(CR)
+		{
+			if(CR.element && CR.contact)
+			{
+				cons++;
+				crs++;
+			}
+			else
+			{
+				setgroup(CR);
+				sprintf(info[i++],"Found null-contactref on net '%s'",S.name);
+			}
+		}
+		S.vias(V)
+		{
+			cons++;
+			vias++;
+		}
+		S.wires(W)
+		{
+			cons++;
+			wirs++;
+		}
+		if(cons==0)
+		{
+			if(project.schematic) project.schematic(sch)
+			{
+				sch.nets(N)
+				{
+					if(N.name==S.name)
+					{
+						sprintf(info[i++],"Found null-net '%s' in schematic",S.name);
+						setgroup(N);
+					}
+				}
+			}
+			setgroup(S);
+			sprintf(info[i++],"Found null-signal '%s' in board",S.name);
+			emps++;
+		}
+	}
+}
+if(emps==0) dlgMessageBox("No null objects found");
+else
+{
+	int res=dlgDialog("Result")
+	{
+		dlgListBox(info,emps);
+		dlgPushButton("+&Delete") exit("delete (>C@);");	
+		dlgPushButton("+&Cancel") exit(EXIT_SUCCESS);	
+	};
+}
+exit(EXIT_SUCCESS);
