@@ -1,0 +1,44 @@
+**************************************************
+*  PROTEL TO EAGLE NETLIST CONVERTER Version 1.0 *
+**************************************************
+
+INSTALLATION INSTRUCTIONS
+*************************
+1.   Create a folder called "Protel2Eagle" in your Eagle application directory.
+2.   Unzip the file "Protel2Eagle.zip" to the folder "Protel2Eagle".
+3.   Copy the library file "ProtelLib.lbr" into your Eagle lbr folder.
+
+NOTES
+*************************
+The file FPData.ptl is a text file containing the Protel packages with the equivalent modified Eagle packages.  A TAB seperates the two fields and you can edit this list to suit your own needs and add to it if necessary.
+
+Circuit analysis applications such as Electronics Workbench, Multisim, Circuit Maker, etc. usually allow you to export the simulated circuit to a PCB design package, such as Eagle Layout.  However, I have experienced many difficulties with the above packages in exporting netlists in Eagle scr format, as the libraries are usually totally different and some bugs are present in the exported netlists.  So, I decided to opt for the export in Protel format option, which seemed to be more robust.
+
+USING THE ULP
+*************************
+1.	Use the particular circuit simulation package to create and analyse your circuits.
+
+2.	Export the netlist in Protel .NET format:-
+
+	(a)  	In Electronics Workbench pick File - Export and select the Protel .NET format.
+
+	(b)	In Multisim pick Transfer - Other PCB Layout.  In the "Save as Type" box, select 			"Protel PCB(*.NET).
+	
+	(c)	In Circuitmaker pick File - Export - PCB Netlist.  Unpick the Run Traxmaker and 			load netlist option and OK.
+
+3.	Start Eagle and select File - New - Board.
+
+4.	Pick the ULP button and find the ULP "Protel2Eagle1_0.ulp" in the Protel2Eagle folder.
+	The ULP will automatically load the file "FPData.ptl" from the Protel2Eagle folder.
+
+5.	Select the source .NET file.
+  	
+6.	The ULP will then convert this file to an Eagle .scr file, saving it in the folder 		from where you obtained the source .NET file, and then execute the script file that the 		ULP created.
+
+7.	Select the devices from the ProtelLib library.  (Semiconductor devices such as diodes, 			transistors and IC's, may have their pins labelled differently to those used by Eagle, 
+	so its advisible to use the devices in the ProtelLib library, which have been modified).
+
+8.	Use the MOVE operation to position your components on the board and then route your 		board.
+
+
+

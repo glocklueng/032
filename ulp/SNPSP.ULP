@@ -1,0 +1,41 @@
+/*  SNPSP.ULP
+ *  This EAGLE User Language Program produces a script
+ *  file that can be used to snap the part instances 
+ *  of the current schematic to the current grid.
+ *  creates snap.scr in the working directory, which
+ *  does the actual moving (not possible in ULP (yet?))
+ *  Iterate with SNPSJ.ULP, SNPSW1.ULP and SNPSW2.ULP
+ */
+
+real GridDist; // in Mil
+
+real snap(int n)  // returns next grid point
+{
+  return round(u2mil(n) / GridDist) * GridDist;
+}
+
+real gridDist2Mil(real gridDist, int gridUnit) //
+{
+  switch (gridUnit) {
+    case GRID_UNIT_MIC : return u2mil(int(gridDist*10.0));break;
+    case GRID_UNIT_MM  : return u2mil(int(gridDist*10000.0));break;
+    case GRID_UNIT_MIL : return gridDist;break;
+    case GRID_UNIT_INCH: return gridDist*1000.0;break;
+    default : exit(-1); }
+}
+
+output("snap.scr") {
+  schematic(SCH) {
+    GridDist = gridDist2Mil(SCH.grid.distance, SCH.grid.unit);
+    printf("GRID MIL %f;\n", 1.0);
+    SCH.sheets(SH) {
+      SH.parts(P) {
+        P.instances(I) {
+          printf("MOVE (%f %f) (%f %f);\n",
+                 u2mil(I.x), u2mil(I.y), snap(I.x), snap(I.y));
+        }
+      }
+    }
+  }
+  printf("GRID LAST;\n");
+}

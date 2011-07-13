@@ -1,0 +1,182 @@
+#usage "<b>Converts a PROTEL .NET file to Eagle script</b>\n"
+       " board file.<p>"
+       "<author>Author: tconnelly@blueyonder.co.uk</author>"
+// Many circuit analysis applications, e.g. Electronic Workbench,
+//  CircuitMaker, Multisim etc., can export netlists that can be
+// used to create the footprints and ratsnest connections in PCB
+// layout applications, such as Eagle.  This ULP will produce
+// footprints and netlists in Eagle Layout's .scr format.
+// 
+//  The ULP has been tested with the following software:
+//        (a)   Electronic Workbench 5.xx
+//        (b)   Multisim 2001
+//        (c)   CircuitMaker2000
+//  Important :-  You must use the Export Netlist as a Protel .NET
+//                or Traxmaker .NET file format in the above
+//                applications.
+//
+//  The file "FPData.ptl" contains the table with the Protel
+//  footprint names and the nearest Eagle equivalents.  You can 
+//  change this list using a suitable Text Editor.  Please note
+//  that not all component footprints are in the list as it isn't
+//  straightforward to get the footprint data from Electronic 
+//  Workbench or Multisim.  However, most of the common components
+//  are listed.
+//
+//  A separate library called "ProtelLib.lbr" has been created from
+//  the Eagle libraries and you can add to this to suit your needs.
+//  
+// Protel NET to Eagle Conversion ULP V1.0 (2/12/2002)
+int NumBytesCM, NumLinesCM, LibLen, I, J;
+string EagleLib="ProtelLib";
+string FPFN="FPData.ptl";
+string t1="",t2="",Rot=" R0 ";
+string CM[], CMMod[], LibFN="", CMFN ="", EagleFN ="", SDir ="";
+string FPLib[], LibListDir="";
+string path="";
+char c='/';
+// Change the values of BrdSizeX and BrdSizeY to the maximum board
+// size your version of Eagle permits
+real BrdSizeX=3.0, BrdSizeY=3.0;
+real xo=0, yo=0.5, inc=0.5;
+//-------- FUNCTIONS -----------
+void LoadFPList(void){
+  LibFN=path+FPFN;
+  LibLen = fileread(FPLib,LibFN);
+return;
+}
+//********************************
+string ConvertFP(string PFP){
+int i=0;
+string EagleFP="";
+do{
+++i;
+EagleFP=lookup(FPLib,PFP,"Protel");
+}while(EagleFP!=PFP && i<LibLen);
+return (lookup(FPLib,PFP,"Eagle"));
+}
+//*********************************
+void LoadCMFile(void){
+  CMFN=dlgFileOpen("Select source .NET file . ","*.net");
+  NumLinesCM = fileread(CM,CMFN);
+  SDir = filedir(CMFN);
+return;
+}
+//*****************************
+void RemoveBlankLines(void){
+int l,k;
+for(l=0;l<NumLinesCM;l++)
+{
+ if(CM[l]!=""){CMMod[k]=CM[l];k++;}
+}
+NumLinesCM=k;
+for(l=0;l<NumLinesCM;l++)
+{
+ CM[l]=CMMod[l];
+ CMMod[l]="";
+}
+return;
+}
+//*****************************
+string PosXY(void){
+ string Xp="", Yp="", coord="";
+  xo=xo+inc;
+  if(xo>BrdSizeX){xo=inc;yo=yo+inc;}
+  if(yo>BrdSizeY){inc=0.25; xo=inc; yo=inc;}
+  sprintf(Xp,"%g",xo);
+  sprintf(Yp,"%g",yo);
+  if(strlen(Xp)==1) Xp=Xp+".0";
+  if(strlen(Yp)==1) Yp=Yp+".0";
+  coord=" ("+Xp+" "+Yp+") ";
+return (coord);
+}
+//****************************
+void ModifyCMFile(void){ 
+string a[], Ref="", CRef="", PinNum="", EagleCL="",CL="";
+string FootPrint="", Value="",s="NET", NetNum="";
+int n;
+CMMod[0]="USE "+EagleLib;
+J=1;
+for(I=0;I<NumLinesCM;I++)
+   {
+     if(strchr(CM[I],'[')>=0)
+     {
+       EagleCL="ADD ";I++;
+	CRef=CM[I];I++;
+	FootPrint=ConvertFP(CM[I]);I++;
+	Value=CM[I];I++;
+	CMMod[J]=EagleCL+FootPrint+" '"+CRef+"' "+Rot+PosXY()+";VALUE "+CRef+" "+Value;
+	J++;
+      }
+      if(strchr(CM[I],'(')>=0)
+	{
+	  EagleCL="SIGNAL ";I++;
+NetNum=CM[I];
+	  I++;EagleCL=EagleCL+"'"+NetNum+"' ";
+	  n=strsplit(a,CM[I],'-');
+	  Ref=a[0];
+if(strchr(a[1],' ')>=0) 
+{
+n=strlen(a[1]);
+a[1]=strsub(a[1],0,n-1);
+}
+          PinNum=a[1];
+	  EagleCL=EagleCL+"'"+Ref+"' "+"'"+PinNum+"' \\";
+	  CMMod[J]=EagleCL;J++;I++;EagleCL="";
+	  while(strchr(CM[I],')')<0)
+	   {
+ 	     n=strsplit(a,CM[I],'-');
+	     Ref=a[0];
+if(strchr(a[1],' ')>=0) 
+{
+n=strlen(a[1]);
+a[1]=strsub(a[1],0,n-1);
+}
+             PinNum=a[1];
+	     EagleCL=EagleCL+"'"+Ref+"' "+"'"+PinNum+"' \\";
+	     CMMod[J]=EagleCL;EagleCL="";
+	     I++;J++;
+	   }
+         }
+       if(strchr(CM[I],')')>=0)
+        { 
+         EagleCL=";";
+         CMMod[J]=EagleCL;
+         J++;
+        }
+    }
+
+return;
+}
+
+//*****************************    
+void SaveEagFile(string Dest){
+  int i =0;
+
+  output(Dest,"wt")
+    {
+     for(i=0;i<J;i++)
+      {
+         printf("%s\n",CMMod[i]);
+      }
+    }
+return;
+}
+
+//****************************
+//------MAIN PROGRAM ----------
+// The next two lines get the path of the Eagle ULP
+int pos=strrchr(argv[0],c);
+if (pos >=0)path=strsub(argv[0],0,pos+1);
+LoadFPList();
+LoadCMFile();
+if(fileerror())exit(1);
+EagleFN=filesetext(CMFN,".scr");
+RemoveBlankLines();
+ModifyCMFile();
+SaveEagFile(EagleFN);
+if(fileerror())exit(1);
+string cmd="; SCRIPT '";
+exit(cmd+EagleFN);
+
+

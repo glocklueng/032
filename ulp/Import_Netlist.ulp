@@ -1,0 +1,369 @@
+#usage "<b>Connects component signals using external netlist file</b>\n"
+       "<p>"
+       "<author>Author: Alex Mykyta (aim6864@rit.edu)</author>"
+
+// THIS PROGRAM IS PROVIDED AS IS AND WITHOUT WARRANTY OF ANY KIND, EXPRESSED OR IMPLIED
+
+string dottospace(string x){
+   for (int i = 0; i != strlen(x); i++) {
+      if (x[i] == '.') {
+         x[i] = ' ';
+      }
+   }
+   return x;
+}
+
+string str(int x){
+   string y;
+   sprintf(y,"%d",x);
+   return y;
+}
+
+string White2Tab(string sInp) {
+   string out;
+   int prevwasspace = 0;
+   int x = 0;
+   do {
+      if (isspace(sInp[x])) {
+         if (prevwasspace == 0) {
+            // insert tab
+            out += '\t';
+         }
+         prevwasspace = 1;
+      }
+      else {
+         //copy chr
+         out += sInp[x];
+         prevwasspace = 0;
+      }
+      x += 1;
+   } while (x != strlen(sInp));
+   return(out);
+}
+
+
+void main(void) {
+   if (!(board)) {
+      dlgMessageBox(":ULP can only work in Board Editor");
+      exit(0);
+   }
+
+
+
+   int pos = strrchr(argv[0], '/');
+   string ulp_path = strsub(argv[0], 0, pos + 1);
+   string ulp_name = strsub(argv[0], pos + 1, strlen(argv[0]) - pos - 5);
+   string settings[];
+   int nset = fileread(settings, ulp_path + ulp_name + ".ini");
+   if (fileerror()) {
+      output(ulp_path + ulp_name + ".ini"){
+         // write default settings
+         printf("\n0");
+      }
+   }
+   
+   
+   string NetForm[] = {"EAGLE Netlist", "PADS-PCB" };
+   string NetPath = settings[0];
+   int idxNetForm = strtol(settings[1]);
+   dlgDialog("Import Netlist") {
+      dlgGridLayout {
+         dlgCell(0,0) dlgLabel("Netlist Format");
+         dlgCell(0,1) dlgLabel("Path:");
+         dlgCell(0,2) dlgSpacing(300);
+         dlgCell(1,0) dlgComboBox(NetForm, idxNetForm);
+         dlgCell(1,1,1,2) dlgStringEdit(NetPath);
+         dlgCell(1,3) dlgPushButton("Browse...") {
+            NetPath = dlgFileOpen("Open");
+         }
+      }
+      dlgHBoxLayout {
+         dlgStretch(1);
+         dlgPushButton("-Cancel") {
+            dlgReject();
+            exit(0);
+         }
+         dlgPushButton("+Load") dlgAccept();
+      }
+   };
+   
+// Load Netlist
+   string txtLines[];
+   int nLines = fileread(txtLines, NetPath);
+   if (fileerror()) {
+      exit(0);
+   }
+   
+   
+/*=================================================
+* Generic Netlist format is as follows:
+* -Netlist is stored in string array called "net"
+*
+* EXAMPLE:
+* net[0] = "GND"	// Net Name
+* net[1] = "U1 3"	// contact name
+* net[2] = "U1 4"
+* net[3] = ""	// Blank space between nets
+* net[4] = "3v3"	// Net Name
+* net[5] = "U1 8"
+* net[6] = "U2 9"
+*
+*=================================================*/
+   string net[];
+   int netIdx = 0;
+   int i;
+   string linesplit[];
+   int nsplit;
+   switch (idxNetForm) {
+      case 0: //Eagle netlist
+         //verify format
+         if (nLines > 8) {
+            if (!((txtLines[0] == "Netlist") && (strsub(txtLines[4],0,13) == "EAGLE Version"))) {
+               dlgMessageBox(":Cannot read EAGLE Netlist");
+               exit(0);
+            }
+         }
+         //load into generic netlist
+         for(i = 8; i != nLines ; i++) {
+            if (strlen(txtLines[i]) != 0) {
+               strsplit(linesplit, White2Tab(txtLines[i]),'\t');
+               if (strlen(linesplit[0]) == 0) {
+                  net[netIdx] = linesplit[1] + ' ' + linesplit[2];
+                  netIdx += 1;
+               }
+               else {
+                  net[netIdx] = linesplit[0];
+                  netIdx += 1;
+                  net[netIdx] = linesplit[1] + ' ' + linesplit[2];
+                  netIdx += 1;
+               }
+            }
+            else {
+               net[netIdx] = "";
+               netIdx += 1;
+            }
+         }
+         
+         break;
+      case 1: // PADS-PCB netlist
+         if(nLines > 2) {
+            if (txtLines[0] != "*PADS-PCB*") {
+               dlgMessageBox(":Cannot read PADS-PCB Netlist");
+               exit(0);
+            }
+         }
+         //load into generic netlist
+
+         // find *net* section
+         i = 0;
+         do {
+            i++;
+            if (i == nLines) {
+               dlgMessageBox(":Cannot read PADS-PCB Netlist");
+               exit(0);
+            }
+         } while((txtLines[i] != "*NET*") && (i < nLines));
+         
+
+         netIdx = -1;
+         for (int q = i+1; q != nLines; q++) {
+            if (strsub(txtLines[q],0,8) == "*SIGNAL*") {
+               // Signal
+               strsplit(linesplit, txtLines[q], ' ');
+               netIdx++;
+               net[netIdx] = linesplit[1];
+               netIdx++;
+            } else {
+               if (strsub(txtLines[q],0,5) == "*END*") {
+                  break;
+               } else {
+                  // Connections
+                  nsplit = strsplit(linesplit, txtLines[q], ' ');
+                  for (int ns = 0; ns != nsplit; ns++) {
+                     net[netIdx] = dottospace(linesplit[ns]);
+                     netIdx++;
+                  }
+               }
+            }
+         }
+
+         break;
+   }
+   
+
+   // make list of existing contacts
+   string BoardContacts[];
+   int bcCount = 0;
+   board(B) {
+      B.elements(E) {
+         E.package.contacts(C) {
+            BoardContacts[bcCount] = E.name + ' ' + C.name;
+            bcCount += 1;
+         }
+      }
+   }
+
+   // make list of netlist contacts
+   string NetContacts[];
+   int ncCount = 0;
+   int prevwasbreak = 1;
+   for( int x = 0; x != netIdx; x++) {
+      if (strlen(net[x]) == 0) {
+         prevwasbreak = 1;
+      }
+      else {
+         switch (prevwasbreak) {
+         case 0:
+            NetContacts[ncCount] = net[x];
+            ncCount += 1;
+            break;
+         case 1:
+            prevwasbreak = 0;
+            break;
+         }
+      }
+   }
+
+
+   string MissingParts;
+   string MissingPins;
+   string ExtraParts;
+   string IgnoreList[]; // list of contacts to be ignored
+   int ilCount = 0;
+   
+   string splitA[];
+   string splitB[];
+   int foundpart;
+   int foundpart2;
+   int foundpin;
+   for(int n = 0; n != ncCount; n++) {
+      foundpart = 0;
+      foundpin = 0;
+      strsplit(splitA, NetContacts[n],' ');
+      for(int b = 0; b != bcCount; b++) {
+         strsplit(splitB, BoardContacts[b],' ');
+         if (splitA[0] == splitB[0]) {
+            foundpart = 1;
+            if (NetContacts[n] == BoardContacts[b]) {
+               foundpin = 1;
+            }
+         }
+      }
+      if (foundpart == 0) {
+         // search ignorelist to see if missing part already added
+         foundpart2 = 0;
+         for (int i = 0; i != ilCount; i++) {
+            strsplit(splitB, IgnoreList[i],' ');
+            if (splitA[0] == splitB[0]) {
+               foundpart2 = 1;
+            }
+         }
+         if (foundpart2 == 0) {
+            MissingParts = MissingParts + splitA[0] + '\n';
+         }
+         IgnoreList[ilCount] = NetContacts[n];
+         ilCount += 1;
+      }
+      else {
+         if (foundpin == 0) {
+            IgnoreList[ilCount] = NetContacts[n];
+            ilCount += 1;
+            MissingPins = MissingPins + NetContacts[n] + '\n';
+         }
+      }
+   }
+   
+   for( int b = 0; b != bcCount; b++) {
+      foundpart = 0;
+      strsplit(splitA, BoardContacts[b], ' ');
+      for(int n = 0; n != ncCount; n++) {
+         strsplit(splitB, NetContacts[n],' ');
+         if (splitA[0] == splitB[0]) {
+            foundpart = 1;
+         }
+      }
+      if ((foundpart == 0) && ((strstr(ExtraParts," " + splitA[0] + '\n')) == -1)) {
+         ExtraParts = ExtraParts + ' ' + splitA[0] + '\n';
+      }
+   }
+
+
+
+   if ((MissingParts != "") || (ExtraParts != "") || (MissingPins != "")) {
+      dlgDialog("Warnings") {
+         dlgGridLayout {
+            dlgCell(0,0) dlgLabel("Parts not found on board:");
+            dlgCell(0,1) dlgLabel("Missing pins:");
+            dlgCell(0,2) dlgLabel("Extra parts on board:");
+            dlgCell(1,0) dlgTextView(MissingParts);
+            dlgCell(1,1) dlgTextView(MissingPins);
+            dlgCell(1,2) dlgTextView(ExtraParts);
+         }
+         dlgHBoxLayout {
+            dlgStretch(1);
+            dlgPushButton("-Cancel") {
+            dlgReject();
+               exit(0);
+            }
+            dlgPushButton("+Continue") dlgAccept();
+         }
+      };
+   }
+
+
+   // generate script file and execute it
+   string cmd;
+   string LastSignal = "";
+   string ExPad;
+   int SignalCount;
+   prevwasbreak = 1;
+   for (x = 0; x != netIdx; x++) {
+      if (strlen(net[x]) == 0){
+         if ((SignalCount == 1) && (LastSignal != "")){
+            // add existing pad to command
+            board(B){
+               B.signals(S){
+                  if (LastSignal == S.name){
+                     S.contactrefs(C){
+                        ExPad = " " + C.element.name + " " + C.contact.name;
+                     }
+                  }
+               }
+            }
+            cmd += ExPad;
+            SignalCount = 0;
+         }
+         cmd += ";\n";
+         prevwasbreak = 1;
+      }
+      else {
+         if (prevwasbreak == 1) {
+            cmd += "signal " + net[x];
+            LastSignal = net[x];
+            SignalCount = 0;
+            prevwasbreak = 0;
+         }
+         else {
+            foundpart = 0;
+            for (int i = 0; i != ilCount; i++) {
+               if(net[x] == IgnoreList[i]) {
+                  foundpart = 1;
+               }
+            }
+            if (foundpart == 0) {
+               cmd += " " + net[x];
+               SignalCount++;
+            }
+         }
+      }
+   }
+   cmd += ";\nratsnest;";
+
+   output(ulp_path + ulp_name + ".ini"){
+   // write settings
+      printf("%s\n%d", NetPath, idxNetForm);
+   }
+
+   exit(cmd);
+}
+

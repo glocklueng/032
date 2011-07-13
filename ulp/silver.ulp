@@ -1,0 +1,366 @@
+#usage "en: <b>PCB Quote Service</b\n>"
+           "<p>"
+           "Get a quote for manufacturing your PCB.<br>",
+       "de: <b>PCB-Angebots-Service</b>\n"
+           "<p>"
+           "Hiermit gelangen Sie zu einem Angebot zur Fertigung Ihres Boards.<p>"
+           "<author>Autor: support@cadsoft.de</author><p>"
+
+#require 5.1001
+
+
+string Version = "1.0.6";
+
+// Debug stuff
+int    Debug = 0;
+string DbgFile = "dbg-pcb.txt";
+string DbgMsg;
+// Language support for dialogs: German/English
+// Please keep to alphabetic sorting for better maintainability !
+string Dictionary[] = {
+  "en\v"
+  "de\v",
+  "Board width and length could not be determined from dimension layer. \v"
+  "Boardbreite und -länge konnten nicht bestimmt werden anhand des Dimension-Layers. \v",
+  "Please use the dimension layer to design the board outline.\v"
+  "Bitte benutzen Sie den Dimension-Layer, um die Boardumrisse festzulegen.\v",
+  "Calculating quote parameters...\v"
+  "Berechne Angebots-Parameter...\v",
+  "+Close\v"
+  "+Schliessen\v",
+  "Estimate based on outer layers failed. \v"
+  "Schätzung basierend auf Aussen-Layer fehlgeschlagen. \v",
+  "Estimation based on outer layers. \v"
+  "Schätzung basierend auf Aussen-Layer. \v",
+  "Get PCB Quote\v"
+  "Zum PCB-Angebot\v",
+  "If you want to get a quote anyway, please follow the link !\v"
+  "Wenn Sie dennoch ein Angebot erhalten wollen, folgen Sie bitte dem Link !\v",
+  "Information:\v"
+  "Hinweise:\v",
+  "Minimum trace width could not be determined.\v"
+  "Minimale Bahnbreite konnte nicht bestimmt werden.\v",
+  "No copper found in the signal layers. \v"
+  "Kein Kupfer in den Signal-Layern vorhanden. \v",
+  "Wire(s) and/or polygon(s) with zero width found on signal layer(s). \v"
+  "Bahnen und/oder Polygone mit Breite 0 in Signal-Layer(n) gefunden. \v",
+  "None of the signal layers are used. Number of layers could not be determined.\v"
+  "Keines der Signal-Layer wird verwendet. Layeranzahl konnte nicht bestimmt werden.\v",
+  "PCB Quote Service\v"
+  "PCB-Angebots-Service\v",
+  "Please start from Layout editor !\v"
+  "Bitte starten Sie vom Layout-Editor aus !\v",
+  "There are still airwires left.\v"
+  "Es sind noch Luftlinien vorhanden.\v",
+  "Warnings:\v"
+  "Warnungen:\v",
+  "Your board layout is incomplete:\v"
+  "Ihr Board-Layout ist unvollständig:\v"
+};
+
+// Help
+string Help[] = {
+   "Based on your board layout and the design rules, key parameters for manufacturing "
+   "your board like board size, smallest hole size etc. are determined. Your design "
+   "should be complete and have passed a DRC successfully.<br>"
+   "By following the link below you get to the quote site of Element14, where these "
+   "parameters are transferred (login necsssary). With a few steps you get a quote for "
+   "manufacturing your board this way."
+   ,
+   "Basierend auf Ihr Board-Layout und den Designregeln werden Kenngrössen zur Fertigung "
+   "des Boards ermittelt wie zum Beispiel Boardgrösse, kleinster Bohrdurchmesser usw. <br>"
+   "Ihr Design sollte möglichst vollständig und ein erfolgreicher DRC durchgeführt worden sein.<br>"
+   "Durch Klicken des Links unten gelangen Sie zur Angebotsseite von Element14, wo diese "
+   "Parameter übernommen werden (Login erforderlich). Mit wenigen Schritten erhalten Sie so "
+   "ein Angebot zur Fertigung Ihres Boards."
+};
+
+string Warnings;
+
+int Export = 1;
+string DruFile;
+
+// Quote Parameters
+int NrUsedLayers;
+int CopperThicknessOutside = INT_MAX;
+int CopperThicknessInside = INT_MAX;
+int MaterialThickness;
+int MinTraceWidth = INT_MAX;
+int MinHoleSize = INT_MAX;
+string SolderSides;
+string SilkScreenSides;
+int NrBlindBuriedTypes;
+int MinPitch = INT_MAX;
+int NrSmdPadsTop;
+int NrSmdPadsBottom;
+// For computing width and height
+real XMin = REAL_MAX, XMax = -REAL_MAX, YMin = REAL_MAX, YMax = -REAL_MAX;
+
+string DlgLang = language();
+if (DlgLang != "de") DlgLang = "en";
+int LangIdx = strstr(Dictionary[0], DlgLang) / 3;
+
+// Translate, based on dictionary
+string tr(string s) {
+  string t = lookup(Dictionary, s, LangIdx, '\v');
+  return t ? t : s;
+}
+
+// Means really within, not at the borders
+int Within(int val, int l, int u) {
+  return (val > l) && (val < u);
+}
+
+
+string I2Str(int i) {
+   string str;
+   sprintf(str, "%d", i);
+   return str;
+}
+
+string U2InchStr(int i) {
+   string str;
+   sprintf(str, "%f", u2inch(i)); // check formatting !
+   return str;
+}
+
+// The US guys like strange units...
+string U2OunzeStr(int i) {
+   string str;
+   sprintf(str, "%f", i/350.0 ); // Check if not rounded !
+   return str;
+}
+
+int Str2U(string s) {
+   if (strstr(s, "mm") > 0) return int(strtod(s) * 10000);
+   if (strstr(s, "mil") > 0) return int(strtod(s) * 10 * 25.4);
+   if (strstr(s, "in") > 0) return int(strtod(s) * 10000 * 25.4);
+   if (strstr(s, "mic") > 0) return int(strtod(s) * 10);
+   dlgMessageBox("Unknown unit in design rules !");
+   return 0;
+}
+
+//-------------------------------------------------------
+// Get PCB parameters
+//-------------------------------------------------------
+
+int ValidBBox() {
+  return (XMin < REAL_MAX) && (XMax > -REAL_MAX) &&
+         (YMin < REAL_MAX) && (YMax > -REAL_MAX) &&
+         (XMax - XMin > 1000) && (YMax - YMin > 1000); // Could make this much bigger, but that's not crucial (currently 0.1 mm)
+}
+
+// Update bounding box with another box
+void UpdateBBoxBox(int xmin, int ymin, int xmax, int ymax) {
+   XMin = min(XMin, xmin);
+   XMax = max(XMax, xmax);
+   YMin = min(YMin, ymin);
+   YMax = max(YMax, ymax);
+}
+
+
+void GetDruParams() {
+   string lines[];
+   int nrlines = fileread(lines, DruFile);
+   if (nrlines == 0) dlgMessageBox("Error reading design rules !");
+   for (int i = 0; i < nrlines; ++i) {
+      string words[];
+      int nrwords = strsplit(words, lines[i], ' ');
+      if (nrwords < 3) continue;    // Empty line or some other stuff
+      string keyword = words[0];
+      if (keyword == "mtCopper") {
+         CopperThicknessOutside = Str2U(words[2]);
+         //output(DbgFile, "wba") printf("CoOutside: %d\n", CopperThicknessOutside);
+         MaterialThickness += CopperThicknessOutside;
+         if (nrwords != 18) dlgMessageBox("Unexpected design rules !");
+         // Check the inner thicknesses:
+         for (int j = 3, ct = Str2U(words[j]); j < NrUsedLayers + 1; ct = Str2U(words[++j])) {
+            // output(DbgFile, "wba") printf("CoInside: %d\n", ct);
+            CopperThicknessInside = min(ct, CopperThicknessInside);
+            MaterialThickness += ct;
+         }
+         if (NrUsedLayers >= 2) {
+            ct = Str2U(words[17]);
+            CopperThicknessOutside = min(ct, CopperThicknessOutside);
+            // output(DbgFile, "wba") printf("CoOutside: %d\n", ct);
+            MaterialThickness += ct;
+         }
+      }
+      else if (keyword == "mtIsolate") {
+         if (nrwords != 17) dlgMessageBox("Unexpected design rules !");
+         // n used layers => n-1 isolate layers. If only 1 layer, also 1 isolate layer.
+         for (int k = 2; k < max(3, NrUsedLayers + 1); ++k) {
+            MaterialThickness += Str2U(words[k]);
+            // output(DbgFile, "wba") printf("Isolate: %d\n", Str2U(words[k]));
+         }
+      }
+      else if (keyword == "mdSmdSmd")
+         MinPitch = Str2U(words[2]);
+   }
+}
+
+void UpdateBBoxWire(UL_WIRE W, int layer) {
+  if (W.layer == layer) {
+     real w2 = W.width/2;
+     real xmin = min(W.x1 - w2, W.x2 - w2), ymin = min(W.y1 - w2, W.y2 - w2);
+     real xmax = max(W.x1 + w2, W.x2 + w2), ymax = max(W.y1 + w2, W.y2 + w2);
+     if (W.arc)
+        if (W.arc.angle2 > 360)
+           xmax = W.arc.xc + W.arc.radius + w2;
+        else if (((W.arc.angle1 <  90) && (W.arc.angle2 >  90)) || (W.arc.angle2 > 450))
+           ymax = W.arc.yc + W.arc.radius + w2;
+        else if (((W.arc.angle1 < 180) && (W.arc.angle2 > 180)) || (W.arc.angle2 > 540))
+           xmin = W.arc.xc - W.arc.radius - w2;
+        else if (((W.arc.angle1 < 270) && (W.arc.angle2 > 270)) || (W.arc.angle2 > 630))
+           ymin = W.arc.yc - W.arc.radius - w2;
+     UpdateBBoxBox(xmin, ymin, xmax, ymax);
+  }
+}
+
+void UpdateBBoxCircle(UL_CIRCLE C, int layer) {
+   if (C.layer == layer) {
+      real w2 = C.width/2;
+      UpdateBBoxBox(C.x - C.radius - w2, C.y - C.radius - w2, C.x + C.radius + w2, C.y + C.radius + w2);
+   }
+}
+
+void UpdateBBox(int layer, int el_origin) {
+   board(B) {
+      B.wires(W) UpdateBBoxWire(W, layer);
+      B.circles(C) UpdateBBoxCircle(C, layer);
+      B.elements(E) {
+         if (el_origin) UpdateBBoxBox(E.x, E.y, E.x, E.y);  // Elements are always on signal layers.
+         E.package.wires(W) UpdateBBoxWire(W, layer);
+         E.package.circles(C) UpdateBBoxCircle(C, layer);
+      }
+  }
+}
+
+
+
+
+void CalcMinTraceWidth() {
+   board(B) {
+      B.wires(W) if (W.layer <= 16) MinTraceWidth = min(W.width, MinTraceWidth);
+      B.signals(S) {
+         S.polygons(P) if (P.layer <= 16) MinTraceWidth = min(P.width, MinTraceWidth);
+         S.wires(W) if (W.layer <= 16) MinTraceWidth = min(W.width, MinTraceWidth);
+      }
+   }
+}
+
+void CheckHoles() {
+   int idx[], start[], end[], k;
+   board(B) {
+      B.holes(H) MinHoleSize = min(MinHoleSize, H.drill);
+      B.signals(S) S.vias(V) {
+         MinHoleSize = min(MinHoleSize, V.drill);
+         // Collect blind/buried holes !
+         if ((V.start > 1) || (V.end < 16)) {
+            start[k] = V.start;
+            end[k] = V.end;
+            ++k;
+         }
+      }
+      B.elements(E) {
+         E.package.contacts(C) if (C.pad)
+            MinHoleSize = min(MinHoleSize, C.pad.drill);
+         E.package.holes(H) MinHoleSize = min(MinHoleSize, H.drill);
+      }
+   }
+   // NrBlindBuriedTypes: Find out how many different ones exist !
+   sort(k, idx, start, end);
+   for (int l = 0, cur_s = 0, cur_e = 0; l < k; ++l)
+      if ((start[idx[l]] != cur_s) || (end[idx[l]] != cur_e)) {
+         ++NrBlindBuriedTypes;
+         cur_s = start[idx[l]];
+         cur_e = end[idx[l]];
+      }
+}
+
+void GetPCBParams() {
+   // Check out layers:
+   int smask_top, smask_bottom, silk_top, silk_bottom, finish;
+   board(B) B.layers(L)
+      if (L.used)
+         if (L.number <= 16) ++NrUsedLayers;
+         else if (L.number == LAYER_TSTOP) smask_top = 1;
+         else if (L.number == LAYER_BSTOP) smask_bottom = 1;
+         else if (L.number == LAYER_TPLACE) silk_top = 1;    // Could also take TNAMES/TVALUES. Leave the criterium less strict
+         else if (L.number == LAYER_BPLACE) silk_bottom = 1; // Could also take BNAMES/BVALUES. Leave the criterium less strict
+   SolderSides = smask_top ? (smask_bottom ? "Both Sides" : "Top Side") :
+                             (smask_bottom ? "Bottom Side" : "None");
+   SilkScreenSides = (silk_top) ? (silk_bottom ? "Both Sides" : "Top Side") :
+                                  (silk_bottom ? "Bottom Side" : "None");
+   if (NrUsedLayers == 0)
+      Warnings += "<li>" + tr("None of the signal layers are used. Number of layers could not be determined.") + "</li>";
+
+
+   // Board outlines:
+   UpdateBBox(LAYER_DIMENSION, 0);
+   if (!ValidBBox()) {
+      Warnings += "<li>" + tr("Board width and length could not be determined from dimension layer. ");
+      UpdateBBox(LAYER_TOP, 1);
+      UpdateBBox(LAYER_BOTTOM, 1);
+      if (!ValidBBox())
+         Warnings += tr("Estimate based on outer layers failed. ") +
+                     tr("Please use the dimension layer to design the board outline.") + "</li>";
+      else
+         Warnings += tr("Estimation based on outer layers. ") + "</li>";
+   }
+
+   CalcMinTraceWidth();
+   if (MinTraceWidth == INT_MAX)
+      Warnings += "<li>" + tr("No copper found in the signal layers. ") +
+                           tr("Minimum trace width could not be determined.") + "</li>";
+   if (MinTraceWidth == 0)
+      Warnings += "<li>" + tr("Wire(s) and/or polygon(s) with zero width found on signal layer(s). ") +
+                           tr("Minimum trace width could not be determined.") + "</li>";
+   GetDruParams();
+   CheckHoles();
+
+   int air_wires = 0;
+   {  // Check if there are still airwires:
+      board(B) {
+         B.wires(W) if (W.layer == LAYER_UNROUTED) air_wires = 1;
+         B.signals(S) {
+            S.polygons(P) if (P.layer == LAYER_UNROUTED) air_wires = 1;
+            S.wires(W) if (W.layer == LAYER_UNROUTED) air_wires = 1;
+         }
+      }
+   }
+   if (air_wires)	
+      Warnings += "<li>" + tr("There are still airwires left.") + "</li>";
+
+   // Count SMD pads
+   board(B) B.elements(E) E.package.contacts(C)
+      if (C.smd)
+         if (C.smd.layer == LAYER_TOP) ++NrSmdPadsTop;
+         else ++NrSmdPadsBottom;
+}
+
+
+if (board) {
+   string dir = filedir(argv[0]);
+   board(B) DruFile = dir + "dl-" + filename(filesetext(B.name, ".dru"));
+   if (Export)
+      exit("DRC SAVE '" + DruFile + "';\nRUN '" + argv[0] + "' -noexp");
+   board(B) {
+     //output(DbgFile, "wba") printf("Board: %s\n", filename(B.name)); //dbg
+     if (Debug) output(DbgFile, "wba") printf("\nBoard: %s\n", filename(B.name));
+   }
+   status(tr("Calculating quote parameters..."));
+   GetPCBParams();
+   if (Warnings) {
+      string tmp = tr("Your board layout is incomplete:") + "<ul>" + Warnings + "</ul>";
+      tmp += tr("If you want to get a quote anyway, please follow the link !");
+      Warnings = tmp;
+   };
+
+exit(0);
+}
+
+else
+   dlgMessageBox(tr("Please start from Layout editor !"));
+
+

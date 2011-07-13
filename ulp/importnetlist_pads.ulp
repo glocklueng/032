@@ -1,0 +1,206 @@
+
+string NetlistFile;
+string nets [];
+string parts [];
+string ref_designator [];
+int nb_parts =0;
+int nb_nets = 0;
+
+int SPACING = 400;
+
+void ReadNetlistFile (string file_name)
+{
+    string lines[];
+    int max_lines = fileread(lines, file_name);
+    string signal_name;
+    int current_net = 0;
+
+    // Scan for the nets identifier
+    int first_line;
+    for (first_line=0; first_line<max_lines; first_line++)
+    {
+        if (strsub(lines[first_line], 0, 5) == "*Net*")
+            break;
+    }
+    if (first_line == max_lines)
+        return;
+    else
+    {
+        // move to the first line of interesting text
+        first_line += 1;
+
+        int current_line = first_line;
+
+        // get the first signal name
+        string substrings[];
+        strsplit(substrings, lines[current_line], ' ');
+
+        while (current_line < max_lines)
+        {
+                if (substrings[0] == "*Signal*")
+                {
+                                signal_name = substrings[1];
+                                // TODO: add name check
+                                nets[current_net] = signal_name + "\t";
+                                current_line++;
+                                int nb_elements = strsplit(substrings, lines[current_line], ' ');
+                                while ((substrings[0] != "*Signal*") && (substrings[0] != "*END*"))
+                                {
+                                       for (int i=0; i<nb_elements; i++)
+                                       {
+                                            nets[current_net] = nets[current_net] + substrings[i] + " ";
+                                       }
+                                       // parse next line
+                                       current_line++;
+                                       nb_elements = strsplit(substrings, lines[current_line], ' ');
+                                }
+                                current_net++;
+                }
+                else if (substrings[0] == "*END*")
+                {
+                    nb_nets = current_net;
+                    break;
+                }
+        }
+    }
+}
+
+
+void ReadPartFile (string file_name)
+{
+    string lines[];
+    int max_lines = fileread(lines, file_name);
+    string part_name;
+    string ref_desig;
+    int current_net = 0;
+
+    // Scan for the parts identifier
+    int first_line;
+    for (first_line=0; first_line<max_lines; first_line++)
+    {
+        if (strsub(lines[first_line], 0, 10) == "*Standard*")
+            break;
+    }
+    if (first_line == max_lines)
+        return;
+    else
+    {
+        // move to the first line of interesting text
+        first_line += 1;
+
+        int current_line = first_line;
+
+        // get the first signal name
+        string substrings[];
+        strsplit(substrings, lines[current_line], '\t');
+
+        while (current_line < max_lines)
+        {
+                if (substrings[0] != "")
+		{
+                                ref_desig = substrings[0];
+                                // TODO: add name check
+                                ref_designator[current_net] = ref_desig;
+				parts[current_net] = substrings[2];
+ 		}
+
+		current_line++;
+		strsplit(substrings, lines[current_line], '\t');
+                current_net++;
+                
+                if (substrings[0] == "*Net*" || substrings[0] == "")
+                {
+                    nb_parts = current_net;
+                    break;
+                }
+        }
+    }
+}
+
+void WriteNetlistScript ()
+{
+     int x = SPACING;
+     int y = SPACING;
+     int i, ii;
+     string libfiles[];
+     string libpath;
+     int libcount;
+
+     output("C:\\temp\\test_net.scr")
+     {
+		printf ("# Eagle Version:   %d\n#\n", EAGLE_VERSION);
+		printf ("# Eagle Release:   %d\n#\n", EAGLE_RELEASE);
+		printf ("# Eagle Signature: %s\n#\n", EAGLE_SIGNATURE);
+		printf ("# Converted with Import-Tango ULP (c) by Ralf Kilguss/Jean Simonet/Keith Williams on your own risk\n#\n#\n");
+				
+		printf ("GRID MIL;\n\n");
+		libpath = path_lbr[0] + '/';
+       		libcount = fileglob (libfiles, libpath);
+            	for (ii = 0; ii < libcount; ii++)
+                	{
+            		if (strstr (libfiles[ii], ".lbr") != -1)
+          		printf ("USE %s;\n", filename (libfiles[ii]));
+                	}
+
+               for (i=0; i<nb_parts; i++)
+               {
+
+             	    printf ("\nADD %s ( %d %d );\n", parts[i], x, y);
+        	    printf ("NAME %s ( %d %d );\n", ref_designator[i], x, y);
+
+
+	            x = x + SPACING;
+    	            if (x > 5500) 
+    	            {
+        	        x = SPACING;
+            	    	y = y + SPACING;
+		    }
+		}
+
+	  printf ("\n");
+          for (int current_net=0; current_net<nb_nets; current_net++)
+          {
+               printf ("SIGNAL ");
+               string the_net[];
+               strsplit(the_net, nets[current_net], '\t');
+               printf ("\'%s\'\n", the_net[0]);
+               string elements[];
+               int nb_elem = strsplit(elements, the_net[1], ' ');
+               for (int i=0; i<nb_elem; i++)
+               {
+                    string detail[];
+                    strsplit(detail, elements[i], '.');
+                    if (detail[0] != "")
+                          printf("\'%s\' \'%s\' ", detail[0], detail[1]);
+               }
+	       printf (";\n");
+           }
+     }
+}
+
+int Result = dlgDialog("Import PADS Netlist")
+{
+        dlgVBoxLayout
+        {
+                dlgHBoxLayout
+                {
+                        dlgLabel ("Netlist: ");
+                        dlgStringEdit (NetlistFile);
+                        dlgPushButton ("Browse")
+                        {
+                                NetlistFile = dlgFileOpen("Select Netlist File", "", "*.asc");
+                                ReadNetlistFile (NetlistFile);
+				ReadPartFile (NetlistFile);
+                                dlgRedisplay();
+                        };
+                }
+                int selected = -1;
+                dlgListView ("NetName\tElements", nets, selected);
+                dlgPushButton ("Import Netlist")
+                {
+                       WriteNetlistScript();
+                       exit ("SCRIPT 'C:\\temp\\test_net.scr'");
+                };
+
+        }
+};

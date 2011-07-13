@@ -1,0 +1,262 @@
+#usage "<qt>This EAGLE User Language Program generates a script "
+       "which places a drill legend on layer 144 on the current board.<br>"
+       "<p>"
+       "Dieses ULP generiert ein Script, das eine Bohrlegende "
+       "im Layout im Layer 144 plaziert<p>"
+       "THIS PROGRAM IS PROVIDED AS IS AND WITHOUT WARRANTY OF ANY KIND, "
+       "EXPRESSED OR IMPLIED.<br>"
+       "<author>Author: support@cadsoft.de</author>"
+       "</qt>"
+
+
+string version = "Version 4.1";
+
+if (EAGLE_VERSION * 100 + EAGLE_RELEASE < 410) {
+string h;
+sprintf(h, "Eagleversion %d %d ", EAGLE_VERSION, EAGLE_RELEASE);
+  dlgMessageBox(h + "This ULP does not run in Eagle Versions older than 4.1", "OK");
+  exit(0);
+}
+
+string file;
+int drillsort = 1;       // sort legend with Symbol = 0 | Diameter = 1
+int Drilling[] = { -1 };
+int DrillSymbol[] = { 0 };
+int Symbol_19 = 0;
+int xoff = 140;
+int indefiniteDrilling[];
+int imax;
+
+string DrilSymbols[] = {        // the 19 Symbols
+  "Wire 3 (R 40 40) (R -40 -40);Circle 3 (R 0 0) (R 40 0);",
+  "Wire 3 (R -40 0) (R 40 0);Wire 3 (R 0 40) (R 0 -40);",
+  "Wire 3 (R -40 -40) (R 40 40);Wire 3 (R -40 40) (R 40 -40);",
+  "Wire 3 (R 0 0) (R 0 40);Wire 3 (R -40 40) (R 40 40) (R 40 -40) (R -40 -40) (R -40 40);",
+  "Wire 3 (R 0 0) (R 0 40) (R -40 0) (R 0 -40) (R 40 0) (R 0 40);",
+  "Wire 3 (R -40 -40) (R 40 40) (R -40 40) (R 40 -40) (R -40 -40);",
+  "Wire 3 (R -40 40) (R 40 -40) (R 40 40) (R -40 -40) (R -40 40);",
+  "Wire 3 (R -40 0) (R 40 0) (R 0 40) (R 0 -40) (R -40 0);",
+  "Wire 3 (R -40 0) (R 40 0) (R 0 -40) (R 0 40) (R -40 0);",
+  "Wire 3 (R -40 40) (R 40 -40);Wire 3 (R 0 -40) (R 0 40);Wire 3 (R 40 40) (R -40 -40);",
+  "Wire 3 (R -40 0) (R 40 0);Wire 3 (R 40 40) (R -40 -40);Wire 3 (R -40 40) (R 40 -40);",
+  "Wire 3 (R 0 -40) (R 0 0) (R 40 40) (R -40 40) (R 0 0);",
+  "Wire 3 (R 0 40) (R 0 0) (R 40 -40) (R -40 -40) (R 0 0);",
+  "Wire 3 (R -40 0) (R 0 0) (R 40 40) (R 40 -40) (R 0 0);",
+  "Wire 3 (R 40 0) (R 0 0) (R -40 -40) (R -40 40) (R 0 0);",
+  "Wire 3 (R -40 0) (R 40 0);Wire 3 (R 0 40) (R 0 -40);Circle 3 (R 0 0) (R 40 0);",
+  "Wire 3 (R -40 0) (R 40 0);Wire 3 (R 0 40) (R 0 -40);Circle 3 (R 0 0) (R 40 0);Circle 3 (R 0 0) (R 20 0);",
+  "Wire 3 (R -40 0) (R 40 0);Wire 3 (R 0 40) (R 0 -40);Wire 3 (R -40 -40) (R 40 -40) (R 40 40) (R -40 40) (R -40 -40);",
+  "Wire 3 (R -40 0) (R 40 0);Wire 3 (R 0 40) (R 0 -40);Wire 3 (R -40 -40) (R 40 -40) (R 40 40) (R -40 40) (R -40 -40);Wire 3 (R -20 -20) (R 20 -20) (R 20 20) (R -20 20) (R -20 -20);"
+  } ;
+
+
+void prvalue(string st, real offset) {  // print value
+  real r = strtod(st);
+  printf("%.1f", r + offset);
+  return;
+}
+
+
+void prsymbol(int s, real x, real y)  {
+  printf("MARK (%.1f %.1f);%s\n", x, y, DrilSymbols[s]);
+  return;
+}
+
+void add_indefinite_drill(int Size) {
+  for (int i = imax; --i >= 0; )
+    if (indefiniteDrilling[i] == Size)
+      return;
+  indefiniteDrilling[imax++] = Size;
+  return;
+}
+
+void AddDrilling(int Size, int Symbol) {
+  if (Symbol) {
+    if (DrillSymbol[Symbol]) return;
+    else {
+      Drilling[Symbol] = Size;
+      DrillSymbol[Symbol] = Symbol;
+    }
+  }
+  else {
+    add_indefinite_drill(Size);
+  }
+  return;
+}
+
+
+void drawsymbol(int drill, int sym, int x, int y) {
+  if (!sym) {
+    Symbol_19++;
+  }
+  prsymbol(sym, u2mil(x), u2mil(y) );
+  return;
+}
+
+
+board(B) {
+  real ylegend = u2mil(B.area.y1);
+  real xlegend = u2mil(B.area.x2) + 40;
+  real drill = 0;
+  B.elements(E) {
+    E.package.contacts(C) {
+      if (C.pad)
+         AddDrilling(C.pad.drill, C.pad.drillsymbol);
+    }
+    E.package.holes(H) AddDrilling(H.drill, H.drillsymbol);
+  }
+  B.holes(H) AddDrilling(H.drill, H.drillsymbol);
+  B.signals(S) S.vias(V) AddDrilling(V.drill, V.drillsymbol);
+
+  file = filedir(B.name) + "drillegend.scr";
+  output(file, "wtD") {
+    printf("# exportet with %s from %s.\n", version, B.name);
+    printf("GRID mil;\n");
+    printf("CHANGE SIZE 50;\n");
+    printf("LAYER 144 Drill_legend;\n");
+    printf("CHANGE LAYER 144;\n");
+    printf("WINDOW FIT;\n");
+    printf("SET WIRE_BEND 2;\n");
+    printf("CHANGE STYLE Continuous;\n");
+
+    B.elements(E) {
+      E.package.contacts(C) {
+        if (C.pad) {
+          printf("# Pads\n");
+          drawsymbol(C.pad.drill, C.pad.drillsymbol, C.pad.x, C.pad.y);
+        }
+      }
+      E.package.holes(H) {
+        printf("# Holes-PAC\n");
+        drawsymbol(H.drill, H.drillsymbol, H.x, H.y);
+      }
+    }
+    B.holes(H) drawsymbol(H.drill, H.drillsymbol, H.x, H.y);
+    printf("# Holes-BRD\n");
+
+    B.signals(S) S.vias(V) {
+      printf("# Vias\n");
+      drawsymbol(V.drill, V.drillsymbol, V.x, V.y);
+    }
+
+
+    int index[];
+    if (drillsort) {
+      sort(20, index, Drilling, DrillSymbol);
+    }
+    else {
+      sort(20, index, DrillSymbol, Drilling);
+    }
+    string list, h;
+
+    int cnt = 0;
+    for (int i = 0; i <= 19; i++){
+      if (DrillSymbol[index[i]] > 0) {
+        sprintf(h, "Symbol %2d = %.4f mm\n", DrillSymbol[index[i]], u2mm(Drilling[index[i]]) );
+        list += h;
+        ylegend += 130;
+        prsymbol(DrillSymbol[index[i]], xlegend + 100, ylegend);
+        printf("TEXT '%3.4f mm / %2.3f mil ' (%f %f);\n",
+                 u2mm(Drilling[index[i]]), u2mil(Drilling[index[i]]),
+                 xlegend + 250,  ylegend - 25);
+        cnt++;
+      }
+    }
+
+    if (Symbol_19) {
+      string indefinite = "";
+
+      if (language() == "de") {
+        if (!cnt) {
+          sprintf(h, "Setzen Sie die Bohrsymbole mit:\nOptionen - Einstellungen - Bohrsymbole - Erzeugen");
+          dlgMessageBox(h, "Ok");
+          exit(0);
+        }
+
+        for (int n = 0; n < imax; n++) {
+          sprintf(h, "Kein Symbol definiert für %.4f mm\n", u2mm(indefiniteDrilling[n]));
+          indefinite += h;
+        }
+        if (cnt + imax > 18) {
+          sprintf(h, "%d unterschiedliche Bohrungen mit undefinierten Symbolen gefunden!\n%s\nBenutzte Symbole :\n%s", imax, indefinite, list);
+        }
+        else {
+          sprintf(h, "Bohrungen mit undefinierten Symbolen gefunden!\n\nBenutzen Sie :\nOptionen - Einstellungen - Bohrsymbole - Erzeugen");
+        }
+        if (dlgMessageBox(h + "\n\nEagle kennt 19 Symbole:\nDavon werden 18 bestimmten Durchmessern zugeordnet.\nEines, das Durchmesserzeichen, erscheint bei Durchmessern\nfür die kein eigenes Symbol zugeordnet werden kann.", "Abbrechen", "Weiter") == 0) exit(0);
+      }
+
+      else {
+        if (!cnt) {
+          sprintf(h, "Set Drill Symbols with:\nOptions - Set - Drill - Set");
+          dlgMessageBox(h, "Ok");
+          exit(0);
+        }
+
+        for (int n = 0; n < imax; n++) {
+          sprintf(h, "No Symbol for %.4f mm\n", u2mm(indefiniteDrilling[n]));
+          indefinite += h;
+        }
+        if (cnt + imax > 18) {
+          sprintf(h, "Found %d Drill(s) with undefined symbol!\n%s\nUsed symbols :\n%s", imax, indefinite, list);
+        }
+        else {
+          sprintf(h, "Found Drill(s) with undefined symbol!\n\nSet Drill Symbols with:\nOptions - Set - Drill - Set");
+        }
+        if (dlgMessageBox(h + "\nEagle uses 19 different symbols:\n18 of them are assigned to a certain diameter;\the diameter sign stands for drills that have no drill symbol assigned.", "STOP", "Continue") == 0) exit(0);
+      }
+
+      ylegend += 120;
+
+      sort(imax, indefiniteDrilling);
+
+      for (int i= 0; i < imax; i++) {
+        printf("TEXT '%3.4f mm / %2.3f mil ' (%f %f);\n",
+                 u2mm(indefiniteDrilling[i]), u2mil(indefiniteDrilling[i]),
+                 xlegend + 250,  ylegend += 100 );
+      }
+      ylegend += 25;
+
+      if (language() == "de") {
+        printf("TEXT 'mit Standardsymbol! (%d Bohrungen)' (%f %f);\n",  Symbol_19,
+                 xlegend + 250,  ylegend += 100);
+        printf("TEXT '%d unterschiedliche Durchmesser ' (%f %f);\n",
+                 imax,
+                 xlegend + 250,  ylegend += 100);
+      }
+      else {
+        printf("TEXT '%d different diameters with default symbols! (%d drills)' (%f %f);\n",
+                 imax, Symbol_19,
+                 xlegend + 250,  ylegend += 100);
+      }
+      prsymbol(DrillSymbol[0], xlegend + 100, ylegend -25);
+    }
+
+    printf("CHANGE SIZE 70;\n");
+    if (language() == "de") {
+      printf("TEXT 'Datum: %s' (%f %f);\n", t2string(time()),
+              xlegend + xoff, ylegend += 200);
+
+      printf("TEXT 'Bohrlegende' (%f %f);\n",
+              xlegend + xoff, ylegend += 100);
+    }
+    else {
+      printf("TEXT 'Date: %s' (%f %f);\n", t2string(time()),
+              xlegend + xoff, ylegend += 200);
+
+      printf("TEXT 'Drill legend' (%f %f);\n",
+              xlegend + xoff, ylegend += 100);
+    }
+    printf("WIRE 5  (%f %f) (%f %f);\n",
+            u2mil(B.area.x2) + 40, u2mil(B.area.y1),
+            u2mil(B.area.x2) + 40, ylegend += 100);
+    printf("WIRE    (%f %f) (%f %f);\n",
+            u2mil(B.area.x2) + 40, u2mil(B.area.y1),
+            u2mil(B.area.x2) + xoff * 10, u2mil(B.area.y1));
+    printf("WINDOW FIT;\n");
+
+    printf("MARK;\n");
+    printf("GRID LAST;\n");
+  }
+}
+exit("SCRIPT '" + file + "';");
