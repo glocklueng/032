@@ -64,13 +64,14 @@ const float angle_scale[3] = {1.5f,1.5f,1.5f};
 //  [0] : X Angle Offset
 //  [1] : Y Angle Offset
 //  [2] : Z Angle Offset
-const float angle_offset[3] = {-15.0f,-15.0f,-15.0f};
+const float angle_offset[3] = {-17.0f,-10.0f,-15.0f};  
 
 //  Accelerometer Voltage Shift
 //  [0] : X Accelerometer Voltage Shift
 //  [1] : Y Accelerometer Voltage Shift
 //  [2] : Z Accelerometer Voltage Shift
-const float acc_shift[3] = {1.65f,1.65f,1.65f};
+//const float acc_shift[3] = {1.65f,1.65f,1.65f};
+const float acc_shift[3] = {1.65f,1.65f,1.65f};   
 
 //  Acceleration in G's
 //  [0] : X Acceleration - in G's
@@ -249,7 +250,7 @@ void readIMU(float *imu)
         //Subtract Previous Timer by Current Timer then divide by system speed to obtain dt
         measuredDt = (float)((float)(previousTimer - currentTimer)/(float)SysCtlClockGet());  
         
-        if(measuredDt > 0.000000000f)    // As long as time is positive set it to dt
+        if(measuredDt > 0.0000001)    // As long as time is positive set it to dt
         {
           dt = measuredDt;
         }
@@ -450,12 +451,6 @@ void readIMU(float *imu)
     //
     updateState(&imu[0]);
     //
-    
-    // Send Data Telemetry
-    //
-    //sendDataTelemetry(&imu[0], dt);
-    //sendMAVLinkData(&imu[0], dt);
-    //
 }
 //*****************************************************************************
 
@@ -481,7 +476,7 @@ void updateState(float *eulerAngle)
     euler_trig[0][1] = fixsin(euler_angle[0]);
     euler_trig[1][1] = fixsin(euler_angle[1]);
     euler_trig[2][1] = fixsin(euler_angle[2]);
-
+    
     q[0] = fixadd((fixmul(fixmul(euler_trig[0][0],euler_trig[1][0]),euler_trig[2][0])),(fixmul(fixmul(euler_trig[0][1],euler_trig[1][1]),euler_trig[2][1])));
     q[1] = fixsub((fixmul(fixmul(euler_trig[0][1],euler_trig[1][0]),euler_trig[2][0])),(fixmul(fixmul(euler_trig[0][0],euler_trig[1][1]),euler_trig[2][1])));
     q[2] = fixadd((fixmul(fixmul(euler_trig[0][0],euler_trig[1][1]),euler_trig[2][0])),(fixmul(fixmul(euler_trig[0][1],euler_trig[1][0]),euler_trig[2][1])));
