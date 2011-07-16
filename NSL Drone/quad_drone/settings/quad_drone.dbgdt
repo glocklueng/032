@@ -6,7 +6,7 @@
       <Debug-Log>
         
         
-      <ColumnWidth0>20</ColumnWidth0><ColumnWidth1>1861</ColumnWidth1></Debug-Log>
+      <PreferedWindows><Position>3</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows><Window><Factory>Build</Factory></Window><Window><Factory>Find-in-Files</Factory></Window></Windows></PreferedWindows><ColumnWidth0>20</ColumnWidth0><ColumnWidth1>1861</ColumnWidth1></Debug-Log>
       <Build>
         
         
@@ -19,35 +19,30 @@
           
           
           
-        <Column0>193</Column0><Column1>27</Column1><Column2>27</Column2><Column3>27</Column3></ColumnWidths>
+        <Column0>192</Column0><Column1>27</Column1><Column2>27</Column2><Column3>27</Column3></ColumnWidths>
       </Workspace>
       <Disassembly>
         
         
         
-      <PreferedWindows><Position>2</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows/></PreferedWindows><MixedMode>1</MixedMode><CodeCovShow>1</CodeCovShow><InstrProfShow>1</InstrProfShow></Disassembly>
-    <Watch><Format><struct_types/><watch_formats/></Format></Watch><QuickWatch><PreferedWindows><Position>2</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows/></PreferedWindows><Column0>100</Column0><Column1>404</Column1><Column2>100</Column2><Column3>100</Column3></QuickWatch><Find-in-Files><ColumnWidth0>664</ColumnWidth0><ColumnWidth1>94</ColumnWidth1><ColumnWidth2>1138</ColumnWidth2></Find-in-Files></Static>
+      <PreferedWindows><Position>2</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows/></PreferedWindows><MixedMode>1</MixedMode><CodeCovShow>1</CodeCovShow><InstrProfShow>1</InstrProfShow><col-names><item>Disassembly</item><item>_I0</item></col-names><col-widths><item>500</item><item>20</item></col-widths><DisasmHistory/><ShowCodeCoverage>0</ShowCodeCoverage><ShowInstrProfiling>0</ShowInstrProfiling></Disassembly>
+    <Watch><Format><struct_types/><watch_formats/></Format></Watch><QuickWatch><PreferedWindows><Position>2</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows/></PreferedWindows><Column0>100</Column0><Column1>404</Column1><Column2>100</Column2><Column3>100</Column3><col-names><item>Expression</item><item>Location</item><item>Type</item><item>Value</item></col-names><col-widths><item>100</item><item>150</item><item>100</item><item>100</item></col-widths><QWatchHistory/></QuickWatch><Find-in-Files><ColumnWidth0>664</ColumnWidth0><ColumnWidth1>94</ColumnWidth1><ColumnWidth2>1138</ColumnWidth2></Find-in-Files><Memory><PreferedWindows><Position>3</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows/></PreferedWindows><FindDirection>1</FindDirection><FindAsHex>0</FindAsHex></Memory><Breakpoints><col-names><item>Breakpoint</item><item>_I0</item></col-names><col-widths><item>500</item><item>35</item></col-widths><PreferedWindows><Position>3</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows/></PreferedWindows></Breakpoints></Static>
     <Windows>
       
       
       
     <Wnd0>
         <Tabs>
-          <Tab>
-            <Identity>TabID-6442-26101</Identity>
-            <TabName>Debug Log</TabName>
-            <Factory>Debug-Log</Factory>
-            <Session/>
-          </Tab>
+          
           <Tab>
             <Identity>TabID-16667-26114</Identity>
             <TabName>Build</TabName>
             <Factory>Build</Factory>
             <Session/>
           </Tab>
-        <Tab><Identity>TabID-31940-8477</Identity><TabName>Find in Files</TabName><Factory>Find-in-Files</Factory><Session/></Tab></Tabs>
+        <Tab><Identity>TabID-31940-8477</Identity><TabName>Find in Files</TabName><Factory>Find-in-Files</Factory><Session/></Tab><Tab><Identity>TabID-2889-28110</Identity><TabName>Debug Log</TabName><Factory>Debug-Log</Factory><Session/></Tab></Tabs>
         
-      <SelectedTab>0</SelectedTab></Wnd0><Wnd1>
+      <SelectedTab>2</SelectedTab></Wnd0><Wnd1>
         <Tabs>
           <Tab>
             <Identity>TabID-17190-26104</Identity>
@@ -55,7 +50,7 @@
             <Factory>Workspace</Factory>
             <Session>
               
-            <NodeDict><ExpandedNode>&lt;ws></ExpandedNode><ExpandedNode>&lt;ws>/driverlib</ExpandedNode><ExpandedNode>&lt;ws>/driverlib/Source</ExpandedNode><ExpandedNode>&lt;ws>/quad_drone</ExpandedNode><ExpandedNode>&lt;ws>/quad_drone/Source</ExpandedNode></NodeDict></Session>
+            <NodeDict><ExpandedNode>&lt;ws&gt;</ExpandedNode><ExpandedNode>&lt;ws&gt;/driverlib</ExpandedNode><ExpandedNode>&lt;ws&gt;/driverlib/Source</ExpandedNode><ExpandedNode>&lt;ws&gt;/quad_drone</ExpandedNode><ExpandedNode>&lt;ws&gt;/quad_drone/Source</ExpandedNode></NodeDict></Session>
           </Tab>
         </Tabs>
         
@@ -65,14 +60,14 @@
       
       
       
-    <Pane><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\quad_drone.c</Filename><XPos>0</XPos><YPos>188</YPos><SelStart>4079</SelStart><SelEnd>4079</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\init.c</Filename><XPos>0</XPos><YPos>214</YPos><SelStart>9862</SelStart><SelEnd>9862</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\imu.c</Filename><XPos>0</XPos><YPos>117</YPos><SelStart>1064</SelStart><SelEnd>1064</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\imu.h</Filename><XPos>0</XPos><YPos>36</YPos><SelStart>3341</SelStart><SelEnd>3341</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\control.c</Filename><XPos>0</XPos><YPos>3</YPos><SelStart>549</SelStart><SelEnd>549</SelEnd></Tab><ActiveTab>4</ActiveTab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\control.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>120</SelStart><SelEnd>120</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\xbee.c</Filename><XPos>0</XPos><YPos>132</YPos><SelStart>3681</SelStart><SelEnd>3681</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\xbee.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>683</SelStart><SelEnd>683</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\common\common.h</Filename><XPos>0</XPos><YPos>78</YPos><SelStart>8198</SelStart><SelEnd>8198</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\init.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>152</SelStart><SelEnd>152</SelEnd></Tab></Pane><ActivePane>0</ActivePane><Pane><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\driverlib\adc.c</Filename><XPos>0</XPos><YPos>51</YPos><SelStart>11684</SelStart><SelEnd>11759</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\driverlib\adc.h</Filename><XPos>0</XPos><YPos>96</YPos><SelStart>5903</SelStart><SelEnd>5903</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\drivers\set_pinout.c</Filename><XPos>0</XPos><YPos>45</YPos><SelStart>2434</SelStart><SelEnd>2434</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\driverlib\gpio.c</Filename><XPos>0</XPos><YPos>48</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\inc\lm3s9b96.h</Filename><XPos>0</XPos><YPos>289</YPos><SelStart>22970</SelStart><SelEnd>22992</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\driverlib\gpio.h</Filename><XPos>0</XPos><YPos>165</YPos><SelStart>1070</SelStart><SelEnd>1070</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\driverlib\sysctl.h</Filename><XPos>0</XPos><YPos>33</YPos><SelStart>17544</SelStart><SelEnd>17544</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\inc\hw_gpio.h</Filename><XPos>0</XPos><YPos>40</YPos><SelStart>3679</SelStart><SelEnd>3679</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\startup.c</Filename><XPos>0</XPos><YPos>18</YPos><SelStart>2054</SelStart><SelEnd>2054</SelEnd></Tab><ActiveTab>8</ActiveTab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\driverlib\timer.c</Filename><XPos>0</XPos><YPos>127</YPos><SelStart>14289</SelStart><SelEnd>14289</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\driverlib\timer.h</Filename><XPos>0</XPos><YPos>42</YPos><SelStart>2130</SelStart><SelEnd>2130</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\driverlib\pwm.c</Filename><XPos>0</XPos><YPos>230</YPos><SelStart>11116</SelStart><SelEnd>11116</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\fixedmath.c</Filename><XPos>0</XPos><YPos>291</YPos><SelStart>16133</SelStart><SelEnd>16133</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\fixedmath.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>346</SelStart><SelEnd>346</SelEnd></Tab></Pane><Sizes><Pane><X>506594</X><Y>1000000</Y></Pane><Pane><X>493405</X><Y>1000000</Y></Pane></Sizes><SplitMode>4</SplitMode></Editor>
+    <Pane><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\quad_drone.c</Filename><XPos>0</XPos><YPos>60</YPos><SelStart>2096</SelStart><SelEnd>2096</SelEnd></Tab><ActiveTab>0</ActiveTab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\init.c</Filename><XPos>0</XPos><YPos>157</YPos><SelStart>6599</SelStart><SelEnd>6599</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\imu.c</Filename><XPos>0</XPos><YPos>100</YPos><SelStart>8684</SelStart><SelEnd>8684</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\imu.h</Filename><XPos>0</XPos><YPos>42</YPos><SelStart>2495</SelStart><SelEnd>2495</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\control.c</Filename><XPos>0</XPos><YPos>28</YPos><SelStart>1850</SelStart><SelEnd>1850</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\control.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>147</SelStart><SelEnd>147</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\xbee.c</Filename><XPos>0</XPos><YPos>37</YPos><SelStart>1829</SelStart><SelEnd>1829</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\xbee.h</Filename><XPos>0</XPos><YPos>6</YPos><SelStart>308</SelStart><SelEnd>308</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\common\common.h</Filename><XPos>0</XPos><YPos>78</YPos><SelStart>8198</SelStart><SelEnd>8198</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\init.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>152</SelStart><SelEnd>152</SelEnd></Tab></Pane><ActivePane>0</ActivePane><Pane><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\drivers\set_pinout.c</Filename><XPos>0</XPos><YPos>21</YPos><SelStart>3255</SelStart><SelEnd>3255</SelEnd></Tab><ActiveTab>0</ActiveTab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\driverlib\adc.c</Filename><XPos>0</XPos><YPos>51</YPos><SelStart>11684</SelStart><SelEnd>11759</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\driverlib\adc.h</Filename><XPos>0</XPos><YPos>96</YPos><SelStart>5903</SelStart><SelEnd>5903</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\driverlib\gpio.c</Filename><XPos>0</XPos><YPos>48</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\inc\lm3s9b96.h</Filename><XPos>0</XPos><YPos>289</YPos><SelStart>22970</SelStart><SelEnd>22992</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\driverlib\gpio.h</Filename><XPos>0</XPos><YPos>165</YPos><SelStart>1070</SelStart><SelEnd>1070</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\driverlib\sysctl.h</Filename><XPos>0</XPos><YPos>33</YPos><SelStart>17544</SelStart><SelEnd>17544</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\inc\hw_gpio.h</Filename><XPos>0</XPos><YPos>40</YPos><SelStart>3679</SelStart><SelEnd>3679</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\startup.c</Filename><XPos>0</XPos><YPos>18</YPos><SelStart>2054</SelStart><SelEnd>2054</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\driverlib\timer.c</Filename><XPos>0</XPos><YPos>127</YPos><SelStart>14289</SelStart><SelEnd>14289</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\driverlib\timer.h</Filename><XPos>0</XPos><YPos>42</YPos><SelStart>2130</SelStart><SelEnd>2130</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\driverlib\pwm.c</Filename><XPos>0</XPos><YPos>230</YPos><SelStart>11116</SelStart><SelEnd>11116</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\fixedmath.c</Filename><XPos>0</XPos><YPos>291</YPos><SelStart>16133</SelStart><SelEnd>16133</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\fixedmath.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>346</SelStart><SelEnd>346</SelEnd></Tab></Pane><Sizes><Pane><X>506053</X><Y>1000000</Y></Pane><Pane><X>493946</X><Y>1000000</Y></Pane></Sizes><SplitMode>4</SplitMode></Editor>
     <Positions>
       
       
       
       
       
-    <Top><Row0><Sizes><Toolbar-00d65c88><key>iaridepm.enu1</key></Toolbar-00d65c88></Sizes></Row0><Row1><Sizes><Toolbar-00e1d680><key>debuggergui.enu1</key></Toolbar-00e1d680><Toolbar-00e1d4f0><key>armjlink.enu1</key></Toolbar-00e1d4f0></Sizes></Row1></Top><Left><Row0><Sizes><Wnd1><Rect><Top>-2</Top><Left>-2</Left><Bottom>862</Bottom><Right>267</Right><x>-2</x><y>-2</y><xscreen>2113</xscreen><yscreen>1398</yscreen><sizeHorzCX>1100521</sizeHorzCX><sizeHorzCY>1239362</sizeHorzCY><sizeVertCX>140104</sizeVertCX><sizeVertCY>765957</sizeVertCY></Rect></Wnd1></Sizes></Row0></Left><Right><Row0><Sizes/></Row0></Right><Bottom><Row0><Sizes><Wnd0><Rect><Top>-2</Top><Left>-2</Left><Bottom>197</Bottom><Right>1922</Right><x>-2</x><y>-2</y><xscreen>1924</xscreen><yscreen>199</yscreen><sizeHorzCX>1002083</sizeHorzCX><sizeHorzCY>176418</sizeHorzCY><sizeVertCX>1100521</sizeVertCX><sizeVertCY>1239362</sizeVertCY></Rect></Wnd0></Sizes></Row0></Bottom><Float><Sizes/></Float></Positions>
+    <Top><Row0><Sizes><Toolbar-026717f0><key>iaridepm.enu1</key></Toolbar-026717f0></Sizes></Row0><Row1><Sizes><Toolbar-026ccd88><key>debuggergui.enu1</key></Toolbar-026ccd88></Sizes></Row1></Top><Left><Row0><Sizes><Wnd1><Rect><Top>-2</Top><Left>-2</Left><Bottom>862</Bottom><Right>266</Right><x>-2</x><y>-2</y><xscreen>2113</xscreen><yscreen>1398</yscreen><sizeHorzCX>1100521</sizeHorzCX><sizeHorzCY>1239362</sizeHorzCY><sizeVertCX>139583</sizeVertCX><sizeVertCY>765957</sizeVertCY></Rect></Wnd1></Sizes></Row0></Left><Right><Row0><Sizes/></Row0></Right><Bottom><Row0><Sizes><Wnd0><Rect><Top>-2</Top><Left>-2</Left><Bottom>197</Bottom><Right>1922</Right><x>-2</x><y>-2</y><xscreen>1924</xscreen><yscreen>199</yscreen><sizeHorzCX>1002083</sizeHorzCX><sizeHorzCY>176418</sizeHorzCY><sizeVertCX>1100521</sizeVertCX><sizeVertCY>1239362</sizeVertCY></Rect></Wnd0></Sizes></Row0></Bottom><Float><Sizes/></Float></Positions>
   </Desktop>
 </Project>
 

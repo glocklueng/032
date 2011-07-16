@@ -27,15 +27,15 @@
 
 // X-Axis PID Data
 // *************************
-float x_Pterm;                  // X-Axis - P Term                                                          
-float x_Iterm;                  // X-Axis - I Term
-float x_Dterm;                  // X-Axis - D Term
-float x_angle_vel_term;         // X-Axis - Angular Velocity Term
+float x_Pterm = 0.0f;           // X-Axis - P Term                                                          
+float x_Iterm = 0.0f;           // X-Axis - I Term
+float x_Dterm = 0.0f;           // X-Axis - D Term
+float x_angle_vel_term = 0.0f;  // X-Axis - Angular Velocity Term
 
-float x_Pgain = 8.5f;           // X-Axis - P Gain - 8.5
-float x_Igain = 0.0f;           // X-Axis - I Gain - 0.01
-float x_Dgain = 0.0f;           // X-Axis - D Gain - 85.0
-float x_Fgain = 0.0f;           // X-Axis - F Gain - 0.0
+const float x_Pgain = 8.5f;     // X-Axis - P Gain - 8.5
+const float x_Igain = 0.01f;    // X-Axis - I Gain - 0.01
+const float x_Dgain = 0.1f;     // X-Axis - D Gain - 85.0
+const float x_Fgain = 0.0f;     // X-Axis - F Gain - 0.0
 
 float x_Dterm_1 = 0.0f;		// X-Axis - D Term Filter Interation 1 
 float x_Dterm_2 = 0.0f;		// X-Axis - D Term Filter Interation 2
@@ -51,15 +51,15 @@ float x_torque = 0.0f;          // X Axis - Rotational Torque
 
 // Y-Axis PID Data
 // *************************
-float y_Pterm;                  // Y-Axis - P Term
-float y_Iterm;                  // Y-Axis - I Term
-float y_Dterm;                  // Y-Axis - D Term 
-float y_angle_vel_term;         // Y-Axis - Angular Velocity Term
+float y_Pterm = 0.0f;           // Y-Axis - P Term
+float y_Iterm = 0.0f;           // Y-Axis - I Term
+float y_Dterm = 0.0f;           // Y-Axis - D Term 
+float y_angle_vel_term = 0.0f;  // Y-Axis - Angular Velocity Term
 
-float y_Pgain = 8.5f;           // Y-Axis - P Gain - 8.5
-float y_Igain = 0.0f;           // Y-Axis - I Gain - 0.01
-float y_Dgain = 0.0f;           // Y-Axis - D Gain - 85.0
-float y_Fgain = 0.0f;           // Y-Axis - F Gain - 0.0
+const float y_Pgain = 8.5f;     // Y-Axis - P Gain - 8.5
+const float y_Igain = 0.01f;    // Y-Axis - I Gain - 0.01
+const float y_Dgain = 0.1f;     // Y-Axis - D Gain - 85.0
+const float y_Fgain = 0.0f;     // Y-Axis - F Gain - 0.0
 
 
 float y_Dterm_1 = 0.0f;		// Y-Axis - D Term Filter Interation 1 
@@ -77,7 +77,7 @@ float y_torque = 0.0f;          // Y Axis - Rotational Torque
 
 // Z-Axis Data
 // *************************
-float z_thrust = 6000.0f;       // Z Axis Thrust - Idle Thrust = 76530.0
+const float z_thrust = 5600.0f; // Z Axis Thrust - Idle Thrust = 6000.0
 // *************************
 //
 
@@ -101,11 +101,11 @@ unsigned long motor_dutycycle[4] = {0,0,0,0};
 //  [1] : Motor 2 - Y-Axis - Scale Factor
 //  [2] : Motor 3 - X-Axis - Scale Factor
 //  [3] : Motor 4 - X-Axis - Scale Factor
-float motor_scale[4] = {1.00f,1.00f,1.00f,1.00f};
+const float motor_scale[4] = {1.00f,1.00f,1.00f,1.00f};
 
 //  Motor Upper and Lower Bound Values
-unsigned long motor_upperbound = 100000;        // 80000
-unsigned long motor_lowerbound = 5180;          // 74000
+const unsigned long motor_upperbound = 5800;        // 100000
+const unsigned long motor_lowerbound = 5300;          // 5180
 // *************************
 //
 
@@ -125,7 +125,7 @@ float b_epsilon = 10.0f;                        // Epsilon - Balanced
 //
 // Control function to stabilize the drone
 // Refresh Rate: 100Hz
-void control(float *imu)
+void control(float *imu, float *data_telemetry)
 {   
     // Load dt Time Variable to Control
     dt = imu[12];                               // Load IMU dt
@@ -249,8 +249,10 @@ void control(float *imu)
     
     // Send Control Data Telemetry
     // *************************
-    sendControlTelemetry(motor_dutycycle[2], x_Pterm, x_Iterm, x_Dterm);       // Send back current PID state
-    //sendControlTelemetry(x_angle_error, x_Pgain, x_Igain, x_Dgain);  // Send back PID gains
+    data_telemetry[0] = motor_dutycycle[2];
+    data_telemetry[1] = x_Pterm;
+    data_telemetry[2] = x_Iterm;
+    data_telemetry[3] = x_Dterm;
     // *************************
     
     
@@ -344,34 +346,6 @@ void motorSpinup()
 //
 void PIDTune(char cmd)
 {
-  if(cmd == '1')
-  {
-     x_Pgain += 1.0f;     // Increase P Gain
-  }
-  else if(cmd == '2')
-  {
-     x_Pgain -= 1.0f;     // Decrease P Gain
-  }                                             
-  else if(cmd == '3')
-  {
-     x_Igain += 0.01f;   // Increase I Gain
-  }
-  else if(cmd == '4')
-  {
-     x_Igain -= 0.01f;   // Decrease I Gain
-  }
-  else if(cmd == '5')
-  {
-     x_Dgain += 1.0f;     // Increase D Gain
-  }
-  else if(cmd == '6')
-  {
-     x_Dgain -= 1.0f;     // Decrease D Gain
-  }
-  else if(cmd == 'p')
-  {
-     sendControlTelemetry(x_torque, x_Pterm, x_Iterm, x_Dterm);       // Send back current PID state
-  }
-  
+
 }
 //

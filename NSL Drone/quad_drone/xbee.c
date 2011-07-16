@@ -25,9 +25,9 @@
 #include "pixhawk/mavlink.h"
 
 // UART Variables
-unsigned long uartDelay = 0;
-unsigned long controlDelay = 0;
-unsigned long  mavlinkDelay = 0;
+volatile static unsigned long uartDelay = 0;
+volatile static unsigned long controlDelay = 0;
+volatile static unsigned long  mavlinkDelay = 0;
 
 //  Natural Constants
 //static const float convert_pi_180 = 0.017453f;	    // Pi/180 - Convert Degrees to Radians
@@ -40,7 +40,6 @@ unsigned long  mavlinkDelay = 0;
 void 
 UARTSend(const unsigned char *pucBuffer, unsigned long ulCount) 
 { 
-    IntMasterDisable();
     
     //
     // Loop while there are more characters to send.
@@ -54,7 +53,7 @@ UARTSend(const unsigned char *pucBuffer, unsigned long ulCount)
         while(UARTBusy(UART0_BASE));
     }
   
-    IntMasterEnable();
+
 } 
   
 
@@ -75,7 +74,6 @@ void sendDataTelemetry(float *imu, float dt)
       {
         char sendBuf[32];
         unsigned long n = 0;
-        volatile unsigned long delay = 0;
         
         if(i <= 6)
         {
@@ -156,7 +154,6 @@ void sendControlTelemetry(float torque, float P, float I, float D)
       {
         char sendBuf[32];
         unsigned long n = 0;
-        volatile unsigned long delay = 0;
         int gainterm;
         
         if(i <= 2)
@@ -245,7 +242,7 @@ void sendControlTelemetry(float torque, float P, float I, float D)
 //
 void sendMAVLinkData(float *imu, float dt)
 {
-    if(mavlinkDelay > 10)
+    if(mavlinkDelay > 1)
     {
       mavlinkDelay = 0;
       // Define the system type, in this case an airplane

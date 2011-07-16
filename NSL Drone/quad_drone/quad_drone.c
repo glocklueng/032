@@ -44,25 +44,31 @@ Archecture: ARM Cortex M3
 
 
 // IMU Values
-// [0] : X Angle - roll   (deg)
-// [1] : Y Angle - pitch  (deg)
-// [2] : Z Angle - yaw    (deg)
-// [3] : X Rate  - roll angular speed  (deg/sec)
-// [4] : Y Rate  - pitch angular speed (deg/sec)
-// [5] : Z Rate  - yaw angular speed   (deg/sec)    
-// [6] : X Acceleration
-// [7] : Y Acceleration
-// [8] : Z Acceleration
-// [9] : dt
-// [10] : Temperature
+// [0]  : X Angle - roll   (deg)
+// [1]  : Y Angle - pitch  (deg)
+// [2]  : Z Angle - yaw    (deg)
+// [3]  : X Rate  - roll angular speed  (deg/sec)
+// [4]  : Y Rate  - pitch angular speed (deg/sec)
+// [5]  : Z Rate  - yaw angular speed   (deg/sec)    
+// [6]  : X Acceleration
+// [7]  : Y Acceleration
+// [8]  : Z Acceleration
+// [9]  : X Compass Gauss
+// [10] : Y Compass Gauss
+// [11] : Z Compass Gauss
+// [12] : dt
+// [13] : Temperature
 //
-float imu[11];
+float imu[14];
 //
 // dt - Measurement of time per loop
 float dt = 0.05f;
 //
-
-unsigned char testvar = 0x00;
+//
+// Control Telemetry Data
+float control_telemetry[4];
+//
+unsigned char toggle = 0x00;
 //***************************************************************************** 
 // 
 // Main Loop 
@@ -70,8 +76,6 @@ unsigned char testvar = 0x00;
 //***************************************************************************** 
 int main(void)
 {
-
-    
     // INIT - Initialization Code 
     // **************************** 
   
@@ -135,7 +139,15 @@ int main(void)
         // IMU
         // ****************************
         readIMU(&imu[0]);             // Read IMU and filter
-        // ****************************
+        // **************************** 
+        
+        // Send Telemetry
+        // ****************************        
+        sendDataTelemetry(&imu[0], dt);                                    // Send IMU Data Telemetry
+        
+        sendControlTelemetry(control_telemetry[0], control_telemetry[1], 
+                             control_telemetry[2], control_telemetry[3]);  // Send Control Telemetry
+        // ****************************   
     }
     // ****************************
 }
@@ -155,20 +167,17 @@ ControlLoopTimerInt(void)
     // CONTROL LOOP
     // Timer clocked at 100Hz
     // ****************************
-    sendDataTelemetry(&imu[0], dt);     // Send Data Telemetry
+    control(&imu[0], &control_telemetry[0]);  // Control drone by feeding IMU data
     
-    control(&imu[0]);                   // Control drone by feeding IMU data
-       
-    
-    if(testvar)
+    if(toggle)
     {
       GPIO_PORTF_DATA_R |= 0x02;        // Turn blue LED on (Motor Spinup Light)
-      testvar = 0x00;
+      toggle = 0x00;
     }
     else
     {
       GPIO_PORTF_DATA_R &= ~(0x02);     // Turn blue LED off (Motor Spinup Light)
-      testvar = 0x01;
+      toggle = 0x01;
     }
     // ****************************
     
