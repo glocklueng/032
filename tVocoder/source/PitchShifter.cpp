@@ -7,18 +7,6 @@
 #include <math.h>
 #include "PitchShifter.h"
 #include "smbPitchShift.cpp"
-#include "GUISlider.h"
-
-#ifdef __MACOSX_CORE__
-// note: for mac only
-#include <GLUT/glut.h>
-#else
-
-
-#include <GL/gl.h>
-#include <GL/glu.h>
-//#include <GL/glut.h>
-#endif
 
 PitchShifter::PitchShifter(bool snapmode, bool pluggedIn){
 	g_width1 = 1024;
@@ -363,7 +351,7 @@ void PitchShifter::drawCorrections(float x, float y, float width, float height){
 void PitchShifter::setDetectedNote(float pitch)
 {
 	for(int i = 0; i < 120; i++) {
-		float d = 8.175 * pow(1.05946309, (float) i) - pitch;
+		float d = 8.175 * pow(1.05946309f, (float) i) - pitch;
 		if(-1.0 < d && d < 1.0) {
 			detectedNote = i;
 			return;
@@ -417,7 +405,7 @@ void SmbPitchShifter::shiftPitch(double *inputBuff, float inputPitch, set<float>
 		if (shiftFactor > 2.0) shiftFactor = 2.0;
 		if (shiftFactor < 0.5) shiftFactor = 0.5;
 		
-		float tempBuff[nFrames];
+		float *tempBuff=new float[nFrames];
 		for(int i = 0; i < nFrames; i++) {
 			tempBuff[i] = (float)(inputBuff[i]);
 		}
@@ -439,7 +427,7 @@ void SmbPitchShifter::shiftPitch(double *inputBuff, float inputPitch, set<float>
 			if (shiftFactor > 2.0) shiftFactor = 2.0;
 			if (shiftFactor < 0.5) shiftFactor = 0.5;
 		
-			float tempBuff[nFrames];
+			float *tempBuff=new float[nFrames];
 			for(int i = 0; i < nFrames; i++) {
 				tempBuff[i] = (float)(inputBuff[i]);
 			}
