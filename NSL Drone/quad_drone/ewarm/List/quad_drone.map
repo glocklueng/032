@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR ELF Linker V6.20.3.52642/W32 for ARM              16/Jul/2011  00:54:30 #
+# IAR ELF Linker V6.20.3.52642/W32 for ARM              17/Jul/2011  18:40:28 #
 # Copyright 2007-2011 IAR Systems AB.                                         #
 #                                                                             #
 #    Output file  =  C:\Users\Arko\Documents\IAR Embedded                     #
@@ -75,7 +75,7 @@ __SystemLibrary = DLib
   .intvec            const    0x00000000   0x11c  startup.o [1]
                             - 0x0000011c   0x11c
 
-"P1":                                     0x4a88
+"P1":                                     0x4a8c
   .text              ro code  0x0000011c  0x158c  fixedmath.o [1]
   .text              ro code  0x000016a8    0x2e  DblCmpGe.o [5]
   .text              ro code  0x000016d6    0x22  zero_init3.o [6]
@@ -115,27 +115,27 @@ __SystemLibrary = DLib
   .text              ro code  0x00003c18   0x3fc  init.o [1]
   .text              ro code  0x00004014    0x80  pwm.o [4]
   .text              ro code  0x00004094    0xe0  uart.o [4]
-  .text              ro code  0x00004174   0x2dc  control.o [1]
-  .text              ro code  0x00004450    0x24  FltToU32.o [5]
-  .text              ro code  0x00004474   0x2a4  xbee.o [1]
-  .text              ro code  0x00004718    0x44  FltToS32.o [5]
-  .text              ro code  0x0000475c    0x34  sprintf.o [3]
-  .text              ro code  0x00004790    0x24  FltCmpLe.o [5]
-  .text              ro code  0x000047b4   0x11a  xprintftiny.o [3]
-  .text              ro code  0x000048d0    0x36  strlen.o [6]
-  .text              ro code  0x00004908   0x120  quad_drone.o [1]
-  .text              ro code  0x00004a28    0xa2  packbits_init3.o [6]
-  .text              ro code  0x00004acc    0x2c  data_init3.o [6]
-  .iar.init_table    const    0x00004af8    0x2c  - Linker created -
-  .text              ro code  0x00004b24    0x16  cmain.o [6]
-  .text              ro code  0x00004b3a     0x4  low_level_init.o [3]
-  .text              ro code  0x00004b3e     0x8  exit.o [3]
-  .text              ro code  0x00004b48     0xa  cexit.o [6]
-  .text              ro code  0x00004b54    0x14  exit.o [7]
-  .text              ro code  0x00004b68     0xc  cstartup_M.o [6]
-  .rodata            const    0x00004b74     0x0  bwt_init3c.o [6]
-  Initializer bytes  ro data  0x00004b74    0x2f  <for P2 s0>
-                            - 0x00004ba3  0x4a87
+  .text              ro code  0x00004174   0x2e0  control.o [1]
+  .text              ro code  0x00004454    0x24  FltToU32.o [5]
+  .text              ro code  0x00004478   0x2a4  xbee.o [1]
+  .text              ro code  0x0000471c    0x44  FltToS32.o [5]
+  .text              ro code  0x00004760    0x34  sprintf.o [3]
+  .text              ro code  0x00004794    0x24  FltCmpLe.o [5]
+  .text              ro code  0x000047b8   0x11a  xprintftiny.o [3]
+  .text              ro code  0x000048d4    0x36  strlen.o [6]
+  .text              ro code  0x0000490c   0x120  quad_drone.o [1]
+  .text              ro code  0x00004a2c    0xa2  packbits_init3.o [6]
+  .text              ro code  0x00004ad0    0x2c  data_init3.o [6]
+  .iar.init_table    const    0x00004afc    0x2c  - Linker created -
+  .text              ro code  0x00004b28    0x16  cmain.o [6]
+  .text              ro code  0x00004b3e     0x4  low_level_init.o [3]
+  .text              ro code  0x00004b42     0x8  exit.o [3]
+  .text              ro code  0x00004b4c     0xa  cexit.o [6]
+  .text              ro code  0x00004b58    0x14  exit.o [7]
+  .text              ro code  0x00004b6c     0xc  cstartup_M.o [6]
+  .rodata            const    0x00004b78     0x0  bwt_init3c.o [6]
+  Initializer bytes  ro data  0x00004b78    0x2f  <for P2 s0>
+                            - 0x00004ba7  0x4a8b
 
 "P2", part 1 of 3:                         0x194
   P2 s0                       0x20000000   0x194  <Init block>
@@ -172,7 +172,7 @@ Zero (__iar_zero_init3)
 
 Copy/packbits (__iar_packbits_init3)
     1 source range, total size 0x2f (11% of destination):
-          0x00004b74   0x2f
+          0x00004b78   0x2f
     1 destination range, total size 0x194:
           0x20000000  0x194
 
@@ -184,7 +184,7 @@ Copy/packbits (__iar_packbits_init3)
     Module            ro code  ro data  rw data
     ------            -------  -------  -------
 C:\Users\Arko\Documents\IAR Embedded Workbench\arm\examples\TexasInstruments\Stellaris\boards\dk-lm3s9b96\quad_drone\ewarm\Obj: [1]
-    control.o             732               104
+    control.o             736               104
     fixedmath.o         5 516
     imu.o               3 498       37      408
     init.o              1 020
@@ -192,7 +192,7 @@ C:\Users\Arko\Documents\IAR Embedded Workbench\arm\examples\TexasInstruments\Ste
     startup.o               6      284      256
     xbee.o                676                 8
     -------------------------------------------
-    Total:             11 736      331      856
+    Total:             11 740      331      856
 
 command line: [2]
     -------------------------------------------
@@ -271,7 +271,7 @@ shb_l.a: [7]
     Gaps                   38
     Linker created                  44
 -----------------------------------------------
-    Grand Total:       18 988      375      860
+    Grand Total:       18 992      375      860
 
 
 *******************************************************************************
@@ -280,7 +280,7 @@ shb_l.a: [7]
 
 Entry                      Address   Size  Type      Object
 -----                      -------   ----  ----      ------
-?main                   0x00004b25         Code  Gb  cmain.o [6]
+?main                   0x00004b29         Code  Gb  cmain.o [6]
 ADCIntClear             0x0000374d    0xa  Code  Gb  adc.o [4]
 ADCIntEnable            0x0000372d    0xe  Code  Gb  adc.o [4]
 ADCIntStatus            0x0000373b   0x12  Code  Gb  adc.o [4]
@@ -293,7 +293,7 @@ ADCSequenceStepConfigure
                         0x000037a5   0x32  Code  Gb  adc.o [4]
 CPUcpsid                0x00003bf9    0x8  Code  Gb  cpu.o [4]
 CPUcpsie                0x00003c01    0x8  Code  Gb  cpu.o [4]
-ControlLoopTimerInt     0x0000498d   0x4c  Code  Gb  quad_drone.o [1]
+ControlLoopTimerInt     0x00004991   0x4c  Code  Gb  quad_drone.o [1]
 FaultISR                0x000018d5    0x2  Code  Lc  startup.o [1]
 GPIODirModeSet          0x0000385d   0x28  Code  Gb  gpio.o [4]
 GPIOPadConfigSet        0x00003885   0x98  Code  Gb  gpio.o [4]
@@ -320,15 +320,15 @@ IntEnable               0x000036c1   0x4e  Code  Gb  interrupt.o [4]
 IntMasterDisable        0x000036b7    0xa  Code  Gb  interrupt.o [4]
 IntMasterEnable         0x000036ad    0xa  Code  Gb  interrupt.o [4]
 NmiSR                   0x000018d3    0x2  Code  Lc  startup.o [1]
-PIDTune                 0x0000444f    0x2  Code  Gb  control.o [1]
+PIDTune                 0x00004453    0x2  Code  Gb  control.o [1]
 PWMGenConfigure         0x00004015   0x2c  Code  Gb  pwm.o [4]
 PWMGenEnable            0x00004059    0x6  Code  Gb  pwm.o [4]
 PWMGenPeriodSet         0x00004045   0x14  Code  Gb  pwm.o [4]
 PWMOutputState          0x00004083   0x12  Code  Gb  pwm.o [4]
 PWMPulseWidthSet        0x0000405f   0x1c  Code  Gb  pwm.o [4]
-Region$$Table$$Base     0x00004af8          --   Gb  - Linker created -
-Region$$Table$$Limit    0x00004b24          --   Gb  - Linker created -
-SB                      0x00004b74         Data  Gb  bwt_init3c.o [6]
+Region$$Table$$Base     0x00004afc          --   Gb  - Linker created -
+Region$$Table$$Limit    0x00004b28          --   Gb  - Linker created -
+SB                      0x00004b78         Data  Gb  bwt_init3c.o [6]
 SysCtlClockGet          0x00002c53  0x15c  Code  Gb  sysctl.o [4]
 SysCtlClockSet          0x00002b45  0x10e  Code  Gb  sysctl.o [4]
 SysCtlDelay             0x00002b3d    0x8  Code  Gb  sysctl.o [4]
@@ -350,14 +350,14 @@ UARTDisable             0x000040fb   0x1e  Code  Gb  uart.o [4]
 UARTEnable              0x000040e1   0x1a  Code  Gb  uart.o [4]
 UARTIntClear            0x00004171    0x4  Code  Gb  uart.o [4]
 UARTIntEnable           0x00004161    0x6  Code  Gb  uart.o [4]
-UARTIntHandler          0x000049d9   0x2e  Code  Gb  quad_drone.o [1]
+UARTIntHandler          0x000049dd   0x2e  Code  Gb  quad_drone.o [1]
 UARTIntStatus           0x00004167    0xa  Code  Gb  uart.o [4]
-UARTSend                0x00004475   0x26  Code  Gb  xbee.o [1]
-_PrintfTiny             0x000047b5  0x11a  Code  Gb  xprintftiny.o [3]
+UARTSend                0x00004479   0x26  Code  Gb  xbee.o [1]
+_PrintfTiny             0x000047b9  0x11a  Code  Gb  xprintftiny.o [3]
 _SProut                 0x00001727    0xa  Code  Gb  xsprout.o [3]
 __aeabi_cdcmple         0x000016f9         Code  Gb  DblCmpLe.o [5]
 __aeabi_cdrcmple        0x000016a9         Code  Gb  DblCmpGe.o [5]
-__aeabi_cfcmple         0x00004791         Code  Gb  FltCmpLe.o [5]
+__aeabi_cfcmple         0x00004795         Code  Gb  FltCmpLe.o [5]
 __aeabi_cfrcmple        0x00002f95         Code  Gb  FltCmpGe.o [5]
 __aeabi_d2f             0x000034b5         Code  Gb  DblToFlt.o [5]
 __aeabi_d2iz            0x000019c1         Code  Gb  DblToI32.o [5]
@@ -368,8 +368,8 @@ __aeabi_dmul            0x00001731         Code  Gb  DblMul.o [5]
 __aeabi_dsub            0x00001b79         Code  Gb  DblSub.o [5]
 __aeabi_errno_addr      0x00003c09    0x6  Code  Gb  errno.o [3]
 __aeabi_f2d             0x00003091         Code  Gb  FltToDbl.o [5]
-__aeabi_f2iz            0x00004719         Code  Gb  FltToS32.o [5]
-__aeabi_f2uiz           0x00004451         Code  Gb  FltToU32.o [5]
+__aeabi_f2iz            0x0000471d         Code  Gb  FltToS32.o [5]
+__aeabi_f2uiz           0x00004455         Code  Gb  FltToU32.o [5]
 __aeabi_fadd            0x00003545         Code  Gb  FltAdd.o [5]
 __aeabi_fdiv            0x00002e99         Code  Gb  FltDiv.o [5]
 __aeabi_fmul            0x00002fb9         Code  Gb  FltMul.o [5]
@@ -381,13 +381,13 @@ __aeabi_ldivmod         0x00001a49         Code  Gb  I64DivMod.o [6]
 __aeabi_ui2d            0x00001a2d         Code  Gb  I32ToDbl.o [5]
 __aeabi_ui2f            0x00002e7d         Code  Gb  I32ToFlt.o [5]
 __aeabi_uldivmod        0x00001a5d         Code  Gb  I64DivMod.o [6]
-__cmain                 0x00004b25         Code  Gb  cmain.o [6]
-__exit                  0x00004b55   0x14  Code  Gb  exit.o [7]
+__cmain                 0x00004b29         Code  Gb  cmain.o [6]
+__exit                  0x00004b59   0x14  Code  Gb  exit.o [7]
 __iar_Atan              0x00003a01  0x15e  Code  Gb  xatan.o [5]
 __iar_Errno             0x20000258    0x4  Data  Gb  errno.o [3]
 __iar_d2uiz             0x000019f7         Code  Gb  DblToI32.o [5]
 __iar_dadd              0x000018eb         Code  Gb  DblAdd.o [5]
-__iar_data_init3        0x00004acd   0x2c  Code  Gb  data_init3.o [6]
+__iar_data_init3        0x00004ad1   0x2c  Code  Gb  data_init3.o [6]
 __iar_default_requirements$$_Printf<unknown>sprintf {Abs}
                         0x00000000          --   Gb  sprintf.o [3]
 __iar_dlib_perthread_access
@@ -398,21 +398,21 @@ __iar_edom              0x000039f5         Code  Gb  iarEdom.o [6]
 __iar_fadd              0x00003553         Code  Gb  FltAdd.o [5]
 __iar_fsub              0x000035d7         Code  Gb  FltSub.o [5]
 __iar_fsubStart         0x000035e5         Code  Gb  FltSub.o [5]
-__iar_packbits_init3    0x00004a29   0xa2  Code  Gb  packbits_init3.o [6]
-__iar_program_start     0x00004b69         Code  Gb  cstartup_M.o [6]
+__iar_packbits_init3    0x00004a2d   0xa2  Code  Gb  packbits_init3.o [6]
+__iar_program_start     0x00004b6d         Code  Gb  cstartup_M.o [6]
 __iar_provide$$_Printf<int_specials>_PrintfTiny {Abs}
                         0x00000000          --   Gb  xprintftiny.o [3]
 __iar_sqrt              0x000030e1         Code  Gb  sqrt.o [5]
 __iar_ui2d              0x00001a2f         Code  Gb  I32ToDbl.o [5]
 __iar_ui2f              0x00002e7f         Code  Gb  I32ToFlt.o [5]
 __iar_zero_init3        0x000016d7   0x22  Code  Gb  zero_init3.o [6]
-__low_level_init        0x00004b3b    0x4  Code  Gb  low_level_init.o [3]
+__low_level_init        0x00004b3f    0x4  Code  Gb  low_level_init.o [3]
 __vector_table          0x00000000  0x11c  Data  Gb  startup.o [1]
 _acos_tbl               0x00000ea4  0x804  Data  Gb  fixedmath.o [1]
-_call_main              0x00004b31         Code  Gb  cmain.o [6]
+_call_main              0x00004b35         Code  Gb  cmain.o [6]
 _cos_tbl                0x000002a4  0x800  Data  Gb  fixedmath.o [1]
-_exit                   0x00004b49         Code  Gb  cexit.o [6]
-_main                   0x00004b37         Code  Gb  cmain.o [6]
+_exit                   0x00004b4d         Code  Gb  cexit.o [6]
+_main                   0x00004b3b         Code  Gb  cmain.o [6]
 _tan_tbl                0x00000aa4  0x400  Data  Gb  fixedmath.o [1]
 a                       0x00003bb8   0x40  Data  Lc  xatan.o [5]
 acc_offset              0x20000118    0xc  Data  Gb  imu.o [1]
@@ -432,7 +432,7 @@ currentTimer            0x200000b8    0x4  Data  Gb  imu.o [1]
 dt                      0x20000158    0x4  Data  Gb  quad_drone.o [1]
 euler_angle             0x20000224    0xc  Data  Gb  imu.o [1]
 euler_trig              0x200001fc   0x18  Data  Gb  imu.o [1]
-exit                    0x00004b3f    0x8  Code  Gb  exit.o [3]
+exit                    0x00004b43    0x8  Code  Gb  exit.o [3]
 fixadd                  0x0000011d   0x1c  Code  Gb  fixedmath.o [1]
 fixasin                 0x00000185   0x24  Code  Gb  fixedmath.o [1]
 fixatan                 0x00000203   0x40  Code  Gb  fixedmath.o [1]
@@ -453,9 +453,9 @@ gyro_values             0x20000240    0x8  Data  Gb  imu.o [1]
 imu                     0x2000015c   0x38  Data  Gb  quad_drone.o [1]
 imuStartup              0x00002845    0x2  Code  Gb  imu.o [1]
 imu_st_cal              0x200000dc   0x30  Data  Gb  imu.o [1]
-main                    0x00004909   0x84  Code  Gb  quad_drone.o [1]
+main                    0x0000490d   0x84  Code  Gb  quad_drone.o [1]
 measuredDt              0x200000c0    0x4  Data  Gb  imu.o [1]
-motorSpinup             0x000043a1   0x6c  Code  Gb  control.o [1]
+motorSpinup             0x000043a1   0x6e  Code  Gb  control.o [1]
 motor_dutycycle         0x20000194   0x10  Data  Gb  control.o [1]
 previousTimer           0x200000b4    0x4  Data  Gb  imu.o [1]
 pulStack                0x2000025c  0x100  Data  Lc  startup.o [1]
@@ -464,14 +464,14 @@ readAccel               0x0000262b   0x5a  Code  Gb  imu.o [1]
 readCompass             0x00002751   0xc6  Code  Gb  imu.o [1]
 readGyro                0x00002685   0xc4  Code  Gb  imu.o [1]
 readIMU                 0x00001cfd  0x638  Code  Gb  imu.o [1]
-sendControlTelemetry    0x00004579   0xe0  Code  Gb  xbee.o [1]
-sendDataTelemetry       0x0000449d   0xdc  Code  Gb  xbee.o [1]
+sendControlTelemetry    0x0000457d   0xe0  Code  Gb  xbee.o [1]
+sendDataTelemetry       0x000044a1   0xdc  Code  Gb  xbee.o [1]
 sensorsSelfTest         0x00002847  0x182  Code  Gb  imu.o [1]
-sprintf                 0x0000475d   0x34  Code  Gb  sprintf.o [3]
+sprintf                 0x00004761   0x34  Code  Gb  sprintf.o [3]
 sqrt                    0x000030e1         Code  Gb  sqrt.o [5]
 sqrtl                   0x000030e1         Code  Gb  sqrt.o [5]
 startFlag               0x200000bc    0x4  Data  Gb  imu.o [1]
-strlen                  0x000048d1         Code  Gb  strlen.o [6]
+strlen                  0x000048d5         Code  Gb  strlen.o [6]
 temp_raw                0x20000140    0x4  Data  Gb  imu.o [1]
 toggle                  0x20000144    0x1  Data  Gb  quad_drone.o [1]
 uartDelay               0x20000250    0x4  Data  Lc  xbee.o [1]
@@ -523,7 +523,7 @@ z_y                     0x200000d4    0x4  Data  Gb  imu.o [1]
 [6] = rt7M_tl.a
 [7] = shb_l.a
 
-  18 988 bytes of readonly  code memory
+  18 992 bytes of readonly  code memory
      375 bytes of readonly  data memory
      860 bytes of readwrite data memory
 
