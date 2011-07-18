@@ -77,7 +77,7 @@ float y_torque = 0.0f;          // Y Axis - Rotational Torque
 
 // Z-Axis Data
 // *************************
-const float z_thrust = 5600.0f; // Z Axis Thrust - Idle Thrust = 6000.0
+const float z_thrust = 5400.0f; // Z Axis Thrust - Idle Thrust = 6000.0
 // *************************
 //
 
@@ -104,8 +104,8 @@ unsigned long motor_dutycycle[4] = {0,0,0,0};
 const float motor_scale[4] = {1.00f,1.00f,1.00f,1.00f};
 
 //  Motor Upper and Lower Bound Values
-const unsigned long motor_upperbound = 5800;        // 100000
-const unsigned long motor_lowerbound = 5300;          // 5180
+const unsigned long motor_upperbound = 10000;        // 100000
+const unsigned long motor_lowerbound = 5180;          // 5180
 // *************************
 //
 
