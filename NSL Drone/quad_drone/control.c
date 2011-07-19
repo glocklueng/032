@@ -24,7 +24,6 @@
 #include "grlib/widget.h"
 
 
-
 // X-Axis PID Data
 // *************************
 float x_Pterm = 0.0f;           // X-Axis - P Term                                                          
@@ -32,9 +31,9 @@ float x_Iterm = 0.0f;           // X-Axis - I Term
 float x_Dterm = 0.0f;           // X-Axis - D Term
 float x_angle_vel_term = 0.0f;  // X-Axis - Angular Velocity Term
 
-const float x_Pgain = 8.5f;     // X-Axis - P Gain - 8.5
-const float x_Igain = 0.01f;    // X-Axis - I Gain - 0.01
-const float x_Dgain = 0.1f;     // X-Axis - D Gain - 85.0
+const float x_Pgain = 6.0f;     // X-Axis - P Gain - 8.5
+const float x_Igain = 3.0f;     // X-Axis - I Gain - 0.01
+const float x_Dgain = 0.13f;    // X-Axis - D Gain - 85.0
 const float x_Fgain = 0.0f;     // X-Axis - F Gain - 0.0
 
 float x_Dterm_1 = 0.0f;		// X-Axis - D Term Filter Interation 1 
@@ -56,9 +55,9 @@ float y_Iterm = 0.0f;           // Y-Axis - I Term
 float y_Dterm = 0.0f;           // Y-Axis - D Term 
 float y_angle_vel_term = 0.0f;  // Y-Axis - Angular Velocity Term
 
-const float y_Pgain = 8.5f;     // Y-Axis - P Gain - 8.5
-const float y_Igain = 0.01f;    // Y-Axis - I Gain - 0.01
-const float y_Dgain = 0.1f;     // Y-Axis - D Gain - 85.0
+const float y_Pgain = 6.0f;     // Y-Axis - P Gain - 8.5
+const float y_Igain = 1.0f;     // Y-Axis - I Gain - 0.01
+const float y_Dgain = 0.13f;    // Y-Axis - D Gain - 85.0
 const float y_Fgain = 0.0f;     // Y-Axis - F Gain - 0.0
 
 
@@ -77,7 +76,7 @@ float y_torque = 0.0f;          // Y Axis - Rotational Torque
 
 // Z-Axis Data
 // *************************
-const float z_thrust = 5400.0f; // Z Axis Thrust - Idle Thrust = 6000.0
+const float z_thrust = 5650.0f; // Z Axis Thrust - Idle Thrust = 5500.0
 // *************************
 //
 
@@ -104,8 +103,8 @@ unsigned long motor_dutycycle[4] = {0,0,0,0};
 const float motor_scale[4] = {1.00f,1.00f,1.00f,1.00f};
 
 //  Motor Upper and Lower Bound Values
-const unsigned long motor_upperbound = 10000;        // 100000
-const unsigned long motor_lowerbound = 5180;          // 5180
+const unsigned long motor_upperbound = 5900;          // 5750
+const unsigned long motor_lowerbound = 5300;          // 5250
 // *************************
 //
 
@@ -136,10 +135,10 @@ void control(float *imu, float *data_telemetry)
     // Determine Error by difference of command angle and state angle
     x_angle_error = (x_cmd_angle - imu[0]);    
     
-    x_Pterm = x_Pgain*x_angle_error;                              // Determine P Term
-    x_Iterm = x_Igain*(x_Iterm + (x_angle_error*dt));             // Determine I Term
-    x_Dterm = x_Dgain*((x_angle_error - x_old_angle)/dt);         // Determine D Term
-    x_angle_vel_term = x_Fgain*imu[3];                            // Determine F Term
+    x_Pterm =  x_Pgain*x_angle_error;                              // Determine P Term
+    x_Iterm += x_Igain*(x_angle_error*dt);                         // Determine I Term
+    x_Dterm =  x_Dgain*((x_angle_error - x_old_angle)/dt);         // Determine D Term
+    x_angle_vel_term = x_Fgain*imu[3];                             // Determine F Term
     
     // Set current angle as old angle for next loop
     x_old_angle = x_angle_error;                
@@ -160,10 +159,10 @@ void control(float *imu, float *data_telemetry)
     // Determine Error by difference of command angle and state angle
     y_angle_error = (y_cmd_angle - imu[1]);
     
-    y_Pterm = y_Pgain*y_angle_error;                              // Determine P Term
-    y_Iterm = y_Igain*(y_Iterm + (y_angle_error*dt));             // Determine I Term
-    y_Dterm = y_Dgain*((y_angle_error - y_old_angle)/dt);         // Determine D Term
-    y_angle_vel_term = y_Fgain*imu[4];                            // Determine F Term
+    y_Pterm =  y_Pgain*y_angle_error;                              // Determine P Term
+    y_Iterm += y_Igain*(y_angle_error*dt);                         // Determine I Term
+    y_Dterm =  y_Dgain*((y_angle_error - y_old_angle)/dt);         // Determine D Term
+    y_angle_vel_term = y_Fgain*imu[4];                             // Determine F Term
     
     // Set current angle as old angle for next loop
     y_old_angle = y_angle_error; 
