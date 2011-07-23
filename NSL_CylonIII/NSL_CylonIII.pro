@@ -1,25 +1,25 @@
 EAGLE AutoRouter Statistics:
 
-Job           : D:/032/NSL_CylonIII/NSL_CylonIII.brd
+Job           : D:/032/032/NSL_CylonIII/NSL_CylonIII.brd
 
-Start at      : 10:49:13 (7/23/2011)
-End at        : 10:50:25 (7/23/2011)
-Elapsed time  : 00:01:12
+Start at      : 14:15:21 (7/23/2011)
+End at        : 14:15:23 (7/23/2011)
+Elapsed time  : 00:00:02
 
-Signals       :    26   RoutingGrid: 2 mil  Layers: 2
-Connections   :    84   predefined:  4 ( 0 Vias )
+Signals       :    26   RoutingGrid: 16 mil  Layers: 2
+Connections   :    84   predefined:  70 ( 10 Vias )
 
-Router memory :   2601760
+Router memory :   46656
 
 Passname          :     Route Optimize1 Optimize2 Optimize3 Optimize4
 
-Time per pass     :  00:00:52  00:00:05  00:00:04  00:00:05  00:00:06
-Number of Ripups  :       116         0         0         0         0
-max. Level        :         4         0         0         0         0
-max. Total        :        16         0         0         0         0
+Time per pass     :  00:00:01  00:00:01  00:00:00  00:00:00  00:00:00
+Number of Ripups  :         1         0         0         0         0
+max. Level        :         2         0         0         0         0
+max. Total        :         1         0         0         0         0
 
-Routed            :        77        78        78        78        78
-Vias              :        27        21        21        20        20
-Resolution        :    96.4 %    97.6 %    97.6 %    97.6 %    97.6 %
+Routed            :        10        11        11        11        11
+Vias              :        13        11        11        11        11
+Resolution        :    95.2 %    96.4 %    96.4 %    96.4 %    96.4 %
 
-Final             : 94.0% finished. Polygons may have fallen apart.
+Final             : 95.2% finished. Polygons may have fallen apart.
