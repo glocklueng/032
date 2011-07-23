@@ -117,7 +117,7 @@ signed char XDIR =1;
 void SetRC( unsigned char R,unsigned char C ) 
 {	
 	unsigned char b1,b2;
-	unsigned char portb, ddrb;
+	unsigned char portb, ddrb,portd6=2;
 
 	// get current values, Can't cache PORTD/DDRD since the sound interrupt can change, should cache DDRD6/PORTD6 instead
 	portb = PORTB;
@@ -199,13 +199,16 @@ void SetRC( unsigned char R,unsigned char C )
 // if 32 == 00 then set to low for PD6
 	if( GET_BIT( b1,3 )==0 && GET_BIT( b1,2 )==0 ) {
 
-		CLR_BIT(PORTD,6 ); //set to off
+//		CLR_BIT(PORTD,6 ); //set to off
+
+		portd6 = 0;
 
 	// if 32 == 01 then set to high for PD6
 	} else if( GET_BIT( b1,3 )==0 && GET_BIT( b1,2 )== 1) { 
 
 		// set to on
-		SET_BIT(PORTD ,6 );
+		//SET_BIT(PORTD ,6 );
+		portd6 = 1;
 	}
 
 // if 10 == 00 then set to low for PB0
@@ -269,9 +272,18 @@ void SetRC( unsigned char R,unsigned char C )
 		SET_BIT(portb ,4 );
 	}
 
-	//set all at once.
+	//set all at once, stops it from flickering 
 	PORTB = portb;
 	DDRB = ddrb;
+
+	if(portd6 == 1 ) { 
+	
+		SET_BIT(PORTD ,6 );
+
+	} else	if(portd6 == 0 ) {
+
+		CLR_BIT(PORTD,6 ); 
+	}
 }
 
 static const unsigned char pattern[] PROGMEM =
@@ -435,8 +447,6 @@ int main(void)
 				i+=(5*6);
 			}
 		}
-
-
 		if( i >=  sizeof(pattern) ) 
 			i = 0;
 	}
