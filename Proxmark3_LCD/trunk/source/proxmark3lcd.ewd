@@ -282,7 +282,7 @@
       <name>IARROM_ID</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>0</version>
+        <version>1</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -292,10 +292,6 @@
         <option>
           <name>CRomLogFileEditB</name>
           <state>$PROJ_DIR$\cspycomm.log</state>
-        </option>
-        <option>
-          <name>CRomCommunication</name>
-          <state>0</state>
         </option>
         <option>
           <name>CRomCommPort</name>
@@ -317,7 +313,7 @@
       <name>JLINK_ID</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -427,7 +423,7 @@
         </option>
         <option>
           <name>CCJLinkResetList</name>
-          <version>2</version>
+          <version>5</version>
           <state>5</state>
         </option>
         <option>
@@ -469,6 +465,10 @@
         <option>
           <name>CCCatchDummy</name>
           <state>0</state>
+        </option>
+        <option>
+          <name>OCJLinkScriptFile</name>
+          <state>1</state>
         </option>
       </data>
     </settings>
@@ -595,6 +595,70 @@
       </data>
     </settings>
     <settings>
+      <name>PEMICRO_ID</name>
+      <archiveVersion>2</archiveVersion>
+      <data>
+        <version>0</version>
+        <wantNonLocal>1</wantNonLocal>
+        <debug>1</debug>
+        <option>
+          <name>OCDriverInfo</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>OCPEMicroAttachSlave</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>CCPEMicroInterfaceList</name>
+          <version>0</version>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCPEMicroResetDelay</name>
+          <state></state>
+        </option>
+        <option>
+          <name>CCPEMicroJtagSpeed</name>
+          <state>#UNINITIALIZED#</state>
+        </option>
+        <option>
+          <name>CCJPEMicroShowSettings</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>DoLogfile</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>LogFile</name>
+          <state>$PROJ_DIR$\cspycomm.log</state>
+        </option>
+        <option>
+          <name>CCPEMicroUSBDevice</name>
+          <version>0</version>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCPEMicroSerialPort</name>
+          <version>0</version>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCJPEMicroTCPIPAutoScanNetwork</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>CCPEMicroTCPIP</name>
+          <state>10.0.0.1</state>
+        </option>
+        <option>
+          <name>CCPEMicroCommCmdLineProducer</name>
+          <state>0</state>
+        </option>
+      </data>
+    </settings>
+    <settings>
       <name>RDI_ID</name>
       <archiveVersion>2</archiveVersion>
       <data>
@@ -715,7 +779,11 @@
         <loadFlag>0</loadFlag>
       </plugin>
       <plugin>
-        <file>$TOOLKIT_DIR$\plugins\rtos\OSE\OseEpsilonPlugin.ewplugin</file>
+        <file>$TOOLKIT_DIR$\plugins\rtos\MQX\MQXRtosPlugin.ewplugin</file>
+        <loadFlag>0</loadFlag>
+      </plugin>
+      <plugin>
+        <file>$TOOLKIT_DIR$\plugins\rtos\OpenRTOS\OpenRTOSPlugin.ewplugin</file>
         <loadFlag>0</loadFlag>
       </plugin>
       <plugin>
@@ -723,7 +791,11 @@
         <loadFlag>0</loadFlag>
       </plugin>
       <plugin>
-        <file>$TOOLKIT_DIR$\plugins\rtos\Quadros\Quadros_EWB5_Plugin.ewplugin</file>
+        <file>$TOOLKIT_DIR$\plugins\rtos\Quadros\Quadros_EWB6_Plugin.ewplugin</file>
+        <loadFlag>0</loadFlag>
+      </plugin>
+      <plugin>
+        <file>$TOOLKIT_DIR$\plugins\rtos\SafeRTOS\SafeRTOSPlugin.ewplugin</file>
         <loadFlag>0</loadFlag>
       </plugin>
       <plugin>
@@ -745,10 +817,6 @@
       <plugin>
         <file>$EW_DIR$\common\plugins\Orti\Orti.ENU.ewplugin</file>
         <loadFlag>0</loadFlag>
-      </plugin>
-      <plugin>
-        <file>$EW_DIR$\common\plugins\Profiling\Profiling.ENU.ewplugin</file>
-        <loadFlag>1</loadFlag>
       </plugin>
       <plugin>
         <file>$EW_DIR$\common\plugins\Stack\Stack.ENU.ewplugin</file>
@@ -847,7 +915,7 @@
         </option>
         <option>
           <name>OCLastSavedByProductVersion</name>
-          <state>5.50.5.51996</state>
+          <state>6.10.3.52260</state>
         </option>
         <option>
           <name>OCDownloadAttachToProgram</name>
@@ -1040,7 +1108,7 @@
       <name>IARROM_ID</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>0</version>
+        <version>1</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1050,10 +1118,6 @@
         <option>
           <name>CRomLogFileEditB</name>
           <state>$PROJ_DIR$\cspycomm.log</state>
-        </option>
-        <option>
-          <name>CRomCommunication</name>
-          <state>0</state>
         </option>
         <option>
           <name>CRomCommPort</name>
@@ -1075,7 +1139,7 @@
       <name>JLINK_ID</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1185,7 +1249,7 @@
         </option>
         <option>
           <name>CCJLinkResetList</name>
-          <version>2</version>
+          <version>5</version>
           <state>5</state>
         </option>
         <option>
@@ -1227,6 +1291,10 @@
         <option>
           <name>CCCatchDummy</name>
           <state>0</state>
+        </option>
+        <option>
+          <name>OCJLinkScriptFile</name>
+          <state>1</state>
         </option>
       </data>
     </settings>
@@ -1353,6 +1421,70 @@
       </data>
     </settings>
     <settings>
+      <name>PEMICRO_ID</name>
+      <archiveVersion>2</archiveVersion>
+      <data>
+        <version>0</version>
+        <wantNonLocal>1</wantNonLocal>
+        <debug>0</debug>
+        <option>
+          <name>OCDriverInfo</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>OCPEMicroAttachSlave</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>CCPEMicroInterfaceList</name>
+          <version>0</version>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCPEMicroResetDelay</name>
+          <state></state>
+        </option>
+        <option>
+          <name>CCPEMicroJtagSpeed</name>
+          <state>#UNINITIALIZED#</state>
+        </option>
+        <option>
+          <name>CCJPEMicroShowSettings</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>DoLogfile</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>LogFile</name>
+          <state>$PROJ_DIR$\cspycomm.log</state>
+        </option>
+        <option>
+          <name>CCPEMicroUSBDevice</name>
+          <version>0</version>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCPEMicroSerialPort</name>
+          <version>0</version>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCJPEMicroTCPIPAutoScanNetwork</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>CCPEMicroTCPIP</name>
+          <state>10.0.0.1</state>
+        </option>
+        <option>
+          <name>CCPEMicroCommCmdLineProducer</name>
+          <state>0</state>
+        </option>
+      </data>
+    </settings>
+    <settings>
       <name>RDI_ID</name>
       <archiveVersion>2</archiveVersion>
       <data>
@@ -1473,7 +1605,11 @@
         <loadFlag>0</loadFlag>
       </plugin>
       <plugin>
-        <file>$TOOLKIT_DIR$\plugins\rtos\OSE\OseEpsilonPlugin.ewplugin</file>
+        <file>$TOOLKIT_DIR$\plugins\rtos\MQX\MQXRtosPlugin.ewplugin</file>
+        <loadFlag>0</loadFlag>
+      </plugin>
+      <plugin>
+        <file>$TOOLKIT_DIR$\plugins\rtos\OpenRTOS\OpenRTOSPlugin.ewplugin</file>
         <loadFlag>0</loadFlag>
       </plugin>
       <plugin>
@@ -1481,7 +1617,11 @@
         <loadFlag>0</loadFlag>
       </plugin>
       <plugin>
-        <file>$TOOLKIT_DIR$\plugins\rtos\Quadros\Quadros_EWB5_Plugin.ewplugin</file>
+        <file>$TOOLKIT_DIR$\plugins\rtos\Quadros\Quadros_EWB6_Plugin.ewplugin</file>
+        <loadFlag>0</loadFlag>
+      </plugin>
+      <plugin>
+        <file>$TOOLKIT_DIR$\plugins\rtos\SafeRTOS\SafeRTOSPlugin.ewplugin</file>
         <loadFlag>0</loadFlag>
       </plugin>
       <plugin>
@@ -1503,10 +1643,6 @@
       <plugin>
         <file>$EW_DIR$\common\plugins\Orti\Orti.ENU.ewplugin</file>
         <loadFlag>0</loadFlag>
-      </plugin>
-      <plugin>
-        <file>$EW_DIR$\common\plugins\Profiling\Profiling.ENU.ewplugin</file>
-        <loadFlag>1</loadFlag>
       </plugin>
       <plugin>
         <file>$EW_DIR$\common\plugins\Stack\Stack.ENU.ewplugin</file>
