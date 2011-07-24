@@ -113,7 +113,7 @@ static const unsigned char PROGMEM led30[] = {
 unsigned int X = 0;
 signed char XDIR =1;
 
-// this routine is written to help understand how the process works, not fast.
+// this routine is written to help understand how the process works, not be fast.
 void SetRC( unsigned char R,unsigned char C ) 
 {	
 	unsigned char b1,b2;
@@ -380,12 +380,22 @@ int main(void)
 
 // switch on interrupts ( start speaker )
 
-	sei();
+	//sei();
 
 // index to start
 	i = 0;
 
 	X = 0;
+	
+	while(1) {
+		for ( R= 0 ; R < 5 ; R ++ ) {
+			for ( C= 0 ; C < 6 ; C ++ ) {
+				SetRC(R,C);
+				_delay_ms(500);				_delay_ms(500);
+				_delay_ms(500);
+			}
+		}
+	}
 
 	for(;;) {	
 
