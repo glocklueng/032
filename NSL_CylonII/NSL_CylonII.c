@@ -70,6 +70,9 @@
 // 01 = HIGH
 // 11 = X (input)
 
+
+#if 0 
+
 static const unsigned char PROGMEM led30[] = {
 
 	B8( 1111),  B8(11110001 ),		// LED1
@@ -108,6 +111,47 @@ static const unsigned char PROGMEM led30[] = {
 	B8( 0011) , B8(11111101 ),		// LED9
 	B8( 0111) , B8(11111100 ),		// LED10
 };
+
+#else
+
+static const unsigned char PROGMEM led30[] = {
+
+	B8( 1111) , B8(11110100 ),		// LED2
+	B8( 1111),  B8(11110001 ),		// LED1
+	B8( 1111) , B8(11011100 ),		// LED4
+	B8( 1111) , B8(11001101 ),		// LED3
+	B8( 1111) , B8(01111100 ),		// LED6
+	B8( 1111) , B8(00111101 ),		// LED5
+	
+	B8( 1111) , B8(11010011 ),		// LED12
+	B8( 1111) , B8(11000111 ),		// LED11
+	B8( 1111) , B8(01110011 ),		// LED14
+	B8( 1111) , B8(00110111 ),		// LED13
+	B8( 1101) , B8(11110011 ),		// LED16
+	B8( 1100) , B8(11110111 ),		// LED15
+	
+	B8( 1111) , B8(01001111 ),		// LED20
+	B8( 1111) , B8(00011111 ),		// LED19
+	B8( 1101) , B8(11001111 ),		// LED22
+	B8( 1100),  B8(11011111 ),		// LED21
+	B8( 0111) , B8(11001111 ),		// LED24
+	B8( 0011) , B8(11011111 ),		// LED23
+
+	B8( 1101) , B8(00111111 ),		// LED26
+	B8( 1100) , B8(01111111 ),		// LED25
+	B8( 0111) , B8(00111111 ),		// LED28
+	B8( 0011) , B8(01111111 ),		// LED27
+	B8( 1101) , B8(11111100 ),		// LED8
+	B8( 1100),  B8(11111101 ),		// LED7
+
+	B8( 0100) , B8(11111111 ),		// LED30
+	B8( 0001) , B8(11111111 ),		// LED29
+	B8( 0111) , B8(11110011 ),		// LED18
+	B8( 0011) , B8(11110111 ),		// LED17
+	B8( 0111) , B8(11111100 ),		// LED10
+	B8( 0011) , B8(11111101 ),		// LED9
+};
+#endif
 
 
 unsigned int X = 0;
@@ -293,6 +337,10 @@ static const unsigned char pattern[] PROGMEM =
 //6x5
 
 	0,0,0,0,0,0,
+	0,0,0,0,0,0,
+	0,0,0,0,0,0,
+	0,0,0,0,0,0,
+
 
 	1,1,1,1,1,1,
 	1,0,0,0,0,1,
@@ -339,7 +387,7 @@ static const unsigned char pattern[] PROGMEM =
 	1,1,1,1,1,1,
 	1,1,1,1,1,1,
 	1,1,1,1,1,1,
-	1,1,1,1,1,1,
+	1,1,1,1,1,1
 };
 
 
@@ -382,41 +430,39 @@ int main(void)
 
 	//sei();
 
+
 // index to start
 	i = 0;
 
 	X = 0;
 	
-	while(1) {
+	while(0) {
 		for ( R= 0 ; R < 5 ; R ++ ) {
 			for ( C= 0 ; C < 6 ; C ++ ) {
+
 				SetRC(R,C);
-				_delay_ms(500);				_delay_ms(500);
-				_delay_ms(500);
 			}
 		}
 	}
 
 	for(;;) {	
 
-		for ( x = 0 ; x < speed*100; x ++) {
+		for ( x = 0 ; x < 150; x ++) {
 
-		//if( x == 9 ) break;
-;
 			for ( R= 0 ; R < 5 ; R ++ ) {
 
 				for ( C= 0 ; C < 6 ; C ++ ) {
 
 					unsigned char code;
 
-					if ( i < sizeof(pattern) ) {
+					if ( i < sizeof( pattern) ) {
 						
 						// fetch value
 						code = pgm_read_byte ( &pattern[i]  );
 
 					} else {
 
-						break;
+						i = 0;
 					}
 	
 					// if first column
@@ -425,8 +471,6 @@ int main(void)
 						// skip rest of row ( i++ later makes it 6)
 						i += 6;
 
-						// set speed
-						speed = code - 2;
 					}
 					else
 						if( code  ) {
@@ -444,21 +488,15 @@ int main(void)
 	
 		}	
 
-		if( speed < 20 ) {
 
-			// skip a row
-			i += 6;
+		// skip a row
+		i += 6;
 
-		} else {
 
-			speed -- ;
 
-			if(speed == 21) {
-				i+=(5*6);
-			}
-		}
-		if( i >=  sizeof(pattern) ) 
+		if( i >=  sizeof(pattern) ) {
 			i = 0;
+		}
 	}
 }
 
