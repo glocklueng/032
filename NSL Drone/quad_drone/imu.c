@@ -1,9 +1,11 @@
 #include "inc/lm3s9b96.h"
 #include "math.h"
 #include "fixedmath.h"
+#include "IQmath/IQmathLib.h"
 
 #include "imu.h"
 #include "xbee.h"
+#include "quaternion.h"
 
 #include "inc/hw_adc.h"
 #include "inc/hw_gpio.h"
@@ -137,13 +139,35 @@ float y_gyro_rad_sec[4] = {0.0f,0.0f,0.0f,0.0f};
 float z_gyro_rad_sec[4] = {0.0f,0.0f,0.0f,0.0f};
 // *************************
 
+// Compass 
+// *************************
+//  Compass Raw Values
+//  [0] : X Compass Reading
+//  [1] : Y Compass Reading
+//  [2] : Z Compass Reading
+float comp_raw[3] = {0,0,0};
+//
+//  Compass Filtered
+//  [0] : X Compass Filtered
+//  [1] : Y Compass Filtered
+//  [2] : Z Compass Filtered
+float compass_filt[3] = {0,0,0};
+//
+// Compass Read Delay Variable
+unsigned long comp_count = 0;
+//
+// Zero Position of the Compass
+float comp_x_zero = 0;
+float comp_y_zero = 0;
+// *************************
+
 //  Quaternion Variables and Constants
 // *************************
-//  State in Quaternions
+//  State in Quaternions - TRUE STATE OF QUADROTOR
 //  [0] : q0
 //  [1] : q1
 //  [2] : q2
-//  [0] : q3
+//  [3] : q3
 fm_fixed q[4] = {0,0,0,0};
 
 //  Readings in Euler Angles
@@ -151,15 +175,6 @@ fm_fixed q[4] = {0,0,0,0};
 //  [1] : Y Euler Angle - Theta
 //  [2] : Z Euler Angle - Psi
 fm_fixed euler_angle[3] = {0,0,0};
-
-//  Readings in Euler Angles
-//  [0][0] : X Euler Angle - Cosine Phi
-//  [1][0] : Y Euler Angle - Cosine Theta
-//  [2][0] : Z Euler Angle - Cosine Psi
-//  [0][1] : X Euler Angle - Sine Phi
-//  [1][1] : Y Euler Angle - Sine Theta
-//  [2][1] : Z Euler Angle - Sine Psi 
-fm_fixed euler_trig[3][2] = {{0,0},{0,0},{0,0}};
 // *************************
 
 // Time Variables
@@ -193,15 +208,6 @@ float zK[2];                            // K Matrix - Z Axis
 float zP[2][2];                         // P Matrix - Z Axis
 // *************************
 
-// Compass Variables
-// *************************
-
-//  Compass Raw Values
-//  [0] : X Compass Reading
-//  [1] : Y Compass Reading
-//  [2] : Z Compass Reading
-signed long comp_raw[3] = {0,0,0};
-// *************************
 
 // Temperature Variables
 // *************************
@@ -275,7 +281,26 @@ void readIMU(float *imu)
     // Read Raw - X Axis Compass
     // Read Raw - Y Axis Compass
     // Read Raw - Z Axis Compass
-    readCompass(&comp_raw[0], &comp_raw[1], &comp_raw[2]);
+    if(comp_count > 200)           // Delay the sampling to approx. 10Hz
+    {
+      readCompass(&comp_raw[0], &comp_raw[1], &comp_raw[2]);
+      
+      if(comp_raw[1] > 30000)
+      {
+        comp_raw[1] = 65535 - comp_raw[1]; 
+      }
+      else if(comp_raw[1] < -30000)
+      {
+        comp_raw[1] = 65535 + comp_raw[1];
+      }        
+      
+      
+      comp_count = 0;
+    }
+    else
+    {
+      comp_count++;
+    }
     
     // Convert raw adc values to acceleration
     accel[0] = ((acc_v_convert*(float)((int)(acc_raw[0]) - acc_offset[0]))-acc_shift[0])*acc_g_convert; // Convert raw data bytes to acceleration - X Axis
@@ -371,7 +396,7 @@ void readIMU(float *imu)
     xP[0][1] -= xK[0] * xP[0][1];
     xP[1][0] -= xK[1] * xP[0][0];
     xP[1][1] -= xK[1] * xP[0][1];
-    
+    // ----------------------
     
     // Filter Y Axis
     // ----------------------
@@ -398,6 +423,7 @@ void readIMU(float *imu)
     yP[0][1] -= yK[0] * yP[0][1];
     yP[1][0] -= yK[1] * yP[0][0]; 
     yP[1][1] -= yK[1] * yP[0][1];
+    // ----------------------
     
     
     // Filter Z Axis
@@ -426,11 +452,16 @@ void readIMU(float *imu)
     zP[1][0] -= zK[1] * zP[0][0]; 
     zP[1][1] -= zK[1] * zP[0][1];
     
+    // Find difference from zero point - Z-Axis
+    compass_filt[1] = comp_y_zero - comp_raw[1];
+    // ----------------------
+    
+    
     // Kalman Filtered Values
     // ----------------------
     imu[0] = angle[0]*convert_180_Pi;
     imu[1] = angle[1]*convert_180_Pi;
-    imu[2] = angle[2]*convert_180_Pi;
+    imu[2] = compass_filt[1];
     imu[3] = (x_gyro_rad_sec[0] - bias[0])*convert_180_Pi;
     imu[4] = (y_gyro_rad_sec[0] - bias[1])*convert_180_Pi;
     imu[5] = (z_gyro_rad_sec[0] - bias[2])*convert_180_Pi;
@@ -449,51 +480,16 @@ void readIMU(float *imu)
     
     // Update the State of the Quadrotor
     //
-    updateState(&imu[0]);
+    eulerFloatToFixed(&imu[0], &euler_angle[0]);    // Convert and load Euler Angles as fixed point
+    eulerToQuat(&q[0], &euler_angle[0]);            // Convert Euler Angles to Quaternions       
+
+    
+    quatToEuler(&q[0], &euler_angle[0]);            // Convert Quaternions to Euler Angles
+    eulerFixedToFloat(&imu[0], &euler_angle[0]);    // Convert and load Euler Angles as floating point
     //
 }
 //*****************************************************************************
 
-
-//*****************************************************************************
-// Update State
-//
-void updateState(float *eulerAngle)
-{
-    // [0] - eulerAngle - Phi - X
-    // [1] - eulerAngle - Theta - Y
-    // [2] - eulerAngle - Psi - Z
-
-    // Convert Euler Angles into Quaternions  
-    euler_angle[0] =  ftofix(eulerAngle[0]*convert_Pi_180*rad_byte/2);	
-    euler_angle[1] = ftofix(eulerAngle[1]*convert_Pi_180*rad_byte/2); 
-    euler_angle[2] = ftofix(eulerAngle[2]*convert_Pi_180*rad_byte/2);
-    
-    euler_trig[0][0] = fixcos(euler_angle[0]);
-    euler_trig[1][0] = fixcos(euler_angle[1]);
-    euler_trig[2][0] = fixcos(euler_angle[2]);
-
-    euler_trig[0][1] = fixsin(euler_angle[0]);
-    euler_trig[1][1] = fixsin(euler_angle[1]);
-    euler_trig[2][1] = fixsin(euler_angle[2]);
-    
-    q[0] = fixadd((fixmul(fixmul(euler_trig[0][0],euler_trig[1][0]),euler_trig[2][0])),(fixmul(fixmul(euler_trig[0][1],euler_trig[1][1]),euler_trig[2][1])));
-    q[1] = fixsub((fixmul(fixmul(euler_trig[0][1],euler_trig[1][0]),euler_trig[2][0])),(fixmul(fixmul(euler_trig[0][0],euler_trig[1][1]),euler_trig[2][1])));
-    q[2] = fixadd((fixmul(fixmul(euler_trig[0][0],euler_trig[1][1]),euler_trig[2][0])),(fixmul(fixmul(euler_trig[0][1],euler_trig[1][0]),euler_trig[2][1])));
-    q[3] = fixsub((fixmul(fixmul(euler_trig[0][0],euler_trig[1][0]),euler_trig[2][1])),(fixmul(fixmul(euler_trig[0][1],euler_trig[1][1]),euler_trig[2][0])));
-
-    // Convert Quaternions to Euler Angles
-    float f_phi = (fixtof(fixatan2((fixmul(ftofix(2),fixadd(fixmul(q[0],q[1]),fixmul(q[2],q[3])))),fixsub(ftofix(1),(fixmul(ftofix(2),fixadd(fixmul(q[1],q[1]),fixmul(q[2],q[2])))))))/(rad_byte))*convert_180_Pi;
-    float f_theta = (fixtof(fixasin(fixmul(ftofix(2),fixsub(fixmul(q[0],q[2]),fixmul(q[3],q[1])))))/(rad_byte))*convert_180_Pi;
-    float f_psi = (fixtof(fixatan2((fixmul(ftofix(2),fixadd(fixmul(q[0],q[3]),fixmul(q[1],q[2])))),fixsub(ftofix(1),(fixmul(ftofix(2),fixadd(fixmul(q[2],q[2]),fixmul(q[3],q[3])))))))/(rad_byte))*convert_180_Pi;
-                             
-    
-    // TEST CODE - Set the quaternions back to the IMU matrix
-    eulerAngle[0] = f_phi;
-    eulerAngle[1] = f_theta;
-    eulerAngle[2] = f_psi;
-}
-//*****************************************************************************
 
 
 //*****************************************************************************
@@ -614,10 +610,10 @@ void readGyro(signed long *x_gyro, signed long *y_gyro,
 // [3] : Y - Axis LSB Compass
 // [4] : Z - Axis MSB Compass
 // [5] : Z - Axis LSB Compass
-signed char compass_values[6];
+int compass_values[6];
 // ----------------------------------------- 
-void readCompass(signed long *x_axis, signed long *y_axis,
-                 signed long *z_axis)
+void readCompass(float *x_axis, float *y_axis,
+                 float *z_axis)
 {   
     IntMasterDisable();
     
@@ -626,47 +622,47 @@ void readCompass(signed long *x_axis, signed long *y_axis,
     I2CMasterControl(I2C0_MASTER_BASE, I2C_MASTER_CMD_SINGLE_SEND);         // Start Sending      
 
     while(I2CMasterBusy(I2C0_MASTER_BASE)){}                                // Wait for SAK
-    
+   
     I2CMasterSlaveAddrSet(I2C0_MASTER_BASE, COMP_ADDRESS, I2C_RECV);        // Set I2C to recieve  (READ)
     I2CMasterControl(I2C0_MASTER_BASE, I2C_MASTER_CMD_BURST_RECEIVE_START); // Set to recieve multiple
     
     while(I2CMasterBusy(I2C0_MASTER_BASE)){}                                // Wait for SAK
     
-    compass_values[0] = (signed char)I2CMasterDataGet(I2C0_MASTER_BASE);  // Get Data X MSB
+    compass_values[0] = (unsigned char)I2CMasterDataGet(I2C0_MASTER_BASE);  // Get Data X MSB
     
     I2CMasterControl(I2C0_MASTER_BASE, I2C_MASTER_CMD_BURST_RECEIVE_CONT);  // Set to recieve
     
     while(I2CMasterBusy(I2C0_MASTER_BASE)){}                                // Wait for SAK
     
-    compass_values[1] = (signed char)I2CMasterDataGet(I2C0_MASTER_BASE);  // Get Data X LSB
+    compass_values[1] = (unsigned char)I2CMasterDataGet(I2C0_MASTER_BASE);  // Get Data X LSB
     
     I2CMasterControl(I2C0_MASTER_BASE, I2C_MASTER_CMD_BURST_RECEIVE_CONT);  // Set to recieve
     
     while(I2CMasterBusy(I2C0_MASTER_BASE)){}                                // Wait for SAK
     
-    compass_values[2] = (signed char)I2CMasterDataGet(I2C0_MASTER_BASE);  // Get Data Y MSB
+    compass_values[2] = (unsigned char)I2CMasterDataGet(I2C0_MASTER_BASE);  // Get Data Y MSB
     
     I2CMasterControl(I2C0_MASTER_BASE, I2C_MASTER_CMD_BURST_RECEIVE_CONT);  // Set to recieve
     
     while(I2CMasterBusy(I2C0_MASTER_BASE)){}                                // Wait for SAK
     
-    compass_values[3] = (signed char)I2CMasterDataGet(I2C0_MASTER_BASE);  // Get Data Y LSB
+    compass_values[3] = (unsigned char)I2CMasterDataGet(I2C0_MASTER_BASE);  // Get Data Y LSB
     
     I2CMasterControl(I2C0_MASTER_BASE, I2C_MASTER_CMD_BURST_RECEIVE_CONT);  // Set to recieve
     
     while(I2CMasterBusy(I2C0_MASTER_BASE)){}                                // Wait for SAK
     
-    compass_values[4] = (signed char)I2CMasterDataGet(I2C0_MASTER_BASE);  // Get Data Z MSB
+    compass_values[4] = (unsigned char)I2CMasterDataGet(I2C0_MASTER_BASE);  // Get Data Z MSB
     
     I2CMasterControl(I2C0_MASTER_BASE, I2C_MASTER_CMD_BURST_RECEIVE_FINISH);  // Set to recieve
     
     while(I2CMasterBusy(I2C0_MASTER_BASE)){}                                // Wait for SAK
     
-    compass_values[5] = (signed char)I2CMasterDataGet(I2C0_MASTER_BASE);  // Get Data Z LSB
+    compass_values[5] = (unsigned char)I2CMasterDataGet(I2C0_MASTER_BASE);  // Get Data Z LSB
     
-    *x_axis = (compass_values[0] << 8) | compass_values[1];
-    *y_axis = (compass_values[2] << 8) | compass_values[3];
-    *z_axis = (compass_values[4] << 8) | compass_values[5];
+    *x_axis = (float)((compass_values[0] << 8) + compass_values[1]);
+    *y_axis = (float)((compass_values[2] << 8) + compass_values[3]);
+    *z_axis = (float)((compass_values[4] << 8) + compass_values[5]);
     
     IntMasterEnable();
 }
@@ -848,3 +844,22 @@ void sensorsSelfTest()
     }                       
 }
 //***************************************************************************** 
+
+
+
+//*****************************************************************************
+// Zero Out Compass
+//
+// ----------------------------------------- 
+void zeroCompass()
+{  
+    // Read Raw - X Axis Compass
+    // Read Raw - Y Axis Compass
+    // Read Raw - Z Axis Compass
+    readCompass(&comp_raw[0], &comp_raw[1], &comp_raw[2]);
+  
+    comp_x_zero = comp_raw[0];
+    comp_y_zero = comp_raw[1];
+}
+// ----------------------------------------- 
+//*****************************************************************************

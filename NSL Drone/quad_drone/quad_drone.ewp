@@ -1125,6 +1125,9 @@
       <name>$PROJ_DIR$\quad_drone.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$\quaternion.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$\..\drivers\set_pinout.c</name>
     </file>
     <file>

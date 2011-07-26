@@ -91,25 +91,25 @@ void sendDataTelemetry(float *imu, float dt)
           switch(i)
           {
           case 0: 
-            UARTSend((unsigned char*)"X-Angle: ", 9); 
+            UARTSend((unsigned char*)"X-A: ", 5); 
             break;
           case 1:
-            UARTSend((unsigned char*)"Y-Angle: ", 9);
+            UARTSend((unsigned char*)"Y-A: ", 5);
             break;
           case 2:
-            UARTSend((unsigned char*)"Z-Angle: ", 9);
+            UARTSend((unsigned char*)"Z-A: ", 5);
             break;
           case 3:
-            UARTSend((unsigned char*)"X-Omega: ", 9);
+            UARTSend((unsigned char*)"X-O: ", 5);
             break;
           case 4:
-            UARTSend((unsigned char*)"Y-Omega: ", 9);
+            UARTSend((unsigned char*)"Y-O: ", 5);
             break;
           case 5:
-            UARTSend((unsigned char*)"Z-Omega: ", 9);
+            UARTSend((unsigned char*)"Z-O: ", 5);
             break;
           case 6:
-            UARTSend((unsigned char*)"X-Raw: ", 7);
+            UARTSend((unsigned char*)"Cmp: ", 5);
             break;
           default:
             UARTSend((unsigned char*)"ERROR", 5);
@@ -211,12 +211,12 @@ void sendControlTelemetry(float torque, float P, float I, float D)
             if(torque < 0)
             {
               torq = (int)(-1*torque);
-              n = sprintf(sendBuf, "  Torque:  -%i", torq);
+              n = sprintf(sendBuf, "  Torq:  -%i", torq);
             }
             else
             {
               torq = (int)(torque);
-              n = sprintf(sendBuf, "  Torque:  %i", torq);
+              n = sprintf(sendBuf, "  Torq:  %i", torq);
             }
       
             UARTSend((unsigned char*)sendBuf, n);
