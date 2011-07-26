@@ -1,5 +1,19 @@
+/*  
+
+Quadrotor Firmware 
+By: Arko
+
+Quadrotor UAV Project - Nullspace Labs
+http://wiki.032.la/nsl/Quadrotor
+
+Processor: TI LM3S9B96
+Archecture: ARM Cortex M3
+
+*/
+
 #include "inc/lm3s9b96.h"
 #include "math.h"
+#include "IQmath/IQmathLib.h"
 
 #include "inc/hw_adc.h"
 #include "inc/hw_gpio.h"
@@ -19,29 +33,22 @@
 #include "grlib/grlib.h"
 #include "grlib/widget.h"
 
-
-#include "../drivers/kitronix320x240x16_ssd2119_8bit.h"
 #include "../drivers/set_pinout.h"
 
 #include "init.h"
 #include "imu.h"
 #include "control.h"
-#include "display.h"
 #include "xbee.h"
 
- /*  
 
-Quadrotor Firmware 
-By: Arko
-
-Quadrotor UAV Project - Nullspace Labs
-http://wiki.032.la/nsl/Quadrotor
-
-Processor: TI LM3S9B96
-Archecture: ARM Cortex M3
-
-*/
-
+// Command Angle
+// [0]  : Command Angle X - Translational X (deg)
+// [1]  : Command Angle Y - Translational Y (deg)
+// [2]  : Command Angle Z - Yaw             (deg)
+// [3]  : Command Altitude Z - Altitude     (cm)
+//
+float cmd_angles[4] = {0.0f,0.0f,0.0f,0.0f};
+//
 
 // IMU Values
 // [0]  : X Angle - roll   (deg)
@@ -59,11 +66,14 @@ Archecture: ARM Cortex M3
 // [12] : dt
 // [13] : Temperature
 //
-float imu[14];
+float imu[14] = {0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,
+                 0.0f,0.0f,0.0f,0.0f,0.0f,0.05f,94.0f};
 //
+
 // dt - Measurement of time per loop
 float dt = 0.05f;
 //
+
 //
 // Control Telemetry Data
 float control_telemetry[4];
@@ -167,7 +177,7 @@ ControlLoopTimerInt(void)
     // CONTROL LOOP
     // Timer clocked at 100Hz
     // ****************************
-    control(&imu[0], &control_telemetry[0]);  // Control drone by feeding IMU data
+    control(&imu[0], &cmd_angles[0], &control_telemetry[0]);  // Control drone by feeding IMU data
     
     if(toggle)
     {
@@ -200,6 +210,8 @@ ControlLoopTimerInt(void)
 void 
 UARTIntHandler(void) 
 { 
+   IntMasterDisable();
+   
    unsigned long ulStatus;
 
    char readCmd;
@@ -226,7 +238,7 @@ UARTIntHandler(void)
         PIDTune(readCmd);
     }
     
-    
+    IntMasterEnable(); 
 }   
 
 //*****************************************************************************

@@ -20,7 +20,6 @@
 #include "grlib/widget.h"
 
 
-#include "../drivers/kitronix320x240x16_ssd2119_8bit.h"
 #include "../drivers/set_pinout.h"
 
 
@@ -125,6 +124,7 @@ void InitI2C()
     I2CMasterInitExpClk(I2C0_MASTER_BASE, SysCtlClockGet(), false);
     I2CMasterEnable(I2C0_MASTER_BASE); 
     
+    // Set Read Mode
     I2CMasterSlaveAddrSet(I2C0_MASTER_BASE, COMP_ADDRESS, I2C_SEND);         // Set I2C to send  (WRITE)
     I2CMasterDataPut(I2C0_MASTER_BASE, COMP_MODE_REG);                       // Setup to start writing Mode Register 
     I2CMasterControl(I2C0_MASTER_BASE, I2C_MASTER_CMD_BURST_SEND_START);     // Start Sending      
@@ -135,14 +135,44 @@ void InitI2C()
     I2CMasterControl(I2C0_MASTER_BASE, I2C_MASTER_CMD_BURST_SEND_FINISH);    // Start Sending      
 
     while(I2CMasterBusy(I2C0_MASTER_BASE)){}                                 // Wait for SAK
-                                      
+    
+    // Set Register Config A
+    I2CMasterSlaveAddrSet(I2C0_MASTER_BASE, COMP_ADDRESS, I2C_SEND);         // Set I2C to send  (WRITE)
+    I2CMasterDataPut(I2C0_MASTER_BASE, COMP_CONFIG_A);                       // Setup to start writing Config A 
+    I2CMasterControl(I2C0_MASTER_BASE, I2C_MASTER_CMD_BURST_SEND_START);     // Start Sending      
+
+    while(I2CMasterBusy(I2C0_MASTER_BASE)){}                                 // Wait for SAK
+    
+    I2CMasterDataPut(I2C0_MASTER_BASE, 0x10); // If fail, Try 0x10 (default) // Set Config A
+    I2CMasterControl(I2C0_MASTER_BASE, I2C_MASTER_CMD_BURST_SEND_FINISH);    // Start Sending      
+
+    while(I2CMasterBusy(I2C0_MASTER_BASE)){}                                 // Wait for SAK
+    
+    // Set Register Config B
+    I2CMasterSlaveAddrSet(I2C0_MASTER_BASE, COMP_ADDRESS, I2C_SEND);         // Set I2C to send  (WRITE)
+    I2CMasterDataPut(I2C0_MASTER_BASE, COMP_CONFIG_B);                       // Setup to start writing Config B
+    I2CMasterControl(I2C0_MASTER_BASE, I2C_MASTER_CMD_BURST_SEND_START);     // Start Sending      
+
+    while(I2CMasterBusy(I2C0_MASTER_BASE)){}                                 // Wait for SAK
+    
+    I2CMasterDataPut(I2C0_MASTER_BASE, 0x20);                                // Set Config B
+    I2CMasterControl(I2C0_MASTER_BASE, I2C_MASTER_CMD_BURST_SEND_FINISH);    // Start Sending      
+
+    while(I2CMasterBusy(I2C0_MASTER_BASE)){}                                 // Wait for SAK
+   
+    
+    zeroCompass();                                                           // Zero out compass
+    
+    
+    
+    // Initialize the I2C - Channel 1 - Gyro
     signed long x_gyro_sample = 0;	// X Gyro Reading
     signed long y_gyro_sample = 0;	// Y Gyro Reading
     signed long z_gyro_sample = 0;	// Z Gyro Reading
 
     while(x_gyro_sample == 0 && y_gyro_sample == 0 && z_gyro_sample == 0)
     {
-      // Initialize the I2C - Channel 1 - Gyro
+     
       SysCtlPeripheralEnable(SYSCTL_PERIPH_I2C1);
       SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOG);
       GPIOPinConfigure(GPIO_PG0_I2C1SCL);
@@ -166,6 +196,8 @@ void InitI2C()
       
       readGyro(&x_gyro_sample, &y_gyro_sample, &z_gyro_sample);
     }
+    
+    
 }
 
 
