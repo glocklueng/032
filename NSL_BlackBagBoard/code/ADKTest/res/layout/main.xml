@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@+id/LinearLayout1" xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" android:orientation="vertical">
+    <ImageView android:layout_alignParentLeft="true" android:layout_toLeftOf="@+id/tvCaption" android:layout_width="wrap_content" android:layout_gravity="bottom" android:src="@drawable/logo" android:id="@+id/Logo" android:layout_weight="1" android:scaleType="fitStart" android:layout_height="wrap_content"></ImageView>
+    <TextView android:layout_alignParentRight="true" android:id="@+id/tvCaption" android:layout_height="wrap_content" android:textSize="24sp" android:layout_weight="10" android:layout_marginLeft="10sp" android:layout_width="wrap_content" android:textStyle="bold" android:text=" NSL ADK Demo" android:layout_gravity="bottom"></TextView>
+    <Button android:layout_height="110dp" android:text="@string/button01Relay" android:id="@+id/buttonOuputLED" android:layout_width="112dp" android:layout_below="@+id/Button01" android:layout_alignLeft="@+id/Button01"></Button>
+    <TextView android:layout_margin="5dp" android:text="@string/tvText" android:gravity="center" android:ellipsize="end" android:textStyle="bold" android:layout_height="73dp" android:textSize="100sp" android:id="@+id/tvADCValue" android:layout_width="40dp" android:layout_below="@+id/buttonOuputLED" android:layout_alignLeft="@+id/TextView01"></TextView>
+    <SeekBar android:layout_height="wrap_content" android:progress="0" android:visibility="visible" android:id="@+id/sbADCValue" android:layout_width="wrap_content" android:max="1024" android:layout_below="@+id/buttonOuputLED" android:layout_alignParentLeft="true"></SeekBar>
+    <SeekBar android:layout_height="wrap_content" android:id="@+id/SeekBar01" android:layout_width="82dp" android:layout_alignTop="@+id/TextView01" android:layout_alignParentRight="true" android:layout_marginTop="26dp"></SeekBar>
+    <SeekBar android:layout_height="wrap_content" android:id="@+id/SeekBar02" android:layout_width="82dp" android:layout_below="@+id/SeekBar01" android:layout_alignParentRight="true"></SeekBar>
+    <SeekBar android:layout_height="wrap_content" android:id="@+id/SeekBar03" android:layout_width="84dp" android:layout_below="@+id/SeekBar02" android:layout_alignParentRight="true" android:layout_alignLeft="@+id/SeekBar02"></SeekBar>
+    <Button android:layout_height="110dp" android:text="@string/buttonLED" android:id="@+id/Button01" android:layout_width="112dp" android:layout_below="@+id/SeekBar01"></Button>
+    <TextView style="@style/styleName" android:text="@string/tvText" android:layout_height="wrap_content" android:id="@+id/TextView01" android:layout_width="wrap_content" android:layout_below="@+id/Logo" android:layout_toRightOf="@+id/Logo" android:layout_marginTop="29dp"></TextView>
+</RelativeLayout>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">NSL ADK Demo</string>
+    <string name="buttonLED">Relay Off</string>
+    <string name="tvText">0</string>
+    <string name="button01Relay">Relay off</string>
+</resources>
