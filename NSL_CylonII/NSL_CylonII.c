@@ -71,7 +71,7 @@
 // 11 = X (input)
 
 
-#if 0 
+#if 1
 
 static const unsigned char PROGMEM led30[] = {
 
@@ -411,8 +411,8 @@ SIGNAL( SIG_TIMER1_COMPA )
 
 int main(void)
 {
-	unsigned int x,speed=4;;
-	unsigned int R,C;
+	unsigned int x;;
+	unsigned char R,C;
 	unsigned long i;
 
 	// setup timer
@@ -436,11 +436,19 @@ int main(void)
 
 	X = 0;
 	
-	while(0) {
+	while( 1 ) {
 		for ( R= 0 ; R < 5 ; R ++ ) {
 			for ( C= 0 ; C < 6 ; C ++ ) {
 
 				SetRC(R,C);
+				_delay_ms(800);
+	
+//				PORTB = rand();
+//				DDRB = rand();
+//				PORTD = rand();
+
+
+
 			}
 		}
 	}
@@ -488,11 +496,8 @@ int main(void)
 	
 		}	
 
-
 		// skip a row
 		i += 6;
-
-
 
 		if( i >=  sizeof(pattern) ) {
 			i = 0;
