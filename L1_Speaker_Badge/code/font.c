@@ -16,8 +16,8 @@
 
 static short textXPos[3] , textLength[3];
 
-static const PROGMEM unsigned char text[] =  "LAYERONE 2011 - CJUNKY ";
-const PROGMEM unsigned char text1[] = "NULLSPACE LABS";
+static const PROGMEM unsigned char text[] =  "DEFCON 19 LAS VEGAS 2011 ";
+const PROGMEM unsigned char text1[] = "NULLSPACE LABS HUMAN";
 static const PROGMEM unsigned char text2[] = "032.LA DESIGN BY KRS TWSS";
 
 void setup_scroll(void)
