@@ -1,0 +1,6 @@
+hot plates http://www.wenesco.com/hotplates.htm
+thermocouple http://www.ladyada.net/learn/sensors/thermocouple.html
+jeffs hot plate http://mightyohm.com/blog/2009/01/diy-pid-controlled-soldering-hotplate/
+zero crossing ssr http://www.epanorama.net/circuits/semiconductor_relays.html
+                  http://forums.parallax.com/attachment.php?attachmentid=36968&d=1106780363
+smt oven reflow controller http://www.circuitcellar.com/renesas/winners/3323.htm
