@@ -396,6 +396,7 @@ UsedLibrary="E:/eagle/lbr/xilinx.lbr"
 UsedLibrary="E:/eagle/lbr/zetex.lbr"
 UsedLibrary="E:/eagle/lbr/zilog.lbr"
 UsedLibrary="E:/032/TV_Nullifier/TV_Nullifer-Final/tvbgone-adj.lbr"
+UsedLibrary="lcd_2x16_led_backlight.lbr"
 
 [Win_1]
 Type="Control Panel"
