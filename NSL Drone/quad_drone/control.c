@@ -172,11 +172,11 @@ void control(float *imu, float *cmd_angles, float *data_telemetry)
     
     x_Pterm =  x_Pgain*x_angle_error;                              // Determine P Term
     x_Iterm += x_Igain*(x_angle_error*dt);                         // Determine I Term
-    x_Dterm =  x_Dgain*((x_angle_error - x_old_angle)/dt);         // Determine D Term
+    x_Dterm =  x_Dgain*((imu[0] - x_old_angle)/dt);                // Determine D Term
     x_angle_vel_term = x_Fgain*imu[3];                             // Determine F Term
     
     // Set current angle as old angle for next loop
-    x_old_angle = x_angle_error;                
+    x_old_angle = imu[0];                
  
     // Filter D Term - Prevent noise near stable zones
     x_Dterm = (x_Dterm_3 + (2 * x_Dterm_2) + (2 * x_Dterm_1) + x_Dterm)/6.0;
@@ -195,7 +195,7 @@ void control(float *imu, float *cmd_angles, float *data_telemetry)
     }
     
     // Add up the PID Terms + F Term to determine X Torque
-    x_torque = x_Pterm + x_Iterm + x_Dterm + x_angle_vel_term;
+    x_torque = x_Pterm + x_Iterm - x_Dterm + x_angle_vel_term;
     // *************************
     
     
@@ -206,11 +206,11 @@ void control(float *imu, float *cmd_angles, float *data_telemetry)
     
     y_Pterm =  y_Pgain*y_angle_error;                              // Determine P Term
     y_Iterm += y_Igain*(y_angle_error*dt);                         // Determine I Term
-    y_Dterm =  y_Dgain*((y_angle_error - y_old_angle)/dt);         // Determine D Term
+    y_Dterm =  y_Dgain*((imu[1] - y_old_angle)/dt);                // Determine D Term
     y_angle_vel_term = y_Fgain*imu[4];                             // Determine F Term
     
     // Set current angle as old angle for next loop
-    y_old_angle = y_angle_error; 
+    y_old_angle = imu[1]; 
     
     // Filter D Term - Prevent noise near stable zones
     y_Dterm = (y_Dterm_3 + (2 * y_Dterm_2) + (2 * y_Dterm_1) + y_Dterm)/6.0;
@@ -229,7 +229,7 @@ void control(float *imu, float *cmd_angles, float *data_telemetry)
     }
        
     // Add up the PID Terms + F Term to determine Y Torque
-    y_torque = y_Pterm + y_Iterm + y_Dterm + y_angle_vel_term;
+    y_torque = y_Pterm + y_Iterm - y_Dterm + y_angle_vel_term;
     // *************************
     
     
@@ -240,11 +240,11 @@ void control(float *imu, float *cmd_angles, float *data_telemetry)
     
     z_Pterm =  z_Pgain*z_angle_error;                              // Determine P Term
     z_Iterm += z_Igain*(z_angle_error*dt);                         // Determine I Term
-    z_Dterm =  z_Dgain*((z_angle_error - z_old_angle)/dt);         // Determine D Term
+    z_Dterm =  z_Dgain*((imu[2] - z_old_angle)/dt);         // Determine D Term
     z_angle_vel_term = z_Fgain*imu[4];                             // Determine F Term
     
     // Set current angle as old angle for next loop
-    z_old_angle = z_angle_error; 
+    z_old_angle = imu[2]; 
     
     // Filter D Term - Prevent noise near stable zones
     z_Dterm = (z_Dterm_3 + (2 * z_Dterm_2) + (2 * z_Dterm_1) + z_Dterm)/6.0;
@@ -263,7 +263,7 @@ void control(float *imu, float *cmd_angles, float *data_telemetry)
     }
     
     // Add up the PID Terms + F Term to determine Y Torque
-    z_torque = z_Pterm + z_Iterm + z_Dterm + z_angle_vel_term;
+    z_torque = z_Pterm + z_Iterm - z_Dterm + z_angle_vel_term;
     // *************************
     
     // Controller for Z-Altitude (Altitude)
@@ -441,31 +441,31 @@ void PIDTune(char cmd)
 {
   if(cmd == '1')
   {
-     x_Pgain += 0.1f;     // Increase P Gain
+     y_Pgain += 0.1f;     // Increase P Gain
   }
   else if(cmd == '2')
   {
-     x_Pgain -= 0.1f;     // Decrease P Gain
+     y_Pgain -= 0.1f;     // Decrease P Gain
   }                                             
   else if(cmd == '3')
   {
-     x_Igain += 0.1f;   // Increase I Gain
+     y_Igain += 0.1f;   // Increase I Gain
   }
   else if(cmd == '4')
   {
-     x_Igain -= 0.1f;   // Decrease I Gain
+     y_Igain -= 0.1f;   // Decrease I Gain
   }
   else if(cmd == '5')
   {
-     x_Dgain += 0.0025f;     // Increase D Gain
+     y_Dgain += 0.0025f;     // Increase D Gain
   }
   else if(cmd == '6')
   {
-     x_Dgain -= 0.0025f;     // Decrease D Gain
+     y_Dgain -= 0.0025f;     // Decrease D Gain
   }
   else if(cmd == 'p')
   {
-     sendControlTelemetry(x_torque, x_Pgain*10000, x_Igain*10000, x_Dgain*1000000);       // Send back current PID state
+     sendControlTelemetry(y_torque, y_Pgain*10000, y_Igain*10000, y_Dgain*1000000);       // Send back current PID state
   }
 }
 //
