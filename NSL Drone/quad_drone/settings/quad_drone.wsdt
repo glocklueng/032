@@ -20,13 +20,13 @@
           
           
           
-        <Column0>183</Column0><Column1>11</Column1><Column2>27</Column2><Column3>0</Column3></ColumnWidths>
+        <Column0>104</Column0><Column1>11</Column1><Column2>27</Column2><Column3>0</Column3></ColumnWidths>
       </Workspace>
     <TerminalIO/><Debug-Log><ColumnWidth0>28</ColumnWidth0><ColumnWidth1>1853</ColumnWidth1></Debug-Log><Disassembly><MixedMode>1</MixedMode><CodeCovShow>1</CodeCovShow><InstrProfShow>1</InstrProfShow></Disassembly><Find-in-Files><ColumnWidth0>1128</ColumnWidth0><ColumnWidth1>94</ColumnWidth1><ColumnWidth2>1138</ColumnWidth2></Find-in-Files><Breakpoints><col-names><item>Breakpoint</item><item>_I0</item></col-names><col-widths><item>500</item><item>35</item></col-widths><PreferedWindows><Position>3</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows/></PreferedWindows></Breakpoints></Static>
     <Windows>
       
       
-    <Wnd1>
+    <Wnd0>
         <Tabs>
           <Tab>
             <Identity>TabID-24739-25758</Identity>
@@ -38,7 +38,7 @@
           </Tab>
         </Tabs>
         
-      <SelectedTab>0</SelectedTab></Wnd1><Wnd3>
+      <SelectedTab>0</SelectedTab></Wnd0><Wnd2>
         <Tabs>
           <Tab>
             <Identity>TabID-2719-25761</Identity>
@@ -48,20 +48,20 @@
           </Tab>
         <Tab><Identity>TabID-15011-31340</Identity><TabName>Debug Log</TabName><Factory>Debug-Log</Factory><Session/></Tab><Tab><Identity>TabID-25768-23420</Identity><TabName>Find in Files</TabName><Factory>Find-in-Files</Factory><Session/></Tab></Tabs>
         
-      <SelectedTab>0</SelectedTab></Wnd3></Windows>
+      <SelectedTab>0</SelectedTab></Wnd2></Windows>
     <Editor>
       
       
       
       
-    <Pane><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\quad_drone.c</Filename><XPos>0</XPos><YPos>61</YPos><SelStart>2227</SelStart><SelEnd>2227</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\init.c</Filename><XPos>0</XPos><YPos>126</YPos><SelStart>6342</SelStart><SelEnd>6342</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\init.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>292</SelStart><SelEnd>305</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\imu.c</Filename><XPos>0</XPos><YPos>448</YPos><SelStart>5144</SelStart><SelEnd>5144</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\imu.h</Filename><XPos>0</XPos><YPos>39</YPos><SelStart>1761</SelStart><SelEnd>2981</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\control.c</Filename><XPos>0</XPos><YPos>303</YPos><SelStart>11122</SelStart><SelEnd>11122</SelEnd></Tab><ActiveTab>5</ActiveTab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\control.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>144</SelStart><SelEnd>144</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\xbee.c</Filename><XPos>0</XPos><YPos>147</YPos><SelStart>2596</SelStart><SelEnd>2596</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\xbee.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>15</SelStart><SelEnd>15</SelEnd></Tab></Pane><ActivePane>0</ActivePane><Pane><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\inc\lm3s9b96.h</Filename><XPos>0</XPos><YPos>289</YPos><SelStart>22970</SelStart><SelEnd>22992</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\fixedmath.c</Filename><XPos>0</XPos><YPos>266</YPos><SelStart>15888</SelStart><SelEnd>15894</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\fixedmath.h</Filename><XPos>0</XPos><YPos>41</YPos><SelStart>1268</SelStart><SelEnd>1274</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\quaternion.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>954</SelStart><SelEnd>954</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\IQmath\IQmathLib.h</Filename><XPos>0</XPos><YPos>63</YPos><SelStart>1272</SelStart><SelEnd>1272</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\quaternion.c</Filename><XPos>0</XPos><YPos>90</YPos><SelStart>5404</SelStart><SelEnd>5404</SelEnd></Tab><ActiveTab>5</ActiveTab></Pane><Sizes><Pane><X>517739</X><Y>1000000</Y></Pane><Pane><X>482260</X><Y>1000000</Y></Pane></Sizes><SplitMode>4</SplitMode></Editor>
+    <Pane><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\quad_drone.c</Filename><XPos>0</XPos><YPos>70</YPos><SelStart>1739</SelStart><SelEnd>1739</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\init.c</Filename><XPos>0</XPos><YPos>126</YPos><SelStart>6342</SelStart><SelEnd>6342</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\init.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>292</SelStart><SelEnd>305</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\imu.c</Filename><XPos>0</XPos><YPos>181</YPos><SelStart>5930</SelStart><SelEnd>5930</SelEnd></Tab><ActiveTab>3</ActiveTab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\imu.h</Filename><XPos>0</XPos><YPos>39</YPos><SelStart>1705</SelStart><SelEnd>1705</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\control.c</Filename><XPos>0</XPos><YPos>78</YPos><SelStart>2182</SelStart><SelEnd>2182</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\control.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>144</SelStart><SelEnd>144</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\xbee.c</Filename><XPos>0</XPos><YPos>132</YPos><SelStart>2596</SelStart><SelEnd>2596</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\xbee.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>15</SelStart><SelEnd>15</SelEnd></Tab></Pane><ActivePane>0</ActivePane><Pane><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\inc\lm3s9b96.h</Filename><XPos>0</XPos><YPos>289</YPos><SelStart>22970</SelStart><SelEnd>22992</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\fixedmath.c</Filename><XPos>0</XPos><YPos>266</YPos><SelStart>15888</SelStart><SelEnd>15894</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\fixedmath.h</Filename><XPos>0</XPos><YPos>41</YPos><SelStart>1268</SelStart><SelEnd>1274</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\quaternion.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>954</SelStart><SelEnd>954</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\IQmath\IQmathLib.h</Filename><XPos>0</XPos><YPos>63</YPos><SelStart>1272</SelStart><SelEnd>1272</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\quaternion.c</Filename><XPos>0</XPos><YPos>90</YPos><SelStart>4244</SelStart><SelEnd>4244</SelEnd></Tab><ActiveTab>5</ActiveTab></Pane><Sizes><Pane><X>517739</X><Y>1000000</Y></Pane><Pane><X>482260</X><Y>1000000</Y></Pane></Sizes><SplitMode>4</SplitMode></Editor>
     <Positions>
       
       
       
       
       
-    <Top><Row0><Sizes><Toolbar-02811f10><key>iaridepm.enu1</key></Toolbar-02811f10></Sizes></Row0><Row1><Sizes/></Row1></Top><Left><Row0><Sizes><Wnd1><Rect><Top>-2</Top><Left>-2</Left><Bottom>961</Bottom><Right>241</Right><x>-2</x><y>-2</y><xscreen>-207102</xscreen><yscreen>133383</yscreen><sizeHorzCX>-107865624</sizeHorzCX><sizeHorzCY>118247340</sizeHorzCY><sizeVertCX>126563</sizeVertCX><sizeVertCY>853723</sizeVertCY></Rect></Wnd1></Sizes></Row0></Left><Right><Row0><Sizes/></Row0></Right><Bottom><Row0><Sizes><Wnd3><Rect><Top>-2</Top><Left>-2</Left><Bottom>122</Bottom><Right>1922</Right><x>-2</x><y>-2</y><xscreen>1924</xscreen><yscreen>124</yscreen><sizeHorzCX>1002083</sizeHorzCX><sizeHorzCY>109929</sizeHorzCY><sizeVertCX>-107865624</sizeVertCX><sizeVertCY>118247340</sizeVertCY></Rect></Wnd3></Sizes></Row0></Bottom><Float><Sizes/></Float></Positions>
+    <Top><Row0><Sizes><Toolbar-00e51f10><key>iaridepm.enu1</key></Toolbar-00e51f10></Sizes></Row0></Top><Left><Row0><Sizes><Wnd0><Rect><Top>-2</Top><Left>-2</Left><Bottom>582</Bottom><Right>179</Right><x>-2</x><y>-2</y><xscreen>-959774</xscreen><yscreen>300334</yscreen><sizeHorzCX>-749823437</sizeHorzCX><sizeHorzCY>412546703</sizeHorzCY><sizeVertCX>141406</sizeVertCX><sizeVertCY>802198</sizeVertCY></Rect></Wnd0></Sizes></Row0></Left><Right><Row0><Sizes/></Row0></Right><Bottom><Row0><Sizes><Wnd2><Rect><Top>-2</Top><Left>-2</Left><Bottom>101</Bottom><Right>1282</Right><x>-2</x><y>-2</y><xscreen>1284</xscreen><yscreen>103</yscreen><sizeHorzCX>1003125</sizeHorzCX><sizeHorzCY>141484</sizeHorzCY><sizeVertCX>-749823437</sizeVertCX><sizeVertCY>412546703</sizeVertCY></Rect></Wnd2></Sizes></Row0></Bottom><Float><Sizes/></Float></Positions>
   </Desktop>
 </Workspace>
 

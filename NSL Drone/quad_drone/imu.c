@@ -98,6 +98,12 @@ float angle[3] = {0.0f,0.0f,0.0f};
 //  [1] : Y Bias for State Matrix - -1.5 degrees
 //  [2] : Z Bias for State Matrix - -1.5 degrees
 float bias[3] = {0.0785385f,-0.0261795f,-0.0261795f};
+
+
+//  Angle Thresholds 
+//  Prevents angles from going out of range 
+float x_angle_thres = 30.0f;
+float y_angle_thres = 30.0f;
 // *************************
 
 //  Gyroscope
@@ -192,7 +198,7 @@ const float Q_angle = 0.001f;		// 0.001 - Q constant for angle
 const float Q_gyro = 0.012f;		// 0.012 - Q constant for gyro
 const float R_angle = 0.1f;		// 0.1   - R constant for noise    
 
-float x_y;				// Difference between previous raw angle reading and previous state angle - X-Axis
+float x_y;			        // Difference between previous raw angle reading and previous state angle - X-Axis
 float xS;				// S Variable - X Axis
 float xK[2];                            // K Matrix - X Axis
 float xP[2][2];                         // P Matrix - X Axis
@@ -293,8 +299,7 @@ void readIMU(float *imu)
       {
         comp_raw[1] = 65535 + comp_raw[1];
       }        
-      
-      
+    
       comp_count = 0;
     }
     else
@@ -326,18 +331,21 @@ void readIMU(float *imu)
     imu[3] = x_gyro_rad_sec[0]*convert_180_Pi;
     imu[4] = y_gyro_rad_sec[0]*convert_180_Pi;
     imu[5] = z_gyro_rad_sec[0]*convert_180_Pi;
-    imu[6] = x_acc
-    imu[7] = y_acc
-    imu[8] = z_acc
-    imu[9] = dt;
-    imu[10] = temp_raw; 
+    imu[6] = acc_raw[0];
+    imu[7] = acc_raw[1];
+    imu[8] = acc_raw[2];
+    imu[9] = comp_raw[0];
+    imu[10] = comp_raw[1];
+    imu[11] = comp_raw[2];
+    imu[12] = dt;
+    imu[13] = temp_raw; 
     */
     // ****************************
     
     
     // Filter
     // ****************************
-    
+   
     // Runge-Kutta Integration 
     // -----------------------
     // The Runge-Kutta Integration will average 
@@ -459,8 +467,39 @@ void readIMU(float *imu)
     
     // Kalman Filtered Values
     // ----------------------
-    imu[0] = angle[0]*convert_180_Pi;
-    imu[1] = angle[1]*convert_180_Pi;
+    if(angle[0]*convert_180_Pi < x_angle_thres && angle[0]*convert_180_Pi > (-1.0f)*x_angle_thres)   // Set X Angle Threshold
+    {
+        imu[0] = angle[0]*convert_180_Pi;
+    }
+    else
+    {
+        if(angle[0]*convert_180_Pi >= 0)
+        {
+          imu[0] = x_angle_thres;
+        }
+        else
+        {
+          imu[0] = (-1.0f)*x_angle_thres;
+        }
+    }
+    
+    if(angle[1]*convert_180_Pi < y_angle_thres && angle[1]*convert_180_Pi > (-1.0f)*y_angle_thres)   // Set Y Angle Threshold
+    {
+        imu[1] = angle[1]*convert_180_Pi;
+    }
+    else
+    {
+        if(angle[1]*convert_180_Pi >= 0)
+        {
+          imu[1] = y_angle_thres;
+        }
+        else
+        {
+          imu[1] = (-1.0f)*y_angle_thres;
+        } 
+    }
+    
+    
     imu[2] = compass_filt[1];
     imu[3] = (x_gyro_rad_sec[0] - bias[0])*convert_180_Pi;
     imu[4] = (y_gyro_rad_sec[0] - bias[1])*convert_180_Pi;
@@ -477,7 +516,7 @@ void readIMU(float *imu)
     //
     // **********************
     // ****************************
-    
+
     // Update the State of the Quadrotor
     //
     eulerFloatToFixed(&imu[0], &euler_angle[0]);    // Convert and load Euler Angles as fixed point
