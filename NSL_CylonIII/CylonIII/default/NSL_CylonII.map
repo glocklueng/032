@@ -1,5 +1,7 @@
 Archive member included because of file (symbol)
 
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_udivmodqi4.o)
+                              NSL_CylonIII.o (__udivmodqi4)
 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_divmodhi4.o)
                               NSL_CylonIII.o (__divmodhi4)
 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_exit.o)
@@ -132,7 +134,7 @@ LOAD d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000      0x6d6
+.text           0x00000000      0x7dc
  *(.vectors)
  .vectors       0x00000000       0x26 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr25/crttn2313.o
                 0x00000000                __vectors
@@ -207,52 +209,55 @@ LOAD d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a
                 0x00000094                __vector_10
                 0x00000094                __vector_16
                 0x00000094                __vector_18
- .text          0x00000096      0x422 NSL_CylonIII.o
+ .text          0x00000096      0x510 NSL_CylonIII.o
                 0x00000096                SetRC
-                0x0000021c                delay_ten_us
-                0x00000248                main
-                0x0000040e                __vector_4
- .text          0x000004b8        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_divmodhi4.o)
- .text          0x000004b8        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_exit.o)
- .text          0x000004b8        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_copy_data.o)
- .text          0x000004b8        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_clear_bss.o)
- .text          0x000004b8        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_udivmodhi4.o)
- .text          0x000004b8        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr25\libc.a(rand.o)
- .text          0x000004b8        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_mulsi3.o)
- .text          0x000004b8        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_divmodsi4.o)
- .text          0x000004b8        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_prologue.o)
- .text          0x000004b8        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_epilogue.o)
- .text          0x000004b8        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_udivmodsi4.o)
-                0x000004b8                . = ALIGN (0x2)
+                0x00000208                delay_ten_us
+                0x00000234                main
+                0x000004fa                __vector_4
+ .text          0x000005a6        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_udivmodqi4.o)
+ .text          0x000005a6        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_divmodhi4.o)
+ .text          0x000005a6        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_exit.o)
+ .text          0x000005a6        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_copy_data.o)
+ .text          0x000005a6        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_clear_bss.o)
+ .text          0x000005a6        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_udivmodhi4.o)
+ .text          0x000005a6        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr25\libc.a(rand.o)
+ .text          0x000005a6        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_mulsi3.o)
+ .text          0x000005a6        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_divmodsi4.o)
+ .text          0x000005a6        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_prologue.o)
+ .text          0x000005a6        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_epilogue.o)
+ .text          0x000005a6        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_udivmodsi4.o)
+                0x000005a6                . = ALIGN (0x2)
  *(.text.*)
- .text.libgcc   0x000004b8       0x26 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_divmodhi4.o)
-                0x000004b8                __divmodhi4
-                0x000004b8                _div
- .text.libgcc   0x000004de        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_exit.o)
- .text.libgcc   0x000004de        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_copy_data.o)
- .text.libgcc   0x000004de        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_clear_bss.o)
- .text.libgcc   0x000004de       0x28 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_udivmodhi4.o)
-                0x000004de                __udivmodhi4
+ .text.libgcc   0x000005a6       0x18 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_udivmodqi4.o)
+                0x000005a6                __udivmodqi4
+ .text.libgcc   0x000005be       0x26 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_divmodhi4.o)
+                0x000005be                __divmodhi4
+                0x000005be                _div
+ .text.libgcc   0x000005e4        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_exit.o)
+ .text.libgcc   0x000005e4        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_copy_data.o)
+ .text.libgcc   0x000005e4        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_clear_bss.o)
+ .text.libgcc   0x000005e4       0x28 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_udivmodhi4.o)
+                0x000005e4                __udivmodhi4
  .text.avr-libc
-                0x00000506       0xb2 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr25\libc.a(rand.o)
-                0x00000596                rand_r
-                0x0000059a                rand
-                0x000005a2                srand
- .text.libgcc   0x000005b8       0x32 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_mulsi3.o)
-                0x000005b8                __mulsi3
- .text.libgcc   0x000005ea       0x36 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_divmodsi4.o)
-                0x000005ea                __divmodsi4
- .text.libgcc   0x00000620       0x38 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_prologue.o)
-                0x00000620                __prologue_saves__
- .text.libgcc   0x00000658       0x36 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_epilogue.o)
-                0x00000658                __epilogue_restores__
- .text.libgcc   0x0000068e       0x44 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_udivmodsi4.o)
-                0x0000068e                __udivmodsi4
-                0x000006d2                . = ALIGN (0x2)
+                0x0000060c       0xb2 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr25\libc.a(rand.o)
+                0x0000069c                rand_r
+                0x000006a0                rand
+                0x000006a8                srand
+ .text.libgcc   0x000006be       0x32 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_mulsi3.o)
+                0x000006be                __mulsi3
+ .text.libgcc   0x000006f0       0x36 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_divmodsi4.o)
+                0x000006f0                __divmodsi4
+ .text.libgcc   0x00000726       0x38 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_prologue.o)
+                0x00000726                __prologue_saves__
+ .text.libgcc   0x0000075e       0x36 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_epilogue.o)
+                0x0000075e                __epilogue_restores__
+ .text.libgcc   0x00000794       0x44 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_udivmodsi4.o)
+                0x00000794                __udivmodsi4
+                0x000007d8                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x000006d2        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_exit.o)
-                0x000006d2                exit
-                0x000006d2                _exit
+ .fini9         0x000007d8        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_exit.o)
+                0x000007d8                exit
+                0x000007d8                _exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -271,16 +276,17 @@ LOAD d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x000006d2        0x4 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_exit.o)
+ .fini0         0x000007d8        0x4 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_exit.o)
  *(.fini0)
-                0x000006d6                _etext = .
+                0x000007dc                _etext = .
 
-.data           0x00800060        0x6 load address 0x000006d6
+.data           0x00800060        0x6 load address 0x000007dc
                 0x00800060                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00800060        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr25/crttn2313.o
  .data          0x00800060        0x1 NSL_CylonIII.o
                 0x00800060                XDIR
+ .data          0x00800061        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_udivmodqi4.o)
  .data          0x00800061        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_divmodhi4.o)
  .data          0x00800061        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_exit.o)
  .data          0x00800061        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_copy_data.o)
@@ -307,6 +313,7 @@ LOAD d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a
  .bss           0x00800066        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr25/crttn2313.o
  .bss           0x00800066        0x2 NSL_CylonIII.o
                 0x00800066                X
+ .bss           0x00800068        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_udivmodqi4.o)
  .bss           0x00800068        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_divmodhi4.o)
  .bss           0x00800068        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_exit.o)
  .bss           0x00800068        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_copy_data.o)
@@ -321,8 +328,8 @@ LOAD d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a
  *(.bss*)
  *(COMMON)
                 0x00800068                PROVIDE (__bss_end, .)
-                0x000006d6                __data_load_start = LOADADDR (.data)
-                0x000006dc                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x000007dc                __data_load_start = LOADADDR (.data)
+                0x000007e2                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x00800068        0x0
                 0x00800068                PROVIDE (__noinit_start, .)
@@ -391,31 +398,31 @@ LOAD d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a
  .debug_pubnames
                 0x00000000       0x54 NSL_CylonIII.o
 
-.debug_info     0x00000000      0x2ff
+.debug_info     0x00000000      0x306
  *(.debug_info)
- .debug_info    0x00000000      0x2ff NSL_CylonIII.o
+ .debug_info    0x00000000      0x306 NSL_CylonIII.o
  *(.gnu.linkonce.wi.*)
 
 .debug_abbrev   0x00000000      0x1c1
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x1c1 NSL_CylonIII.o
 
-.debug_line     0x00000000      0x467
+.debug_line     0x00000000      0x51d
  *(.debug_line)
- .debug_line    0x00000000      0x467 NSL_CylonIII.o
+ .debug_line    0x00000000      0x51d NSL_CylonIII.o
 
 .debug_frame    0x00000000       0x50
  *(.debug_frame)
  .debug_frame   0x00000000       0x50 NSL_CylonIII.o
 
-.debug_str      0x00000000      0x143
+.debug_str      0x00000000      0x149
  *(.debug_str)
- .debug_str     0x00000000      0x143 NSL_CylonIII.o
-                                0x177 (size before relaxing)
+ .debug_str     0x00000000      0x149 NSL_CylonIII.o
+                                0x17d (size before relaxing)
 
-.debug_loc      0x00000000      0x15b
+.debug_loc      0x00000000      0x359
  *(.debug_loc)
- .debug_loc     0x00000000      0x15b NSL_CylonIII.o
+ .debug_loc     0x00000000      0x359 NSL_CylonIII.o
 
 .debug_macinfo
  *(.debug_macinfo)
