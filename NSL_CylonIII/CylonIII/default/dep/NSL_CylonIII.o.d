@@ -14,8 +14,7 @@ NSL_CylonIII.o: ../NSL_CylonIII.c \
   d:/winavr-20100110/lib/gcc/../../avr/include/avr/interrupt.h \
   d:/winavr-20100110/lib/gcc/../../avr/include/avr/pgmspace.h \
   d:/winavr-20100110/lib/gcc/../../avr/include/util/delay.h \
-  d:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h \
-  d:/winavr-20100110/lib/gcc/../../avr/include/stdlib.h
+  d:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h
 
 d:/winavr-20100110/lib/gcc/../../avr/include/avr/io.h:
 
@@ -48,5 +47,3 @@ d:/winavr-20100110/lib/gcc/../../avr/include/avr/pgmspace.h:
 d:/winavr-20100110/lib/gcc/../../avr/include/util/delay.h:
 
 d:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h:
-
-d:/winavr-20100110/lib/gcc/../../avr/include/stdlib.h:
