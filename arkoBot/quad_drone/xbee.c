@@ -30,7 +30,7 @@ volatile static unsigned long controlDelay = 0;
 volatile static unsigned long  mavlinkDelay = 0;
 
 //  Natural Constants
-//static const float convert_pi_180 = 0.017453f;	    // Pi/180 - Convert Degrees to Radians
+// static const float convert_pi_180 = 0.017453f;	    // Pi/180 - Convert Degrees to Radians
 
 //***************************************************************************** 
 // 
@@ -128,7 +128,7 @@ void sendDataTelemetry(float *imu, float dt)
         UARTSend((unsigned char*)sendBuf, n);
         UARTSend((unsigned char*)"  ", 1);
       }                                   
-      //UARTSend((unsigned char*)"\n", 1);
+      // UARTSend((unsigned char*)"\n", 1);
     }
     else
     {
@@ -240,45 +240,61 @@ void sendControlTelemetry(float torque, float P, float I, float D)
 // Packets are constructed to send to QGroundControl for data
 // telemetry.
 //
-void sendMAVLinkData(float *imu, float dt)
+
+// Initialize the required buffers
+mavlink_message_t msg;
+uint8_t buf[MAVLINK_MAX_PACKET_LEN];
+uint16_t len;
+
+// Define the system type, in this case an airplane
+int system_type = MAV_QUADROTOR;
+int autopilot_type = MAV_AUTOPILOT_GENERIC;
+uint8_t system_id = 100;
+uint8_t component_id = 200;
+
+void sendMAVLinkData(float *imu)
 {
-    if(mavlinkDelay > 1)
+    IntMasterDisable();
+    
+    if(mavlinkDelay > 20)
     {
       mavlinkDelay = 0;
-      // Define the system type, in this case an airplane
-      int system_type = MAV_QUADROTOR;
-      int autopilot_type = MAV_AUTOPILOT_GENERIC;
-       
-      // Initialize the required buffers
-      mavlink_message_t msg;
-      uint8_t buf[MAVLINK_MAX_PACKET_LEN];
       
       // Pack the message
       // mavlink_message_heartbeat_pack(system id, component id, message container, system type, MAV_AUTOPILOT_GENERIC)
-      // try 0x55 0x20
-      // else try 26 200
-      mavlink_msg_heartbeat_pack(100, 200, &msg, system_type, autopilot_type);
+      mavlink_msg_heartbeat_pack(system_id, component_id, &msg, system_type, autopilot_type);
       
       // Copy the message to the send buffer
-      uint16_t len = mavlink_msg_to_send_buffer(buf, &msg);
+      len = mavlink_msg_to_send_buffer(buf, &msg);
        
       // Send the message with the standard UART send function
       UARTSend((unsigned char*)buf, len);
       
       // SEND IMU DATA
-      mavlink_msg_scaled_imu_pack(100, 200, &msg, 0, (int16_t)imu[0], (int16_t)imu[1], (int16_t)imu[2], (int16_t)imu[3], (int16_t)imu[4], (int16_t)imu[5], 0, 0, 0);
+      mavlink_msg_scaled_imu_pack(system_id, component_id, &msg, (uint16_t)imu[12], (uint16_t)imu[0], (uint16_t)imu[1], (uint16_t)imu[2], (uint16_t)imu[3], (uint16_t)imu[4], (uint16_t)imu[5], (uint16_t)imu[9], (uint16_t)imu[10], (uint16_t)imu[11]);
+      
+       // Copy the message to the send buffer
+      len = mavlink_msg_to_send_buffer(buf, &msg);
+       
+      // Send the message with the standard UART send function
+      UARTSend((unsigned char*)buf, len);  
+      
+      /* SEND ATTITUDE DATA
+      mavlink_msg_attitude_pack(system_id, component_id, &msg, 0, imu[0]*convert_pi_180, imu[1]*convert_pi_180, imu[2]*convert_pi_180, imu[3]*convert_pi_180, imu[4]*convert_pi_180, imu[5]*convert_pi_180);
       
       // Copy the message to the send buffer
       len = mavlink_msg_to_send_buffer(buf, &msg);
        
       // Send the message with the standard UART send function
       UARTSend((unsigned char*)buf, len);  
-     
+      */
     }
     else
     {
       mavlinkDelay++; 
     }
+    
+    IntMasterEnable();
 }
 
 
