@@ -194,24 +194,24 @@ extern float dt;		        // dt = 0.002 seconds per sample
 
 //  Kalman Variables and Constants
 // *************************
-const float Q_angle = 0.001f;		// 0.001 - Q constant for angle
-const float Q_gyro = 0.012f;		// 0.012 - Q constant for gyro
-const float R_angle = 0.1f;		// 0.1   - R constant for noise    
+const float Q_angle = 0.001f;		// 0.001 - Q constant for angle - try 0.001
+const float Q_gyro = 0.012f;		// 0.012 - Q constant for gyro  - try 0.003
+const float R_angle = 0.1f;		// 0.1   - R constant for noise - try 0.03   
 
 float x_y;			        // Difference between previous raw angle reading and previous state angle - X-Axis
 float xS;				// S Variable - X Axis
 float xK[2];                            // K Matrix - X Axis
-float xP[2][2];                         // P Matrix - X Axis
+float xP[2][2] = {{1,0},{0,1}};         // P Matrix - X Axis
 
 float y_y;				// Difference between previous raw angle reading and previous state angle - Y-Axis
 float yS;				// S Variable - Y Axis
 float yK[2];                            // K Matrix - Y Axis
-float yP[2][2];                         // P Matrix - Y Axis
+float yP[2][2] = {{1,0},{0,1}};         // P Matrix - Y Axis
 
 float z_y;				// Difference between previous raw angle reading and previous state angle - Z-Axis
 float zS;				// S Variable - Z Axis
 float zK[2];                            // K Matrix - Z Axis
-float zP[2][2];                         // P Matrix - Z Axis
+float zP[2][2] = {{1,0},{0,1}};         // P Matrix - Z Axis
 // *************************
 
 
@@ -369,7 +369,7 @@ void readIMU(float *imu)
     z_gyro_rad_sec[2] = z_gyro_rad_sec[1];
     z_gyro_rad_sec[3] = z_gyro_rad_sec[2];
     
-    
+    // Why am I doing this twice?!?!?!?!?!?!?!??!?!?!?!?!
     // Integrate the gyro axis with a bias to convert to angle then add to angle
     angle[0] += ((x_gyro_rad_sec[0] - bias[0])) * dt;			// integrate x axis gyro with bias then add to x angle
     angle[1] += ((y_gyro_rad_sec[0] - bias[1])) * dt;			// integrate y axis gyro with bias then add to y angle
@@ -387,6 +387,8 @@ void readIMU(float *imu)
     xP[1][0] -=  dt * xP[1][1];
     xP[1][1] +=  Q_gyro * dt; 
     
+    // Why am I doing this twice?!?!?!?!?!?!?!??!?!?!?!?!
+    // Also, try Degrees, not radians
     angle[0] += (x_gyro_rad_sec[0] - bias[0])*dt;
     
     // Update with new data
@@ -467,6 +469,8 @@ void readIMU(float *imu)
     
     // Kalman Filtered Values
     // ----------------------
+    
+    /*  THRESHOLD FOR KALMAN FILTER
     if(angle[0]*convert_180_Pi < x_angle_thres && angle[0]*convert_180_Pi > (-1.0f)*x_angle_thres)   // Set X Angle Threshold
     {
         imu[0] = angle[0]*convert_180_Pi;
@@ -498,8 +502,10 @@ void readIMU(float *imu)
           imu[1] = (-1.0f)*y_angle_thres;
         } 
     }
+    */
     
-    
+    imu[0] = angle[0]*convert_180_Pi;
+    imu[1] = angle[1]*convert_180_Pi;
     imu[2] = compass_filt[1];
     imu[3] = (x_gyro_rad_sec[0] - bias[0])*convert_180_Pi;
     imu[4] = (y_gyro_rad_sec[0] - bias[1])*convert_180_Pi;

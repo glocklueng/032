@@ -79,6 +79,7 @@ float dt = 0.05f;
 float control_telemetry[4];
 //
 unsigned char toggle = 0x00;
+
 //***************************************************************************** 
 // 
 // Main Loop 
@@ -153,10 +154,19 @@ int main(void)
         
         // Send Telemetry
         // ****************************        
-        sendDataTelemetry(&imu[0], dt);                                    // Send IMU Data Telemetry
         
-        sendControlTelemetry(control_telemetry[0], control_telemetry[1], 
-                             control_telemetry[2], control_telemetry[3]);  // Send Control Telemetry
+        // Serial Debug Mode
+        // *****************
+        //sendDataTelemetry(&imu[0], dt);                                   // Send IMU Data Telemetry
+        //sendControlTelemetry(control_telemetry[0], control_telemetry[1], 
+        //                     control_telemetry[2], control_telemetry[3]);  // Send Control Telemetry
+        // *****************
+        
+        // MavLink Data Telemetry
+        // **********************
+        sendMAVLinkData(&imu[0]);                                        // Send IMU Data Telemetry
+        // **********************
+        
         // ****************************   
     }
     // ****************************
