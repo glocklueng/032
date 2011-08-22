@@ -5,7 +5,7 @@
 ## General Flags
 PROJECT = NSL_CylonII
 MCU = attiny2313
-TARGET = NSL_CylonII.elf
+TARGET = NSL_CylonIII.elf
 CC = avr-gcc
 
 CPP = avr-g++
@@ -15,7 +15,7 @@ COMMON = -mmcu=$(MCU)
 
 ## Compile options common for all C compilation units.
 CFLAGS = $(COMMON)
-CFLAGS += -Wall -gdwarf-2 -std=gnu99                                                       -DF_CPU=800000UL -Os -funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums
+CFLAGS += -Wall -gdwarf-2 -std=gnu99                                                                      -DF_CPU=800000UL -O2 -funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums
 CFLAGS += -MD -MP -MT $(*F).o -MF dep/$(@F).d 
 
 ## Assembly specific flags
@@ -25,7 +25,7 @@ ASMFLAGS += -x assembler-with-cpp -Wa,-gdwarf2
 
 ## Linker flags
 LDFLAGS = $(COMMON)
-LDFLAGS +=  -Wl,-Map=NSL_CylonII.map
+LDFLAGS +=  -Wl,-Map=NSL_CylonIII.map
 
 
 ## Intel Hex file production flags
@@ -43,7 +43,7 @@ OBJECTS = NSL_CylonIII.o
 LINKONLYOBJECTS = 
 
 ## Build
-all: $(TARGET) NSL_CylonII.hex NSL_CylonII.eep NSL_CylonII.lss## Compile
+all: $(TARGET) NSL_CylonIII.hex NSL_CylonIII.eep NSL_CylonIII.lss## Compile
 NSL_CylonIII.o: ../NSL_CylonIII.c
 	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
 
@@ -63,7 +63,7 @@ $(TARGET): $(OBJECTS)
 ## Clean target
 .PHONY: clean
 clean:
-	-rm -rf $(OBJECTS) NSL_CylonII.elf dep/* NSL_CylonII.hex NSL_CylonII.eep NSL_CylonII.lss NSL_CylonII.map
+	-rm -rf $(OBJECTS) NSL_CylonIII.elf dep/* NSL_CylonIII.hex NSL_CylonIII.eep NSL_CylonIII.lss NSL_CylonIII.map
 
 
 ## Other dependencies

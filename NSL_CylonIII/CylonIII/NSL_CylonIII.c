@@ -4,9 +4,6 @@
 #include <avr/pgmspace.h>
 
 #include <util/delay.h>
-
-#include <stdlib.h>
-
 #define shortdelay(); 			asm("nop\n\tnop\n\t");
 
 #define TIMER1_PRESCALE_1 		(1)
@@ -224,8 +221,7 @@ void SetRC( unsigned char index )
 	ddrb = DDRB;
 	
 
-	index %= 30;
-
+	index = index - 30 * (index / 30);
 
 //	read two values from array, we use pgm_read_byte because the data is in program memory space
 // its 6*2 because there are 6 leds in each column, and two bytes per led
@@ -397,16 +393,6 @@ SIGNAL( SIG_TIMER1_COMPA )
 {
 	// toggle speaker on/off
 	//SWITCH_BIT( PORTD , 4 );
-
-	X += XDIR;
-
-	if (X > 10000 ) { 
-		XDIR = -((rand()%9)+1);
-	} else if ( X < 20) {
-		XDIR = ((rand()%9)+1);
-	}
-
-	OCR1A = X+(rand()%100);
 }
 
 
@@ -451,9 +437,25 @@ int main(void)
 	while( 1 ) 
 	{
 
+
+		for ( X = 0 ; X < 5 ; X++ ) 
+			for ( R= 0 ; R < 30 ; R +=2) 
+			{
+				for ( c = 0 ; c < 100 ; c ++) {
+					SetRC(29-R);	
+					//delay_ten_us(1);	
+					SetRC(R);
+//					delay_ten_us(2000);	
+				}
+				
+			}
+
+
+		
+
 		R = 0;	
 		C = 29;			
-		for ( X = 0 ; X < 3000/8 ; X++ ) {
+		for ( X = 0 ; X < 200 ; X++ ) {
 			for ( i = 0 ; i < 10 ; i++ ) {
 				SetRC(R);	
 				SetRC(R+1);	
@@ -469,15 +471,15 @@ int main(void)
 			}
 
 			R++;
-			R%=30;
+			if ( R == 30 ) R = 0;
 			C--;
 			if( c == 0 ) c = 29;
 		}
 
 		R= 0 ;
 
-		for ( X = 0 ; X < 3000/8 ; X++ ) {
-			for ( i = 0 ; i < 10 ; i++ ) {
+		for ( X = 0 ; X < 200 ; X++ ) {
+			for ( i = 0 ; i < 20 ; i++ ) {
 				SetRC(R);	
 				SetRC(R+1);	
 				SetRC(R+2);	
@@ -486,47 +488,52 @@ int main(void)
 			}
 
 			R++;
-			R%=30;
+			if ( R == 30 )  R = 0;
+
 		}
 
 		x = 30;
 
-	c=0;
-		for ( X = 0 ; X < 5000/8 ; X++ )  {
-			x--;
-			if (x== 0 ) x =29;
+		c = 0;
 
-			for ( i = 0 ; i < 10 ; i++ ) {
+		for ( X = 0 ; X < 200 ; X++ )  {
+
+			x--;
+
+			if ( x == 0 ) 
+				x = 29;
+
+			for ( i = 0 ; i < 20 ; i++ ) {
 				for ( R= 0 ; R < x ; R ++ ) 
 				{
 					SetRC(c+R);
-					
 				}
+				delay_ten_us(30-R);
 				if( i&1 == 1 ) 
-				c++;
+					c++;
 
 			}
 		}
 
-		for ( X = 0 ; X < 10 ; X++ ) 
+		for ( X = 0 ; X < 5 ; X++ ) 
 			for ( R= 0 ; R < 30 ; R ++ ) 
 			{
 
 				SetRC(R);
-				i = 200*(((R+1)*6));
+				i = 150*(((R+1)*6));
 				delay_ten_us(i);
 
 			}
 
-		for ( X = 0 ; X < 10 ; X++ ) 
+		for ( X = 0 ; X < 5 ; X++ ) 
 			for ( R= 0 ; R < 30 ; R ++ ) 
 			{
 				SetRC(R);
-				i = 200*(((R+1)*6));
+				i = 150*(((R+1)*6));
 				delay_ten_us(i);
 			}
 		
-		for ( X = 0 ; X < 5000/8 ; X++ ) 
+		for ( X = 0 ; X < 400 ; X++ ) 
 			for ( R= 0 ; R < 30 ; R ++ ) 
 			{
 
@@ -535,10 +542,6 @@ int main(void)
 				
 			}
 		
-		for ( X = 0 ; X < 5000/8 ; X++ ) 
-			SetRC(rand()%30);	
-
-
 
 
 
