@@ -1,9 +1,20 @@
+/*
+ #     #                        #
+ #     #                        #
+ #     #                        #
+ #######   ####    #####    #####   ####   #####    #####
+ #     #  #    #  #    #   #    #  #    #  #    #  #
+ #     #  ######  #    #   #    #  ######  #        ####
+ #     #  #       #    #   #    #  #       #            #
+ #     #   #####   ######   #####   #####  #       #####
+*/
+
 #include <avr/io.h> 
 #include <avr/eeprom.h> 
 #include <avr/interrupt.h>
 #include <avr/pgmspace.h>
-
 #include <util/delay.h>
+
 #define shortdelay(); 			asm("nop\n\tnop\n\t");
 
 #define TIMER1_PRESCALE_1 		(1)
@@ -53,6 +64,7 @@
 	+ ((unsigned long)B8(db2)<<16) \
 	+ ((unsigned long)B8(db3)<<	 \
 	+ B8(dlsb))
+
 
 
 
@@ -117,6 +129,7 @@
 // 01 = HIGH
 // 11 = X (input)
 
+// If leds are reversed, 0 this
 #if 1
 
 static const unsigned char PROGMEM led30[] = {
@@ -204,7 +217,6 @@ static const unsigned char PROGMEM led30[] = {
 
 
 unsigned int X = 0;
-signed char XDIR =1;
 
 // this routine is written to help understand how the process works, not be fast.
 void SetRC( unsigned char index ) 
@@ -459,14 +471,20 @@ int main(void)
 			for ( i = 0 ; i < 10 ; i++ ) {
 				SetRC(R);	
 				SetRC(R+1);	
+				delay_ten_us(10);	
 				SetRC(R+2);	
+				delay_ten_us(25);	
 				SetRC(R+3);	
+				delay_ten_us(10);	
 				SetRC(R+4);	
 
 				SetRC(C+15);	
 				SetRC(C+1+15);	
+				delay_ten_us(10);	
 				SetRC(C+2+15);	
+				delay_ten_us(25);	
 				SetRC(C+3+15);	
+				delay_ten_us(10);	
 				SetRC(C+4+15);	
 			}
 
@@ -482,9 +500,14 @@ int main(void)
 			for ( i = 0 ; i < 20 ; i++ ) {
 				SetRC(R);	
 				SetRC(R+1);	
+				delay_ten_us(20);	
 				SetRC(R+2);	
+				delay_ten_us(100);	
 				SetRC(R+3);	
+				delay_ten_us(20);	
 				SetRC(R+4);	
+				delay_ten_us(10);	
+				SetRC(R+5);	
 			}
 
 			R++;
@@ -514,25 +537,6 @@ int main(void)
 
 			}
 		}
-
-		for ( X = 0 ; X < 5 ; X++ ) 
-			for ( R= 0 ; R < 30 ; R ++ ) 
-			{
-
-				SetRC(R);
-				i = 150*(((R+1)*6));
-				delay_ten_us(i);
-
-			}
-
-		for ( X = 0 ; X < 5 ; X++ ) 
-			for ( R= 0 ; R < 30 ; R ++ ) 
-			{
-				SetRC(R);
-				i = 150*(((R+1)*6));
-				delay_ten_us(i);
-			}
-		
 		for ( X = 0 ; X < 400 ; X++ ) 
 			for ( R= 0 ; R < 30 ; R ++ ) 
 			{
@@ -541,11 +545,34 @@ int main(void)
 				SetRC(R);	
 				
 			}
+
+		for ( X = 0 ; X < 5 ; X++ ) 
+			for ( R= 0 ; R < 30 ; R ++ ) 
+			{
+
+				SetRC(R);
+				i = 150*(((R+1)*6));
+				delay_ten_us(i);
+
+			}
+
+		for ( X = 0 ; X < 5 ; X++ ) 
+			for ( R= 0 ; R < 30 ; R ++ ) 
+			{
+				SetRC(R);
+				i = 150*(((R+1)*6));
+				delay_ten_us(i);
+			}
 		
+		for ( X = 0 ; X < 200 ; X++ ) 
+			for ( R= 0 ; R < 30 ; R ++ ) 
+			{
 
 
-
-
+				SetRC(R);	
+				delay_ten_us(X*R);
+				
+			}
 
 /// end
 	}
