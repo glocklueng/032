@@ -30,7 +30,7 @@ volatile static unsigned long controlDelay = 0;
 volatile static unsigned long  mavlinkDelay = 0;
 
 //  Natural Constants
-// static const float convert_pi_180 = 0.017453f;	    // Pi/180 - Convert Degrees to Radians
+static const float convert_pi_180 = 0.017453f;	    // Pi/180 - Convert Degrees to Radians
 
 //***************************************************************************** 
 // 
@@ -270,7 +270,7 @@ void sendMAVLinkData(float *imu)
       // Send the message with the standard UART send function
       UARTSend((unsigned char*)buf, len);
       
-      // SEND IMU DATA
+      /* SEND IMU DATA
       mavlink_msg_scaled_imu_pack(system_id, component_id, &msg, (uint16_t)imu[12], (uint16_t)imu[0], (uint16_t)imu[1], (uint16_t)imu[2], (uint16_t)imu[3], (uint16_t)imu[4], (uint16_t)imu[5], (uint16_t)imu[9], (uint16_t)imu[10], (uint16_t)imu[11]);
       
        // Copy the message to the send buffer
@@ -278,16 +278,17 @@ void sendMAVLinkData(float *imu)
        
       // Send the message with the standard UART send function
       UARTSend((unsigned char*)buf, len);  
+      */
       
-      /* SEND ATTITUDE DATA
-      mavlink_msg_attitude_pack(system_id, component_id, &msg, 0, imu[0]*convert_pi_180, imu[1]*convert_pi_180, imu[2]*convert_pi_180, imu[3]*convert_pi_180, imu[4]*convert_pi_180, imu[5]*convert_pi_180);
+      // SEND ATTITUDE DATA
+      mavlink_msg_attitude_pack(system_id, component_id, &msg, 0, imu[0]*convert_pi_180, -1.0f*imu[1]*convert_pi_180, imu[2]*convert_pi_180, imu[3]*convert_pi_180, -1.0f*imu[4]*convert_pi_180, imu[5]*convert_pi_180);
       
       // Copy the message to the send buffer
       len = mavlink_msg_to_send_buffer(buf, &msg);
        
       // Send the message with the standard UART send function
       UARTSend((unsigned char*)buf, len);  
-      */
+     
     }
     else
     {

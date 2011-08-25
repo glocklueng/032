@@ -194,9 +194,9 @@ extern float dt;		        // dt = 0.002 seconds per sample
 
 //  Kalman Variables and Constants
 // *************************
-const float Q_angle = 0.001f;		// 0.001 - Q constant for angle - try 0.001
-const float Q_gyro = 0.012f;		// 0.012 - Q constant for gyro  - try 0.003
-const float R_angle = 0.1f;		// 0.1   - R constant for noise - try 0.03   
+const float Q_angle = 0.002f;		// 0.001 - Q constant for angle - try 0.001
+const float Q_gyro = 0.3f;		// 0.012 - Q constant for gyro  - try 0.003
+const float R_angle = 0.03f;		// 0.1   - R constant for noise - try 0.03   
 
 float x_y;			        // Difference between previous raw angle reading and previous state angle - X-Axis
 float xS;				// S Variable - X Axis
@@ -313,9 +313,9 @@ void readIMU(float *imu)
     accel[2] = ((acc_v_convert*(float)((int)(acc_raw[2]) - acc_offset[2]))-acc_shift[2])*acc_g_convert; // Convert raw data bytes to acceleration - Z Axis
     
     // Convert acceleration to angles    
-    acc_rad[0] = (float)((angle_scale[0]*((((float)atan(accel[1]/sqrt(accel[0]*accel[0] + accel[2]*accel[2])))*convert_180_Pi) + angle_offset[0]))*convert_Pi_180);
-    acc_rad[1] = (float)((angle_scale[1]*((((float)atan(accel[0]/sqrt(accel[1]*accel[1] + accel[2]*accel[2])))*convert_180_Pi) + angle_offset[1]))*convert_Pi_180);
-    acc_rad[2] += z_gyro_rad_sec[0]*dt;  // Integrate Z Angular Velocity to obtain yaw angle 
+    acc_rad[0] = (float)((angle_scale[0]*((((float)atan2(accel[1],accel[2]))*convert_180_Pi) + angle_offset[0]))*convert_Pi_180);
+    acc_rad[1] = (float)((angle_scale[1]*((((float)atan2(accel[0],accel[2]))*convert_180_Pi) + angle_offset[1]))*convert_Pi_180);
+    acc_rad[2] += z_gyro_rad_sec[0]*dt;                                                                  // Integrate Z Angular Velocity to obtain yaw angle 
     
     x_gyro_rad_sec[0]  = (float)(((float)(gyro_raw[0] - gyro_offset[0])* gyro_scale)*convert_Pi_180);	 // Convert raw data bytes to angular velocity - X Axis
     y_gyro_rad_sec[0]  = (float)(((float)(gyro_raw[1] - gyro_offset[1])* gyro_scale)*convert_Pi_180);	 // Convert raw data bytes to angular velocity - Y Axis
@@ -350,7 +350,7 @@ void readIMU(float *imu)
     // -----------------------
     // The Runge-Kutta Integration will average 
     // out the gyroscope readings.
-    
+
     // X-Axis Gyro - Runge-Kutta Integration 
     x_gyro_rad_sec[0] = (x_gyro_rad_sec[3] + (2 * x_gyro_rad_sec[2]) + (2 * x_gyro_rad_sec[1]) + x_gyro_rad_sec[0])/6.0;
     x_gyro_rad_sec[1] = x_gyro_rad_sec[0];
@@ -368,12 +368,7 @@ void readIMU(float *imu)
     z_gyro_rad_sec[1] = z_gyro_rad_sec[0];
     z_gyro_rad_sec[2] = z_gyro_rad_sec[1];
     z_gyro_rad_sec[3] = z_gyro_rad_sec[2];
-    
-    // Why am I doing this twice?!?!?!?!?!?!?!??!?!?!?!?!
-    // Integrate the gyro axis with a bias to convert to angle then add to angle
-    angle[0] += ((x_gyro_rad_sec[0] - bias[0])) * dt;			// integrate x axis gyro with bias then add to x angle
-    angle[1] += ((y_gyro_rad_sec[0] - bias[1])) * dt;			// integrate y axis gyro with bias then add to y angle
-    angle[2] += ((z_gyro_rad_sec[0] - bias[2])) * dt;			// integrate z axis gyro with bias then add to z angle
+    // -----------------------
 
         
     // Kalman Filter 
@@ -387,8 +382,7 @@ void readIMU(float *imu)
     xP[1][0] -=  dt * xP[1][1];
     xP[1][1] +=  Q_gyro * dt; 
     
-    // Why am I doing this twice?!?!?!?!?!?!?!??!?!?!?!?!
-    // Also, try Degrees, not radians
+    // Integrate the gyro axis with a bias to convert to angle then add to angle
     angle[0] += (x_gyro_rad_sec[0] - bias[0])*dt;
     
     // Update with new data
@@ -416,6 +410,7 @@ void readIMU(float *imu)
     yP[1][0] -=  dt * yP[1][1];
     yP[1][1] +=  Q_gyro * dt; 
     
+    // Integrate the gyro axis with a bias to convert to angle then add to angle
     angle[1] += (y_gyro_rad_sec[0] - bias[1])*dt;
     
     // Update with new data
@@ -444,6 +439,7 @@ void readIMU(float *imu)
     zP[1][0] -=  dt * zP[1][1];
     zP[1][1] +=  Q_gyro * dt; 
     
+    // Integrate the gyro axis with a bias to convert to angle then add to angle 
     angle[2] += (z_gyro_rad_sec[0] - bias[2])*dt;
     
     // Update with new data
@@ -518,20 +514,21 @@ void readIMU(float *imu)
     imu[11] = comp_raw[2];
     imu[12] = dt;
     imu[13] = temp_raw; 
+    
     // ----------------------
     //
     // **********************
     // ****************************
-
+    
+    /*  Quaternion Code - WARNING: LOSS OF PRECISION
     // Update the State of the Quadrotor
-    //
     eulerFloatToFixed(&imu[0], &euler_angle[0]);    // Convert and load Euler Angles as fixed point
     eulerToQuat(&q[0], &euler_angle[0]);            // Convert Euler Angles to Quaternions       
-
     
     quatToEuler(&q[0], &euler_angle[0]);            // Convert Quaternions to Euler Angles
     eulerFixedToFloat(&imu[0], &euler_angle[0]);    // Convert and load Euler Angles as floating point
-    //
+    */
+    
 }
 //*****************************************************************************
 
