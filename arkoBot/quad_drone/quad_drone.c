@@ -157,14 +157,14 @@ int main(void)
         
         // Serial Debug Mode
         // *****************
-        //sendDataTelemetry(&imu[0], dt);                                   // Send IMU Data Telemetry
+        //sendDataTelemetry(&imu[0], dt);                                    // Send IMU Data Telemetry
         //sendControlTelemetry(control_telemetry[0], control_telemetry[1], 
         //                     control_telemetry[2], control_telemetry[3]);  // Send Control Telemetry
         // *****************
         
         // MavLink Data Telemetry
         // **********************
-        sendMAVLinkData(&imu[0]);                                        // Send IMU Data Telemetry
+        sendMAVLinkData(&imu[0]);                                            // Send IMU Data Telemetry
         // **********************
         
         // ****************************   
