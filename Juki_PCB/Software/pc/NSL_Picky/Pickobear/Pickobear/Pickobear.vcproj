@@ -45,7 +45,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="D:\opencv\opencv\build\include\;D:\opencv\opencv\include;D:\opencv\opencv\include\opencv\;D:\opencv\opencv\include\opencv\cxcore\include;D:\opencv\opencv\include\opencv\otherlibs\highgui;C:\code\glut\include"
+				AdditionalIncludeDirectories="opencv\build\include\;opencv\include;opencv\include\opencv\;D:\opencv\opencv\include\opencv\cxcore\include;opencv\include\opencv\otherlibs\highgui"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -69,7 +69,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="D:\opencv\opencv\build\x86\vc9\lib\"
+				AdditionalLibraryDirectories="opencv\build\x86\vc9\lib\"
 				IgnoreDefaultLibraryNames=" atlthunk.lib"
 				GenerateDebugInformation="true"
 				SubSystem="2"
@@ -128,7 +128,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="D:\opencv\opencv\build\include\;D:\opencv\opencv\include;D:\opencv\opencv\include\opencv\;D:\opencv\opencv\include\opencv\cxcore\include;D:\opencv\opencv\include\opencv\otherlibs\highgui;C:\code\glut\include"
+				AdditionalIncludeDirectories="opencv\build\include\;opencv\include;opencv\include\opencv\;D:\opencv\opencv\include\opencv\cxcore\include;opencv\include\opencv\otherlibs\highgui"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
 				MinimalRebuild="false"
 				RuntimeLibrary="0"
@@ -152,7 +152,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="D:\opencv\opencv\build\x86\vc9\lib\"
+				AdditionalLibraryDirectories="opencv\build\x86\vc9\lib\"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"
