@@ -441,7 +441,7 @@ int main(void)
 			for ( C= 0 ; C < 6 ; C ++ ) {
 
 				SetRC(R,C);
-				_delay_ms(800);
+				//_delay_ms(800);
 	
 //				PORTB = rand();
 //				DDRB = rand();
