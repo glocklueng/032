@@ -1,0 +1,247 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#ifndef APSTUDIO_INVOKED
+#include "targetver.h"
+#endif
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#ifndef APSTUDIO_INVOKED\r\n"
+    "#include ""targetver.h""\r\n"
+    "#endif\r\n"
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
+    "LANGUAGE 9, 1\r\n"
+    "#pragma code_page(1252)\r\n"
+    "#include ""res\\Pickobear.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""afxres.rc""     // Standard components\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON                    "res\\Pickobear.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOGEX 0, 0, 170, 62
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About Pickobear"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_STATIC,14,14,21,20
+    LTEXT           "Pickobear, Version 1.0",IDC_STATIC,42,14,114,8,SS_NOPREFIX
+    LTEXT           "Copyright (C) 2011",IDC_STATIC,42,26,114,8
+    DEFPUSHBUTTON   "OK",IDOK,113,41,50,14,WS_GROUP
+END
+
+IDD_PICKOBEAR_DIALOG DIALOGEX 0, 0, 613, 413
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_MINIMIZEBOX | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "[Null Space Labs] Pickobear"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    LISTBOX         IDC_LIST1,179,17,164,328,LBS_SORT | LBS_NOINTEGRALHEIGHT | LBS_MULTICOLUMN | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "GO!",IDC_GO,68,243,38,23
+    PUSHBUTTON      "/\\",IDC_UP,38,24,13,14
+    PUSHBUTTON      ">",IDC_RIGHT,56,42,13,14
+    PUSHBUTTON      "U/D",IDC_HEAD,36,42,17,14
+    PUSHBUTTON      "<",IDC_LEFT,20,42,13,14
+    PUSHBUTTON      "\\/",IDC_DOWN,38,59,13,14
+    CONTROL         "Tool 1",IDC_TOOL1,"Button",BS_AUTORADIOBUTTON | BS_PUSHLIKE,7,125,35,10
+    CONTROL         "Tool 2",IDC_TOOL2,"Button",BS_AUTORADIOBUTTON | BS_PUSHLIKE,7,134,35,10
+    CONTROL         "Tool 3",IDC_TOOL3,"Button",BS_AUTORADIOBUTTON | BS_PUSHLIKE,7,143,35,10
+    CONTROL         "Tool 4",IDC_TOOL4,"Button",BS_AUTORADIOBUTTON | BS_PUSHLIKE,7,152,35,10
+    CONTROL         "Tool 5",IDC_TOOL5,"Button",BS_AUTORADIOBUTTON | BS_PUSHLIKE,7,161,35,10
+    CONTROL         "Tool 6",IDC_TOOL6,"Button",BS_AUTORADIOBUTTON | BS_PUSHLIKE,7,170,35,10
+    GROUPBOX        "Teach tools",IDC_STATIC,11,7,68,80
+    PUSHBUTTON      "HOME",IDC_HOME,72,127,88,22
+    PUSHBUTTON      "EMERGENCY STOP",IDC_BUTTON4,7,345,336,61
+    CONTROL         "Teach Mode",IDC_TEACH,"Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,16,88,55,10
+    CONTROL         "Run Mode",IDC_RUN,"Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,16,98,48,10
+    LTEXT           "Up camera",IDC_STATIC,345,203,35,8
+    LTEXT           "Down Camera",IDC_STATIC,346,7,46,8
+    CONTROL         "",IDC_ROTATE,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,7,202,70,9
+    LTEXT           "Rotation",IDC_STATIC,12,191,28,8
+    COMBOBOX        IDC_STEPSIZE,114,12,44,90,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Step size",IDC_STATIC,84,16,30,8
+    CONTROL         "",IDC_CAM1,"Static",SS_BLACKFRAME | NOT WS_VISIBLE,346,22,260,181
+    CONTROL         "",IDC_CAM2,"Static",SS_BLACKRECT | NOT WS_VISIBLE,346,224,260,182
+    EDITTEXT        IDC_X_POS,36,304,27,11,ES_AUTOHSCROLL | ES_NUMBER
+    EDITTEXT        IDC_Y_POS,36,318,27,11,ES_AUTOHSCROLL
+    LTEXT           "X Pos",IDC_STATIC,16,306,18,8
+    LTEXT           "Y Pos",IDC_STATIC,16,318,18,8
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904e4"
+        BEGIN
+            VALUE "CompanyName", "TODO: <Company name>"
+            VALUE "FileDescription", "TODO: <File description>"
+            VALUE "FileVersion", "1.0.0.1"
+            VALUE "InternalName", "Pickobear.exe"
+            VALUE "LegalCopyright", "TODO: (c) <Company name>.  All rights reserved."
+            VALUE "OriginalFilename", "Pickobear.exe"
+            VALUE "ProductName", "TODO: <Product name>"
+            VALUE "ProductVersion", "1.0.0.1"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1252
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 163
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 55
+    END
+
+    IDD_PICKOBEAR_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 606
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 406
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog Info
+//
+
+IDD_PICKOBEAR_DIALOG DLGINIT
+BEGIN
+    IDC_STEPSIZE, 0x403, 4, 0
+0x6d31, 0x006d, 
+    IDC_STEPSIZE, 0x403, 4, 0
+0x6d32, 0x006d, 
+    IDC_STEPSIZE, 0x403, 4, 0
+0x6d33, 0x006d, 
+    0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_ABOUTBOX            "&About Pickobear..."
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE 9, 1
+#pragma code_page(1252)
+#include "res\Pickobear.rc2"  // non-Microsoft Visual C++ edited resources
+#include "afxres.rc"     // Standard components
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
