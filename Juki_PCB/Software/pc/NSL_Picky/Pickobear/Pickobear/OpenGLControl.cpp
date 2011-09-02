@@ -85,21 +85,31 @@ void COpenGLControl::OnTimer(UINT nIDEvent)
 	{
 		case 1:
 		{
-		
+			wglMakeCurrent(hdc, hrc);
+
 			// fetch that data from the camera
-			img1->imageData = ( char *) VI.getPixels(m_camera, true , false ); 
+			img1->imageData = ( char *) VI.getPixels(m_camera, true , true ); 
 			
-			cvConvertImage(img1, img2, CV_CVTIMG_FLIP);
+
+			//cvConvertImage(img1, img2, CV_CVTIMG_FLIP);
          
+#if 0 
+			// Randomise buffer for testing
+			CvRNG rng = cvRNG(rand());
+			cvRandArr( &rng, img2, CV_RAND_UNI, cvScalar(0,0,0), cvScalar(256,256,256)); 
+#endif
+
+#if 0
 			kernel_size = 3 + 2*( ind%5 );
 			kernel = cv::Mat::ones( kernel_size, kernel_size, CV_32F )/ (float)(kernel_size*kernel_size);
 			
 			filter2D(src, dst, ddepth , kernel, anchor, delta, cv::BORDER_DEFAULT );
-			
+#endif		
 			//	cvFilter2D(img2,img2,kernel,anchor);
 
 			// Create Texture
-			gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, img2->width, img2->height, GL_RGB, GL_UNSIGNED_BYTE, img2->imageData);
+			
+			gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, img1->width, img1->height, GL_RGB, GL_UNSIGNED_BYTE, img1->imageData);
 
 
 			// Clear color and depth buffer bits
@@ -140,7 +150,7 @@ void COpenGLControl::OnTimer(UINT nIDEvent)
 	CWnd::OnTimer(nIDEvent);
 }
 
-void COpenGLControl::oglCreate(CRect rect, CRect orect, CWnd *parent, int camera)
+void COpenGLControl::oglCreate(CRect rect, CRect orect, CWnd *parent, int DeviceID)
 {
 	CString className = AfxRegisterWndClass(CS_HREDRAW | CS_VREDRAW | CS_OWNDC, NULL, (HBRUSH)GetStockObject(BLACK_BRUSH), NULL);
 
@@ -155,12 +165,21 @@ void COpenGLControl::oglCreate(CRect rect, CRect orect, CWnd *parent, int camera
 
 	int numDevices = VI.listDevices();
 
-	m_camera = camera;
+	for( int i = 0 ; i < numDevices ; i++ ) {
+	
+		_RPT2(_CRT_WARN,"%d) Camera name is [%s]\n",i, VI.getDeviceName( i  ));
+
+	}
+
+	m_camera = DeviceID;
 
 	VI.setupDevice(m_camera); 
 
+	_RPT1(_CRT_WARN,"Camera name is [%s]\n",VI.getDeviceName(m_camera));
+
 	img1 = cvCreateImage(cvSize(VI.getWidth(m_camera),VI.getHeight(m_camera) ),IPL_DEPTH_8U,3);
 	assert(img1);
+
 	img2 = cvCreateImage(cvSize(VI.getWidth(m_camera),VI.getHeight(m_camera) ),IPL_DEPTH_8U,3);
 	assert(img2);
 

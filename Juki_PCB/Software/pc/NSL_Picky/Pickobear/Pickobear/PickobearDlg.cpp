@@ -119,7 +119,7 @@ BOOL CPickobearDlg::OnInitDialog()
 	// Setup the OpenGL Window's timer to render
 	m_oglWindow.m_unpTimer = m_oglWindow.SetTimer(1, 1, 0);
 
-#if 0
+#if 1
 	// Get size and position of the template textfield we created before in the dialog editor
 	GetDlgItem(IDC_CAM2)->GetWindowRect(rect);
 	GetDlgItem(IDC_CAM2)->GetWindowRect(rect1);
@@ -128,7 +128,7 @@ BOOL CPickobearDlg::OnInitDialog()
 	ScreenToClient(rect);
 
 	// Create OpenGL Control window
-	m_oglWindow1.oglCreate(rect, rect1,this,0);
+	m_oglWindow1.oglCreate(rect, rect1,this,3);
 
 	// Setup the OpenGL Window's timer to render
 	m_oglWindow1.m_unpTimer = m_oglWindow1.SetTimer(1, 1, 0);
