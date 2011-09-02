@@ -49,6 +49,8 @@
 #include "OpenGLControl.h"
 
 
+#include "opencv.h"
+
 #pragma comment(lib,"opencv_highgui231.lib")
 #pragma comment(lib,"opencv_imgproc231.lib")
 #pragma comment(lib,"opencv_core231.lib")

@@ -65,6 +65,7 @@ void COpenGLControl::OnDraw(CDC *pDC)
 {
 }
 
+extern double m_Thresh1,m_Thresh2;
 
 void COpenGLControl::OnTimer(UINT nIDEvent)
 {  
@@ -88,8 +89,10 @@ void COpenGLControl::OnTimer(UINT nIDEvent)
 			wglMakeCurrent(hdc, hrc);
 
 			// fetch that data from the camera
-			img1->imageData = ( char *) VI.getPixels(m_camera, true , true ); 
+			if (VI.isFrameNew(m_camera))
+				img1->imageData = ( char *) VI.getPixels(m_camera, true , true ); 
 			
+			Squares( img1 ,m_Thresh1,m_Thresh2,VI.getDeviceName(m_camera) ) ;
 
 			//cvConvertImage(img1, img2, CV_CVTIMG_FLIP);
          
@@ -114,8 +117,6 @@ void COpenGLControl::OnTimer(UINT nIDEvent)
 
 			// Clear color and depth buffer bits
 			glClear(GL_COLOR_BUFFER_BIT |  GL_DEPTH_BUFFER_BIT);
-
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 			glEnable(GL_TEXTURE_2D);
 
 			// Set Projection Matrix
@@ -135,7 +136,7 @@ void COpenGLControl::OnTimer(UINT nIDEvent)
 			glTexCoord2f(0.0f, 1.0f); glVertex2f(0.0f, (float)m_size.Height());
 			glEnd();
 
-			glFlush();
+			//glFlush();
 
 			SwapBuffers(hdc);
 	
