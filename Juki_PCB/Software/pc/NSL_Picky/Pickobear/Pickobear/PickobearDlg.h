@@ -10,8 +10,9 @@
 class CPickobearDlg : public CDialog
 {
 private:
-		COpenGLControl m_oglWindow;
-		COpenGLControl m_oglWindow1;
+	// each of the camera windows
+	COpenGLControl m_oglWindow;
+	COpenGLControl m_oglWindow1;
 
 // Construction
 public:
@@ -40,4 +41,8 @@ public:
 	afx_msg void OnLbnSelchangeList1();
 	long m_headXPos;
 	long m_headYpos;
+	double m_Threshold1;
+	double m_Threshold2;
+	afx_msg void OnEnChangeThreshold();
+	afx_msg void OnEnChangeThreshold2();
 };

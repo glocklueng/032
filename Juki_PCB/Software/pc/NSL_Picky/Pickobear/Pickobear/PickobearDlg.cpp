@@ -45,13 +45,17 @@ END_MESSAGE_MAP()
 // CPickobearDlg dialog
 
 
+double m_Thresh1=0,m_Thresh2=10;
 
 
 CPickobearDlg::CPickobearDlg(CWnd* pParent /*=NULL*/)
 	: CDialog(CPickobearDlg::IDD, pParent)
 	, m_headXPos(0)
 	, m_headYpos(0)
+	, m_Threshold1(m_Thresh1)
+	, m_Threshold2(m_Thresh2)
 {
+
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
 
@@ -62,6 +66,8 @@ void CPickobearDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_GO, GO);
 	DDX_Text(pDX, IDC_X_POS, m_headXPos);
 	DDX_Text(pDX, IDC_Y_POS, m_headYpos);
+	DDX_Text(pDX, IDC_THRESHOLD, m_Threshold1);
+	DDX_Text(pDX, IDC_THRESHOLD2, m_Threshold2);
 }
 
 BEGIN_MESSAGE_MAP(CPickobearDlg, CDialog)
@@ -70,6 +76,8 @@ BEGIN_MESSAGE_MAP(CPickobearDlg, CDialog)
 	ON_WM_QUERYDRAGICON()
 	//}}AFX_MSG_MAP
 	ON_LBN_SELCHANGE(IDC_LIST1, &CPickobearDlg::OnLbnSelchangeList1)
+	ON_EN_CHANGE(IDC_THRESHOLD, &CPickobearDlg::OnEnChangeThreshold)
+	ON_EN_CHANGE(IDC_THRESHOLD2, &CPickobearDlg::OnEnChangeThreshold2)
 END_MESSAGE_MAP()
 
 
@@ -119,7 +127,6 @@ BOOL CPickobearDlg::OnInitDialog()
 	// Setup the OpenGL Window's timer to render
 	m_oglWindow.m_unpTimer = m_oglWindow.SetTimer(1, 1, 0);
 
-#if 1
 	// Get size and position of the template textfield we created before in the dialog editor
 	GetDlgItem(IDC_CAM2)->GetWindowRect(rect);
 	GetDlgItem(IDC_CAM2)->GetWindowRect(rect1);
@@ -132,7 +139,7 @@ BOOL CPickobearDlg::OnInitDialog()
 
 	// Setup the OpenGL Window's timer to render
 	m_oglWindow1.m_unpTimer = m_oglWindow1.SetTimer(1, 1, 0);
-#endif
+
 
 
 	return TRUE;  // return TRUE  unless you set the focus to a control
@@ -157,6 +164,8 @@ void CPickobearDlg::OnSysCommand(UINT nID, LPARAM lParam)
 
 void CPickobearDlg::OnPaint()
 {
+
+
 	if (IsIconic())
 	{
 		CPaintDC dc(this); // device context for painting
@@ -191,4 +200,29 @@ HCURSOR CPickobearDlg::OnQueryDragIcon()
 void CPickobearDlg::OnLbnSelchangeList1()
 {
 	// TODO: Add your control notification handler code here
+}
+
+void CPickobearDlg::OnEnChangeThreshold()
+{
+	// TODO:  If this is a RICHEDIT control, the control will not
+	// send this notification unless you override the CDialog::OnInitDialog()
+	// function and call CRichEditCtrl().SetEventMask()
+	// with the ENM_CHANGE flag ORed into the mask.
+
+	// TODO:  Add your control notification handler code here
+
+	UpdateData(TRUE);
+	m_Thresh1 = m_Threshold1;
+
+}
+
+void CPickobearDlg::OnEnChangeThreshold2()
+{
+	// TODO:  If this is a RICHEDIT control, the control will not
+	// send this notification unless you override the CDialog::OnInitDialog()
+	// function and call CRichEditCtrl().SetEventMask()
+	// with the ENM_CHANGE flag ORed into the mask.
+
+	UpdateData(TRUE);
+	m_Thresh2 = m_Threshold2;
 }
