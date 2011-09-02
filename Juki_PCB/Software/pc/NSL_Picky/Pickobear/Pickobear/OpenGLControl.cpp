@@ -66,8 +66,6 @@ void COpenGLControl::OnDraw(CDC *pDC)
 }
 
 
-using namespace cv;
-
 void COpenGLControl::OnTimer(UINT nIDEvent)
 {  
 	double delta;
@@ -75,25 +73,30 @@ void COpenGLControl::OnTimer(UINT nIDEvent)
 	int kernel_size;
 	int ind =1 ;
 	
-	Mat kernel;
-	Mat src, dst;
-	Point anchor;
+	cv::Mat kernel;
+	cv::Mat src, dst;
+	cv::Point anchor;
+
 	delta = 0;
 	ddepth = -1;
-	anchor = Point( -1, -1 );
+	anchor = cv::Point( -1, -1 );
 
 	switch (nIDEvent)
 	{
 		case 1:
 		{
 		
+			// fetch that data from the camera
 			img1->imageData = ( char *) VI.getPixels(m_camera, true , false ); 
 			
 			cvConvertImage(img1, img2, CV_CVTIMG_FLIP);
          
 			kernel_size = 3 + 2*( ind%5 );
-			kernel = Mat::ones( kernel_size, kernel_size, CV_32F )/ (float)(kernel_size*kernel_size);
-			filter2D(src, dst, ddepth , kernel, anchor, delta, BORDER_DEFAULT );
+			kernel = cv::Mat::ones( kernel_size, kernel_size, CV_32F )/ (float)(kernel_size*kernel_size);
+			
+			filter2D(src, dst, ddepth , kernel, anchor, delta, cv::BORDER_DEFAULT );
+			
+			//	cvFilter2D(img2,img2,kernel,anchor);
 
 			// Create Texture
 			gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, img2->width, img2->height, GL_RGB, GL_UNSIGNED_BYTE, img2->imageData);
@@ -123,6 +126,7 @@ void COpenGLControl::OnTimer(UINT nIDEvent)
 			glEnd();
 
 			glFlush();
+
 			SwapBuffers(hdc);
 	
 
