@@ -71,28 +71,47 @@ void COpenGLControl::OnTimer(UINT nIDEvent)
 {  
 	double delta;
 	int ddepth;  
-	int kernel_size;
-	int ind =1 ;
+	int ind =1 , ni = 100;
 	
+	static int iCounter = 0;
+
 	cv::Mat kernel;
 	cv::Mat src, dst;
 	cv::Point anchor;
 
+	static IplImage *resultImg= NULL;
+
 	delta = 0;
 	ddepth = -1;
 	anchor = cv::Point( -1, -1 );
+	
+	if( resultImg == NULL) {
+		resultImg = cvCloneImage( img1 ); 
+	}
 
 	switch (nIDEvent)
 	{
 		case 1:
 		{
+			// fetch that data from the camera
+			if (VI.isFrameNew(m_camera)){
+
+				img1->imageData = ( char * ) VI.getPixels(m_camera, true , true ); 
+
+				//cvAddWeighted( img1->imageData, 1.0/100., resultImg, 1, 0.0, resultImg );
+
+				iCounter ++ ;
+			}
+
+			if ( iCounter  < 10 ) {
+				return;
+			}
+
+			iCounter = 0;
+
 			wglMakeCurrent(hdc, hrc);
 
-			// fetch that data from the camera
-			if (VI.isFrameNew(m_camera))
-				img1->imageData = ( char *) VI.getPixels(m_camera, true , true ); 
-			
-			Squares( img1 ,m_Thresh1,m_Thresh2,VI.getDeviceName(m_camera) ) ;
+			Squares( img1 , m_Thresh1, m_Thresh2, VI.getDeviceName( m_camera ) ) ;
 
 			//cvConvertImage(img1, img2, CV_CVTIMG_FLIP);
          
