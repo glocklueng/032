@@ -1,5 +1,9 @@
 // Pin mappings
 
+#if 1
+
+// new board
+
 // xy lIMITS
 #define XL1 ( 18 )
 #define YL1 ( 21 ) 
@@ -48,9 +52,9 @@
 #define SPARE7 ( 53 )
 #define SPARE8 ( A12 )
 #define SPOT ( 52 )
-#define VCHANGE( 51 )
+#define VCHANGE ( 51 )
 #define DISPENSERSTART ( 50 )
-#define CVYM( 49 )
+#define CVYM ( 49 )
 #define STOPPER ( 48 )
 #define LOCATOR ( 47 )
 #define SUPPORTER ( 46 )
@@ -76,6 +80,89 @@
 #define YCCW ( A3 )
 #define XCW ( A0 )
 #define XCCW ( A1 )
+
+#else
+
+// oldbboard
+
+// xy lIMITS
+#define XL1 ( 23 )
+#define YL1 ( 27 ) 
+#define XL2 ( 22 ) 
+#define YL2 ( 28 ) 
+#define XL3 ( 24 ) 
+#define YL3 ( 29 ) 
+#define XL4 ( 25 ) 
+#define YL4 ( 30 ) 
+
+// x/y home
+#define XHM     ( 26 ) 
+#define YHM      ( 41 ) 
+
+#define HEADDN     ( 1 )
+#define DEG90      ( 2 )
+#define TACSENSE   (3 )
+#define PCBDETECTOR ( )
+#define PCBIN ( )
+#define PCBOUT  ( )
+#define PINUP ( )
+#define READYIN ( )
+#define DISPENSEREND ( )
+#define MORG ( 11 )
+#define MCENT ( )
+
+#define CWSW ( )
+#define CCWSW ( )
+
+#define XPLUS  ( 40 )
+#define XMINUS ( 39 )
+#define YPLUS  ( 0  )
+#define YMINUS ( 11 )
+
+
+#define FAST ( 15 )
+#define TEACH ( 16 )
+#define T_VAC ( 17 )
+// switch on touch pad
+#define T_HEAD ( 18 )
+
+#define SPAREA ( )
+#define SPAREB ( )
+#define SPAREC ( )
+
+#define SPARE7 ( )
+#define SPARE8 ( )
+#define SPOT ( 52 )
+#define VCHANGE( )
+#define DISPENSERSTART ( )
+#define CVYM( )
+#define STOPPER ( )
+#define LOCATOR ( )
+#define SUPPORTER ( )
+#define VAC ( 45 ) 
+#define HEAD ( 44 ) 
+#define ROT (43 ) 
+#define CENTERING (42  )
+#define TAPEKNOCK ( A14 )
+#define SPARE6 ( A13 )
+
+#define ACENT ( )
+#define SPARE1 ( A7 )
+#define SPARE2 ( A8 )
+#define SPARE3 ( A9 )
+#define SPARE4 ( A10)
+#define SPARE5 ( A11)
+#define READYOUT ( )
+#define CW_CCW ( )
+#define PULSE ( )
+
+// motors
+#define YCW ( A2 )
+#define YCCW ( A3 )
+#define XCW ( A0 )
+#define XCCW ( A1 )
+
+#endif
 
 // maximum number of pulses before machine has hit a hard limit
 #define MAX_X_PULSES ( 14868L )
@@ -256,12 +343,9 @@ void readPanel( void )
         // read state of cursor keys
 	xPlus  =  digitalRead( XPLUS );
 	xMinus =  digitalRead( XMINUS );
-        if (Serial.available() < 1 ) 
-	  yPlus  =  digitalRead( YPLUS );
-        else
-          yPlus = 0;
-	yMinus =  digitalRead( FAST );
-	//fast    = !digitalRead( FAST );
+        yPlus  =  digitalRead( YPLUS );
+	yMinus =  digitalRead( YMINUS );
+	fast    = !digitalRead( FAST );
 	teach   = !digitalRead( TEACH );
 
         // don't allow both
@@ -274,9 +358,9 @@ void readPanel( void )
            yMinus = 1;
         }
         
-	// fast isn't enabled.
+	// fast mode
 	if( fast ) {
-		fspeed = 100;
+  		fspeed = 500;
 	}
 
         // Read the home key, and home machine if set
@@ -292,7 +376,7 @@ void readPanel( void )
 		spot(lastteach);
 
 		// simple 'debounce'
-		delay(100);
+		delay(500);
 	}
 
         // remember last setting
@@ -307,7 +391,7 @@ void readPanel( void )
         // handle cursor keys
 	if( !xPlus ) goright(fspeed,1);
 	if( !xMinus ) goleft(fspeed,1);
-	//if( !yPlus  ) goback(fspeed,1);
+	if( !yPlus  ) goback(fspeed,1);
 	if( !yMinus ) goforward(fspeed,1);
 }
 
@@ -474,6 +558,9 @@ void loop()
 
 		switch( sbyte ) 
 		{
+  case 'C':
+                circle(10000,10000,1000);
+                break;
                 case 'R':
                          Reset_AVR();break;
 		case 'A':
@@ -648,6 +735,8 @@ void home( void )
 
 	homed = false;
 
+  long length = DELAY_X2+DELAY_X1;
+  
 	// next step is to move right a bit, so that its past the home switch
 	// check XL1,YL1 limits if its in either, move out? 
 	for(int i = 0 ; i < 1000 ; i++ ) {
@@ -663,11 +752,20 @@ void home( void )
 			break;
 		}
 
-                stepXCCW(DELAY_X2+DELAY_X1);
+    digitalWrite(XCCW,HIGH);
+    digitalWrite(YCCW,HIGH);
+    delayMicroseconds(SHORT_X_PULSE); 
+    digitalWrite(XCCW,LOW);
+    digitalWrite(YCCW,LOW);
+    delayMicroseconds(length--);   
+		if (length <= Y_SPEED ) 
+                  length = Y_SPEED;
+                  
+//                stepXCCW(DELAY_X2+DELAY_X1);
                 
-		delay(1);
+//		delay(1);
 
-                stepYCCW(DELAY_Y2+DELAY_Y1);
+//                stepYCCW(DELAY_Y2+DELAY_Y1);
 	}
 
 	digitalWrite(XCCW,HIGH);
@@ -1148,8 +1246,9 @@ none
 
 char gotoxy(long xum,long yum)
 {
+        long a,b;
       // direction to travel, defaults to right and back
-        char xDir=1,yDir;
+        char xDir=1,yDir=1;
         long dx,dy;
 	long numXPulses=0,numYPulses=0;
  
@@ -1165,12 +1264,23 @@ char gotoxy(long xum,long yum)
 
         gCurrentXum = pulsestoum( gXPulses ) ;
         gCurrentYum = pulsestoum( gYPulses ) ;
-        
+       
         Serial.print("cx,cy = ");
         Serial.print(gCurrentXum);
         Serial.print(" ");
         Serial.println(gCurrentYum);
-       
+           
+           float num = (xum * xum) + (yum * yum);
+           float num2 = 1.0f / ((float)sqrt((float)num));
+           float X = xum * num2;
+           float Y = yum * num2;
+            
+        Serial.print("fx,fx = ");
+        Serial.print(X);
+        Serial.print(" ");
+        Serial.println(Y);
+
+
         // calculate dx/dy
         dx = ( gCurrentXum - xum );
         dy = ( gCurrentYum - yum );
@@ -1264,9 +1374,7 @@ char goforward(long steps ,char nolimit ) {
 
 char goback(long steps ,char nolimit ) {
 
-  Serial.println("goback");
-  
-	for( int y = 0 ; y < steps ; y ++ )
+  	for( int y = 0 ; y < steps ; y ++ )
 	{
 		if( nolimit == 1) {
 			if( digitalRead( YL2 ) ) {
@@ -1419,5 +1527,37 @@ void DecrementYPulses( void )
 		homed = false;
 		return;
 	}
+}
+      
+int computeA(long x, long y) {
+  return sqrt(x * x + y * y);
+}
+  
+
+void circle(int x0, int y0, int radius)
+{
+  int f = 1 - radius;
+  int ddF_x = 1;
+  int ddF_y = -2 * radius;
+  int x = 0;
+  int y = radius;
+
+  while(x < y)
+  {
+    // ddF_x == 2 * x + 1;
+    // ddF_y == -2 * y;
+    // f == x*x + y*y - radius*radius + 2*x - y + 1;
+    if(f >= 0) 
+    {
+      y--;
+      ddF_y += 2;
+      f += ddF_y;
+    }
+    x++;
+    ddF_x += 2;
+    f += ddF_x;    
+    gotoxy(x0 + x, y0 + y);
+
+  }
 }
 
