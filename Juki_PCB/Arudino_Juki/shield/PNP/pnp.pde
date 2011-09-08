@@ -128,6 +128,11 @@ long gCurrentYum = 0;
 // homed?
 boolean homed = false;
 
+#include <avr/io.h>
+#include <avr/wdt.h>
+
+#define Reset_AVR() wdt_enable(WDTO_30MS); while(1) {}
+
 /////////////////////////////////////////////////////////////////////////////////////
 // Code
 /////////////////////////////////////////////////////////////////////////////////////
@@ -225,12 +230,19 @@ void setup( void ) {
 	digitalWrite(VAC,HIGH);
 
 // some test code.
-	Serial.print("25mm = pulses =");
-	Serial.print(mmtopulses(25),DEC); 
+	Serial.print("25mm = pulses = ");
+	Serial.println(mmtopulses(25),DEC); 
+	Serial.print("25,000um = pulses = ");
+	Serial.println(umtopulses(25000),DEC); 
+	Serial.print("1,000 pulses = um ");
+	Serial.println(pulsestoum(1000),DEC); 
+	Serial.print("1,000 pulses = mm ");
+	Serial.println(pulsestomm(1000),DEC); 
+
 	Serial.print(" x max mm=");
-	Serial.print(pulsestomm(MAX_X_PULSES*1000),DEC);
+	Serial.println(pulsestomm(MAX_X_PULSES*1000),DEC);
 	Serial.print(" y max mm=");
-	Serial.print(pulsestomm(MAX_Y_PULSES*1000),DEC);
+	Serial.println(pulsestomm(MAX_Y_PULSES*1000),DEC);
 	Serial.println("");
 
 }
@@ -244,7 +256,10 @@ void readPanel( void )
         // read state of cursor keys
 	xPlus  =  digitalRead( XPLUS );
 	xMinus =  digitalRead( XMINUS );
-	yPlus  =  digitalRead( YPLUS );
+        if (Serial.available() < 1 ) 
+	  yPlus  =  digitalRead( YPLUS );
+        else
+          yPlus = 0;
 	yMinus =  digitalRead( FAST );
 	//fast    = !digitalRead( FAST );
 	teach   = !digitalRead( TEACH );
@@ -261,7 +276,7 @@ void readPanel( void )
         
 	// fast isn't enabled.
 	if( fast ) {
-		fspeed = 1;
+		fspeed = 100;
 	}
 
         // Read the home key, and home machine if set
@@ -292,7 +307,7 @@ void readPanel( void )
         // handle cursor keys
 	if( !xPlus ) goright(fspeed,1);
 	if( !xMinus ) goleft(fspeed,1);
-	if( yPlus == 0 ) goback(fspeed,1);
+	//if( !yPlus  ) goback(fspeed,1);
 	if( !yMinus ) goforward(fspeed,1);
 }
 
@@ -325,11 +340,22 @@ unsigned int readLimitSwitches( void )
 	Serial.print(xHome,HEX);
 	Serial.print(yHome,HEX);
 	Serial.println("");
-	Serial.println("XP, YP");
+	Serial.println("gXP, gYP");
 	Serial.print(gXPulses,DEC);
 	Serial.print(" ");
 	Serial.print(gYPulses,DEC);
 	Serial.println("");
+
+
+
+
+        gCurrentXum = pulsestoum( gXPulses ) ;
+        gCurrentYum = pulsestoum( gYPulses ) ;
+        Serial.print("cx,cy = ");
+        Serial.print(gCurrentXum);
+        Serial.print(" ");
+        Serial.println(gCurrentYum);
+       
 
 	// if any of the limit switches are reached, machine is no longer considerd to be homed!
 	if( limit ) {
@@ -441,17 +467,20 @@ void loop()
 {
 	char sbyte;
 
-	readPanel();
 
-	if (Serial.available() > 0) {
+  	if (Serial.available() > 0) {
 		// read the incoming byte:
 		sbyte = Serial.read();
 
 		switch( sbyte ) 
 		{
+                case 'R':
+                         Reset_AVR();break;
 		case 'A':
-			home();
-			gotoxyp(12275-40 + (20*40),0);
+			gotoxy(25000,25000);
+			break;
+		case 'a':
+			gotoxy(150000,150000);
 			break;
 		case 'K':
 			gotoxyp(52,12330);
@@ -524,7 +553,9 @@ void loop()
 			goleft(1,1);break;
 
 		case 'q':
-			goback(1,1);break;
+                        Serial.println("q");
+			//goback(1,1);
+                        break;
 		case 'Q':
 			goforward(1,1);break;
 
@@ -589,8 +620,13 @@ void loop()
 			Serial.print(digitalRead(SPARE6),HEX);      
 			Serial.println("");
 			break;
+                default:
+                  Serial.println("none");break;
 		}
-	}
+	} else {
+  	  readPanel();
+        }
+
 }
 
 /* 
@@ -607,7 +643,7 @@ void home( void )
 
 	Serial.println("Homing machine");
 	findleftlimit();
-	delay(10);
+	delay(100);
 	findypluslimit();
 
 	homed = false;
@@ -627,18 +663,11 @@ void home( void )
 			break;
 		}
 
-                STEPxcw
-		digitalWrite(XCCW,HIGH);
-		delayMicroseconds(1); 
-		digitalWrite(XCCW,LOW);
-		delayMicroseconds(DELAY_X2+DELAY_X1);   
-
+                stepXCCW(DELAY_X2+DELAY_X1);
+                
 		delay(1);
 
-		digitalWrite(YCCW,HIGH);
-		delayMicroseconds(1); 
-		digitalWrite(YCCW,LOW);
-		delayMicroseconds(DELAY_Y2+DELAY_Y2); 
+                stepYCCW(DELAY_Y2+DELAY_Y1);
 	}
 
 	digitalWrite(XCCW,HIGH);
@@ -659,10 +688,7 @@ void home( void )
 		}
 
 		if( xhomed == 0 ) {
-			digitalWrite(XCW,HIGH);
-			delayMicroseconds(1); 
-			digitalWrite(XCW,LOW);
-			delayMicroseconds(DELAY_X2+DELAY_X1); 
+                      stepXCW(DELAY_X2+DELAY_X1);
 		}
 
 	}
@@ -682,10 +708,8 @@ void home( void )
 		}      
 
 		if( yhomed == 0 ){
-			digitalWrite(YCW,HIGH);
-			delayMicroseconds(1); 
-			digitalWrite(YCW,LOW);
-			delayMicroseconds(DELAY_Y2+DELAY_Y1); 
+                  stepYCW(DELAY_Y2+DELAY_Y1);
+
 		}
 	}
 
@@ -824,6 +848,7 @@ void head( unsigned char on )
 
 char findlefthome(void) {
 
+  unsigned long counter = 0;
 	while(1) {
 
 		if( digitalRead( XL1) ) {
@@ -848,10 +873,8 @@ char findlefthome(void) {
 			return false;
 		}
 
-		digitalWrite(XCW,HIGH);
-		delayMicroseconds(DELAY_X1); 
-		digitalWrite(XCW,LOW);
-		delayMicroseconds(DELAY_X2); 
+                stepXCW( DELAY_Y1 + DELAY_Y2);
+                counter++;
 	}  
 
 	// reset it back
@@ -880,24 +903,20 @@ char findleftlimit(void)
                         // Reset Xum counter 
                         gCurrentXum = 0;
                         
-			delay(200);
+			delay(500);
 			return false;
 		}
 
-		digitalWrite(XCW,HIGH);
-		delayMicroseconds(SHORT_X_PULSE); 
-		digitalWrite(XCW,LOW);
-		delayMicroseconds(length); 
-
-		counter ++ ;
-
-		if (length <= X_SPEED ) length = X_SPEED;
+                stepXCW(length--);
+                counter++;
+		if (length <= X_SPEED ) 
+                  length = X_SPEED;
 	}  
 }
 
 char findrightlimit(void) {
-
-	unsigned long counter = 0;
+  
+  unsigned long counter = 0;
 
 	unsigned int length = ( DELAY_X1 + DELAY_X2 ) ;
 
@@ -906,7 +925,7 @@ char findrightlimit(void) {
 		if( digitalRead( XL2 ) ) {
 
 			digitalWrite(XCCW,HIGH);
-			delay(200);
+			delay(500);
 
 			homed = 0;
 			Serial.print("Found X right limit = ");
@@ -915,13 +934,9 @@ char findrightlimit(void) {
 			return false;
 		}
 
-		digitalWrite(XCCW,HIGH);
-		delayMicroseconds(1); 
-		digitalWrite(XCCW,LOW);
-		delayMicroseconds(length); 
-
-		counter++;
-
+                stepXCCW(length--);
+                counter ++;
+                
 		//clamp value
 		if (length <= X_SPEED ) 
 			length = X_SPEED;
@@ -942,6 +957,7 @@ char findyplushome(void) {
 
                         // Reset Yum counter 
                         gCurrentYum = 0;
+			delay(500);
 
 			return false;
 
@@ -953,14 +969,12 @@ char findyplushome(void) {
 			digitalWrite(YCW,HIGH);
 
 			Serial.println("Found Y home");
+			delay(200);
 
 			return false;
 		}
 
-		digitalWrite(YCW,HIGH);
-		delayMicroseconds(DELAY_Y1); 
-		digitalWrite(YCW,LOW);
-		delayMicroseconds(DELAY_Y2); 
+                stepYCW(DELAY_Y1+DELAY_Y2);
 	}  
 
 	// reset it back
@@ -1017,7 +1031,7 @@ void stepXCCW( long length )
 char findypluslimit(void) {
 
 	unsigned long counter = 0;
-	unsigned int length = DELAY_X1 + DELAY_X2;
+	unsigned int length = DELAY_Y1 + DELAY_Y2;
 
 	while( 1 ) {
 
@@ -1028,30 +1042,33 @@ char findypluslimit(void) {
 			homed = 0;
 			Serial.print("Found Y+ limit = ");
 			Serial.println(counter,DEC);
-			delay(200);
+			delay(500);
 
                         // reset Y micrometers
                         gCurrentYum =  0;
                         
 			return false;
 		}
-
-		counter++;
-		if (length <= Y_SPEED ) length = Y_SPEED;
+                
+                stepYCW(length--);
+		
+                counter++;
+		if (length <= Y_SPEED ) 
+                  length = Y_SPEED;
 	}  
 }
 
 char findyminuslimit(void) {
 
 	unsigned long counter = 0;
-	unsigned int length = DELAY_X1 + DELAY_X2;
+	unsigned int length = DELAY_Y1 + DELAY_Y2;
 
 	while( 1 ) {
 
 		if(  digitalRead( YL2 )) {
 
 			digitalWrite(YCCW,HIGH);
-			delay(200);
+			delay(500);
 
 			homed = 0;
 			Serial.print("Found Y- limit = ");
@@ -1059,10 +1076,7 @@ char findyminuslimit(void) {
 			return false;
 		}
 
-		digitalWrite(YCCW,HIGH);
-		delayMicroseconds(1); 
-		digitalWrite(YCCW,LOW);
-		delayMicroseconds(length); 
+                stepYCCW(length--);
 		counter++;
 
 		if (length <= Y_SPEED ) length = Y_SPEED;
@@ -1080,13 +1094,8 @@ char goleft(long steps ,char nolimit) {
 				return false;
 			}
 		}
-		digitalWrite(XCW,HIGH);
-		delayMicroseconds(DELAY_X1); 
-		digitalWrite(XCW,LOW);
-		delayMicroseconds(DELAY_X2); 
 
-		// global pulse counter
-		DecrementXPulses();
+                stepXCW(DELAY_X1+DELAY_X2);
 
 	}  
 
@@ -1105,12 +1114,12 @@ long mmtopulses( long mm )
 
 long umtopulses( long microm ) 
 {
-	return ( microm *  40000 ) ;
+	return ( microm /  25 ) ;
 }
 
 long pulsestoum( long pulses ) 
 {
-	return ( pulses /  40000 ) ;
+	return ( pulses *  25 ) ;
 }
 
 long pulsestomm( long pulses ) 
@@ -1118,18 +1127,59 @@ long pulsestomm( long pulses )
 	return ( pulses /  40 ) ;
 }
 
+/*
 
-char gotoxy(int xum,int yum)
+xum,yum = 150000 150000 going to in um
+gx,gy = 6000 6000  at in pulses
+cx,cy = 150000 150000 at in um
+dx,dy = 0 0 difference
+nx,ny = 0 0
+
+xum,yum = 25000 25000 wanted in um
+gx,gy = 6000 6000 at in pulses
+cx,cy = 150000 150000 currently in um
+dx,dy = 125000 125000 difference in um
+nx,ny = 5000 5000 pulses
+
+
+none
+
+*/
+
+char gotoxy(long xum,long yum)
 {
       // direction to travel, defaults to right and back
         char xDir=1,yDir;
         long dx,dy;
 	long numXPulses=0,numYPulses=0;
+ 
+        Serial.print("xum,yum um= ");
+        Serial.print(xum);
+        Serial.print(" ");
+        Serial.println(yum);
 
+        Serial.print("gx,gy pulses= ");
+        Serial.print(gXPulses);
+        Serial.print(" ");
+        Serial.println(gYPulses);
+
+        gCurrentXum = pulsestoum( gXPulses ) ;
+        gCurrentYum = pulsestoum( gYPulses ) ;
+        
+        Serial.print("cx,cy = ");
+        Serial.print(gCurrentXum);
+        Serial.print(" ");
+        Serial.println(gCurrentYum);
+       
         // calculate dx/dy
         dx = ( gCurrentXum - xum );
         dy = ( gCurrentYum - yum );
-        
+
+        Serial.print("dx,dy um = ");
+        Serial.print(dx);
+         Serial.print(" ");
+         Serial.println(dy);
+       
         // if needs to go left
         if( dx < 0  ) {
           dx = abs( dx ) ;
@@ -1143,16 +1193,21 @@ char gotoxy(int xum,int yum)
 	numXPulses = umtopulses( dx );
 	numYPulses = umtopulses( dy );
 
-        if( xDir == 0 ) {
+        Serial.print("nx,ny pulses = ");
+        Serial.print(numXPulses);
+         Serial.print(" ");
+         Serial.println(numYPulses);
+
+        if( xDir == 1 ) {
           goleft( numXPulses, 1);
         } else {
           goright( numXPulses, 1 ) ;
         }
   
-        if( yDir == 0 ) {
-          goback( numYPulses, 1);
-        } else {
+        if( yDir == 1 ) {
           goforward( numYPulses, 1 ) ;
+        } else {
+          goback( numYPulses, 1);
         }
         
 }
@@ -1179,7 +1234,6 @@ char goright(long steps ,char nolimit ) {
 		}
 
                 stepXCCW( DELAY_X2+DELAY_X1 );
-
 	}  
 
 	// reset it back
@@ -1210,6 +1264,8 @@ char goforward(long steps ,char nolimit ) {
 
 char goback(long steps ,char nolimit ) {
 
+  Serial.println("goback");
+  
 	for( int y = 0 ; y < steps ; y ++ )
 	{
 		if( nolimit == 1) {
@@ -1301,6 +1357,9 @@ void testmode(void)
 
 void IncrementXPulses( void ) 
 {
+    if (homed == 0 ) 
+        return; 
+
 	gXPulses ++;
 
 	if( gXPulses >= MAX_X_PULSES ) {
@@ -1315,7 +1374,10 @@ void IncrementXPulses( void )
 
 void DecrementXPulses( void ) 
 {
-	gXPulses --;
+    if (homed == 0 ) 
+        return; 
+	
+      gXPulses --;
 
 	if( gXPulses < 0 ) {
 		Serial.print("Error negative X pulses, must be loosing some ");
@@ -1329,7 +1391,11 @@ void DecrementXPulses( void )
 
 void IncrementYPulses( void ) 
 {
+    if (homed == 0 )
+      return; 
+    
 	gYPulses ++;
+
 	if( gYPulses >= MAX_Y_PULSES ) {
 		Serial.print("Error too many Y pulses, must be loosing some ");
 		Serial.print(gXPulses,DEC);
@@ -1341,7 +1407,11 @@ void IncrementYPulses( void )
 
 void DecrementYPulses( void ) 
 {
+    if (homed == 0 ) 
+      return; 
+
 	gYPulses --;
+
 	if( gYPulses < 0 ) {
 		Serial.print("Error negative Y pulses, must be loosing some ");
 		Serial.print(gXPulses,DEC);
