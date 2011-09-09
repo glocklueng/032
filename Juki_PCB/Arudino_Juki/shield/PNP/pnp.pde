@@ -1,3 +1,4 @@
+#define NDEBUG 1
 
 /*
      __  __           ___    ___       ____                                        __                __                
@@ -363,11 +364,18 @@ void setup( void ) {
     Serial.println(pulsestomm(MAX_Y_PULSES*1000),DEC);
     Serial.println("");
 
+#if 0
     // setup the limit switches
-    attachInterrupt(XL1, x1Limit, LOW);
-    attachInterrupt(XL2, x2Limit, LOW);
-    attachInterrupt(YL1, y1Limit, LOW);
-    attachInterrupt(YL2, y2Limit, LOW);
+    attachInterrupt(5, x1Limit, FALLING );
+    attachInterrupt(4, x2Limit, FALLING );
+    attachInterrupt(2, y1Limit, FALLING );
+    attachInterrupt(3, y2Limit, FALLING );
+#endif
+
+    xLimit1 = digitalRead( XL1 );
+    yLimit1 = digitalRead( YL1 );
+    xLimit2 = digitalRead( XL2 );
+    yLimit2 = digitalRead( YL2 );
 }
 
 
@@ -462,33 +470,34 @@ void readPanel( void )
     lastTeach = teachSwitch;
 
     // if vac is held down, toggle vacuum
-    if( vacSwitch == true && lastVac== false ) {
-
-        // toggle state
-        vacuumState = 1 - vacuumState;
-        vacuum(vacuumState);
+    if( vacSwitch == true ) {    
+        vacuum(1);
+        // remember last setting
+        lastVac = true;
+      
+    } else if ( lastVac == true ) {
+      vacuum(0 ) ;
+      lastVac = false;
     }
 
-    // remember last setting
-    lastVac = vacSwitch;
-    
     // if head is held down, toggle head
-    if( headSwitch == true && lastHead == false ) {
+    if( headSwitch == true ) {
 
         // toggle state
-        headState = 1 - headState;
-        head(headState);
+       lastHead = true;
+        head(1);
+        
+    } else if (lastHead == true ) {
+      head(0);
+      lastHead = false;
     }
 
-    // remember last setting
-    lastHead = headSwitch;
-    
     
     // handle cursor keys
-    if( xPlus  == true ) goright(fspeed,1);
-    if( xMinus == true ) goleft(fspeed,1);
-    if( yPlus  == true ) goback(fspeed,1);
-    if( yMinus == true ) goforward(fspeed,1);
+    if( xPlus  == true ) {delay(10);goright(fspeed,1);};
+    if( xMinus == true ) {delay(10);goleft(fspeed,1);};
+    if( yPlus  == true ) {delay(10);goback(fspeed,1);};
+    if( yMinus == true ) {delay(10);goforward(fspeed,1);};
     
 }
 
@@ -496,7 +505,11 @@ void readPanel( void )
 unsigned int readLimitSwitches( void ) 
 {
     unsigned char  limit;
-
+    xLimit1 = digitalRead( XL1 );
+    yLimit1 = digitalRead( YL1 );
+    xLimit2 = digitalRead( XL2 );
+    yLimit2 = digitalRead( YL2 );
+  
     limit  = xLimit1;
     limit += xLimit2;
     limit += xLimit3;
@@ -510,7 +523,7 @@ unsigned int readLimitSwitches( void )
     yHome =  digitalRead( YHM ); 
 
     // debug code
-#ifndef NDEBUG
+
     Serial.println("Limit");
     Serial.println("123123XY");
     Serial.print(xLimit1,HEX);
@@ -527,26 +540,23 @@ unsigned int readLimitSwitches( void )
     Serial.print(" ");
     Serial.print(gYPulses,DEC);
     Serial.println("");
-#endif
 
     // update the global position in micrometers
     gCurrentXum = pulsestoum( gXPulses ) ;
     gCurrentYum = pulsestoum( gYPulses ) ;
 
-#ifndef NDEBUG
+
     Serial.print("cx,cy = ");
     Serial.print(gCurrentXum);
     Serial.print(" ");
     Serial.println(gCurrentYum);
-#endif
 
     // if any of the limit switches are reached, machine is no longer considered to be homed
     // set in interrupts
     if( limit ) {
 
-#ifndef NDEBUG
+
         Serial.println("out of home!!");
-#endif
 
            // limit switch interrupt will update this, but just in case.
         homed = false;
@@ -674,14 +684,42 @@ void vacuum( boolean on_off )
 // return the status of the head
 boolean headDown( void ) 
 {
-    return !digitalRead( HEADDN ) ;
+    return digitalRead( HEADDN ) ?1:0;
 } 
 
+void xtoolchange(void)
+{
+  // move to toolchange
+//  move2(0,pulsestoum(12299));
+ move2(pulsestoum(34),pulsestoum(12271));
+
+  // 
+            tapeKnock(1);
+            delay(200);
+            tapeKnock(0);
+            delay(100);
+            vacuum(1);
+            delay(100);
+            head(1);
+            delay(500);
+            head(0);
+            delay(500);
+}
+
+void xend(void)
+{
+            head(1);
+            delay(200);
+            vacuum(0);
+            delay(500);
+            head(0);
+            delay(500);
+}
 
 void loop() 
 {
     char sbyte;
-
+    
     if (Serial.available() > 0) {
         
         // read the incoming byte:
@@ -690,9 +728,96 @@ void loop()
         switch( sbyte ) 
         {
         case '*':
-            Reset_AVR();
-            break;
+            move2(  50000,100000);
             
+            
+              xtoolchange();
+move2(50188,181426);xend();
+              xtoolchange();
+move2(53484,181426);xend();
+              xtoolchange();
+move2(59192,185480);xend();
+              xtoolchange();
+move2(61683,185480);xend();
+
+              xtoolchange();
+            rotate(true);
+move2(41929,209188);xend();
+            rotate(false);
+
+              xtoolchange();
+            rotate(true);
+move2(59200,181508);
+            rotate(false);
+            xend();
+              xtoolchange();
+              center(true);
+              delay(10);
+             center(false);
+move2(54666,202537);
+          xend();
+              xtoolchange();
+move2(62896,210238);xend();
+              xtoolchange();
+move2(57408,178552);xend();
+              xtoolchange();
+move2(62300,179442);xend();
+              xtoolchange();
+move2(67033,165146);xend();
+              xtoolchange();
+move2(60023,165009);xend();
+              xtoolchange();
+move2(61312,161566);xend();
+              xtoolchange();
+move2(57086,215584);xend();
+              xtoolchange();
+move2(54712,158199);xend();
+              xtoolchange();
+move2(59676,158199);xend();
+              xtoolchange();
+move2(63939,220169);xend();
+              xtoolchange();
+move2(50996,200426);xend();
+              xtoolchange();
+move2(58610,172304);xend();
+              xtoolchange();
+move2(66726,192156);xend();
+              xtoolchange();
+move2(65697,172314);xend();
+              xtoolchange();
+move2(51717,171414);xend();
+              xtoolchange();
+move2(61902,192979);xend();
+              xtoolchange();
+move2(67503,211651);xend();
+              xtoolchange();
+move2(61539,216191);xend();
+              xtoolchange();
+move2(57725,216191);xend();
+              xtoolchange();
+move2(55834,216191);xend();
+              xtoolchange();
+move2(62991,202407);xend();
+              xtoolchange();
+move2(40926,218469);xend();
+              xtoolchange();
+move2(68576,199343);xend();
+              xtoolchange();
+move2(51712,158199);xend();
+              xtoolchange();
+move2(68767,159693);xend();
+              xtoolchange();
+move2(49848,165338);xend();
+              xtoolchange();
+move2(54996,224363);xend();
+
+          head(0);
+        home();
+
+
+            break;
+
+
         case 'A':
             gotoxy(25000,25000);
             break;
@@ -794,11 +919,18 @@ void loop()
             break;
 
         case 'q':
-            Serial.println("q");
-            //goback(1,1);
+        head(1);
+        delay(200);
+              center(true);
+              delay(200);
+             center(false);
+              delay(100);
+              head(0);
+    //        move2(pulsestoum(1560), pulsestoum(5766));
+//            goback(100,1);
             break;
         case 'Q':
-            goforward(1,1);
+            goforward(100,1);
             break;
 
         case '8':
@@ -936,7 +1068,7 @@ void home( void )
         digitalWrite(XCCW,LOW);
         digitalWrite(YCCW,LOW);
         // decrease delay ( ramp )
-        delayMicroseconds(length--);   
+        delayMicroseconds(length);   
 
         // clamp speed to slowest axis ( Y Axis)
         if (length <= Y_SPEED ) 
@@ -956,7 +1088,7 @@ void home( void )
         }
 
          // failed
-        if( digitalRead( XL1 )) {
+        if( digitalRead( XL1  ) ) {
             digitalWrite(XCW,HIGH);
             return;
         }
@@ -1135,7 +1267,7 @@ void center( boolean on )
     if( on ) 
         digitalWrite(CENTERING,LOW);  
     else  
-        digitalWrite(ROT,HIGH);
+        digitalWrite(CENTERING,HIGH);
 
 }
 
@@ -1322,7 +1454,8 @@ char findyplushome(void) {
 // this function should be called before moving either axis.
 void beforeMoving( void ) 
 {
-    // head up
+  // head up
+  if( headState )
     head( false );
 }
 
@@ -1435,48 +1568,27 @@ char findyminuslimit(void) {
     }  
 }
 
-char goleft(long steps ,boolean nolimit) {
 
-    for( int y = 0 ; y < steps ; y ++ )
-    {
-        if( nolimit == true ) {
-            if( digitalRead( XL1 ) ) {
-                digitalWrite(XCW,HIGH);
-#ifndef NDEBUG
-                Serial.println("goleft limit");
-#endif
-                return false;
-            }
-        }
-
-        stepXCW(DELAY_X1+DELAY_X2);
-    }  
-
-    // reset it back
-    digitalWrite(XCW,HIGH);
-
-    return true;
-}
 
 // pulses = ( microm * 40000 )
 
 // conversions betweem mm,um and pusles
-long mmtopulses( long mm ) 
+inline long mmtopulses( long mm ) 
 {
     return ( mm *  40 ) ;
 }
 
-long umtopulses( long microm ) 
+inline long umtopulses( long microm ) 
 {
     return ( microm /  25 ) ;
 }
 
-long pulsestoum( long pulses ) 
+inline long pulsestoum( long pulses ) 
 {
     return ( pulses *  25 ) ;
 }
 
-long pulsestomm( long pulses ) 
+inline long pulsestomm( long pulses ) 
 {
     return ( pulses /  40 ) ;
 }
@@ -1591,11 +1703,11 @@ char gotoxy(long xum,long yum)
  */
 
 
-void moveLine(int x0, int y0, int x1, int y1)
+void moveLine(long x0, long y0, long x1, long y1)
 {
-    int dx =  abs(x1-x0), sx = x0<x1 ? 1 : -1;
-    int dy = -abs(y1-y0), sy = y0<y1 ? 1 : -1; 
-    int err = dx+dy, e2; /* error value e_xy */
+    long dx =  abs(x1-x0), sx = x0<x1 ? 1 : -1;
+    long dy = -abs(y1-y0), sy = y0<y1 ? 1 : -1; 
+    long err = dx+dy, e2; /* error value e_xy */
 
     for(;;){  /* loop */
 
@@ -1625,10 +1737,50 @@ boolean gotoxyp(int xp,int yp)
     goback(yp,1);
 }
 
+boolean goleft(long steps ,boolean nolimit) {
+
+  long length = DELAY_X1+DELAY_X2;
+  long perc = (steps /100 ) * 5;
+  if( (steps-perc) < 0 ) perc = 0;
+       
+    for( int i = 0 ; i < steps ; i ++ )
+    {
+        if( nolimit == true ) {
+            if( digitalRead( XL1 ) ) {
+                digitalWrite(XCW,HIGH);
+#ifndef NDEBUG
+                Serial.println("goleft limit");
+#endif
+                return false;
+            }
+        }
+        stepXCW( length );
+       
+        if( i < (steps-perc)) 
+          length--;
+         else
+          length+=10;
+          
+        if (length < Y_SPEED ) 
+          length = Y_SPEED;
+        if (length >DELAY_Y2 + DELAY_Y1 ) 
+          length = DELAY_Y2 + DELAY_Y1;
+    }  
+
+    // reset it back
+    digitalWrite(XCW,HIGH);
+
+    return true;
+}
+
 boolean goright(long steps ,boolean nolimit ) 
 {
-
-    for( int x = 0 ; x < steps ; x ++ )
+  long length=DELAY_X2+DELAY_X1;
+  long perc = (steps /100 ) * 5;
+  
+  if(steps-perc <0 ) perc = 0;
+  
+    for( int i = 0 ; i < steps ; i ++ )
     {
         if( nolimit == true ) {
             if( digitalRead( XL2 ) ) {
@@ -1640,7 +1792,17 @@ boolean goright(long steps ,boolean nolimit )
             }
         }
 
-        stepXCCW( DELAY_X2+DELAY_X1 );
+        stepXCCW( length );
+        
+        if( i < (steps-perc)) 
+          length--;
+         else
+          length+=10;
+        
+        if (length < Y_SPEED ) 
+          length = Y_SPEED;
+        if (length >DELAY_Y2 + DELAY_Y1 ) 
+          length = DELAY_Y2 + DELAY_Y1;    
     }  
 
     // reset it back
@@ -1649,9 +1811,14 @@ boolean goright(long steps ,boolean nolimit )
     return true;        
 }
 
-boolean goforward(long steps ,boolean nolimit ) {
-
-    for( int y = 0 ; y < steps ; y ++ )
+boolean goforward(long steps ,boolean nolimit )
+{
+  long length = DELAY_Y2 + DELAY_Y1;
+  long perc = (steps /100 ) * 2;
+  
+  if( (steps-perc) < 0 ) perc = 0;
+  
+    for( int i = 0 ; i < steps ; i ++ )
     {
         if( nolimit == true ) {
             if( digitalRead( YL1 ) ) {
@@ -1662,7 +1829,18 @@ boolean goforward(long steps ,boolean nolimit ) {
                 return false;
             }
         }
-        stepYCW( DELAY_Y2 + DELAY_Y1 );
+        stepYCW( length );
+        
+        if( i < (steps-perc)) 
+          length--;
+         else
+          length+=1;
+
+        if (length < Y_SPEED ) 
+          length = Y_SPEED;
+        if (length >DELAY_Y2 + DELAY_Y1 ) 
+          length = DELAY_Y2 + DELAY_Y1;          
+          
     }  
 
     // reset it back
@@ -1673,7 +1851,11 @@ boolean goforward(long steps ,boolean nolimit ) {
 
 boolean goback(long steps ,boolean nolimit ) {
 
-    for( int y = 0 ; y < steps ; y ++ )
+    long length = DELAY_Y2 + DELAY_Y1;
+    long perc = (steps /100 ) * 2;
+    if( (steps-perc) < 0 ) perc = 0;
+  
+    for( int i = 0 ; i < steps ; i ++ )
     {
         if( nolimit == true ) {
             if( digitalRead( YL2 ) ) {
@@ -1684,7 +1866,18 @@ boolean goback(long steps ,boolean nolimit ) {
                 return false;
             }
         }
-        stepYCCW( DELAY_Y2 + DELAY_Y1 ); 
+        stepYCCW( length ); 
+        
+        if( i < (steps-perc)) 
+          length--;
+         else
+          length+=1;
+ 
+
+        if (length < Y_SPEED ) 
+          length = Y_SPEED;
+        if (length >DELAY_Y2 + DELAY_Y1 ) 
+          length = DELAY_Y2 + DELAY_Y1;
     }  
     
 
@@ -1756,8 +1949,134 @@ void DecrementYPulses( void )
         Serial.print("Error negative Y pulses, must be loosing some ");
         Serial.print(gXPulses,DEC);
         Serial.println(gYPulses,DEC);
-
+        readLimitSwitches();
         homed = false;
         return;
     }
 }
+
+
+float distance(float x1, float y1, float x2, float y2)
+{
+   return sqrt(pow(x2-x1,2) + pow(y2-y1,2));
+}
+ 
+ 
+void plotLine(long x0, long y0, long x1, long y1,unsigned long col,int fast)
+{
+  static long lastpx=0,lastpy=0;
+  long dx =  abs(x1-x0), sx = x0<x1 ? 1 : -1;
+  long dy = -abs(y1-y0), sy = y0<y1 ? 1 : -1; 
+  long err = dx+dy, e2; /* error value e_xy */
+  long seg1,seg2;	
+  float dist = distance(x0,y0,x1,y1);
+
+  lastpx=0;lastpy=0;
+
+  // calculate 20% of distance
+  seg1  = ( dist / 100.0f ) * 20.0f;
+  
+  // subtract
+  dist -= seg1;
+
+  for(;;){  /* loop */
+
+
+	  if( seg1 > 0 ) {
+		  // first segment, slow
+		  gotoxy(x0,y0);
+delay(20);
+	   	  seg1	--;
+		  dist--;
+	  } else {
+		  if (dist >0 ) {
+			  // fast 
+      		          gotoxy(x0,y0);
+delay(20);
+			dist--;
+		  } else {
+	  		  //slow last
+      	      	          gotoxy(x0,y0);
+delay(20);
+		  }
+	  }
+
+    if (x0==x1 && y0==y1) 
+		break;
+    
+	e2 = 2*err;
+
+    if (e2 >= dy) { 
+		err += dy; 
+		x0 += sx; 
+	} 
+    
+	if (e2 <= dx) { 
+		err += dx; 
+		y0 += sy; 
+	} 
+  }
+}
+
+void move2(long x0,long y0 )
+{
+  static long lx,ly;
+  
+  moveLine2(lx,ly,x0,y0);
+  
+  lx = x0;
+  ly = y0;
+  delay(500);
+}
+void moveLine2( long x0, long y0, long x1, long y1)
+{
+  long xdiff,ydiff;
+  
+  //convert to pulses
+  x0 = umtopulses(x0);
+  y0 = umtopulses(y0);
+  x1 = umtopulses(x1);
+  y1 = umtopulses(y1);
+  
+  while( x0 != x1 || y0 != y1 )
+  {
+        
+        if( x0 != x1 ) {
+        
+            xdiff = x0-x1;
+            xdiff = abs(xdiff);
+ 
+              // move right
+             if( x0 < x1 ) {
+               
+               if ( false == goright( xdiff ,1) ) return;
+               delay(20);
+                x0 += xdiff;
+             } else { 
+                if ( false == goleft( xdiff,1)) return;
+                delay(20);
+
+               x0 -= xdiff;
+             }
+        }
+
+        if( y0 != y1 ) {
+
+             ydiff = y0-y1;
+             ydiff = abs(ydiff);
+
+              // move right
+             if( y0 < y1 ) {
+                if ( false == goback(ydiff,1)) return;
+                delay(20);
+               y0 += ydiff;
+             } else { 
+               if ( false == goforward(ydiff,1)) return;
+               delay(20);
+               y0 -= ydiff;
+             }
+        }
+
+  }
+}
+
