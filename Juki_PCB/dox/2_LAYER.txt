@@ -1,8 +1,0 @@
-*.R01 = Top layer 
-*.R02 = Botom layer 
-*.R03 = Top soldermask 
-*.R04 = Bot Soldermask 
-*.R05 = Top Silk 
-*.R06 = Bot Silk 
-*.R07 = PCB Shape 
-*.NCD = N/C Drill 3:4 0 leading/suspresion none
