@@ -47,8 +47,11 @@
 #define XHM     ( 26 ) 
 #define YHM      ( 41 ) 
 
-#define HEADDN     ( 36 )
-#define DEG90      ( 37 )
+// these two seem mixed up
+#define HEADDN     ( 37 )
+#define DEG90      ( 36 )
+
+
 #define TACSENSE   ( 38 )
 #define PCBDETECTOR ( 39 )
 #define PCBIN ( 5 )
@@ -70,6 +73,7 @@
 
 #define FAST ( 15 )
 #define TEACH ( 16 )
+//switch on touch pad
 #define T_VAC ( 17 )
 // switch on touch pad
 #define T_HEAD ( 33 )
@@ -247,6 +251,9 @@ long gCurrentYum = 0;
 
 // machine homed ?
 boolean homed = false;
+
+static long lx=0,ly=0;
+
 
 // This should cause a proper reset it doesn't.
 #define Reset_AVR() wdt_enable(WDTO_30MS); while(1) {}
@@ -578,17 +585,115 @@ unsigned int readLimitSwitches( void )
  100 = tool 5
  101 = tool 6
  */
+boolean  hastool( void )
+{
+  boolean status = false;
+  
+  // headup
+  head( 0 );
 
+  move2(pulsestoum(12308),pulsestoum(5002));
+  delay(100);
+  
+  head(1);
+  vacuum(1);
+  delay(500);
+  Serial.println(!digitalRead(TACSENSE ),DEC);
+  status     = !digitalRead( TACSENSE );
+  delay(40);
+  head(0);
+  vacuum(0);
+  delay(500);
+  Serial.println(!digitalRead(TACSENSE ),DEC);
+
+  return status;
+}
+
+void putdown(void )
+{
+  #ifndef NDEBUG
+  Serial.println("putdown");
+  #endif
+             // head down wait
+           //00:14:11
+            head(1);
+            //14:12 its down
+           delay(600);
+            //0:14:15
+            
+            // toolchanger up
+            digitalWrite(SPARE2,LOW);
+            //wait
+            //  up by 14:14
+            delay(1000);
+            //00:15:18
+             // toolchanger down         
+            digitalWrite(SPARE2,HIGH);
+            delay(1000);
+            //head up
+            head(0); 
+           delay(300);
+           
+           if( hastool() == true ) {
+             Serial.println("Failed to drop tool");
+           }
+}
+
+void pickup(void )
+{
+#ifndef NDEBUG
+  Serial.println("pickup");
+#endif
+
+// head down wait
+           //00:14:11
+            head(1);
+            //14:12 its down
+           delay(600);
+            //0:14:15
+            
+            // toolchanger up
+            digitalWrite(SPARE2,LOW);
+            //wait
+            //  up by 14:14
+            delay(1000);
+            //00:15:18
+            //head up
+            head(0); 
+            delay(1000);
+             // toolchanger down         
+            digitalWrite(SPARE2,HIGH);
+           delay(300);
+
+           if( hastool() == false ) {
+             Serial.println("Failed to pi tool");
+           }
+
+}
 /* handle the tool changer */
+
+void tooloff( void )
+{
+   digitalWrite(SPARE2,HIGH);
+}
 
 void tool( unsigned char on_off, unsigned char toolid ) 
 {
+  boolean pick = false;
+  
+    head(0);
+    
+    if( hastool() == true ) {
+      pick = true;
+    }
+    
 #ifndef NDEBUG
     Serial.print("Tool change ");
     Serial.println(toolid,DEC);
 #endif
     switch( toolid ) {
         case 0 :
+
             digitalWrite(SPARE3,HIGH);  
             ;
             digitalWrite(SPARE4,HIGH);  
@@ -597,20 +702,37 @@ void tool( unsigned char on_off, unsigned char toolid )
             ;          
             break;
         case 1 :
+
+
+            //13077 4657
+          // move to toolchanger position, bring up tool change.
+            move2(pulsestoum(13077),pulsestoum(4657));
+            
+            delay(200);
+            
             digitalWrite(SPARE3,LOW);  
-            ;
             digitalWrite(SPARE4,LOW);  
-            ;
             digitalWrite(SPARE5,LOW);  
-            ;          
+            
+            if(pick) 
+                putdown();
+            else
+                pickup();
+                
             break;
         case 2 :
+            move2(pulsestoum(13077),pulsestoum(3684));
+            delay(200);
+            
+            if(pick) 
+                putdown();
+            else
+                pickup();
+
             digitalWrite(SPARE3,LOW);  
-            ;
             digitalWrite(SPARE4,LOW);  
-            ;
             digitalWrite(SPARE5,HIGH);  
-            ;          
+
             break;
         case 3 :
             digitalWrite(SPARE3,LOW);  
@@ -646,10 +768,10 @@ void tool( unsigned char on_off, unsigned char toolid )
             break;
         }
     if( on_off ) { 
-        digitalWrite(SPARE2,LOW);
+        //digitalWrite(SPARE2,LOW);
     } 
     else {
-        digitalWrite(SPARE2,HIGH);
+       digitalWrite(SPARE2,HIGH);
     }
 }
 
@@ -682,6 +804,8 @@ void vacuum( boolean on_off )
 }
 
 // return the status of the head
+// o down
+// 1 up
 boolean headDown( void ) 
 {
     return digitalRead( HEADDN ) ?1:0;
@@ -691,35 +815,37 @@ void xtoolchange(void)
 {
   // move to toolchange
 //  move2(0,pulsestoum(12299));
- move2(pulsestoum(34),pulsestoum(12271));
+  delay(100);
+  // move to feeder one
+   move2(pulsestoum(34),pulsestoum(12271));
 
   // 
             tapeKnock(1);
-            delay(200);
+            delay(100);
             tapeKnock(0);
-            delay(100);
+            delay(200);
+            head( 1 );
+            delay(150);
             vacuum(1);
-            delay(100);
-            head(1);
-            delay(500);
-            head(0);
-            delay(500);
+            delay(200);
+            head( 0 );
+            delay(200);
 }
 
 void xend(void)
 {
             head(1);
-            delay(200);
+            delay(100);
             vacuum(0);
-            delay(500);
+            delay(10);
             head(0);
-            delay(500);
+            delay(100);
 }
 
 void loop() 
 {
     char sbyte;
-    
+        
     if (Serial.available() > 0) {
         
         // read the incoming byte:
@@ -729,8 +855,10 @@ void loop()
         {
         case '*':
             move2(  50000,100000);
-            
-            
+            delay(100);
+            if( hastool() == false ) 
+              tool(1,1);
+
               xtoolchange();
 move2(50188,181426);xend();
               xtoolchange();
@@ -810,8 +938,9 @@ move2(68767,159693);xend();
 move2(49848,165338);xend();
               xtoolchange();
 move2(54996,224363);xend();
-
           head(0);
+    tool(1,1);
+  
         home();
 
 
@@ -819,10 +948,11 @@ move2(54996,224363);xend();
 
 
         case 'A':
-            gotoxy(25000,25000);
+               Serial.print(hastool(),DEC);
             break;
         case 'a':
-            gotoxy(150000,150000);
+                    move2(pulsestoum(13077),pulsestoum(4657-(973*1)));
+
             break;
         case 'K':
             gotoxyp(52,12330);
@@ -884,33 +1014,6 @@ move2(54996,224363);xend();
             walk();
             break;
 
-        case 'z':          
-            tool(1,1);
-            delay(3);
-            tool(1,2);
-            delay(3);
-            tool(1,3);
-            delay(3);
-            tool(1,4);
-            delay(3);
-            tool(1,5);
-            delay(3);
-            tool(1,6);
-            delay(3);
-            tool(1,5);
-            delay(3);
-            tool(1,4);
-            delay(3);
-            tool(1,3);
-            delay(3);
-            tool(1,2);
-            delay(3);
-            tool(1,1);
-            delay(3);
-
-            tool(0,0);
-            break;
-
         case 'f':
             goright(1,1);
             break;
@@ -919,8 +1022,8 @@ move2(54996,224363);xend();
             break;
 
         case 'q':
-        head(1);
-        delay(200);
+          head(1);
+            delay(200);
               center(true);
               delay(200);
              center(false);
@@ -1031,7 +1134,13 @@ void home( void )
     // reset the pulse counter 
     gXPulses = -1;
     gYPulses = -1;
-
+  lx = 0;ly=0;
+// just in case
+  
+    head(0);
+  //tool changer off
+    tooloff();
+  
     Serial.println("Homing machine");
 
 // doesn't need to find left/Y+ limits    
@@ -1142,7 +1251,7 @@ void home( void )
 #ifndef NDEBUG
     Serial.println("HOMED");
 #endif
-
+  
     homed = true;
 }
 
@@ -1283,8 +1392,6 @@ boolean head( boolean on )
         digitalWrite(HEAD,HIGH);
         headState = false;
     }
-
-    delay( 1 );
     
     //if the head down sensor doesn't equal the headState, something is wrong
     if (headDown() != headState ) {
@@ -2020,7 +2127,8 @@ delay(20);
 
 void move2(long x0,long y0 )
 {
-  static long lx,ly;
+  if(headDown() == true ) 
+    return ;
   
   moveLine2(lx,ly,x0,y0);
   
@@ -2031,6 +2139,8 @@ void move2(long x0,long y0 )
 void moveLine2( long x0, long y0, long x1, long y1)
 {
   long xdiff,ydiff;
+    if(headDown() == true ) 
+    return ;
   
   //convert to pulses
   x0 = umtopulses(x0);
