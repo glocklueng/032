@@ -203,8 +203,8 @@
 
 
 // maximum speed the motors can travel at
-int X_SPEED =( 70 );
-int Y_SPEED =( 80 );
+int X_SPEED =( 50 );
+int Y_SPEED =( 40 );
 
 // length of pulse sent to motor controller
 #define SHORT_X_PULSE ( 1 )
@@ -459,7 +459,7 @@ void readPanel( void )
     // make it go 500 pulses
     fspeed = 500;
   }
-  
+
 
   if( !digitalRead( MORG ) == true && fastSwitch  ) {
     park();
@@ -510,24 +510,24 @@ void readPanel( void )
 
   // handle cursor keys
   if( xPlus  == true ) {
-//    if(!fastSwitch)delay(100);
-//    goright(fspeed,1);
-      DELAY_X2 ++;
+    //    if(!fastSwitch)delay(100);
+    //    goright(fspeed,1);
+    DELAY_X2 ++;
   };
   if( xMinus == true ) {
-//    if(!fastSwitch)delay(100);
-//    goleft(fspeed,1);
-      DELAY_X2 --;
+    //    if(!fastSwitch)delay(100);
+    //    goleft(fspeed,1);
+    DELAY_X2 --;
   };
   if( yPlus  == true ) {
-//    if(!fastSwitch)delay(100);
-//    goback(fspeed,1);
-      DELAY_Y2 ++;
+    //    if(!fastSwitch)delay(100);
+    //    goback(fspeed,1);
+    DELAY_Y2 ++;
   };
   if( yMinus == true ) {
-//    if(!fastSwitch)delay(100);
-//    goforward(fspeed,1);
-      DELAY_Y2 --;
+    //    if(!fastSwitch)delay(100);
+    //    goforward(fspeed,1);
+    DELAY_Y2 --;
   };
 
 }
@@ -607,13 +607,13 @@ unsigned int readLimitSwitches( void )
  100 = tool 5
  101 = tool 6
  */
- 
- void testPad( void ) 
- {
-     move2(pulsestoum(12308),pulsestoum(5002));
- }
- 
- // check to see if head has a tool
+
+void testPad( void ) 
+{
+  move2(pulsestoum(12308),pulsestoum(5002));
+}
+
+// check to see if head has a tool
 boolean  hastool( void )
 {
   boolean status = false;
@@ -622,17 +622,17 @@ boolean  hastool( void )
   head( 0 );
 
 
- // move to the test pad
+  // move to the test pad
   testPad();
   delay(100);
   // head down
   head(1);
   delay(100);
-  
+
   //vacuum on
   vacuum(1);
   delay(500);
-  
+
   // test the vacuum
   status = !digitalRead( TACSENSE );
 
@@ -640,7 +640,7 @@ boolean  hastool( void )
   vacuum(0);
   // head up
   head(0);
-  
+
   // wait for head up
   delay( 400 );
   return status;
@@ -665,7 +665,7 @@ boolean putdown(void )
   //head up
   head(0); 
   delay(300);
-  
+
   if( hastool() == true ) {
 #ifndef NDEBUG
     Serial.println("Failed to drop tool");
@@ -701,7 +701,7 @@ boolean pickup(void )
   delay(300);
 
   if( hastool() == false ) {
-    
+
     Serial.println("Failed to pickup tool");
     return false;
   }
@@ -804,28 +804,28 @@ boolean degree90( void )
 }
 void parkleft(void) { 
   move2( 
-    0,
-     517000
-  );
+  0,
+  517000
+    );
 }
 void parkforward(void) { 
   move2( 
-    364650,
-     0
-  );
+  364650,
+  0
+    );
 }
 void gohome(void) { 
   move2( 
-    0,
-     0
-  );
+  0,
+  0
+    );
 }
 
 void park(void) { 
   move2( 
-    364650,
-     517000
-  );
+  364650,
+  517000
+    );
 }
 
 
@@ -888,7 +888,8 @@ knock:;
   head( 0 );
   delay(200);
 
-  if( !digitalRead( TACSENSE ) == false ) {
+  if( !digitalRead( TACSENSE ) == false ) 
+  {
 
     vacuum(0);
 
@@ -915,7 +916,8 @@ void xend(void)
 
 boolean testpart(void )
 {
-  if( !digitalRead( TACSENSE ) == false ) {
+  if( !digitalRead( TACSENSE ) == false ) 
+  {
 
     move2(pulsestoum(0),pulsestoum(0));
 
@@ -940,14 +942,14 @@ void loop()
     switch( sbyte ) 
     {
     case '*':
-      
+
       move2(  50000,100000);
-      
+
       delay(100);
-      
+
       if( hastool() == false ) 
         tool(1,1);
-        
+
       xtoolchange();
       move2(50188,181426);
       xend();
@@ -1229,17 +1231,17 @@ void loop()
       findypluslimit();
       break;
     case 'p':
-        park();
+      park();
       break;
     case 'P':
-        gohome();
+      gohome();
       break;
-     case 'k':
-       parkleft();
-       break;
-     case 'K':
-       parkforward();     
-       break;
+    case 'k':
+      parkleft();
+      break;
+    case 'K':
+      parkforward();     
+      break;
     case '[':
       findleftlimit();
       break;
@@ -1715,43 +1717,43 @@ char findyplushome(void) {
 // this function should be called before moving either axis.
 void beforeMoving( void ) 
 {
-  
+
   // head up
   if( headState )
     head( false );
 
   if(!digitalRead( FAST ) ) {
-   Serial.println("x1x2");
-  Serial.println(DELAY_X1);
- Serial.println(DELAY_X2);
-  Serial.println(DELAY_Y1);
- Serial.println(DELAY_Y2);
+    Serial.println("x1x2");
+    Serial.println(DELAY_X1);
+    Serial.println(DELAY_X2);
+    Serial.println(DELAY_Y1);
+    Serial.println(DELAY_Y2);
   }
   xPlus  =  !digitalRead( XPLUS );
   xMinus =  !digitalRead( XMINUS );
   yPlus  =  !digitalRead( YPLUS );
   yMinus =  !digitalRead( YMINUS );
-  
+
   // handle cursor keys
   if( xPlus  == true ) {
-//    if(!fastSwitch)delay(100);
-//    goright(fspeed,1);
-      DELAY_X2 ++;
+    //    if(!fastSwitch)delay(100);
+    //    goright(fspeed,1);
+    DELAY_X2 ++;
   };
   if( xMinus == true ) {
-//    if(!fastSwitch)delay(100);
-//    goleft(fspeed,1);
-      DELAY_X2 --;
+    //    if(!fastSwitch)delay(100);
+    //    goleft(fspeed,1);
+    if( DELAY_X2>2)DELAY_X2 --;
   };
   if( yPlus  == true ) {
-//    if(!fastSwitch)delay(100);
-//    goback(fspeed,1);
-      DELAY_Y2 ++;
+    //    if(!fastSwitch)delay(100);
+    //    goback(fspeed,1);
+    DELAY_Y2 ++;
   };
   if( yMinus == true ) {
-//    if(!fastSwitch)delay(100);
-//    goforward(fspeed,1);
-      DELAY_Y2 --;
+    //    if(!fastSwitch)delay(100);
+    //    goforward(fspeed,1);
+    if( DELAY_Y2>2)DELAY_Y2 --;
   };
 
 }
@@ -1861,7 +1863,8 @@ char findyminuslimit(void) {
     stepYCCW(length--);
     counter++;
 
-    if (length <= Y_SPEED ) length = Y_SPEED;
+    if (length <= Y_SPEED ) 
+      length = Y_SPEED;
   }  
 }
 
@@ -2056,11 +2059,12 @@ boolean goleft(long steps ,boolean nolimit) {
     if( i < (steps-perc)) 
       length--;
     else
-      length+=10;
+      length+=2;
 
-    if (length < Y_SPEED ) 
-      length = Y_SPEED;
-    if (length >DELAY_Y2 + DELAY_Y1 ) 
+    if (length < X_SPEED ) 
+      length = X_SPEED;
+      
+    if (length > DELAY_Y2 + DELAY_Y1 ) 
       length = DELAY_Y2 + DELAY_Y1;
   }  
 
@@ -2094,10 +2098,11 @@ boolean goright(long steps ,boolean nolimit )
     if( i < (steps-perc)) 
       length--;
     else
-      length+=10;
+      length+=2;
 
-    if (length < Y_SPEED ) 
-      length = Y_SPEED;
+    if (length < X_SPEED ) 
+      length = X_SPEED;
+      
     if (length >DELAY_Y2 + DELAY_Y1 ) 
       length = DELAY_Y2 + DELAY_Y1;    
   }  
@@ -2173,6 +2178,7 @@ boolean goback(long steps ,boolean nolimit ) {
 
     if (length < Y_SPEED ) 
       length = Y_SPEED;
+      
     if (length >DELAY_Y2 + DELAY_Y1 ) 
       length = DELAY_Y2 + DELAY_Y1;
   }  
@@ -2328,18 +2334,18 @@ void move2(long x0,long y0 )
 
   lx = x0;
   ly = y0;
-  
+
   delay(500);
 }
 
 void moveLine2( long x0, long y0, long x1, long y1)
 {
   long xdiff,ydiff;
-  
+
   if(headDown() == true ) {
     return ;
   }
-  
+
   //convert to pulses
   x0 = umtopulses(x0);
   y0 = umtopulses(y0);
@@ -2388,6 +2394,7 @@ void moveLine2( long x0, long y0, long x1, long y1)
     }
   }
 }
+
 
 
 
