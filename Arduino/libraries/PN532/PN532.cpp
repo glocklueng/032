@@ -1,7 +1,7 @@
 #include <WProgram.h>
 #include "PN532.h"
 
-//#define PN532DEBUG 1
+#define PN532DEBUG 1
 
 byte pn532ack[] = {0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00};
 byte pn532response_firmwarevers[] = {0x00, 0xFF, 0x06, 0xFA, 0xD5, 0x03};
