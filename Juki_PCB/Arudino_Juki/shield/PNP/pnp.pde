@@ -1,6 +1,6 @@
 
 /*
-     __  __           ___    ___       ____                                        __                __                
+__  __           ___    ___       ____                                        __                __                
  /\ \/\ \         /\_ \  /\_ \     /\  _`\                                     /\ \              /\ \               
  \ \ `\\ \  __  __\//\ \ \//\ \    \ \,\L\_\  _____      __      ___     __    \ \ \         __  \ \ \____    ____  
  \ \ , ` \/\ \/\ \ \ \ \  \ \ \    \/_\__ \ /\ '__`\  /'__`\   /'___\ /'__`\   \ \ \  __  /'__`\ \ \ '__`\  /',__\ 
@@ -513,26 +513,30 @@ void readPanel( void )
 
   // handle cursor keys
   if( xPlus  == true ) {
-        if(!fastSwitch)delay(100);
-        goright(fspeed,1);
+    if(!fastSwitch)delay(100);
+    goright(fspeed,1);
     //DELAY_X2 ++;
   };
   if( xMinus == true ) {
-        if(!fastSwitch)delay(100);
-        goleft(fspeed,1);
+    if(!fastSwitch)delay(100);
+    goleft(fspeed,1);
     //DELAY_X2 --;
   };
   if( yPlus  == true ) {
-        if(!fastSwitch)delay(100);
-        goback(fspeed,1);
+    if(!fastSwitch)delay(100);
+    goback(fspeed,1);
     //DELAY_Y2 ++;
   };
   if( yMinus == true ) {
-        if(!fastSwitch)delay(100);
-        goforward(fspeed,1);
+    if(!fastSwitch)delay(100);
+    goforward(fspeed,1);
     //DELAY_Y2 --;
   };
 
+}
+
+bool tacSense(void) {
+  return !digitalRead( TACSENSE) ;
 }
 
 // limits should be set by interrupts now
@@ -637,7 +641,7 @@ boolean  hastool( void )
   delay(500);
 
   // test the vacuum
-  status = !digitalRead( TACSENSE );
+  status = tacSense();
 
   // vacuum off
   vacuum(0);
@@ -891,7 +895,7 @@ knock:;
   head( 0 );
   delay(200);
 
-  if( !digitalRead( TACSENSE ) == false ) 
+  if( tacSense() == true ) 
   {
 
     vacuum(0);
@@ -919,7 +923,9 @@ void xend(void)
 
 boolean testpart(void )
 {
-  if( !digitalRead( TACSENSE ) == false ) 
+  return true;
+
+  if( tacSense() == false ) 
   {
 
     move2(pulsestoum(0),pulsestoum(0));
@@ -1075,12 +1081,22 @@ void loop()
 
 
     case 'A':
-
-      move2(pulsestoum(65),pulsestoum(13215));
-
+      movebackright(1000,1000,1);delay(100);
+      movebackleft(1000,1000,1);delay(100);
+      moveforwardleft(1000,1000,1);delay(100);
+      moveforwardright(1000,1000,1);delay(100);
+ 
+      /*
+                        movebackright(1000,1000,1);
+       
+       			move2(0,0);
+       			move2( 100000,100000 );
+       			move2(0,0);
+       */
       break;
     case 'a':
-      move2(  50000,100000);
+      movebackright(1000,1000,1);delay(100);
+      break;
 
       delay(100);
 
@@ -1287,11 +1303,11 @@ void loop()
 void home( void ) 
 {
   boolean xhomed = false , yhomed = false;
-  
+
   if( headDown() == true ) {
     return ;
   }
-  
+
   // reset the pulse counter 
   gXPulses = -1;
   gYPulses = -1;
@@ -1500,7 +1516,8 @@ void tapeKnock( boolean on_off )
   lastState = on_off;
 
   if( on_off ) 
-    digitalWrite(TAPEKNOCK,LOW);  
+  // debug
+    ;//digitalWrite(TAPEKNOCK,LOW);  
   else  
     digitalWrite(TAPEKNOCK,HIGH);
 
@@ -2036,7 +2053,7 @@ boolean goleft(long steps ,boolean nolimit) {
 
     if (length < X_SPEED ) 
       length = X_SPEED;
-      
+
     if (length > DELAY_Y2 + DELAY_Y1 ) 
       length = DELAY_Y2 + DELAY_Y1;
   }  
@@ -2075,7 +2092,7 @@ boolean goright(long steps ,boolean nolimit )
 
     if (length < X_SPEED ) 
       length = X_SPEED;
-      
+
     if (length >DELAY_Y2 + DELAY_Y1 ) 
       length = DELAY_Y2 + DELAY_Y1;    
   }  
@@ -2151,7 +2168,7 @@ boolean goback(long steps ,boolean nolimit ) {
 
     if (length < Y_SPEED ) 
       length = Y_SPEED;
-      
+
     if (length >DELAY_Y2 + DELAY_Y1 ) 
       length = DELAY_Y2 + DELAY_Y1;
   }  
@@ -2296,22 +2313,428 @@ void plotLine(long x0, long y0, long x1, long y1,unsigned long col,int fast)
     } 
   }
 }
+boolean movebackleft(long x0_pulses,long y0_pulses, boolean nolimit )
+{
+  long length = DELAY_Y2 + DELAY_Y1;
+  long llength = DELAY_X2 + DELAY_X1;
+  long fperc,lperc;
+  long fsteps,lsteps;
+  long li,fi;
+#ifndef NDEBUG
+  Serial.print("movebackleft ");
+  Serial.print(x0_pulses, DEC);
+  Serial.print(" pulses ");
+  Serial.print(y0_pulses, DEC);
+  Serial.println(" pulses");
+#endif
 
-void move2(long x0,long y0 )
+  lsteps = ( x0_pulses ) ;
+  fsteps = ( y0_pulses ) ;
+
+  fperc = (fsteps / 100 ) * 2;
+  lperc = (lsteps / 100 ) * 2;
+
+  if( (fsteps-fperc) < 0 ) fperc = 0;
+  if( (lsteps-lperc) < 0 ) lperc = 0;
+
+  fi = 0;
+  li = 0;
+
+  // if li or fi > 0
+  while( fsteps || lsteps )
+  {
+    if( nolimit == true ) {
+      if( digitalRead( YL2 ) ) {
+        digitalWrite(YCCW,HIGH);
+        digitalWrite(XCW,HIGH);
+#ifndef NDEBUG
+        Serial.println("YL2 limit");
+#endif
+        return false;
+      }
+    }
+
+    if( nolimit == true ) {
+      if( digitalRead( XL1 ) ) {
+        digitalWrite(YCW,HIGH);
+        digitalWrite(XCW,HIGH);
+#ifndef NDEBUG
+        Serial.println("XL1 limit");
+#endif
+        return false;
+      }
+    }
+
+
+    /// handle forward/back Y axis
+    if( fsteps ) {
+      stepYCCW( length );
+
+      if( fi < (y0_pulses-fperc)) 
+        length--;
+      else
+        length+=1;
+
+      if (length < Y_SPEED ) 
+        length = Y_SPEED;
+
+      if (length >DELAY_Y2 + DELAY_Y1 ) 
+        length = DELAY_Y2 + DELAY_Y1; 
+
+      fi ++;
+      fsteps--;
+    }
+
+    /// handle left, right X axis
+    if( lsteps ) {
+
+      stepXCW( llength );
+
+      if( li < (x0_pulses-lperc)) 
+        llength--;
+      else
+        llength+=1;
+
+      if (llength < X_SPEED ) 
+        llength = X_SPEED;
+
+      if (llength > DELAY_Y2 + DELAY_Y1 ) 
+        llength = DELAY_Y2 + DELAY_Y1;
+
+      li ++;
+      lsteps--;
+    }  
+  }  
+
+  // reset servos back
+  digitalWrite(YCCW,HIGH);
+  digitalWrite(XCW,HIGH);
+
+  return true;
+}
+
+boolean movebackright(long x0_pulses,long y0_pulses, boolean nolimit )
+{
+  long length = DELAY_Y2 + DELAY_Y1;
+  long llength = DELAY_X2 + DELAY_X1;
+  long fperc,lperc;
+  long fsteps,lsteps;
+  long li,fi;
+#ifndef NDEBUG
+  Serial.print("movebackright ");
+  Serial.print(x0_pulses, DEC);
+  Serial.print(" pulses ");
+  Serial.print(y0_pulses, DEC);
+  Serial.println(" pulses");
+#endif
+
+  lsteps = ( x0_pulses ) ;
+  fsteps = ( y0_pulses ) ;
+
+  fperc = (fsteps / 100 ) * 2;
+  lperc = (lsteps / 100 ) * 2;
+
+  if( (fsteps-fperc) < 0 ) fperc = 0;
+  if( (lsteps-lperc) < 0 ) lperc = 0;
+
+  fi = 0;
+  li = 0;
+
+  // if li or fi > 0
+  while( fsteps || lsteps )
+  {
+    if( nolimit == true ) {
+      if( digitalRead( YL2 ) ) {
+        digitalWrite(YCCW,HIGH);
+        digitalWrite(XCCW,HIGH);
+#ifndef NDEBUG
+        Serial.println("YL2 limit");
+#endif
+        return false;
+      }
+    }
+
+    if( nolimit == true ) {
+      if( digitalRead( XL2 ) ) {
+        digitalWrite(YCCW,HIGH);
+        digitalWrite(XCCW,HIGH);
+#ifndef NDEBUG
+        Serial.println("XL2 limit");
+#endif
+        return false;
+      }
+    }
+
+
+    /// handle forward/back Y axis
+    if( fsteps ) {
+      stepYCCW( length );
+
+      if( fi < (y0_pulses-fperc)) 
+        length--;
+      else
+        length+=1;
+
+      if (length < Y_SPEED ) 
+        length = Y_SPEED;
+
+      if (length >DELAY_Y2 + DELAY_Y1 ) 
+        length = DELAY_Y2 + DELAY_Y1; 
+
+      fi ++;
+      fsteps--;
+    }
+
+    /// handle left, right X axis
+    if( lsteps ) {
+
+      stepXCCW( llength );
+
+      if( li < (x0_pulses-lperc)) 
+        llength--;
+      else
+        llength+=1;
+
+      if (llength < X_SPEED ) 
+        llength = X_SPEED;
+
+      if (llength > DELAY_Y2 + DELAY_Y1 ) 
+        llength = DELAY_Y2 + DELAY_Y1;
+
+      li ++;
+      lsteps--;
+    }  
+
+
+  }  
+
+  // reset servos back
+  digitalWrite(YCCW,HIGH);
+  digitalWrite(XCCW,HIGH);
+
+  return true;
+}
+boolean moveforwardright(long x0_pulses,long y0_pulses, boolean nolimit )
+{
+  long length = DELAY_Y2 + DELAY_Y1;
+  long llength = DELAY_X2 + DELAY_X1;
+  long fperc,lperc;
+  long fsteps,lsteps;
+  long li,fi;
+
+#ifndef NDEBUG
+  Serial.print("moveforwardright ");
+  Serial.print(x0_pulses, DEC);
+  Serial.print(" pulses ");
+  Serial.print(y0_pulses, DEC);
+  Serial.println(" pulses");
+#endif
+
+  fsteps = ( y0_pulses ) ;
+  lsteps = ( x0_pulses ) ;
+
+  fperc = (fsteps / 100 ) * 2;
+  lperc = (lsteps / 100 ) * 2;
+
+  if( ( fsteps-fperc) < 0 ) fperc = 0;
+  if( ( lsteps-lperc) < 0 ) lperc = 0;
+
+  fi = 0;
+  li = 0;
+
+  // if li or fi > 0
+  while( fsteps || lsteps )
+  {
+    if( nolimit == true ) {
+      if( digitalRead( YL1 ) ) {
+        digitalWrite(YCW,HIGH);
+        digitalWrite(XCCW,HIGH);
+#ifndef NDEBUG
+        Serial.println("YL1 limit");
+#endif
+        return false;
+      }
+    }
+
+    if( nolimit == true ) {
+      if( digitalRead( XL2 ) ) {
+        digitalWrite(YCW,HIGH);
+        digitalWrite(XCCW,HIGH);
+#ifndef NDEBUG
+        Serial.println("XL2 limit");
+#endif
+        return false;
+      }
+    }
+
+    // handle front/back Y axis
+    if( fsteps ) {
+      stepYCW( length );
+
+      if( fi < (y0_pulses-fperc)) 
+        length--;
+      else
+        length+=1;
+
+      if (length < Y_SPEED ) 
+        length = Y_SPEED;
+      if (length >DELAY_Y2 + DELAY_Y1 ) 
+        length = DELAY_Y2 + DELAY_Y1; 
+
+      fi ++;
+      fsteps--;
+    }
+
+    // handleleft/right X axis
+    if( lsteps ) {
+
+      stepXCCW( llength );
+
+      if( li < (x0_pulses-lperc)) 
+        llength--;
+      else
+        llength+=1;
+
+      if (llength < X_SPEED ) 
+        llength = X_SPEED;
+
+      if (llength > DELAY_Y2 + DELAY_Y1 ) 
+        llength = DELAY_Y2 + DELAY_Y1;
+
+      li ++;
+      lsteps--;
+    }  
+  }  
+
+  // reset servos back
+  digitalWrite(YCW,HIGH);
+  digitalWrite(XCCW,HIGH);
+
+  return true;
+}
+
+boolean moveforwardleft(long x0_pulses,long y0_pulses, boolean nolimit )
+{
+  long length = DELAY_Y2 + DELAY_Y1;
+  long llength = DELAY_X2 + DELAY_X1;
+  long fperc,lperc;
+  long fsteps,lsteps;
+  long li,fi;
+
+#ifndef NDEBUG
+  Serial.print("moveforwardleft ");
+  Serial.print(x0_pulses, DEC);
+  Serial.print(" pulses ");
+  Serial.print(y0_pulses, DEC);
+  Serial.println(" pulses");
+#endif
+
+  fsteps = ( y0_pulses ) ;
+  lsteps = ( x0_pulses ) ;
+
+  fperc = (fsteps / 100 ) * 2;
+  lperc = (lsteps / 100 ) * 2;
+
+  if( ( fsteps-fperc) < 0 ) fperc = 0;
+  if( ( lsteps-lperc) < 0 ) lperc = 0;
+
+  fi = 0;
+  li = 0;
+
+  // if li or fi > 0
+  while( fsteps || lsteps )
+  {
+    if( nolimit == true ) {
+      if( digitalRead( YL1 ) ) {
+        digitalWrite(YCW,HIGH);
+        digitalWrite(XCW,HIGH);
+#ifndef NDEBUG
+        Serial.println("YL1 limit");
+#endif
+        return false;
+      }
+    }
+
+    if( nolimit == true ) {
+      if( digitalRead( XL1 ) ) {
+        digitalWrite(YCW,HIGH);
+        digitalWrite(XCW,HIGH);
+#ifndef NDEBUG
+        Serial.println("XL1 limit");
+#endif
+        return false;
+      }
+    }
+
+    // handle front/back Y axis
+    if( fsteps ) {
+      stepYCW( length );
+
+      if( fi < (y0_pulses-fperc)) 
+        length--;
+      else
+        length+=1;
+
+      if (length < Y_SPEED ) 
+        length = Y_SPEED;
+      if (length >DELAY_Y2 + DELAY_Y1 ) 
+        length = DELAY_Y2 + DELAY_Y1; 
+
+      fi ++;
+      fsteps--;
+    }
+
+    // handleleft/right X axis
+    if( lsteps ) {
+
+      stepXCW( llength );
+
+      if( li < (x0_pulses-lperc)) 
+        llength--;
+      else
+        llength+=1;
+
+      if (llength < X_SPEED ) 
+        llength = X_SPEED;
+
+      if (llength > DELAY_Y2 + DELAY_Y1 ) 
+        llength = DELAY_Y2 + DELAY_Y1;
+
+      li ++;
+      lsteps--;
+    }  
+  }  
+
+  // reset servos back
+  digitalWrite(YCW,HIGH);
+  digitalWrite(XCW,HIGH);
+
+  return true;
+}
+
+void move2o(long x0,long y0 )
 {
   if( headDown() == true ) {
     return ;
   }
 
-  moveLine2(lx,ly,x0,y0);
+  moveLine2o(lx,ly,x0,y0);
 
   lx = x0;
   ly = y0;
 
-  delay(500);
+  delay(100);
 }
 
-void moveLine2( long x0, long y0, long x1, long y1)
+enum {
+  GO_NONE,
+  GO_FL,
+  GO_FR,
+  GO_BR,
+  GO_BL
+};
+
+void moveLine2o( long x0, long y0, long x1, long y1)
 {
   long xdiff,ydiff;
 
@@ -2336,12 +2759,12 @@ void moveLine2( long x0, long y0, long x1, long y1)
       // move right
       if( x0 < x1 ) {
 
-        if ( false == goright( xdiff ,1) ) return;
+        if ( false == movebackright( xdiff, 0,1) ) return;
         delay(20);
         x0 += xdiff;
       } 
       else { 
-        if ( false == goleft( xdiff,1)) return;
+        if ( false == moveforwardleft( xdiff,0,1)) return;
         delay(20);
 
         x0 -= xdiff;
@@ -2355,12 +2778,12 @@ void moveLine2( long x0, long y0, long x1, long y1)
 
       // move right
       if( y0 < y1 ) {
-        if ( false == goback(ydiff,1)) return;
+        if ( false == movebackright(0,ydiff,1)) return;
         delay(20);
         y0 += ydiff;
       } 
       else { 
-        if ( false == goforward(ydiff,1)) return;
+        if ( false == moveforwardleft(0,ydiff,1)) return;
         delay(20);
         y0 -= ydiff;
       }
@@ -2368,8 +2791,214 @@ void moveLine2( long x0, long y0, long x1, long y1)
   }
 }
 
+/*
+GO_BR 2000 4000
 
+GO_BR 10308 1002
 
+GO_FR 769 345
+
+GO_BL 769 345
+
+Failed to pickup tool
+
+GO_BL 12243 8213
+
+GO_FR 1942 5958
+
+GO_BL 1942 5958
+
+GO_FR 2074 5958
+
+GO_BL 2074 5958
+
+GO_FR 2302 5796
+
+GO_BL 2302 5796
+
+GO_FR 2402 5796
+
+*/
+
+void moveLine2( long x0, long y0, long x1, long y1)
+{
+  long xdiff,ydiff;
+  unsigned char direction = GO_NONE ;
+
+#ifndef NDEBUG
+  Serial.print("moveLine2 ");
+  Serial.print(x0, DEC);
+  Serial.print(" ");
+  Serial.print(y0, DEC);
+  Serial.print(" ");
+  Serial.print(x1, DEC);
+  Serial.print(" ");
+  Serial.println(y1, DEC);
+#endif
+
+  if( headDown() == true ) {
+    return ;
+  }
+
+  //convert to pulses
+  x0 = umtopulses(x0);
+  y0 = umtopulses(y0);
+  x1 = umtopulses(x1);
+  y1 = umtopulses(y1);
+
+  while( x0 != x1 || y0 != y1 )
+  {
+    if( y0 > y1 && x0 > x1 ) {
+      direction = GO_FL;
+    }
+    else 
+
+      if( y0 < y1 && x0 < x1 ) {
+      direction = GO_BR;
+    } 
+   else 
+
+      if( y0 < y1 && x0 > x1 ) {
+        //direction = GO_BL;
+    }
+   else 
+
+      if( y0 > y1 && x0 < x1 ) {
+
+         //direction = GO_FR;
+    } 
+    else {
+       direction = GO_NONE;
+    }
+
+// forward and left
+    switch( direction ) {
+
+    case GO_FL:
+      Serial.print ("GO_FL ");
+      xdiff = x0-x1;
+      xdiff = abs(xdiff);
+      ydiff = y0-y1;
+      ydiff = abs(ydiff);
+
+      Serial.print(xdiff,DEC);Serial.print(" "); 
+      Serial.println(ydiff,DEC); 
+
+      moveforwardleft(xdiff,ydiff,true);
+      delay(20);
+      y0 -= ydiff;
+      x0 -= xdiff;
+      break;
+    case GO_BR:
+      Serial.print("GO_BR ");
+      xdiff = x0-x1;
+      xdiff = abs(xdiff);
+      ydiff = y0-y1;
+      ydiff = abs(ydiff);
+
+      Serial.print(xdiff,DEC);Serial.print(" "); 
+      Serial.println(ydiff,DEC); 
+
+      movebackright(xdiff,ydiff,true);
+      delay(20);
+      y0 += ydiff;
+      x0 += xdiff;
+      break;      
+      // Don't work
+    case GO_FR:
+      Serial.print("GO_FR ");
+      xdiff = x0-x1;
+      xdiff = abs(xdiff);
+      ydiff = y0-y1;
+      ydiff = abs(ydiff);
+
+      Serial.print(xdiff,DEC);Serial.print(" "); 
+      Serial.println(ydiff,DEC); 
+
+      moveforwardright(xdiff,ydiff,true);
+      delay(20);
+      y0 -= ydiff;
+      x0 += xdiff;
+      break;
+    case GO_BL:
+      Serial.print("GO_BL ");
+      xdiff = x0-x1;
+      xdiff = abs(xdiff);
+      ydiff = y0-y1;
+      ydiff = abs(ydiff);
+
+      Serial.print(xdiff,DEC);Serial.print(" "); 
+      Serial.println(ydiff,DEC); 
+
+      movebackleft(xdiff,ydiff,true);
+      delay(20);
+      y0 += ydiff;
+      x0 -= xdiff;
+      break;      
+      
+    case GO_NONE:
+      Serial.println("GO_NONE");
+      if( x0 != x1 ) {
+
+        xdiff = x0-x1;
+        xdiff = abs(xdiff);
+
+        // move right
+        if( x0 < x1 ) {
+
+          if ( false == goright( xdiff ,1) ) return;
+          delay(20);
+          x0 += xdiff;
+        } 
+        else { 
+          if ( false == goleft( xdiff,1) ) return;
+          delay(20);
+
+          x0 -= xdiff;
+        }
+      }
+
+      if( y0 != y1 ) {
+
+        // calculate dy abs
+        ydiff = y0-y1;
+        ydiff = abs(ydiff);
+
+        // move right
+        if( y0 < y1 ) {
+          if ( false == goback(ydiff,1)) return;
+          delay(20);
+          y0 += ydiff;
+        } 
+        else { 
+          if ( false == goforward(ydiff,1)) return;
+          delay(20);
+          y0 -= ydiff;
+        }
+      }
+      
+        break;
+      default:
+            Serial.println("GO_DERP");
+
+        break;
+    }
+  }
+}
+
+void move2(long x0,long y0 )
+{
+  if( headDown() == true ) {
+    return ;
+  }
+
+  moveLine2(lx,ly,x0,y0);
+
+  lx = x0;
+  ly = y0;
+
+  delay( 500 );
+}
 
 
 
