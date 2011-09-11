@@ -1,4 +1,3 @@
-#define NDEBUG 1
 
 /*
      __  __           ___    ___       ____                                        __                __                
@@ -22,12 +21,15 @@
  88           88   `"Ybbd8"'  88   `Y8a  `"YbbdP"'   88888888P"    `"Ybbd8"'  `"8bbdP"Y8  88        
  */
 
+#include <JukiStepper.h>
+
 // for the watchdog based reset ( which didn't seem to work)
 #include <avr/io.h>
 #include <avr/wdt.h>
 
-// Pin mappings
+#define NDEBUG 1
 
+// Pin mappings
 #if 1
 
 // new board
@@ -203,8 +205,8 @@
 
 
 // maximum speed the motors can travel at
-int X_SPEED =( 50 );
-int Y_SPEED =( 40 );
+int X_SPEED =( 100 );
+int Y_SPEED =( 110 );
 
 // length of pulse sent to motor controller
 #define SHORT_X_PULSE ( 1 )
@@ -254,6 +256,7 @@ boolean homed = false;
 
 static long lx=0,ly=0;
 
+JukiStepper m_Stepper(25*40,DELAY_X2,XCCW,XCW);
 
 // This should cause a proper reset it doesn't.
 #define Reset_AVR() wdt_enable(WDTO_30MS); while(1) {}
@@ -510,24 +513,24 @@ void readPanel( void )
 
   // handle cursor keys
   if( xPlus  == true ) {
-    //    if(!fastSwitch)delay(100);
-    //    goright(fspeed,1);
-    DELAY_X2 ++;
+        if(!fastSwitch)delay(100);
+        goright(fspeed,1);
+    //DELAY_X2 ++;
   };
   if( xMinus == true ) {
-    //    if(!fastSwitch)delay(100);
-    //    goleft(fspeed,1);
-    DELAY_X2 --;
+        if(!fastSwitch)delay(100);
+        goleft(fspeed,1);
+    //DELAY_X2 --;
   };
   if( yPlus  == true ) {
-    //    if(!fastSwitch)delay(100);
-    //    goback(fspeed,1);
-    DELAY_Y2 ++;
+        if(!fastSwitch)delay(100);
+        goback(fspeed,1);
+    //DELAY_Y2 ++;
   };
   if( yMinus == true ) {
-    //    if(!fastSwitch)delay(100);
-    //    goforward(fspeed,1);
-    DELAY_Y2 --;
+        if(!fastSwitch)delay(100);
+        goforward(fspeed,1);
+    //DELAY_Y2 --;
   };
 
 }
@@ -1284,7 +1287,11 @@ void loop()
 void home( void ) 
 {
   boolean xhomed = false , yhomed = false;
-
+  
+  if( headDown() == true ) {
+    return ;
+  }
+  
   // reset the pulse counter 
   gXPulses = -1;
   gYPulses = -1;
@@ -1721,40 +1728,6 @@ void beforeMoving( void )
   // head up
   if( headState )
     head( false );
-
-  if(!digitalRead( FAST ) ) {
-    Serial.println("x1x2");
-    Serial.println(DELAY_X1);
-    Serial.println(DELAY_X2);
-    Serial.println(DELAY_Y1);
-    Serial.println(DELAY_Y2);
-  }
-  xPlus  =  !digitalRead( XPLUS );
-  xMinus =  !digitalRead( XMINUS );
-  yPlus  =  !digitalRead( YPLUS );
-  yMinus =  !digitalRead( YMINUS );
-
-  // handle cursor keys
-  if( xPlus  == true ) {
-    //    if(!fastSwitch)delay(100);
-    //    goright(fspeed,1);
-    DELAY_X2 ++;
-  };
-  if( xMinus == true ) {
-    //    if(!fastSwitch)delay(100);
-    //    goleft(fspeed,1);
-    if( DELAY_X2>2)DELAY_X2 --;
-  };
-  if( yPlus  == true ) {
-    //    if(!fastSwitch)delay(100);
-    //    goback(fspeed,1);
-    DELAY_Y2 ++;
-  };
-  if( yMinus == true ) {
-    //    if(!fastSwitch)delay(100);
-    //    goforward(fspeed,1);
-    if( DELAY_Y2>2)DELAY_Y2 --;
-  };
 
 }
 
@@ -2394,6 +2367,7 @@ void moveLine2( long x0, long y0, long x1, long y1)
     }
   }
 }
+
 
 
 
