@@ -14,12 +14,14 @@ JukiStepper::JukiStepper(long number_of_steps,
 
 	//get our parameters
 	this->number_of_steps = number_of_steps;
+	
 	this->step_minus_pin = step_minus;
-	this->step_plus_pin = step_plus;
+	this->step_plus_pin  = step_plus;
 	
 	// setup the pins on the microcontroller:
 	pinMode(this->step_minus_pin, OUTPUT);
 	pinMode(this->step_plus_pin, OUTPUT);
+
 	this->enable();
 	this->setDirection(RS_FORWARD);
 
@@ -68,9 +70,11 @@ void JukiStepper::setSteps(long steps)
 	this->setRPM(this->rpm);
 }
 
-void JukiStepper::setDirection(bool direction)
+void JukiStepper::setDirection(byte direction)
 {
 	this->direction = direction; //save our direction.
+
+	disable();
 }
 
 long JukiStepper::getMicros()
@@ -108,14 +112,15 @@ void JukiStepper::disable()
 void JukiStepper::pulse()
 {
 	if ( this->direction == RS_REVERSE ) {
-		digitalWrite(this->step_minus_pin, HIGH);
-		delayMicroseconds( 1 ); //make sure it stabilizes... for opto isolated stepper drivers.
 		digitalWrite(this->step_minus_pin, LOW);
+		delayMicroseconds( 1 ); //make sure it stabilizes... for opto isolated stepper drivers.
+		digitalWrite(this->step_minus_pin, HIGH);
 		delayMicroseconds(  delay ); //make sure it stabilizes... for opto isolated stepper drivers.
 	} else {
-		digitalWrite(this->step_plus_pin, HIGH);
-		delayMicroseconds( 1 ); //make sure it stabilizes... for opto isolated stepper drivers.
 		digitalWrite(this->step_plus_pin, LOW);
+		delayMicroseconds( 1 ); //make sure it stabilizes... for opto isolated stepper drivers.
+		digitalWrite(this->step_plus_pin, HIGH);
 		delayMicroseconds(  delay ); //make sure it stabilizes... for opto isolated stepper drivers.
 	}
+
 }

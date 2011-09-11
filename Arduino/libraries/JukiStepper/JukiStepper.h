@@ -50,8 +50,9 @@ class JukiStepper {
     // various setters methods
 	void setRPM(long rpm);
     void setSpeed(long speed);
-	void setDirection(bool direction);
+	void setDirection(byte direction);
 	void setSteps(long steps);
+	void setDelay( long delay ) { this->delay = delay ;};
 	
 	long getMicros();
 	
@@ -65,7 +66,7 @@ class JukiStepper {
 	long step_delay;  			// delay between steps, in processor ticks, based on speed
     long number_of_steps;		// total number of steps this motor can take
 	bool enabled;				//are we enabled?
-	bool direction;				//what is our direction?
+	byte direction;				//what is our direction?
 	long delay;					// delay after HIGH LOW
 
 	// motor pin numbers:
