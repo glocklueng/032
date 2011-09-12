@@ -21,19 +21,18 @@ __  __           ___    ___       ____                                        __
  88           88   `"Ybbd8"'  88   `Y8a  `"YbbdP"'   88888888P"    `"Ybbd8"'  `"8bbdP"Y8  88        
  */
 
-#include <JukiStepper.h>
-#include <Time.h>
-
-
 // for the watchdog based reset ( which didn't seem to work)
 #include <avr/io.h>
 #include <avr/wdt.h>
 #include <avr/delay.h>
 
+// Arduino specific
+#include <JukiStepper.h>
+#include <Time.h>
 
-#define 	WDTO_8S   9
 
-#define NDEBUG 1
+#define 	WDTO_8S   ( 9 )
+#define         NDEBUG    ( 1 )
 
 #include "shieldpins.h"
 
@@ -41,14 +40,13 @@ __  __           ___    ___       ____                                        __
 #define MAX_X_PULSES ( 14868L )
 #define MAX_Y_PULSES ( 21172L )
 
-
 // maximum speed the motors can travel at
 int X_SPEED =( 100 );
 int Y_SPEED =( 110 );
 
 // for diagonal move
-int X2_SPEED =( 50 );
-int Y2_SPEED =( 96 );
+int X2_SPEED =( 40 );
+int Y2_SPEED =( 40 );
 
 // length of pulse sent to motor controller
 #define SHORT_X_PULSE ( 1 )
@@ -96,6 +94,7 @@ long gCurrentYum = 0;
 // machine homed ?
 boolean homed = false;
 
+// last x,y
 static long lx=0,ly=0;
 
 JukiStepper m_Stepper(25*40,DELAY_X2,XCCW,XCW);
@@ -123,7 +122,7 @@ void setup( void )
   // Serial port init
   Serial.begin(9600);
 
-  Serial.println("PNP Test\n");
+  Serial.println("PickoBear initialise\n");
 
   // set pullups for sensors and switches
   digitalWrite(XPLUS,HIGH);
@@ -203,35 +202,26 @@ void setup( void )
   pinMode(VAC,OUTPUT);
   digitalWrite(VAC,HIGH);
 
-  // some test code.
-  Serial.print("25mm = pulses = ");
-  Serial.println(mmtopulses(25),DEC); 
-  Serial.print("25,000um = pulses = ");
-  Serial.println(umtopulses(25000),DEC); 
-  Serial.print("1,000 pulses = um ");
-  Serial.println(pulsestoum(1000),DEC); 
-  Serial.print("1,000 pulses = mm ");
-  Serial.println(pulsestomm(1000),DEC); 
-
-  Serial.print(" x max mm=");
-  Serial.println(pulsestomm(MAX_X_PULSES*1000),DEC);
-  Serial.print(" y max mm=");
-  Serial.println(pulsestomm(MAX_Y_PULSES*1000),DEC);
-  Serial.println("");
-
-#if 0
+#if 1
   // setup the limit switches
-  attachInterrupt(5, x1Limit, FALLING );
-  attachInterrupt(4, x2Limit, FALLING );
-  attachInterrupt(2, y1Limit, FALLING );
-  attachInterrupt(3, y2Limit, FALLING );
+
+  //These pins can be configured to trigger an interrupt on a low value, a rising or falling edge, or a change in value. See the attachInterrupt() function for details.
+  //External Interrupts: 2 (interrupt 0), 3 (interrupt 1), 18 (interrupt 5), 19 (interrupt 4), 20 (interrupt 3), and 21 (interrupt 2).
+  
+  attachInterrupt(2, y1Limit, CHANGE );
+  attachInterrupt(3, y2Limit, CHANGE );
+  attachInterrupt(4, x2Limit, CHANGE );
+  attachInterrupt(5, x1Limit, CHANGE );
+
 #endif
 
-  xLimit1 = digitalRead( XL1 );
-  yLimit1 = digitalRead( YL1 );
-  xLimit2 = digitalRead( XL2 );
-  yLimit2 = digitalRead( YL2 );
+//  xLimit1 = digitalRead( XL1 );
+//  yLimit1 = digitalRead( YL1 );
+//  xLimit2 = digitalRead( XL2 );
+//  yLimit2 = digitalRead( YL2 );
+
 }
+
 
 
 // called when limit switches are hit
@@ -251,25 +241,25 @@ void setup( void )
 void x1Limit( void ) 
 {
   homed = false;
-  xLimit1 = true;
+  xLimit1 = digitalRead( XL1 );
 }
 
 void x2Limit( void ) 
 {
   homed = false;
-  xLimit2 = true;
+  xLimit2 = digitalRead( XL2 );
 }
 
 void y1Limit( void ) 
 {
   homed = false;
-  yLimit1 = true;
+  yLimit1 = digitalRead( YL1 );
 }
 
 void y2Limit( void ) 
 {
   homed = false;
-  yLimit2 = true;
+  yLimit2 = digitalRead( YL2 );
 }
 
 //
@@ -388,10 +378,10 @@ bool tacSense(void) {
 unsigned int readLimitSwitches( void ) 
 {
   unsigned char  limit;
-  xLimit1 = digitalRead( XL1 );
-  yLimit1 = digitalRead( YL1 );
-  xLimit2 = digitalRead( XL2 );
-  yLimit2 = digitalRead( YL2 );
+//  xLimit1 = digitalRead( XL1 );
+//  yLimit1 = digitalRead( YL1 );
+//  xLimit2 = digitalRead( XL2 );
+ // yLimit2 = digitalRead( YL2 );
 
   limit  = xLimit1;
   limit += xLimit2;
@@ -418,7 +408,7 @@ unsigned int readLimitSwitches( void )
   Serial.print(xHome,HEX);
   Serial.print(yHome,HEX);
   Serial.println("");
-  Serial.println("gXPulses, gYPulses");
+  Serial.print ("gXPulses, gYPulses = ");
   Serial.print(gXPulses,DEC);
   Serial.print(",");
   Serial.println(gYPulses,DEC);
@@ -672,9 +662,9 @@ void gohome(void) {
 
 void park(void) { 
   move2( 
-  364600,
-  517000
-    );
+    364000,
+    517000
+  );
 }
 
 
@@ -802,6 +792,16 @@ void loop()
 {
   char sbyte;
 
+#if 0
+  Serial.print (xLimit1,DEC);
+  Serial.print (xLimit2,DEC);
+  Serial.print (yLimit1,DEC);
+  Serial.print (yLimit2,DEC);
+  Serial.println (homed,DEC);
+  
+  return;
+#endif
+  
 // handle watchdog
 //   wdt_reset();
 
@@ -844,13 +844,13 @@ void loop()
 
 
     case 'A':
-      movebackright(5000,5000,1);
+      movebackright(5000,3000,1);
       delay(20);
-      movebackleft(5000,5000,1);
+      movebackleft(5000,3000,1);
       delay(20);
-      moveforwardleft(5000,5000,1);
+      moveforwardleft(5000,3000,1);
       delay(20);
-      moveforwardright(5000,5000,1);
+      moveforwardright(5000,3000,1);
       delay(20);
 
       /*
@@ -1104,13 +1104,13 @@ void home( void )
   // check XL1,YL1 limits if its in either, move out? 
   for(int i = 0 ; i < 1000 ; i++ ) {
 
-    if( digitalRead( XL2 )) {
+    if( xLimit2 ) {
       digitalWrite(XCCW,HIGH);
       break;
     }
 
     // hit a limit
-    if( digitalRead( YL2 )) {
+    if( yLimit2 ) {
       digitalWrite(YCCW,HIGH);
       break;
     }
@@ -1142,7 +1142,7 @@ void home( void )
     }
 
     // failed
-    if( digitalRead( XL1  ) ) {
+    if( xLimit1 ) {
       digitalWrite(XCW,HIGH);
       return;
     }
@@ -1163,7 +1163,7 @@ void home( void )
     }
     // hit a limit
     // failed
-    if( digitalRead( YL1 )) {
+    if( yLimit1 ) {
       digitalWrite(YCW,HIGH);
       return;
     }      
@@ -1924,6 +1924,7 @@ boolean goback(long steps ,boolean nolimit ) {
 
   long length = DELAY_Y2 + DELAY_Y1;
   long perc = (steps /100 ) * 2;
+  
   if( (steps-perc) < 0 ) perc = 0;
 
   for( int i = 0 ; i < steps ; i ++ )
@@ -1961,9 +1962,6 @@ boolean goback(long steps ,boolean nolimit ) {
 
 void IncrementXPulses( void ) 
 {
-  if (homed == false ) 
-    return; 
-
   gXPulses ++;
 
   if( gXPulses >= MAX_X_PULSES ) {
@@ -1978,12 +1976,9 @@ void IncrementXPulses( void )
 
 void DecrementXPulses( void ) 
 {
-  if (homed == false ) 
-    return; 
-
   gXPulses --;
 
-  if( gXPulses < 0 ) {
+  if( gXPulses < 0 && homed ) {
     Serial.print("Error negative X pulses, must be loosing some ");
     Serial.print(gXPulses,DEC);
     Serial.print(gYPulses,DEC);
@@ -1995,12 +1990,9 @@ void DecrementXPulses( void )
 
 void IncrementYPulses( void ) 
 {
-  if (homed == false )
-    return; 
-
   gYPulses ++;
 
-  if( gYPulses >= MAX_Y_PULSES ) {
+  if( gYPulses >= MAX_Y_PULSES && homed) {
     Serial.print("Error too many Y pulses, must be loosing some ");
     Serial.print(gXPulses,DEC);
     Serial.println(gYPulses,DEC);
@@ -2012,12 +2004,9 @@ void IncrementYPulses( void )
 
 void DecrementYPulses( void ) 
 {
-  if (homed == false ) 
-    return; 
-
   gYPulses --;
 
-  if( gYPulses < 0 ) {
+  if( gYPulses < 0 && homed ) {
     Serial.print("Error negative Y pulses, must be loosing some ");
     Serial.print(gXPulses,DEC);
     Serial.println(gYPulses,DEC);
@@ -2573,35 +2562,6 @@ void moveLine2o( long x0, long y0, long x1, long y1)
   }
 }
 
-/*
-GO_BR 2000 4000
- 
- GO_BR 10308 1002
- 
- GO_FR 769 345
- 
- GO_BL 769 345
- 
- Failed to pickup tool
- 
- GO_BL 12243 8213
- 
- GO_FR 1942 5958
- 
- GO_BL 1942 5958
- 
- GO_FR 2074 5958
- 
- GO_BL 2074 5958
- 
- GO_FR 2302 5796
- 
- GO_BL 2302 5796
- 
- GO_FR 2402 5796
- 
- */
-
 void moveLine2( long x0, long y0, long x1, long y1)
 {
   long xdiff,ydiff;
@@ -2769,7 +2729,7 @@ void move2(long x0,long y0 )
     return ;
   }
 
-  moveLine2(lx,ly,x0,y0);
+  moveLine2o(lx,ly,x0,y0);
 
   lx = x0;
   ly = y0;
