@@ -22,10 +22,13 @@ __  __           ___    ___       ____                                        __
  */
 
 #include <JukiStepper.h>
+#include <Time.h>
+
 
 // for the watchdog based reset ( which didn't seem to work)
 #include <avr/io.h>
 #include <avr/wdt.h>
+#include <avr/delay.h>
 
 #define NDEBUG 1
 
@@ -207,6 +210,10 @@ __  __           ___    ___       ____                                        __
 // maximum speed the motors can travel at
 int X_SPEED =( 100 );
 int Y_SPEED =( 110 );
+
+// for diagonal move
+int X2_SPEED =( 55 );
+int Y2_SPEED =( 90 );
 
 // length of pulse sent to motor controller
 #define SHORT_X_PULSE ( 1 )
@@ -648,8 +655,6 @@ boolean  hastool( void )
   // head up
   head(0);
 
-  // wait for head up
-  delay( 400 );
   return status;
 }
 
@@ -671,7 +676,6 @@ boolean putdown(void )
   delay(1000);
   //head up
   head(0); 
-  delay(300);
 
   if( hastool() == true ) {
 #ifndef NDEBUG
@@ -817,7 +821,7 @@ void parkleft(void) {
 }
 void parkforward(void) { 
   move2( 
-  364650,
+  364600,
   0
     );
 }
@@ -830,7 +834,7 @@ void gohome(void) {
 
 void park(void) { 
   move2( 
-  364650,
+  364600,
   517000
     );
 }
@@ -867,14 +871,19 @@ boolean headDown( void )
   return digitalRead( HEADDN ) ?1:0;
 } 
 
+long startTime;
+long CPH =0,avgCPH = 0,avgCount=0;
+
 void xtoolchange(void)
 {
   int dpart = 200;
 
+  startTime = (minute()*60)+second();
+
+
   // move to toolchange
   //  move2(0,pulsestoum(12299));
 knock:;
-  delay(100);
   // move to feeder one
   //  move2(pulsestoum(34),pulsestoum(12271));
   // move to feeder three
@@ -887,7 +896,7 @@ knock:;
   tapeKnock(1);
   delay(100);
   tapeKnock(0);
-  delay(200);
+  delay(100);
   head( 1 );
   delay(150);
   vacuum(1);
@@ -897,7 +906,6 @@ knock:;
 
   if( tacSense() == true ) 
   {
-
     vacuum(0);
 
     Serial.println("Failed to pick up part");
@@ -909,6 +917,7 @@ knock:;
     goto knock;
   }
 }
+long endTime;
 
 void xend(void)
 {
@@ -918,7 +927,19 @@ void xend(void)
   // hold on part
   delay(200);
   head(0);
-  delay(100);
+  
+  endTime = (minute()*60)+second();
+  
+  Serial.print("took seconds = ");
+  Serial.println(endTime - startTime ,DEC);
+  Serial.print("CPH = ");
+  CPH =   3600 / (endTime-startTime );
+  Serial.println(CPH,DEC);
+  avgCPH += CPH; 
+  avgCount ++;
+  Serial.print("Average CPH = ");
+  Serial.println(avgCPH/avgCount ,DEC);
+  
 }
 
 boolean testpart(void )
@@ -952,140 +973,45 @@ void loop()
     {
     case '*':
 
+
       move2(  50000,100000);
 
       delay(100);
 
+      Serial.print("Start:");
+      Serial.print(minute(),DEC);
+      Serial.print(":");
+      Serial.println(second(),DEC);
+      
+
       if( hastool() == false ) 
         tool(1,1);
 
-      xtoolchange();
-      move2(50188,181426);
-      xend();
-
-      xtoolchange();
-      move2(53484,181426);
-      xend();
-      xtoolchange();
-      move2(59192,185480);
-      xend();
-      xtoolchange();
-      move2(61683,185480);
-      xend();
-
-      xtoolchange();
-      rotate(true);
-      move2(41929,209188);
-      xend();
-      rotate(false);
-
-      xtoolchange();
-      rotate(true);
-      move2(59200,181508);
-      rotate(false);
-      xend();
-      xtoolchange();
-      center(true);
-      delay(10);
-      center(false);
-      move2(54666,202537);
-      xend();
-      xtoolchange();
-      move2(62896,210238);
-      xend();
-      xtoolchange();
-      move2(57408,178552);
-      xend();
-      xtoolchange();
-      move2(62300,179442);
-      xend();
-      xtoolchange();
-      move2(67033,165146);
-      xend();
-      xtoolchange();
-      move2(60023,165009);
-      xend();
-      xtoolchange();
-      move2(61312,161566);
-      xend();
-      xtoolchange();
-      move2(57086,215584);
-      xend();
-      xtoolchange();
-      move2(54712,158199);
-      xend();
-      xtoolchange();
-      move2(59676,158199);
-      xend();
-      xtoolchange();
-      move2(63939,220169);
-      xend();
-      xtoolchange();
-      move2(50996,200426);
-      xend();
-      xtoolchange();
-      move2(58610,172304);
-      xend();
-      xtoolchange();
-      move2(66726,192156);
-      xend();
-      xtoolchange();
-      move2(65697,172314);
-      xend();
-      xtoolchange();
-      move2(51717,171414);
-      xend();
-      xtoolchange();
-      move2(61902,192979);
-      xend();
-      xtoolchange();
-      move2(67503,211651);
-      xend();
-      xtoolchange();
-      move2(61539,216191);
-      xend();
-      xtoolchange();
-      move2(57725,216191);
-      xend();
-      xtoolchange();
-      move2(55834,216191);
-      xend();
-      xtoolchange();
-      move2(62991,202407);
-      xend();
-      xtoolchange();
-      move2(40926,218469);
-      xend();
-      xtoolchange();
-      move2(68576,199343);
-      xend();
-      xtoolchange();
-      move2(51712,158199);
-      xend();
-      xtoolchange();
-      move2(68767,159693);
-      xend();
-      xtoolchange();
-      move2(49848,165338);
-      xend();
-      xtoolchange();
-      move2(54996,224363);
-      xend();
-      head(0);
-      tool(1,1);
+          speakerBadge();
+  
+        head(0);
+        tool(1,1);
 
       home();
+      Serial.print("End:");
+      Serial.print(minute(),DEC);
+      Serial.print(":");
+      Serial.println(second(),DEC);
 
 
       break;
 
 
     case 'A':
-      movebackright(1000,1000,1);delay(100);
-      movebackleft(1000,1000,1);delay(100);
-      moveforwardleft(1000,1000,1);delay(100);
-      moveforwardright(1000,1000,1);delay(100);
- 
+      movebackright(5000,5000,1);
+      delay(20);
+      movebackleft(5000,5000,1);
+      delay(20);
+      moveforwardleft(5000,5000,1);
+      delay(20);
+      moveforwardright(5000,5000,1);
+      delay(20);
+
       /*
                         movebackright(1000,1000,1);
        
@@ -1095,7 +1021,8 @@ void loop()
        */
       break;
     case 'a':
-      movebackright(1000,1000,1);delay(100);
+      movebackright(1000,1000,1);
+      delay(100);
       break;
 
       delay(100);
@@ -1135,7 +1062,6 @@ void loop()
       head(1);
       delay(500);
       head(0);
-      delay(500);
       gotoxyp(6080,8171);
       delay(500);
       head(1);
@@ -1516,7 +1442,7 @@ void tapeKnock( boolean on_off )
   lastState = on_off;
 
   if( on_off ) 
-  // debug
+    // debug
     ;//digitalWrite(TAPEKNOCK,LOW);  
   else  
     digitalWrite(TAPEKNOCK,HIGH);
@@ -1567,10 +1493,14 @@ boolean head( boolean on )
   if( on ) {
     digitalWrite(HEAD,LOW);  
     headState = true;
+    
+    while( headDown() == false) ;
+
   } 
   else {
     digitalWrite(HEAD,HIGH);
     headState = false;
+    while( headDown() == true) ;
   }
 
   //if the head down sensor doesn't equal the headState, something is wrong
@@ -1612,7 +1542,8 @@ char findlefthome(void) {
       return false;
     }
 
-    stepXCW( DELAY_Y1 + DELAY_Y2);
+
+    ( DELAY_Y1 + DELAY_Y2);
     counter++;
   }  
 
@@ -1754,11 +1685,12 @@ void beforeMoving( void )
 void stepYCW( long length ) 
 {    
   beforeMoving();
-
+  cli();
   digitalWrite(YCW,HIGH);
-  delayMicroseconds(SHORT_Y_PULSE); 
+  _delay_us( SHORT_X_PULSE ) ;
   digitalWrite(YCW,LOW);
-  delayMicroseconds(length); 
+  _delay_us(length); 
+  sei();
 
   DecrementYPulses();
 }
@@ -1768,10 +1700,12 @@ void stepYCCW( long pulselength )
 {
   beforeMoving();
 
+  cli();
   digitalWrite(YCCW,HIGH);
-  delayMicroseconds(SHORT_Y_PULSE); 
+  _delay_us( SHORT_X_PULSE ) ;
   digitalWrite(YCCW,LOW);
-  delayMicroseconds(pulselength);  
+  _delay_us(pulselength);  
+  sei();
 
   IncrementYPulses();
 }
@@ -1781,10 +1715,13 @@ void stepXCW( long pulselength )
 {
   beforeMoving();
 
+  cli();
   digitalWrite(XCW,HIGH);
+  _delay_us( SHORT_X_PULSE ) ;
   delayMicroseconds(SHORT_X_PULSE); 
   digitalWrite(XCW,LOW);
-  delayMicroseconds(pulselength); 
+  _delay_us(pulselength); 
+  sei();
 
   DecrementXPulses();
 }
@@ -1795,10 +1732,11 @@ void stepXCCW( long pulselength )
   beforeMoving();
 
   digitalWrite(XCCW,HIGH);
-  delayMicroseconds(SHORT_X_PULSE); 
+  _delay_us( SHORT_X_PULSE ) ;
   digitalWrite(XCCW,LOW);
-  delayMicroseconds(pulselength);    
+  _delay_us(pulselength);    
 
+  sei();
   IncrementXPulses();
 }
 
@@ -2313,6 +2251,9 @@ void plotLine(long x0, long y0, long x1, long y1,unsigned long col,int fast)
     } 
   }
 }
+
+#define ACCEL_STEP ( 32 ) 
+
 boolean movebackleft(long x0_pulses,long y0_pulses, boolean nolimit )
 {
   long length = DELAY_Y2 + DELAY_Y1;
@@ -2331,8 +2272,8 @@ boolean movebackleft(long x0_pulses,long y0_pulses, boolean nolimit )
   lsteps = ( x0_pulses ) ;
   fsteps = ( y0_pulses ) ;
 
-  fperc = (fsteps / 100 ) * 2;
-  lperc = (lsteps / 100 ) * 2;
+  fperc = (fsteps / 100 ) * 5;
+  lperc = (lsteps / 100 ) * 5;
 
   if( (fsteps-fperc) < 0 ) fperc = 0;
   if( (lsteps-lperc) < 0 ) lperc = 0;
@@ -2371,12 +2312,12 @@ boolean movebackleft(long x0_pulses,long y0_pulses, boolean nolimit )
       stepYCCW( length );
 
       if( fi < (y0_pulses-fperc)) 
-        length--;
+        length-=ACCEL_STEP;
       else
         length+=1;
 
-      if (length < Y_SPEED ) 
-        length = Y_SPEED;
+      if (length < Y2_SPEED ) 
+        length = Y2_SPEED;
 
       if (length >DELAY_Y2 + DELAY_Y1 ) 
         length = DELAY_Y2 + DELAY_Y1; 
@@ -2391,12 +2332,12 @@ boolean movebackleft(long x0_pulses,long y0_pulses, boolean nolimit )
       stepXCW( llength );
 
       if( li < (x0_pulses-lperc)) 
-        llength--;
+        llength-=ACCEL_STEP;
       else
         llength+=1;
 
-      if (llength < X_SPEED ) 
-        llength = X_SPEED;
+      if (llength < X2_SPEED ) 
+        llength = X2_SPEED;
 
       if (llength > DELAY_Y2 + DELAY_Y1 ) 
         llength = DELAY_Y2 + DELAY_Y1;
@@ -2431,8 +2372,8 @@ boolean movebackright(long x0_pulses,long y0_pulses, boolean nolimit )
   lsteps = ( x0_pulses ) ;
   fsteps = ( y0_pulses ) ;
 
-  fperc = (fsteps / 100 ) * 2;
-  lperc = (lsteps / 100 ) * 2;
+  fperc = (fsteps / 100 ) * 5;
+  lperc = (lsteps / 100 ) * 5;
 
   if( (fsteps-fperc) < 0 ) fperc = 0;
   if( (lsteps-lperc) < 0 ) lperc = 0;
@@ -2471,12 +2412,12 @@ boolean movebackright(long x0_pulses,long y0_pulses, boolean nolimit )
       stepYCCW( length );
 
       if( fi < (y0_pulses-fperc)) 
-        length--;
+        length-=ACCEL_STEP;
       else
         length+=1;
 
-      if (length < Y_SPEED ) 
-        length = Y_SPEED;
+      if (length < Y2_SPEED ) 
+        length = Y2_SPEED;
 
       if (length >DELAY_Y2 + DELAY_Y1 ) 
         length = DELAY_Y2 + DELAY_Y1; 
@@ -2491,12 +2432,12 @@ boolean movebackright(long x0_pulses,long y0_pulses, boolean nolimit )
       stepXCCW( llength );
 
       if( li < (x0_pulses-lperc)) 
-        llength--;
+        llength-=ACCEL_STEP;
       else
         llength+=1;
 
-      if (llength < X_SPEED ) 
-        llength = X_SPEED;
+      if (llength < X2_SPEED ) 
+        llength = X2_SPEED;
 
       if (llength > DELAY_Y2 + DELAY_Y1 ) 
         llength = DELAY_Y2 + DELAY_Y1;
@@ -2533,8 +2474,8 @@ boolean moveforwardright(long x0_pulses,long y0_pulses, boolean nolimit )
   fsteps = ( y0_pulses ) ;
   lsteps = ( x0_pulses ) ;
 
-  fperc = (fsteps / 100 ) * 2;
-  lperc = (lsteps / 100 ) * 2;
+  fperc = (fsteps / 100 ) * 5;
+  lperc = (lsteps / 100 ) * 5;
 
   if( ( fsteps-fperc) < 0 ) fperc = 0;
   if( ( lsteps-lperc) < 0 ) lperc = 0;
@@ -2572,12 +2513,12 @@ boolean moveforwardright(long x0_pulses,long y0_pulses, boolean nolimit )
       stepYCW( length );
 
       if( fi < (y0_pulses-fperc)) 
-        length--;
+        length-=ACCEL_STEP;
       else
         length+=1;
 
-      if (length < Y_SPEED ) 
-        length = Y_SPEED;
+      if (length < Y2_SPEED ) 
+        length = Y2_SPEED;
       if (length >DELAY_Y2 + DELAY_Y1 ) 
         length = DELAY_Y2 + DELAY_Y1; 
 
@@ -2591,12 +2532,12 @@ boolean moveforwardright(long x0_pulses,long y0_pulses, boolean nolimit )
       stepXCCW( llength );
 
       if( li < (x0_pulses-lperc)) 
-        llength--;
+        llength-=4;
       else
         llength+=1;
 
-      if (llength < X_SPEED ) 
-        llength = X_SPEED;
+      if (llength < X2_SPEED ) 
+        llength = X2_SPEED;
 
       if (llength > DELAY_Y2 + DELAY_Y1 ) 
         llength = DELAY_Y2 + DELAY_Y1;
@@ -2632,8 +2573,8 @@ boolean moveforwardleft(long x0_pulses,long y0_pulses, boolean nolimit )
   fsteps = ( y0_pulses ) ;
   lsteps = ( x0_pulses ) ;
 
-  fperc = (fsteps / 100 ) * 2;
-  lperc = (lsteps / 100 ) * 2;
+  fperc = (fsteps / 100 ) * 5;
+  lperc = (lsteps / 100 ) * 5;
 
   if( ( fsteps-fperc) < 0 ) fperc = 0;
   if( ( lsteps-lperc) < 0 ) lperc = 0;
@@ -2671,12 +2612,12 @@ boolean moveforwardleft(long x0_pulses,long y0_pulses, boolean nolimit )
       stepYCW( length );
 
       if( fi < (y0_pulses-fperc)) 
-        length--;
+        length-=ACCEL_STEP;
       else
         length+=1;
 
-      if (length < Y_SPEED ) 
-        length = Y_SPEED;
+      if (length < Y2_SPEED ) 
+        length = Y2_SPEED;
       if (length >DELAY_Y2 + DELAY_Y1 ) 
         length = DELAY_Y2 + DELAY_Y1; 
 
@@ -2690,12 +2631,12 @@ boolean moveforwardleft(long x0_pulses,long y0_pulses, boolean nolimit )
       stepXCW( llength );
 
       if( li < (x0_pulses-lperc)) 
-        llength--;
+        llength-=2;
       else
         llength+=1;
 
-      if (llength < X_SPEED ) 
-        llength = X_SPEED;
+      if (llength < X2_SPEED ) 
+        llength = X2_SPEED;
 
       if (llength > DELAY_Y2 + DELAY_Y1 ) 
         llength = DELAY_Y2 + DELAY_Y1;
@@ -2723,7 +2664,7 @@ void move2o(long x0,long y0 )
   lx = x0;
   ly = y0;
 
-  delay(100);
+  delay( 50 );
 }
 
 enum {
@@ -2759,12 +2700,12 @@ void moveLine2o( long x0, long y0, long x1, long y1)
       // move right
       if( x0 < x1 ) {
 
-        if ( false == movebackright( xdiff, 0,1) ) return;
+        if ( false == goright( xdiff,1) ) return;
         delay(20);
         x0 += xdiff;
       } 
       else { 
-        if ( false == moveforwardleft( xdiff,0,1)) return;
+        if ( false == goleft( xdiff,1)) return;
         delay(20);
 
         x0 -= xdiff;
@@ -2778,12 +2719,12 @@ void moveLine2o( long x0, long y0, long x1, long y1)
 
       // move right
       if( y0 < y1 ) {
-        if ( false == movebackright(0,ydiff,1)) return;
+        if ( false == goback(ydiff,1)) return;
         delay(20);
         y0 += ydiff;
       } 
       else { 
-        if ( false == moveforwardleft(0,ydiff,1)) return;
+        if ( false == goforward(ydiff,1)) return;
         delay(20);
         y0 -= ydiff;
       }
@@ -2793,32 +2734,32 @@ void moveLine2o( long x0, long y0, long x1, long y1)
 
 /*
 GO_BR 2000 4000
-
-GO_BR 10308 1002
-
-GO_FR 769 345
-
-GO_BL 769 345
-
-Failed to pickup tool
-
-GO_BL 12243 8213
-
-GO_FR 1942 5958
-
-GO_BL 1942 5958
-
-GO_FR 2074 5958
-
-GO_BL 2074 5958
-
-GO_FR 2302 5796
-
-GO_BL 2302 5796
-
-GO_FR 2402 5796
-
-*/
+ 
+ GO_BR 10308 1002
+ 
+ GO_FR 769 345
+ 
+ GO_BL 769 345
+ 
+ Failed to pickup tool
+ 
+ GO_BL 12243 8213
+ 
+ GO_FR 1942 5958
+ 
+ GO_BL 1942 5958
+ 
+ GO_FR 2074 5958
+ 
+ GO_BL 2074 5958
+ 
+ GO_FR 2302 5796
+ 
+ GO_BL 2302 5796
+ 
+ GO_FR 2402 5796
+ 
+ */
 
 void moveLine2( long x0, long y0, long x1, long y1)
 {
@@ -2853,25 +2794,24 @@ void moveLine2( long x0, long y0, long x1, long y1)
     }
     else 
 
+      if( y0 > y1 && x0 < x1 ) {
+      direction = GO_FR;
+    } 
+    else 
+
+      if( y0 < y1 && x0 > x1 ) {
+      direction = GO_BL;
+    }
+    else 
+
       if( y0 < y1 && x0 < x1 ) {
       direction = GO_BR;
     } 
-   else 
-
-      if( y0 < y1 && x0 > x1 ) {
-        //direction = GO_BL;
-    }
-   else 
-
-      if( y0 > y1 && x0 < x1 ) {
-
-         //direction = GO_FR;
-    } 
     else {
-       direction = GO_NONE;
+      direction = GO_NONE;
     }
 
-// forward and left
+    // forward and left
     switch( direction ) {
 
     case GO_FL:
@@ -2881,11 +2821,11 @@ void moveLine2( long x0, long y0, long x1, long y1)
       ydiff = y0-y1;
       ydiff = abs(ydiff);
 
-      Serial.print(xdiff,DEC);Serial.print(" "); 
+      Serial.print(xdiff,DEC);
+      Serial.print(" "); 
       Serial.println(ydiff,DEC); 
 
       moveforwardleft(xdiff,ydiff,true);
-      delay(20);
       y0 -= ydiff;
       x0 -= xdiff;
       break;
@@ -2896,11 +2836,11 @@ void moveLine2( long x0, long y0, long x1, long y1)
       ydiff = y0-y1;
       ydiff = abs(ydiff);
 
-      Serial.print(xdiff,DEC);Serial.print(" "); 
+      Serial.print(xdiff,DEC);
+      Serial.print(" "); 
       Serial.println(ydiff,DEC); 
 
       movebackright(xdiff,ydiff,true);
-      delay(20);
       y0 += ydiff;
       x0 += xdiff;
       break;      
@@ -2912,11 +2852,11 @@ void moveLine2( long x0, long y0, long x1, long y1)
       ydiff = y0-y1;
       ydiff = abs(ydiff);
 
-      Serial.print(xdiff,DEC);Serial.print(" "); 
+      Serial.print(xdiff,DEC);
+      Serial.print(" "); 
       Serial.println(ydiff,DEC); 
 
       moveforwardright(xdiff,ydiff,true);
-      delay(20);
       y0 -= ydiff;
       x0 += xdiff;
       break;
@@ -2927,15 +2867,15 @@ void moveLine2( long x0, long y0, long x1, long y1)
       ydiff = y0-y1;
       ydiff = abs(ydiff);
 
-      Serial.print(xdiff,DEC);Serial.print(" "); 
+      Serial.print(xdiff,DEC);
+      Serial.print(" "); 
       Serial.println(ydiff,DEC); 
 
       movebackleft(xdiff,ydiff,true);
-      delay(20);
       y0 += ydiff;
       x0 -= xdiff;
       break;      
-      
+
     case GO_NONE:
       Serial.println("GO_NONE");
       if( x0 != x1 ) {
@@ -2946,13 +2886,11 @@ void moveLine2( long x0, long y0, long x1, long y1)
         // move right
         if( x0 < x1 ) {
 
-          if ( false == goright( xdiff ,1) ) return;
-          delay(20);
+          if ( false == moveforwardright( xdiff,0,true) ) return;
           x0 += xdiff;
         } 
         else { 
-          if ( false == goleft( xdiff,1) ) return;
-          delay(20);
+          if ( false == moveforwardleft( xdiff,0,1) ) return;
 
           x0 -= xdiff;
         }
@@ -2964,24 +2902,22 @@ void moveLine2( long x0, long y0, long x1, long y1)
         ydiff = y0-y1;
         ydiff = abs(ydiff);
 
-        // move right
+        // move back
         if( y0 < y1 ) {
-          if ( false == goback(ydiff,1)) return;
-          delay(20);
+          if ( false == movebackleft(0,ydiff,1)) return;
           y0 += ydiff;
         } 
         else { 
-          if ( false == goforward(ydiff,1)) return;
-          delay(20);
+          if ( false == moveforwardleft(0,ydiff,1)) return;
           y0 -= ydiff;
         }
       }
-      
-        break;
-      default:
-            Serial.println("GO_DERP");
 
-        break;
+      break;
+    default:
+      Serial.println("GO_DERP");
+
+      break;
     }
   }
 }
@@ -2996,9 +2932,1156 @@ void move2(long x0,long y0 )
 
   lx = x0;
   ly = y0;
-
-  delay( 500 );
 }
 
 
+void speed_cntr_Init_Timer1(void)
+{
+  // Tells what part of speed ramp we are in.
+//  srd.run_state = STOP;
+  // Timer/Counter 1 in mode 4 CTC (Not running).
+  TCCR1B = (1<<WGM12);
+  // Timer/Counter 1 Output Compare A Match Interrupt enable.
+  TIMSK1 = (1<<OCIE1A);
+}
+
+void speakerBadge(void)
+{
+  	xtoolchange();
+		move2(61860,159240);
+	xend();
+	xtoolchange();
+		move2(55510,152890);
+	xend();
+	xtoolchange();
+		rotate(true);
+		move2(49160,159240);
+		rotate(false);
+	xend();
+	xtoolchange();
+		move2(55510,165590);
+	xend();
+	xtoolchange();
+		move2(79640,146540);
+	xend();
+	xtoolchange();
+		move2(41540,240520);
+	xend();
+	xtoolchange();
+		move2(45350,240520);
+	xend();
+	xtoolchange();
+		move2(49160,240520);
+	xend();
+	xtoolchange();
+		move2(52970,240520);
+	xend();
+	xtoolchange();
+		move2(56780,240520);
+	xend();
+	xtoolchange();
+		move2(60590,240520);
+	xend();
+	xtoolchange();
+		move2(64400,240520);
+	xend();
+	xtoolchange();
+		move2(68210,240520);
+	xend();
+	xtoolchange();
+		move2(72020,240520);
+	xend();
+	xtoolchange();
+		move2(75830,240520);
+	xend();
+	xtoolchange();
+		move2(79640,240520);
+	xend();
+	xtoolchange();
+		move2(83450,240520);
+	xend();
+	xtoolchange();
+		move2(87260,240520);
+	xend();
+	xtoolchange();
+		move2(91070,240520);
+	xend();
+	xtoolchange();
+		move2(94880,240520);
+	xend();
+	xtoolchange();
+		move2(98690,240520);
+	xend();
+	xtoolchange();
+		move2(102500,240520);
+	xend();
+	xtoolchange();
+		move2(106310,240520);
+	xend();
+	xtoolchange();
+		move2(41540,236710);
+	xend();
+	xtoolchange();
+		move2(45350,236710);
+	xend();
+	xtoolchange();
+		move2(49160,236710);
+	xend();
+	xtoolchange();
+		move2(52970,236710);
+	xend();
+	xtoolchange();
+		move2(56780,236710);
+	xend();
+	xtoolchange();
+		move2(60590,236710);
+	xend();
+	xtoolchange();
+		move2(64400,236710);
+	xend();
+	xtoolchange();
+		move2(68210,236710);
+	xend();
+	xtoolchange();
+		move2(72020,236710);
+	xend();
+	xtoolchange();
+		move2(75830,236710);
+	xend();
+	xtoolchange();
+		move2(79640,236710);
+	xend();
+	xtoolchange();
+		move2(83450,236710);
+	xend();
+	xtoolchange();
+		move2(87260,236710);
+	xend();
+	xtoolchange();
+		move2(91070,236710);
+	xend();
+	xtoolchange();
+		move2(94880,236710);
+	xend();
+	xtoolchange();
+		move2(98690,236710);
+	xend();
+	xtoolchange();
+		move2(102500,236710);
+	xend();
+	xtoolchange();
+		move2(106310,236710);
+	xend();
+	xtoolchange();
+		move2(41540,232900);
+	xend();
+	xtoolchange();
+		move2(45350,232900);
+	xend();
+	xtoolchange();
+		move2(49160,232900);
+	xend();
+	xtoolchange();
+		move2(52970,232900);
+	xend();
+	xtoolchange();
+		move2(56780,232900);
+	xend();
+	xtoolchange();
+		move2(60590,232900);
+	xend();
+	xtoolchange();
+		move2(64400,232900);
+	xend();
+	xtoolchange();
+		move2(68210,232900);
+	xend();
+	xtoolchange();
+		move2(72020,232900);
+	xend();
+	xtoolchange();
+		move2(75830,232900);
+	xend();
+	xtoolchange();
+		move2(79640,232900);
+	xend();
+	xtoolchange();
+		move2(83450,232900);
+	xend();
+	xtoolchange();
+		move2(87260,232900);
+	xend();
+	xtoolchange();
+		move2(91070,232900);
+	xend();
+	xtoolchange();
+		move2(94880,232900);
+	xend();
+	xtoolchange();
+		move2(98690,232900);
+	xend();
+	xtoolchange();
+		move2(102500,232900);
+	xend();
+	xtoolchange();
+		move2(106310,232900);
+	xend();
+	xtoolchange();
+		move2(41540,229090);
+	xend();
+	xtoolchange();
+		move2(45350,229090);
+	xend();
+	xtoolchange();
+		move2(49160,229090);
+	xend();
+	xtoolchange();
+		move2(52970,229090);
+	xend();
+	xtoolchange();
+		move2(56780,229090);
+	xend();
+	xtoolchange();
+		move2(60590,229090);
+	xend();
+	xtoolchange();
+		move2(64400,229090);
+	xend();
+	xtoolchange();
+		move2(68210,229090);
+	xend();
+	xtoolchange();
+		move2(72020,229090);
+	xend();
+	xtoolchange();
+		move2(75830,229090);
+	xend();
+	xtoolchange();
+		move2(79640,229090);
+	xend();
+	xtoolchange();
+		move2(83450,229090);
+	xend();
+	xtoolchange();
+		move2(87260,229090);
+	xend();
+	xtoolchange();
+		move2(91070,229090);
+	xend();
+	xtoolchange();
+		move2(94880,229090);
+	xend();
+	xtoolchange();
+		move2(98690,229090);
+	xend();
+	xtoolchange();
+		move2(102500,229090);
+	xend();
+	xtoolchange();
+		move2(106310,229090);
+	xend();
+	xtoolchange();
+		move2(41540,225280);
+	xend();
+	xtoolchange();
+		move2(45350,225280);
+	xend();
+	xtoolchange();
+		move2(49160,225280);
+	xend();
+	xtoolchange();
+		move2(52970,225280);
+	xend();
+	xtoolchange();
+		move2(56780,225280);
+	xend();
+	xtoolchange();
+		move2(60590,225280);
+	xend();
+	xtoolchange();
+		move2(64400,225280);
+	xend();
+	xtoolchange();
+		move2(68210,225280);
+	xend();
+	xtoolchange();
+		move2(72020,225280);
+	xend();
+	xtoolchange();
+		move2(75830,225280);
+	xend();
+	xtoolchange();
+		move2(79640,225280);
+	xend();
+	xtoolchange();
+		move2(83450,225280);
+	xend();
+	xtoolchange();
+		move2(87260,225280);
+	xend();
+	xtoolchange();
+		move2(91070,225280);
+	xend();
+	xtoolchange();
+		move2(94880,225280);
+	xend();
+	xtoolchange();
+		move2(98690,225280);
+	xend();
+	xtoolchange();
+		move2(102500,225280);
+	xend();
+	xtoolchange();
+		move2(106310,225280);
+	xend();
+	xtoolchange();
+		move2(41540,221470);
+	xend();
+	xtoolchange();
+		move2(45350,221470);
+	xend();
+	xtoolchange();
+		move2(49160,221470);
+	xend();
+	xtoolchange();
+		move2(52970,221470);
+	xend();
+	xtoolchange();
+		move2(56780,221470);
+	xend();
+	xtoolchange();
+		move2(60590,221470);
+	xend();
+	xtoolchange();
+		move2(64400,221470);
+	xend();
+	xtoolchange();
+		move2(68210,221470);
+	xend();
+	xtoolchange();
+		move2(72020,221470);
+	xend();
+	xtoolchange();
+		move2(75830,221470);
+	xend();
+	xtoolchange();
+		move2(79640,221470);
+	xend();
+	xtoolchange();
+		move2(83450,221470);
+	xend();
+	xtoolchange();
+		move2(87260,221470);
+	xend();
+	xtoolchange();
+		move2(91070,221470);
+	xend();
+	xtoolchange();
+		move2(94880,221470);
+	xend();
+	xtoolchange();
+		move2(98690,221470);
+	xend();
+	xtoolchange();
+		move2(102500,221470);
+	xend();
+	xtoolchange();
+		move2(106310,221470);
+	xend();
+	xtoolchange();
+		move2(41540,217660);
+	xend();
+	xtoolchange();
+		move2(45350,217660);
+	xend();
+	xtoolchange();
+		move2(49160,217660);
+	xend();
+	xtoolchange();
+		move2(52970,217660);
+	xend();
+	xtoolchange();
+		move2(56780,217660);
+	xend();
+	xtoolchange();
+		move2(60590,217660);
+	xend();
+	xtoolchange();
+		move2(64400,217660);
+	xend();
+	xtoolchange();
+		move2(68210,217660);
+	xend();
+	xtoolchange();
+		move2(72020,217660);
+	xend();
+	xtoolchange();
+		move2(75830,217660);
+	xend();
+	xtoolchange();
+		move2(79640,217660);
+	xend();
+	xtoolchange();
+		move2(83450,217660);
+	xend();
+	xtoolchange();
+		move2(87260,217660);
+	xend();
+	xtoolchange();
+		move2(91070,217660);
+	xend();
+	xtoolchange();
+		move2(94880,217660);
+	xend();
+	xtoolchange();
+		move2(98690,217660);
+	xend();
+	xtoolchange();
+		move2(102500,217660);
+	xend();
+	xtoolchange();
+		move2(106310,217660);
+	xend();
+	xtoolchange();
+		move2(41540,213850);
+	xend();
+	xtoolchange();
+		move2(45350,213850);
+	xend();
+	xtoolchange();
+		move2(49160,213850);
+	xend();
+	xtoolchange();
+		move2(52970,213850);
+	xend();
+	xtoolchange();
+		move2(56780,213850);
+	xend();
+	xtoolchange();
+		move2(60590,213850);
+	xend();
+	xtoolchange();
+		move2(64400,213850);
+	xend();
+	xtoolchange();
+		move2(68210,213850);
+	xend();
+	xtoolchange();
+		move2(72020,213850);
+	xend();
+	xtoolchange();
+		move2(75830,213850);
+	xend();
+	xtoolchange();
+		move2(79640,213850);
+	xend();
+	xtoolchange();
+		move2(83450,213850);
+	xend();
+	xtoolchange();
+		move2(87260,213850);
+	xend();
+	xtoolchange();
+		move2(91070,213850);
+	xend();
+	xtoolchange();
+		move2(94880,213850);
+	xend();
+	xtoolchange();
+		move2(98690,213850);
+	xend();
+	xtoolchange();
+		move2(102500,213850);
+	xend();
+	xtoolchange();
+		move2(106310,213850);
+	xend();
+	xtoolchange();
+		move2(41540,210040);
+	xend();
+	xtoolchange();
+		move2(45350,210040);
+	xend();
+	xtoolchange();
+		move2(49160,210040);
+	xend();
+	xtoolchange();
+		move2(52970,210040);
+	xend();
+	xtoolchange();
+		move2(56780,210040);
+	xend();
+	xtoolchange();
+		move2(60590,210040);
+	xend();
+	xtoolchange();
+		move2(64400,210040);
+	xend();
+	xtoolchange();
+		move2(68210,210040);
+	xend();
+	xtoolchange();
+		move2(72020,210040);
+	xend();
+	xtoolchange();
+		move2(75830,210040);
+	xend();
+	xtoolchange();
+		move2(79640,210040);
+	xend();
+	xtoolchange();
+		move2(83450,210040);
+	xend();
+	xtoolchange();
+		move2(87260,210040);
+	xend();
+	xtoolchange();
+		move2(91070,210040);
+	xend();
+	xtoolchange();
+		move2(94880,210040);
+	xend();
+	xtoolchange();
+		move2(98690,210040);
+	xend();
+	xtoolchange();
+		move2(102500,210040);
+	xend();
+	xtoolchange();
+		move2(106310,210040);
+	xend();
+	xtoolchange();
+		move2(41540,206230);
+	xend();
+	xtoolchange();
+		move2(45350,206230);
+	xend();
+	xtoolchange();
+		move2(49160,206230);
+	xend();
+	xtoolchange();
+		move2(52970,206230);
+	xend();
+	xtoolchange();
+		move2(56780,206230);
+	xend();
+	xtoolchange();
+		move2(60590,206230);
+	xend();
+	xtoolchange();
+		move2(64400,206230);
+	xend();
+	xtoolchange();
+		move2(68210,206230);
+	xend();
+	xtoolchange();
+		move2(72020,206230);
+	xend();
+	xtoolchange();
+		move2(75830,206230);
+	xend();
+	xtoolchange();
+		move2(79640,206230);
+	xend();
+	xtoolchange();
+		move2(83450,206230);
+	xend();
+	xtoolchange();
+		move2(87260,206230);
+	xend();
+	xtoolchange();
+		move2(91070,206230);
+	xend();
+	xtoolchange();
+		move2(94880,206230);
+	xend();
+	xtoolchange();
+		move2(98690,206230);
+	xend();
+	xtoolchange();
+		move2(102500,206230);
+	xend();
+	xtoolchange();
+		move2(106310,206230);
+	xend();
+	xtoolchange();
+		move2(41540,202420);
+	xend();
+	xtoolchange();
+		move2(45350,202420);
+	xend();
+	xtoolchange();
+		move2(49160,202420);
+	xend();
+	xtoolchange();
+		move2(52970,202420);
+	xend();
+	xtoolchange();
+		move2(56780,202420);
+	xend();
+	xtoolchange();
+		move2(60590,202420);
+	xend();
+	xtoolchange();
+		move2(64400,202420);
+	xend();
+	xtoolchange();
+		move2(68210,202420);
+	xend();
+	xtoolchange();
+		move2(72020,202420);
+	xend();
+	xtoolchange();
+		move2(75830,202420);
+	xend();
+	xtoolchange();
+		move2(79640,202420);
+	xend();
+	xtoolchange();
+		move2(83450,202420);
+	xend();
+	xtoolchange();
+		move2(87260,202420);
+	xend();
+	xtoolchange();
+		move2(91070,202420);
+	xend();
+	xtoolchange();
+		move2(94880,202420);
+	xend();
+	xtoolchange();
+		move2(98690,202420);
+	xend();
+	xtoolchange();
+		move2(102500,202420);
+	xend();
+	xtoolchange();
+		move2(106310,202420);
+	xend();
+	xtoolchange();
+		move2(41540,198610);
+	xend();
+	xtoolchange();
+		move2(45350,198610);
+	xend();
+	xtoolchange();
+		move2(49160,198610);
+	xend();
+	xtoolchange();
+		move2(52970,198610);
+	xend();
+	xtoolchange();
+		move2(56780,198610);
+	xend();
+	xtoolchange();
+		move2(60590,198610);
+	xend();
+	xtoolchange();
+		move2(64400,198610);
+	xend();
+	xtoolchange();
+		move2(68210,198610);
+	xend();
+	xtoolchange();
+		move2(72020,198610);
+	xend();
+	xtoolchange();
+		move2(75830,198610);
+	xend();
+	xtoolchange();
+		move2(79640,198610);
+	xend();
+	xtoolchange();
+		move2(83450,198610);
+	xend();
+	xtoolchange();
+		move2(87260,198610);
+	xend();
+	xtoolchange();
+		move2(91070,198610);
+	xend();
+	xtoolchange();
+		move2(94880,198610);
+	xend();
+	xtoolchange();
+		move2(98690,198610);
+	xend();
+	xtoolchange();
+		move2(102500,198610);
+	xend();
+	xtoolchange();
+		move2(106310,198610);
+	xend();
+	xtoolchange();
+		move2(41540,194800);
+	xend();
+	xtoolchange();
+		move2(45350,194800);
+	xend();
+	xtoolchange();
+		move2(49160,194800);
+	xend();
+	xtoolchange();
+		move2(52970,194800);
+	xend();
+	xtoolchange();
+		move2(56780,194800);
+	xend();
+	xtoolchange();
+		move2(60590,194800);
+	xend();
+	xtoolchange();
+		move2(64400,194800);
+	xend();
+	xtoolchange();
+		move2(68210,194800);
+	xend();
+	xtoolchange();
+		move2(72020,194800);
+	xend();
+	xtoolchange();
+		move2(75830,194800);
+	xend();
+	xtoolchange();
+		move2(79640,194800);
+	xend();
+	xtoolchange();
+		move2(83450,194800);
+	xend();
+	xtoolchange();
+		move2(87260,194800);
+	xend();
+	xtoolchange();
+		move2(91070,194800);
+	xend();
+	xtoolchange();
+		move2(94880,194800);
+	xend();
+	xtoolchange();
+		move2(98690,194800);
+	xend();
+	xtoolchange();
+		move2(102500,194800);
+	xend();
+	xtoolchange();
+		move2(106310,194800);
+	xend();
+	xtoolchange();
+		move2(41540,190990);
+	xend();
+	xtoolchange();
+		move2(45350,190990);
+	xend();
+	xtoolchange();
+		move2(49160,190990);
+	xend();
+	xtoolchange();
+		move2(52970,190990);
+	xend();
+	xtoolchange();
+		move2(56780,190990);
+	xend();
+	xtoolchange();
+		move2(60590,190990);
+	xend();
+	xtoolchange();
+		move2(64400,190990);
+	xend();
+	xtoolchange();
+		move2(68210,190990);
+	xend();
+	xtoolchange();
+		move2(72020,190990);
+	xend();
+	xtoolchange();
+		move2(75830,190990);
+	xend();
+	xtoolchange();
+		move2(79640,190990);
+	xend();
+	xtoolchange();
+		move2(83450,190990);
+	xend();
+	xtoolchange();
+		move2(87260,190990);
+	xend();
+	xtoolchange();
+		move2(91070,190990);
+	xend();
+	xtoolchange();
+		move2(94880,190990);
+	xend();
+	xtoolchange();
+		move2(98690,190990);
+	xend();
+	xtoolchange();
+		move2(102500,190990);
+	xend();
+	xtoolchange();
+		move2(106310,190990);
+	xend();
+	xtoolchange();
+		move2(41540,187180);
+	xend();
+	xtoolchange();
+		move2(45350,187180);
+	xend();
+	xtoolchange();
+		move2(49160,187180);
+	xend();
+	xtoolchange();
+		move2(52970,187180);
+	xend();
+	xtoolchange();
+		move2(56780,187180);
+	xend();
+	xtoolchange();
+		move2(60590,187180);
+	xend();
+	xtoolchange();
+		move2(64400,187180);
+	xend();
+	xtoolchange();
+		move2(68210,187180);
+	xend();
+	xtoolchange();
+		move2(72020,187180);
+	xend();
+	xtoolchange();
+		move2(75830,187180);
+	xend();
+	xtoolchange();
+		move2(79640,187180);
+	xend();
+	xtoolchange();
+		move2(83450,187180);
+	xend();
+	xtoolchange();
+		move2(87260,187180);
+	xend();
+	xtoolchange();
+		move2(91070,187180);
+	xend();
+	xtoolchange();
+		move2(94880,187180);
+	xend();
+	xtoolchange();
+		move2(98690,187180);
+	xend();
+	xtoolchange();
+		move2(102500,187180);
+	xend();
+	xtoolchange();
+		move2(106310,187180);
+	xend();
+	xtoolchange();
+		move2(41540,183370);
+	xend();
+	xtoolchange();
+		move2(45350,183370);
+	xend();
+	xtoolchange();
+		move2(49160,183370);
+	xend();
+	xtoolchange();
+		move2(52970,183370);
+	xend();
+	xtoolchange();
+		move2(56780,183370);
+	xend();
+	xtoolchange();
+		move2(60590,183370);
+	xend();
+	xtoolchange();
+		move2(64400,183370);
+	xend();
+	xtoolchange();
+		move2(68210,183370);
+	xend();
+	xtoolchange();
+		move2(72020,183370);
+	xend();
+	xtoolchange();
+		move2(75830,183370);
+	xend();
+	xtoolchange();
+		move2(79640,183370);
+	xend();
+	xtoolchange();
+		move2(83450,183370);
+	xend();
+	xtoolchange();
+		move2(87260,183370);
+	xend();
+	xtoolchange();
+		move2(91070,183370);
+	xend();
+	xtoolchange();
+		move2(94880,183370);
+	xend();
+	xtoolchange();
+		move2(98690,183370);
+	xend();
+	xtoolchange();
+		move2(102500,183370);
+	xend();
+	xtoolchange();
+		move2(106310,183370);
+	xend();
+	xtoolchange();
+		move2(41540,179560);
+	xend();
+	xtoolchange();
+		move2(45350,179560);
+	xend();
+	xtoolchange();
+		move2(49160,179560);
+	xend();
+	xtoolchange();
+		move2(52970,179560);
+	xend();
+	xtoolchange();
+		move2(56780,179560);
+	xend();
+	xtoolchange();
+		move2(60590,179560);
+	xend();
+	xtoolchange();
+		move2(64400,179560);
+	xend();
+	xtoolchange();
+		move2(68210,179560);
+	xend();
+	xtoolchange();
+		move2(72020,179560);
+	xend();
+	xtoolchange();
+		move2(75830,179560);
+	xend();
+	xtoolchange();
+		move2(79640,179560);
+	xend();
+	xtoolchange();
+		move2(83450,179560);
+	xend();
+	xtoolchange();
+		move2(87260,179560);
+	xend();
+	xtoolchange();
+		move2(91070,179560);
+	xend();
+	xtoolchange();
+		move2(94880,179560);
+	xend();
+	xtoolchange();
+		move2(98690,179560);
+	xend();
+	xtoolchange();
+		move2(102500,179560);
+	xend();
+	xtoolchange();
+		move2(106310,179560);
+	xend();
+	xtoolchange();
+		move2(41540,175750);
+	xend();
+	xtoolchange();
+		move2(45350,175750);
+	xend();
+	xtoolchange();
+		move2(49160,175750);
+	xend();
+	xtoolchange();
+		move2(52970,175750);
+	xend();
+	xtoolchange();
+		move2(56780,175750);
+	xend();
+	xtoolchange();
+		move2(60590,175750);
+	xend();
+	xtoolchange();
+		move2(64400,175750);
+	xend();
+	xtoolchange();
+		move2(68210,175750);
+	xend();
+	xtoolchange();
+		move2(72020,175750);
+	xend();
+	xtoolchange();
+		move2(75830,175750);
+	xend();
+	xtoolchange();
+		move2(79640,175750);
+	xend();
+	xtoolchange();
+		move2(83450,175750);
+	xend();
+	xtoolchange();
+		move2(87260,175750);
+	xend();
+	xtoolchange();
+		move2(91070,175750);
+	xend();
+	xtoolchange();
+		move2(94880,175750);
+	xend();
+	xtoolchange();
+		move2(98690,175750);
+	xend();
+	xtoolchange();
+		move2(102500,175750);
+	xend();
+	xtoolchange();
+		move2(106310,175750);
+	xend();
+	xtoolchange();
+		rotate(true);
+		move2(101230,160510);
+		rotate(false);
+	xend();
+	xtoolchange();
+		rotate(true);
+		move2(87260,160510);
+		rotate(false);
+	xend();
+	xtoolchange();
+		move2(65670,159240);
+	xend();
+	xtoolchange();
+		move2(50430,152890);
+	xend();
+	xtoolchange();
+		move2(46620,154160);
+	xend();
+	xtoolchange();
+		move2(50430,165590);
+	xend();
+	xtoolchange();
+		move2(83450,159240);
+	xend();
+	xtoolchange();
+		move2(97420,159240);
+	xend();
+}
+
+
+void stdTest( void )
+{
+  
+      xtoolchange();
+      move2(50188,181426);
+      xend();
+
+      xtoolchange();
+      move2(53484,181426);
+      xend();
+      xtoolchange();
+      move2(59192,185480);
+      xend();
+      xtoolchange();
+      move2(61683,185480);
+      xend();
+
+      xtoolchange();
+      rotate(true);
+      move2(41929,209188);
+      xend();
+      rotate(false);
+
+      xtoolchange();
+      rotate(true);
+      move2(59200,181508);
+      rotate(false);
+      xend();
+      xtoolchange();
+      center(true);
+      delay(10);
+      center(false);
+      move2(54666,202537);
+      xend();
+      xtoolchange();
+      move2(62896,210238);
+      xend();
+      xtoolchange();
+      move2(57408,178552);
+      xend();
+      xtoolchange();
+      move2(62300,179442);
+      xend();
+      xtoolchange();
+      move2(67033,165146);
+      xend();
+      xtoolchange();
+      move2(60023,165009);
+      xend();
+      xtoolchange();
+      move2(61312,161566);
+      xend();
+      xtoolchange();
+      move2(57086,215584);
+      xend();
+      xtoolchange();
+      move2(54712,158199);
+      xend();
+      xtoolchange();
+      move2(59676,158199);
+      xend();
+      xtoolchange();
+      move2(63939,220169);
+      xend();
+      xtoolchange();
+      move2(50996,200426);
+      xend();
+      xtoolchange();
+      move2(58610,172304);
+      xend();
+      xtoolchange();
+      move2(66726,192156);
+      xend();
+      xtoolchange();
+      move2(65697,172314);
+      xend();
+      xtoolchange();
+      move2(51717,171414);
+      xend();
+      xtoolchange();
+      move2(61902,192979);
+      xend();
+      xtoolchange();
+      move2(67503,211651);
+      xend();
+      xtoolchange();
+      move2(61539,216191);
+      xend();
+      xtoolchange();
+      move2(57725,216191);
+      xend();
+      xtoolchange();
+      move2(55834,216191);
+      xend();
+      xtoolchange();
+      move2(62991,202407);
+      xend();
+      xtoolchange();
+      move2(40926,218469);
+      xend();
+      xtoolchange();
+      move2(68576,199343);
+      xend();
+      xtoolchange();
+      move2(51712,158199);
+      xend();
+      xtoolchange();
+      move2(68767,159693);
+      xend();
+      xtoolchange();
+      move2(49848,165338);
+      xend();
+      xtoolchange();
+      move2(54996,224363);
+      xend();
+
+}
 
