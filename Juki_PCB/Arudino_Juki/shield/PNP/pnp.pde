@@ -30,6 +30,8 @@ __  __           ___    ___       ____                                        __
 #include <avr/wdt.h>
 #include <avr/delay.h>
 
+#define 	WDTO_8S   9
+
 #define NDEBUG 1
 
 // Pin mappings
@@ -212,8 +214,8 @@ int X_SPEED =( 100 );
 int Y_SPEED =( 110 );
 
 // for diagonal move
-int X2_SPEED =( 55 );
-int Y2_SPEED =( 90 );
+int X2_SPEED =( 50 );
+int Y2_SPEED =( 96 );
 
 // length of pulse sent to motor controller
 #define SHORT_X_PULSE ( 1 )
@@ -272,7 +274,10 @@ JukiStepper m_Stepper(25*40,DELAY_X2,XCCW,XCW);
 // Code
 /////////////////////////////////////////////////////////////////////////////////////
 
-void setup( void ) {
+void setup( void ) 
+{
+
+//  wdt_enable( WDTO_8S );
 
   homed = false;
 
@@ -290,7 +295,7 @@ void setup( void ) {
   // set pullups for sensors and switches
   digitalWrite(XPLUS,HIGH);
   digitalWrite(YPLUS,HIGH);
-  digitalWrite(XMINUS,HIGH);
+  digitalWrite(XMINUS,HIGH);for all the
   digitalWrite(YMINUS,HIGH);
   digitalWrite(T_VAC,HIGH);
   digitalWrite(MORG,HIGH);
@@ -963,6 +968,9 @@ boolean testpart(void )
 void loop() 
 {
   char sbyte;
+
+// handle watchdog
+//   wdt_reset();
 
   if (Serial.available() > 0) {
 
@@ -2252,7 +2260,7 @@ void plotLine(long x0, long y0, long x1, long y1,unsigned long col,int fast)
   }
 }
 
-#define ACCEL_STEP ( 32 ) 
+#define ACCEL_STEP ( 16 ) 
 
 boolean movebackleft(long x0_pulses,long y0_pulses, boolean nolimit )
 {
@@ -2935,7 +2943,7 @@ void move2(long x0,long y0 )
 }
 
 
-void speed_cntr_Init_Timer1(void)
+void setupTimer1(void)
 {
   // Tells what part of speed ramp we are in.
 //  srd.run_state = STOP;
