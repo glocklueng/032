@@ -1,3 +1,5 @@
+#ifndef _SHIELDPINS_H_
+#define _SHIELDPINS_H_ (1)
 
 // Pin mappings
 #if 1
@@ -168,3 +170,6 @@
 #define XCCW ( A1 )
 
 #endif
+
+#endif
+
