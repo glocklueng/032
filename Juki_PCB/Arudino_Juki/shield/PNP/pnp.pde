@@ -1,14 +1,11 @@
 
 /*
-__  __           ___    ___       ____                                        __                __                
- /\ \/\ \         /\_ \  /\_ \     /\  _`\                                     /\ \              /\ \               
- \ \ `\\ \  __  __\//\ \ \//\ \    \ \,\L\_\  _____      __      ___     __    \ \ \         __  \ \ \____    ____  
- \ \ , ` \/\ \/\ \ \ \ \  \ \ \    \/_\__ \ /\ '__`\  /'__`\   /'___\ /'__`\   \ \ \  __  /'__`\ \ \ '__`\  /',__\ 
- \ \ \`\ \ \ \_\ \ \_\ \_ \_\ \_    /\ \L\ \ \ \L\ \/\ \L\.\_/\ \__//\  __/    \ \ \L\ \/\ \L\.\_\ \ \L\ \/\__, `\
- \ \_\ \_\ \____/ /\____\/\____\   \ `\____\ \ ,__/\ \__/.\_\ \____\ \____\    \ \____/\ \__/.\_\\ \_,__/\/\____/
- \/_/\/_/\/___/  \/____/\/____/    \/_____/\ \ \/  \/__/\/_/\/____/\/____/     \/___/  \/__/\/_/ \/___/  \/___/ 
- \ \_\                                                               
- \/_/                                      
+    _   ____  ____    __   _____ ____  ___   ______________    ___    ____ _____
+   / | / / / / / /   / /  / ___// __ \/   | / ____/ ____/ /   /   |  / __ ) ___/
+  /  |/ / / / / /   / /   \__ \/ /_/ / /| |/ /   / __/ / /   / /| | / __  \__ \ 
+ / /|  / /_/ / /___/ /______/ / ____/ ___ / /___/ /___/ /___/ ___ |/ /_/ /__/ / 
+/_/ |_/\____/_____/_____/____/_/   /_/  |_\____/_____/_____/_/  |_/_____/____/  
+                                                                                
  
  
  88888888ba   88              88                     88888888ba                                       
@@ -19,6 +16,7 @@ __  __           ___    ___       ____                                        __
  88           88  8b          8888[     8b       d8  88      `8b  8PP"""""""  ,adPPPPP88  88          
  88           88  "8a,   ,aa  88`"Yba,  "8a,   ,a8"  88      a8P  "8b,   ,aa  88,    ,88  88          
  88           88   `"Ybbd8"'  88   `Y8a  `"YbbdP"'   88888888P"    `"Ybbd8"'  `"8bbdP"Y8  88        
+ 
  */
 
 // for the watchdog based reset ( which didn't seem to work)
@@ -30,15 +28,15 @@ __  __           ___    ___       ____                                        __
 #include <JukiStepper.h>
 #include <Time.h>
 
+// Pickobear includes
+#include "shieldpins.h"
 
 #define 	WDTO_8S   ( 9 )
 #define         NDEBUG    ( 1 )
 
-#include "shieldpins.h"
-
 // Maximum number of pulses before machine has hit a hard limit
-#define MAX_X_PULSES ( 14868L )
-#define MAX_Y_PULSES ( 21172L )
+#define MAX_X_PULSES       ( 14868L )
+#define MAX_Y_PULSES       ( 21172L )
 
 // maximum speed the motors can travel at
 int X_SPEED =( 100 );
@@ -88,11 +86,11 @@ long gXPulses = 0;
 long gYPulses = 0;
 
 // current X,Y position of head in micrometers
-long gCurrentXum = 0;
+//.long gCurrentXum = 0;
 long gCurrentYum = 0;
 
 // machine homed ?
-boolean homed = false;
+volatile boolean homed = false;
 
 // last x,y
 static long lx=0,ly=0;
@@ -109,7 +107,7 @@ JukiStepper m_Stepper(25*40,DELAY_X2,XCCW,XCW);
 void setup( void ) 
 {
 
-//  wdt_enable( WDTO_8S );
+  //  wdt_enable( WDTO_8S );
 
   homed = false;
 
@@ -205,9 +203,9 @@ void setup( void )
 #if 1
   // setup the limit switches
 
-  //These pins can be configured to trigger an interrupt on a low value, a rising or falling edge, or a change in value. See the attachInterrupt() function for details.
+  //These pins can be configured to trigger an interrupt on a low value, a rising or falling edge, or a change in value. See the attach nterrupt() function for details.
   //External Interrupts: 2 (interrupt 0), 3 (interrupt 1), 18 (interrupt 5), 19 (interrupt 4), 20 (interrupt 3), and 21 (interrupt 2).
-  
+
   attachInterrupt(2, y1Limit, CHANGE );
   attachInterrupt(3, y2Limit, CHANGE );
   attachInterrupt(4, x2Limit, CHANGE );
@@ -215,11 +213,10 @@ void setup( void )
 
 #endif
 
-//  xLimit1 = digitalRead( XL1 );
-//  yLimit1 = digitalRead( YL1 );
-//  xLimit2 = digitalRead( XL2 );
-//  yLimit2 = digitalRead( YL2 );
-
+    xLimit1 = digitalRead( XL1 );
+    yLimit1 = digitalRead( YL1 );
+    xLimit2 = digitalRead( XL2 );
+    yLimit2 = digitalRead( YL2 );
 }
 
 
@@ -276,10 +273,11 @@ void readPanel( void )
   xMinus =  !digitalRead( XMINUS );
   yPlus  =  !digitalRead( YPLUS );
   yMinus =  !digitalRead( YMINUS );
+
   fastSwitch    = !digitalRead( FAST );
   teachSwitch   = !digitalRead( TEACH );
   vacSwitch     = !digitalRead( T_VAC );
-  headSwitch     = !digitalRead( T_HEAD ) ;
+  headSwitch    = !digitalRead( T_HEAD ) ;
 
   // don't allow both
   if( xPlus == true && xMinus == true ) {
@@ -293,11 +291,9 @@ void readPanel( void )
 
   // fast mode
   if( fastSwitch == true ) {
-
     // make it go 500 pulses
     fspeed = 500;
   }
-
 
   if( !digitalRead( MORG ) == true && fastSwitch  ) {
     park();
@@ -310,11 +306,13 @@ void readPanel( void )
     }
 
   // if teach is held down, toggle spot light 
-  if( teachSwitch == true && lastTeach == false ) {
+  if( teachSwitch == true ) {
 
-    // toggle state
-    spotState = 1 - spotState;
-    spot(spotState);
+    if( lastTeach != true ) {
+      // toggle state
+      spotState = 1 - spotState;
+      spot(spotState);
+    }
   }
 
   // remember last setting
@@ -351,23 +349,24 @@ void readPanel( void )
     if(!fastSwitch)delay(100);
     goright(fspeed,1);
     //DELAY_X2 ++;
-  };
+  }
   if( xMinus == true ) {
     if(!fastSwitch)delay(100);
     goleft(fspeed,1);
     //DELAY_X2 --;
-  };
+  }
+
   if( yPlus  == true ) {
     if(!fastSwitch)delay(100);
     goback(fspeed,1);
     //DELAY_Y2 ++;
-  };
+  }
+
   if( yMinus == true ) {
     if(!fastSwitch)delay(100);
     goforward(fspeed,1);
     //DELAY_Y2 --;
-  };
-
+  }
 }
 
 bool tacSense(void) {
@@ -378,10 +377,10 @@ bool tacSense(void) {
 unsigned int readLimitSwitches( void ) 
 {
   unsigned char  limit;
-//  xLimit1 = digitalRead( XL1 );
-//  yLimit1 = digitalRead( YL1 );
-//  xLimit2 = digitalRead( XL2 );
- // yLimit2 = digitalRead( YL2 );
+  //  xLimit1 = digitalRead( XL1 );
+  //  yLimit1 = digitalRead( YL1 );
+  //  xLimit2 = digitalRead( XL2 );
+  // yLimit2 = digitalRead( YL2 );
 
   limit  = xLimit1;
   limit += xLimit2;
@@ -491,6 +490,7 @@ boolean putdown(void )
 #ifndef NDEBUG
   Serial.println("putdown");
 #endif
+
   // head down wait
   head(1);
   delay(600);
@@ -662,9 +662,9 @@ void gohome(void) {
 
 void park(void) { 
   move2( 
-    364000,
-    517000
-  );
+  364000,
+  517000
+    );
 }
 
 
@@ -755,9 +755,9 @@ void xend(void)
   // hold on part
   delay(200);
   head(0);
-  
+
   endTime = (minute()*60)+second();
-  
+
   Serial.print("took seconds = ");
   Serial.println(endTime - startTime ,DEC);
   Serial.print("CPH = ");
@@ -767,7 +767,7 @@ void xend(void)
   avgCount ++;
   Serial.print("Average CPH = ");
   Serial.println(avgCPH/avgCount ,DEC);
-  
+
 }
 
 boolean testpart(void )
@@ -798,12 +798,12 @@ void loop()
   Serial.print (yLimit1,DEC);
   Serial.print (yLimit2,DEC);
   Serial.println (homed,DEC);
-  
+
   return;
 #endif
-  
-// handle watchdog
-//   wdt_reset();
+
+  // handle watchdog
+  //   wdt_reset();
 
   if (Serial.available() > 0) {
 
@@ -823,15 +823,15 @@ void loop()
       Serial.print(minute(),DEC);
       Serial.print(":");
       Serial.println(second(),DEC);
-      
+
 
       if( hastool() == false ) 
         tool(1,1);
 
-          speakerBadge();
-  
-        head(0);
-        tool(1,1);
+      speakerBadge();
+
+      head(0);
+      tool(1,1);
 
       home();
       Serial.print("End:");
@@ -1072,7 +1072,7 @@ void home( void )
   boolean xhomed = false , yhomed = false;
 
   if( headDown() == true ) {
-    return ;
+    head(0) ;
   }
 
   // reset the pulse counter 
@@ -1157,10 +1157,11 @@ void home( void )
 
   for(int i = 0 ; i < 1100 ; i++ ) {
 
-    if( digitalRead( YHM )) {
+    if( digitalRead( YHM ) ) {
       yhomed = 1;
       break;
     }
+    
     // hit a limit
     // failed
     if( yLimit1 ) {
@@ -1215,6 +1216,7 @@ void centerof(void)
       return;
     }
   }
+  
   // 2800 = 14mm
   Serial.println("Center");
 
@@ -1245,8 +1247,9 @@ void centerof(void)
 
 void walk(void)
 {
-  Serial.println("Walk mode enabled, press a key to stop after limit reached");
+  Serial.println("Walk limit mode enabled, press a key to stop after limit reached");
   Serial.read();
+ 
   while(1){
     findrightlimit(); 
     readLimitSwitches();
@@ -1284,7 +1287,7 @@ void tapeKnock( boolean on_off )
 
   if( on_off ) 
     // debug
-    ;//digitalWrite(TAPEKNOCK,LOW);  
+    digitalWrite(TAPEKNOCK,LOW);  
   else  
     digitalWrite(TAPEKNOCK,HIGH);
 
@@ -1311,7 +1314,6 @@ void rotate( boolean on )
     digitalWrite(ROT,LOW);  
   else  
     digitalWrite(ROT,HIGH);
-
 }
 
 void center( boolean on )
@@ -1323,7 +1325,6 @@ void center( boolean on )
     digitalWrite(CENTERING,LOW);  
   else  
     digitalWrite(CENTERING,HIGH);
-
 }
 
 boolean head( boolean on )
@@ -1331,14 +1332,14 @@ boolean head( boolean on )
 #ifndef NDEBUG
   Serial.println("head");
 #endif
+
   if( on ) {
     digitalWrite(HEAD,LOW);  
     headState = true;
-    
+
     while( headDown() == false) ;
 
-  } 
-  else {
+  } else {
     digitalWrite(HEAD,HIGH);
     headState = false;
     while( headDown() == true) ;
@@ -1353,7 +1354,7 @@ boolean head( boolean on )
   return true;
 }
 
-char findlefthome(void) {
+boolean findlefthome(void) {
 
   unsigned long counter = 0;
 
@@ -1371,7 +1372,6 @@ char findlefthome(void) {
       return false;
 
     }
-
 
     if( digitalRead( XHM ) ) {
 
@@ -1394,7 +1394,7 @@ char findlefthome(void) {
   return true;
 }
 
-char findleftlimit(void) 
+boolean findleftlimit(void) 
 {
 
   unsigned long counter = 0;
@@ -1437,7 +1437,7 @@ char findleftlimit(void)
   }  
 }
 
-char findrightlimit(void) {
+boolean findrightlimit(void) {
 
   unsigned long counter = 0;
 
@@ -1470,7 +1470,7 @@ char findrightlimit(void) {
   }  
 }
 
-char findyplushome(void) {
+boolean findyplushome(void) {
 
   while(1)
   {
@@ -1513,14 +1513,10 @@ char findyplushome(void) {
 // this function should be called before moving either axis.
 void beforeMoving( void ) 
 {
-
   // head up
   if( headState )
     head( false );
-
 }
-
-
 
 // Step once forward
 void stepYCW( long length ) 
@@ -1540,7 +1536,7 @@ void stepYCW( long length )
 void stepYCCW( long pulselength ) 
 {
   beforeMoving();
-
+  
   cli();
   digitalWrite(YCCW,HIGH);
   _delay_us( SHORT_X_PULSE ) ;
@@ -1581,7 +1577,7 @@ void stepXCCW( long pulselength )
   IncrementXPulses();
 }
 
-char findypluslimit(void) {
+boolean findypluslimit(void) {
 
   unsigned long counter = 0;
   unsigned int length = DELAY_Y1 + DELAY_Y2;
@@ -1595,7 +1591,7 @@ char findypluslimit(void) {
       homed = 0;
       Serial.print("Found Y+ limit = ");
       Serial.println(counter,DEC);
-      delay(500);
+      delay(200);
 
       // reset Y micrometers
       gCurrentYum =  0;
@@ -1606,12 +1602,14 @@ char findypluslimit(void) {
     stepYCW(length--);
 
     counter++;
+    
     if (length <= Y_SPEED ) 
       length = Y_SPEED;
-  }  
+  } 
+ return true; 
 }
 
-char findyminuslimit(void) {
+boolean findyminuslimit(void) {
 
   unsigned long counter = 0;
   unsigned int length = DELAY_Y1 + DELAY_Y2;
@@ -1621,7 +1619,7 @@ char findyminuslimit(void) {
     if(  digitalRead( YL2 )) {
 
       digitalWrite(YCCW,HIGH);
-      delay(500);
+      delay( 200 );
 
       homed = false ;
       Serial.print("Found Y- limit = ");
@@ -1634,13 +1632,11 @@ char findyminuslimit(void) {
 
     if (length <= Y_SPEED ) 
       length = Y_SPEED;
-  }  
+  } 
+  return true; 
 }
 
-
-
 // pulses = ( microm * 40000 )
-
 // conversions betweem mm,um and pusles
 inline long mmtopulses( long mm ) 
 {
@@ -1681,7 +1677,7 @@ inline long pulsestomm( long pulses )
  
  */
 
-char gotoxy(long xum,long yum)
+boolean gotoxy(long xum,long yum)
 {
   // direction to travel, defaults to right and back
   boolean xDir=true,yDir=true;
@@ -1770,8 +1766,6 @@ char gotoxy(long xum,long yum)
  * moveline - move head from x0,y0 to x1,y1 
  *
  */
-
-
 void moveLine(long x0, long y0, long x1, long y1)
 {
   long dx =  abs(x1-x0), sx = x0<x1 ? 1 : -1;
@@ -1924,7 +1918,7 @@ boolean goback(long steps ,boolean nolimit ) {
 
   long length = DELAY_Y2 + DELAY_Y1;
   long perc = (steps /100 ) * 2;
-  
+
   if( (steps-perc) < 0 ) perc = 0;
 
   for( int i = 0 ; i < steps ; i ++ )
@@ -2236,7 +2230,6 @@ boolean movebackright(long x0_pulses,long y0_pulses, boolean nolimit )
       }
     }
 
-
     /// handle forward/back Y axis
     if( fsteps ) {
       stepYCCW( length );
@@ -2483,20 +2476,6 @@ boolean moveforwardleft(long x0_pulses,long y0_pulses, boolean nolimit )
   return true;
 }
 
-void move2o(long x0,long y0 )
-{
-  if( headDown() == true ) {
-    return ;
-  }
-
-  moveLine2o(lx,ly,x0,y0);
-
-  lx = x0;
-  ly = y0;
-
-  delay( 50 );
-}
-
 enum {
   GO_NONE,
   GO_FL,
@@ -2510,7 +2489,7 @@ void moveLine2o( long x0, long y0, long x1, long y1)
   long xdiff,ydiff;
 
   if(headDown() == true ) {
-    return ;
+    head(0) ;
   }
 
   //convert to pulses
@@ -2579,7 +2558,7 @@ void moveLine2( long x0, long y0, long x1, long y1)
 #endif
 
   if( headDown() == true ) {
-    return ;
+    head(0);
   }
 
   //convert to pulses
@@ -2726,7 +2705,7 @@ void moveLine2( long x0, long y0, long x1, long y1)
 void move2(long x0,long y0 )
 {
   if( headDown() == true ) {
-    return ;
+    head(0) ;
   }
 
   moveLine2o(lx,ly,x0,y0);
@@ -2735,11 +2714,10 @@ void move2(long x0,long y0 )
   ly = y0;
 }
 
-
 void setupTimer1(void)
 {
   // Tells what part of speed ramp we are in.
-//  srd.run_state = STOP;
+  //  srd.run_state = STOP;
   // Timer/Counter 1 in mode 4 CTC (Not running).
   TCCR1B = (1<<WGM12);
   // Timer/Counter 1 Output Compare A Match Interrupt enable.
@@ -2748,1141 +2726,1142 @@ void setupTimer1(void)
 
 void speakerBadge(void)
 {
-  	xtoolchange();
-		move2(61860,159240);
-	xend();
-	xtoolchange();
-		move2(55510,152890);
-	xend();
-	xtoolchange();
-		rotate(true);
-		move2(49160,159240);
-		rotate(false);
-	xend();
-	xtoolchange();
-		move2(55510,165590);
-	xend();
-	xtoolchange();
-		move2(79640,146540);
-	xend();
-	xtoolchange();
-		move2(41540,240520);
-	xend();
-	xtoolchange();
-		move2(45350,240520);
-	xend();
-	xtoolchange();
-		move2(49160,240520);
-	xend();
-	xtoolchange();
-		move2(52970,240520);
-	xend();
-	xtoolchange();
-		move2(56780,240520);
-	xend();
-	xtoolchange();
-		move2(60590,240520);
-	xend();
-	xtoolchange();
-		move2(64400,240520);
-	xend();
-	xtoolchange();
-		move2(68210,240520);
-	xend();
-	xtoolchange();
-		move2(72020,240520);
-	xend();
-	xtoolchange();
-		move2(75830,240520);
-	xend();
-	xtoolchange();
-		move2(79640,240520);
-	xend();
-	xtoolchange();
-		move2(83450,240520);
-	xend();
-	xtoolchange();
-		move2(87260,240520);
-	xend();
-	xtoolchange();
-		move2(91070,240520);
-	xend();
-	xtoolchange();
-		move2(94880,240520);
-	xend();
-	xtoolchange();
-		move2(98690,240520);
-	xend();
-	xtoolchange();
-		move2(102500,240520);
-	xend();
-	xtoolchange();
-		move2(106310,240520);
-	xend();
-	xtoolchange();
-		move2(41540,236710);
-	xend();
-	xtoolchange();
-		move2(45350,236710);
-	xend();
-	xtoolchange();
-		move2(49160,236710);
-	xend();
-	xtoolchange();
-		move2(52970,236710);
-	xend();
-	xtoolchange();
-		move2(56780,236710);
-	xend();
-	xtoolchange();
-		move2(60590,236710);
-	xend();
-	xtoolchange();
-		move2(64400,236710);
-	xend();
-	xtoolchange();
-		move2(68210,236710);
-	xend();
-	xtoolchange();
-		move2(72020,236710);
-	xend();
-	xtoolchange();
-		move2(75830,236710);
-	xend();
-	xtoolchange();
-		move2(79640,236710);
-	xend();
-	xtoolchange();
-		move2(83450,236710);
-	xend();
-	xtoolchange();
-		move2(87260,236710);
-	xend();
-	xtoolchange();
-		move2(91070,236710);
-	xend();
-	xtoolchange();
-		move2(94880,236710);
-	xend();
-	xtoolchange();
-		move2(98690,236710);
-	xend();
-	xtoolchange();
-		move2(102500,236710);
-	xend();
-	xtoolchange();
-		move2(106310,236710);
-	xend();
-	xtoolchange();
-		move2(41540,232900);
-	xend();
-	xtoolchange();
-		move2(45350,232900);
-	xend();
-	xtoolchange();
-		move2(49160,232900);
-	xend();
-	xtoolchange();
-		move2(52970,232900);
-	xend();
-	xtoolchange();
-		move2(56780,232900);
-	xend();
-	xtoolchange();
-		move2(60590,232900);
-	xend();
-	xtoolchange();
-		move2(64400,232900);
-	xend();
-	xtoolchange();
-		move2(68210,232900);
-	xend();
-	xtoolchange();
-		move2(72020,232900);
-	xend();
-	xtoolchange();
-		move2(75830,232900);
-	xend();
-	xtoolchange();
-		move2(79640,232900);
-	xend();
-	xtoolchange();
-		move2(83450,232900);
-	xend();
-	xtoolchange();
-		move2(87260,232900);
-	xend();
-	xtoolchange();
-		move2(91070,232900);
-	xend();
-	xtoolchange();
-		move2(94880,232900);
-	xend();
-	xtoolchange();
-		move2(98690,232900);
-	xend();
-	xtoolchange();
-		move2(102500,232900);
-	xend();
-	xtoolchange();
-		move2(106310,232900);
-	xend();
-	xtoolchange();
-		move2(41540,229090);
-	xend();
-	xtoolchange();
-		move2(45350,229090);
-	xend();
-	xtoolchange();
-		move2(49160,229090);
-	xend();
-	xtoolchange();
-		move2(52970,229090);
-	xend();
-	xtoolchange();
-		move2(56780,229090);
-	xend();
-	xtoolchange();
-		move2(60590,229090);
-	xend();
-	xtoolchange();
-		move2(64400,229090);
-	xend();
-	xtoolchange();
-		move2(68210,229090);
-	xend();
-	xtoolchange();
-		move2(72020,229090);
-	xend();
-	xtoolchange();
-		move2(75830,229090);
-	xend();
-	xtoolchange();
-		move2(79640,229090);
-	xend();
-	xtoolchange();
-		move2(83450,229090);
-	xend();
-	xtoolchange();
-		move2(87260,229090);
-	xend();
-	xtoolchange();
-		move2(91070,229090);
-	xend();
-	xtoolchange();
-		move2(94880,229090);
-	xend();
-	xtoolchange();
-		move2(98690,229090);
-	xend();
-	xtoolchange();
-		move2(102500,229090);
-	xend();
-	xtoolchange();
-		move2(106310,229090);
-	xend();
-	xtoolchange();
-		move2(41540,225280);
-	xend();
-	xtoolchange();
-		move2(45350,225280);
-	xend();
-	xtoolchange();
-		move2(49160,225280);
-	xend();
-	xtoolchange();
-		move2(52970,225280);
-	xend();
-	xtoolchange();
-		move2(56780,225280);
-	xend();
-	xtoolchange();
-		move2(60590,225280);
-	xend();
-	xtoolchange();
-		move2(64400,225280);
-	xend();
-	xtoolchange();
-		move2(68210,225280);
-	xend();
-	xtoolchange();
-		move2(72020,225280);
-	xend();
-	xtoolchange();
-		move2(75830,225280);
-	xend();
-	xtoolchange();
-		move2(79640,225280);
-	xend();
-	xtoolchange();
-		move2(83450,225280);
-	xend();
-	xtoolchange();
-		move2(87260,225280);
-	xend();
-	xtoolchange();
-		move2(91070,225280);
-	xend();
-	xtoolchange();
-		move2(94880,225280);
-	xend();
-	xtoolchange();
-		move2(98690,225280);
-	xend();
-	xtoolchange();
-		move2(102500,225280);
-	xend();
-	xtoolchange();
-		move2(106310,225280);
-	xend();
-	xtoolchange();
-		move2(41540,221470);
-	xend();
-	xtoolchange();
-		move2(45350,221470);
-	xend();
-	xtoolchange();
-		move2(49160,221470);
-	xend();
-	xtoolchange();
-		move2(52970,221470);
-	xend();
-	xtoolchange();
-		move2(56780,221470);
-	xend();
-	xtoolchange();
-		move2(60590,221470);
-	xend();
-	xtoolchange();
-		move2(64400,221470);
-	xend();
-	xtoolchange();
-		move2(68210,221470);
-	xend();
-	xtoolchange();
-		move2(72020,221470);
-	xend();
-	xtoolchange();
-		move2(75830,221470);
-	xend();
-	xtoolchange();
-		move2(79640,221470);
-	xend();
-	xtoolchange();
-		move2(83450,221470);
-	xend();
-	xtoolchange();
-		move2(87260,221470);
-	xend();
-	xtoolchange();
-		move2(91070,221470);
-	xend();
-	xtoolchange();
-		move2(94880,221470);
-	xend();
-	xtoolchange();
-		move2(98690,221470);
-	xend();
-	xtoolchange();
-		move2(102500,221470);
-	xend();
-	xtoolchange();
-		move2(106310,221470);
-	xend();
-	xtoolchange();
-		move2(41540,217660);
-	xend();
-	xtoolchange();
-		move2(45350,217660);
-	xend();
-	xtoolchange();
-		move2(49160,217660);
-	xend();
-	xtoolchange();
-		move2(52970,217660);
-	xend();
-	xtoolchange();
-		move2(56780,217660);
-	xend();
-	xtoolchange();
-		move2(60590,217660);
-	xend();
-	xtoolchange();
-		move2(64400,217660);
-	xend();
-	xtoolchange();
-		move2(68210,217660);
-	xend();
-	xtoolchange();
-		move2(72020,217660);
-	xend();
-	xtoolchange();
-		move2(75830,217660);
-	xend();
-	xtoolchange();
-		move2(79640,217660);
-	xend();
-	xtoolchange();
-		move2(83450,217660);
-	xend();
-	xtoolchange();
-		move2(87260,217660);
-	xend();
-	xtoolchange();
-		move2(91070,217660);
-	xend();
-	xtoolchange();
-		move2(94880,217660);
-	xend();
-	xtoolchange();
-		move2(98690,217660);
-	xend();
-	xtoolchange();
-		move2(102500,217660);
-	xend();
-	xtoolchange();
-		move2(106310,217660);
-	xend();
-	xtoolchange();
-		move2(41540,213850);
-	xend();
-	xtoolchange();
-		move2(45350,213850);
-	xend();
-	xtoolchange();
-		move2(49160,213850);
-	xend();
-	xtoolchange();
-		move2(52970,213850);
-	xend();
-	xtoolchange();
-		move2(56780,213850);
-	xend();
-	xtoolchange();
-		move2(60590,213850);
-	xend();
-	xtoolchange();
-		move2(64400,213850);
-	xend();
-	xtoolchange();
-		move2(68210,213850);
-	xend();
-	xtoolchange();
-		move2(72020,213850);
-	xend();
-	xtoolchange();
-		move2(75830,213850);
-	xend();
-	xtoolchange();
-		move2(79640,213850);
-	xend();
-	xtoolchange();
-		move2(83450,213850);
-	xend();
-	xtoolchange();
-		move2(87260,213850);
-	xend();
-	xtoolchange();
-		move2(91070,213850);
-	xend();
-	xtoolchange();
-		move2(94880,213850);
-	xend();
-	xtoolchange();
-		move2(98690,213850);
-	xend();
-	xtoolchange();
-		move2(102500,213850);
-	xend();
-	xtoolchange();
-		move2(106310,213850);
-	xend();
-	xtoolchange();
-		move2(41540,210040);
-	xend();
-	xtoolchange();
-		move2(45350,210040);
-	xend();
-	xtoolchange();
-		move2(49160,210040);
-	xend();
-	xtoolchange();
-		move2(52970,210040);
-	xend();
-	xtoolchange();
-		move2(56780,210040);
-	xend();
-	xtoolchange();
-		move2(60590,210040);
-	xend();
-	xtoolchange();
-		move2(64400,210040);
-	xend();
-	xtoolchange();
-		move2(68210,210040);
-	xend();
-	xtoolchange();
-		move2(72020,210040);
-	xend();
-	xtoolchange();
-		move2(75830,210040);
-	xend();
-	xtoolchange();
-		move2(79640,210040);
-	xend();
-	xtoolchange();
-		move2(83450,210040);
-	xend();
-	xtoolchange();
-		move2(87260,210040);
-	xend();
-	xtoolchange();
-		move2(91070,210040);
-	xend();
-	xtoolchange();
-		move2(94880,210040);
-	xend();
-	xtoolchange();
-		move2(98690,210040);
-	xend();
-	xtoolchange();
-		move2(102500,210040);
-	xend();
-	xtoolchange();
-		move2(106310,210040);
-	xend();
-	xtoolchange();
-		move2(41540,206230);
-	xend();
-	xtoolchange();
-		move2(45350,206230);
-	xend();
-	xtoolchange();
-		move2(49160,206230);
-	xend();
-	xtoolchange();
-		move2(52970,206230);
-	xend();
-	xtoolchange();
-		move2(56780,206230);
-	xend();
-	xtoolchange();
-		move2(60590,206230);
-	xend();
-	xtoolchange();
-		move2(64400,206230);
-	xend();
-	xtoolchange();
-		move2(68210,206230);
-	xend();
-	xtoolchange();
-		move2(72020,206230);
-	xend();
-	xtoolchange();
-		move2(75830,206230);
-	xend();
-	xtoolchange();
-		move2(79640,206230);
-	xend();
-	xtoolchange();
-		move2(83450,206230);
-	xend();
-	xtoolchange();
-		move2(87260,206230);
-	xend();
-	xtoolchange();
-		move2(91070,206230);
-	xend();
-	xtoolchange();
-		move2(94880,206230);
-	xend();
-	xtoolchange();
-		move2(98690,206230);
-	xend();
-	xtoolchange();
-		move2(102500,206230);
-	xend();
-	xtoolchange();
-		move2(106310,206230);
-	xend();
-	xtoolchange();
-		move2(41540,202420);
-	xend();
-	xtoolchange();
-		move2(45350,202420);
-	xend();
-	xtoolchange();
-		move2(49160,202420);
-	xend();
-	xtoolchange();
-		move2(52970,202420);
-	xend();
-	xtoolchange();
-		move2(56780,202420);
-	xend();
-	xtoolchange();
-		move2(60590,202420);
-	xend();
-	xtoolchange();
-		move2(64400,202420);
-	xend();
-	xtoolchange();
-		move2(68210,202420);
-	xend();
-	xtoolchange();
-		move2(72020,202420);
-	xend();
-	xtoolchange();
-		move2(75830,202420);
-	xend();
-	xtoolchange();
-		move2(79640,202420);
-	xend();
-	xtoolchange();
-		move2(83450,202420);
-	xend();
-	xtoolchange();
-		move2(87260,202420);
-	xend();
-	xtoolchange();
-		move2(91070,202420);
-	xend();
-	xtoolchange();
-		move2(94880,202420);
-	xend();
-	xtoolchange();
-		move2(98690,202420);
-	xend();
-	xtoolchange();
-		move2(102500,202420);
-	xend();
-	xtoolchange();
-		move2(106310,202420);
-	xend();
-	xtoolchange();
-		move2(41540,198610);
-	xend();
-	xtoolchange();
-		move2(45350,198610);
-	xend();
-	xtoolchange();
-		move2(49160,198610);
-	xend();
-	xtoolchange();
-		move2(52970,198610);
-	xend();
-	xtoolchange();
-		move2(56780,198610);
-	xend();
-	xtoolchange();
-		move2(60590,198610);
-	xend();
-	xtoolchange();
-		move2(64400,198610);
-	xend();
-	xtoolchange();
-		move2(68210,198610);
-	xend();
-	xtoolchange();
-		move2(72020,198610);
-	xend();
-	xtoolchange();
-		move2(75830,198610);
-	xend();
-	xtoolchange();
-		move2(79640,198610);
-	xend();
-	xtoolchange();
-		move2(83450,198610);
-	xend();
-	xtoolchange();
-		move2(87260,198610);
-	xend();
-	xtoolchange();
-		move2(91070,198610);
-	xend();
-	xtoolchange();
-		move2(94880,198610);
-	xend();
-	xtoolchange();
-		move2(98690,198610);
-	xend();
-	xtoolchange();
-		move2(102500,198610);
-	xend();
-	xtoolchange();
-		move2(106310,198610);
-	xend();
-	xtoolchange();
-		move2(41540,194800);
-	xend();
-	xtoolchange();
-		move2(45350,194800);
-	xend();
-	xtoolchange();
-		move2(49160,194800);
-	xend();
-	xtoolchange();
-		move2(52970,194800);
-	xend();
-	xtoolchange();
-		move2(56780,194800);
-	xend();
-	xtoolchange();
-		move2(60590,194800);
-	xend();
-	xtoolchange();
-		move2(64400,194800);
-	xend();
-	xtoolchange();
-		move2(68210,194800);
-	xend();
-	xtoolchange();
-		move2(72020,194800);
-	xend();
-	xtoolchange();
-		move2(75830,194800);
-	xend();
-	xtoolchange();
-		move2(79640,194800);
-	xend();
-	xtoolchange();
-		move2(83450,194800);
-	xend();
-	xtoolchange();
-		move2(87260,194800);
-	xend();
-	xtoolchange();
-		move2(91070,194800);
-	xend();
-	xtoolchange();
-		move2(94880,194800);
-	xend();
-	xtoolchange();
-		move2(98690,194800);
-	xend();
-	xtoolchange();
-		move2(102500,194800);
-	xend();
-	xtoolchange();
-		move2(106310,194800);
-	xend();
-	xtoolchange();
-		move2(41540,190990);
-	xend();
-	xtoolchange();
-		move2(45350,190990);
-	xend();
-	xtoolchange();
-		move2(49160,190990);
-	xend();
-	xtoolchange();
-		move2(52970,190990);
-	xend();
-	xtoolchange();
-		move2(56780,190990);
-	xend();
-	xtoolchange();
-		move2(60590,190990);
-	xend();
-	xtoolchange();
-		move2(64400,190990);
-	xend();
-	xtoolchange();
-		move2(68210,190990);
-	xend();
-	xtoolchange();
-		move2(72020,190990);
-	xend();
-	xtoolchange();
-		move2(75830,190990);
-	xend();
-	xtoolchange();
-		move2(79640,190990);
-	xend();
-	xtoolchange();
-		move2(83450,190990);
-	xend();
-	xtoolchange();
-		move2(87260,190990);
-	xend();
-	xtoolchange();
-		move2(91070,190990);
-	xend();
-	xtoolchange();
-		move2(94880,190990);
-	xend();
-	xtoolchange();
-		move2(98690,190990);
-	xend();
-	xtoolchange();
-		move2(102500,190990);
-	xend();
-	xtoolchange();
-		move2(106310,190990);
-	xend();
-	xtoolchange();
-		move2(41540,187180);
-	xend();
-	xtoolchange();
-		move2(45350,187180);
-	xend();
-	xtoolchange();
-		move2(49160,187180);
-	xend();
-	xtoolchange();
-		move2(52970,187180);
-	xend();
-	xtoolchange();
-		move2(56780,187180);
-	xend();
-	xtoolchange();
-		move2(60590,187180);
-	xend();
-	xtoolchange();
-		move2(64400,187180);
-	xend();
-	xtoolchange();
-		move2(68210,187180);
-	xend();
-	xtoolchange();
-		move2(72020,187180);
-	xend();
-	xtoolchange();
-		move2(75830,187180);
-	xend();
-	xtoolchange();
-		move2(79640,187180);
-	xend();
-	xtoolchange();
-		move2(83450,187180);
-	xend();
-	xtoolchange();
-		move2(87260,187180);
-	xend();
-	xtoolchange();
-		move2(91070,187180);
-	xend();
-	xtoolchange();
-		move2(94880,187180);
-	xend();
-	xtoolchange();
-		move2(98690,187180);
-	xend();
-	xtoolchange();
-		move2(102500,187180);
-	xend();
-	xtoolchange();
-		move2(106310,187180);
-	xend();
-	xtoolchange();
-		move2(41540,183370);
-	xend();
-	xtoolchange();
-		move2(45350,183370);
-	xend();
-	xtoolchange();
-		move2(49160,183370);
-	xend();
-	xtoolchange();
-		move2(52970,183370);
-	xend();
-	xtoolchange();
-		move2(56780,183370);
-	xend();
-	xtoolchange();
-		move2(60590,183370);
-	xend();
-	xtoolchange();
-		move2(64400,183370);
-	xend();
-	xtoolchange();
-		move2(68210,183370);
-	xend();
-	xtoolchange();
-		move2(72020,183370);
-	xend();
-	xtoolchange();
-		move2(75830,183370);
-	xend();
-	xtoolchange();
-		move2(79640,183370);
-	xend();
-	xtoolchange();
-		move2(83450,183370);
-	xend();
-	xtoolchange();
-		move2(87260,183370);
-	xend();
-	xtoolchange();
-		move2(91070,183370);
-	xend();
-	xtoolchange();
-		move2(94880,183370);
-	xend();
-	xtoolchange();
-		move2(98690,183370);
-	xend();
-	xtoolchange();
-		move2(102500,183370);
-	xend();
-	xtoolchange();
-		move2(106310,183370);
-	xend();
-	xtoolchange();
-		move2(41540,179560);
-	xend();
-	xtoolchange();
-		move2(45350,179560);
-	xend();
-	xtoolchange();
-		move2(49160,179560);
-	xend();
-	xtoolchange();
-		move2(52970,179560);
-	xend();
-	xtoolchange();
-		move2(56780,179560);
-	xend();
-	xtoolchange();
-		move2(60590,179560);
-	xend();
-	xtoolchange();
-		move2(64400,179560);
-	xend();
-	xtoolchange();
-		move2(68210,179560);
-	xend();
-	xtoolchange();
-		move2(72020,179560);
-	xend();
-	xtoolchange();
-		move2(75830,179560);
-	xend();
-	xtoolchange();
-		move2(79640,179560);
-	xend();
-	xtoolchange();
-		move2(83450,179560);
-	xend();
-	xtoolchange();
-		move2(87260,179560);
-	xend();
-	xtoolchange();
-		move2(91070,179560);
-	xend();
-	xtoolchange();
-		move2(94880,179560);
-	xend();
-	xtoolchange();
-		move2(98690,179560);
-	xend();
-	xtoolchange();
-		move2(102500,179560);
-	xend();
-	xtoolchange();
-		move2(106310,179560);
-	xend();
-	xtoolchange();
-		move2(41540,175750);
-	xend();
-	xtoolchange();
-		move2(45350,175750);
-	xend();
-	xtoolchange();
-		move2(49160,175750);
-	xend();
-	xtoolchange();
-		move2(52970,175750);
-	xend();
-	xtoolchange();
-		move2(56780,175750);
-	xend();
-	xtoolchange();
-		move2(60590,175750);
-	xend();
-	xtoolchange();
-		move2(64400,175750);
-	xend();
-	xtoolchange();
-		move2(68210,175750);
-	xend();
-	xtoolchange();
-		move2(72020,175750);
-	xend();
-	xtoolchange();
-		move2(75830,175750);
-	xend();
-	xtoolchange();
-		move2(79640,175750);
-	xend();
-	xtoolchange();
-		move2(83450,175750);
-	xend();
-	xtoolchange();
-		move2(87260,175750);
-	xend();
-	xtoolchange();
-		move2(91070,175750);
-	xend();
-	xtoolchange();
-		move2(94880,175750);
-	xend();
-	xtoolchange();
-		move2(98690,175750);
-	xend();
-	xtoolchange();
-		move2(102500,175750);
-	xend();
-	xtoolchange();
-		move2(106310,175750);
-	xend();
-	xtoolchange();
-		rotate(true);
-		move2(101230,160510);
-		rotate(false);
-	xend();
-	xtoolchange();
-		rotate(true);
-		move2(87260,160510);
-		rotate(false);
-	xend();
-	xtoolchange();
-		move2(65670,159240);
-	xend();
-	xtoolchange();
-		move2(50430,152890);
-	xend();
-	xtoolchange();
-		move2(46620,154160);
-	xend();
-	xtoolchange();
-		move2(50430,165590);
-	xend();
-	xtoolchange();
-		move2(83450,159240);
-	xend();
-	xtoolchange();
-		move2(97420,159240);
-	xend();
+  xtoolchange();
+  move2(61860,159240);
+  xend();
+  xtoolchange();
+  move2(55510,152890);
+  xend();
+  xtoolchange();
+  rotate(true);
+  move2(49160,159240);
+  rotate(false);
+  xend();
+  xtoolchange();
+  move2(55510,165590);
+  xend();
+  xtoolchange();
+  move2(79640,146540);
+  xend();
+  xtoolchange();
+  move2(41540,240520);
+  xend();
+  xtoolchange();
+  move2(45350,240520);
+  xend();
+  xtoolchange();
+  move2(49160,240520);
+  xend();
+  xtoolchange();
+  move2(52970,240520);
+  xend();
+  xtoolchange();
+  move2(56780,240520);
+  xend();
+  xtoolchange();
+  move2(60590,240520);
+  xend();
+  xtoolchange();
+  move2(64400,240520);
+  xend();
+  xtoolchange();
+  move2(68210,240520);
+  xend();
+  xtoolchange();
+  move2(72020,240520);
+  xend();
+  xtoolchange();
+  move2(75830,240520);
+  xend();
+  xtoolchange();
+  move2(79640,240520);
+  xend();
+  xtoolchange();
+  move2(83450,240520);
+  xend();
+  xtoolchange();
+  move2(87260,240520);
+  xend();
+  xtoolchange();
+  move2(91070,240520);
+  xend();
+  xtoolchange();
+  move2(94880,240520);
+  xend();
+  xtoolchange();
+  move2(98690,240520);
+  xend();
+  xtoolchange();
+  move2(102500,240520);
+  xend();
+  xtoolchange();
+  move2(106310,240520);
+  xend();
+  xtoolchange();
+  move2(41540,236710);
+  xend();
+  xtoolchange();
+  move2(45350,236710);
+  xend();
+  xtoolchange();
+  move2(49160,236710);
+  xend();
+  xtoolchange();
+  move2(52970,236710);
+  xend();
+  xtoolchange();
+  move2(56780,236710);
+  xend();
+  xtoolchange();
+  move2(60590,236710);
+  xend();
+  xtoolchange();
+  move2(64400,236710);
+  xend();
+  xtoolchange();
+  move2(68210,236710);
+  xend();
+  xtoolchange();
+  move2(72020,236710);
+  xend();
+  xtoolchange();
+  move2(75830,236710);
+  xend();
+  xtoolchange();
+  move2(79640,236710);
+  xend();
+  xtoolchange();
+  move2(83450,236710);
+  xend();
+  xtoolchange();
+  move2(87260,236710);
+  xend();
+  xtoolchange();
+  move2(91070,236710);
+  xend();
+  xtoolchange();
+  move2(94880,236710);
+  xend();
+  xtoolchange();
+  move2(98690,236710);
+  xend();
+  xtoolchange();
+  move2(102500,236710);
+  xend();
+  xtoolchange();
+  move2(106310,236710);
+  xend();
+  xtoolchange();
+  move2(41540,232900);
+  xend();
+  xtoolchange();
+  move2(45350,232900);
+  xend();
+  xtoolchange();
+  move2(49160,232900);
+  xend();
+  xtoolchange();
+  move2(52970,232900);
+  xend();
+  xtoolchange();
+  move2(56780,232900);
+  xend();
+  xtoolchange();
+  move2(60590,232900);
+  xend();
+  xtoolchange();
+  move2(64400,232900);
+  xend();
+  xtoolchange();
+  move2(68210,232900);
+  xend();
+  xtoolchange();
+  move2(72020,232900);
+  xend();
+  xtoolchange();
+  move2(75830,232900);
+  xend();
+  xtoolchange();
+  move2(79640,232900);
+  xend();
+  xtoolchange();
+  move2(83450,232900);
+  xend();
+  xtoolchange();
+  move2(87260,232900);
+  xend();
+  xtoolchange();
+  move2(91070,232900);
+  xend();
+  xtoolchange();
+  move2(94880,232900);
+  xend();
+  xtoolchange();
+  move2(98690,232900);
+  xend();
+  xtoolchange();
+  move2(102500,232900);
+  xend();
+  xtoolchange();
+  move2(106310,232900);
+  xend();
+  xtoolchange();
+  move2(41540,229090);
+  xend();
+  xtoolchange();
+  move2(45350,229090);
+  xend();
+  xtoolchange();
+  move2(49160,229090);
+  xend();
+  xtoolchange();
+  move2(52970,229090);
+  xend();
+  xtoolchange();
+  move2(56780,229090);
+  xend();
+  xtoolchange();
+  move2(60590,229090);
+  xend();
+  xtoolchange();
+  move2(64400,229090);
+  xend();
+  xtoolchange();
+  move2(68210,229090);
+  xend();
+  xtoolchange();
+  move2(72020,229090);
+  xend();
+  xtoolchange();
+  move2(75830,229090);
+  xend();
+  xtoolchange();
+  move2(79640,229090);
+  xend();
+  xtoolchange();
+  move2(83450,229090);
+  xend();
+  xtoolchange();
+  move2(87260,229090);
+  xend();
+  xtoolchange();
+  move2(91070,229090);
+  xend();
+  xtoolchange();
+  move2(94880,229090);
+  xend();
+  xtoolchange();
+  move2(98690,229090);
+  xend();
+  xtoolchange();
+  move2(102500,229090);
+  xend();
+  xtoolchange();
+  move2(106310,229090);
+  xend();
+  xtoolchange();
+  move2(41540,225280);
+  xend();
+  xtoolchange();
+  move2(45350,225280);
+  xend();
+  xtoolchange();
+  move2(49160,225280);
+  xend();
+  xtoolchange();
+  move2(52970,225280);
+  xend();
+  xtoolchange();
+  move2(56780,225280);
+  xend();
+  xtoolchange();
+  move2(60590,225280);
+  xend();
+  xtoolchange();
+  move2(64400,225280);
+  xend();
+  xtoolchange();
+  move2(68210,225280);
+  xend();
+  xtoolchange();
+  move2(72020,225280);
+  xend();
+  xtoolchange();
+  move2(75830,225280);
+  xend();
+  xtoolchange();
+  move2(79640,225280);
+  xend();
+  xtoolchange();
+  move2(83450,225280);
+  xend();
+  xtoolchange();
+  move2(87260,225280);
+  xend();
+  xtoolchange();
+  move2(91070,225280);
+  xend();
+  xtoolchange();
+  move2(94880,225280);
+  xend();
+  xtoolchange();
+  move2(98690,225280);
+  xend();
+  xtoolchange();
+  move2(102500,225280);
+  xend();
+  xtoolchange();
+  move2(106310,225280);
+  xend();
+  xtoolchange();
+  move2(41540,221470);
+  xend();
+  xtoolchange();
+  move2(45350,221470);
+  xend();
+  xtoolchange();
+  move2(49160,221470);
+  xend();
+  xtoolchange();
+  move2(52970,221470);
+  xend();
+  xtoolchange();
+  move2(56780,221470);
+  xend();
+  xtoolchange();
+  move2(60590,221470);
+  xend();
+  xtoolchange();
+  move2(64400,221470);
+  xend();
+  xtoolchange();
+  move2(68210,221470);
+  xend();
+  xtoolchange();
+  move2(72020,221470);
+  xend();
+  xtoolchange();
+  move2(75830,221470);
+  xend();
+  xtoolchange();
+  move2(79640,221470);
+  xend();
+  xtoolchange();
+  move2(83450,221470);
+  xend();
+  xtoolchange();
+  move2(87260,221470);
+  xend();
+  xtoolchange();
+  move2(91070,221470);
+  xend();
+  xtoolchange();
+  move2(94880,221470);
+  xend();
+  xtoolchange();
+  move2(98690,221470);
+  xend();
+  xtoolchange();
+  move2(102500,221470);
+  xend();
+  xtoolchange();
+  move2(106310,221470);
+  xend();
+  xtoolchange();
+  move2(41540,217660);
+  xend();
+  xtoolchange();
+  move2(45350,217660);
+  xend();
+  xtoolchange();
+  move2(49160,217660);
+  xend();
+  xtoolchange();
+  move2(52970,217660);
+  xend();
+  xtoolchange();
+  move2(56780,217660);
+  xend();
+  xtoolchange();
+  move2(60590,217660);
+  xend();
+  xtoolchange();
+  move2(64400,217660);
+  xend();
+  xtoolchange();
+  move2(68210,217660);
+  xend();
+  xtoolchange();
+  move2(72020,217660);
+  xend();
+  xtoolchange();
+  move2(75830,217660);
+  xend();
+  xtoolchange();
+  move2(79640,217660);
+  xend();
+  xtoolchange();
+  move2(83450,217660);
+  xend();
+  xtoolchange();
+  move2(87260,217660);
+  xend();
+  xtoolchange();
+  move2(91070,217660);
+  xend();
+  xtoolchange();
+  move2(94880,217660);
+  xend();
+  xtoolchange();
+  move2(98690,217660);
+  xend();
+  xtoolchange();
+  move2(102500,217660);
+  xend();
+  xtoolchange();
+  move2(106310,217660);
+  xend();
+  xtoolchange();
+  move2(41540,213850);
+  xend();
+  xtoolchange();
+  move2(45350,213850);
+  xend();
+  xtoolchange();
+  move2(49160,213850);
+  xend();
+  xtoolchange();
+  move2(52970,213850);
+  xend();
+  xtoolchange();
+  move2(56780,213850);
+  xend();
+  xtoolchange();
+  move2(60590,213850);
+  xend();
+  xtoolchange();
+  move2(64400,213850);
+  xend();
+  xtoolchange();
+  move2(68210,213850);
+  xend();
+  xtoolchange();
+  move2(72020,213850);
+  xend();
+  xtoolchange();
+  move2(75830,213850);
+  xend();
+  xtoolchange();
+  move2(79640,213850);
+  xend();
+  xtoolchange();
+  move2(83450,213850);
+  xend();
+  xtoolchange();
+  move2(87260,213850);
+  xend();
+  xtoolchange();
+  move2(91070,213850);
+  xend();
+  xtoolchange();
+  move2(94880,213850);
+  xend();
+  xtoolchange();
+  move2(98690,213850);
+  xend();
+  xtoolchange();
+  move2(102500,213850);
+  xend();
+  xtoolchange();
+  move2(106310,213850);
+  xend();
+  xtoolchange();
+  move2(41540,210040);
+  xend();
+  xtoolchange();
+  move2(45350,210040);
+  xend();
+  xtoolchange();
+  move2(49160,210040);
+  xend();
+  xtoolchange();
+  move2(52970,210040);
+  xend();
+  xtoolchange();
+  move2(56780,210040);
+  xend();
+  xtoolchange();
+  move2(60590,210040);
+  xend();
+  xtoolchange();
+  move2(64400,210040);
+  xend();
+  xtoolchange();
+  move2(68210,210040);
+  xend();
+  xtoolchange();
+  move2(72020,210040);
+  xend();
+  xtoolchange();
+  move2(75830,210040);
+  xend();
+  xtoolchange();
+  move2(79640,210040);
+  xend();
+  xtoolchange();
+  move2(83450,210040);
+  xend();
+  xtoolchange();
+  move2(87260,210040);
+  xend();
+  xtoolchange();
+  move2(91070,210040);
+  xend();
+  xtoolchange();
+  move2(94880,210040);
+  xend();
+  xtoolchange();
+  move2(98690,210040);
+  xend();
+  xtoolchange();
+  move2(102500,210040);
+  xend();
+  xtoolchange();
+  move2(106310,210040);
+  xend();
+  xtoolchange();
+  move2(41540,206230);
+  xend();
+  xtoolchange();
+  move2(45350,206230);
+  xend();
+  xtoolchange();
+  move2(49160,206230);
+  xend();
+  xtoolchange();
+  move2(52970,206230);
+  xend();
+  xtoolchange();
+  move2(56780,206230);
+  xend();
+  xtoolchange();
+  move2(60590,206230);
+  xend();
+  xtoolchange();
+  move2(64400,206230);
+  xend();
+  xtoolchange();
+  move2(68210,206230);
+  xend();
+  xtoolchange();
+  move2(72020,206230);
+  xend();
+  xtoolchange();
+  move2(75830,206230);
+  xend();
+  xtoolchange();
+  move2(79640,206230);
+  xend();
+  xtoolchange();
+  move2(83450,206230);
+  xend();
+  xtoolchange();
+  move2(87260,206230);
+  xend();
+  xtoolchange();
+  move2(91070,206230);
+  xend();
+  xtoolchange();
+  move2(94880,206230);
+  xend();
+  xtoolchange();
+  move2(98690,206230);
+  xend();
+  xtoolchange();
+  move2(102500,206230);
+  xend();
+  xtoolchange();
+  move2(106310,206230);
+  xend();
+  xtoolchange();
+  move2(41540,202420);
+  xend();
+  xtoolchange();
+  move2(45350,202420);
+  xend();
+  xtoolchange();
+  move2(49160,202420);
+  xend();
+  xtoolchange();
+  move2(52970,202420);
+  xend();
+  xtoolchange();
+  move2(56780,202420);
+  xend();
+  xtoolchange();
+  move2(60590,202420);
+  xend();
+  xtoolchange();
+  move2(64400,202420);
+  xend();
+  xtoolchange();
+  move2(68210,202420);
+  xend();
+  xtoolchange();
+  move2(72020,202420);
+  xend();
+  xtoolchange();
+  move2(75830,202420);
+  xend();
+  xtoolchange();
+  move2(79640,202420);
+  xend();
+  xtoolchange();
+  move2(83450,202420);
+  xend();
+  xtoolchange();
+  move2(87260,202420);
+  xend();
+  xtoolchange();
+  move2(91070,202420);
+  xend();
+  xtoolchange();
+  move2(94880,202420);
+  xend();
+  xtoolchange();
+  move2(98690,202420);
+  xend();
+  xtoolchange();
+  move2(102500,202420);
+  xend();
+  xtoolchange();
+  move2(106310,202420);
+  xend();
+  xtoolchange();
+  move2(41540,198610);
+  xend();
+  xtoolchange();
+  move2(45350,198610);
+  xend();
+  xtoolchange();
+  move2(49160,198610);
+  xend();
+  xtoolchange();
+  move2(52970,198610);
+  xend();
+  xtoolchange();
+  move2(56780,198610);
+  xend();
+  xtoolchange();
+  move2(60590,198610);
+  xend();
+  xtoolchange();
+  move2(64400,198610);
+  xend();
+  xtoolchange();
+  move2(68210,198610);
+  xend();
+  xtoolchange();
+  move2(72020,198610);
+  xend();
+  xtoolchange();
+  move2(75830,198610);
+  xend();
+  xtoolchange();
+  move2(79640,198610);
+  xend();
+  xtoolchange();
+  move2(83450,198610);
+  xend();
+  xtoolchange();
+  move2(87260,198610);
+  xend();
+  xtoolchange();
+  move2(91070,198610);
+  xend();
+  xtoolchange();
+  move2(94880,198610);
+  xend();
+  xtoolchange();
+  move2(98690,198610);
+  xend();
+  xtoolchange();
+  move2(102500,198610);
+  xend();
+  xtoolchange();
+  move2(106310,198610);
+  xend();
+  xtoolchange();
+  move2(41540,194800);
+  xend();
+  xtoolchange();
+  move2(45350,194800);
+  xend();
+  xtoolchange();
+  move2(49160,194800);
+  xend();
+  xtoolchange();
+  move2(52970,194800);
+  xend();
+  xtoolchange();
+  move2(56780,194800);
+  xend();
+  xtoolchange();
+  move2(60590,194800);
+  xend();
+  xtoolchange();
+  move2(64400,194800);
+  xend();
+  xtoolchange();
+  move2(68210,194800);
+  xend();
+  xtoolchange();
+  move2(72020,194800);
+  xend();
+  xtoolchange();
+  move2(75830,194800);
+  xend();
+  xtoolchange();
+  move2(79640,194800);
+  xend();
+  xtoolchange();
+  move2(83450,194800);
+  xend();
+  xtoolchange();
+  move2(87260,194800);
+  xend();
+  xtoolchange();
+  move2(91070,194800);
+  xend();
+  xtoolchange();
+  move2(94880,194800);
+  xend();
+  xtoolchange();
+  move2(98690,194800);
+  xend();
+  xtoolchange();
+  move2(102500,194800);
+  xend();
+  xtoolchange();
+  move2(106310,194800);
+  xend();
+  xtoolchange();
+  move2(41540,190990);
+  xend();
+  xtoolchange();
+  move2(45350,190990);
+  xend();
+  xtoolchange();
+  move2(49160,190990);
+  xend();
+  xtoolchange();
+  move2(52970,190990);
+  xend();
+  xtoolchange();
+  move2(56780,190990);
+  xend();
+  xtoolchange();
+  move2(60590,190990);
+  xend();
+  xtoolchange();
+  move2(64400,190990);
+  xend();
+  xtoolchange();
+  move2(68210,190990);
+  xend();
+  xtoolchange();
+  move2(72020,190990);
+  xend();
+  xtoolchange();
+  move2(75830,190990);
+  xend();
+  xtoolchange();
+  move2(79640,190990);
+  xend();
+  xtoolchange();
+  move2(83450,190990);
+  xend();
+  xtoolchange();
+  move2(87260,190990);
+  xend();
+  xtoolchange();
+  move2(91070,190990);
+  xend();
+  xtoolchange();
+  move2(94880,190990);
+  xend();
+  xtoolchange();
+  move2(98690,190990);
+  xend();
+  xtoolchange();
+  move2(102500,190990);
+  xend();
+  xtoolchange();
+  move2(106310,190990);
+  xend();
+  xtoolchange();
+  move2(41540,187180);
+  xend();
+  xtoolchange();
+  move2(45350,187180);
+  xend();
+  xtoolchange();
+  move2(49160,187180);
+  xend();
+  xtoolchange();
+  move2(52970,187180);
+  xend();
+  xtoolchange();
+  move2(56780,187180);
+  xend();
+  xtoolchange();
+  move2(60590,187180);
+  xend();
+  xtoolchange();
+  move2(64400,187180);
+  xend();
+  xtoolchange();
+  move2(68210,187180);
+  xend();
+  xtoolchange();
+  move2(72020,187180);
+  xend();
+  xtoolchange();
+  move2(75830,187180);
+  xend();
+  xtoolchange();
+  move2(79640,187180);
+  xend();
+  xtoolchange();
+  move2(83450,187180);
+  xend();
+  xtoolchange();
+  move2(87260,187180);
+  xend();
+  xtoolchange();
+  move2(91070,187180);
+  xend();
+  xtoolchange();
+  move2(94880,187180);
+  xend();
+  xtoolchange();
+  move2(98690,187180);
+  xend();
+  xtoolchange();
+  move2(102500,187180);
+  xend();
+  xtoolchange();
+  move2(106310,187180);
+  xend();
+  xtoolchange();
+  move2(41540,183370);
+  xend();
+  xtoolchange();
+  move2(45350,183370);
+  xend();
+  xtoolchange();
+  move2(49160,183370);
+  xend();
+  xtoolchange();
+  move2(52970,183370);
+  xend();
+  xtoolchange();
+  move2(56780,183370);
+  xend();
+  xtoolchange();
+  move2(60590,183370);
+  xend();
+  xtoolchange();
+  move2(64400,183370);
+  xend();
+  xtoolchange();
+  move2(68210,183370);
+  xend();
+  xtoolchange();
+  move2(72020,183370);
+  xend();
+  xtoolchange();
+  move2(75830,183370);
+  xend();
+  xtoolchange();
+  move2(79640,183370);
+  xend();
+  xtoolchange();
+  move2(83450,183370);
+  xend();
+  xtoolchange();
+  move2(87260,183370);
+  xend();
+  xtoolchange();
+  move2(91070,183370);
+  xend();
+  xtoolchange();
+  move2(94880,183370);
+  xend();
+  xtoolchange();
+  move2(98690,183370);
+  xend();
+  xtoolchange();
+  move2(102500,183370);
+  xend();
+  xtoolchange();
+  move2(106310,183370);
+  xend();
+  xtoolchange();
+  move2(41540,179560);
+  xend();
+  xtoolchange();
+  move2(45350,179560);
+  xend();
+  xtoolchange();
+  move2(49160,179560);
+  xend();
+  xtoolchange();
+  move2(52970,179560);
+  xend();
+  xtoolchange();
+  move2(56780,179560);
+  xend();
+  xtoolchange();
+  move2(60590,179560);
+  xend();
+  xtoolchange();
+  move2(64400,179560);
+  xend();
+  xtoolchange();
+  move2(68210,179560);
+  xend();
+  xtoolchange();
+  move2(72020,179560);
+  xend();
+  xtoolchange();
+  move2(75830,179560);
+  xend();
+  xtoolchange();
+  move2(79640,179560);
+  xend();
+  xtoolchange();
+  move2(83450,179560);
+  xend();
+  xtoolchange();
+  move2(87260,179560);
+  xend();
+  xtoolchange();
+  move2(91070,179560);
+  xend();
+  xtoolchange();
+  move2(94880,179560);
+  xend();
+  xtoolchange();
+  move2(98690,179560);
+  xend();
+  xtoolchange();
+  move2(102500,179560);
+  xend();
+  xtoolchange();
+  move2(106310,179560);
+  xend();
+  xtoolchange();
+  move2(41540,175750);
+  xend();
+  xtoolchange();
+  move2(45350,175750);
+  xend();
+  xtoolchange();
+  move2(49160,175750);
+  xend();
+  xtoolchange();
+  move2(52970,175750);
+  xend();
+  xtoolchange();
+  move2(56780,175750);
+  xend();
+  xtoolchange();
+  move2(60590,175750);
+  xend();
+  xtoolchange();
+  move2(64400,175750);
+  xend();
+  xtoolchange();
+  move2(68210,175750);
+  xend();
+  xtoolchange();
+  move2(72020,175750);
+  xend();
+  xtoolchange();
+  move2(75830,175750);
+  xend();
+  xtoolchange();
+  move2(79640,175750);
+  xend();
+  xtoolchange();
+  move2(83450,175750);
+  xend();
+  xtoolchange();
+  move2(87260,175750);
+  xend();
+  xtoolchange();
+  move2(91070,175750);
+  xend();
+  xtoolchange();
+  move2(94880,175750);
+  xend();
+  xtoolchange();
+  move2(98690,175750);
+  xend();
+  xtoolchange();
+  move2(102500,175750);
+  xend();
+  xtoolchange();
+  move2(106310,175750);
+  xend();
+  xtoolchange();
+  rotate(true);
+  move2(101230,160510);
+  rotate(false);
+  xend();
+  xtoolchange();
+  rotate(true);
+  move2(87260,160510);
+  rotate(false);
+  xend();
+  xtoolchange();
+  move2(65670,159240);
+  xend();
+  xtoolchange();
+  move2(50430,152890);
+  xend();
+  xtoolchange();
+  move2(46620,154160);
+  xend();
+  xtoolchange();
+  move2(50430,165590);
+  xend();
+  xtoolchange();
+  move2(83450,159240);
+  xend();
+  xtoolchange();
+  move2(97420,159240);
+  xend();
 }
 
 
 void stdTest( void )
 {
-  
-      xtoolchange();
-      move2(50188,181426);
-      xend();
 
-      xtoolchange();
-      move2(53484,181426);
-      xend();
-      xtoolchange();
-      move2(59192,185480);
-      xend();
-      xtoolchange();
-      move2(61683,185480);
-      xend();
+  xtoolchange();
+  move2(50188,181426);
+  xend();
 
-      xtoolchange();
-      rotate(true);
-      move2(41929,209188);
-      xend();
-      rotate(false);
+  xtoolchange();
+  move2(53484,181426);
+  xend();
+  xtoolchange();
+  move2(59192,185480);
+  xend();
+  xtoolchange();
+  move2(61683,185480);
+  xend();
 
-      xtoolchange();
-      rotate(true);
-      move2(59200,181508);
-      rotate(false);
-      xend();
-      xtoolchange();
-      center(true);
-      delay(10);
-      center(false);
-      move2(54666,202537);
-      xend();
-      xtoolchange();
-      move2(62896,210238);
-      xend();
-      xtoolchange();
-      move2(57408,178552);
-      xend();
-      xtoolchange();
-      move2(62300,179442);
-      xend();
-      xtoolchange();
-      move2(67033,165146);
-      xend();
-      xtoolchange();
-      move2(60023,165009);
-      xend();
-      xtoolchange();
-      move2(61312,161566);
-      xend();
-      xtoolchange();
-      move2(57086,215584);
-      xend();
-      xtoolchange();
-      move2(54712,158199);
-      xend();
-      xtoolchange();
-      move2(59676,158199);
-      xend();
-      xtoolchange();
-      move2(63939,220169);
-      xend();
-      xtoolchange();
-      move2(50996,200426);
-      xend();
-      xtoolchange();
-      move2(58610,172304);
-      xend();
-      xtoolchange();
-      move2(66726,192156);
-      xend();
-      xtoolchange();
-      move2(65697,172314);
-      xend();
-      xtoolchange();
-      move2(51717,171414);
-      xend();
-      xtoolchange();
-      move2(61902,192979);
-      xend();
-      xtoolchange();
-      move2(67503,211651);
-      xend();
-      xtoolchange();
-      move2(61539,216191);
-      xend();
-      xtoolchange();
-      move2(57725,216191);
-      xend();
-      xtoolchange();
-      move2(55834,216191);
-      xend();
-      xtoolchange();
-      move2(62991,202407);
-      xend();
-      xtoolchange();
-      move2(40926,218469);
-      xend();
-      xtoolchange();
-      move2(68576,199343);
-      xend();
-      xtoolchange();
-      move2(51712,158199);
-      xend();
-      xtoolchange();
-      move2(68767,159693);
-      xend();
-      xtoolchange();
-      move2(49848,165338);
-      xend();
-      xtoolchange();
-      move2(54996,224363);
-      xend();
+  xtoolchange();
+  rotate(true);
+  move2(41929,209188);
+  xend();
+  rotate(false);
+
+  xtoolchange();
+  rotate(true);
+  move2(59200,181508);
+  rotate(false);
+  xend();
+  xtoolchange();
+  center(true);
+  delay(10);
+  center(false);
+  move2(54666,202537);
+  xend();
+  xtoolchange();
+  move2(62896,210238);
+  xend();
+  xtoolchange();
+  move2(57408,178552);
+  xend();
+  xtoolchange();
+  move2(62300,179442);
+  xend();
+  xtoolchange();
+  move2(67033,165146);
+  xend();
+  xtoolchange();
+  move2(60023,165009);
+  xend();
+  xtoolchange();
+  move2(61312,161566);
+  xend();
+  xtoolchange();
+  move2(57086,215584);
+  xend();
+  xtoolchange();
+  move2(54712,158199);
+  xend();
+  xtoolchange();
+  move2(59676,158199);
+  xend();
+  xtoolchange();
+  move2(63939,220169);
+  xend();
+  xtoolchange();
+  move2(50996,200426);
+  xend();
+  xtoolchange();
+  move2(58610,172304);
+  xend();
+  xtoolchange();
+  move2(66726,192156);
+  xend();
+  xtoolchange();
+  move2(65697,172314);
+  xend();
+  xtoolchange();
+  move2(51717,171414);
+  xend();
+  xtoolchange();
+  move2(61902,192979);
+  xend();
+  xtoolchange();
+  move2(67503,211651);
+  xend();
+  xtoolchange();
+  move2(61539,216191);
+  xend();
+  xtoolchange();
+  move2(57725,216191);
+  xend();
+  xtoolchange();
+  move2(55834,216191);
+  xend();
+  xtoolchange();
+  move2(62991,202407);
+  xend();
+  xtoolchange();
+  move2(40926,218469);
+  xend();
+  xtoolchange();
+  move2(68576,199343);
+  xend();
+  xtoolchange();
+  move2(51712,158199);
+  xend();
+  xtoolchange();
+  move2(68767,159693);
+  xend();
+  xtoolchange();
+  move2(49848,165338);
+  xend();
+  xtoolchange();
+  move2(54996,224363);
+  xend();
 
 }
+
 
