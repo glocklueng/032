@@ -38,6 +38,9 @@
 #define MAX_X_PULSES       ( 14868L )
 #define MAX_Y_PULSES       ( 21172L )
 
+#define ACCEL_STEP ( 32 ) 
+
+
 // These are for the four directions forward,left,back,right
 enum {
   GO_NONE,
@@ -53,8 +56,8 @@ int X_SPEED =( 100 );
 int Y_SPEED =( 110 );
 
 // for diagonal move
-int X2_SPEED =( 40 );
-int Y2_SPEED =( 40 );
+int X2_SPEED =( 20 );
+int Y2_SPEED =( 50 );
 
 // length of pulse sent to motor controller
 #define SHORT_X_PULSE ( 1 )
@@ -134,7 +137,7 @@ void setup( void )
   Serial.begin(9600);
 
   Serial.println("PickoBear initialise\n");
-
+  
   // set pullups for sensors and switches
   digitalWrite(XPLUS,HIGH);
   digitalWrite(YPLUS,HIGH);
@@ -230,7 +233,140 @@ void setup( void )
     yLimit1 = digitalRead( YL1 );
     xLimit2 = digitalRead( XL2 );
     yLimit2 = digitalRead( YL2 );
-}
+    
+#define STOP ( 48 )
+      {
+      const static unsigned short lramp[30] = {
+     600,
+570,
+540,
+510,
+480,
+450,
+420,
+
+395,
+370,
+345,
+320,
+295,
+270,
+
+250,
+230,
+210,
+190,
+170,
+150,
+
+135,
+120,
+105,
+90,
+75,
+60,
+
+50,
+48,
+46,
+44,
+42,
+
+
+      };
+        
+  #define YCCW_HIGH   bitSet(PORTF,3);
+  #define YCW_HIGH   bitSet(PORTF,2);
+
+  #define YCCW_LOW  bitClear(PORTF,3);
+  #define YCW_LOW   bitClear(PORTF,2);
+
+     while(1) {
+       int i;
+             i= 5000;
+         YCCW_HIGH;
+ 
+         stepYCW(lramp[0] ); 
+        stepYCW(lramp[1] ); 
+        stepYCW(lramp[2] ); 
+        stepYCW(lramp[3] ); 
+        stepYCW(lramp[4] ); 
+        stepYCW(lramp[5] ); 
+        stepYCW(lramp[6] ); 
+        stepYCW(lramp[7] ); 
+        stepYCW(lramp[8] ); 
+        stepYCW(lramp[9] ); 
+ 
+        stepYCW(lramp[10] ); 
+        stepYCW(lramp[11] ); 
+        stepYCW(lramp[12] ); 
+        stepYCW(lramp[13] ); 
+        stepYCW(lramp[14] ); 
+        stepYCW(lramp[15] ); 
+        stepYCW(lramp[16] ); 
+        stepYCW(lramp[17] ); 
+        stepYCW(lramp[18] ); 
+        stepYCW(lramp[19] ); 
+ 
+        stepYCW(lramp[20] ); 
+        stepYCW(lramp[21] ); 
+        stepYCW(lramp[22] ); 
+        stepYCW(lramp[23] ); 
+        stepYCW(lramp[24] ); 
+        stepYCW(lramp[25] ); 
+        stepYCW(lramp[26] ); 
+        stepYCW(lramp[27] ); 
+        stepYCW(lramp[28] ); 
+        while(i--)
+          stepYCW(lramp[29] ); 
+ 
+        YCW_HIGH;
+
+       delay(200);
+ 
+       i =5000;
+   
+        stepYCCW(lramp[0] ); 
+        stepYCCW(lramp[1] ); 
+        stepYCCW(lramp[2] ); 
+        stepYCCW(lramp[3] ); 
+        stepYCCW(lramp[4] ); 
+        stepYCCW(lramp[5] ); 
+        stepYCCW(lramp[6] ); 
+        stepYCCW(lramp[7] ); 
+        stepYCCW(lramp[8] ); 
+        stepYCCW(lramp[9] ); 
+ 
+        stepYCCW(lramp[10] ); 
+        stepYCCW(lramp[11] ); 
+        stepYCCW(lramp[12] ); 
+        stepYCCW(lramp[13] ); 
+        stepYCCW(lramp[14] ); 
+        stepYCCW(lramp[15] ); 
+        stepYCCW(lramp[16] ); 
+        stepYCCW(lramp[17] ); 
+        stepYCCW(lramp[18] ); 
+        stepYCCW(lramp[19] ); 
+ 
+        stepYCCW(lramp[20] ); 
+        stepYCCW(lramp[21] ); 
+        stepYCCW(lramp[22] ); 
+        stepYCCW(lramp[23] ); 
+        stepYCCW(lramp[24] ); 
+        stepYCCW(lramp[25] ); 
+        stepYCCW(lramp[26] ); 
+        stepYCCW(lramp[27] ); 
+        stepYCCW(lramp[28] ); 
+        while(i--)
+          stepYCCW(lramp[29] ); 
+  
+    
+       delay(200);
+ 
+ 
+       }
+      }
+  }
 
 
 // called when limit switches are hit
@@ -304,7 +440,7 @@ void readPanel( void )
   // fast mode
   if( fastSwitch == true ) {
     // make it go 500 pulses
-    fspeed = 500;
+    fspeed = 2000;
   }
 
   if( !digitalRead( MORG ) == true && fastSwitch  ) {
@@ -358,24 +494,24 @@ void readPanel( void )
 
   // handle cursor keys
   if( xPlus  == true ) {
-    if(!fastSwitch)delay(100);
+//    if(!fastSwitch)delay(100);
     goright(fspeed,1);
     //DELAY_X2 ++;
   }
   if( xMinus == true ) {
-    if(!fastSwitch)delay(100);
+ //   if(!fastSwitch)delay(100);
     goleft(fspeed,1);
     //DELAY_X2 --;
   }
 
   if( yPlus  == true ) {
-    if(!fastSwitch)delay(100);
+   // if(!fastSwitch)delay(100);
     goback(fspeed,1);
     //DELAY_Y2 ++;
   }
 
   if( yMinus == true ) {
-    if(!fastSwitch)delay(100);
+    //if(!ofoitch)delay(100);
     goforward(fspeed,1);
     //DELAY_Y2 --;
   }
@@ -1533,30 +1669,34 @@ void beforeMoving( void )
 // Step once forward
 void stepYCW( long length ) 
 {    
-  beforeMoving();
+  //beforeMoving();
   cli();
-  digitalWrite(YCW,HIGH);
-  _delay_us( SHORT_X_PULSE ) ;
-  digitalWrite(YCW,LOW);
-  _delay_us(length); 
+  //digitalWrite(YCW,HIGH);
+   bitSet(PORTF,2);
+   _delay_us( 7 ) ;
+//  digitalWrite(YCW,LOW);
+   bitClear(PORTF,2);
+  _delay_us( length ); 
   sei();
 
-  DecrementYPulses();
+  //DecrementYPulses();
 }
 
 // Step once back
 void stepYCCW( long pulselength ) 
 {
-  beforeMoving();
+  //beforeMoving();
   
   cli();
-  digitalWrite(YCCW,HIGH);
-  _delay_us( SHORT_X_PULSE ) ;
-  digitalWrite(YCCW,LOW);
-  _delay_us(pulselength);  
+//  digitalWrite(YCCW,HIGH);
+   bitSet(PORTF,3);
+  _delay_us ( 7 );
+//  digitalWrite(YCCW,LOW);
+   bitClear(PORTF,3);
+  _delay_us( pulselength );  
   sei();
 
-  IncrementYPulses();
+ // IncrementYPulses();
 }
 
 // Step once left
@@ -1890,13 +2030,17 @@ boolean goright(long steps ,boolean nolimit )
 
 boolean goforward(long steps ,boolean nolimit )
 {
+  int i;
   long length = DELAY_Y2 + DELAY_Y1;
   long perc = (steps /100 ) * 2;
 
   if( (steps-perc) < 0 ) perc = 0;
 
-  for( int i = 0 ; i < steps ; i ++ )
+  for(  i = 0 ; i < steps ; i ++ )
   {
+        stepYCW( length );
+  }
+        
     if( nolimit == true ) {
       if( digitalRead( YL1 ) ) {
         digitalWrite(YCW,HIGH);
@@ -1918,7 +2062,7 @@ boolean goforward(long steps ,boolean nolimit )
     if (length >DELAY_Y2 + DELAY_Y1 ) 
       length = DELAY_Y2 + DELAY_Y1;          
 
-  }  
+  
 
   // reset it back
   digitalWrite(YCW,HIGH);
@@ -2088,7 +2232,6 @@ void plotLine(long x0, long y0, long x1, long y1,unsigned long col,int fast)
   }
 }
 
-#define ACCEL_STEP ( 16 ) 
 
 boolean movebackleft(long x0_pulses,long y0_pulses, boolean nolimit )
 {
@@ -2175,8 +2318,8 @@ boolean movebackleft(long x0_pulses,long y0_pulses, boolean nolimit )
       if (llength < X2_SPEED ) 
         llength = X2_SPEED;
 
-      if (llength > DELAY_Y2 + DELAY_Y1 ) 
-        llength = DELAY_Y2 + DELAY_Y1;
+      if (llength > DELAY_X2 + DELAY_X1 ) 
+        llength = DELAY_X2 + DELAY_X1;
 
       li ++;
       lsteps--;
@@ -2274,8 +2417,8 @@ boolean movebackright(long x0_pulses,long y0_pulses, boolean nolimit )
       if (llength < X2_SPEED ) 
         llength = X2_SPEED;
 
-      if (llength > DELAY_Y2 + DELAY_Y1 ) 
-        llength = DELAY_Y2 + DELAY_Y1;
+      if (llength > DELAY_X2 + DELAY_X1 ) 
+        llength = DELAY_X2 + DELAY_X1;
 
       li ++;
       lsteps--;
@@ -2374,8 +2517,8 @@ boolean moveforwardright(long x0_pulses,long y0_pulses, boolean nolimit )
       if (llength < X2_SPEED ) 
         llength = X2_SPEED;
 
-      if (llength > DELAY_Y2 + DELAY_Y1 ) 
-        llength = DELAY_Y2 + DELAY_Y1;
+      if (llength > DELAY_X2 + DELAY_X1 ) 
+        llength = DELAY_X2 + DELAY_X1;
 
       li ++;
       lsteps--;
@@ -2473,8 +2616,8 @@ boolean moveforwardleft(long x0_pulses,long y0_pulses, boolean nolimit )
       if (llength < X2_SPEED ) 
         llength = X2_SPEED;
 
-      if (llength > DELAY_Y2 + DELAY_Y1 ) 
-        llength = DELAY_Y2 + DELAY_Y1;
+      if (llength > DELAY_X2 + DELAY_X1 ) 
+        llength = DELAY_X2 + DELAY_X1;
 
       li ++;
       lsteps--;
@@ -2489,7 +2632,7 @@ boolean moveforwardleft(long x0_pulses,long y0_pulses, boolean nolimit )
 }
 
 
-void moveLine2o( long x0, long y0, long x1, long y1)
+void moveLine2_slow( long x0, long y0, long x1, long y1)
 {
   long xdiff,ydiff;
 
@@ -2546,7 +2689,7 @@ void moveLine2o( long x0, long y0, long x1, long y1)
   }
 }
 
-void moveLine2( long x0, long y0, long x1, long y1)
+void moveLine2_fast( long x0, long y0, long x1, long y1)
 {
   long xdiff,ydiff;
   unsigned char direction = GO_NONE ;
@@ -2595,36 +2738,23 @@ void moveLine2( long x0, long y0, long x1, long y1)
     else {
       direction = GO_NONE;
     }
+    // calc dx/dy
+    xdiff = x0-x1;
+    xdiff = abs(xdiff);
+    ydiff = y0-y1;
+    ydiff = abs(ydiff);
 
     // forward and left
     switch( direction ) {
 
     case GO_FL:
       Serial.print ("GO_FL ");
-      xdiff = x0-x1;
-      xdiff = abs(xdiff);
-      ydiff = y0-y1;
-      ydiff = abs(ydiff);
-
-      Serial.print(xdiff,DEC);
-      Serial.print(" "); 
-      Serial.println(ydiff,DEC); 
-
       moveforwardleft(xdiff,ydiff,true);
       y0 -= ydiff;
       x0 -= xdiff;
       break;
     case GO_BR:
       Serial.print("GO_BR ");
-      xdiff = x0-x1;
-      xdiff = abs(xdiff);
-      ydiff = y0-y1;
-      ydiff = abs(ydiff);
-
-      Serial.print(xdiff,DEC);
-      Serial.print(" "); 
-      Serial.println(ydiff,DEC); 
-
       movebackright(xdiff,ydiff,true);
       y0 += ydiff;
       x0 += xdiff;
@@ -2632,30 +2762,12 @@ void moveLine2( long x0, long y0, long x1, long y1)
       // Don't work
     case GO_FR:
       Serial.print("GO_FR ");
-      xdiff = x0-x1;
-      xdiff = abs(xdiff);
-      ydiff = y0-y1;
-      ydiff = abs(ydiff);
-
-      Serial.print(xdiff,DEC);
-      Serial.print(" "); 
-      Serial.println(ydiff,DEC); 
-
       moveforwardright(xdiff,ydiff,true);
       y0 -= ydiff;
       x0 += xdiff;
       break;
     case GO_BL:
       Serial.print("GO_BL ");
-      xdiff = x0-x1;
-      xdiff = abs(xdiff);
-      ydiff = y0-y1;
-      ydiff = abs(ydiff);
-
-      Serial.print(xdiff,DEC);
-      Serial.print(" "); 
-      Serial.println(ydiff,DEC); 
-
       movebackleft(xdiff,ydiff,true);
       y0 += ydiff;
       x0 -= xdiff;
@@ -2664,9 +2776,6 @@ void moveLine2( long x0, long y0, long x1, long y1)
     case GO_NONE:
       Serial.println("GO_NONE");
       if( x0 != x1 ) {
-
-        xdiff = x0-x1;
-        xdiff = abs(xdiff);
 
         // move right
         if( x0 < x1 ) {
@@ -2682,10 +2791,6 @@ void moveLine2( long x0, long y0, long x1, long y1)
       }
 
       if( y0 != y1 ) {
-
-        // calculate dy abs
-        ydiff = y0-y1;
-        ydiff = abs(ydiff);
 
         // move back
         if( y0 < y1 ) {
@@ -2720,7 +2825,7 @@ void movexy(long x0,long y0 )
     head(0) ;
   }
 
-  moveLine2o(lx,ly,x0,y0);
+  moveLine2_fast(lx,ly,x0,y0);
 
   lx = x0;
   ly = y0;
@@ -2735,5 +2840,4 @@ void setupTimer1(void)
   // Timer/Counter 1 Output Compare A Match Interrupt enable.
   TIMSK1 = (1<<OCIE1A);
 }
-
 

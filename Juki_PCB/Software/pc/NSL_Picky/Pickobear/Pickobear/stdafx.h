@@ -49,6 +49,7 @@
 
 #include "OpenGLControl.h"
 
+#include "Serial.h"
 
 #include "opencv.h"
 
