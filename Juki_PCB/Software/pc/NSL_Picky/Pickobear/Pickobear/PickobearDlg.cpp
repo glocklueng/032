@@ -10,6 +10,7 @@
 #define new DEBUG_NEW
 #endif
 
+CSerial m_Serial;
 
 // CAboutDlg dialog used for App About
 

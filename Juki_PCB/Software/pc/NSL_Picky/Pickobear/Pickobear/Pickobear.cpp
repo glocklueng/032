@@ -51,6 +51,11 @@ BOOL CPickobearApp::InitInstance()
 
 	AfxEnableControlContainer();
 
+	for ( int i = 1 ; i < 30 ; i++ ) {
+
+		_RPT1( _CRT_WARN, "%d,\n",600/i) ;
+	}
+
 	// Standard initialization
 	// If you are not using these features and wish to reduce the size
 	// of your final executable, you should remove from the following
