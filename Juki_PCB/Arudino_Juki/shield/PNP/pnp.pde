@@ -231,9 +231,9 @@ void setup( void )
 
   //These pins can be configured to trigger an interrupt on a low value, a rising or falling edge, or a change in value. See the attach
   // interrupt() function for details.
-    //External Interrupts: 2 (interrupt 0), 3 (interrupt 1), 18 (interrupt 5), 19 (interrupt 4), 20 (interrupt 3), and 21 (interrupt 2).
+  //External Interrupts: 2 (interrupt 0), 3 (interrupt 1), 18 (interrupt 5), 19 (interrupt 4), 20 (interrupt 3), and 21 (interrupt 2).
 
-    attachInterrupt(2, y1Limit, CHANGE );
+  attachInterrupt(2, y1Limit, CHANGE );
   attachInterrupt(3, y2Limit, CHANGE );
   attachInterrupt(4, x2Limit, CHANGE );
   attachInterrupt(5, x1Limit, CHANGE );
@@ -1753,31 +1753,30 @@ void setup( void )
       YCCW_HIGH;
       YCW_HIGH;
 
-// works as div 4
+      // works as div 4
       for(a = 0; a < 505 ; a+=2 )  {
-          stepYCW(speedUpY[a] ); 
+        stepYCW(speedUpY[a] ); 
       } 
 
-      while(i--)
-        stepYCW( 108  ); 
-        
-/*
-
-      YCCW_HIGH;
-      YCW_HIGH;
-
-      delay(500);
-
-      i = 5000;
-      for(a = 0; a < sizeof(speedUpY) ; a+=2 )  {
-        stepYCCW(speedUpY[a]); 
+      while(i--) {
+        stepYCW( 98  ); 
       }
-
-      while(i--)
-        stepYCCW(108 ); 
-
-      delay(500);
-*/
+      /*
+      YCCW_HIGH;
+       YCW_HIGH;
+       
+       delay(500);
+       
+       i = 5000;
+       for(a = 0; a < sizeof(speedUpY) ; a+=2 )  {
+       stepYCCW(speedUpY[a]); 
+       }
+       
+       while(i--)
+       stepYCCW(108 ); 
+       
+       delay(500);
+       */
 
     }
   }
@@ -3122,7 +3121,7 @@ void stepYCCW( long pulselength )
   _delay_us( pulselength );  
   sei();
 
- // IncrementYPulses();
+  // IncrementYPulses();
 }
 
 // Step once left
@@ -4271,5 +4270,6 @@ void setupTimer1(void)
   // Timer/Counter 1 Output Compare A Match Interrupt enable.
   TIMSK1 = (1<<OCIE1A);
 }
+
 
 
