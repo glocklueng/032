@@ -248,7 +248,7 @@ void setup( void )
 #define STOP ( 48 )
   {
 
-    const static unsigned long speedUpY[] = {
+    const static unsigned long speedUpY[506] = {
       962,
       41,
       952,
@@ -753,7 +753,8 @@ void setup( void )
       41,
       101,
       40,
-      108
+      108,
+      40
     };
 
     const static unsigned long slowDownY[] = {
@@ -1748,19 +1749,18 @@ void setup( void )
       int a;
 
       i= 2000;
+
       YCCW_HIGH;
       YCW_HIGH;
 
 // works as div 4
-      for(a = 0; a < sizeof(speedUpY)/3 ; a+=2 )  {
-        if (speedUpY[a] < 50 ) a++;
-        stepYCW(speedUpY[a] ); 
+      for(a = 0; a < 505 ; a+=2 )  {
+          stepYCW(speedUpY[a] ); 
       } 
 
       while(i--)
         stepYCW( 108  ); 
         
-        delay(100);
 /*
 
       YCCW_HIGH;
