@@ -215,18 +215,6 @@
 			RelativePath="tinyptc.h"
 			>
 		</File>
-		<File
-			RelativePath="vfw.c"
-			>
-			<FileConfiguration
-				Name="Release|Win32"
-				>
-				<Tool
-					Name="VCCLCompilerTool"
-					PreprocessorDefinitions=""
-				/>
-			</FileConfiguration>
-		</File>
 	</Files>
 	<Globals>
 	</Globals>
