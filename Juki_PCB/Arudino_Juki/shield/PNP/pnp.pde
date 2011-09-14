@@ -1744,39 +1744,50 @@ void setup( void )
     };
 
 
-    while(1) {
+
+    while( 1 ) {
       int i;
       int a;
 
-      i= 2000;
+      i= 5000;
 
       YCCW_HIGH;
       YCW_HIGH;
 
       // works as div 4
-      for(a = 0; a < 505 ; a+=2 )  {
+      for(a = 0; a < sizeof(speedUpY)/4 ; a+=2 )  {
         stepYCW(speedUpY[a] ); 
       } 
 
       while(i--) {
-        stepYCW( 98  ); 
+        stepYCW( 65  ); 
       }
-      /*
+
+      for(a = 0; a < sizeof(slowDownY)/4 ; a+=2 )  {
+        stepYCW(slowDownY[a] ); 
+      }  
+
       YCCW_HIGH;
-       YCW_HIGH;
-       
-       delay(500);
-       
-       i = 5000;
-       for(a = 0; a < sizeof(speedUpY) ; a+=2 )  {
-       stepYCCW(speedUpY[a]); 
-       }
-       
-       while(i--)
-       stepYCCW(108 ); 
-       
-       delay(500);
-       */
+      YCW_HIGH;
+
+      delay(500);
+
+      i = 5000;
+      for(a = 0; a < sizeof(speedUpY)/4 ; a+=2 )  {
+        stepYCCW(speedUpY[a]); 
+      }
+
+
+      while(i--) {
+        stepYCCW( 65  ); 
+      }
+
+      for(a = 0; a < sizeof(slowDownY)/4 ; a+=2 )  {
+        stepYCCW(slowDownY[a] ); 
+      }  
+
+      delay(500);
+
 
     }
   }
@@ -4270,6 +4281,7 @@ void setupTimer1(void)
   // Timer/Counter 1 Output Compare A Match Interrupt enable.
   TIMSK1 = (1<<OCIE1A);
 }
+
 
 
 
