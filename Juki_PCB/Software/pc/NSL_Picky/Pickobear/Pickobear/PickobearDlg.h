@@ -21,12 +21,24 @@ private:
 public:
 	CPickobearDlg(CWnd* pParent = NULL);	// standard constructor
 
+	~CPickobearDlg(){
+
+		m_Serial.Close();
+	}
+
+	void SendCommand(const char *cmd)
+	{
+		DWORD written;
+
+		m_Serial.Write(cmd,&written,0,INFINITE);
+	};
+
 // Dialog Data
 	enum { IDD = IDD_PICKOBEAR_DIALOG };
 
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV support
-
+	
 
 // Implementation
 protected:
@@ -48,4 +60,13 @@ public:
 	double m_Threshold2;
 	afx_msg void OnEnChangeThreshold();
 	afx_msg void OnEnChangeThreshold2();
+	afx_msg void OnBnClickedHome();
+	afx_msg void OnBnClickedRight();
+	afx_msg void OnBnClickedPark();
+	afx_msg void OnBnClickedTool1();
+	afx_msg void OnBnClickedTool2();
+	afx_msg void OnBnClickedTool3();
+	afx_msg void OnBnClickedTool4();
+	afx_msg void OnBnClickedTool5();
+	afx_msg void OnBnClickedTool6();
 };

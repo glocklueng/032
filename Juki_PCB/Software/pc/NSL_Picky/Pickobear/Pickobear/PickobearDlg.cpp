@@ -78,10 +78,20 @@ BEGIN_MESSAGE_MAP(CPickobearDlg, CDialog)
 	ON_LBN_SELCHANGE(IDC_LIST1, &CPickobearDlg::OnLbnSelchangeList1)
 	ON_EN_KILLFOCUS(IDC_THRESHOLD, &CPickobearDlg::OnEnChangeThreshold)
 	ON_EN_KILLFOCUS(IDC_THRESHOLD2, &CPickobearDlg::OnEnChangeThreshold2)
+	ON_BN_CLICKED(IDC_HOME, &CPickobearDlg::OnBnClickedHome)
+	ON_BN_CLICKED(IDC_RIGHT, &CPickobearDlg::OnBnClickedRight)
+	ON_BN_CLICKED(IDC_PARK, &CPickobearDlg::OnBnClickedPark)
+	ON_BN_CLICKED(IDC_TOOL1, &CPickobearDlg::OnBnClickedTool1)
+	ON_BN_CLICKED(IDC_TOOL2, &CPickobearDlg::OnBnClickedTool2)
+	ON_BN_CLICKED(IDC_TOOL3, &CPickobearDlg::OnBnClickedTool3)
+	ON_BN_CLICKED(IDC_TOOL4, &CPickobearDlg::OnBnClickedTool4)
+	ON_BN_CLICKED(IDC_TOOL5, &CPickobearDlg::OnBnClickedTool5)
+	ON_BN_CLICKED(IDC_TOOL6, &CPickobearDlg::OnBnClickedTool6)
 END_MESSAGE_MAP()
 
 
 // CPickobearDlg message handlers
+
 
 BOOL CPickobearDlg::OnInitDialog()
 {
@@ -122,12 +132,12 @@ BOOL CPickobearDlg::OnInitDialog()
 	ScreenToClient(rect);
 
 	// Create OpenGL Control window
-	m_oglWindow.oglCreate( rect, rect1, this, 2 );
+	m_oglWindow.oglCreate( rect, rect1, this, 3 );
 
 	// Setup the OpenGL Window's timer to render
 	m_oglWindow.m_unpTimer = m_oglWindow.SetTimer(1, 1, 0);
 
-	// Get size and position of the template textfield we created before in the dialog editor
+	// Get size and position of the template textfie7ld we created before in the dialog editor
 	GetDlgItem(IDC_CAM2)->GetWindowRect(rect);
 	GetDlgItem(IDC_CAM2)->GetWindowRect(rect1);
 
@@ -135,12 +145,15 @@ BOOL CPickobearDlg::OnInitDialog()
 	ScreenToClient(rect);
 
 	// Create OpenGL Control window
-	m_oglWindow1.oglCreate( rect, rect1, this, 3 );
+	m_oglWindow1.oglCreate( rect, rect1, this, 2 );
 
 	// Setup the OpenGL Window's timer to render
 	m_oglWindow1.m_unpTimer = m_oglWindow1.SetTimer(1, 1, 0);
 
-
+	CString m_ComPort = _T("\\\\.\\COM14");
+	m_Serial.Open(m_ComPort );
+	m_Serial.Setup(CSerial::EBaud9600);//,CSerial::EData8,CSerial::EParNone,CSerial::EStop1);
+	//m_Serial.SetupHandshaking(CSerial::EHandshakeOff);
 
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
@@ -223,4 +236,59 @@ void CPickobearDlg::OnEnChangeThreshold2()
 
 	UpdateData(TRUE);
 	m_Thresh2 = m_Threshold2;
+}
+
+
+void CPickobearDlg::OnBnClickedHome()
+{	
+	m_Serial.Write(" ");
+	//SendCommand("\r");
+}
+
+
+void CPickobearDlg::OnBnClickedRight()
+{
+	// TODO: Add your control notification handler code here
+}
+
+
+void CPickobearDlg::OnBnClickedPark()
+{
+	m_Serial.Write("p");
+}
+
+
+void CPickobearDlg::OnBnClickedTool1()
+{
+	m_Serial.Write("1");
+}
+
+
+void CPickobearDlg::OnBnClickedTool2()
+{
+	m_Serial.Write("2");
+}
+
+
+void CPickobearDlg::OnBnClickedTool3()
+{
+	m_Serial.Write("3");
+}
+
+
+void CPickobearDlg::OnBnClickedTool4()
+{
+	m_Serial.Write("4");
+}
+
+
+void CPickobearDlg::OnBnClickedTool5()
+{
+	m_Serial.Write("5");
+}
+
+
+void CPickobearDlg::OnBnClickedTool6()
+{
+	m_Serial.Write("6");
 }
