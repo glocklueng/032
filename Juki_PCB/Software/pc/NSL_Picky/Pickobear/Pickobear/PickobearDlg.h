@@ -6,6 +6,35 @@
 #include "afxwin.h"
 
 #include "Serial.h"
+#include "afxcmn.h"
+
+class CListCtrl_Components : public CListCtrl
+{
+	DECLARE_MESSAGE_MAP();
+
+	void PreSubclassWindow();
+
+public:
+	CListCtrl_Components()
+	{}
+
+
+	void AddItem( const char *label,const char *type,const char *x,const char *y,const char *rot)
+	{
+		CString mLabel(label);
+		CString mType(type);
+		CString mX(x);
+		CString mY(y);
+		CString mRot(rot);
+
+		int Index = InsertItem(LVIF_TEXT, 0,mLabel, 0, 0, 0, NULL);
+		SetItemText(Index,1,mType);
+		SetItemText(Index,2,mX);
+		SetItemText(Index,3,mY);
+		SetItemText(Index,4,mRot);
+	}
+};
+
 
 // CPickobearDlg dialog
 class CPickobearDlg : public CDialog
@@ -33,6 +62,7 @@ public:
 		m_Serial.Write(cmd,&written,0,INFINITE);
 	};
 
+
 // Dialog Data
 	enum { IDD = IDD_PICKOBEAR_DIALOG };
 
@@ -51,7 +81,7 @@ protected:
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
 public:
-	CListBox m_Components;
+//	CListCtrl m_Components;
 	CButton GO;
 	afx_msg void OnLbnSelchangeList1();
 	long m_headXPos;
@@ -69,4 +99,16 @@ public:
 	afx_msg void OnBnClickedTool4();
 	afx_msg void OnBnClickedTool5();
 	afx_msg void OnBnClickedTool6();
+	afx_msg void OnBnClickedUp();
+	afx_msg void OnBnClickedDown();
+	afx_msg void OnBnClickedLeft();
+	afx_msg void OnBnClickedHead();
+	afx_msg void OnNMCustomdrawRotate(NMHDR *pNMHDR, LRESULT *pResult);
+	// rotation for head
+	CSliderCtrl m_Rotation;
+	CListCtrl_Components m_ComponentList;
+	afx_msg void OnBnClickedUpleft();
+	afx_msg void OnBnClickedUpright();
+	afx_msg void OnBnClickedLeftdown();
+	afx_msg void OnBnClickedBottomleft();
 };

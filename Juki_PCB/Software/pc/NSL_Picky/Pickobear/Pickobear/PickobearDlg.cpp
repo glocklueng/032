@@ -62,12 +62,13 @@ CPickobearDlg::CPickobearDlg(CWnd* pParent /*=NULL*/)
 void CPickobearDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
-	DDX_Control(pDX, IDC_LIST1, m_Components);
 	DDX_Control(pDX, IDC_GO, GO);
 	DDX_Text(pDX, IDC_X_POS, m_headXPos);
 	DDX_Text(pDX, IDC_Y_POS, m_headYpos);
 	DDX_Text(pDX, IDC_THRESHOLD, m_Threshold1);
 	DDX_Text(pDX, IDC_THRESHOLD2, m_Threshold2);
+	DDX_Control(pDX, IDC_ROTATE, m_Rotation);
+	DDX_Control(pDX, IDC_LIST2, m_ComponentList);
 }
 
 BEGIN_MESSAGE_MAP(CPickobearDlg, CDialog)
@@ -87,7 +88,33 @@ BEGIN_MESSAGE_MAP(CPickobearDlg, CDialog)
 	ON_BN_CLICKED(IDC_TOOL4, &CPickobearDlg::OnBnClickedTool4)
 	ON_BN_CLICKED(IDC_TOOL5, &CPickobearDlg::OnBnClickedTool5)
 	ON_BN_CLICKED(IDC_TOOL6, &CPickobearDlg::OnBnClickedTool6)
+	ON_BN_CLICKED(IDC_UP, &CPickobearDlg::OnBnClickedUp)
+	ON_BN_CLICKED(IDC_DOWN, &CPickobearDlg::OnBnClickedDown)
+	ON_BN_CLICKED(IDC_LEFT, &CPickobearDlg::OnBnClickedLeft)
+	ON_BN_CLICKED(IDC_HEAD, &CPickobearDlg::OnBnClickedHead)
+	ON_NOTIFY(NM_CUSTOMDRAW, IDC_ROTATE, &CPickobearDlg::OnNMCustomdrawRotate)
+	ON_BN_CLICKED(IDC_UPLEFT, &CPickobearDlg::OnBnClickedUpleft)
+	ON_BN_CLICKED(IDC_UPRIGHT, &CPickobearDlg::OnBnClickedUpright)
+	ON_BN_CLICKED(IDC_LEFTDOWN, &CPickobearDlg::OnBnClickedLeftdown)
+	ON_BN_CLICKED(IDC_BOTTOMLEFT, &CPickobearDlg::OnBnClickedBottomleft)
 END_MESSAGE_MAP()
+
+BEGIN_MESSAGE_MAP(CListCtrl_Components, CListCtrl)
+END_MESSAGE_MAP()
+
+
+void CListCtrl_Components::PreSubclassWindow()
+{
+	CListCtrl::PreSubclassWindow();
+
+	// Focus retangle is not painted properly without double-buffering
+#if (_WIN32_WINNT >= 0x501)
+	SetExtendedStyle(LVS_EX_DOUBLEBUFFER | GetExtendedStyle());
+#endif
+
+	SetExtendedStyle(GetExtendedStyle() | LVS_EX_FULLROWSELECT| LVS_REPORT);
+
+}
 
 
 // CPickobearDlg message handlers
@@ -135,7 +162,7 @@ BOOL CPickobearDlg::OnInitDialog()
 	m_oglWindow.oglCreate( rect, rect1, this, 3 );
 
 	// Setup the OpenGL Window's timer to render
-	m_oglWindow.m_unpTimer = m_oglWindow.SetTimer(1, 1, 0);
+	m_oglWindow.m_unpTimer = m_oglWindow.SetTimer(1, 100, 0);
 
 	// Get size and position of the template textfie7ld we created before in the dialog editor
 	GetDlgItem(IDC_CAM2)->GetWindowRect(rect);
@@ -148,12 +175,24 @@ BOOL CPickobearDlg::OnInitDialog()
 	m_oglWindow1.oglCreate( rect, rect1, this, 2 );
 
 	// Setup the OpenGL Window's timer to render
-	m_oglWindow1.m_unpTimer = m_oglWindow1.SetTimer(1, 1, 0);
+	m_oglWindow1.m_unpTimer = m_oglWindow1.SetTimer(1, 100, 0);
 
 	CString m_ComPort = _T("\\\\.\\COM14");
 	m_Serial.Open(m_ComPort );
-	m_Serial.Setup(CSerial::EBaud9600);//,CSerial::EData8,CSerial::EParNone,CSerial::EStop1);
-	//m_Serial.SetupHandshaking(CSerial::EHandshakeOff);
+	m_Serial.Setup(CSerial::EBaud9600);
+	
+	m_ComponentList.GetClientRect(&rect);
+	int nInterval =( rect.Width() / 5);
+
+	m_ComponentList.InsertColumn(0, _T("Name"),LVCFMT_CENTER,nInterval);
+	m_ComponentList.InsertColumn(1, _T("Type"),LVCFMT_CENTER,nInterval);
+	m_ComponentList.InsertColumn(2, _T("X"),LVCFMT_CENTER,nInterval);
+	m_ComponentList.InsertColumn(3, _T("Y"),LVCFMT_CENTER,nInterval);
+	m_ComponentList.InsertColumn(4, _T("R"),LVCFMT_CENTER,nInterval);
+
+	m_ComponentList.AddItem("R1","0805","10","20","90");
+
+	m_Rotation.SetRange(0,360);
 
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
@@ -242,13 +281,12 @@ void CPickobearDlg::OnEnChangeThreshold2()
 void CPickobearDlg::OnBnClickedHome()
 {	
 	m_Serial.Write(" ");
-	//SendCommand("\r");
 }
 
 
 void CPickobearDlg::OnBnClickedRight()
 {
-	// TODO: Add your control notification handler code here
+	m_Serial.Write("r");
 }
 
 
@@ -291,4 +329,60 @@ void CPickobearDlg::OnBnClickedTool5()
 void CPickobearDlg::OnBnClickedTool6()
 {
 	m_Serial.Write("6");
+}
+
+
+void CPickobearDlg::OnBnClickedUp()
+{
+	m_Serial.Write("u");
+}
+
+
+void CPickobearDlg::OnBnClickedDown()
+{
+	m_Serial.Write("d");
+}
+
+
+void CPickobearDlg::OnBnClickedLeft()
+{
+	m_Serial.Write("l");
+}
+
+
+void CPickobearDlg::OnBnClickedHead()
+{
+	m_Serial.Write("h");
+}
+
+
+void CPickobearDlg::OnNMCustomdrawRotate(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	LPNMCUSTOMDRAW pNMCD = reinterpret_cast<LPNMCUSTOMDRAW>(pNMHDR);
+	// TODO: Add your control notification handler code here
+	*pResult = 0;
+}
+
+
+void CPickobearDlg::OnBnClickedUpleft()
+{
+	// TODO: Add your control notification handler code here
+}
+
+
+void CPickobearDlg::OnBnClickedUpright()
+{
+	// TODO: Add your control notification handler code here
+}
+
+
+void CPickobearDlg::OnBnClickedLeftdown()
+{
+	// TODO: Add your control notification handler code here
+}
+
+
+void CPickobearDlg::OnBnClickedBottomleft()
+{
+	// TODO: Add your control notification handler code here
 }
