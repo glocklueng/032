@@ -10,7 +10,6 @@
 #define new DEBUG_NEW
 #endif
 
-CSerial m_Serial;
 
 // CAboutDlg dialog used for App About
 
@@ -77,8 +76,8 @@ BEGIN_MESSAGE_MAP(CPickobearDlg, CDialog)
 	ON_WM_QUERYDRAGICON()
 	//}}AFX_MSG_MAP
 	ON_LBN_SELCHANGE(IDC_LIST1, &CPickobearDlg::OnLbnSelchangeList1)
-	ON_EN_CHANGE(IDC_THRESHOLD, &CPickobearDlg::OnEnChangeThreshold)
-	ON_EN_CHANGE(IDC_THRESHOLD2, &CPickobearDlg::OnEnChangeThreshold2)
+	ON_EN_KILLFOCUS(IDC_THRESHOLD, &CPickobearDlg::OnEnChangeThreshold)
+	ON_EN_KILLFOCUS(IDC_THRESHOLD2, &CPickobearDlg::OnEnChangeThreshold2)
 END_MESSAGE_MAP()
 
 
@@ -123,7 +122,7 @@ BOOL CPickobearDlg::OnInitDialog()
 	ScreenToClient(rect);
 
 	// Create OpenGL Control window
-	m_oglWindow.oglCreate(rect, rect1,this,2);
+	m_oglWindow.oglCreate( rect, rect1, this, 2 );
 
 	// Setup the OpenGL Window's timer to render
 	m_oglWindow.m_unpTimer = m_oglWindow.SetTimer(1, 1, 0);
@@ -136,7 +135,7 @@ BOOL CPickobearDlg::OnInitDialog()
 	ScreenToClient(rect);
 
 	// Create OpenGL Control window
-	m_oglWindow1.oglCreate(rect, rect1,this,3);
+	m_oglWindow1.oglCreate( rect, rect1, this, 3 );
 
 	// Setup the OpenGL Window's timer to render
 	m_oglWindow1.m_unpTimer = m_oglWindow1.SetTimer(1, 1, 0);
@@ -165,8 +164,6 @@ void CPickobearDlg::OnSysCommand(UINT nID, LPARAM lParam)
 
 void CPickobearDlg::OnPaint()
 {
-
-
 	if (IsIconic())
 	{
 		CPaintDC dc(this); // device context for painting

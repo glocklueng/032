@@ -5,6 +5,7 @@
 #pragma once
 #include "afxwin.h"
 
+#include "Serial.h"
 
 // CPickobearDlg dialog
 class CPickobearDlg : public CDialog
@@ -13,6 +14,8 @@ private:
 	// each of the camera windows
 	COpenGLControl m_oglWindow;
 	COpenGLControl m_oglWindow1;
+	
+	CSerial m_Serial;
 
 // Construction
 public:
