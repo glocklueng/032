@@ -63,11 +63,11 @@ enum {
 
 // maximum speed the motors can travel at
 int X_SPEED =( 150 );
-int Y_SPEED =( 98 );
+int Y_SPEED =( 100 );
 
 // for diagonal move
-int X2_SPEED =( 20 );
-int Y2_SPEED =( 50 );
+int X2_SPEED =( 80 );
+int Y2_SPEED =( 80 );
 
 // length of pulse sent to motor controller
 #define SHORT_X_PULSE ( 4 )
@@ -250,17 +250,17 @@ void setup( void )
 
     const static unsigned long speedUpY[506] = {
       962,
-      41,
+      40,
       952,
       40,
       962,
-      41,
+      40,
       951,
       40,
-      741,
+      740,
       40,
       734,
-      41,
+      40,
       744,
       40,
       733,
@@ -268,23 +268,23 @@ void setup( void )
       523,
       40,
       516,
-      41,
+      40,
       522,
-      41,
+      40,
       514,
-      41,
-      441,
+      40,
+      440,
       40,
       432,
       40,
-      441,
+      440,
       40,
       433,
-      41,
+      40,
       359,
       40,
       352,
-      41,
+      40,
       359,
       40,
       350,
@@ -292,27 +292,27 @@ void setup( void )
       360,
       40,
       352,
-      41,
+      40,
       359,
       40,
       351,
-      41,
+      40,
       310,
       40,
       303,
-      41,
+      40,
       310,
       40,
       301,
       40,
       310,
-      41,
+      40,
       300,
       40,
       310,
-      41,
+      40,
       304,
-      41,
+      40,
       264,
       40,
       257,
@@ -326,7 +326,7 @@ void setup( void )
       257,
       40,
       264,
-      41,
+      40,
       254,
       40,
       264,
@@ -334,13 +334,13 @@ void setup( void )
       257,
       40,
       264,
-      41,
+      40,
       255,
       40,
       237,
       40,
       227,
-      41,
+      40,
       236,
       40,
       230,
@@ -348,7 +348,7 @@ void setup( void )
       237,
       40,
       227,
-      41,
+      40,
       236,
       40,
       230,
@@ -360,105 +360,105 @@ void setup( void )
       237,
       40,
       228,
-      41,
+      40,
       214,
-      41,
+      40,
       205,
       40,
       215,
       40,
       205,
-      41,
+      40,
       214,
-      41,
+      40,
       210,
-      41,
+      40,
       217,
       40,
       205,
-      41,
+      40,
       214,
-      41,
+      40,
       210,
-      41,
+      40,
       217,
       40,
       205,
-      41,
+      40,
       214,
-      41,
+      40,
       210,
-      41,
+      40,
       217,
-      41,
+      40,
       206,
       40,
       196,
       40,
       186,
-      41,
+      40,
       190,
       40,
       183,
-      41,
+      40,
       192,
-      41,
+      40,
       186,
       40,
       190,
-      41,
+      40,
       183,
       40,
       193,
-      41,
+      40,
       185,
-      41,
+      40,
       190,
       40,
       183,
-      41,
+      40,
       193,
       40,
       186,
-      41,
+      40,
       189,
-      41,
+      40,
       184,
-      41,
+      40,
       176,
-      41,
+      40,
       164,
       40,
       174,
-      41,
+      40,
       163,
-      41,
+      40,
       174,
       40,
       170,
       40,
       176,
-      41,
+      40,
       164,
       40,
       174,
-      41,
+      40,
       169,
-      41,
+      40,
       176,
       40,
       164,
-      41,
+      40,
       173,
-      41,
+      40,
       169,
-      41,
+      40,
       176,
-      41,
+      40,
       164,
       40,
       174,
-      41,
+      40,
       169,
       40,
       177,
@@ -470,7 +470,7 @@ void setup( void )
       151,
       40,
       160,
-      41,
+      40,
       156,
       40,
       163,
@@ -478,83 +478,83 @@ void setup( void )
       151,
       40,
       160,
-      41,
+      40,
       155,
-      41,
+      40,
       163,
       40,
       151,
       40,
       160,
-      41,
+      40,
       155,
-      41,
+      40,
       163,
       40,
       150,
-      41,
+      40,
       160,
       40,
       156,
-      41,
+      40,
       162,
-      41,
+      40,
       150,
-      41,
+      40,
       160,
       40,
       155,
       40,
       149,
-      41,
+      40,
       142,
-      41,
+      40,
       151,
-      41,
+      40,
       145,
       40,
       149,
-      41,
+      40,
       142,
-      41,
+      40,
       151,
-      41,
+      40,
       145,
       40,
       149,
-      41,
+      40,
       142,
-      41,
+      40,
       151,
-      41,
+      40,
       145,
       40,
       149,
-      41,
+      40,
       142,
-      41,
+      40,
       151,
-      41,
+      40,
       145,
       40,
       149,
-      41,
+      40,
       142,
-      41,
+      40,
       151,
-      41,
+      40,
       146,
-      41,
-      141,
+      40,
+      140,
       40,
       131,
-      41,
+      40,
       135,
-      41,
+      40,
       128,
-      41,
+      40,
       138,
-      41,
+      40,
       131,
       40,
       136,
@@ -562,15 +562,15 @@ void setup( void )
       129,
       40,
       138,
-      41,
+      40,
       131,
-      41,
+      40,
       135,
-      41,
+      40,
       128,
-      41,
+      40,
       138,
-      41,
+      40,
       131,
       40,
       136,
@@ -578,17 +578,17 @@ void setup( void )
       129,
       40,
       138,
-      41,
+      40,
       131,
-      41,
+      40,
       135,
-      41,
+      40,
       130,
       40,
       130,
-      41,
+      40,
       120,
-      41,
+      40,
       127,
       40,
       118,
@@ -596,65 +596,57 @@ void setup( void )
       128,
       40,
       120,
-      41,
+      40,
       127,
-      41,
+      40,
       117,
-      41,
+      40,
       127,
-      41,
+      40,
       120,
-      41,
+      40,
       127,
       40,
       118,
-      41,
+      40,
       127,
       40,
       121,
       40,
       127,
-      41,
+      40,
       117,
-      41,
+      40,
       127,
-      41,
+      40,
       120,
-      41,
+      40,
       127,
       40,
       118,
-      41,
+      40,
       127,
       40,
       121,
       40,
       127,
-      41,
+      40,
       119,
-      41,
+      40,
       118,
-      41,
+      40,
       112,
-      41,
+      40,
       119,
       40,
       110,
       40,
       119,
-      41,
+      40,
       109,
-      41,
-      119,
-      40,
-      115,
-      41,
-      122,
-      40,
-      110,
       40,
       119,
-      41,
+      40,
       115,
       40,
       122,
@@ -662,75 +654,83 @@ void setup( void )
       110,
       40,
       119,
-      41,
+      40,
       115,
       40,
       122,
-      41,
+      40,
+      110,
+      40,
+      119,
+      40,
+      115,
+      40,
+      122,
+      40,
       109,
-      41,
+      40,
       119,
       40,
       115,
-      41,
+      40,
       121,
-      41,
+      40,
       109,
-      41,
+      40,
       119,
-      41,
+      40,
       113,
-      41,
+      40,
       113,
-      41,
+      40,
       106,
-      41,
+      40,
       116,
-      41,
+      40,
       106,
-      41,
+      40,
       116,
-      41,
+      40,
       107,
       40,
       114,
       40,
       104,
-      41,
+      40,
       113,
-      41,
+      40,
       107,
       40,
       114,
       40,
       104,
-      41,
+      40,
       113,
-      41,
+      40,
       107,
       40,
       114,
       40,
       104,
-      41,
+      40,
       113,
-      41,
+      40,
       107,
       40,
       114,
       40,
       104,
-      41,
+      40,
       113,
-      41,
+      40,
       107,
       40,
       114,
       40,
       104,
-      41,
+      40,
       113,
-      41,
+      40,
       107,
       40,
       114,
@@ -738,19 +738,19 @@ void setup( void )
       106,
       40,
       105,
-      41,
+      40,
       98,
-      41,
-      105,
-      41,
-      96,
-      41,
+      40,
       105,
       40,
       96,
-      41,
+      40,
       105,
-      41,
+      40,
+      96,
+      40,
+      105,
+      40,
       101,
       40,
       108,
@@ -1745,12 +1745,14 @@ void setup( void )
 
 
 
-    while( 1 ) {
+    while( 0 ) {
       int i;
       int a;
 
       int step = 65;
 
+    while(1) stepYCW( 100 ) ;
+    
       i= 5000;
 
       YCCW_HIGH;
@@ -1758,20 +1760,21 @@ void setup( void )
       XCCW_HIGH;
       XCW_HIGH;
 
+
       // works as div 4
-      for(a = 0; a < sizeof(speedUpY)/4 ; a+=2 )  {
-        stepYCW(speedUpY[a] /2); 
-        stepXCW(speedUpY[a]/2 ); 
+      for(a = 0; a < sizeof(speedUpY) / 4 ; a += 2 )  {
+        stepYCW(speedUpY[a] ); 
+   //     stepXCW(speedUpY[a]); 
       } 
 
       while(i--) {
-        stepYCW( 100 /2 ); 
-        stepXCW( 65 /2 ); 
+        stepYCW( 65 ); 
+       // stepXCW( 65 /2 ); 
       }
 
-      for(a = 0; a < sizeof(slowDownY)/4 ; a+=2 )  {
-        stepYCW(slowDownY[a] /2); 
-        stepXCW(slowDownY[a]/2 ); 
+      for(a = 0; a < sizeof(slowDownY) / 4 ; a += 2 )  {
+        stepYCW(slowDownY[a] ); 
+        //stepXCW(slowDownY[a]/2 ); 
       }  
 
       YCCW_HIGH;
@@ -1783,19 +1786,19 @@ void setup( void )
 
       i = 5000;
       for(a = 0; a < sizeof(speedUpY)/4 ; a+=2 )  {
-        stepYCCW(speedUpY[a]/2); 
-        stepXCCW(speedUpY[a]/2); 
+        stepYCCW(speedUpY[a]); 
+       // stepXCCW(speedUpY[a]/2); 
       }
 
 
       while(i--) {
-        stepYCCW( 100/2 ); 
-        stepXCCW( 65/2  ); 
+        stepYCCW( 65 ); 
+        //stepXCCW( 65/2  ); 
       }
 
       for(a = 0; a < sizeof(slowDownY)/4 ; a+=2 )  {
-        stepYCCW(slowDownY[a] /2); 
-        stepXCCW(slowDownY[a] /2); 
+        stepYCCW(slowDownY[a] ); 
+       // stepXCCW(slowDownY[a] /2); 
       }  
 
       delay(500);
@@ -1851,7 +1854,7 @@ void y2Limit( void )
 void readPanel( void )
 {
   // number of pulses to move by 
-  unsigned long fspeed = 10000;
+  unsigned long fspeed = 500;
 
   // read state of cursor keys
   xPlus  =  !digitalRead( XPLUS );
@@ -1877,7 +1880,7 @@ void readPanel( void )
   // fast mode
   if( fastSwitch == true ) {
     // make it go 500 pulses
-    fspeed = 2000;
+    fspeed = 1000;
   }
 
   if( !digitalRead( MORG ) == true && fastSwitch  ) {
@@ -3111,21 +3114,27 @@ void beforeMoving( void )
 }
 
 // Step once forward
-void stepYCW( long length ) 
+void stepYCW( unsigned long length ) 
 {    
-  //beforeMoving();
-  cli();
-  //digitalWrite(YCW,HIGH);
-  //bitSet(PORTF,2);
-  YCW_LOW;
-  _delay_us( SHORT_Y_PULSE ) ;
-  //  digitalWrite(YCW,LOW);
-  //   bitClear(PORTF,2);
-  YCW_HIGH;
-  _delay_us( length ); 
-  sei();
+  beforeMoving();
+  cli();  {
+    
+    //digitalWrite(YCW,HIGH);
+    //bitSet(PORTF,2);
+    YCW_LOW;
+    
+  //  __builtin_avr_delay_cycles( 130 ) ;
+     _delay_us(4);
+     
+    //_delay_us( SHORT_Y_PULSE ) ;
+    //  digitalWrite(YCW,LOW);
+    //   bitClear(PORTF,2);
+    YCW_HIGH;
+//    __builtin_avr_delay_cycles( 62 *16 ) ;
+  _delay_us( length );   
+  } sei();
 
-  //DecrementYPulses();
+  DecrementYPulses();
 }
 
 // Step once back
@@ -3144,7 +3153,7 @@ void stepYCCW( long pulselength )
   _delay_us( pulselength );  
   sei();
 
-  // IncrementYPulses();
+  IncrementYPulses();
 }
 
 // Step once left

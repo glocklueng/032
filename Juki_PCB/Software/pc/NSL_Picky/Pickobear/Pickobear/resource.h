@@ -25,6 +25,8 @@
 #define IDC_TEACH                       1015
 #define IDC_RUN                         1016
 #define IDC_CUSTOM1                     1017
+#define IDC_HOME2                       1017
+#define IDC_PARK                        1017
 #define IDC_ROTATE                      1019
 #define IDC_STEPSIZE                    1021
 #define IDC_CAM1                        1022

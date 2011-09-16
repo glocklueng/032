@@ -64,7 +64,7 @@ CvSeq* findSquares4( IplImage* img, CvMemStorage* storage , double threshold1, d
 				// holes between edge segments 
 				cvDilate( gray, gray, 0, 1 ); 
 				
-				cvShowImage( wndname, gray ); 
+				//cvShowImage( wndname, gray ); 
 			} 
 			else 
 			{ 
@@ -167,7 +167,7 @@ void drawSquares( IplImage* img, CvSeq* squares )
 void Squares(IplImage* img, double thresh1, double thresh2,const char *wndname) 
 { 
 	if(cvGetWindowHandle(wndname ) ==0 ) {	
-		cvNamedWindow( wndname, 1 ); 
+		//cvNamedWindow( wndname, 1 ); 
 	}
 
 	// create memory storage that will contain all the dynamic data 
