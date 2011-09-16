@@ -17,8 +17,11 @@ COpenGLControl::~COpenGLControl(void)
 		VI.stopDevice (m_camera);
 	}
 
-    if(img1) cvReleaseImage (& img1);
-	if(img2) cvReleaseImage (& img2);
+    if(img1) 
+		cvReleaseImage (& img1);
+
+	if(img2) 
+		cvReleaseImage (& img2);
 }
 
 BEGIN_MESSAGE_MAP(COpenGLControl, CWnd)

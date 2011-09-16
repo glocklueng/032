@@ -27,7 +27,9 @@
 #define IDC_CUSTOM1                     1017
 #define IDC_HOME2                       1017
 #define IDC_PARK                        1017
+#define IDC_UPRIGHT                     1018
 #define IDC_ROTATE                      1019
+#define IDC_UPLEFT                      1020
 #define IDC_STEPSIZE                    1021
 #define IDC_CAM1                        1022
 #define IDC_CAM2                        1023
@@ -35,6 +37,14 @@
 #define IDC_Y_POS                       1025
 #define IDC_THRESHOLD                   1026
 #define IDC_THRESHOLD2                  1027
+#define IDC_LIST2                       1028
+#define IDC_LEFTDOWN                    1029
+#define IDC_BOTTOMLEFT                  1030
+#define IDC_OFFSET                      1031
+#define IDC_LOAD                        1032
+#define IDC_SAVE                        1033
+#define IDC_SAVE2                       1034
+#define IDC_IMPORT                      1034
 
 // Next default values for new objects
 // 
@@ -42,7 +52,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        130
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1027
+#define _APS_NEXT_CONTROL_VALUE         1033
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
