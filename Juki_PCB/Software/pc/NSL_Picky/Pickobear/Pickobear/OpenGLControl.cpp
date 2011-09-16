@@ -13,7 +13,10 @@ COpenGLControl::COpenGLControl(void)
 
 COpenGLControl::~COpenGLControl(void)
 {
-	if( m_camera!=-1) VI.stopDevice (m_camera);
+	if( m_camera!=-1) {
+		VI.stopDevice (m_camera);
+	}
+
     if(img1) cvReleaseImage (& img1);
 	if(img2) cvReleaseImage (& img2);
 }

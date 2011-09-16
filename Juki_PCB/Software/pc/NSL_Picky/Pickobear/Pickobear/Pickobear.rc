@@ -16,13 +16,11 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// English (U.S.) resources
+// English (United States) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
-#ifdef _WIN32
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 #pragma code_page(1252)
-#endif //_WIN32
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -94,7 +92,7 @@ EXSTYLE WS_EX_APPWINDOW
 CAPTION "[Null Space Labs] Pickobear"
 FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
-    LISTBOX         IDC_LIST1,179,17,164,328,LBS_SORT | LBS_NOINTEGRALHEIGHT | LBS_MULTICOLUMN | WS_VSCROLL | WS_TABSTOP
+    LISTBOX         IDC_LIST1,179,18,164,327,LBS_SORT | LBS_NOINTEGRALHEIGHT | LBS_MULTICOLUMN | WS_VSCROLL | WS_TABSTOP
     PUSHBUTTON      "GO!",IDC_GO,68,243,38,23
     PUSHBUTTON      "/\\",IDC_UP,38,24,13,14
     PUSHBUTTON      ">",IDC_RIGHT,56,42,13,14
@@ -120,12 +118,13 @@ BEGIN
     LTEXT           "Step size",IDC_STATIC,84,16,30,8
     CONTROL         "",IDC_CAM1,"Static",SS_BLACKFRAME | NOT WS_VISIBLE,346,22,260,181
     CONTROL         "",IDC_CAM2,"Static",SS_BLACKRECT | NOT WS_VISIBLE,346,224,260,182
-    EDITTEXT        IDC_X_POS,36,304,27,11,ES_AUTOHSCROLL | ES_NUMBER
-    EDITTEXT        IDC_Y_POS,36,318,27,11,ES_AUTOHSCROLL
+    EDITTEXT        IDC_X_POS,36,304,27,12,ES_AUTOHSCROLL | ES_NUMBER
+    EDITTEXT        IDC_Y_POS,36,318,27,12,ES_AUTOHSCROLL
     LTEXT           "X Pos",IDC_STATIC,16,306,18,8
     LTEXT           "Y Pos",IDC_STATIC,16,318,18,8
     EDITTEXT        IDC_THRESHOLD,131,310,36,13,ES_AUTOHSCROLL
     EDITTEXT        IDC_THRESHOLD2,132,326,36,13,ES_AUTOHSCROLL
+    LTEXT           "Down Camera",IDC_STATIC,178,7,46,8
 END
 
 
@@ -174,7 +173,7 @@ END
 //
 
 #ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO 
+GUIDELINES DESIGNINFO
 BEGIN
     IDD_ABOUTBOX, DIALOG
     BEGIN
@@ -217,12 +216,12 @@ END
 // String Table
 //
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_ABOUTBOX            "&About Pickobear..."
 END
 
-#endif    // English (U.S.) resources
+#endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////
 
 
