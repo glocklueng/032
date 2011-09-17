@@ -97,6 +97,12 @@ BEGIN_MESSAGE_MAP(CPickobearDlg, CDialog)
 	ON_BN_CLICKED(IDC_UPRIGHT, &CPickobearDlg::OnBnClickedUpright)
 	ON_BN_CLICKED(IDC_LEFTDOWN, &CPickobearDlg::OnBnClickedLeftdown)
 	ON_BN_CLICKED(IDC_BOTTOMLEFT, &CPickobearDlg::OnBnClickedBottomleft)
+	ON_BN_CLICKED(IDC_LOAD, &CPickobearDlg::OnBnClickedLoad)
+	ON_BN_CLICKED(IDC_SAVE, &CPickobearDlg::OnBnClickedSave)
+	ON_BN_CLICKED(IDC_IMPORT, &CPickobearDlg::OnBnClickedImport)
+	ON_STN_DBLCLK(IDC_CAM2, &CPickobearDlg::OnStnDblclickCam2)
+	ON_STN_CLICKED(IDC_CAM1, &CPickobearDlg::OnStnClickedCam1)
+	ON_WM_NCRBUTTONDOWN()
 END_MESSAGE_MAP()
 
 BEGIN_MESSAGE_MAP(CListCtrl_Components, CListCtrl)
@@ -159,10 +165,10 @@ BOOL CPickobearDlg::OnInitDialog()
 	ScreenToClient(rect);
 
 	// Create OpenGL Control window
-	m_oglWindow.oglCreate( rect, rect1, this, 3 );
+	( ( CWnd* ) GetDlgItem( IDC_DOWNCAM ) )->SetWindowText( m_oglWindow.oglCreate( rect, rect1, this, 3 ) );
 
 	// Setup the OpenGL Window's timer to render
-	m_oglWindow.m_unpTimer = m_oglWindow.SetTimer(1, 100, 0);
+	m_oglWindow.m_unpTimer = m_oglWindow.SetTimer(1, 1, 0);
 
 	// Get size and position of the template textfie7ld we created before in the dialog editor
 	GetDlgItem(IDC_CAM2)->GetWindowRect(rect);
@@ -172,10 +178,11 @@ BOOL CPickobearDlg::OnInitDialog()
 	ScreenToClient(rect);
 
 	// Create OpenGL Control window
-	m_oglWindow1.oglCreate( rect, rect1, this, 2 );
+	
+	( ( CWnd* ) GetDlgItem( IDC_UPCAM ) )->SetWindowText( m_oglWindow1.oglCreate( rect, rect1, this, 2 ) );
 
 	// Setup the OpenGL Window's timer to render
-	m_oglWindow1.m_unpTimer = m_oglWindow1.SetTimer(1, 100, 0);
+	m_oglWindow1.m_unpTimer = m_oglWindow1.SetTimer(1, 1, 0);
 
 	CString m_ComPort = _T("\\\\.\\COM14");
 	m_Serial.Open(m_ComPort );
@@ -190,7 +197,7 @@ BOOL CPickobearDlg::OnInitDialog()
 	m_ComponentList.InsertColumn(3, _T("Y"),LVCFMT_CENTER,nInterval);
 	m_ComponentList.InsertColumn(4, _T("R"),LVCFMT_CENTER,nInterval);
 
-	m_ComponentList.AddItem("R1","0805","10","20","90");
+	//m_ComponentList.AddItem("R1","0805","10","20","90");
 
 	m_Rotation.SetRange(0,360);
 
@@ -366,23 +373,188 @@ void CPickobearDlg::OnNMCustomdrawRotate(NMHDR *pNMHDR, LRESULT *pResult)
 
 void CPickobearDlg::OnBnClickedUpleft()
 {
-	// TODO: Add your control notification handler code here
+	m_Serial.Write("l");
+	m_Serial.Write("u");
 }
 
 
 void CPickobearDlg::OnBnClickedUpright()
 {
-	// TODO: Add your control notification handler code here
+	m_Serial.Write("r");
+	m_Serial.Write("u");
 }
 
 
 void CPickobearDlg::OnBnClickedLeftdown()
 {
-	// TODO: Add your control notification handler code here
+	m_Serial.Write("l");
+	m_Serial.Write("d");
 }
 
 
 void CPickobearDlg::OnBnClickedBottomleft()
 {
-	// TODO: Add your control notification handler code here
+	m_Serial.Write("r");
+	m_Serial.Write("d");
+}
+
+void CPickobearDlg::OnBnClickedLoad()
+{
+	CString m_LoadFile = ::GetLoadFile( _T("Supported Files Types(*.pck)\0*.pck\0\0"),_T("Pick board to load"),_T("") );
+}
+
+
+void CPickobearDlg::OnBnClickedSave()
+{
+	CString m_SaveFile = ::GetSaveFile( _T("Supported Files Types(*.pck)\0*.pck\0\0"),_T("Pick board to save"),_T("") );
+}
+
+void CPickobearDlg::OnBnClickedImport()
+{
+	int i;
+	const char seps[] = ",";
+	char* token;
+
+	CString m_LoadFile = ::GetLoadFile( 
+		_T("Supported Files Types(*.csv)\0*.csv\0\0"),
+		_T("Pick board to load"),
+		NULL
+	);
+
+	static char list[10][100];
+	static char buffer[1024];
+
+	CFile m_File;
+
+	m_File.Open( m_LoadFile  ,CFile::modeRead ) ;
+
+	do {
+
+		for( i = 0 ; i < sizeof( buffer) -1 ; i++ ) {
+	
+			// if ended
+			if( 0 == m_File.Read( &buffer[i],1) )
+				goto end;
+	
+			// line end
+			if( buffer[i] == '\n')
+				break;
+		}
+
+		// last character
+		buffer[i] = 0;
+
+		token = strtok (buffer, seps);
+	
+		i = 0;
+
+		while (token != NULL) {
+
+			sscanf (token, "%s", &list[i] );
+			token = strtok (NULL, seps);
+			i++;
+		}
+
+		m_ComponentList.AddItem(list[0], list[1], list[2], list[3],list[4]);
+	}	while( 1 ) ;
+
+	end:;
+	m_File.Close();
+	
+}
+
+
+CString GetLoadFile( const TCHAR *ptypes, const TCHAR*caption, const TCHAR *pStartDir)
+{
+	CString szFile;
+	TCHAR tmpFile[MAX_PATH];
+
+	OPENFILENAME ofn;
+
+	szFile.Empty();
+	memset( tmpFile, 0, MAX_PATH );
+
+	if( pStartDir)
+		_tcscpy_s(tmpFile, sizeof(tmpFile)-1,pStartDir);
+
+
+
+	ZeroMemory(&ofn, sizeof(OPENFILENAME));
+	ofn.lStructSize	= sizeof(OPENFILENAME);
+
+	ofn.Flags		=  OFN_FILEMUSTEXIST | OFN_EXPLORER| OFN_PATHMUSTEXIST | OFN_HIDEREADONLY; 
+	ofn.hwndOwner	= NULL; //Hwnd
+
+	ofn.lpstrFilter	= ptypes;
+	ofn.lpstrInitialDir = pStartDir;
+
+	ofn.lpstrTitle	= caption;
+
+	ofn.lpstrFile	= &tmpFile[0];
+	ofn.nMaxFile	= MAX_PATH;
+	
+	if (IDOK != GetOpenFileName(&ofn)) {
+
+		return _T("");
+	}
+
+	szFile = tmpFile;
+
+	return szFile;
+}
+
+CString GetSaveFile( const TCHAR *ptypes, const TCHAR*caption, const TCHAR *pStartDir )
+{
+
+	TCHAR szFile[MAX_PATH];
+		
+	OPENFILENAME ofn;
+	ZeroMemory(szFile, MAX_PATH);
+
+	if( pStartDir){
+		_tcscpy_s(szFile, sizeof(szFile)-1,pStartDir);
+	}
+
+	ZeroMemory(&ofn, sizeof(OPENFILENAME));
+	ofn.lStructSize	= sizeof(OPENFILENAME);
+
+	ofn.Flags		=  OFN_EXPLORER | OFN_OVERWRITEPROMPT | OFN_PATHMUSTEXIST | OFN_HIDEREADONLY; 
+	ofn.hwndOwner	= NULL; //Hwnd
+
+	ofn.lpstrFilter	= ptypes;
+	ofn.lpstrInitialDir = pStartDir;
+
+	ofn.lpstrTitle	= caption;
+
+	ofn.lpstrFile	= szFile;
+	ofn.nMaxFile	= MAX_PATH;
+	
+	if (IDOK != GetSaveFileName(&ofn)) {
+
+		return _T("");
+	}
+
+	return szFile;
+}
+
+
+
+
+void CPickobearDlg::OnStnDblclickCam2()
+{
+	__asm int 3
+}
+
+
+void CPickobearDlg::OnStnClickedCam1()
+{
+	__asm int 3
+}
+
+
+void CPickobearDlg::OnNcRButtonDown(UINT nHitTest, CPoint point)
+{
+	// TODO: Add your message handler code here and/or call default
+		__asm int 3
+	CDialog::OnNcRButtonDown(nHitTest, point);
 }

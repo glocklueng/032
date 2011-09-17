@@ -47,6 +47,7 @@ class COpenGLControl : public CWnd
 		afx_msg	void OnDraw(CDC *pDC);
 		afx_msg int  OnCreate(LPCREATESTRUCT lpCreateStruct);
 		afx_msg void OnTimer(UINT nIDEvent);
-
+		afx_msg void OnRButtonDown(UINT nFlags, CPoint point );
 		DECLARE_MESSAGE_MAP()
+		afx_msg void OnStnDblclickCam2();
 };
