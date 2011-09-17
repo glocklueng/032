@@ -176,7 +176,7 @@ void COpenGLControl::OnTimer(UINT nIDEvent)
 	CWnd::OnTimer(nIDEvent);
 }
 
-void COpenGLControl::oglCreate(CRect rect, CRect orect, CWnd *parent, int DeviceID)
+CString COpenGLControl::oglCreate(CRect rect, CRect orect, CWnd *parent, int DeviceID)
 {
 	CString className = AfxRegisterWndClass(CS_HREDRAW | CS_VREDRAW | CS_OWNDC, NULL, (HBRUSH)GetStockObject(BLACK_BRUSH), NULL);
 
