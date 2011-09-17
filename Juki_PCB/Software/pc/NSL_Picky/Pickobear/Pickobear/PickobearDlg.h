@@ -28,6 +28,7 @@ public:
 		CString mRot(rot);
 
 		int Index = InsertItem(LVIF_TEXT, 0,mLabel, 0, 0, 0, NULL);
+
 		SetItemText(Index,1,mType);
 		SetItemText(Index,2,mX);
 		SetItemText(Index,3,mY);
@@ -44,7 +45,6 @@ private:
 	COpenGLControl m_oglWindow;
 	COpenGLControl m_oglWindow1;
 	
-	CSerial m_Serial;
 
 // Construction
 public:
@@ -111,4 +111,13 @@ public:
 	afx_msg void OnBnClickedUpright();
 	afx_msg void OnBnClickedLeftdown();
 	afx_msg void OnBnClickedBottomleft();
+	afx_msg void OnBnClickedLoad();
+	afx_msg void OnBnClickedSave();
+	afx_msg void OnBnClickedImport();
+	afx_msg void OnStnDblclickCam2();
+	afx_msg void OnStnClickedCam1();
+	afx_msg void OnNcRButtonDown(UINT nHitTest, CPoint point);
 };
+
+CString GetSaveFile( const TCHAR *ptypes, const TCHAR*caption, const TCHAR *pStartDir);
+CString GetLoadFile( const TCHAR *ptypes, const TCHAR*caption, const TCHAR *pStartDir);

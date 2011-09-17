@@ -29,12 +29,41 @@ BEGIN_MESSAGE_MAP(COpenGLControl, CWnd)
 	ON_WM_SIZE()
 	ON_WM_CREATE()
 	ON_WM_TIMER()
+	ON_WM_RBUTTONDOWN()
+	ON_STN_DBLCLK(IDC_CAM2, &COpenGLControl::OnStnDblclickCam2)
 END_MESSAGE_MAP()
 
 void COpenGLControl::OnPaint()
 {
 	//CPaintDC dc(this); // device context for painting
 	ValidateRect(NULL);
+}
+
+void COpenGLControl::OnRButtonDown(UINT nFlags, CPoint point )
+{
+	int i;
+	int w = m_size.Width()/2;
+	int h = m_size.Height()/2;
+	
+	point.x -=w;
+	point.y -=h;
+
+	if( point.x > 1 )
+		for( i = 0 ;  i < (point.x) ; i ++ ) 
+		m_Serial.Write("R");
+
+	if( point.x < 0 )
+		for( i = 0 ;  i < abs(point.x) ; i ++ ) 
+			m_Serial.Write("L");
+
+	if( point.y > 1 )
+		for( i = 0 ;  i < (point.y) ; i ++ ) 
+			m_Serial.Write("D");
+
+	if( point.y < 0 )
+		for( i = 0 ;  i < abs(point.y) ; i ++ ) 
+			m_Serial.Write("U");
+
 }
 
 void COpenGLControl::OnSize(UINT nType, int cx, int cy)
@@ -109,8 +138,9 @@ void COpenGLControl::OnTimer(UINT nIDEvent)
 				iCounter ++ ;
 			}
 
-			if ( iCounter  < 10 ) {
-				return;
+			if ( iCounter  < 10 )
+			{
+			//	return;
 			}
 
 			iCounter = 0;
@@ -153,19 +183,44 @@ void COpenGLControl::OnTimer(UINT nIDEvent)
 			glMatrixMode(GL_MODELVIEW);
 			glLoadIdentity();
 
+			float x,y;
+			x = m_size.Width()/2.0f;
+			y = m_size.Height()/2.0f;
+
 			// Draw a textured quad
 			glBegin(GL_QUADS);
-			glTexCoord2f(0.0f, 0.0f); glVertex2f(0.0f, 0.0f);
-			glTexCoord2f(1.0f, 0.0f); glVertex2f((float)m_size.Width(), 0.0f);
-			glTexCoord2f(1.0f, 1.0f); glVertex2f((float)m_size.Width(), (float)m_size.Height());
-			glTexCoord2f(0.0f, 1.0f); glVertex2f(0.0f, (float)m_size.Height());
+				glTexCoord2f(0.0f, 0.0f); glVertex2f(0.0f, 0.0f);
+				glTexCoord2f(1.0f, 0.0f); glVertex2f((float)m_size.Width(), 0.0f);
+				glTexCoord2f(1.0f, 1.0f); glVertex2f((float)m_size.Width(), (float)m_size.Height());
+				glTexCoord2f(0.0f, 1.0f); glVertex2f(0.0f, (float)m_size.Height());
+			glEnd();
+				
+			glColor3f(1.0f,1.0f,1.0f);
+
+			glBegin( GL_LINES) ;
+			
+
+				glVertex2f((float)x, 0.0f);
+				glVertex2f((float)x, (GLfloat)m_size.Height());
+
+				glVertex2f((float)0.0f, y);
+				glVertex2f((float)m_size.Width(), y);
+
+			glEnd();
+			
+			glBegin(GL_POINTS);
+
+				glVertex2f(x, y);
+				float radius=100.0f;
+				for(float angle = 0 ; angle < 360 ; angle +=1 ) {
+					glVertex2f(x + sin(angle) * radius, y + cos(angle) * radius);
+				}
 			glEnd();
 
-			//glFlush();
+			glFlush();
 
 			SwapBuffers(hdc);
 	
-
 			break;
 		}
 
@@ -209,6 +264,9 @@ CString COpenGLControl::oglCreate(CRect rect, CRect orect, CWnd *parent, int Dev
 	img2 = cvCreateImage(cvSize(VI.getWidth(m_camera),VI.getHeight(m_camera) ),IPL_DEPTH_8U,3);
 	assert(img2);
 
+	CString name( VI.getDeviceName( m_camera )) ;
+
+	return name;
 }
 
 void COpenGLControl::oglInitialize(void)
@@ -254,4 +312,10 @@ void COpenGLControl::oglInitialize(void)
 
 	// Send draw request
 	OnDraw(NULL);
+}
+
+void COpenGLControl::OnStnDblclickCam2()
+{
+	// TODO: Add your control notification handler code here
+	__asm int 3
 }

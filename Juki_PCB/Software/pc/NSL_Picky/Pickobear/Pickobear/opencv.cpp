@@ -27,6 +27,7 @@ CvSeq* findSquares4( IplImage* img, CvMemStorage* storage , double threshold1, d
 	IplImage* tgray; 
 	CvSeq* result; 
 	double s, t; 
+
 	// create empty sequence that will contain points - 
 	// 4 points per square (the square's vertices) 
 	CvSeq* squares = cvCreateSeq( 0, sizeof(CvSeq), sizeof(CvPoint), storage ); 
@@ -49,7 +50,7 @@ CvSeq* findSquares4( IplImage* img, CvMemStorage* storage , double threshold1, d
 		cvCopy( timg, tgray, 0 ); 
 
 		// try several threshold levels 
-		for( l = 0; l < 1; l++ ) 
+		for( l = 0; l < 4; l++ ) 
 		{ 
 			// hack: use Canny instead of zero threshold level. 
 			// Canny helps to catch squares with gradient shading 
@@ -114,7 +115,7 @@ CvSeq* findSquares4( IplImage* img, CvMemStorage* storage , double threshold1, d
 					// if cosines of all angles are small 
 					// (all angles are ~90 degree) then write quandrange 
 					// vertices to resultant sequence 
-					if( s < 0.3 ) 
+					if( s < 0.1 ) 
 						for( i = 0; i < 4; i++ ) 
 							cvSeqPush( squares, 
 								(CvPoint*)cvGetSeqElem( result, i )); 
@@ -180,3 +181,4 @@ void Squares(IplImage* img, double thresh1, double thresh2,const char *wndname)
 	cvReleaseMemStorage(&storage);
 
 } 
+

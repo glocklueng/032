@@ -63,7 +63,7 @@ enum {
 
 // maximum speed the motors can travel at
 int X_SPEED =( 150 );
-int Y_SPEED =( 100 );
+int Y_SPEED =( 110 );
 
 // for diagonal move
 int X2_SPEED =( 80 );
@@ -2513,10 +2513,7 @@ void loop()
       delay(500);
       tapeKnock(0);
       break;
-    case 'r':
-      rotate(true);
-      break;
-    case 'R':
+    case 'X':
       rotate(false);
       break;
     case 'c':
@@ -2530,9 +2527,6 @@ void loop()
       break;
     case 'H':
       head(1);
-      break;
-    case 'd':
-      Serial.println(degree90(),HEX);
       break;
     case 'v':          
       vacuum(0);          
@@ -2563,16 +2557,34 @@ void loop()
       //        movexy(pulsestoum(1560), pulsestoum(5766));
       //            goback(100,1);
       break;
-    case 'Q':
+      
+    case 'd':
       goforward(100,1);
       break;
+    case 'u':
+      goback(100,1);
+      break;
+    case 'r':
+      goright(100,1);
+      break;
+    case 'l':
+      goleft(100,1);
+      break;
 
-    case '8':
-      goright(500,1);
+
+    case 'D':
+      goforward(1,1);
       break;
-    case '9':
-      goleft(500,1);
+    case 'U':
+      goback(1,1);
       break;
+    case 'R':
+      goright(1,1);
+      break;
+    case 'L':
+      goleft(1,1);
+      break;
+
 
     case '1':
       tool(1,1);
@@ -2608,6 +2620,9 @@ void loop()
       break;
 
     case 'o':
+      findyminuslimit();
+      break;
+    case 'O':
       findypluslimit();
       break;
     case 'p':
@@ -2628,7 +2643,7 @@ void loop()
     case ']':
       findrightlimit();
       break;
-    case 'l':
+    case 's':
       readLimitSwitches();
       break;
 
@@ -4287,7 +4302,7 @@ void movexy(long x0,long y0 )
     head(0) ;
   }
 
-  moveLine2_fast(lx,ly,x0,y0);
+  moveLine2_slow(lx,ly,x0,y0);
 
   lx = x0;
   ly = y0;
