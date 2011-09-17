@@ -400,13 +400,28 @@ void CPickobearDlg::OnBnClickedBottomleft()
 
 void CPickobearDlg::OnBnClickedLoad()
 {
-	CString m_LoadFile = ::GetLoadFile( _T("Supported Files Types(*.pck)\0*.pck\0\0"),_T("Pick board to load"),_T("") );
-}
+	CFile m_File;
 
+	CString m_LoadFile = ::GetLoadFile( _T("Supported Files Types(*.pck)\0*.pck\0\0"),_T("Pick board to load"),_T("") );
+
+	if( FALSE == m_File.Open(  m_LoadFile , CFile::modeRead ) ) {
+		return ;
+	}
+
+	m_File.Close();
+}
 
 void CPickobearDlg::OnBnClickedSave()
 {
+	CFile m_File;
+
 	CString m_SaveFile = ::GetSaveFile( _T("Supported Files Types(*.pck)\0*.pck\0\0"),_T("Pick board to save"),_T("") );
+
+	if( FALSE == m_File.Open(  m_SaveFile , CFile::modeWrite ) ) {
+		return ;
+	}
+
+	m_File.Close();
 }
 
 void CPickobearDlg::OnBnClickedImport()
@@ -414,6 +429,10 @@ void CPickobearDlg::OnBnClickedImport()
 	int i;
 	const char seps[] = ",";
 	char* token;
+	CFile m_File;
+
+	static char list[10][100];
+	static char buffer[1024];
 
 	CString m_LoadFile = ::GetLoadFile( 
 		_T("Supported Files Types(*.csv)\0*.csv\0\0"),
@@ -421,46 +440,58 @@ void CPickobearDlg::OnBnClickedImport()
 		NULL
 	);
 
-	static char list[10][100];
-	static char buffer[1024];
-
-	CFile m_File;
-
-	m_File.Open( m_LoadFile  ,CFile::modeRead ) ;
+	if(  FALSE == m_File.Open( m_LoadFile  ,CFile::modeRead ) ) { 
+		return;
+	}
 
 	do {
+		
+		ZeroMemory( buffer, sizeof( buffer ) );
 
-		for( i = 0 ; i < sizeof( buffer) -1 ; i++ ) {
+		for( i = 0 ; i < sizeof( buffer) - 1 ; i++ ) {
 	
 			// if ended
-			if( 0 == m_File.Read( &buffer[i],1) )
-				goto end;
-	
+			if( 0 == m_File.Read( &buffer[i],1) ) {
+				
+				m_File.Close();
+
+				return;
+			}
+
 			// line end
 			if( buffer[i] == '\n')
 				break;
 		}
 
-		// last character
+		// Terminate last character
 		buffer[i] = 0;
 
-		token = strtok (buffer, seps);
+		token = strtok( buffer, seps );
 	
 		i = 0;
 
 		while (token != NULL) {
 
-			sscanf (token, "%s", &list[i] );
-			token = strtok (NULL, seps);
-			i++;
+			if( 1 == sscanf (token, "%s", &list[i] ) ) {
+				token = strtok (NULL, seps);
+				i++;
+				
+				if( i == 5 ) {
+					// too many inputs
+					token = NULL;
+				}
+
+			} else {
+				// error in input
+				token = NULL;
+			}
 		}
 
 		m_ComponentList.AddItem(list[0], list[1], list[2], list[3],list[4]);
+
 	}	while( 1 ) ;
 
-	end:;
-	m_File.Close();
-	
+	m_File.Close();	
 }
 
 
@@ -476,8 +507,6 @@ CString GetLoadFile( const TCHAR *ptypes, const TCHAR*caption, const TCHAR *pSta
 
 	if( pStartDir)
 		_tcscpy_s(tmpFile, sizeof(tmpFile)-1,pStartDir);
-
-
 
 	ZeroMemory(&ofn, sizeof(OPENFILENAME));
 	ofn.lStructSize	= sizeof(OPENFILENAME);
@@ -537,24 +566,15 @@ CString GetSaveFile( const TCHAR *ptypes, const TCHAR*caption, const TCHAR *pSta
 	return szFile;
 }
 
-
-
-
 void CPickobearDlg::OnStnDblclickCam2()
 {
-	__asm int 3
 }
-
 
 void CPickobearDlg::OnStnClickedCam1()
 {
-	__asm int 3
 }
-
 
 void CPickobearDlg::OnNcRButtonDown(UINT nHitTest, CPoint point)
 {
-	// TODO: Add your message handler code here and/or call default
-		__asm int 3
 	CDialog::OnNcRButtonDown(nHitTest, point);
 }
