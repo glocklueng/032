@@ -13,26 +13,64 @@ class CListCtrl_Components : public CListCtrl
 	DECLARE_MESSAGE_MAP();
 
 	void PreSubclassWindow();
+public:
+	typedef struct CompDatabase_tag  {
+		unsigned int item;
+		unsigned long x,y;
+		short rot;
+		CString label;
+		CString type;
+	} CompDatabase;
+	
+	std::vector<CompDatabase> m_Database;
 
 public:
 	CListCtrl_Components()
-	{}
+	{
 
+		m_Count = 0;
+	
+	}
 
+	unsigned long m_Count ;
+
+	unsigned long GetCount( void )
+	{
+		return m_Database.size();
+	}
+
+	CompDatabase  at( int i ) {
+		return m_Database.at(i);
+	}
+ 
 	void AddItem( const char *label,const char *type,const char *x,const char *y,const char *rot)
 	{
-		CString mLabel(label);
-		CString mType(type);
-		CString mX(x);
-		CString mY(y);
-		CString mRot(rot);
+		ASSERT( label ) ;
+		ASSERT( type ) ;
+		ASSERT( x ) ;
+		ASSERT( y ) ;
+		ASSERT( rot ) ;
 
-		int Index = InsertItem(LVIF_TEXT, 0,mLabel, 0, 0, 0, NULL);
+		CompDatabase entry;
 
-		SetItemText(Index,1,mType);
-		SetItemText(Index,2,mX);
-		SetItemText(Index,3,mY);
-		SetItemText(Index,4,mRot);
+		entry.label = label;
+		entry.type = type;
+		entry.x = atol( x ) ;
+		entry.y = atol( y ) ;
+		entry.rot = atoi( rot ) ;
+
+		int Index = InsertItem(LVIF_TEXT, 0,entry.label, 0, 0, 0, NULL);
+
+			SetItemText(Index,1,entry.type);
+			SetItemText(Index,2,CString(x));
+			SetItemText(Index,3,CString(y));
+			SetItemText(Index,4,CString(rot));
+			SetItemText(Index,5,_T("NA"));
+
+		// add to database
+		m_Database.push_back (entry );
+
+		m_Count ++;
 	}
 };
 
@@ -45,10 +83,22 @@ private:
 	COpenGLControl m_oglWindow;
 	COpenGLControl m_oglWindow1;
 	
+	char m_Head;
+
+	enum eMachineState {
+		MS_IDLE,MS_GO
+	};
+
+	eMachineState m_MachineState;
 
 // Construction
 public:
 	CPickobearDlg(CWnd* pParent = NULL);	// standard constructor
+	
+	
+	static DWORD WINAPI goSetup(LPVOID pThis);
+	DWORD goThread(void );
+	char CheckAck(char ack,char ack1);
 
 	~CPickobearDlg(){
 
@@ -114,10 +164,6 @@ public:
 	afx_msg void OnBnClickedLoad();
 	afx_msg void OnBnClickedSave();
 	afx_msg void OnBnClickedImport();
-	afx_msg void OnStnDblclickCam2();
-	afx_msg void OnStnClickedCam1();
-	afx_msg void OnNcRButtonDown(UINT nHitTest, CPoint point);
+	afx_msg void OnBnClickedGo();
+	afx_msg void OnBnClickedFeeder();
 };
-
-CString GetSaveFile( const TCHAR *ptypes, const TCHAR*caption, const TCHAR *pStartDir);
-CString GetLoadFile( const TCHAR *ptypes, const TCHAR*caption, const TCHAR *pStartDir);

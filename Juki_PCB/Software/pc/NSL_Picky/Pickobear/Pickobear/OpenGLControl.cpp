@@ -102,6 +102,34 @@ void COpenGLControl::OnDraw(CDC *pDC)
 
 extern double m_Thresh1,m_Thresh2;
 
+void DrawCircle(float cx, float cy, float r, int num_segments) 
+{ 
+	float theta = 2.0f * 3.1415926f / float(num_segments); 
+	float c = cosf(theta);//precalculate the sine and cosine
+	float s = sinf(theta);
+	float t;
+
+	float x = r;//we start at angle = 0 
+	float y = 0; 
+
+	glBegin(GL_LINE_LOOP);  {
+
+		glColor3f(1.0f,1.0f,1.0f);
+
+		for(int ii = 0; ii < num_segments; ii++) 
+		{ 
+			glVertex2f(x + cx, y + cy);
+
+			// apply the rotation matrix
+			t = x;
+			x = c * x - s * y;
+			y = s * t + c * y;
+		} 
+	} glEnd(); 
+
+	glFlush();
+}
+
 void COpenGLControl::OnTimer(UINT nIDEvent)
 {  
 	double delta;
@@ -149,6 +177,25 @@ void COpenGLControl::OnTimer(UINT nIDEvent)
 
 			Squares( img1 , m_Thresh1, m_Thresh2, VI.getDeviceName( m_camera ) ) ;
 
+
+			CvPoint cx;
+			CvPoint cy;
+				// center of window
+			float x,y;
+			x = img1->width/2.0f;
+			y = img1->height/2.0f;	
+			cx.x = x ; cx.y = 0;
+			cy.x = x ; cy.y = img1->height;
+			cvLine(img1,  cx, cy, CV_RGB(0,0,200),2);
+			cx.x = 0 ; cx.y = y;
+			cy.x = img1->width ; cy.y = y;
+			cvLine(img1,  cx, cy, CV_RGB(0,0,200),2);
+			cx.x=x;cx.y=y;
+			cvCircle(img1,cx,100,CV_RGB(0,0,200),2);
+			cvCircle(img1,cx,150,CV_RGB(0,0,200),2);
+			cvCircle(img1,cx,200,CV_RGB(0,0,200),2);
+
+
 			//cvConvertImage(img1, img2, CV_CVTIMG_FLIP);
          
 #if 0 
@@ -166,9 +213,7 @@ void COpenGLControl::OnTimer(UINT nIDEvent)
 			//	cvFilter2D(img2,img2,kernel,anchor);
 
 			// Create Texture
-			
 			gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, img1->width, img1->height, GL_RGB, GL_UNSIGNED_BYTE, img1->imageData);
-
 
 			// Clear color and depth buffer bits
 			glClear(GL_COLOR_BUFFER_BIT |  GL_DEPTH_BUFFER_BIT);
@@ -183,22 +228,22 @@ void COpenGLControl::OnTimer(UINT nIDEvent)
 			glMatrixMode(GL_MODELVIEW);
 			glLoadIdentity();
 
-			float x,y;
-			x = m_size.Width()/2.0f;
-			y = m_size.Height()/2.0f;
 
 			// Draw a textured quad
-			glBegin(GL_QUADS);
+			glBegin(GL_QUADS); {
+
 				glTexCoord2f(0.0f, 0.0f); glVertex2f(0.0f, 0.0f);
 				glTexCoord2f(1.0f, 0.0f); glVertex2f((float)m_size.Width(), 0.0f);
 				glTexCoord2f(1.0f, 1.0f); glVertex2f((float)m_size.Width(), (float)m_size.Height());
 				glTexCoord2f(0.0f, 1.0f); glVertex2f(0.0f, (float)m_size.Height());
-			glEnd();
-				
-			glColor3f(1.0f,1.0f,1.0f);
+			} glEnd();
 
-			glBegin( GL_LINES) ;
-			
+
+#if 0
+			// draw CrossHair
+			glBegin( GL_LINES ) ; {
+					
+				glColor3f(1.0f,1.0f,1.0f);
 
 				glVertex2f((float)x, 0.0f);
 				glVertex2f((float)x, (GLfloat)m_size.Height());
@@ -206,19 +251,14 @@ void COpenGLControl::OnTimer(UINT nIDEvent)
 				glVertex2f((float)0.0f, y);
 				glVertex2f((float)m_size.Width(), y);
 
-			glEnd();
+			} glEnd();
+			// draw circles
 			
-			glBegin(GL_POINTS);
-
-				glVertex2f(x, y);
-				float radius=100.0f;
-				for(float angle = 0 ; angle < 360 ; angle +=1 ) {
-					glVertex2f(x + sin(angle) * radius, y + cos(angle) * radius);
-				}
-			glEnd();
-
 			glFlush();
 
+			DrawCircle(x,y,100,40);
+			DrawCircle(x,y,50,20);
+#endif
 			SwapBuffers(hdc);
 	
 			break;
