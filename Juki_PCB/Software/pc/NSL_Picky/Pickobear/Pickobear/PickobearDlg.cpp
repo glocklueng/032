@@ -54,6 +54,7 @@ CPickobearDlg::CPickobearDlg(CWnd* pParent /*=NULL*/)
 	, m_headYpos(0)
 	, m_Threshold1(m_Thresh1)
 	, m_Threshold2(m_Thresh2)
+	, m_Head(0)
 {
 
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
@@ -100,9 +101,9 @@ BEGIN_MESSAGE_MAP(CPickobearDlg, CDialog)
 	ON_BN_CLICKED(IDC_LOAD, &CPickobearDlg::OnBnClickedLoad)
 	ON_BN_CLICKED(IDC_SAVE, &CPickobearDlg::OnBnClickedSave)
 	ON_BN_CLICKED(IDC_IMPORT, &CPickobearDlg::OnBnClickedImport)
-	ON_STN_DBLCLK(IDC_CAM2, &CPickobearDlg::OnStnDblclickCam2)
-	ON_STN_CLICKED(IDC_CAM1, &CPickobearDlg::OnStnClickedCam1)
 	ON_WM_NCRBUTTONDOWN()
+	ON_BN_CLICKED(IDC_GO, &CPickobearDlg::OnBnClickedGo)
+	ON_BN_CLICKED(IDC_FEEDER, &CPickobearDlg::OnBnClickedFeeder)
 END_MESSAGE_MAP()
 
 BEGIN_MESSAGE_MAP(CListCtrl_Components, CListCtrl)
@@ -117,9 +118,8 @@ void CListCtrl_Components::PreSubclassWindow()
 #if (_WIN32_WINNT >= 0x501)
 	SetExtendedStyle(LVS_EX_DOUBLEBUFFER | GetExtendedStyle());
 #endif
-
+	// switch to report style/fullrow
 	SetExtendedStyle(GetExtendedStyle() | LVS_EX_FULLROWSELECT| LVS_REPORT);
-
 }
 
 
@@ -165,7 +165,7 @@ BOOL CPickobearDlg::OnInitDialog()
 	ScreenToClient(rect);
 
 	// Create OpenGL Control window
-	( ( CWnd* ) GetDlgItem( IDC_DOWNCAM ) )->SetWindowText( m_oglWindow.oglCreate( rect, rect1, this, 3 ) );
+	( ( CWnd* ) GetDlgItem( IDC_DOWNCAM ) )->SetWindowText( m_oglWindow.oglCreate( rect, rect1, this, 4 ) );
 
 	// Setup the OpenGL Window's timer to render
 	m_oglWindow.m_unpTimer = m_oglWindow.SetTimer(1, 1, 0);
@@ -189,13 +189,14 @@ BOOL CPickobearDlg::OnInitDialog()
 	m_Serial.Setup(CSerial::EBaud9600);
 	
 	m_ComponentList.GetClientRect(&rect);
-	int nInterval =( rect.Width() / 5);
+	int nInterval =( rect.Width() / 6);
 
 	m_ComponentList.InsertColumn(0, _T("Name"),LVCFMT_CENTER,nInterval);
-	m_ComponentList.InsertColumn(1, _T("Type"),LVCFMT_CENTER,nInterval);
+	m_ComponentList.InsertColumn(1, _T("Type"),LVCFMT_CENTER,nInterval+(nInterval/2));
 	m_ComponentList.InsertColumn(2, _T("X"),LVCFMT_CENTER,nInterval);
 	m_ComponentList.InsertColumn(3, _T("Y"),LVCFMT_CENTER,nInterval);
-	m_ComponentList.InsertColumn(4, _T("R"),LVCFMT_CENTER,nInterval);
+	m_ComponentList.InsertColumn(4, _T("R"),LVCFMT_CENTER,nInterval/2);
+	m_ComponentList.InsertColumn(5, _T("F"),LVCFMT_CENTER,nInterval);
 
 	//m_ComponentList.AddItem("R1","0805","10","20","90");
 
@@ -291,6 +292,18 @@ void CPickobearDlg::OnBnClickedHome()
 }
 
 
+char CPickobearDlg::CheckAck(char ack,char ack1)
+{
+	char ch;
+	// wait for ack.
+	do { 
+		m_Serial.Read(&ch,1);
+	} while(ch!=ack && ch!=ack1);
+	
+	return ch;
+
+}
+
 void CPickobearDlg::OnBnClickedRight()
 {
 	m_Serial.Write("r");
@@ -299,13 +312,33 @@ void CPickobearDlg::OnBnClickedRight()
 
 void CPickobearDlg::OnBnClickedPark()
 {
-	m_Serial.Write("p");
+	m_Serial.Write("p");	
 }
 
 
 void CPickobearDlg::OnBnClickedTool1()
 {
-	m_Serial.Write("1");
+	bool pass = false;
+
+	do { 
+		m_Serial.Write("1");
+		Sleep(400);
+
+		switch( CheckAck('f','p') )
+		{
+		case 'f':
+			if( MessageBox(_T("Tool change failed!!"),_T("Error"),IDOK|IDRETRY) == IDRETRY)
+				pass = false;
+			else
+				pass = true;
+			break;
+		case 'p':
+			pass = true;
+			break;
+		default:
+			break;
+		}
+	} while( pass == false );
 }
 
 
@@ -359,7 +392,13 @@ void CPickobearDlg::OnBnClickedLeft()
 
 void CPickobearDlg::OnBnClickedHead()
 {
-	m_Serial.Write("h");
+	if( m_Head ) {
+		m_Serial.Write("h");
+	} else { 
+		m_Serial.Write("H");
+	}
+
+	m_Head = 1 - m_Head;
 }
 
 
@@ -566,15 +605,58 @@ CString GetSaveFile( const TCHAR *ptypes, const TCHAR*caption, const TCHAR *pSta
 	return szFile;
 }
 
-void CPickobearDlg::OnStnDblclickCam2()
+
+ DWORD WINAPI CPickobearDlg::goSetup(LPVOID pThis)
 {
+	return ((CPickobearDlg*)pThis)->goThread();
+ }
+
+DWORD CPickobearDlg::goThread(void )
+{
+	unsigned int i ;
+	char buffer[5];
+	CListCtrl_Components::CompDatabase entry; 
+	
+	ZeroMemory(buffer,sizeof(buffer));
+
+	while( m_Serial.Read( &buffer,sizeof(buffer ) ) );
+
+	for (i = 0 ; i < m_ComponentList.GetCount(); i ++ ) {
+		
+		 entry = m_ComponentList.at(i);
+		 
+		 char buffer[256];
+		 
+		 sprintf(buffer,"g%d,%d\n",entry.x,entry.y);
+		 
+		 m_Serial.Write(buffer);
+
+		 char ch;
+		 // wait for ack.
+		 do { 
+			 m_Serial.Read(&ch,1);
+		 } while(ch!='A');
+	}
+	 
+	// Park machine
+	m_Serial.Write("p");
+
+	// switch state to idle
+	m_MachineState = MS_IDLE ;
+	return true;
 }
 
-void CPickobearDlg::OnStnClickedCam1()
+void CPickobearDlg::OnBnClickedGo()
 {
+
+	// switch state to GO
+	m_MachineState = MS_GO ;
+
+	// Start thread for 'GO'
+	HANDLE h = CreateThread(NULL, 0, &CPickobearDlg::goSetup, (LPVOID)this, 0, NULL);
+
 }
 
-void CPickobearDlg::OnNcRButtonDown(UINT nHitTest, CPoint point)
+void CPickobearDlg::OnBnClickedFeeder()
 {
-	CDialog::OnNcRButtonDown(nHitTest, point);
 }
