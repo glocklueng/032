@@ -58,6 +58,9 @@
 #pragma comment(lib,"opencv_core231.lib")
 #pragma comment(lib,"videoInput\\videoInput.lib")
 
+CString GetSaveFile( const TCHAR *ptypes, const TCHAR*caption, const TCHAR *pStartDir);
+CString GetLoadFile( const TCHAR *ptypes, const TCHAR*caption, const TCHAR *pStartDir);
+
 
 extern 	videoInput VI; ;
 extern 	CSerial m_Serial;

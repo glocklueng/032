@@ -1271,7 +1271,7 @@ CVAPI(void)  cvLine( CvArr* img, CvPoint pt1, CvPoint pt2,
                      CvScalar color, int thickness CV_DEFAULT(1),
                      int line_type CV_DEFAULT(8), int shift CV_DEFAULT(0) );
 
-/* Draws a rectangle given two opposite corners of the rectangle (pt1 & pt2),
+/* Draws a rectangle given two opposite corners of the rectangle (pt1 & pt2),	
    if thickness<0 (e.g. thickness == CV_FILLED), the filled box is drawn */
 CVAPI(void)  cvRectangle( CvArr* img, CvPoint pt1, CvPoint pt2,
                           CvScalar color, int thickness CV_DEFAULT(1),

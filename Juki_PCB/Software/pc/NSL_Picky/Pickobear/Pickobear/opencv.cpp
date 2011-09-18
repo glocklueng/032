@@ -159,7 +159,7 @@ void drawSquares( IplImage* img, CvSeq* squares )
 		CV_READ_SEQ_ELEM( pt[3], reader ); 
 
 		// draw the square as a closed polyline 
-		cvPolyLine( img, &rect, &count, 1, 1, CV_RGB(0,0,255), 5, CV_AA, 0 ); 
+		cvPolyLine( img, &rect, &count, 1, 1, CV_RGB(255,0,0), 5, CV_AA, 0 ); 
 	} 
 } 
 
