@@ -39,7 +39,7 @@
 #define MAX_Y_PULSES       ( 21172L )
 
 // how much to ramp up by
-#define ACCEL_STEP ( 16 ) 
+#define ACCEL_STEP ( 8 ) 
 
 #define YCCW_HIGH   bitSet(PORTF,3);
 #define YCW_HIGH   bitSet(PORTF,2);
@@ -63,15 +63,15 @@ enum {
 
 // maximum speed the motors can travel at
 int X_SPEED =( 150 );
-int Y_SPEED =( 110 );
+int Y_SPEED =( 120 );
 
 // for diagonal move
-int X2_SPEED =( 80 );
-int Y2_SPEED =( 80 );
+int X2_SPEED =( 90 );
+int Y2_SPEED =( 90 );
 
 // length of pulse sent to motor controller
-#define SHORT_X_PULSE ( 4 )
-#define SHORT_Y_PULSE ( 4 )
+#define SHORT_X_PULSE ( 7 )
+#define SHORT_Y_PULSE ( 7 )
 
 // Limit switches
 volatile boolean xLimit1=false,xLimit2=false,xLimit3=false,yLimit1=false,yLimit2=false,yLimit3=false;
@@ -2043,7 +2043,7 @@ unsigned int readLimitSwitches( void )
 void testPad( void ) 
 {
 #ifndef NDEBUG
-  Serial.println("testPad");
+  Serial.println("goto testPad");
 #endif
 
   movexy(pulsestoum(12308),pulsestoum(5002));
@@ -2053,15 +2053,15 @@ void testPad( void )
 boolean  hastool( void )
 {
 #ifndef NDEBUG
-  Serial.println("hastool");
+  Serial.println("calling hastool");
 #endif
- 
+
   boolean status = false;
 
   if(headDown() == true ){ 
- #ifndef NDEBUG
-  Serial.println("hastool, warning head is down.");
- #endif
+#ifndef NDEBUG
+    Serial.println("hastool: warning head is down, moving up");
+#endif
     // set the head to be up
     head( 0 );
   }
@@ -2085,10 +2085,11 @@ boolean  hastool( void )
   vacuum(0);
   // head up
   head(0);
-  
- #ifndef NDEBUG
-  Serial.println("end hastool");
- #endif
+
+#ifndef NDEBUG
+  Serial.print(status,DEC);
+  Serial.println(" = end hastool");
+#endif
 
   return status;
 }
@@ -2096,7 +2097,7 @@ boolean  hastool( void )
 boolean putdown(void )
 {
 #ifndef NDEBUG
-  Serial.println("putdown");
+  Serial.println("putdown: putting down tool");
 #endif
 
   // head down wait
@@ -2115,7 +2116,7 @@ boolean putdown(void )
 
   if( hastool() == true ) {
 #ifndef NDEBUG
-    Serial.println("Failed to drop tool");
+    Serial.println("putdown: Failed to drop tool");
 #endif
     return false;
   }
@@ -2125,7 +2126,7 @@ boolean putdown(void )
 boolean pickup(void )
 {
 #ifndef NDEBUG
-  Serial.println("pickup");
+  Serial.println("pickup: picking up tool");
 #endif
 
   // head down wait
@@ -2150,9 +2151,9 @@ boolean pickup(void )
   if( hastool() == false ) {
 
 #ifndef NDEBUG
-     Serial.println("Failed to pickup tool");
+    Serial.println("Failed to pickup tool");
 #endif
-return false;
+    return false;
   }
   return true;
 }
@@ -2164,26 +2165,59 @@ void tooloff( void )
   digitalWrite(SPARE2,HIGH);
 }
 
+boolean picker( boolean pick )
+{
+  boolean errCode = false;
+  if(pick == false) {
+    errCode=putdown();
+#ifndef NDEBUG
+    Serial.println("did a putdown");
+#endif
+  } 
+  else {
+    errCode=pickup();
+#ifndef NDEBUG
+    Serial.println("did a pickup");
+#endif 
+  }
+
+  return errCode;
+
+}
+
 void tool( unsigned char on_off, unsigned char toolid ) 
 {
   boolean errCode = false;
-  
+
   boolean pick = false;
 
- // Just turn off the toolchanger
+  // Just turn off the toolchanger
   if( on_off == 0 && toolid == 0 ) {
-    
-    digitalWrite(SPARE2,HIGH);
+
+    if( digitalRead( SPARE2 ) == 0 ) {
+#ifndef NDEBUG
+      Serial.println("Tools off");
+#endif
+      digitalWrite(SPARE2,HIGH);
+    }
     return;  
-    
   }
 
- if(headDown() == true ) {
-   head(0);
- }
-  
+  if(headDown() == true ) {
+    head(0);
+  }
+
   if( hastool() == true ) {
+    pick = false;
+#ifndef NDEBUG
+    Serial.println("has tool, putdown");
+#endif
+  }  
+  else {
     pick = true;
+#ifndef NDEBUG   
+    Serial.println("doesnt have tool, pickup");
+#endif
   }
 
 #ifndef NDEBUG
@@ -2211,20 +2245,14 @@ void tool( unsigned char on_off, unsigned char toolid )
     digitalWrite(SPARE4,LOW);  
     digitalWrite(SPARE5,LOW);  
 
-    if(pick) 
-      errCode=putdown();
-    else
-      errCode=pickup();
+    errCode = picker(pick);
 
     break;
   case 2 :
     movexy(pulsestoum(13077),pulsestoum(3684));
     delay(200);
 
-    if(pick) 
-      errCode=putdown();
-    else
-      errCode=pickup();
+    errCode = picker(pick);
 
     digitalWrite(SPARE3,LOW);  
     digitalWrite(SPARE4,LOW);  
@@ -2235,30 +2263,35 @@ void tool( unsigned char on_off, unsigned char toolid )
     digitalWrite(SPARE3,LOW);  
     digitalWrite(SPARE4,HIGH);  
     digitalWrite(SPARE5,LOW);  
+    errCode = picker(pick);
     break;
   case 4 :
     digitalWrite(SPARE3,LOW);  
     digitalWrite(SPARE4,HIGH);  
     digitalWrite(SPARE5,HIGH);  
+    errCode = picker(pick);
     break;
   case 5 :
     digitalWrite(SPARE3,HIGH);  
     digitalWrite(SPARE4,LOW);  
     digitalWrite(SPARE5,LOW);  
+    errCode = picker(pick);
     break;
   case 6 :
     digitalWrite(SPARE3,HIGH);  
     digitalWrite(SPARE4,LOW);  
     digitalWrite(SPARE5,HIGH);  
+    errCode = picker(pick);
     break;
   }
 
   digitalWrite(SPARE2,HIGH);
-  
+
   if( errCode == false ){
-    Serial.Write("f");
-  } else {
-    Serial.Write("p");
+    Serial.print("f");
+  } 
+  else {
+    Serial.print("p");
   }  
 }
 
@@ -2306,7 +2339,8 @@ void vacuum( boolean on_off )
   lastState = on_off;
 
 #ifndef NDEBUG
-  Serial.println("Vacuum");
+  Serial.print("Vacuum = ");
+  Serial.println(on_off,DEC);
 #endif
 
   if( on_off ) { 
@@ -2390,11 +2424,11 @@ void xend(void)
   Serial.println(endTime - startTime ,DEC);
   Serial.print("CPH = ");
 #endif
-CPH =   3600 / (endTime-startTime );
+  CPH =   3600 / (endTime-startTime );
 #ifndef NDEBUG
   Serial.println(CPH,DEC);
 #endif
-avgCPH += CPH; 
+  avgCPH += CPH; 
   avgCount ++;
 #ifndef NDEBUG
   Serial.print("Average CPH = ");
@@ -2487,7 +2521,7 @@ void loop()
 
         // wait for string
         delay( 300 );
-        
+
         // read in from port.
         while(Serial.available() ) 
         {
@@ -2508,15 +2542,15 @@ void loop()
 
               token = strtok (NULL, ",");
               if( token ) {
-                
+
                 sscanf(token, "%s", &yString );	
-                	                
+
                 gotoxy(atol(xString),atol(yString));
-                
+
                 Serial.println("A");
-                
+
                 break;
-                
+
               }
             }
           }
@@ -2527,12 +2561,12 @@ void loop()
       }
 
       break;
-      
-     case '?':
-       Serial.print(gXPulses);
-       Serial.print(",");
-       Serial.println(gYPulses);
-       break;
+
+    case '?':
+      Serial.print(gXPulses);
+      Serial.print(",");
+      Serial.println(gYPulses);
+      break;
     case 'B':
       goback(5000,1);
       break;
@@ -2611,6 +2645,10 @@ void loop()
 
       break;
 
+    case 'T':
+      Serial.print("tacsense = ");
+      Serial.println(tacSense(), DEC);
+      break;
     case 't':
       tapeKnock(1);
       delay(500);
@@ -2722,6 +2760,27 @@ void loop()
       centerof();
       break;
 
+    case ';':
+
+      home();
+
+      movexy(0,0);
+      readLimitSwitches();
+      delay(200);
+
+      movexy(200000,0);        
+      readLimitSwitches();
+      delay(200);
+
+      movexy(0,200000);        
+      readLimitSwitches();
+      delay(200);
+
+      movexy(0,0);
+      readLimitSwitches();
+      Serial.println("Test complete, machine should be homed");
+      break;
+
     case 'o':
       findyminuslimit();
       break;
@@ -2757,7 +2816,7 @@ void loop()
 #ifndef NDEBUG
       Serial.println("none");
 #endif
-break;
+      break;
     }
   } 
   else {
@@ -2892,7 +2951,7 @@ void home( void )
 #ifndef NDEBUG
     Serial.println("Failed to home");
 #endif
-  homed = false;
+    homed = false;
     return;
   }
 
@@ -2929,30 +2988,30 @@ void centerof(void)
 
   Serial.println("X home");
 #endif
-findlefthome(); 
+  findlefthome(); 
   readLimitSwitches();
 #ifndef NDEBUG
   Serial.println("Y home");
 #endif
-findyplushome(); 
+  findyplushome(); 
   readLimitSwitches();
 
 #ifndef NDEBUG
   Serial.println("right");
 #endif
-goright(2500,1); 
+  goright(2500,1); 
   readLimitSwitches();
 #ifndef NDEBUG
   Serial.println("back");
 #endif
-goback(4600,1); 
+  goback(4600,1); 
   readLimitSwitches();
 
   if( homed == 0 ) {
 #ifndef NDEBUG
     Serial.println("Something went wrong, hit a limit");
 #endif
-  return;
+    return;
   }
 
   spot(true);
@@ -2967,7 +3026,7 @@ void walk(void)
 #ifndef NDEBUG
   Serial.println("Walk limit mode enabled, press a key to stop after limit reached");
 #endif
-Serial.read();
+  Serial.read();
 
   while(1){
     findrightlimit(); 
@@ -3017,7 +3076,8 @@ void tapeKnock( boolean on_off )
 void spot( boolean on)
 {
 #ifndef NDEBUG
-  Serial.println("Spot");
+  Serial.print("Spot = ");
+  Serial.println(on,DEC);
 #endif
 
   if( on ) 
@@ -3029,7 +3089,8 @@ void spot( boolean on)
 void rotate( boolean on )
 {
 #ifndef NDEBUG
-  Serial.println("rotate");
+  Serial.print("rotate = ");
+  Serial.println(on,DEC);
 #endif
   if( on ) 
     digitalWrite(ROT,LOW);  
@@ -3040,7 +3101,8 @@ void rotate( boolean on )
 void center( boolean on )
 {
 #ifndef NDEBUG
-  Serial.println("center");
+  Serial.print("center = ");
+  Serial.println(on,DEC);
 #endif
   if( on ) 
     digitalWrite(CENTERING,LOW);  
@@ -3051,7 +3113,8 @@ void center( boolean on )
 boolean head( boolean on )
 {
 #ifndef NDEBUG
-  Serial.println("head");
+  Serial.print("head = ");
+  Serial.println(on,DEC);
 #endif
 
   if( on ) {
@@ -3221,7 +3284,7 @@ boolean findyplushome(void) {
 #ifndef NDEBUG
       Serial.println("Found Y home");
 #endif
-delay(200);
+      delay(200);
 
       return false;
     }
@@ -3239,13 +3302,13 @@ delay(200);
 void beforeMoving( void ) 
 {
   // head up (this has to be here or it'll flood serial msgs
-   if(headDown() == true ) {
-      head( false );
-   }
-   
-   // tools down
-   tool(0,0);
-    
+  if(headDown() == true ) {
+    head( false );
+  }
+
+  // tools down
+  tool(0,0);
+
 }
 
 // Step once forward
@@ -3260,7 +3323,7 @@ void stepYCW( unsigned long length )
     YCW_LOW;
 
     //  __builtin_avr_delay_cycles( 130 ) ;
-    _delay_us(4);
+    _delay_us( SHORT_Y_PULSE  );
 
     //_delay_us( SHORT_Y_PULSE ) ;
     //  digitalWrite(YCW,LOW);
@@ -3277,7 +3340,7 @@ void stepYCW( unsigned long length )
 // Step once back
 void stepYCCW( long pulselength ) 
 {
-  //beforeMoving();
+  beforeMoving();
 
   cli();
   //  digitalWrite(YCCW,HIGH);
@@ -3657,7 +3720,8 @@ boolean goforward(long steps ,boolean nolimit )
       return false;
     }
   }
-  stepYCW( length );
+
+  //  stepYCW( length );
 
   if( i < (steps-perc)) 
     length--;
@@ -3669,46 +3733,50 @@ boolean goforward(long steps ,boolean nolimit )
   if (length >DELAY_Y2 + DELAY_Y1 ) 
     length = DELAY_Y2 + DELAY_Y1;          
 
-
-
   // reset it back
   digitalWrite(YCW,HIGH);
   return true;
 }
 
 
-boolean goback(long steps ,boolean nolimit ) {
+boolean goback(long steps ,boolean nolimit ) 
+{
+  int i;
 
   long length = DELAY_Y2 + DELAY_Y1;
   long perc = (steps /100 ) * 2;
 
-  if( (steps-perc) < 0 ) perc = 0;
+  if( (steps-perc) < 0 ) 
+    perc = 0;
 
-  for( int i = 0 ; i < steps ; i ++ )
+  for( i = 0 ; i < steps ; i ++ )
   {
-    if( nolimit == true ) {
-      if( digitalRead( YL2 ) ) {
-        digitalWrite(YCCW,HIGH);
+    stepYCCW( length );
+  }
+  
+  if( nolimit == true ) {
+    if( digitalRead( YL2 ) ) {
+      digitalWrite(YCCW,HIGH);
 #ifndef NDEBUG
-        Serial.println("goback limit");
+      Serial.println("goback limit");
 #endif
-        return false;
-      }
+      return false;
     }
-    stepYCCW( length/2 ); 
+  }
+  //    stepYCCW( length/2 ); 
 
-    if( i < (steps-perc)) 
-      length--;
-    else
-      length+=1;
+  if( i < (steps-perc)) 
+    length--;
+  else
+    length+=1;
 
 
-    if (length < Y_SPEED ) 
-      length = Y_SPEED;
+  if (length < Y_SPEED ) 
+    length = Y_SPEED;
 
-    if (length >DELAY_Y2 + DELAY_Y1 ) 
-      length = DELAY_Y2 + DELAY_Y1;
-  }  
+  if (length >DELAY_Y2 + DELAY_Y1 ) 
+    length = DELAY_Y2 + DELAY_Y1;
+
 
 
   // reset it back
@@ -3743,7 +3811,7 @@ void DecrementXPulses( void )
     Serial.print(gYPulses,DEC);
     Serial.println("");
 #endif
-  homed = false;
+    homed = false;
     return;
   }
 }
@@ -4252,7 +4320,7 @@ void moveLine2_slow( long x0, long y0, long x1, long y1)
 #ifndef NDEBUG
   Serial.println("moveLine2_slow");
 #endif
- 
+
   if(headDown() == true ) {
     head(0) ;
   }
@@ -4451,14 +4519,14 @@ void movexy(long x0,long y0 )
   Serial.println("movexy");
 #endif
 
-// check head
- if( headDown() == true ) {
+  // check head
+  if( headDown() == true ) {
     head(0) ;
   }
 
   moveLine2_slow(lx,ly,x0,y0);
 
-// remember last position
+  // remember last position
   lx = x0;
   ly = y0;
 }
@@ -4472,6 +4540,8 @@ void setupTimer1(void)
   // Timer/Counter 1 Output Compare A Match Interrupt enable.
   TIMSK1 = (1<<OCIE1A);
 }
+
+
 
 
 
