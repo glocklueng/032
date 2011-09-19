@@ -2563,9 +2563,13 @@ void loop()
       break;
 
     case '?':
-      Serial.print(gXPulses);
+    
+      gCurrentXum = pulsestoum( gXPulses ) ;
+      gCurrentYum = pulsestoum( gYPulses ) ;
+
+      Serial.print(gCurrentXum);
       Serial.print(",");
-      Serial.println(gYPulses);
+      Serial.println(gCurrentYum);
       break;
     case 'B':
       goback(5000,1);
