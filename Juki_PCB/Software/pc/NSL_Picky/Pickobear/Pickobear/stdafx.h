@@ -29,6 +29,8 @@
 
 #include <vector>
 
+#include "resource.h"
+
 
 #ifndef _AFX_NO_OLE_SUPPORT
 #include <afxdtctl.h>           // MFC support for Internet Explorer 4 Common Controls
@@ -38,6 +40,7 @@
 #endif // _AFX_NO_AFXCMN_SUPPORT
 
 #include <afxcontrolbars.h>     // MFC support for ribbons and control bars
+
 
 
 // http://muonics.net/school/spring05/videoInput/
@@ -52,6 +55,7 @@
 #include "Serial.h"
 
 #include "opencv.h"
+#include "FeederSetup.h"
 
 #pragma comment(lib,"opencv_highgui231.lib")
 #pragma comment(lib,"opencv_imgproc231.lib")
@@ -60,7 +64,7 @@
 
 CString GetSaveFile( const TCHAR *ptypes, const TCHAR*caption, const TCHAR *pStartDir);
 CString GetLoadFile( const TCHAR *ptypes, const TCHAR*caption, const TCHAR *pStartDir);
-
+bool GetCurrentPosition ( long &x,long &y);
 
 extern 	videoInput VI; ;
 extern 	CSerial m_Serial;

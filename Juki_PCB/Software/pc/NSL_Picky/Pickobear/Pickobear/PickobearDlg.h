@@ -10,6 +10,7 @@
 
 class CListCtrl_Components : public CListCtrl
 {
+	afx_msg void OnNcLButtonDblClk (UINT nFlags, CPoint point);
 	DECLARE_MESSAGE_MAP();
 
 	void PreSubclassWindow();
@@ -23,12 +24,21 @@ public:
 	} CompDatabase;
 	
 	std::vector<CompDatabase> m_Database;
+	
+	CompDatabase *entry;
+
+	
+	/// Offset of item in PCB
+	long m_OffsetX;
+	long m_OffsetY;
 
 public:
 	CListCtrl_Components()
 	{
-
+		m_OffsetX = 0 ;
+		m_OffsetY = 0;
 		m_Count = 0;
+		entry = NULL;
 	
 	}
 
@@ -72,6 +82,10 @@ public:
 
 		m_Count ++;
 	}
+
+
+
+	afx_msg void OnHdnItemdblclickList2(NMHDR *pNMHDR, LRESULT *pResult);
 };
 
 
@@ -99,6 +113,7 @@ public:
 	static DWORD WINAPI goSetup(LPVOID pThis);
 	DWORD goThread(void );
 	char CheckAck(char ack,char ack1);
+	bool MoveHead( long x, long y );
 
 	~CPickobearDlg(){
 
@@ -166,4 +181,12 @@ public:
 	afx_msg void OnBnClickedImport();
 	afx_msg void OnBnClickedGo();
 	afx_msg void OnBnClickedFeeder();
+	afx_msg void OnBnClickedZero();
+	afx_msg void OnBnClickedOffset();
+	afx_msg void OnBnClickedGoff();
+	afx_msg void OnBnClickedGoxy();
+	long m_GOX;
+	long m_GOY;
+	afx_msg void OnEnChangeGox();
+	afx_msg void OnEnChangeGoy();
 };

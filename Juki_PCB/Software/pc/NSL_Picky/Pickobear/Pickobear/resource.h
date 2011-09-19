@@ -7,6 +7,7 @@
 #define IDS_ABOUTBOX                    101
 #define IDD_PICKOBEAR_DIALOG            102
 #define IDR_MAINFRAME                   128
+#define IDD_FEEDERS                     130
 #define IDC_LIST1                       1000
 #define IDC_GO                          1001
 #define IDC_UP                          1002
@@ -46,16 +47,21 @@
 #define IDC_IMPORT                      1034
 #define IDC_DOWNCAM                     1035
 #define IDC_UPCAM                       1036
-#define IDC_BUTTON1                     1037
 #define IDC_FEEDER                      1037
+#define IDC_GOFF                        1038
+#define IDC_ZERO                        1039
+#define IDC_GOXY                        1040
+#define IDC_GOX                         1042
+#define IDC_THRESHOLD4                  1043
+#define IDC_GOY                         1043
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        130
+#define _APS_NEXT_RESOURCE_VALUE        131
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1038
+#define _APS_NEXT_CONTROL_VALUE         1039
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

@@ -55,6 +55,8 @@ CPickobearDlg::CPickobearDlg(CWnd* pParent /*=NULL*/)
 	, m_Threshold1(m_Thresh1)
 	, m_Threshold2(m_Thresh2)
 	, m_Head(0)
+	, m_GOX(0)
+	, m_GOY(0)
 {
 
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
@@ -70,6 +72,8 @@ void CPickobearDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_THRESHOLD2, m_Threshold2);
 	DDX_Control(pDX, IDC_ROTATE, m_Rotation);
 	DDX_Control(pDX, IDC_LIST2, m_ComponentList);
+	DDX_Text(pDX, IDC_GOX, m_GOX);
+	DDX_Text(pDX, IDC_GOY, m_GOY);
 }
 
 BEGIN_MESSAGE_MAP(CPickobearDlg, CDialog)
@@ -104,10 +108,18 @@ BEGIN_MESSAGE_MAP(CPickobearDlg, CDialog)
 	ON_WM_NCRBUTTONDOWN()
 	ON_BN_CLICKED(IDC_GO, &CPickobearDlg::OnBnClickedGo)
 	ON_BN_CLICKED(IDC_FEEDER, &CPickobearDlg::OnBnClickedFeeder)
+	ON_BN_CLICKED(IDC_ZERO, &CPickobearDlg::OnBnClickedZero)
+	ON_BN_CLICKED(IDC_OFFSET, &CPickobearDlg::OnBnClickedOffset)
+	ON_BN_CLICKED(IDC_GOFF, &CPickobearDlg::OnBnClickedGoff)
+	ON_BN_CLICKED(IDC_GOXY, &CPickobearDlg::OnBnClickedGoxy)
+	ON_EN_KILLFOCUS(IDC_GOX, &CPickobearDlg::OnEnChangeGox)
+	ON_EN_KILLFOCUS(IDC_GOY, &CPickobearDlg::OnEnChangeGoy)
 END_MESSAGE_MAP()
 
 BEGIN_MESSAGE_MAP(CListCtrl_Components, CListCtrl)
+    ON_NOTIFY_REFLECT(NM_DBLCLK, OnHdnItemdblclickList2) 
 END_MESSAGE_MAP()
+
 
 
 void CListCtrl_Components::PreSubclassWindow()
@@ -198,8 +210,6 @@ BOOL CPickobearDlg::OnInitDialog()
 	m_ComponentList.InsertColumn(4, _T("R"),LVCFMT_CENTER,nInterval/2);
 	m_ComponentList.InsertColumn(5, _T("F"),LVCFMT_CENTER,nInterval);
 
-	//m_ComponentList.AddItem("R1","0805","10","20","90");
-
 	m_Rotation.SetRange(0,360);
 
 	return TRUE;  // return TRUE  unless you set the focus to a control
@@ -288,9 +298,100 @@ void CPickobearDlg::OnEnChangeThreshold2()
 
 void CPickobearDlg::OnBnClickedHome()
 {	
-	m_Serial.Write(" ");
+	bool pass = false;
+
+	do { 
+		m_Serial.Write(" ");
+
+		switch( CheckAck('f','p') )
+		{
+		case 'f':
+			if( MessageBox(_T("Home failed!!"),_T("Error"),IDOK|IDRETRY) == IDRETRY)
+				pass = false;
+			else
+				pass = true;
+			break;
+		case 'p':
+			
+			// enable the GO button
+			GO.EnableWindow( TRUE ) ;
+
+			// enable tool changers
+			GetDlgItem( IDC_TOOL1 )->EnableWindow( TRUE );
+			GetDlgItem( IDC_TOOL2 )->EnableWindow( TRUE );
+			GetDlgItem( IDC_TOOL3 )->EnableWindow( TRUE );
+			GetDlgItem( IDC_TOOL4 )->EnableWindow( TRUE );
+			GetDlgItem( IDC_TOOL5 )->EnableWindow( TRUE );
+			GetDlgItem( IDC_TOOL6 )->EnableWindow( TRUE );
+
+			// Park enable
+			GetDlgItem( IDC_PARK )->EnableWindow( TRUE );
+
+			// Cursor pad
+			GetDlgItem( IDC_UPLEFT )->EnableWindow( TRUE );
+			GetDlgItem( IDC_UPRIGHT )->EnableWindow( TRUE );
+			GetDlgItem( IDC_LEFTDOWN )->EnableWindow( TRUE );
+			GetDlgItem( IDC_BOTTOMLEFT )->EnableWindow( TRUE );
+			GetDlgItem( IDC_UP )->EnableWindow( TRUE );
+			GetDlgItem( IDC_DOWN )->EnableWindow( TRUE );
+			GetDlgItem( IDC_LEFT )->EnableWindow( TRUE );
+			GetDlgItem( IDC_RIGHT )->EnableWindow( TRUE );
+
+			// head up/down
+			GetDlgItem( IDC_HEAD )->EnableWindow( TRUE );
+
+			//zero
+			GetDlgItem( IDC_ZERO )->EnableWindow( TRUE );
+
+			GetDlgItem( IDC_GOXY )->EnableWindow( TRUE );
+			GetDlgItem( IDC_GOFF )->EnableWindow( TRUE );
+
+			
+			pass = true;
+			break;
+		default:
+			break;
+		}
+	} while( pass == false );
+
+	long cx,cy;
+	GetCurrentPosition(cx,cy);
+	
 }
 
+// move head can only go to (int)(x/40)*40,same for y
+bool CPickobearDlg::MoveHead( long x, long y ) 
+{
+	char buffer[56];
+
+	long cx,cy;
+	GetCurrentPosition(cx,cy);
+
+	x = (x/40)*40;
+	y = (y/40)*40;
+
+	sprintf(buffer,"g%d,%d\n",x,y);
+
+	_RPT4(_CRT_WARN,"current pos = %dum,%dum\nGoing to %dum,%dum\n",cx,cy,x,y);
+	m_Serial.Write(buffer);
+
+	char ch;
+	// wait for ack.
+	do { 
+		m_Serial.Read(&ch,1);
+	} while(ch!='A');
+
+
+	GetCurrentPosition(cx,cy);
+	_RPT2(_CRT_WARN,"current pos = %d,%d\n",cx,cy);
+
+	if( cx!= x &&  cy != y ) {
+		
+		_RPT0(_CRT_WARN,"Problem!");
+	}
+
+	return true;
+}
 
 char CPickobearDlg::CheckAck(char ack,char ack1)
 {
@@ -307,12 +408,16 @@ char CPickobearDlg::CheckAck(char ack,char ack1)
 void CPickobearDlg::OnBnClickedRight()
 {
 	m_Serial.Write("r");
+	long cx,cy;
+	GetCurrentPosition(cx,cy);
 }
 
 
 void CPickobearDlg::OnBnClickedPark()
 {
 	m_Serial.Write("p");	
+	long cx,cy;
+	GetCurrentPosition(cx,cy);
 }
 
 
@@ -339,54 +444,73 @@ void CPickobearDlg::OnBnClickedTool1()
 			break;
 		}
 	} while( pass == false );
+
+	long cx,cy;
+	GetCurrentPosition(cx,cy);
 }
 
 
 void CPickobearDlg::OnBnClickedTool2()
 {
 	m_Serial.Write("2");
+	long cx,cy;
+	GetCurrentPosition(cx,cy);
 }
 
 
 void CPickobearDlg::OnBnClickedTool3()
 {
 	m_Serial.Write("3");
+	long cx,cy;
+	GetCurrentPosition(cx,cy);
 }
 
 
 void CPickobearDlg::OnBnClickedTool4()
 {
 	m_Serial.Write("4");
+	long cx,cy;
+	GetCurrentPosition(cx,cy);
 }
 
 
 void CPickobearDlg::OnBnClickedTool5()
 {
 	m_Serial.Write("5");
+	long cx,cy;
+	GetCurrentPosition(cx,cy);
 }
 
 
 void CPickobearDlg::OnBnClickedTool6()
 {
 	m_Serial.Write("6");
+	long cx,cy;
+	GetCurrentPosition(cx,cy);
 }
 
 
 void CPickobearDlg::OnBnClickedUp()
 {
 	m_Serial.Write("u");
+	long cx,cy;
+	GetCurrentPosition(cx,cy);
 }
 
 
 void CPickobearDlg::OnBnClickedDown()
 {
 	m_Serial.Write("d");
+	long cx,cy;
+	GetCurrentPosition(cx,cy);
 }
 
 
 void CPickobearDlg::OnBnClickedLeft()
 {
 	m_Serial.Write("l");
+	long cx,cy;
+	GetCurrentPosition(cx,cy);
 }
 
 
@@ -399,6 +523,10 @@ void CPickobearDlg::OnBnClickedHead()
 	}
 
 	m_Head = 1 - m_Head;
+
+	long cx,cy;
+	GetCurrentPosition(cx,cy);
+
 }
 
 
@@ -414,6 +542,8 @@ void CPickobearDlg::OnBnClickedUpleft()
 {
 	m_Serial.Write("l");
 	m_Serial.Write("u");
+	long cx,cy;
+	GetCurrentPosition(cx,cy);
 }
 
 
@@ -421,6 +551,8 @@ void CPickobearDlg::OnBnClickedUpright()
 {
 	m_Serial.Write("r");
 	m_Serial.Write("u");
+	long cx,cy;
+	GetCurrentPosition(cx,cy);
 }
 
 
@@ -428,6 +560,8 @@ void CPickobearDlg::OnBnClickedLeftdown()
 {
 	m_Serial.Write("l");
 	m_Serial.Write("d");
+	long cx,cy;
+	GetCurrentPosition(cx,cy);
 }
 
 
@@ -435,6 +569,8 @@ void CPickobearDlg::OnBnClickedBottomleft()
 {
 	m_Serial.Write("r");
 	m_Serial.Write("d");
+	long cx,cy;
+	GetCurrentPosition(cx,cy);
 }
 
 void CPickobearDlg::OnBnClickedLoad()
@@ -625,17 +761,8 @@ DWORD CPickobearDlg::goThread(void )
 		
 		 entry = m_ComponentList.at(i);
 		 
-		 char buffer[256];
-		 
-		 sprintf(buffer,"g%d,%d\n",entry.x,entry.y);
-		 
-		 m_Serial.Write(buffer);
+		MoveHead(entry.x,entry.y);
 
-		 char ch;
-		 // wait for ack.
-		 do { 
-			 m_Serial.Read(&ch,1);
-		 } while(ch!='A');
 	}
 	 
 	// Park machine
@@ -659,4 +786,156 @@ void CPickobearDlg::OnBnClickedGo()
 
 void CPickobearDlg::OnBnClickedFeeder()
 {
+	CFeederSetup dlg;
+	INT_PTR nResponse = dlg.DoModal();
+}
+
+
+void CListCtrl_Components::OnHdnItemdblclickList2(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	LPNMHEADER phdr = reinterpret_cast<LPNMHEADER>(pNMHDR);
+	// TODO: Add your control notification handler code here
+	*pResult = 0;
+	
+	CPickobearDlg *pDlg = (CPickobearDlg*)AfxGetApp()->m_pMainWnd;
+
+	ASSERT( pDlg );
+
+	// iItem is item number, list is backwards
+	int item = (GetCount()-1)-phdr->iItem;
+
+	entry = &m_Database.at( item ) ;
+	// entry is item.
+	ASSERT( entry );
+
+	// GotoXY in micrometers
+	pDlg->MoveHead(entry->x+pDlg->m_ComponentList.m_OffsetX,entry->y+pDlg->m_ComponentList.m_OffsetY);
+
+	pDlg->GetDlgItem( IDC_OFFSET )->EnableWindow( TRUE );
+
+}
+
+bool GetCurrentPosition ( long &x,long &y)
+{
+	CPickobearDlg *pDlg = (CPickobearDlg*)AfxGetApp()->m_pMainWnd;
+
+	ASSERT( pDlg );
+
+	// read offset in pulses
+	m_Serial.Write("?");
+
+	// give arduino time to answer
+	Sleep(200);
+
+	char lineBuffer[256];
+	unsigned int linePtr = 0;
+	char *token;
+	char xString[20];
+	char yString[20];
+
+	do {
+		char sbyte;
+		// does this timeout ?
+		m_Serial.Read(&sbyte,1);
+
+		// end of line
+		if( sbyte == '\n' ) {
+
+			// ASCIZ terminate the buffer
+			lineBuffer[linePtr]  = 0;
+
+			// lineBuffer Should now contain something like 1000,1000
+			token = strtok (lineBuffer, ",");
+			if( token) {
+				// convert token to a string
+				sscanf (token, "%s", &xString );
+
+				token = strtok (NULL, ",");
+				if( token ) {
+
+					sscanf(token, "%s", &yString );	
+
+
+					break;
+
+				}
+			}
+		}
+		// add to buffer.
+		// it'll wrap automatically
+		lineBuffer[linePtr++] = sbyte;
+
+	}while( 1 );
+
+	x = atol( xString );
+	y = atol( yString );
+
+	( ( CWnd* ) pDlg->GetDlgItem( IDC_X_POS ) )->SetWindowText( CString(xString) ) ;
+	( ( CWnd* ) pDlg->GetDlgItem( IDC_Y_POS ) )->SetWindowText( CString(yString) ) ;
+
+	return true;
+
+}
+
+void CPickobearDlg::OnBnClickedZero()
+{
+	MoveHead(0,0);
+}
+
+
+void CPickobearDlg::OnBnClickedOffset()
+{
+	ASSERT( m_ComponentList.entry );
+
+	long cx,cy;
+	GetCurrentPosition(cx,cy);
+	_RPT2(_CRT_WARN,"current pos = %d,%d\n",cx,cy);
+
+	_RPT2(_CRT_WARN,"compone pos = %d,%d\n", m_ComponentList.entry->x, m_ComponentList.entry->y);
+
+	// set the offset.
+	m_ComponentList.m_OffsetX = cx - m_ComponentList.entry->x; 
+	m_ComponentList.m_OffsetY = cy - m_ComponentList.entry->y;
+
+	_RPT2(_CRT_WARN,"offset pos = %d,%d\n",m_ComponentList.m_OffsetX,m_ComponentList.m_OffsetY);
+
+}
+
+
+void CPickobearDlg::OnBnClickedGoff()
+{
+	MoveHead(m_ComponentList.m_OffsetX ,m_ComponentList.m_OffsetY );
+}
+
+
+void CPickobearDlg::OnBnClickedGoxy()
+{
+	// TODO: Add your control notification handler code here
+	MoveHead(m_GOX,m_GOY);
+}
+
+
+void CPickobearDlg::OnEnChangeGox()
+{
+	// TODO:  If this is a RICHEDIT control, the control will not
+	// send this notification unless you override the CDialog::OnInitDialog()
+	// function and call CRichEditCtrl().SetEventMask()
+	// with the ENM_CHANGE flag ORed into the mask.
+
+	// TODO:  Add your control notification handler code here
+	UpdateData(TRUE);
+
+}
+
+
+void CPickobearDlg::OnEnChangeGoy()
+{
+	// TODO:  If this is a RICHEDIT control, the control will not
+	// send this notification unless you override the CDialog::OnInitDialog()
+	// function and call CRichEditCtrl().SetEventMask()
+	// with the ENM_CHANGE flag ORed into the mask.
+
+	// TODO:  Add your control notification handler code here
+	UpdateData(TRUE);
+
 }
