@@ -225,28 +225,26 @@ void setup( void )
   pinMode(VAC,OUTPUT);
   digitalWrite(VAC,HIGH);
 
-#if 1
   // setup the limit switches
 
   //These pins can be configured to trigger an interrupt on a low value, a rising or falling edge, or a change in value. See the attach
   // interrupt() function for details.
-  //External Interrupts: 2 (interrupt 0), 3 (interrupt 1), 18 (interrupt 5), 19 (interrupt 4), 20 (interrupt 3), and 21 (interrupt 2).
+  // External Interrupts: 2 (interrupt 0), 3 (interrupt 1), 18 (interrupt 5), 19 (interrupt 4), 20 (interrupt 3), and 21 (interrupt 2).
 
   attachInterrupt(2, y1Limit, CHANGE );
   attachInterrupt(3, y2Limit, CHANGE );
   attachInterrupt(4, x2Limit, CHANGE );
   attachInterrupt(5, x1Limit, CHANGE );
 
-#endif
-
+ // intial read of their state
   xLimit1 = digitalRead( XL1 );
   yLimit1 = digitalRead( YL1 );
   xLimit2 = digitalRead( XL2 );
   yLimit2 = digitalRead( YL2 );
 
 #define STOP ( 48 )
-  {
 
+  {
     const static unsigned long speedUpY[506] = {
       962,
       40,
@@ -1743,8 +1741,8 @@ void setup( void )
     };
 
 
-
     while( 0 ) {
+      
       int i;
       int a;
 
@@ -1801,8 +1799,6 @@ void setup( void )
       }  
 
       delay(500);
-
-
     }
   }
 }
@@ -3723,7 +3719,7 @@ boolean goforward(long steps ,boolean nolimit )
   }
 
   if( nolimit == true ) {
-    if( digitalRead( YL1 ) ) {
+    if( y1Limit ) {
       digitalWrite(YCW,HIGH);
 #ifndef NDEBUG
       Serial.println("goforward limit");
@@ -3766,7 +3762,7 @@ boolean goback(long steps ,boolean nolimit )
   }
   
   if( nolimit == true ) {
-    if( digitalRead( YL2 ) ) {
+    if( y2Limit ) {
       digitalWrite(YCCW,HIGH);
 #ifndef NDEBUG
       Serial.println("goback limit");
@@ -3852,7 +3848,6 @@ void DecrementYPulses( void )
     Serial.print(gXPulses,DEC);
     Serial.println(gYPulses,DEC);
 #endif
-    readLimitSwitches();
     homed = false;
     return;
   }
@@ -3924,7 +3919,6 @@ void plotLine(long x0, long y0, long x1, long y1,unsigned long col,int fast)
   }
 }
 
-
 boolean movebackleft(long x0_pulses,long y0_pulses, boolean nolimit )
 {
   long length = DELAY_Y2 + DELAY_Y1;
@@ -3956,7 +3950,7 @@ boolean movebackleft(long x0_pulses,long y0_pulses, boolean nolimit )
   while( fsteps || lsteps )
   {
     if( nolimit == true ) {
-      if( digitalRead( YL2 ) ) {
+      if( y2Limit ) {
         digitalWrite(YCCW,HIGH);
         digitalWrite(XCW,HIGH);
 #ifndef NDEBUG
@@ -3967,7 +3961,7 @@ boolean movebackleft(long x0_pulses,long y0_pulses, boolean nolimit )
     }
 
     if( nolimit == true ) {
-      if( digitalRead( XL1 ) ) {
+      if( x1Limit ) {
         digitalWrite(YCW,HIGH);
         digitalWrite(XCW,HIGH);
 #ifndef NDEBUG
@@ -3980,6 +3974,7 @@ boolean movebackleft(long x0_pulses,long y0_pulses, boolean nolimit )
 
     /// handle forward/back Y axis
     if( fsteps ) {
+      
       stepYCCW( length );
 
       if( fi < (y0_pulses-fperc)) 
@@ -4056,7 +4051,7 @@ boolean movebackright(long x0_pulses,long y0_pulses, boolean nolimit )
   while( fsteps || lsteps )
   {
     if( nolimit == true ) {
-      if( digitalRead( YL2 ) ) {
+      if( y2Limit ) {
         digitalWrite(YCCW,HIGH);
         digitalWrite(XCCW,HIGH);
 #ifndef NDEBUG
@@ -4067,7 +4062,7 @@ boolean movebackright(long x0_pulses,long y0_pulses, boolean nolimit )
     }
 
     if( nolimit == true ) {
-      if( digitalRead( XL2 ) ) {
+      if( x2Limit ) {
         digitalWrite(YCCW,HIGH);
         digitalWrite(XCCW,HIGH);
 #ifndef NDEBUG
@@ -4256,7 +4251,7 @@ boolean moveforwardleft(long x0_pulses,long y0_pulses, boolean nolimit )
   while( fsteps || lsteps )
   {
     if( nolimit == true ) {
-      if( digitalRead( YL1 ) ) {
+      if( y1Limit ) {
         digitalWrite(YCW,HIGH);
         digitalWrite(XCW,HIGH);
 #ifndef NDEBUG
@@ -4267,7 +4262,7 @@ boolean moveforwardleft(long x0_pulses,long y0_pulses, boolean nolimit )
     }
 
     if( nolimit == true ) {
-      if( digitalRead( XL1 ) ) {
+      if( x1Limit ) {
         digitalWrite(YCW,HIGH);
         digitalWrite(XCW,HIGH);
 #ifndef NDEBUG
