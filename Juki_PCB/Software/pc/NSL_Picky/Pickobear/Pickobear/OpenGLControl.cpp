@@ -67,6 +67,11 @@ void COpenGLControl::OnRButtonDown(UINT nFlags, CPoint point )
 		for( i = 0 ;  i < abs(point.y) ; i ++ ) 
 			m_Serial.Write("U");
 
+	CPickobearDlg *pDlg = (CPickobearDlg*)AfxGetApp()->m_pMainWnd;
+	ASSERT( pDlg );
+
+	long cx,cy;
+	pDlg->GetCurrentPosition(cx,cy);
 }
 
 void COpenGLControl::OnSize(UINT nType, int cx, int cy)
@@ -359,6 +364,4 @@ void COpenGLControl::oglInitialize(void)
 
 void COpenGLControl::OnStnDblclickCam2()
 {
-	// TODO: Add your control notification handler code here
-	__asm int 3
 }

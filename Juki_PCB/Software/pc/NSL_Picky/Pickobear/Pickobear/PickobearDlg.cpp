@@ -798,7 +798,6 @@ void CListCtrl_Components::OnHdnItemdblclickList2(NMHDR *pNMHDR, LRESULT *pResul
 	*pResult = 0;
 	
 	CPickobearDlg *pDlg = (CPickobearDlg*)AfxGetApp()->m_pMainWnd;
-
 	ASSERT( pDlg );
 
 	// iItem is item number, list is backwards
@@ -865,7 +864,7 @@ bool GetCurrentPosition ( long &x,long &y)
 		// it'll wrap automatically
 		lineBuffer[linePtr++] = sbyte;
 
-	}while( 1 );
+	} while( 1 );
 
 	x = atol( xString );
 	y = atol( yString );
@@ -889,16 +888,10 @@ void CPickobearDlg::OnBnClickedOffset()
 
 	long cx,cy;
 	GetCurrentPosition(cx,cy);
-	_RPT2(_CRT_WARN,"current pos = %d,%d\n",cx,cy);
-
-	_RPT2(_CRT_WARN,"compone pos = %d,%d\n", m_ComponentList.entry->x, m_ComponentList.entry->y);
 
 	// set the offset.
 	m_ComponentList.m_OffsetX = cx - m_ComponentList.entry->x; 
 	m_ComponentList.m_OffsetY = cy - m_ComponentList.entry->y;
-
-	_RPT2(_CRT_WARN,"offset pos = %d,%d\n",m_ComponentList.m_OffsetX,m_ComponentList.m_OffsetY);
-
 }
 
 
@@ -910,32 +903,17 @@ void CPickobearDlg::OnBnClickedGoff()
 
 void CPickobearDlg::OnBnClickedGoxy()
 {
-	// TODO: Add your control notification handler code here
 	MoveHead(m_GOX,m_GOY);
 }
 
 
 void CPickobearDlg::OnEnChangeGox()
 {
-	// TODO:  If this is a RICHEDIT control, the control will not
-	// send this notification unless you override the CDialog::OnInitDialog()
-	// function and call CRichEditCtrl().SetEventMask()
-	// with the ENM_CHANGE flag ORed into the mask.
-
-	// TODO:  Add your control notification handler code here
 	UpdateData(TRUE);
-
 }
 
 
 void CPickobearDlg::OnEnChangeGoy()
 {
-	// TODO:  If this is a RICHEDIT control, the control will not
-	// send this notification unless you override the CDialog::OnInitDialog()
-	// function and call CRichEditCtrl().SetEventMask()
-	// with the ENM_CHANGE flag ORed into the mask.
-
-	// TODO:  Add your control notification handler code here
 	UpdateData(TRUE);
-
 }
