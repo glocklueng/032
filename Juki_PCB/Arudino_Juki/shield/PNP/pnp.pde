@@ -2907,6 +2907,7 @@ void home( void )
     // failed
     if( xLimit1 ) {
       digitalWrite(XCW,HIGH);
+      Serial.print("f");
       return;
     }
 
@@ -2929,6 +2930,7 @@ void home( void )
     // failed
     if( yLimit1 ) {
       digitalWrite(YCW,HIGH);
+      Serial.print("f");
       return;
     }      
 
@@ -2951,6 +2953,8 @@ void home( void )
 #ifndef NDEBUG
     Serial.println("Failed to home");
 #endif
+  // failed
+   Serial.print("f");
     homed = false;
     return;
   }
@@ -2959,11 +2963,14 @@ void home( void )
   gXPulses = 0;
   gYPulses = 0;
 
+
 #ifndef NDEBUG
   Serial.println("HOMED");
 #endif
 
   homed = true;
+  // passed
+  Serial.print("p");
 }
 
 void centerof(void)

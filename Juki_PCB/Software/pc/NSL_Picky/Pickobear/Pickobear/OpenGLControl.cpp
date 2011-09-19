@@ -47,6 +47,9 @@ void COpenGLControl::OnRButtonDown(UINT nFlags, CPoint point )
 	
 	point.x -=w;
 	point.y -=h;
+	
+	point.x*=2;
+	point.y*=2;
 
 	if( point.x > 1 )
 		for( i = 0 ;  i < (point.x) ; i ++ ) 
