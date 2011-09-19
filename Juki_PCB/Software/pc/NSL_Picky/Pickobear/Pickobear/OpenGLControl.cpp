@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "OpenGLControl.h"
 #include "pickobear.h"
+#include "pickobeardlg.h"
 
 COpenGLControl::COpenGLControl(void)
 {
@@ -71,7 +72,7 @@ void COpenGLControl::OnRButtonDown(UINT nFlags, CPoint point )
 	ASSERT( pDlg );
 
 	long cx,cy;
-	pDlg->GetCurrentPosition(cx,cy);
+	GetCurrentPosition(cx,cy);
 }
 
 void COpenGLControl::OnSize(UINT nType, int cx, int cy)
