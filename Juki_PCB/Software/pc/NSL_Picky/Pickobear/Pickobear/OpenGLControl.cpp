@@ -193,13 +193,13 @@ void COpenGLControl::OnTimer(UINT nIDEvent)
 			float x,y;
 			x = img1->width/2.0f;
 			y = img1->height/2.0f;	
-			cx.x = x ; cx.y = 0;
-			cy.x = x ; cy.y = img1->height;
+			cx.x = (int)x ; cx.y = 0;
+			cy.x = (int)x ; cy.y = (int)img1->height;
 			cvLine(img1,  cx, cy, CV_RGB(0,0,200),2);
-			cx.x = 0 ; cx.y = y;
-			cy.x = img1->width ; cy.y = y;
+			cx.x = 0 ; cx.y = (int)y;
+			cy.x = (int)img1->width ; cy.y = (int)y;
 			cvLine(img1,  cx, cy, CV_RGB(0,0,200),2);
-			cx.x=x;cx.y=y;
+			cx.x=(int)x;cx.y=(int)y;
 			cvCircle(img1,cx,100,CV_RGB(0,0,200),2);
 			cvCircle(img1,cx,150,CV_RGB(0,0,200),2);
 			cvCircle(img1,cx,200,CV_RGB(0,0,200),2);
