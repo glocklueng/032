@@ -177,7 +177,7 @@ BOOL CPickobearDlg::OnInitDialog()
 	ScreenToClient(rect);
 
 	// Create OpenGL Control window
-	( ( CWnd* ) GetDlgItem( IDC_DOWNCAM ) )->SetWindowText( m_oglWindow.oglCreate( rect, rect1, this, 4 ) );
+	( ( CWnd* ) GetDlgItem( IDC_DOWNCAM ) )->SetWindowText( m_oglWindow.oglCreate( rect, rect1, this, 3 ) );
 
 	// Setup the OpenGL Window's timer to render
 	m_oglWindow.m_unpTimer = m_oglWindow.SetTimer(1, 1, 0);
