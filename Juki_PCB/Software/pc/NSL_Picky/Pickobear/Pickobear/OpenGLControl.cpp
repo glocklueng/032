@@ -11,7 +11,6 @@ COpenGLControl::COpenGLControl(void)
 
 }
 
-
 COpenGLControl::~COpenGLControl(void)
 {
 	if( m_camera!=-1) {

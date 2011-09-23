@@ -62,16 +62,16 @@ enum {
 
 
 // maximum speed the motors can travel at
-int X_SPEED =( 150 );
-int Y_SPEED =( 120 );
+int X_SPEED =( 50 );
+int Y_SPEED =( 28 );
 
 // for diagonal move
 int X2_SPEED =( 90 );
 int Y2_SPEED =( 90 );
 
 // length of pulse sent to motor controller
-#define SHORT_X_PULSE ( 7 )
-#define SHORT_Y_PULSE ( 7 )
+#define SHORT_X_PULSE ( 4 )
+#define SHORT_Y_PULSE ( 4 )
 
 // Limit switches
 volatile boolean xLimit1=false,xLimit2=false,xLimit3=false,yLimit1=false,yLimit2=false,yLimit3=false;
@@ -90,10 +90,10 @@ boolean xHome=false,yHome=false;
 // motor speed pulses
 // motors need |__
 
-unsigned short DELAY_X1 =(150*2); // 148 lowest (maybe 150)
-unsigned short DELAY_X2 =(150*2);
-unsigned short DELAY_Y1 =(208*2); //200 lowest
-unsigned short DELAY_Y2 =(208*2);
+unsigned short DELAY_X1 =(100*2); // 148 lowest (maybe 150)
+unsigned short DELAY_X2 =(100*2);
+unsigned short DELAY_Y1 =(40*2); //200 lowest
+unsigned short DELAY_Y2 =(40*2);
 
 // 500 pulses = 25mm
 // 100 pulses = 5mm
@@ -236,7 +236,7 @@ void setup( void )
   attachInterrupt(4, x2Limit, CHANGE );
   attachInterrupt(5, x1Limit, CHANGE );
 
- // intial read of their state
+  // intial read of their state
   xLimit1 = digitalRead( XL1 );
   yLimit1 = digitalRead( YL1 );
   xLimit2 = digitalRead( XL2 );
@@ -1742,13 +1742,11 @@ void setup( void )
 
 
     while( 0 ) {
-      
+
       int i;
       int a;
 
       int step = 65;
-
-      while(1) stepYCW( 100 ) ;
 
       i= 5000;
 
@@ -1898,6 +1896,7 @@ void readPanel( void )
     }
   }
 
+fspeed=1;
   // remember last setting
   lastTeach = teachSwitch;
 
@@ -2559,7 +2558,7 @@ void loop()
       break;
 
     case '?':
-    
+
       gCurrentXum = pulsestoum( gXPulses ) ;
       gCurrentYum = pulsestoum( gYPulses ) ;
 
@@ -2575,6 +2574,17 @@ void loop()
       break;
 
     case 'A':
+
+      gotoxy(0,0);
+      delay(200);
+      gotoxy(290000,0);
+      delay(200);
+      gotoxy(290000,290000);
+      delay(200);
+      gotoxy(0,290000);
+      delay(200);
+      break;
+      
       movebackright(5000,3000,1);
       delay(20);
       movebackleft(5000,3000,1);
@@ -2593,9 +2603,6 @@ void loop()
        */
       break;
     case 'a':
-      movebackright(1000,1000,1);
-      delay(100);
-      break;
 
       delay(100);
 
@@ -2867,13 +2874,13 @@ void home( void )
   // check XL1,YL1 limits if its in either, move out? 
   for(int i = 0 ; i < 1000 ; i++ ) {
 
-    if( xLimit2 ) {
+    if( digitalRead( XL2 ) ) {
       digitalWrite(XCCW,HIGH);
       break;
     }
 
     // hit a limit
-    if( yLimit2 ) {
+    if( digitalRead( YL2 )) {
       digitalWrite(YCCW,HIGH);
       break;
     }
@@ -2905,7 +2912,7 @@ void home( void )
     }
 
     // failed
-    if( xLimit1 ) {
+    if( digitalRead( XL1 ) ) {
       digitalWrite(XCW,HIGH);
       Serial.print("f");
       return;
@@ -2928,7 +2935,7 @@ void home( void )
 
     // hit a limit
     // failed
-    if( yLimit1 ) {
+    if( digitalRead( YL1 ) ) {
       digitalWrite(YCW,HIGH);
       Serial.print("f");
       return;
@@ -2953,8 +2960,8 @@ void home( void )
 #ifndef NDEBUG
     Serial.println("Failed to home");
 #endif
-  // failed
-   Serial.print("f");
+    // failed
+    Serial.print("f");
     homed = false;
     return;
   }
@@ -3033,7 +3040,7 @@ void walk(void)
 #ifndef NDEBUG
   Serial.println("Walk limit mode enabled, press a key to stop after limit reached");
 #endif
-  Serial.read();
+  while( Serial.available() ) Serial.read();
 
   while(1){
     findrightlimit(); 
@@ -3176,8 +3183,8 @@ boolean findlefthome(void) {
     }
 
 
-    ( DELAY_Y1 + DELAY_Y2);
-    counter++;
+    stepXCW( DELAY_Y1 + DELAY_Y2);
+    counter++; 
   }  
 
   // reset it back
@@ -3322,7 +3329,7 @@ void beforeMoving( void )
 void stepYCW( unsigned long length ) 
 {    
   beforeMoving();
-  cli();  
+  // cli();  
   {
 
     //digitalWrite(YCW,HIGH);
@@ -3339,7 +3346,7 @@ void stepYCW( unsigned long length )
     //    __builtin_avr_delay_cycles( 62 *16 ) ;
     _delay_us( length );   
   } 
-  sei();
+  //sei();
 
   DecrementYPulses();
 }
@@ -3349,7 +3356,7 @@ void stepYCCW( long pulselength )
 {
   beforeMoving();
 
-  cli();
+  //cli();
   //  digitalWrite(YCCW,HIGH);
   YCCW_LOW;
   //   bitSet(PORTF,3);
@@ -3358,7 +3365,7 @@ void stepYCCW( long pulselength )
   YCCW_HIGH;
   //   bitClear(PORTF,3);
   _delay_us( pulselength );  
-  sei();
+  //sei();
 
   IncrementYPulses();
 }
@@ -3368,7 +3375,7 @@ void stepXCW( long pulselength )
 {
   beforeMoving();
 
-  cli();
+  //cli();
   XCW_LOW;
   //  digitalWrite(XCW,HIGH);
   _delay_us( SHORT_X_PULSE ) ;
@@ -3376,7 +3383,7 @@ void stepXCW( long pulselength )
   //  digitalWrite(XCW,LOW);
   XCW_HIGH;
   _delay_us(pulselength); 
-  sei();
+  //sei();
 
   DecrementXPulses();
 }
@@ -3386,6 +3393,7 @@ void stepXCCW( long pulselength )
 {
   beforeMoving();
 
+  //cli();
   XCCW_LOW;
   //  digitalWrite(XCCW,HIGH);
   _delay_us( SHORT_X_PULSE ) ;
@@ -3394,7 +3402,7 @@ void stepXCCW( long pulselength )
 
   _delay_us(pulselength);    
 
-  sei();
+  //sei();
   IncrementXPulses();
 }
 
@@ -3405,7 +3413,7 @@ boolean findypluslimit(void) {
 
   while( 1 ) {
 
-    if(  digitalRead( YL1 )) {
+    if(  digitalRead( YL1 ) ) {
 
       digitalWrite(YCW,HIGH);
 
@@ -3423,7 +3431,7 @@ boolean findypluslimit(void) {
       return false;
     }
 
-    stepYCW(length--);
+    stepYCW(length);
 
     counter++;
 
@@ -3456,7 +3464,7 @@ boolean findyminuslimit(void) {
       return false;
     }
 
-    stepYCCW(length--);
+    stepYCCW(length);
     counter++;
 
     if (length <= Y_SPEED ) 
@@ -3570,6 +3578,7 @@ boolean gotoxy(long xum,long yum)
   Serial.println(numYPulses);
 #endif    
 
+//movebackright
   if( numXPulses > 0 ) {
     if( xDir == true ) {
       goleft( numXPulses, 1);
@@ -3709,36 +3718,34 @@ boolean goforward(long steps ,boolean nolimit )
 {
   int i;
   long length = DELAY_Y2 + DELAY_Y1;
-  long perc = (steps /100 ) * 2;
+  long perc = (steps /100 ) * 6;
 
   if( (steps-perc) < 0 ) perc = 0;
 
   for(  i = 0 ; i < steps ; i ++ )
   {
-    stepYCW( length );
-  }
-
-  if( nolimit == true ) {
-    if( y1Limit ) {
-      digitalWrite(YCW,HIGH);
+    if( nolimit == true ) {
+      if( digitalRead( YL1 ) ) {
+        digitalWrite(YCW,HIGH);
 #ifndef NDEBUG
-      Serial.println("goforward limit");
+        Serial.println("goforward limit");
 #endif
-      return false;
+        return false;
+      }
     }
+
+    stepYCW( length );
+
+    if( i < (steps-perc)) 
+      length--;
+    else
+      length+=1;
+
+    if (length < Y_SPEED ) 
+      length = Y_SPEED;
+    if (length >DELAY_Y2 + DELAY_Y1 ) 
+      length = DELAY_Y2 + DELAY_Y1;          
   }
-
-  //  stepYCW( length );
-
-  if( i < (steps-perc)) 
-    length--;
-  else
-    length+=1;
-
-  if (length < Y_SPEED ) 
-    length = Y_SPEED;
-  if (length >DELAY_Y2 + DELAY_Y1 ) 
-    length = DELAY_Y2 + DELAY_Y1;          
 
   // reset it back
   digitalWrite(YCW,HIGH);
@@ -3751,39 +3758,36 @@ boolean goback(long steps ,boolean nolimit )
   int i;
 
   long length = DELAY_Y2 + DELAY_Y1;
-  long perc = (steps /100 ) * 2;
+  long perc = (steps /100 ) * 6;
 
   if( (steps-perc) < 0 ) 
     perc = 0;
 
   for( i = 0 ; i < steps ; i ++ )
   {
-    stepYCCW( length );
-  }
-  
-  if( nolimit == true ) {
-    if( y2Limit ) {
-      digitalWrite(YCCW,HIGH);
+    if( nolimit == true ) {
+      if( digitalRead( YL2 ) ) {
+        digitalWrite(YCCW,HIGH);
 #ifndef NDEBUG
-      Serial.println("goback limit");
+        Serial.println("goback limit");
 #endif
-      return false;
+        return false;
+      }
     }
+    stepYCCW( length ); 
+
+    if( i < (steps-perc)) 
+      length--;
+    else
+      length+=1;
+
+
+    if (length < Y_SPEED ) 
+      length = Y_SPEED;
+
+    if (length >DELAY_Y2 + DELAY_Y1 ) 
+      length = DELAY_Y2 + DELAY_Y1;
   }
-  //    stepYCCW( length/2 ); 
-
-  if( i < (steps-perc)) 
-    length--;
-  else
-    length+=1;
-
-
-  if (length < Y_SPEED ) 
-    length = Y_SPEED;
-
-  if (length >DELAY_Y2 + DELAY_Y1 ) 
-    length = DELAY_Y2 + DELAY_Y1;
-
 
 
   // reset it back
@@ -3885,7 +3889,7 @@ void plotLine(long x0, long y0, long x1, long y1,unsigned long col,int fast)
       // first segment, slow
       gotoxy(x0,y0);
       delay(20);
-      seg1	--;
+      seg1--;
       dist--;
     } 
     else {
@@ -3950,7 +3954,7 @@ boolean movebackleft(long x0_pulses,long y0_pulses, boolean nolimit )
   while( fsteps || lsteps )
   {
     if( nolimit == true ) {
-      if( y2Limit ) {
+      if( digitalRead( YL2 ) ) {
         digitalWrite(YCCW,HIGH);
         digitalWrite(XCW,HIGH);
 #ifndef NDEBUG
@@ -3961,7 +3965,7 @@ boolean movebackleft(long x0_pulses,long y0_pulses, boolean nolimit )
     }
 
     if( nolimit == true ) {
-      if( x1Limit ) {
+      if( digitalRead( XL1 )  ) {
         digitalWrite(YCW,HIGH);
         digitalWrite(XCW,HIGH);
 #ifndef NDEBUG
@@ -3971,11 +3975,20 @@ boolean movebackleft(long x0_pulses,long y0_pulses, boolean nolimit )
       }
     }
 
-
     /// handle forward/back Y axis
-    if( fsteps ) {
-      
-      stepYCCW( length );
+    if( fsteps || lsteps  ) {
+
+      if( fsteps ) {
+        stepYCCW( length );
+        fi ++;
+        fsteps--;
+      }
+
+      if( lsteps ) {
+        stepXCW( llength );            
+        li ++;
+        lsteps--;
+      }
 
       if( fi < (y0_pulses-fperc)) 
         length-=ACCEL_STEP;
@@ -3988,14 +4001,6 @@ boolean movebackleft(long x0_pulses,long y0_pulses, boolean nolimit )
       if (length >DELAY_Y2 + DELAY_Y1 ) 
         length = DELAY_Y2 + DELAY_Y1; 
 
-      fi ++;
-      fsteps--;
-    }
-
-    /// handle left, right X axis
-    if( lsteps ) {
-
-      stepXCW( llength );
 
       if( li < (x0_pulses-lperc)) 
         llength-=ACCEL_STEP;
@@ -4008,9 +4013,8 @@ boolean movebackleft(long x0_pulses,long y0_pulses, boolean nolimit )
       if (llength > DELAY_X2 + DELAY_X1 ) 
         llength = DELAY_X2 + DELAY_X1;
 
-      li ++;
-      lsteps--;
-    }  
+
+    }
   }  
 
   // reset servos back
@@ -4051,7 +4055,7 @@ boolean movebackright(long x0_pulses,long y0_pulses, boolean nolimit )
   while( fsteps || lsteps )
   {
     if( nolimit == true ) {
-      if( y2Limit ) {
+      if( digitalRead( YL2 )  ) {
         digitalWrite(YCCW,HIGH);
         digitalWrite(XCCW,HIGH);
 #ifndef NDEBUG
@@ -4062,7 +4066,7 @@ boolean movebackright(long x0_pulses,long y0_pulses, boolean nolimit )
     }
 
     if( nolimit == true ) {
-      if( x2Limit ) {
+      if( digitalRead( XL2 ) ) {
         digitalWrite(YCCW,HIGH);
         digitalWrite(XCCW,HIGH);
 #ifndef NDEBUG
@@ -4251,7 +4255,7 @@ boolean moveforwardleft(long x0_pulses,long y0_pulses, boolean nolimit )
   while( fsteps || lsteps )
   {
     if( nolimit == true ) {
-      if( y1Limit ) {
+      if( digitalRead( YL1)  ) {
         digitalWrite(YCW,HIGH);
         digitalWrite(XCW,HIGH);
 #ifndef NDEBUG
@@ -4262,7 +4266,7 @@ boolean moveforwardleft(long x0_pulses,long y0_pulses, boolean nolimit )
     }
 
     if( nolimit == true ) {
-      if( x1Limit ) {
+      if( digitalRead( XL1 ) ) {
         digitalWrite(YCW,HIGH);
         digitalWrite(XCW,HIGH);
 #ifndef NDEBUG
@@ -4296,9 +4300,9 @@ boolean moveforwardleft(long x0_pulses,long y0_pulses, boolean nolimit )
       stepXCW( llength );
 
       if( li < (x0_pulses-lperc)) 
-        llength-=2;
+        llength -= ACCEL_STEP;
       else
-        llength+=1;
+        llength += 1;
 
       if (llength < X2_SPEED ) 
         llength = X2_SPEED;
@@ -4380,6 +4384,7 @@ void moveLine2_slow( long x0, long y0, long x1, long y1)
   }
 }
 
+// um
 void moveLine2_fast( long x0, long y0, long x1, long y1)
 {
   long xdiff,ydiff;
@@ -4447,7 +4452,9 @@ void moveLine2_fast( long x0, long y0, long x1, long y1)
       x0 -= xdiff;
       break;
     case GO_BR:
+#ifndef NDEBUG
       Serial.print("GO_BR ");
+#endif
       movebackright(xdiff,ydiff,true);
       y0 += ydiff;
       x0 += xdiff;
@@ -4530,7 +4537,7 @@ void movexy(long x0,long y0 )
     head(0) ;
   }
 
-  moveLine2_slow(lx,ly,x0,y0);
+  moveLine2_fast(lx,ly,x0,y0);
 
   // remember last position
   lx = x0;
@@ -4546,6 +4553,7 @@ void setupTimer1(void)
   // Timer/Counter 1 Output Compare A Match Interrupt enable.
   TIMSK1 = (1<<OCIE1A);
 }
+
 
 
 
