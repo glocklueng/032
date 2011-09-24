@@ -24,7 +24,7 @@ public:
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 
-// Implementation
+// Implementation5
 protected:
 	DECLARE_MESSAGE_MAP()
 };
@@ -57,8 +57,8 @@ CPickobearDlg::CPickobearDlg(CWnd* pParent /*=NULL*/)
 	, m_Head(0)
 	, m_GOX(0)
 	, m_GOY(0)
+	, m_pFeederDlg( NULL )
 {
-
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
 
@@ -787,8 +787,9 @@ void CPickobearDlg::OnBnClickedGo()
 
 void CPickobearDlg::OnBnClickedFeeder()
 {
-	CFeederSetup dlg;
-	INT_PTR nResponse = dlg.DoModal();
+	m_pFeederDlg = new CFeederSetup(this);
+	m_pFeederDlg->Create(CFeederSetup::IDD,GetDesktopWindow());
+	m_pFeederDlg->ShowWindow(SW_SHOW);
 }
 
 
