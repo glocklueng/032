@@ -26,8 +26,10 @@ void CFeederSetup::DoDataExchange(CDataExchange* pDX)
 	CDialog::DoDataExchange(pDX);
 }
 
-
 BEGIN_MESSAGE_MAP(CFeederSetup, CDialog)
+	ON_WM_SYSCOMMAND()
+	ON_WM_PAINT()
+	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 

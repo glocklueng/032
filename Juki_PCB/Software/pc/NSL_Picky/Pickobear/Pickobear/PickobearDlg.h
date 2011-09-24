@@ -96,8 +96,9 @@ private:
 	// each of the camera windows
 	COpenGLControl m_oglWindow;
 	COpenGLControl m_oglWindow1;
+	CFeederSetup *m_pFeederDlg ;
 	
-	char m_Head;
+		char m_Head;
 
 	enum eMachineState {
 		MS_IDLE,MS_GO
