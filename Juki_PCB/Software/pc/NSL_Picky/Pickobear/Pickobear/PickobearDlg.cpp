@@ -367,9 +367,6 @@ bool CPickobearDlg::MoveHead( long x, long y )
 	long cx,cy;
 	GetCurrentPosition(cx,cy);
 
-	x = (x/40)*40;
-	y = (y/40)*40;
-
 	sprintf(buffer,"g%d,%d\n",x,y);
 
 	_RPT4(_CRT_WARN,"current pos = %dum,%dum\nGoing to %dum,%dum\n",cx,cy,x,y);
@@ -761,8 +758,8 @@ DWORD CPickobearDlg::goThread(void )
 		
 		 entry = m_ComponentList.at(i);
 		 
-		MoveHead(entry.x,entry.y);
-
+		MoveHead(entry.x+m_ComponentList.m_OffsetX,
+			     entry.y+m_ComponentList.m_OffsetY);
 	}
 	 
 	// Park machine
@@ -775,6 +772,10 @@ DWORD CPickobearDlg::goThread(void )
 
 void CPickobearDlg::OnBnClickedGo()
 {
+
+	if ( m_MachineState == MS_GO  ) { 
+		return;
+	}
 
 	// switch state to GO
 	m_MachineState = MS_GO ;
@@ -881,6 +882,9 @@ void CPickobearDlg::OnBnClickedZero()
 	MoveHead(0,0);
 }
 
+// 82075
+// 236625
+
 
 void CPickobearDlg::OnBnClickedOffset()
 {
@@ -892,6 +896,9 @@ void CPickobearDlg::OnBnClickedOffset()
 	// set the offset.
 	m_ComponentList.m_OffsetX = cx - m_ComponentList.entry->x; 
 	m_ComponentList.m_OffsetY = cy - m_ComponentList.entry->y;
+
+	GetDlgItem( IDC_OFFSET )->EnableWindow( FALSE );
+
 }
 
 
