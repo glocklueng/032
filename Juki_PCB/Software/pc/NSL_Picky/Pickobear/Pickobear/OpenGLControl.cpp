@@ -183,7 +183,7 @@ void COpenGLControl::OnTimer(UINT nIDEvent)
 
 			wglMakeCurrent(hdc, hrc);
 
-			Squares( img1 , m_Thresh1, m_Thresh2, VI.getDeviceName( m_camera ) ) ;
+			//Squares( img1 , m_Thresh1, m_Thresh2, VI.getDeviceName( m_camera ) ) ;
 
 
 			CvPoint cx;

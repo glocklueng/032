@@ -62,16 +62,26 @@ enum {
 
 
 // maximum speed the motors can travel at
-int X_SPEED =( 50 );
+int X_SPEED =( 110 );
 int Y_SPEED =( 28 );
 
 // for diagonal move
-int X2_SPEED =( 90 );
-int Y2_SPEED =( 90 );
+int X2_SPEED =( 100 );
+int Y2_SPEED =( 100 );
+
+
+// motor speed pulses
+// motors need |__
+
+unsigned short DELAY_X1 =(140*2); // 148 lowest (maybe 150)
+unsigned short DELAY_X2 =(140*2);
+unsigned short DELAY_Y1 =(140*2); //200 lowest
+unsigned short DELAY_Y2 =(140*2);
+
 
 // length of pulse sent to motor controller
-#define SHORT_X_PULSE ( 4 )
-#define SHORT_Y_PULSE ( 4 )
+#define SHORT_X_PULSE ( 7 )
+#define SHORT_Y_PULSE ( 7 )
 
 // Limit switches
 volatile boolean xLimit1=false,xLimit2=false,xLimit3=false,yLimit1=false,yLimit2=false,yLimit3=false;
@@ -86,14 +96,6 @@ boolean xPlus=false,xMinus=false,yMinus=false,yPlus=false,fastSwitch=false,teach
 
 // home sensors (set if currently in home position for each axis)
 boolean xHome=false,yHome=false;
-
-// motor speed pulses
-// motors need |__
-
-unsigned short DELAY_X1 =(100*2); // 148 lowest (maybe 150)
-unsigned short DELAY_X2 =(100*2);
-unsigned short DELAY_Y1 =(40*2); //200 lowest
-unsigned short DELAY_Y2 =(40*2);
 
 // 500 pulses = 25mm
 // 100 pulses = 5mm
@@ -2664,6 +2666,9 @@ void loop()
     case 'X':
       rotate(false);
       break;
+    case 'x':
+      rotate(true);
+      break;
     case 'c':
       center(true);
       break;          
@@ -3379,7 +3384,7 @@ void stepXCW( long pulselength )
   XCW_LOW;
   //  digitalWrite(XCW,HIGH);
   _delay_us( SHORT_X_PULSE ) ;
-  delayMicroseconds(SHORT_X_PULSE); 
+//  delayMicroseconds(SHORT_X_PULSE); 
   //  digitalWrite(XCW,LOW);
   XCW_HIGH;
   _delay_us(pulselength); 
@@ -3514,7 +3519,7 @@ inline long pulsestomm( long pulses )
  
  */
 
-boolean gotoxy(long xum,long yum)
+boolean gotoxy( long xum, long yum )
 {
   // direction to travel, defaults to right and back
   boolean xDir=true,yDir=true;
@@ -3581,10 +3586,28 @@ boolean gotoxy(long xum,long yum)
 //movebackright
   if( numXPulses > 0 ) {
     if( xDir == true ) {
-      goleft( numXPulses, 1);
+      if( numYPulses > 0 ) {
+        if( yDir == true ) {
+          moveforwardleft(numXPulses,numYPulses,1);
+          numYPulses= 0;
+        } else {
+          movebackleft(numXPulses,numYPulses,1);
+          numYPulses= 0;
+        }
+      } else
+        goleft( numXPulses, 1);
     } 
-    else {
-      goright( numXPulses, 1 ) ;
+    else {  
+      if( numYPulses > 0 ) {
+        if( yDir == true ) {
+          moveforwardright(numXPulses,numYPulses,1);
+          numYPulses= 0;
+        } else {
+          movebackright(numXPulses,numYPulses,1);
+          numYPulses= 0;
+        }
+      } else
+        goright( numXPulses, 1 ) ;
     }
   }
 
@@ -3596,6 +3619,11 @@ boolean gotoxy(long xum,long yum)
       goback( numYPulses, 1);
     }
   }
+  
+    // remember last position
+  lx = xum;
+  ly = yum;
+  
   return true;       
 }
 
