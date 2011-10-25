@@ -1,0 +1,28 @@
+
+With example links
+
+1 x ATMEL - ATTINY2313-20PU 
+		http://www.mouser.com/search/ProductDetail.aspx?qs=%2F3fErP%2Fu%252bPG7dXL0kuANBA%3D%3D 
+		http://parts.digikey.com/1/parts/552505-ic-mcu-avr-2k-flash-20dip-attiny2313-20pu.html 
+		http://avnetexpress.avnet.com/store/em/EMController/_/A-3592179/An-0?action=part&catalogId=500201&langId=-1&storeId=500201&CMP=KNC-Supplyframe_VSE-T11
+
+24 x 3MM PTH LED ( HLMP-KB45-A0000  you choose colour 83H6746 newark example) less than 3.1V Forward volts. 3.3V at a push
+
+6 x 220 ohm 1/4W PTH resistors 
+		http://www.digikey.com/us/en/products/RC14JB220R/RC14JB220R-ND/1744980 example
+
+1 x 24MM PTH CR Battery holder
+		 http://www.digikey.com/us/en/products/BK-5033/BK-5033-ND/2330512 (2450 Battey)
+
+1 x CR2450 Battery, you can change which battery you want to use as long as its a 24MM holder. Digikey etc batteries are 'california' so not as good
+
+1 x 6mmx6mm PTH switch, momentary  
+		http://www.digikey.com/us/en/products/FSM2JH/450-1649-ND/1632535
+
+Optional for programming
+
+1 x 6 pin 2.54mm header programming socket
+
+1 x STK500/STK600/AVR Dragon for programming
+
+1 x 6 Pin IDC to  Pin 2.54mm header
