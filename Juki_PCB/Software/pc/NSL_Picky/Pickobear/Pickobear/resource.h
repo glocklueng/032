@@ -56,7 +56,10 @@
 #define IDC_GOY                         1043
 #define IDC_XL2                         1044
 #define IDC_YL1                         1045
-#define IDC_YL2							1046
+#define IDC_YL2                         1046
+#define IDC_LIST3                       1047
+#define IDC_BUTTON1                     1048
+#define IDC_ADD_FEEDER                  1048
 
 // Next default values for new objects
 // 
@@ -64,7 +67,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        131
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1042
+#define _APS_NEXT_CONTROL_VALUE         1049
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

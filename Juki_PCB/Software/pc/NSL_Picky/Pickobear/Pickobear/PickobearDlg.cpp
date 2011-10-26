@@ -74,6 +74,7 @@ void CPickobearDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_LIST2, m_ComponentList);
 	DDX_Text(pDX, IDC_GOX, m_GOX);
 	DDX_Text(pDX, IDC_GOY, m_GOY);
+	DDX_Control(pDX, IDC_LIST3, m_FeederList);
 }
 
 BEGIN_MESSAGE_MAP(CPickobearDlg, CDialog)
@@ -114,6 +115,7 @@ BEGIN_MESSAGE_MAP(CPickobearDlg, CDialog)
 	ON_BN_CLICKED(IDC_GOXY, &CPickobearDlg::OnBnClickedGoxy)
 	ON_EN_KILLFOCUS(IDC_GOX, &CPickobearDlg::OnEnChangeGox)
 	ON_EN_KILLFOCUS(IDC_GOY, &CPickobearDlg::OnEnChangeGoy)
+	ON_BN_CLICKED(IDC_ADD_FEEDER, &CPickobearDlg::OnBnClickedAddFeeder)
 END_MESSAGE_MAP()
 
 BEGIN_MESSAGE_MAP(CListCtrl_Components, CListCtrl)
@@ -211,6 +213,15 @@ BOOL CPickobearDlg::OnInitDialog()
 	m_ComponentList.InsertColumn(5, _T("F"),LVCFMT_CENTER,nInterval);
 
 	m_Rotation.SetRange(0,360);
+		
+	m_FeederList.GetClientRect(&rect);
+	nInterval =( rect.Width() / 5 );
+
+	m_FeederList.InsertColumn(0, _T("ID"),LVCFMT_CENTER,nInterval/2);
+	m_FeederList.InsertColumn(1, _T("Name"),LVCFMT_CENTER,nInterval);
+	m_FeederList.InsertColumn(2, _T("X"),LVCFMT_CENTER,nInterval);
+	m_FeederList.InsertColumn(3, _T("Y"),LVCFMT_CENTER,nInterval);
+	m_FeederList.InsertColumn(4, _T("Rot"),LVCFMT_CENTER,nInterval);
 
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
@@ -382,9 +393,10 @@ bool CPickobearDlg::MoveHead( long x, long y )
 	GetCurrentPosition(cx,cy);
 	_RPT2(_CRT_WARN,"current pos = %d,%d\n",cx,cy);
 
-	if( cx!= x &&  cy != y ) {
+	if( (cx) != x &&  (cy) != y) {
 		
-		_RPT0(_CRT_WARN,"Problem!");
+		_RPT2(_CRT_WARN,"Problem! wanted=(%d,%d)", x,y );
+		_RPT2(_CRT_WARN," converted=(%d,%d)\n",((cx/40)*40),((cy/40)*40) );
 	}
 
 	return true;
@@ -578,7 +590,7 @@ void CPickobearDlg::OnBnClickedLoad()
 
 	if( FALSE == m_File.Open(  m_LoadFile , CFile::modeRead ) ) {
 		return ;
-	}
+	} 
 
 	m_File.Close();
 }
@@ -677,8 +689,14 @@ CString GetLoadFile( const TCHAR *ptypes, const TCHAR*caption, const TCHAR *pSta
 	szFile.Empty();
 	memset( tmpFile, 0, MAX_PATH );
 
-	if( pStartDir)
-		_tcscpy_s(tmpFile, sizeof(tmpFile)-1,pStartDir);
+	if(pStartDir != NULL && _tcslen( pStartDir ) ) {
+
+		_tcscpy_s(
+			tmpFile, 
+			MAX_PATH,
+			pStartDir
+		);
+	}
 
 	ZeroMemory(&ofn, sizeof(OPENFILENAME));
 	ofn.lStructSize	= sizeof(OPENFILENAME);
@@ -818,6 +836,7 @@ void CListCtrl_Components::OnHdnItemdblclickList2(NMHDR *pNMHDR, LRESULT *pResul
 
 bool GetCurrentPosition ( long &x,long &y)
 {
+	char sbyte;
 	CPickobearDlg *pDlg = (CPickobearDlg*)AfxGetApp()->m_pMainWnd;
 
 	ASSERT( pDlg );
@@ -825,7 +844,12 @@ bool GetCurrentPosition ( long &x,long &y)
 	// read offset in pulses
 	m_Serial.Write("?");
 
-	// give arduino time to answer
+	// wait for ACK
+	do {
+		Sleep(200);
+		m_Serial.Read(&sbyte,1);
+	} while( sbyte != '?');
+			
 	Sleep(200);
 
 	char lineBuffer[256];
@@ -835,7 +859,6 @@ bool GetCurrentPosition ( long &x,long &y)
 	char yString[20];
 
 	do {
-		char sbyte;
 		// does this timeout ?
 		m_Serial.Read(&sbyte,1);
 
@@ -864,7 +887,11 @@ bool GetCurrentPosition ( long &x,long &y)
 		}
 		// add to buffer.
 		// it'll wrap automatically
-		lineBuffer[linePtr++] = sbyte;
+		if( linePtr < sizeof( lineBuffer) -1 ) {
+			lineBuffer[linePtr++] = sbyte;
+		} else {
+			return false ;
+		}
 
 	} while( 1 );
 
@@ -924,4 +951,10 @@ void CPickobearDlg::OnEnChangeGox()
 void CPickobearDlg::OnEnChangeGoy()
 {
 	UpdateData(TRUE);
+}
+
+
+void CPickobearDlg::OnBnClickedAddFeeder()
+{
+	// TODO: Add your control notification handler code here
 }

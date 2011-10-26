@@ -65,8 +65,8 @@ public:
 
 		entry.label = label;
 		entry.type = type;
-		entry.x = atol( x ) ;
-		entry.y = atol( y ) ;
+		entry.x = (atol( x )/40)*40 ;
+		entry.y = (atol( y )/40)*40 ;
 		entry.rot = atoi( rot ) ;
 
 		int Index = InsertItem(LVIF_TEXT, 0,entry.label, 0, 0, 0, NULL);
@@ -190,4 +190,6 @@ public:
 	long m_GOY;
 	afx_msg void OnEnChangeGox();
 	afx_msg void OnEnChangeGoy();
+	CListCtrl_Components m_FeederList;
+	afx_msg void OnBnClickedAddFeeder();
 };
