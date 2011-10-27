@@ -116,6 +116,7 @@ BEGIN_MESSAGE_MAP(CPickobearDlg, CDialog)
 	ON_EN_KILLFOCUS(IDC_GOX, &CPickobearDlg::OnEnChangeGox)
 	ON_EN_KILLFOCUS(IDC_GOY, &CPickobearDlg::OnEnChangeGoy)
 	ON_BN_CLICKED(IDC_ADD_FEEDER, &CPickobearDlg::OnBnClickedAddFeeder)
+	ON_BN_CLICKED(IDC_UPDATE, &CPickobearDlg::OnBnClickedUpdate)
 END_MESSAGE_MAP()
 
 BEGIN_MESSAGE_MAP(CListCtrl_Components, CListCtrl)
@@ -203,14 +204,15 @@ BOOL CPickobearDlg::OnInitDialog()
 	m_Serial.Setup(CSerial::EBaud9600);
 	
 	m_ComponentList.GetClientRect(&rect);
-	int nInterval =( rect.Width() / 6);
+	int nInterval =( rect.Width() / 7);
 
 	m_ComponentList.InsertColumn(0, _T("Name"),LVCFMT_CENTER,nInterval);
-	m_ComponentList.InsertColumn(1, _T("Type"),LVCFMT_CENTER,nInterval+(nInterval/2));
-	m_ComponentList.InsertColumn(2, _T("X"),LVCFMT_CENTER,nInterval);
-	m_ComponentList.InsertColumn(3, _T("Y"),LVCFMT_CENTER,nInterval);
-	m_ComponentList.InsertColumn(4, _T("R"),LVCFMT_CENTER,nInterval/2);
-	m_ComponentList.InsertColumn(5, _T("F"),LVCFMT_CENTER,nInterval);
+	m_ComponentList.InsertColumn(1, _T("Value"),LVCFMT_CENTER,nInterval/2);
+	m_ComponentList.InsertColumn(2, _T("Type"),LVCFMT_CENTER,nInterval+(nInterval/2));
+	m_ComponentList.InsertColumn(3, _T("X"),LVCFMT_CENTER,nInterval);
+	m_ComponentList.InsertColumn(4, _T("Y"),LVCFMT_CENTER,nInterval);
+	m_ComponentList.InsertColumn(5, _T("R"),LVCFMT_CENTER,nInterval/2);
+	m_ComponentList.InsertColumn(6, _T("F"),LVCFMT_CENTER,nInterval);
 
 	m_Rotation.SetRange(0,360);
 		
@@ -388,7 +390,6 @@ bool CPickobearDlg::MoveHead( long x, long y )
 	do { 
 		m_Serial.Read(&ch,1);
 	} while(ch!='A');
-
 
 	GetCurrentPosition(cx,cy);
 	_RPT2(_CRT_WARN,"current pos = %d,%d\n",cx,cy);
@@ -660,7 +661,7 @@ void CPickobearDlg::OnBnClickedImport()
 				token = strtok (NULL, seps);
 				i++;
 				
-				if( i == 5 ) {
+				if( i == 6 ) {
 					// too many inputs
 					token = NULL;
 				}
@@ -671,7 +672,7 @@ void CPickobearDlg::OnBnClickedImport()
 			}
 		}
 
-		m_ComponentList.AddItem(list[0], list[1], list[2], list[3],list[4]);
+		m_ComponentList.AddItem(list[0], list[1], list[2], list[3], list[4],list[5] );
 
 	}	while( 1 ) ;
 
@@ -778,6 +779,14 @@ DWORD CPickobearDlg::goThread(void )
 		 
 		MoveHead(entry.x+m_ComponentList.m_OffsetX,
 			     entry.y+m_ComponentList.m_OffsetY);
+		
+
+		int in = (m_ComponentList.GetCount()-1)-i;
+		m_ComponentList.SetItemState(in, LVIS_SELECTED, LVIS_SELECTED);
+		m_ComponentList.EnsureVisible( in ,TRUE );
+
+		UpdateWindow();
+
 	}
 	 
 	// Park machine
@@ -957,4 +966,11 @@ void CPickobearDlg::OnEnChangeGoy()
 void CPickobearDlg::OnBnClickedAddFeeder()
 {
 	// TODO: Add your control notification handler code here
+}
+
+
+void CPickobearDlg::OnBnClickedUpdate()
+{
+	long cx,cy;
+	GetCurrentPosition(cx,cy);
 }

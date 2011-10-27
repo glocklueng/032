@@ -20,6 +20,7 @@ public:
 		unsigned long x,y;
 		short rot;
 		CString label;
+		CString value;
 		CString type;
 	} CompDatabase;
 	
@@ -53,10 +54,11 @@ public:
 		return m_Database.at(i);
 	}
  
-	void AddItem( const char *label,const char *type,const char *x,const char *y,const char *rot)
+	void AddItem( const char *label,const char *type,const char *value,const char *x,const char *y,const char *rot)
 	{
 		ASSERT( label ) ;
 		ASSERT( type ) ;
+		ASSERT( value ) ;
 		ASSERT( x ) ;
 		ASSERT( y ) ;
 		ASSERT( rot ) ;
@@ -65,6 +67,9 @@ public:
 
 		entry.label = label;
 		entry.type = type;
+		entry.value  = value;
+
+		// convert to level of accuracy pnp can handle
 		entry.x = (atol( x )/40)*40 ;
 		entry.y = (atol( y )/40)*40 ;
 		entry.rot = atoi( rot ) ;
@@ -72,19 +77,17 @@ public:
 		int Index = InsertItem(LVIF_TEXT, 0,entry.label, 0, 0, 0, NULL);
 
 			SetItemText(Index,1,entry.type);
-			SetItemText(Index,2,CString(x));
-			SetItemText(Index,3,CString(y));
-			SetItemText(Index,4,CString(rot));
-			SetItemText(Index,5,_T("NA"));
+			SetItemText(Index,2,CString(value));
+			SetItemText(Index,3,CString(x));
+			SetItemText(Index,4,CString(y));
+			SetItemText(Index,5,CString(rot));
+			SetItemText(Index,6,_T("NA"));
 
 		// add to database
 		m_Database.push_back (entry );
 
 		m_Count ++;
 	}
-
-
-
 	afx_msg void OnHdnItemdblclickList2(NMHDR *pNMHDR, LRESULT *pResult);
 };
 
@@ -192,4 +195,5 @@ public:
 	afx_msg void OnEnChangeGoy();
 	CListCtrl_Components m_FeederList;
 	afx_msg void OnBnClickedAddFeeder();
+	afx_msg void OnBnClickedUpdate();
 };
