@@ -19,6 +19,7 @@ public:
 		unsigned int item;
 		unsigned long x,y;
 		short rot;
+		int feeder;
 		CString label;
 		CString value;
 		CString type;
@@ -33,11 +34,14 @@ public:
 	long m_OffsetX;
 	long m_OffsetY;
 
+	int m_FeederId;
+
 public:
 	CListCtrl_Components()
 	{
 		m_OffsetX = 0 ;
 		m_OffsetY = 0;
+		m_FeederId = -1;
 		m_Count = 0;
 		entry = NULL;
 	
@@ -49,6 +53,16 @@ public:
 	{
 		return m_Database.size();
 	}
+
+
+	void AssignFeeder(int idd, int id ) {
+
+		m_FeederId = id;
+
+		m_Database.at(idd).feeder = id;
+
+	}
+
 
 	CompDatabase  at( int i ) {
 		return m_Database.at(i);
@@ -68,6 +82,7 @@ public:
 		entry.label = label;
 		entry.type = type;
 		entry.value  = value;
+		entry.feeder = -1;
 
 		// convert to level of accuracy pnp can handle
 		entry.x = (atol( x )/40)*40 ;
@@ -81,7 +96,11 @@ public:
 			SetItemText(Index,3,CString(x));
 			SetItemText(Index,4,CString(y));
 			SetItemText(Index,5,CString(rot));
-			SetItemText(Index,6,_T("NA"));
+			CString temp(L"NA");
+			if ( entry.feeder != -1 ) {
+				temp.Format(L"%d",entry.feeder);
+			}
+			SetItemText(Index,6,temp);
 
 		// add to database
 		m_Database.push_back (entry );
@@ -89,8 +108,85 @@ public:
 		m_Count ++;
 	}
 	afx_msg void OnHdnItemdblclickList2(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnNMRClickList2(NMHDR *pNMHDR, LRESULT *pResult);
 };
 
+
+class CListCtrl_FeederList : public CListCtrl
+{
+	afx_msg void OnNcLButtonDblClk (UINT nFlags, CPoint point);
+	DECLARE_MESSAGE_MAP();
+
+	void PreSubclassWindow();
+public:
+	typedef struct CompDatabase_tag  {
+		unsigned int item;
+		unsigned long x,y;
+		short rot;
+		CString label;
+		CString type;
+	} FeederDatabase;
+	
+	std::vector<FeederDatabase> m_Database;
+	
+	FeederDatabase *entry;
+
+	
+	/// Offset of item in PCB
+	long m_OffsetX;
+	long m_OffsetY;
+
+public:
+	CListCtrl_FeederList()
+	{
+		m_OffsetX = 0 ;
+		m_OffsetY = 0;
+		m_Count = 0;
+		entry = NULL;
+	
+	}
+
+	unsigned long m_Count ;
+
+	unsigned long GetCount( void )
+	{
+		return m_Database.size();
+	}
+
+	FeederDatabase  at( int i ) {
+		return m_Database.at(i);
+	}
+ 
+	void AddItem( const char *label,const long x,long y,short rot)
+	{
+		ASSERT( label ) ;
+		
+		FeederDatabase entry;
+
+		entry.label = label;
+
+		// convert to level of accuracy pnp can handle
+		entry.x = (( x )/40)*40 ;
+		entry.y = (( y )/40)*40 ;
+		entry.rot = ( rot ) ;
+
+		int Index = InsertItem(LVIF_TEXT, 0,entry.label, 0, 0, 0, NULL);
+		CString temp;
+		SetItemText(Index,1,entry.label);
+		temp.Format(L"%d",x);
+		SetItemText(Index,2,temp);
+		temp.Format(L"%d",y);
+		SetItemText(Index,3,temp);
+		temp.Format(L"%d",rot);
+		SetItemText(Index,4,temp);
+	
+	// add to database
+		m_Database.push_back (entry );
+
+		m_Count ++;
+	}
+	afx_msg void OnHdnItemdblclickList2(NMHDR *pNMHDR, LRESULT *pResult);
+};
 
 // CPickobearDlg dialog
 class CPickobearDlg : public CDialog
@@ -104,7 +200,9 @@ private:
 
 	CFeederSetup *m_pFeederDlg ;
 	
-		char m_Head;
+	char m_Head;
+	int m_Quit;
+
 
 	enum eMachineState {
 		MS_IDLE,MS_GO
@@ -128,6 +226,8 @@ public:
 	bool MoveHead( long x, long y );
 
 	~CPickobearDlg(){
+		
+		m_Quit = 1;
 
 		m_Serial.Close();
 	}
@@ -201,7 +301,7 @@ public:
 	long m_GOY;
 	afx_msg void OnEnChangeGox();
 	afx_msg void OnEnChangeGoy();
-	CListCtrl_Components m_FeederList;
+	CListCtrl_FeederList m_FeederList;
 	afx_msg void OnBnClickedAddFeeder();
 	afx_msg void OnBnClickedUpdate();
 };

@@ -58,6 +58,7 @@ CPickobearDlg::CPickobearDlg(CWnd* pParent /*=NULL*/)
 	, m_GOX(0)
 	, m_GOY(0)
 	, m_pFeederDlg( NULL )
+	, m_Quit(0)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -121,11 +122,28 @@ END_MESSAGE_MAP()
 
 BEGIN_MESSAGE_MAP(CListCtrl_Components, CListCtrl)
     ON_NOTIFY_REFLECT(NM_DBLCLK, OnHdnItemdblclickList2) 
+	ON_NOTIFY_REFLECT(NM_RCLICK ,  &CListCtrl_Components::OnNMRClickList2)
+END_MESSAGE_MAP()
+
+BEGIN_MESSAGE_MAP(CListCtrl_FeederList, CListCtrl)
+    ON_NOTIFY_REFLECT(NM_DBLCLK, OnHdnItemdblclickList2) 
 END_MESSAGE_MAP()
 
 
 
 void CListCtrl_Components::PreSubclassWindow()
+{
+	CListCtrl::PreSubclassWindow();
+
+	// Focus retangle is not painted properly without double-buffering
+#if (_WIN32_WINNT >= 0x501)
+	SetExtendedStyle(LVS_EX_DOUBLEBUFFER | GetExtendedStyle());
+#endif
+	// switch to report style/fullrow
+	SetExtendedStyle(GetExtendedStyle() | LVS_EX_FULLROWSELECT| LVS_REPORT);
+}
+
+void CListCtrl_FeederList::PreSubclassWindow()
 {
 	CListCtrl::PreSubclassWindow();
 
@@ -181,11 +199,7 @@ BOOL CPickobearDlg::OnInitDialog()
 
 	// Create OpenGL Control window
 	( ( CWnd* ) GetDlgItem( IDC_DOWNCAM ) )->SetWindowText( m_oglWindow.oglCreate( rect, rect1, this, 3 ) );
-
-	// Setup the OpenGL Window's timer to render
-//	m_oglWindow.m_unpTimer = m_oglWindow.SetTimer(1, 300, 0);
 	
-	// Start thread for 'goCamera'
 
 	// Get size and position of the template textfield we created before in the dialog editor
 	GetDlgItem(IDC_CAM2)->GetWindowRect(rect);
@@ -193,8 +207,7 @@ BOOL CPickobearDlg::OnInitDialog()
 
 	// Convert screen coordinates to client coordinates
 	ScreenToClient(rect);
-	ScreenToClient(rect1);
-
+	
 	// Create OpenGL Control window	
 	( ( CWnd* ) GetDlgItem( IDC_UPCAM ) )->SetWindowText( m_oglWindow1.oglCreate( rect, rect1, this, 2 ) );
 
@@ -224,7 +237,9 @@ BOOL CPickobearDlg::OnInitDialog()
 	m_FeederList.InsertColumn(3, _T("Y"),LVCFMT_CENTER,nInterval);
 	m_FeederList.InsertColumn(4, _T("Rot"),LVCFMT_CENTER,nInterval);
 
-	//HANDLE h = CreateThread(NULL, 0, &CPickobearDlg::goCamera, (LPVOID)this, 0, NULL);
+	// Start thread for 'goCamera'
+	HANDLE h = CreateThread(NULL, 0, &CPickobearDlg::goCamera, (LPVOID)this, 0, NULL);
+
 
 #if 0	
 	COGLThread* oglThread = new COGLThread() ;
@@ -237,8 +252,8 @@ BOOL CPickobearDlg::OnInitDialog()
 #endif
 
 	// Setup the OpenGL Window's timer to render
-	m_oglWindow.m_unpTimer = m_oglWindow.SetTimer(1, 100, 0);
-	m_oglWindow1.m_unpTimer = m_oglWindow1.SetTimer(1, 100, 0);
+//	m_oglWindow.m_unpTimer = m_oglWindow.SetTimer(1, 100, 0);
+	m_oglWindow1.m_unpTimer = m_oglWindow1.SetTimer(1, 300, 0);
 
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
@@ -780,11 +795,13 @@ DWORD WINAPI CPickobearDlg::goCamera(LPVOID pThis)
 
 DWORD CPickobearDlg::cameraThread(void )
 {
-	while(1) {
+	while( m_Quit == 0 ) {
 		m_oglWindow.UpdateCamera( 1 ) ;
-		m_oglWindow1.UpdateCamera( 1 ) ;
-		Sleep(100);
-		//InvalidateRect(NULL);
+		Sleep(1);
+		
+		//m_oglWindow1.UpdateCamera( 1 ) ;
+		Sleep(1);
+
 	}
 	return true;
 }
@@ -815,6 +832,12 @@ DWORD CPickobearDlg::goThread(void )
 		int in = (m_ComponentList.GetCount()-1)-i;
 		m_ComponentList.SetItemState(in, LVIS_SELECTED, LVIS_SELECTED);
 		m_ComponentList.EnsureVisible( in ,TRUE );
+
+		CListCtrl_FeederList::FeederDatabase feeder = m_FeederList.at(rand()%2);
+	
+		MoveHead(feeder.x,
+			     feeder.y);
+		
 
 		UpdateWindow();
 
@@ -868,6 +891,27 @@ void CListCtrl_Components::OnHdnItemdblclickList2(NMHDR *pNMHDR, LRESULT *pResul
 	pDlg->MoveHead(entry->x+pDlg->m_ComponentList.m_OffsetX,entry->y+pDlg->m_ComponentList.m_OffsetY);
 
 	pDlg->GetDlgItem( IDC_OFFSET )->EnableWindow( TRUE );
+}
+
+void CListCtrl_FeederList::OnHdnItemdblclickList2(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	LPNMHEADER phdr = reinterpret_cast<LPNMHEADER>(pNMHDR);
+	// TODO: Add your control notification handler code here
+	*pResult = 0;
+
+	CPickobearDlg *pDlg = (CPickobearDlg*)AfxGetApp()->m_pMainWnd;
+	ASSERT( pDlg );
+
+	// iItem is item number, list is backwards
+	int item = (GetCount()-1)-phdr->iItem;
+
+	entry = &m_Database.at( item ) ;
+	// entry is item.
+	ASSERT( entry );
+
+	// GotoXY in micrometers
+	pDlg->MoveHead(entry->x,entry->y);
+
 }
 
 bool GetCurrentPosition( long &x,long &y)
@@ -946,8 +990,8 @@ void CPickobearDlg::OnBnClickedZero()
 	MoveHead(0,0);
 }
 
-// 82075
-// 236625
+// 81775
+// 236275
 
 void CPickobearDlg::OnBnClickedOffset()
 {
@@ -990,7 +1034,11 @@ void CPickobearDlg::OnEnChangeGoy()
 
 void CPickobearDlg::OnBnClickedAddFeeder()
 {
-	// TODO: Add your control notification handler code here
+	long cx,cy;
+	GetCurrentPosition(cx,cy);
+
+	m_FeederList.AddItem("LABEL",cx, cy, 0);
+
 }
 
 
@@ -1037,4 +1085,31 @@ int CPickobearDlg::SendCommand( int command )
 	}
 
 	return 0;
+}
+
+void CListCtrl_Components::OnNMRClickList2(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	LPNMITEMACTIVATE pNMItemActivate = reinterpret_cast<LPNMITEMACTIVATE>(pNMHDR);
+	// TODO: Add your control notification handler code here
+	*pResult = 0;
+
+	CPickobearDlg *pDlg = (CPickobearDlg*)AfxGetApp()->m_pMainWnd;
+	ASSERT( pDlg );
+
+
+	int item = pDlg->m_FeederList.GetSelectedCount();
+
+	if( 0 ) {
+		return ;
+	}
+	
+	item = pDlg->m_FeederList.GetNextItem(-1, LVNI_SELECTED);
+
+	// iItem is item number, database is backwards
+	int clist = (GetCount()-1)-pDlg->m_ComponentList.GetNextItem(-1, LVNI_SELECTED);
+
+	entry = &m_Database.at( clist ) ;
+
+	pDlg->m_ComponentList.AssignFeeder( clist, item ) ;
+
 }
