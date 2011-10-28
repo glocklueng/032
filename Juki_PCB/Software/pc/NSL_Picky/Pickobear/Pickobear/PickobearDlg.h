@@ -99,6 +99,9 @@ private:
 	// each of the camera windows
 	COpenGLControl m_oglWindow;
 	COpenGLControl m_oglWindow1;
+	
+	COGLThread m_OGLThread;
+
 	CFeederSetup *m_pFeederDlg ;
 	
 		char m_Head;
@@ -113,9 +116,14 @@ private:
 public:
 	CPickobearDlg(CWnd* pParent = NULL);	// standard constructor
 	
-	
+	int SendCommand( int command );
+
+	static DWORD WINAPI goCamera(LPVOID pThis);
 	static DWORD WINAPI goSetup(LPVOID pThis);
+
 	DWORD goThread(void );
+	DWORD cameraThread(void );
+
 	char CheckAck(char ack,char ack1);
 	bool MoveHead( long x, long y );
 

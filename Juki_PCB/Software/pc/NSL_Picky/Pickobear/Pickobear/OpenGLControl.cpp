@@ -8,6 +8,8 @@ COpenGLControl::COpenGLControl(void)
 	img1 = NULL;
 	m_camera = -1;
 	img2 = NULL;
+	resultImg = NULL;
+	iCounter = 0;
 
 }
 
@@ -140,17 +142,27 @@ void DrawCircle(float cx, float cy, float r, int num_segments)
 
 void COpenGLControl::OnTimer(UINT nIDEvent)
 {  
+	UpdateCamera(nIDEvent);
+	CWnd::OnTimer(nIDEvent);
+}
+
+void COpenGLControl::UpdateCamera( UINT nIDEvent ) 
+{
 	double delta;
 	int ddepth;  
 	int ind =1 , ni = 100;
 	
-	static int iCounter = 0;
+
+	if( m_camera == -1 ) 
+		return;
+
+	if( img1 == NULL ) {
+		return;
+	}
 
 	cv::Mat kernel;
 	cv::Mat src, dst;
 	cv::Point anchor;
-
-	static IplImage *resultImg= NULL;
 
 	delta = 0;
 	ddepth = -1;
@@ -276,7 +288,6 @@ void COpenGLControl::OnTimer(UINT nIDEvent)
 			break;
 	}
 
-	CWnd::OnTimer(nIDEvent);
 }
 
 CString COpenGLControl::oglCreate(CRect rect, CRect orect, CWnd *parent, int DeviceID)
@@ -321,7 +332,7 @@ void COpenGLControl::oglInitialize(void)
 {
 	// Initial Setup:
 	//
-	static PIXELFORMATDESCRIPTOR pfd =
+	const static PIXELFORMATDESCRIPTOR pfd =
 	{
 		sizeof(PIXELFORMATDESCRIPTOR),
 		1,
@@ -364,4 +375,34 @@ void COpenGLControl::oglInitialize(void)
 
 void COpenGLControl::OnStnDblclickCam2()
 {
+}
+
+
+BOOL COGLThread::InitInstance()
+{
+
+    return TRUE;
+}
+
+int COGLThread::Run()
+{
+	TRACE(_T("COGLThread: Run() called\n")) ;
+	
+	while(1) {
+		if(p_OGLCamera1)p_OGLCamera1->UpdateCamera(1);
+		if(p_OGLCamera2)p_OGLCamera2->UpdateCamera(1);
+	}
+	CWinThread::Run();
+
+	return (0) ;
+}
+
+COGLThread::~COGLThread()
+{
+}
+
+COGLThread::COGLThread()
+{
+	p_OGLCamera1 = NULL;
+	p_OGLCamera2 = NULL;
 }

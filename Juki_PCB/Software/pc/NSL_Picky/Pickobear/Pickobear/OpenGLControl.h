@@ -14,11 +14,11 @@ class COpenGLControl : public CWnd
 		/******************/
 		UINT_PTR m_unpTimer;
 
-		int m_camera;
+		int m_camera,iCounter;
 
 		IplImage* img1;
 		IplImage* img2;
-
+		IplImage *resultImg;
 
 	private:
 		/*******************/
@@ -40,6 +40,7 @@ class COpenGLControl : public CWnd
 
 		CString oglCreate(CRect rect, CRect rect1,CWnd *parent,int camera=0);
 		void oglInitialize(void);
+		void UpdateCamera( UINT id );
 
 		// Added message classes:
 		afx_msg void OnPaint();
@@ -51,3 +52,18 @@ class COpenGLControl : public CWnd
 		DECLARE_MESSAGE_MAP()
 		afx_msg void OnStnDblclickCam2();
 };
+
+
+class COGLThread : public CWinThread
+{
+public:
+	COpenGLControl *p_OGLCamera1;
+	COpenGLControl *p_OGLCamera2;
+
+    COGLThread();
+    virtual ~COGLThread();
+    virtual BOOL InitInstance() ;
+    virtual int Run() ;
+    CString sName ;
+} ;
+
