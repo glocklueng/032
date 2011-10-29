@@ -143,7 +143,7 @@ void setup( void )
   }
 
   // Serial port init
-  Serial.begin(9600);
+  Serial.begin( 9600 );
 
 #ifndef NDEBUG
   Serial.println("PickoBear initialise\n");
