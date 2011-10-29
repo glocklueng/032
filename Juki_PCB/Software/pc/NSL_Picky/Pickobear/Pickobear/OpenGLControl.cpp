@@ -43,31 +43,35 @@ void COpenGLControl::OnPaint()
 
 void COpenGLControl::OnRButtonDown(UINT nFlags, CPoint point )
 {
-	int i;
 	int w = m_size.Width()/2;
 	int h = m_size.Height()/2;
 	
-	point.x -=w;
-	point.y -=h;
+	point.x -= w;
+	point.y -= h;
 	
-	point.x*=2;
-	point.y*=2;
+	point.x *= 1.6;
+	point.y *= 1.6;
 
-	if( point.x > 1 )
-		for( i = 0 ;  i < (point.x) ; i ++ ) 
-		m_Serial.Write("R");
+	do {
 
-	if( point.x < 0 )
-		for( i = 0 ;  i < abs(point.x) ; i ++ ) 
+		if( point.x > 0 ) {
+			point.x--;
+			m_Serial.Write("R");
+		} else if( point.x < 0 ) {
+			point.x++;
 			m_Serial.Write("L");
+		}
 
-	if( point.y > 1 )
-		for( i = 0 ;  i < (point.y) ; i ++ ) 
+		if( point.y > 0 ) {
+			point.y--;
 			m_Serial.Write("D");
-
-	if( point.y < 0 )
-		for( i = 0 ;  i < abs(point.y) ; i ++ ) 
+		}
+		else if( point.y < 0 ) {
+			point.y++;
 			m_Serial.Write("U");
+		}
+
+	} while( point.x!=0 || point.y != 0 ) ;
 
 	CPickobearDlg *pDlg = (CPickobearDlg*)AfxGetApp()->m_pMainWnd;
 	ASSERT( pDlg );

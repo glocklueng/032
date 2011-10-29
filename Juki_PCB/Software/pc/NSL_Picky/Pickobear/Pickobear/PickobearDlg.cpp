@@ -213,7 +213,8 @@ BOOL CPickobearDlg::OnInitDialog()
 
 	CString m_ComPort = _T("\\\\.\\COM14");
 	m_Serial.Open(m_ComPort );
-	m_Serial.Setup(CSerial::EBaud9600);
+
+	m_Serial.Setup(CSerial::EBaud9600 );
 	
 	m_ComponentList.GetClientRect(&rect);
 	int nInterval =( rect.Width() / 7);
@@ -958,10 +959,7 @@ bool GetCurrentPosition( long &x,long &y)
 				if( token ) {
 
 					sscanf(token, "%s", &yString );	
-
-
 					break;
-
 				}
 			}
 		}
@@ -978,6 +976,9 @@ bool GetCurrentPosition( long &x,long &y)
 
 	x = atol( xString );
 	y = atol( yString );
+
+	pDlg->m_GOX = x;
+	pDlg->m_GOY = y;
 
 	( ( CWnd* ) pDlg->GetDlgItem( IDC_X_POS ) )->SetWindowText( CString(xString) ) ;
 	( ( CWnd* ) pDlg->GetDlgItem( IDC_Y_POS ) )->SetWindowText( CString(yString) ) ;
@@ -1005,7 +1006,6 @@ void CPickobearDlg::OnBnClickedOffset()
 	m_ComponentList.m_OffsetY = cy - m_ComponentList.entry->y;
 
 	GetDlgItem( IDC_OFFSET )->EnableWindow( FALSE );
-
 }
 
 void CPickobearDlg::OnBnClickedGoff()
@@ -1034,11 +1034,7 @@ void CPickobearDlg::OnEnChangeGoy()
 
 void CPickobearDlg::OnBnClickedAddFeeder()
 {
-	long cx,cy;
-	GetCurrentPosition(cx,cy);
-
-	m_FeederList.AddItem("LABEL",cx, cy, 0);
-
+	m_FeederList.AddItem("LABEL",m_GOX, m_GOY, 0);
 }
 
 
@@ -1065,9 +1061,7 @@ enum {
 	PNP_TOOL3,
 	PNP_TOOL4,
 	PNP_TOOL5,
-	PNP_TOOL6,
-
-	// 
+	PNP_TOOL6,g
 };
 
 int CPickobearDlg::SendCommand( int command ) 
@@ -1078,6 +1072,8 @@ int CPickobearDlg::SendCommand( int command )
 			break;
 
 		case PNP_CURRENTPOS:
+			long cx,cy;
+			GetCurrentPosition(cx,cy);
 			break;
 
 		default:
@@ -1099,7 +1095,7 @@ void CListCtrl_Components::OnNMRClickList2(NMHDR *pNMHDR, LRESULT *pResult)
 
 	int item = pDlg->m_FeederList.GetSelectedCount();
 
-	if( 0 ) {
+	if( item == 0 ) {
 		return ;
 	}
 	
@@ -1111,5 +1107,4 @@ void CListCtrl_Components::OnNMRClickList2(NMHDR *pNMHDR, LRESULT *pResult)
 	entry = &m_Database.at( clist ) ;
 
 	pDlg->m_ComponentList.AssignFeeder( clist, item ) ;
-
 }
