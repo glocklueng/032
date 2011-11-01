@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='utf-8' ?>
-<!DOCTYPE document SYSTEM 'file:///d:/Xilinx/13.3/ISE_DS/ISE/chipviewer/data/xsl/buildXML.dtd'>
+<!DOCTYPE document SYSTEM 'file:///d:/Xilinx/13.2/ISE_DS/ISE/chipviewer/data/xsl/buildXML.dtd'>
 
 <document>
 <design name='RomEmuCtrl'/>
 <rptdir name='RomEmuCtrl'/>
-<xilinx path='d:/Xilinx/13.3/ISE_DS/ISE;'/>
-<projDir path='C:\Users\charlie\romtool'/>
+<xilinx path='d:/Xilinx/13.2/ISE_DS/ISE;'/>
+<projDir path='E:\032\romtool'/>
 <xslDir path='chipviewer/data/xsl'/>
 <fileDir path='/chipviewer/data/html'/>
 <dataFile file='index.htm'/>
@@ -69,7 +69,7 @@
     <output file='topnav.htm'/>
   </xslFile>
   <xslFile file='leftnav.xsl'>
-    <param name='result' value='0'/>
+    <param name='result' value='1'/>
     <output file='leftnav.htm'/>
   </xslFile>
   <xslFile file='print.xsl'>
@@ -107,7 +107,6 @@
     <output file='inputleft.htm'/>
   </xslFile>
   <xslFile file='printPins.xsl'>
-    <param name='appletOn' value='0'/>
     <output file='pins.htm'/>
   </xslFile>
   <xslFile file='wait.xsl'>
@@ -129,7 +128,6 @@
     <param name='unmapLog' value='0'/>
     <param name='unmapIn' value='0'/>
     <param name='legendOn' value='1'/>
-    <param name='appletOn' value='0'/>
     <output file='maplogic_00.htm'/>
     <param name='sortType' value='1'/>
     <param name='mapLog' value='1'/>
@@ -137,7 +135,6 @@
     <param name='unmapLog' value='0'/>
     <param name='unmapIn' value='0'/>
     <param name='legendOn' value='1'/>
-    <param name='appletOn' value='0'/>
     <output file='maplogic_01.htm'/>
     <param name='sortType' value='2'/>
     <param name='mapLog' value='1'/>
@@ -145,7 +142,6 @@
     <param name='unmapLog' value='0'/>
     <param name='unmapIn' value='0'/>
     <param name='legendOn' value='1'/>
-    <param name='appletOn' value='0'/>
     <output file='maplogic_02.htm'/>
     <param name='sortType' value='0'/>
     <param name='mapLog' value='0'/>
@@ -153,7 +149,6 @@
     <param name='unmapLog' value='0'/>
     <param name='unmapIn' value='0'/>
     <param name='legendOn' value='1'/>
-    <param name='appletOn' value='0'/>
     <output file='mapinput_00.htm'/>
     <param name='sortType' value='1'/>
     <param name='mapLog' value='0'/>
@@ -161,7 +156,6 @@
     <param name='unmapLog' value='0'/>
     <param name='unmapIn' value='0'/>
     <param name='legendOn' value='1'/>
-    <param name='appletOn' value='0'/>
     <output file='mapinput_01.htm'/>
     <param name='sortType' value='2'/>
     <param name='mapLog' value='0'/>
@@ -169,7 +163,6 @@
     <param name='unmapLog' value='0'/>
     <param name='unmapIn' value='0'/>
     <param name='legendOn' value='1'/>
-    <param name='appletOn' value='0'/>
     <output file='mapinput_02.htm'/>
   </xslFile>
   <xslFile file='fbsum.xsl'>
@@ -180,36 +173,30 @@
     <param name='fb' value='FB1'/>
     <param name='type' value='1'/>
     <param name='legendOn' value='1'/>
-    <param name='appletOn' value='0'/>
     <output file='fbs_FB1.htm'/>
     <param name='fb' value='FB2'/>
     <param name='type' value='3'/>
     <param name='legendOn' value='1'/>
-    <param name='appletOn' value='0'/>
     <output file='fbs_FB2.htm'/>
     <param name='fb' value='FB3'/>
     <param name='type' value='3'/>
     <param name='legendOn' value='1'/>
-    <param name='appletOn' value='0'/>
     <output file='fbs_FB3.htm'/>
     <param name='fb' value='FB4'/>
     <param name='type' value='3'/>
     <param name='legendOn' value='1'/>
-    <param name='appletOn' value='0'/>
     <output file='fbs_FB4.htm'/>
     <param name='fb' value='FB5'/>
     <param name='type' value='3'/>
     <param name='legendOn' value='1'/>
-    <param name='appletOn' value='0'/>
     <output file='fbs_FB5.htm'/>
     <param name='fb' value='FB6'/>
     <param name='type' value='2'/>
     <param name='legendOn' value='1'/>
-    <param name='appletOn' value='0'/>
     <output file='fbs_FB6.htm'/>
   </xslFile>
 </xmlFile>
-<xmlFile file='d:/Xilinx/13.3/ISE_DS/ISE/chipviewer/data/xsl/pinlegend.xml'>
+<xmlFile file='d:/Xilinx/13.2/ISE_DS/ISE/chipviewer/data/xsl/pinlegend.xml'>
   <xslFile file='legend.xsl'>
     <param name='device' value='XC95108-15-PC84'/>
     <param name='verOn' value='0'/>
@@ -221,7 +208,7 @@
     <output file='pinlegendV.htm'/>
   </xslFile>
 </xmlFile>
-<xmlFile file='d:/Xilinx/13.3/ISE_DS/ISE/chipviewer/data/xsl/logiclegend.xml'>
+<xmlFile file='d:/Xilinx/13.2/ISE_DS/ISE/chipviewer/data/xsl/logiclegend.xml'>
   <xslFile file='legend.xsl'>
     <param name='device' value='XC95108-15-PC84'/>
     <param name='verOn' value='0'/>
@@ -236,4 +223,5 @@
 </xmlFileGroup>
 <rptFile file='RomEmuCtrl.rpt'/>
 <timFile file='RomEmuCtrl.tim'/>
+<appFile/>
 </document>

@@ -11,11 +11,5 @@
 <msg type="info" file="Cpld" num="0" delta="new" >Inferring BUFG constraint for signal &apos;<arg fmt="%s" index="1">i_HClk</arg>&apos; based upon the LOC constraint &apos;<arg fmt="%s" index="2">P9</arg>&apos;. It is recommended that you declare this BUFG explicitedly in your design. Note that for certain device families the output of a BUFG constraint can not drive a gated clock, and the BUFG constraint will be ignored.
 </msg>
 
-<msg type="error" file="Cpld" num="892" delta="old" >Cannot place signal <arg fmt="%s" index="1">o_RAddr&lt;10&gt;</arg>. Consider reducing the collapsing input limit or the product term limit to prevent the fitter from creating high input and/or high product term functions.
-</msg>
-
-<msg type="error" file="Cpld" num="868" delta="old" >Cannot fit the design into any of the specified devices with the selected implementation options.
-</msg>
-
 </messages>
 

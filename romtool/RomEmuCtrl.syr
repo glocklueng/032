@@ -1,4 +1,4 @@
-Release 13.3 - xst O.76xd (nt)
+Release 13.2 - xst O.61xd (nt64)
 Copyright (c) 1995-2011 Xilinx, Inc.  All rights reserved.
 --> Parameter TMPDIR set to xst/projnav.tmp
 
@@ -210,11 +210,11 @@ Cell Usage :
 
 
 Total REAL time to Xst completion: 4.00 secs
-Total CPU time to Xst completion: 4.39 secs
+Total CPU time to Xst completion: 4.34 secs
  
 --> 
 
-Total memory usage is 195176 kilobytes
+Total memory usage is 233360 kilobytes
 
 Number of errors   :    0 (   0 filtered)
 Number of warnings :    0 (   0 filtered)
