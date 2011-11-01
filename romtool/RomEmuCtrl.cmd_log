@@ -1,0 +1,70 @@
+xst -intstyle ise -ifn "C:/Users/charlie/romtool/RomEmuCtrl.xst" -ofn "C:/Users/charlie/romtool/RomEmuCtrl.syr" 
+ngdbuild -intstyle ise -dd _ngo -i -p xc9500 RomEmuCtrl.ngc RomEmuCtrl.ngd  
+cpldfit -intstyle ise -p xc95*-*-TQ* -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 36 -pterms 25 -power std -localfbk -pinfbk RomEmuCtrl.ngd 
+XSLTProcess RomEmuCtrl_build.xml 
+tsim -intstyle ise RomEmuCtrl RomEmuCtrl.nga 
+taengine -intstyle ise -f RomEmuCtrl -w --format html1 -l RomEmuCtrl_html/tim/timing_report.htm 
+hprep6 -s IEEE1149 -n RomEmuCtrl -i RomEmuCtrl 
+ngdbuild -intstyle ise -dd _ngo -uc RomEmuCtrl.ucf -p xc9500 RomEmuCtrl.ngc RomEmuCtrl.ngd  
+cpldfit -intstyle ise -p xc95*-*-TQ* -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 36 -pterms 25 -power std -localfbk -pinfbk RomEmuCtrl.ngd 
+XSLTProcess RomEmuCtrl_build.xml 
+tsim -intstyle ise RomEmuCtrl RomEmuCtrl.nga 
+taengine -intstyle ise -f RomEmuCtrl -w --format html1 -l RomEmuCtrl_html/tim/timing_report.htm 
+-cwd "C:/Users/charlie/romtool" timingan_cpld -intstyle ise "C:/Users/charlie/romtool/RomEmuCtrl.vm6" 
+hprep6 -s IEEE1149 -n RomEmuCtrl -i RomEmuCtrl 
+-cwd "C:/Users/charlie/romtool" timingan_cpld -intstyle ise "C:/Users/charlie/romtool/RomEmuCtrl.vm6" 
+-cwd "C:/Users/charlie/romtool" timingan_cpld -intstyle ise "C:/Users/charlie/romtool/RomEmuCtrl.vm6" 
+xst -intstyle ise -ifn "C:/Users/charlie/romtool/RomEmuCtrl.xst" -ofn "C:/Users/charlie/romtool/RomEmuCtrl.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc RomEmuCtrl.ucf -p xc95108-PC84-15 RomEmuCtrl.ngc RomEmuCtrl.ngd  
+cpldfit -intstyle ise -p xc95108-15-PC84 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 36 -pterms 25 -power std -localfbk -pinfbk RomEmuCtrl.ngd 
+XSLTProcess RomEmuCtrl_build.xml 
+tsim -intstyle ise RomEmuCtrl RomEmuCtrl.nga 
+hprep6 -s IEEE1149 -n RomEmuCtrl -i RomEmuCtrl 
+ngdbuild -intstyle ise -dd _ngo -uc RomEmuCtrl.ucf -p xc95108-PC84-15 RomEmuCtrl.ngc RomEmuCtrl.ngd  
+ngdbuild -intstyle ise -dd _ngo -uc RomEmuCtrl.ucf -p xc95108-PC84-15 RomEmuCtrl.ngc RomEmuCtrl.ngd  
+ngdbuild -intstyle ise -dd _ngo -uc RomEmuCtrl.ucf -p xc95108-PC84-15 RomEmuCtrl.ngc RomEmuCtrl.ngd  
+ngdbuild -intstyle ise -dd _ngo -uc RomEmuCtrl.ucf -p xc95108-PC84-15 RomEmuCtrl.ngc RomEmuCtrl.ngd  
+ngdbuild -intstyle ise -dd _ngo -uc RomEmuCtrl.ucf -p xc95108-PC84-15 RomEmuCtrl.ngc RomEmuCtrl.ngd  
+ngdbuild -intstyle ise -dd _ngo -uc RomEmuCtrl.ucf -p xc95108-PC84-15 RomEmuCtrl.ngc RomEmuCtrl.ngd  
+ngdbuild -intstyle ise -dd _ngo -uc RomEmuCtrl.ucf -p xc95108-PC84-15 RomEmuCtrl.ngc RomEmuCtrl.ngd  
+ngdbuild -intstyle ise -dd _ngo -uc RomEmuCtrl.ucf -p xc95108-PC84-15 RomEmuCtrl.ngc RomEmuCtrl.ngd  
+ngdbuild -intstyle ise -dd _ngo -uc RomEmuCtrl.ucf -p xc95108-PC84-15 RomEmuCtrl.ngc RomEmuCtrl.ngd  
+ngdbuild -intstyle ise -dd _ngo -uc RomEmuCtrl.ucf -p xc95108-PC84-15 RomEmuCtrl.ngc RomEmuCtrl.ngd  
+cpldfit -intstyle ise -p xc95108-15-PC84 -ofmt vhdl -optimize density -htmlrpt -loc on -slew fast -init low -inputs 36 -pterms 25 -power std -localfbk -pinfbk RomEmuCtrl.ngd 
+XSLTProcess RomEmuCtrl_build.xml 
+tsim -intstyle ise RomEmuCtrl RomEmuCtrl.nga 
+hprep6 -s IEEE1149 -n RomEmuCtrl -i RomEmuCtrl 
+xst -intstyle ise -ifn "C:/Users/charlie/romtool/RomEmuCtrl.xst" -ofn "C:/Users/charlie/romtool/RomEmuCtrl.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc RomEmuCtrl.ucf -p xc95108-PC84-15 RomEmuCtrl.ngc RomEmuCtrl.ngd  
+ngdbuild -intstyle ise -dd _ngo -uc RomEmuCtrl.ucf -p xc95108-PC84-15 RomEmuCtrl.ngc RomEmuCtrl.ngd  
+ngdbuild -intstyle ise -dd _ngo -uc RomEmuCtrl.ucf -p xc95108-PC84-15 RomEmuCtrl.ngc RomEmuCtrl.ngd  
+cpldfit -intstyle ise -p xc95108-15-PC84 -ofmt vhdl -optimize density -htmlrpt -loc on -slew fast -init low -inputs 36 -pterms 25 -power std -localfbk -pinfbk RomEmuCtrl.ngd 
+XSLTProcess RomEmuCtrl_build.xml 
+tsim -intstyle ise RomEmuCtrl RomEmuCtrl.nga 
+hprep6 -s IEEE1149 -n RomEmuCtrl -i RomEmuCtrl 
+ngdbuild -intstyle ise -dd _ngo -uc RomEmuCtrl.ucf -p xc95108-PC84-15 RomEmuCtrl.ngc RomEmuCtrl.ngd  
+ngdbuild -intstyle ise -dd _ngo -uc RomEmuCtrl.ucf -p xc95108-PC84-15 RomEmuCtrl.ngc RomEmuCtrl.ngd  
+ngdbuild -intstyle ise -dd _ngo -uc RomEmuCtrl.ucf -p xc95108-PC84-15 RomEmuCtrl.ngc RomEmuCtrl.ngd  
+ngdbuild -intstyle ise -dd _ngo -uc RomEmuCtrl.ucf -p xc95108-PC84-15 RomEmuCtrl.ngc RomEmuCtrl.ngd  
+ngdbuild -intstyle ise -dd _ngo -uc RomEmuCtrl.ucf -p xc95108-PC84-15 RomEmuCtrl.ngc RomEmuCtrl.ngd  
+ngdbuild -intstyle ise -dd _ngo -uc RomEmuCtrl.ucf -p xc95108-PC84-15 RomEmuCtrl.ngc RomEmuCtrl.ngd  
+cpldfit -intstyle ise -p xc95108-15-PC84 -ofmt vhdl -optimize density -htmlrpt -loc on -slew fast -init low -inputs 36 -pterms 25 -power std -localfbk -pinfbk RomEmuCtrl.ngd 
+XSLTProcess RomEmuCtrl_build.xml 
+taengine -intstyle ise -f RomEmuCtrl -w --format html1 -l RomEmuCtrl_html/tim/timing_report.htm 
+-cwd "C:/Users/charlie/romtool" timingan_cpld -intstyle ise "C:/Users/charlie/romtool/RomEmuCtrl.vm6" 
+cpldfit -intstyle ise -p xc95108-15-PC84 -ofmt vhdl -optimize density -htmlrpt -loc on -slew fast -init low -inputs 36 -pterms 25 -power std -localfbk -pinfbk RomEmuCtrl.ngd 
+XSLTProcess RomEmuCtrl_build.xml 
+cpldfit -intstyle ise -p xc95108-15-PC84 -ofmt vhdl -optimize density -htmlrpt -loc on -slew fast -init low -inputs 36 -pterms 25 -power std -localfbk -pinfbk RomEmuCtrl.ngd 
+XSLTProcess RomEmuCtrl_build.xml 
+ngdbuild -intstyle ise -dd _ngo -uc RomEmuCtrl.ucf -p xc95108-PC84-15 RomEmuCtrl.ngc RomEmuCtrl.ngd  
+cpldfit -intstyle ise -p xc95108-15-PC84 -ofmt vhdl -optimize density -htmlrpt -loc on -slew fast -init low -inputs 36 -pterms 25 -power std -localfbk -pinfbk RomEmuCtrl.ngd 
+XSLTProcess RomEmuCtrl_build.xml 
+xst -intstyle ise -ifn "C:/Users/charlie/romtool/RomEmuCtrl.xst" -ofn "C:/Users/charlie/romtool/RomEmuCtrl.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc RomEmuCtrl.ucf -p xc95108-PC84-15 RomEmuCtrl.ngc RomEmuCtrl.ngd  
+cpldfit -intstyle ise -p xc95108-15-PC84 -ofmt vhdl -optimize density -htmlrpt -loc on -slew fast -init low -inputs 36 -pterms 25 -power std -localfbk -pinfbk RomEmuCtrl.ngd 
+XSLTProcess RomEmuCtrl_build.xml 
+cpldfit -intstyle ise -p xc95108-15-PC84 -ofmt vhdl -optimize density -htmlrpt -loc on -slew fast -init low -inputs 36 -pterms 25 -power std -localfbk -pinfbk RomEmuCtrl.ngd 
+XSLTProcess RomEmuCtrl_build.xml 
+xst -intstyle ise -ifn "C:/Users/charlie/romtool/RomEmuCtrl.xst" -ofn "C:/Users/charlie/romtool/RomEmuCtrl.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc RomEmuCtrl.ucf -p xc95108-PC84-15 RomEmuCtrl.ngc RomEmuCtrl.ngd  
+cpldfit -intstyle ise -p xc95108-15-PC84 -ofmt vhdl -optimize speed -loc on -slew fast -init low -inputs 36 -pterms 25 -power std -localfbk -pinfbk RomEmuCtrl.ngd 

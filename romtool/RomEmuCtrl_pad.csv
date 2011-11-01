@@ -1,0 +1,113 @@
+Release 8.1i - Fit O.76xd
+Copyright(c) 1995-2003 Xilinx Inc. All rights reserved
+
+10-31-2011  9:10AM
+
+NOTE: This file is designed to be imported into a spreadsheet program
+such as Microsoft Excel for viewing, printing and sorting. The comma ','
+character is used as the data field separator.
+This file is also designed to support parsing.
+
+Input file:  RomEmuCtrl.ngd
+output file: RomEmuCtrl_pad.csv
+Part type:   xc95108
+Speed grade: -15
+Package:     pc84
+
+Pinout by Pin Number:
+
+-----,-----,-----,-----,-----,-----,-----,-----,-----,-----,
+Pin Number,Signal Name,Pin Usage,Pin Name,Direction,IO Standard,IO Bank Number,{blank},Slew Rate,Termination,{blank},Voltage,Constraint,
+P1,i_HCmd<0>,I,I/O,INPUT,,,,,,,,,
+P2,i_HCmd<1>,I,I/O,INPUT,,,,,,,,,
+P3,i_HCmd<2>,I,I/O,INPUT,,,,,,,,,
+P4,i_HData<0>,I,I/O,INPUT,,,,,,,,,
+P5,i_HData<1>,I,I/O,INPUT,,,,,,,,,
+P6,i_HData<2>,I,I/O,INPUT,,,,,,,,,
+P7,i_HData<3>,I,I/O,INPUT,,,,,,,,,
+P8,GND,,GND,,,,,,,,,,
+P9,i_HClk,GCK,I/O/GCK1,,,,,,,,,,
+P10,io_RData<0>,I/O,I/O/GCK2,BIDIR,,,,,,,,,
+P11,io_RData<1>,I/O,I/O,BIDIR,,,,,,,,,
+P12,io_RData<2>,I/O,I/O/GCK3,BIDIR,,,,,,,,,
+P13,io_RData<3>,I/O,I/O,BIDIR,,,,,,,,,
+P14,o_RAddr<0>,O,I/O,OUTPUT,,,,,,,,,
+P15,o_RAddr<1>,O,I/O,OUTPUT,,,,,,,,,
+P16,GND,,GND,,,,,,,,,,
+P17,TIE,,I/O,,,,,,,,,,
+P18,TIE,,I/O,,,,,,,,,,
+P19,TIE,,I/O,,,,,,,,,,
+P20,TIE,,I/O,,,,,,,,,,
+P21,TIE,,I/O,,,,,,,,,,
+P22,VCC,,VCCIO,,,,,,,,,,
+P23,TIE,,I/O,,,,,,,,,,
+P24,TIE,,I/O,,,,,,,,,,
+P25,TIE,,I/O,,,,,,,,,,
+P26,TIE,,I/O,,,,,,,,,,
+P27,GND,,GND,,,,,,,,,,
+P28,TDI,,TDI,,,,,,,,,,
+P29,TMS,,TMS,,,,,,,,,,
+P30,TCK,,TCK,,,,,,,,,,
+P31,TIE,,I/O,,,,,,,,,,
+P32,TIE,,I/O,,,,,,,,,,
+P33,TIE,,I/O,,,,,,,,,,
+P34,TIE,,I/O,,,,,,,,,,
+P35,TIE,,I/O,,,,,,,,,,
+P36,TIE,,I/O,,,,,,,,,,
+P37,TIE,,I/O,,,,,,,,,,
+P38,VCC,,VCCINT,,,,,,,,,,
+P39,o_HData,O,I/O,OUTPUT,,,,,,,,,
+P40,TIE,,I/O,,,,,,,,,,
+P41,TIE,,I/O,,,,,,,,,,
+P42,GND,,GND,,,,,,,,,,
+P43,TIE,,I/O,,,,,,,,,,
+P44,TIE,,I/O,,,,,,,,,,
+P45,TIE,,I/O,,,,,,,,,,
+P46,TIE,,I/O,,,,,,,,,,
+P47,TIE,,I/O,,,,,,,,,,
+P48,i_TAddr<0>,I,I/O,INPUT,,,,,,,,,
+P49,GND,,GND,,,,,,,,,,
+P50,i_TAddr<1>,I,I/O,INPUT,,,,,,,,,
+P51,i_TAddr<2>,I,I/O,INPUT,,,,,,,,,
+P52,i_TAddr<3>,I,I/O,INPUT,,,,,,,,,
+P53,i_TAddr<4>,I,I/O,INPUT,,,,,,,,,
+P54,i_TAddr<5>,I,I/O,INPUT,,,,,,,,,
+P55,i_TAddr<6>,I,I/O,INPUT,,,,,,,,,
+P56,i_TAddr<7>,I,I/O,INPUT,,,,,,,,,
+P57,i_TAddr<8>,I,I/O,INPUT,,,,,,,,,
+P58,i_TAddr<9>,I,I/O,INPUT,,,,,,,,,
+P59,TDO,,TDO,,,,,,,,,,
+P60,GND,,GND,,,,,,,,,,
+P61,i_TAddr<10>,I,I/O,INPUT,,,,,,,,,
+P62,i_TAddr<11>,I,I/O,INPUT,,,,,,,,,
+P63,i_TAddr<12>,I,I/O,INPUT,,,,,,,,,
+P64,VCC,,VCCIO,,,,,,,,,,
+P65,i_TAddr<13>,I,I/O,INPUT,,,,,,,,,
+P66,i_TAddr<14>,I,I/O,INPUT,,,,,,,,,
+P67,i_TAddr<15>,I,I/O,INPUT,,,,,,,,,
+P68,io_TData<0>,I/O,I/O,BIDIR,,,,,,,,,
+P69,io_TData<1>,I/O,I/O,BIDIR,,,,,,,,,
+P70,io_TData<2>,I/O,I/O,BIDIR,,,,,,,,,
+P71,io_TData<3>,I/O,I/O,BIDIR,,,,,,,,,
+P72,io_TData<4>,I/O,I/O,BIDIR,,,,,,,,,
+P73,VCC,,VCCINT,,,,,,,,,,
+P74,io_TData<5>,I/O,I/O/GSR,BIDIR,,,,,,,,,
+P75,io_TData<6>,I/O,I/O,BIDIR,,,,,,,,,
+P76,io_TData<7>,I/O,I/O/GTS1,BIDIR,,,,,,,,,
+P77,io_RData<4>,I/O,I/O/GTS2,BIDIR,,,,,,,,,
+P78,VCC,,VCCINT,,,,,,,,,,
+P79,io_RData<5>,I/O,I/O,BIDIR,,,,,,,,,
+P80,io_RData<6>,I/O,I/O,BIDIR,,,,,,,,,
+P81,io_RData<7>,I/O,I/O,BIDIR,,,,,,,,,
+P82,o_nReset,O,I/O,OUTPUT,,,,,,,,,
+P83,o_nROE,O,I/O,OUTPUT,,,,,,,,,
+P84,o_nRWE,O,I/O,OUTPUT,,,,,,,,,
+
+To preserve the pinout above for future design iterations in
+Project Navigator simply execute the (Lock Pins) process
+located under the (Implement Design) process in a toolbox named
+(Optional Implementation Tools) or invoke PIN2UCF from the
+command line. The location constraints will be written into your
+specified UCF file
+
+
