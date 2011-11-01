@@ -1,0 +1,242 @@
+Release 13.3 ngdbuild O.76xd (nt)
+Copyright (c) 1995-2011 Xilinx, Inc.  All rights reserved.
+
+Command Line: d:\Xilinx\13.3\ISE_DS\ISE\bin\nt\unwrapped\ngdbuild.exe -intstyle
+ise -dd _ngo -uc RomEmuCtrl.ucf -p xc95108-PC84-15 RomEmuCtrl.ngc RomEmuCtrl.ngd
+
+Reading NGO file "C:/Users/charlie/romtool/RomEmuCtrl.ngc" ...
+Gathering constraint information from source properties...
+Done.
+
+Annotating constraints to design from ucf file "RomEmuCtrl.ucf" ...
+Resolving constraint associations...
+Checking Constraint Associations...
+WARNING:ConstraintSystem:119 - Constraint <NET r_Addr(0)			LOC = "P17";>
+   [RomEmuCtrl.ucf(9)]: This constraint cannot be distributed from the design
+   objects matching 'NET "r_Addr(0)"' because those design objects do not
+   contain or drive any instances of the correct type.
+
+WARNING:ConstraintSystem - A target design object for the Locate constraint
+   '<NET r_Addr(0)			LOC = "P17";> [RomEmuCtrl.ucf(9)]' could not be found and
+   so the Locate constraint will be removed.
+
+WARNING:ConstraintSystem:119 - Constraint <NET r_Addr(1)			LOC = "P18";>
+   [RomEmuCtrl.ucf(10)]: This constraint cannot be distributed from the design
+   objects matching 'NET "r_Addr(1)"' because those design objects do not
+   contain or drive any instances of the correct type.
+
+WARNING:ConstraintSystem - A target design object for the Locate constraint
+   '<NET r_Addr(1)			LOC = "P18";> [RomEmuCtrl.ucf(10)]' could not be found and
+   so the Locate constraint will be removed.
+
+WARNING:ConstraintSystem:119 - Constraint <NET r_Addr(2)			LOC = "P19";>
+   [RomEmuCtrl.ucf(11)]: This constraint cannot be distributed from the design
+   objects matching 'NET "r_Addr(2)"' because those design objects do not
+   contain or drive any instances of the correct type.
+
+WARNING:ConstraintSystem - A target design object for the Locate constraint
+   '<NET r_Addr(2)			LOC = "P19";> [RomEmuCtrl.ucf(11)]' could not be found and
+   so the Locate constraint will be removed.
+
+WARNING:ConstraintSystem:119 - Constraint <NET r_Addr(3)			LOC = "P20";>
+   [RomEmuCtrl.ucf(12)]: This constraint cannot be distributed from the design
+   objects matching 'NET "r_Addr(3)"' because those design objects do not
+   contain or drive any instances of the correct type.
+
+WARNING:ConstraintSystem - A target design object for the Locate constraint
+   '<NET r_Addr(3)			LOC = "P20";> [RomEmuCtrl.ucf(12)]' could not be found and
+   so the Locate constraint will be removed.
+
+WARNING:ConstraintSystem:119 - Constraint <NET r_Addr(4)			LOC = "P21";>
+   [RomEmuCtrl.ucf(13)]: This constraint cannot be distributed from the design
+   objects matching 'NET "r_Addr(4)"' because those design objects do not
+   contain or drive any instances of the correct type.
+
+WARNING:ConstraintSystem - A target design object for the Locate constraint
+   '<NET r_Addr(4)			LOC = "P21";> [RomEmuCtrl.ucf(13)]' could not be found and
+   so the Locate constraint will be removed.
+
+WARNING:ConstraintSystem:119 - Constraint <NET r_Addr(5)			LOC = "P23";>
+   [RomEmuCtrl.ucf(14)]: This constraint cannot be distributed from the design
+   objects matching 'NET "r_Addr(5)"' because those design objects do not
+   contain or drive any instances of the correct type.
+
+WARNING:ConstraintSystem - A target design object for the Locate constraint
+   '<NET r_Addr(5)			LOC = "P23";> [RomEmuCtrl.ucf(14)]' could not be found and
+   so the Locate constraint will be removed.
+
+WARNING:ConstraintSystem:119 - Constraint <NET r_Addr(6)			LOC = "P24";>
+   [RomEmuCtrl.ucf(15)]: This constraint cannot be distributed from the design
+   objects matching 'NET "r_Addr(6)"' because those design objects do not
+   contain or drive any instances of the correct type.
+
+WARNING:ConstraintSystem - A target design object for the Locate constraint
+   '<NET r_Addr(6)			LOC = "P24";> [RomEmuCtrl.ucf(15)]' could not be found and
+   so the Locate constraint will be removed.
+
+WARNING:ConstraintSystem:119 - Constraint <NET r_Addr(7)			LOC = "P25";>
+   [RomEmuCtrl.ucf(16)]: This constraint cannot be distributed from the design
+   objects matching 'NET "r_Addr(7)"' because those design objects do not
+   contain or drive any instances of the correct type.
+
+WARNING:ConstraintSystem - A target design object for the Locate constraint
+   '<NET r_Addr(7)			LOC = "P25";> [RomEmuCtrl.ucf(16)]' could not be found and
+   so the Locate constraint will be removed.
+
+WARNING:ConstraintSystem:119 - Constraint <NET r_Addr(8)			LOC = "P26";>
+   [RomEmuCtrl.ucf(17)]: This constraint cannot be distributed from the design
+   objects matching 'NET "r_Addr(8)"' because those design objects do not
+   contain or drive any instances of the correct type.
+
+WARNING:ConstraintSystem - A target design object for the Locate constraint
+   '<NET r_Addr(8)			LOC = "P26";> [RomEmuCtrl.ucf(17)]' could not be found and
+   so the Locate constraint will be removed.
+
+WARNING:ConstraintSystem:119 - Constraint <NET r_Addr(9)			LOC = "P31";>
+   [RomEmuCtrl.ucf(18)]: This constraint cannot be distributed from the design
+   objects matching 'NET "r_Addr(9)"' because those design objects do not
+   contain or drive any instances of the correct type.
+
+WARNING:ConstraintSystem - A target design object for the Locate constraint
+   '<NET r_Addr(9)			LOC = "P31";> [RomEmuCtrl.ucf(18)]' could not be found and
+   so the Locate constraint will be removed.
+
+WARNING:ConstraintSystem:119 - Constraint <NET r_Addr(10)			LOC = "P32";>
+   [RomEmuCtrl.ucf(19)]: This constraint cannot be distributed from the design
+   objects matching 'NET "r_Addr(10)"' because those design objects do not
+   contain or drive any instances of the correct type.
+
+WARNING:ConstraintSystem - A target design object for the Locate constraint
+   '<NET r_Addr(10)			LOC = "P32";> [RomEmuCtrl.ucf(19)]' could not be found and
+   so the Locate constraint will be removed.
+
+WARNING:ConstraintSystem:119 - Constraint <NET r_Addr(11)			LOC = "P33";>
+   [RomEmuCtrl.ucf(20)]: This constraint cannot be distributed from the design
+   objects matching 'NET "r_Addr(11)"' because those design objects do not
+   contain or drive any instances of the correct type.
+
+WARNING:ConstraintSystem - A target design object for the Locate constraint
+   '<NET r_Addr(11)			LOC = "P33";> [RomEmuCtrl.ucf(20)]' could not be found and
+   so the Locate constraint will be removed.
+
+WARNING:ConstraintSystem:119 - Constraint <NET r_Addr(12)			LOC = "P34";>
+   [RomEmuCtrl.ucf(21)]: This constraint cannot be distributed from the design
+   objects matching 'NET "r_Addr(12)"' because those design objects do not
+   contain or drive any instances of the correct type.
+
+WARNING:ConstraintSystem - A target design object for the Locate constraint
+   '<NET r_Addr(12)			LOC = "P34";> [RomEmuCtrl.ucf(21)]' could not be found and
+   so the Locate constraint will be removed.
+
+WARNING:ConstraintSystem:119 - Constraint <NET r_Addr(13)			LOC = "P35";>
+   [RomEmuCtrl.ucf(22)]: This constraint cannot be distributed from the design
+   objects matching 'NET "r_Addr(13)"' because those design objects do not
+   contain or drive any instances of the correct type.
+
+WARNING:ConstraintSystem - A target design object for the Locate constraint
+   '<NET r_Addr(13)			LOC = "P35";> [RomEmuCtrl.ucf(22)]' could not be found and
+   so the Locate constraint will be removed.
+
+WARNING:ConstraintSystem:119 - Constraint <NET r_Addr(14)			LOC = "P36";>
+   [RomEmuCtrl.ucf(23)]: This constraint cannot be distributed from the design
+   objects matching 'NET "r_Addr(14)"' because those design objects do not
+   contain or drive any instances of the correct type.
+
+WARNING:ConstraintSystem - A target design object for the Locate constraint
+   '<NET r_Addr(14)			LOC = "P36";> [RomEmuCtrl.ucf(23)]' could not be found and
+   so the Locate constraint will be removed.
+
+WARNING:ConstraintSystem:119 - Constraint <NET r_Addr(15)			LOC = "P37";>
+   [RomEmuCtrl.ucf(24)]: This constraint cannot be distributed from the design
+   objects matching 'NET "r_Addr(15)"' because those design objects do not
+   contain or drive any instances of the correct type.
+
+WARNING:ConstraintSystem - A target design object for the Locate constraint
+   '<NET r_Addr(15)			LOC = "P37";> [RomEmuCtrl.ucf(24)]' could not be found and
+   so the Locate constraint will be removed.
+
+WARNING:ConstraintSystem:119 - Constraint <NET r_Data(1)			LOC = "P40";>
+   [RomEmuCtrl.ucf(27)]: This constraint cannot be distributed from the design
+   objects matching 'NET "r_Data(1)"' because those design objects do not
+   contain or drive any instances of the correct type.
+
+WARNING:ConstraintSystem - A target design object for the Locate constraint
+   '<NET r_Data(1)			LOC = "P40";> [RomEmuCtrl.ucf(27)]' could not be found and
+   so the Locate constraint will be removed.
+
+WARNING:ConstraintSystem:119 - Constraint <NET r_Data(2)			LOC = "P41";>
+   [RomEmuCtrl.ucf(28)]: This constraint cannot be distributed from the design
+   objects matching 'NET "r_Data(2)"' because those design objects do not
+   contain or drive any instances of the correct type.
+
+WARNING:ConstraintSystem - A target design object for the Locate constraint
+   '<NET r_Data(2)			LOC = "P41";> [RomEmuCtrl.ucf(28)]' could not be found and
+   so the Locate constraint will be removed.
+
+WARNING:ConstraintSystem:119 - Constraint <NET r_Data(3)			LOC = "P43";>
+   [RomEmuCtrl.ucf(29)]: This constraint cannot be distributed from the design
+   objects matching 'NET "r_Data(3)"' because those design objects do not
+   contain or drive any instances of the correct type.
+
+WARNING:ConstraintSystem - A target design object for the Locate constraint
+   '<NET r_Data(3)			LOC = "P43";> [RomEmuCtrl.ucf(29)]' could not be found and
+   so the Locate constraint will be removed.
+
+WARNING:ConstraintSystem:119 - Constraint <NET r_Data(4)			LOC = "P44";>
+   [RomEmuCtrl.ucf(30)]: This constraint cannot be distributed from the design
+   objects matching 'NET "r_Data(4)"' because those design objects do not
+   contain or drive any instances of the correct type.
+
+WARNING:ConstraintSystem - A target design object for the Locate constraint
+   '<NET r_Data(4)			LOC = "P44";> [RomEmuCtrl.ucf(30)]' could not be found and
+   so the Locate constraint will be removed.
+
+WARNING:ConstraintSystem:119 - Constraint <NET r_Data(5)			LOC = "P45";>
+   [RomEmuCtrl.ucf(31)]: This constraint cannot be distributed from the design
+   objects matching 'NET "r_Data(5)"' because those design objects do not
+   contain or drive any instances of the correct type.
+
+WARNING:ConstraintSystem - A target design object for the Locate constraint
+   '<NET r_Data(5)			LOC = "P45";> [RomEmuCtrl.ucf(31)]' could not be found and
+   so the Locate constraint will be removed.
+
+WARNING:ConstraintSystem:119 - Constraint <NET r_Data(6)			LOC = "P46";>
+   [RomEmuCtrl.ucf(32)]: This constraint cannot be distributed from the design
+   objects matching 'NET "r_Data(6)"' because those design objects do not
+   contain or drive any instances of the correct type.
+
+WARNING:ConstraintSystem - A target design object for the Locate constraint
+   '<NET r_Data(6)			LOC = "P46";> [RomEmuCtrl.ucf(32)]' could not be found and
+   so the Locate constraint will be removed.
+
+WARNING:ConstraintSystem:119 - Constraint <NET r_Data(7)			LOC = "P47";>
+   [RomEmuCtrl.ucf(33)]: This constraint cannot be distributed from the design
+   objects matching 'NET "r_Data(7)"' because those design objects do not
+   contain or drive any instances of the correct type.
+
+WARNING:ConstraintSystem - A target design object for the Locate constraint
+   '<NET r_Data(7)			LOC = "P47";> [RomEmuCtrl.ucf(33)]' could not be found and
+   so the Locate constraint will be removed.
+
+Done...
+
+Checking expanded design ...
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+NGDBUILD Design Results Summary:
+  Number of errors:     0
+  Number of warnings:  46
+
+Total memory usage is 112688 kilobytes
+
+Writing NGD file "RomEmuCtrl.ngd" ...
+Total REAL time to NGDBUILD completion:  3 sec
+Total CPU time to NGDBUILD completion:   3 sec
+
+Writing NGDBUILD log file "RomEmuCtrl.bld"...
