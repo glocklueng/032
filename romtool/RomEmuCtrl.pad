@@ -1,7 +1,7 @@
-Release 8.1i - Fit O.76xd
+Release 8.1i - Fit O.61xd
 Copyright(c) 1995-2003 Xilinx Inc. All rights reserved
 
-10-31-2011  9:10AM
+10-31-2011  9:04PM
 
 NOTE: This file is designed to be imported into a spreadsheet program
 such as Microsoft Excel for viewing, printing and sorting. The pipe '|'
@@ -27,44 +27,44 @@ P6|i_HData<2>|I|I/O|INPUT|||||||||
 P7|i_HData<3>|I|I/O|INPUT|||||||||
 P8|GND||GND||||||||||
 P9|i_HClk|GCK|I/O/GCK1||||||||||
-P10|io_RData<0>|I/O|I/O/GCK2|BIDIR|||||||||
-P11|io_RData<1>|I/O|I/O|BIDIR|||||||||
-P12|io_RData<2>|I/O|I/O/GCK3|BIDIR|||||||||
-P13|io_RData<3>|I/O|I/O|BIDIR|||||||||
-P14|o_RAddr<0>|O|I/O|OUTPUT|||||||||
-P15|o_RAddr<1>|O|I/O|OUTPUT|||||||||
+P10|TIE||I/O/GCK2||||||||||
+P11|o_HData|I/O|I/O|BIDIR|||||||||
+P12|TIE||I/O/GCK3||||||||||
+P13|i_nTWE|I|I/O|INPUT|||||||||
+P14|i_nTOE|I|I/O|INPUT|||||||||
+P15|TIE||I/O||||||||||
 P16|GND||GND||||||||||
-P17|TIE||I/O||||||||||
-P18|TIE||I/O||||||||||
-P19|TIE||I/O||||||||||
-P20|TIE||I/O||||||||||
-P21|TIE||I/O||||||||||
+P17|o_RAddr<0>|O|I/O|OUTPUT|||||||||
+P18|o_RAddr<1>|O|I/O|OUTPUT|||||||||
+P19|o_RAddr<2>|O|I/O|OUTPUT|||||||||
+P20|o_RAddr<3>|O|I/O|OUTPUT|||||||||
+P21|o_RAddr<4>|O|I/O|OUTPUT|||||||||
 P22|VCC||VCCIO||||||||||
-P23|TIE||I/O||||||||||
-P24|TIE||I/O||||||||||
-P25|TIE||I/O||||||||||
-P26|TIE||I/O||||||||||
+P23|o_RAddr<5>|O|I/O|OUTPUT|||||||||
+P24|o_RAddr<6>|O|I/O|OUTPUT|||||||||
+P25|o_RAddr<7>|O|I/O|OUTPUT|||||||||
+P26|o_RAddr<8>|O|I/O|OUTPUT|||||||||
 P27|GND||GND||||||||||
 P28|TDI||TDI||||||||||
 P29|TMS||TMS||||||||||
 P30|TCK||TCK||||||||||
-P31|TIE||I/O||||||||||
-P32|TIE||I/O||||||||||
-P33|TIE||I/O||||||||||
-P34|TIE||I/O||||||||||
-P35|TIE||I/O||||||||||
-P36|TIE||I/O||||||||||
-P37|TIE||I/O||||||||||
+P31|o_RAddr<9>|O|I/O|OUTPUT|||||||||
+P32|o_RAddr<10>|O|I/O|OUTPUT|||||||||
+P33|o_RAddr<11>|O|I/O|OUTPUT|||||||||
+P34|o_RAddr<12>|O|I/O|OUTPUT|||||||||
+P35|o_RAddr<13>|O|I/O|OUTPUT|||||||||
+P36|o_RAddr<14>|O|I/O|OUTPUT|||||||||
+P37|o_RAddr<15>|O|I/O|OUTPUT|||||||||
 P38|VCC||VCCINT||||||||||
-P39|o_HData|O|I/O|OUTPUT|||||||||
-P40|TIE||I/O||||||||||
-P41|TIE||I/O||||||||||
+P39|io_RData<0>|I/O|I/O|BIDIR|||||||||
+P40|io_RData<1>|I/O|I/O|BIDIR|||||||||
+P41|io_RData<2>|I/O|I/O|BIDIR|||||||||
 P42|GND||GND||||||||||
-P43|TIE||I/O||||||||||
-P44|TIE||I/O||||||||||
-P45|TIE||I/O||||||||||
-P46|TIE||I/O||||||||||
-P47|TIE||I/O||||||||||
+P43|io_RData<3>|I/O|I/O|BIDIR|||||||||
+P44|io_RData<4>|I/O|I/O|BIDIR|||||||||
+P45|io_RData<5>|I/O|I/O|BIDIR|||||||||
+P46|io_RData<6>|I/O|I/O|BIDIR|||||||||
+P47|io_RData<7>|I/O|I/O|BIDIR|||||||||
 P48|i_TAddr<0>|I|I/O|INPUT|||||||||
 P49|GND||GND||||||||||
 P50|i_TAddr<1>|I|I/O|INPUT|||||||||
@@ -94,14 +94,14 @@ P73|VCC||VCCINT||||||||||
 P74|io_TData<5>|I/O|I/O/GSR|BIDIR|||||||||
 P75|io_TData<6>|I/O|I/O|BIDIR|||||||||
 P76|io_TData<7>|I/O|I/O/GTS1|BIDIR|||||||||
-P77|io_RData<4>|I/O|I/O/GTS2|BIDIR|||||||||
+P77|TIE||I/O/GTS2||||||||||
 P78|VCC||VCCINT||||||||||
-P79|io_RData<5>|I/O|I/O|BIDIR|||||||||
-P80|io_RData<6>|I/O|I/O|BIDIR|||||||||
-P81|io_RData<7>|I/O|I/O|BIDIR|||||||||
-P82|o_nReset|O|I/O|OUTPUT|||||||||
-P83|o_nROE|O|I/O|OUTPUT|||||||||
-P84|o_nRWE|O|I/O|OUTPUT|||||||||
+P79|o_nReset|I/O|I/O|BIDIR|||||||||
+P80|TIE||I/O||||||||||
+P81|o_nROE|O|I/O|OUTPUT|||||||||
+P82|TIE||I/O||||||||||
+P83|o_nRWE|O|I/O|OUTPUT|||||||||
+P84|TIE||I/O||||||||||
 
 To preserve the pinout above for future design iterations in
 Project Navigator simply execute the (Lock Pins) process

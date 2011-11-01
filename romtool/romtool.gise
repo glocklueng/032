@@ -32,6 +32,7 @@
     <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_NGC" xil_pn:name="RomEmuCtrl.ngc"/>
     <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_NGD" xil_pn:name="RomEmuCtrl.ngd"/>
     <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_NGR" xil_pn:name="RomEmuCtrl.ngr"/>
+    <file xil_pn:fileType="FILE_PAD_MISC" xil_pn:name="RomEmuCtrl.pad"/>
     <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_PNX" xil_pn:name="RomEmuCtrl.pnx"/>
     <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="RomEmuCtrl.prj"/>
     <file xil_pn:fileType="FILE_FITTER_REPORT" xil_pn:name="RomEmuCtrl.rpt"/>
@@ -42,23 +43,27 @@
     <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_VM6" xil_pn:name="RomEmuCtrl.vm6"/>
     <file xil_pn:fileType="FILE_FITTER_REPORT" xil_pn:name="RomEmuCtrl.xml"/>
     <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_XST" xil_pn:name="RomEmuCtrl.xst"/>
+    <file xil_pn:fileType="FILE_FITTER_REPORT" xil_pn:name="RomEmuCtrl_build.xml"/>
     <file xil_pn:fileType="FILE_HTML" xil_pn:name="RomEmuCtrl_envsettings.html"/>
     <file xil_pn:fileType="FILE_DIRECTORY" xil_pn:name="RomEmuCtrl_html"/>
     <file xil_pn:fileType="FILE_XRPT" xil_pn:name="RomEmuCtrl_ngdbuild.xrpt"/>
+    <file xil_pn:fileType="FILE_PAD_EXCEL_REPORT" xil_pn:name="RomEmuCtrl_pad.csv"/>
     <file xil_pn:fileType="FILE_HTML" xil_pn:name="RomEmuCtrl_summary.html"/>
     <file xil_pn:fileType="FILE_XRPT" xil_pn:name="RomEmuCtrl_xst.xrpt"/>
     <file xil_pn:fileType="FILE_DIRECTORY" xil_pn:name="_ngo"/>
     <file xil_pn:fileType="FILE_XMSGS" xil_pn:name="_xmsgs/ngdbuild.xmsgs"/>
     <file xil_pn:fileType="FILE_XMSGS" xil_pn:name="_xmsgs/xst.xmsgs"/>
+    <file xil_pn:fileType="FILE_LOG" xil_pn:name="compxlib.log"/>
     <file xil_pn:fileType="FILE_FITTER_REPORT" xil_pn:name="webtalk_pn.xml"/>
     <file xil_pn:fileType="FILE_DIRECTORY" xil_pn:name="xlnx_auto_0_xdb"/>
     <file xil_pn:fileType="FILE_DIRECTORY" xil_pn:name="xst"/>
   </files>
 
   <transforms xmlns="http://www.xilinx.com/XMLSchema">
-    <transform xil_pn:end_ts="1320076703" xil_pn:name="TRANEXT_compLibraries_CPLD" xil_pn:prop_ck="-84089622777923343" xil_pn:start_ts="1320076703">
+    <transform xil_pn:end_ts="1320126541" xil_pn:name="TRANEXT_compLibraries_CPLD" xil_pn:prop_ck="8681498907089373142" xil_pn:start_ts="1320126541">
       <status xil_pn:value="FailedRun"/>
       <status xil_pn:value="ReadyToRun"/>
+      <outfile xil_pn:name="compxlib.log"/>
     </transform>
     <transform xil_pn:end_ts="1319937741" xil_pn:name="TRAN_copyInitialToXSTAbstractSynthesis" xil_pn:start_ts="1319937741">
       <status xil_pn:value="SuccessfullyRun"/>
@@ -68,7 +73,7 @@
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
     </transform>
-    <transform xil_pn:end_ts="1320077430" xil_pn:in_ck="-8790174467390708688" xil_pn:name="TRANEXT_xstsynthesize_CPLD" xil_pn:prop_ck="-1966158870642298009" xil_pn:start_ts="1320077424">
+    <transform xil_pn:end_ts="1320119923" xil_pn:in_ck="-8790174467390708688" xil_pn:name="TRANEXT_xstsynthesize_CPLD" xil_pn:prop_ck="-1966158870642298009" xil_pn:start_ts="1320119917">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
       <outfile xil_pn:name="RomEmuCtrl.lso"/>
@@ -83,13 +88,12 @@
       <outfile xil_pn:name="webtalk_pn.xml"/>
       <outfile xil_pn:name="xst"/>
     </transform>
-    <transform xil_pn:end_ts="1320076890" xil_pn:in_ck="145019798047852182" xil_pn:name="TRAN_compileBCD2" xil_pn:prop_ck="8766412104767437644" xil_pn:start_ts="1320076890">
+    <transform xil_pn:end_ts="1320120272" xil_pn:in_ck="145019798047852182" xil_pn:name="TRAN_compileBCD2" xil_pn:prop_ck="8766412104767437644" xil_pn:start_ts="1320120272">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
     </transform>
-    <transform xil_pn:end_ts="1320077435" xil_pn:in_ck="-7186244187146486810" xil_pn:name="TRAN_ngdbuild" xil_pn:prop_ck="-5048631304759742094" xil_pn:start_ts="1320077430">
+    <transform xil_pn:end_ts="1320120276" xil_pn:in_ck="-7186244187146486810" xil_pn:name="TRAN_ngdbuild" xil_pn:prop_ck="-5048631304759742094" xil_pn:start_ts="1320120272">
       <status xil_pn:value="SuccessfullyRun"/>
-      <status xil_pn:value="WarningsGenerated"/>
       <status xil_pn:value="ReadyToRun"/>
       <outfile xil_pn:name="RomEmuCtrl.bld"/>
       <outfile xil_pn:name="RomEmuCtrl.ngd"/>
@@ -97,32 +101,39 @@
       <outfile xil_pn:name="_ngo"/>
       <outfile xil_pn:name="_xmsgs/ngdbuild.xmsgs"/>
     </transform>
-    <transform xil_pn:end_ts="1320077445" xil_pn:in_ck="145019798047844689" xil_pn:name="TRANEXT_vm6File_xc9500" xil_pn:prop_ck="-6693885353598625805" xil_pn:start_ts="1320077435">
-      <status xil_pn:value="FailedRun"/>
+    <transform xil_pn:end_ts="1320120293" xil_pn:in_ck="145019798047844689" xil_pn:name="TRANEXT_vm6File_xc9500" xil_pn:prop_ck="-6693885353598625805" xil_pn:start_ts="1320120276">
+      <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="WarningsGenerated"/>
       <status xil_pn:value="ReadyToRun"/>
+      <status xil_pn:value="OutOfDateForOutputs"/>
+      <status xil_pn:value="OutputChanged"/>
+      <outfile xil_pn:name="RomEmuCtrl.gyd"/>
+      <outfile xil_pn:name="RomEmuCtrl.mfd"/>
+      <outfile xil_pn:name="RomEmuCtrl.nga"/>
+      <outfile xil_pn:name="RomEmuCtrl.pad"/>
+      <outfile xil_pn:name="RomEmuCtrl.pnx"/>
       <outfile xil_pn:name="RomEmuCtrl.rpt"/>
       <outfile xil_pn:name="RomEmuCtrl.tim"/>
       <outfile xil_pn:name="RomEmuCtrl.tspec"/>
+      <outfile xil_pn:name="RomEmuCtrl.vm6"/>
       <outfile xil_pn:name="RomEmuCtrl.xml"/>
+      <outfile xil_pn:name="RomEmuCtrl_build.xml"/>
       <outfile xil_pn:name="RomEmuCtrl_html"/>
+      <outfile xil_pn:name="RomEmuCtrl_pad.csv"/>
     </transform>
-    <transform xil_pn:end_ts="1320075498" xil_pn:in_ck="145019798047853553" xil_pn:name="TRANEXT_crtProg_xc9500" xil_pn:prop_ck="-9204593535224376705" xil_pn:start_ts="1320075496">
+    <transform xil_pn:end_ts="1320120294" xil_pn:in_ck="145019798047853553" xil_pn:name="TRANEXT_crtProg_xc9500" xil_pn:prop_ck="-9204593535224376705" xil_pn:start_ts="1320120293">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
-      <status xil_pn:value="OutOfDateForPredecessor"/>
       <outfile xil_pn:name="RomEmuCtrl.jed"/>
     </transform>
-    <transform xil_pn:end_ts="1320076537" xil_pn:in_ck="145019798047853553" xil_pn:name="TRAN_timRpt" xil_pn:prop_ck="111903974446" xil_pn:start_ts="1320076535">
+    <transform xil_pn:end_ts="1320120306" xil_pn:in_ck="145019798047853553" xil_pn:name="TRAN_timRpt" xil_pn:prop_ck="111903974446" xil_pn:start_ts="1320120304">
       <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="WarningsGenerated"/>
       <status xil_pn:value="ReadyToRun"/>
-      <status xil_pn:value="OutOfDateForPredecessor"/>
     </transform>
-    <transform xil_pn:end_ts="1320074424" xil_pn:in_ck="1364518373118077351" xil_pn:name="TRAN_createTimingConstraints" xil_pn:start_ts="1320074424">
+    <transform xil_pn:end_ts="1320124903" xil_pn:in_ck="1364518373118077351" xil_pn:name="TRAN_createTimingConstraints" xil_pn:start_ts="1320124903">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
-      <status xil_pn:value="OutOfDateForInputs"/>
-      <status xil_pn:value="InputChanged"/>
     </transform>
   </transforms>
 

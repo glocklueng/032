@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
-<document OS="nt" product="ISE" version="13.3">
+<document OS="nt64" product="ISE" version="13.2">
 
   <!--The data in this file is primarily intended for consumption by Xilinx tools.
     The structure and the elements are likely to change over the next few releases.
     This means code written to parse this file will need to be revisited each subsequent release.-->
 
-  <application stringID="Xst" timeStamp="Mon Oct 31 09:10:25 2011">
+  <application stringID="Xst" timeStamp="Mon Oct 31 20:58:38 2011">
     <section stringID="User_Env">
       <table stringID="User_EnvVar">
         <column stringID="variable"/>
         <column stringID="value"/>
         <row stringID="row" value="0">
           <item stringID="variable" value="Path"/>
-          <item stringID="value" value="d:\Xilinx\13.3\ISE_DS\ISE\\lib\nt;d:\Xilinx\13.3\ISE_DS\ISE\\bin\nt;D:\Xilinx\13.3\ISE_DS\PlanAhead\bin;D:\Xilinx\13.3\ISE_DS\ISE\bin\nt;D:\Xilinx\13.3\ISE_DS\ISE\lib\nt;D:\Xilinx\13.3\ISE_DS\EDK\bin\nt;D:\Xilinx\13.3\ISE_DS\EDK\lib\nt;D:\Xilinx\13.3\ISE_DS\EDK\gnu\microblaze\nt\bin;D:\Xilinx\13.3\ISE_DS\EDK\gnu\powerpc-eabi\nt\bin;D:\Xilinx\13.3\ISE_DS\EDK\gnuwin\bin;D:\Xilinx\13.3\ISE_DS\common\bin\nt;D:\Xilinx\13.3\ISE_DS\common\lib\nt;C:\Program Files\Common Files\Microsoft Shared\Windows Live;C:\Perl\site\bin;C:\Perl\bin;c:\devkitPro\msys\bin;C:\Program Files\ImageMagick;C:\WinAVR-20100110\bin;C:\WinAVR-20100110\utils\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\Altium Designer Summer 09\System;C:\Program Files\TortoiseSVN\bin;C:\Program Files\OpenOCD\0.4.0\bin;C:\svn\bin\;C:\Program Files\Microsoft Windows Performance Toolkit\;C:\Program Files\Windows Live\Shared;C:\Program Files\Flash Magic;c:\WinARM\BIN\;C:\Program Files\IVI Foundation\IVI\bin;C:\Program Files\IVI Foundation\VISA\WinNT\Bin;C:\VXIPNP\WINNT\BIN;C:\VXIPNP\WINNT\TekVISA\BIN;d:\Program Files\MATLAB\R2010b\runtime\win32;d:\Program Files\MATLAB\R2010b\bin;C:\Program Files\QuickTime\QTSystem\;C:\Program Files\P-CAD 2006 Viewer\;C:\Program Files\ATMEL Corporation\SAM-BA v2.10;c:\tools\nmap5.35;C:\Program Files\ATMEL Corporation\AT91-ISP v1.12\SAM-BA v2.8;C:\Program Files\ATMEL Corporation\AT91-ISP v1.12\Library\;C:\Program Files\smartmontools\bin;C:\PROGRA~1\FLASHM~1"/>
+          <item stringID="value" value="d:\Xilinx\13.2\ISE_DS\ISE\\lib\nt64;d:\Xilinx\13.2\ISE_DS\ISE\\bin\nt64;D:\Xilinx\13.2\ISE_DS\PlanAhead\bin;D:\Xilinx\13.2\ISE_DS\ISE\bin\nt64;D:\Xilinx\13.2\ISE_DS\ISE\lib\nt64;D:\Xilinx\13.2\ISE_DS\EDK\bin\nt64;D:\Xilinx\13.2\ISE_DS\EDK\lib\nt64;D:\Xilinx\13.2\ISE_DS\EDK\gnu\microblaze\nt64\bin;D:\Xilinx\13.2\ISE_DS\EDK\gnu\powerpc-eabi\nt64\bin;D:\Xilinx\13.2\ISE_DS\EDK\gnuwin\bin;D:\Xilinx\13.2\ISE_DS\common\bin\nt64;D:\Xilinx\13.2\ISE_DS\common\lib\nt64;C:\Program Files\Common Files\Microsoft Shared\Windows Live;C:\Program Files (x86)\Common Files\Microsoft Shared\Windows Live;C:\Program Files (x86)\AMD APP\bin\x86_64;C:\Program Files (x86)\AMD APP\bin\x86;C:\Users\charlie\Documents\AMD APP\bin\x86_64;C:\Users\charlie\Documents\AMD APP\bin\x86;C:\WinAVR-20100110\bin;C:\WinAVR-20100110\utils\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\TortoiseSVN\bin;C:\Program Files (x86)\Altium Designer Summer 09\System;C:\Program Files (x86)\Windows Live\Shared;C:\Program Files (x86)\ATI Technologies\ATI.ACE\Core-Static;C:\Program Files\Microsoft Windows Performance Toolkit\;C:\Program Files (x86)\QuickTime\QTSystem\;C:\Program Files (x86)\GTK2-Runtime\bin;D:\Program Files\ATI Technologies\ATI.ACE\Core-Static;d:\doxygen\bin;C:\Program Files (x86)\IVI\bin;C:\Program Files (x86)\IVI Foundation\VISA\WinNT\Bin;C:\PROGRA~2\IVIFOU~1\VISA\WinNT\Bin;C:\Program Files (x86)\TortoiseSVN\bin;C:\Program Files (x86)\AMD APP\tools\AMD APP KernelAnalyzer 1.9\;C:\Program Files (x86)\ATMEL Corporation\SAM-BA v2.10;C:\Program Files (x86)\Nmap;d:\altera\11.0\modelsim_ase\win32aloem"/>
         </row>
         <row stringID="row" value="1">
           <item stringID="variable" value="PATHEXT"/>
@@ -20,32 +20,32 @@
         </row>
         <row stringID="row" value="2">
           <item stringID="variable" value="XILINX"/>
-          <item stringID="value" value="d:\Xilinx\13.3\ISE_DS\ISE\"/>
+          <item stringID="value" value="d:\Xilinx\13.2\ISE_DS\ISE\"/>
         </row>
         <row stringID="row" value="3">
           <item stringID="variable" value="XILINX_DSP"/>
-          <item stringID="value" value="D:\Xilinx\13.3\ISE_DS\ISE"/>
+          <item stringID="value" value="D:\Xilinx\13.2\ISE_DS\ISE"/>
         </row>
         <row stringID="row" value="4">
           <item stringID="variable" value="XILINX_EDK"/>
-          <item stringID="value" value="D:\Xilinx\13.3\ISE_DS\EDK"/>
+          <item stringID="value" value="D:\Xilinx\13.2\ISE_DS\EDK"/>
         </row>
         <row stringID="row" value="5">
           <item stringID="variable" value="XILINX_PLANAHEAD"/>
-          <item stringID="value" value="D:\Xilinx\13.3\ISE_DS\PlanAhead"/>
+          <item stringID="value" value="D:\Xilinx\13.2\ISE_DS\PlanAhead"/>
         </row>
       </table>
       <item stringID="User_EnvOs" value="OS Information">
-        <item stringID="User_EnvOsname" value="Microsoft Windows 7 , 32-bit"/>
+        <item stringID="User_EnvOsname" value="Microsoft Windows 7 , 64-bit"/>
         <item stringID="User_EnvOsrelease" value="major release  (build 7600)"/>
       </item>
-      <item stringID="User_EnvHost" value="infected"/>
+      <item stringID="User_EnvHost" value="zombiemac"/>
       <table stringID="User_EnvCpu">
         <column stringID="arch"/>
         <column stringID="speed"/>
         <row stringID="row" value="0">
-          <item stringID="arch" value="Intel(R) Core(TM)2 Duo CPU     T9300  @ 2.50GHz"/>
-          <item stringID="speed" value="2493 MHz"/>
+          <item stringID="arch" value="Intel(R) Core(TM)2 Quad CPU    Q6600  @ 2.40GHz"/>
+          <item stringID="speed" value="2405 MHz"/>
         </row>
       </table>
     </section>
