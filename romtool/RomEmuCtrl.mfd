@@ -3,8 +3,8 @@ MDF_INFO | RomEmuCtrl | XC95108-15-PC84
 MACROCELL | 4 | 10 | io_RData_0_IOBUFE
 ATTRIBUTES | 265986 | 0
 INPUTS | 4 | o_HData.PIN  | io_TData<0>.PIN  | io_RData_6_IOBUFE/io_RData_6_IOBUFE_TRST  | o_nReset.PIN
-INPUTMC | 1 | 3 | 15
-INPUTP | 3 | 33 | 124 | 8
+INPUTMC | 1 | 1 | 10
+INPUTP | 3 | 31 | 124 | 42
 EQ | 3 | 
    io_RData<0> = io_TData<0>.PIN & o_nReset.PIN
 	# !o_nReset.PIN & o_HData.PIN;
@@ -13,8 +13,8 @@ EQ | 3 |
 MACROCELL | 4 | 11 | io_RData_1_IOBUFE
 ATTRIBUTES | 265986 | 0
 INPUTS | 4 | r_Data<1>  | io_TData<1>.PIN  | io_RData_6_IOBUFE/io_RData_6_IOBUFE_TRST  | o_nReset.PIN
-INPUTMC | 2 | 0 | 0 | 3 | 15
-INPUTP | 2 | 126 | 8
+INPUTMC | 2 | 0 | 2 | 1 | 10
+INPUTP | 2 | 126 | 42
 EQ | 3 | 
    io_RData<1> = r_Data<1> & !o_nReset.PIN
 	# io_TData<1>.PIN & o_nReset.PIN;
@@ -23,8 +23,8 @@ EQ | 3 |
 MACROCELL | 4 | 13 | io_RData_2_IOBUFE
 ATTRIBUTES | 265986 | 0
 INPUTS | 4 | io_TData<2>.PIN  | r_Data<2>  | io_RData_6_IOBUFE/io_RData_6_IOBUFE_TRST  | o_nReset.PIN
-INPUTMC | 2 | 1 | 0 | 3 | 15
-INPUTP | 2 | 127 | 8
+INPUTMC | 2 | 0 | 17 | 1 | 10
+INPUTP | 2 | 127 | 42
 EQ | 3 | 
    io_RData<2> = r_Data<2> & !o_nReset.PIN
 	# io_TData<2>.PIN & o_nReset.PIN;
@@ -33,8 +33,8 @@ EQ | 3 |
 MACROCELL | 4 | 14 | io_RData_3_IOBUFE
 ATTRIBUTES | 265986 | 0
 INPUTS | 4 | r_Data<3>  | io_TData<3>.PIN  | io_RData_6_IOBUFE/io_RData_6_IOBUFE_TRST  | o_nReset.PIN
-INPUTMC | 2 | 1 | 3 | 3 | 15
-INPUTP | 2 | 129 | 8
+INPUTMC | 2 | 0 | 12 | 1 | 10
+INPUTP | 2 | 129 | 42
 EQ | 3 | 
    io_RData<3> = r_Data<3> & !o_nReset.PIN
 	# io_TData<3>.PIN & o_nReset.PIN;
@@ -44,8 +44,8 @@ MACROCELL | 4 | 16 | io_RData_4_IOBUFE
 ATTRIBUTES | 265986 | 0
 OUTPUTMC | 1 | 4 | 17
 INPUTS | 9 | r_Data<4>  | io_TData<4>.PIN  | io_RData_6_IOBUFE/io_RData_6_IOBUFE_TRST  | i_HCmd<1>  | r_DataCount<1>.LFBK  | r_DataCount<2>.LFBK  | r_DataCount<3>.LFBK  | o_nReset.PIN  | r_DataCount<0>.LFBK
-INPUTMC | 6 | 1 | 6 | 3 | 15 | 4 | 15 | 4 | 9 | 4 | 12 | 4 | 17
-INPUTP | 3 | 131 | 19 | 8
+INPUTMC | 6 | 0 | 10 | 1 | 10 | 4 | 15 | 4 | 9 | 4 | 12 | 4 | 17
+INPUTP | 3 | 131 | 19 | 42
 EXPORTS | 1 | 4 | 17
 EQ | 5 | 
    io_RData<4> = r_Data<4> & !o_nReset.PIN
@@ -57,8 +57,8 @@ EQ | 5 |
 MACROCELL | 5 | 1 | io_RData_5_IOBUFE
 ATTRIBUTES | 265986 | 0
 INPUTS | 4 | r_Data<5>  | io_TData<5>.PIN  | io_RData_6_IOBUFE/io_RData_6_IOBUFE_TRST  | o_nReset.PIN
-INPUTMC | 2 | 1 | 9 | 3 | 15
-INPUTP | 2 | 134 | 8
+INPUTMC | 2 | 0 | 8 | 1 | 10
+INPUTP | 2 | 134 | 42
 EQ | 3 | 
    io_RData<5> = r_Data<5> & !o_nReset.PIN
 	# io_TData<5>.PIN & o_nReset.PIN;
@@ -67,8 +67,8 @@ EQ | 3 |
 MACROCELL | 5 | 2 | io_RData_6_IOBUFE
 ATTRIBUTES | 265986 | 0
 INPUTS | 4 | io_TData<6>.PIN  | r_Data<6>  | io_RData_6_IOBUFE/io_RData_6_IOBUFE_TRST  | o_nReset.PIN
-INPUTMC | 2 | 1 | 12 | 3 | 15
-INPUTP | 2 | 2 | 8
+INPUTMC | 2 | 1 | 17 | 1 | 10
+INPUTP | 2 | 2 | 42
 EQ | 3 | 
    io_RData<6> = r_Data<6> & !o_nReset.PIN
 	# io_TData<6>.PIN & o_nReset.PIN;
@@ -77,21 +77,20 @@ EQ | 3 |
 MACROCELL | 5 | 4 | io_RData_7_IOBUFE
 ATTRIBUTES | 265986 | 0
 INPUTS | 4 | r_Data<7>  | io_TData<7>.PIN  | io_RData_6_IOBUFE/io_RData_6_IOBUFE_TRST  | o_nReset.PIN
-INPUTMC | 2 | 1 | 14 | 3 | 15
-INPUTP | 2 | 4 | 8
+INPUTMC | 2 | 1 | 16 | 1 | 10
+INPUTP | 2 | 4 | 42
 EQ | 3 | 
    io_RData<7> = r_Data<7> & !o_nReset.PIN
 	# io_TData<7>.PIN & o_nReset.PIN;
    io_RData<7>.OE = io_RData_6_IOBUFE/io_RData_6_IOBUFE_TRST;
 
-MACROCELL | 1 | 10 | r_TargetMode
+MACROCELL | 2 | 2 | r_TargetMode
 ATTRIBUTES | 4686594 | 0
-OUTPUTMC | 9 | 1 | 9 | 1 | 10 | 1 | 13 | 1 | 15 | 1 | 1 | 1 | 2 | 1 | 4 | 1 | 5 | 1 | 7
-INPUTS | 11 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_Data<5>.LFBK  | i_HData<0>  | r_DataCount<0>  | r_DataCount<1>  | r_DataCount<2>  | r_DataCount<3>  | i_HData<1>  | r_TargetMode.LFBK
-INPUTMC | 6 | 1 | 9 | 4 | 17 | 4 | 15 | 4 | 9 | 4 | 12 | 1 | 10
-INPUTP | 5 | 20 | 19 | 18 | 21 | 23
-EXPORTS | 1 | 1 | 9
-EQ | 10 | 
+OUTPUTMC | 11 | 2 | 2 | 2 | 4 | 2 | 5 | 2 | 7 | 2 | 8 | 2 | 10 | 2 | 11 | 2 | 13 | 2 | 14 | 2 | 15 | 2 | 16
+INPUTS | 5 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | i_HData<0>  | r_TargetMode.LFBK
+INPUTMC | 1 | 2 | 2
+INPUTP | 4 | 20 | 19 | 18 | 21
+EQ | 7 | 
    o_nReset.T = !i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
 	r_TargetMode.LFBK
 	# i_HCmd<2> & !i_HCmd<1> & i_HCmd<0> & i_HData<0> & 
@@ -99,18 +98,15 @@ EQ | 10 |
 	# i_HCmd<2> & !i_HCmd<1> & i_HCmd<0> & !i_HData<0> & 
 	r_TargetMode.LFBK;
    o_nReset.CLK = i_HClk;	// GCK
-    r_TargetMode.EXP  =  !i_HCmd<2> & i_HCmd<1> & i_HCmd<0> & 
-	r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
-	!i_HData<1> & r_Data<5>.LFBK
 GLOBALS | 1 | 2 | i_HClk
 
-MACROCELL | 0 | 14 | r_Data<0>
+MACROCELL | 0 | 13 | r_Data<0>
 ATTRIBUTES | 4686594 | 0
-OUTPUTMC | 3 | 0 | 14 | 0 | 13 | 0 | 15
-INPUTS | 10 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_Data<1>.LFBK  | r_DataCount<1>  | r_DataCount<2>  | r_DataCount<3>  | r_Addr<2>.EXP  | EXP1_.EXP  | r_Data<0>.LFBK
-INPUTMC | 7 | 0 | 0 | 4 | 15 | 4 | 9 | 4 | 12 | 0 | 13 | 0 | 15 | 0 | 14
+OUTPUTMC | 3 | 0 | 13 | 0 | 14 | 0 | 12
+INPUTS | 10 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_Data<1>.LFBK  | r_DataCount<1>  | r_DataCount<2>  | r_DataCount<3>  | r_Data<3>.EXP  | o_nROE_OBUF.EXP  | r_Data<0>.LFBK
+INPUTMC | 7 | 0 | 2 | 4 | 15 | 4 | 9 | 4 | 12 | 0 | 12 | 0 | 14 | 0 | 13
 INPUTP | 3 | 20 | 19 | 18
-IMPORTS | 2 | 0 | 13 | 0 | 15
+IMPORTS | 2 | 0 | 12 | 0 | 14
 EQ | 29 | 
    o_HData.T = !i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
 	r_Data<0>.LFBK
@@ -122,10 +118,10 @@ EQ | 29 |
 	r_Data<0>.LFBK & !r_Data<1>.LFBK
 	# i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
 	r_DataCount<1> & !r_Data<0>.LFBK & r_Data<1>.LFBK
-;Imported pterms FB1_14
+;Imported pterms FB1_13
 	# i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
 	r_DataCount<2> & !r_Data<0>.LFBK & r_Data<1>.LFBK
-;Imported pterms FB1_16
+;Imported pterms FB1_15
 	# i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
 	r_DataCount<3> & !r_Data<0>.LFBK & r_Data<1>.LFBK
 	# !i_HCmd<1> & !i_HCmd<0> & !io_RData<0>.PIN & 
@@ -143,44 +139,50 @@ EQ | 29 |
    o_HData.CLK = i_HClk;	// GCK
 GLOBALS | 1 | 2 | i_HClk
 
-MACROCELL | 1 | 13 | o_nROE_OBUF
+MACROCELL | 0 | 14 | o_nROE_OBUF
 ATTRIBUTES | 396034 | 0
-OUTPUTMC | 1 | 1 | 12
-INPUTS | 12 | r_Data<6>.LFBK  | r_nOE  | i_nTOE  | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_DataCount<0>  | r_DataCount<1>  | r_DataCount<2>  | r_DataCount<3>  | i_HData<2>  | r_TargetMode.LFBK
-INPUTMC | 7 | 1 | 12 | 0 | 6 | 4 | 17 | 4 | 15 | 4 | 9 | 4 | 12 | 1 | 10
-INPUTP | 5 | 41 | 20 | 19 | 18 | 25
-EXPORTS | 1 | 1 | 12
-EQ | 5 | 
-   o_nROE = i_nTOE & r_TargetMode.LFBK
-	# r_nOE & !r_TargetMode.LFBK;
-    o_nROE_OBUF.EXP  =  !i_HCmd<2> & i_HCmd<1> & i_HCmd<0> & 
+OUTPUTMC | 1 | 0 | 13
+INPUTS | 12 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_Data<1>.LFBK  | r_DataCount<3>  | io_RData<0>.PIN  | r_DataCount<0>  | r_DataCount<1>  | r_DataCount<2>  | i_HData<0>  | o_nRWE_OBUF.EXP  | r_Data<0>.LFBK
+INPUTMC | 7 | 0 | 2 | 4 | 12 | 4 | 17 | 4 | 15 | 4 | 9 | 0 | 15 | 0 | 13
+INPUTP | 5 | 20 | 19 | 18 | 80 | 21
+EXPORTS | 1 | 0 | 13
+IMPORTS | 1 | 0 | 15
+EQ | 17 | 
+   o_nROE = ;Imported pterms FB1_16
+	  i_nTOE & o_nReset.PIN
+	# r_nOE.LFBK & !o_nReset.PIN;
+    o_nROE_OBUF.EXP  =  i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
+	r_DataCount<3> & !r_Data<0>.LFBK & r_Data<1>.LFBK
+	# !i_HCmd<1> & !i_HCmd<0> & !io_RData<0>.PIN & 
 	r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
-	!i_HData<2> & r_Data<6>.LFBK
+	r_Data<0>.LFBK
+	# i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
+	io_RData<0>.PIN & r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & 
+	!r_DataCount<3> & !r_Data<0>.LFBK
+	# !i_HCmd<2> & i_HCmd<1> & i_HCmd<0> & 
+	!r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
+	i_HData<0> & !r_Data<0>.LFBK
+	# !i_HCmd<2> & i_HCmd<1> & i_HCmd<0> & 
+	!r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
+	!i_HData<0> & r_Data<0>.LFBK
 
-MACROCELL | 1 | 15 | o_nRWE_OBUF
+MACROCELL | 0 | 15 | o_nRWE_OBUF
 ATTRIBUTES | 396034 | 0
-OUTPUTMC | 1 | 1 | 14
-INPUTS | 13 | r_Data<7>.LFBK  | i_nTWE  | r_nWE  | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | io_RData<7>.PIN  | r_DataCount<0>  | r_DataCount<1>  | r_DataCount<2>  | r_DataCount<3>  | i_HData<3>  | r_TargetMode.LFBK
-INPUTMC | 7 | 1 | 14 | 0 | 5 | 4 | 17 | 4 | 15 | 4 | 9 | 4 | 12 | 1 | 10
-INPUTP | 6 | 38 | 20 | 19 | 18 | 91 | 27
-EXPORTS | 1 | 1 | 14
-EQ | 11 | 
-   o_nRWE = r_nWE & !r_TargetMode.LFBK
-	# i_nTWE & r_TargetMode.LFBK;
-    o_nRWE_OBUF.EXP  =  i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
-	io_RData<7>.PIN & r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & 
-	!r_DataCount<3> & !r_Data<7>.LFBK
-	# !i_HCmd<2> & i_HCmd<1> & i_HCmd<0> & 
-	r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
-	i_HData<3> & !r_Data<7>.LFBK
-	# !i_HCmd<2> & i_HCmd<1> & i_HCmd<0> & 
-	r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
-	!i_HData<3> & r_Data<7>.LFBK
+OUTPUTMC | 1 | 0 | 14
+INPUTS | 5 | i_nTWE  | r_nOE.LFBK  | i_nTOE  | o_nReset.PIN  | r_nWE.LFBK
+INPUTMC | 2 | 0 | 6 | 0 | 5
+INPUTP | 3 | 41 | 38 | 42
+EXPORTS | 1 | 0 | 14
+EQ | 4 | 
+   o_nRWE = i_nTWE & o_nReset.PIN
+	# r_nWE.LFBK & !o_nReset.PIN;
+    o_nRWE_OBUF.EXP  =  i_nTOE & o_nReset.PIN
+	# r_nOE.LFBK & !o_nReset.PIN
 
 MACROCELL | 3 | 13 | io_TData_0_IOBUFE$BUF0
 ATTRIBUTES | 265986 | 0
 INPUTS | 4 | io_RData<0>.PIN  | i_nTOE  | i_nTWE  | o_nReset.PIN
-INPUTP | 4 | 80 | 41 | 38 | 8
+INPUTP | 4 | 80 | 38 | 41 | 42
 EQ | 2 | 
    io_TData<0> = io_RData<0>.PIN;
    io_TData<0>.OE = !i_nTOE & i_nTWE & o_nReset.PIN;
@@ -188,7 +190,7 @@ EQ | 2 |
 MACROCELL | 3 | 14 | io_TData_1_IOBUFE$BUF0
 ATTRIBUTES | 265986 | 0
 INPUTS | 4 | io_RData<1>.PIN  | i_nTOE  | i_nTWE  | o_nReset.PIN
-INPUTP | 4 | 82 | 41 | 38 | 8
+INPUTP | 4 | 82 | 38 | 41 | 42
 EQ | 2 | 
    io_TData<1> = io_RData<1>.PIN;
    io_TData<1>.OE = !i_nTOE & i_nTWE & o_nReset.PIN;
@@ -196,7 +198,7 @@ EQ | 2 |
 MACROCELL | 3 | 16 | io_TData_2_IOBUFE$BUF0
 ATTRIBUTES | 265986 | 0
 INPUTS | 4 | io_RData<2>.PIN  | i_nTOE  | i_nTWE  | o_nReset.PIN
-INPUTP | 4 | 83 | 41 | 38 | 8
+INPUTP | 4 | 83 | 38 | 41 | 42
 EQ | 2 | 
    io_TData<2> = io_RData<2>.PIN;
    io_TData<2>.OE = !i_nTOE & i_nTWE & o_nReset.PIN;
@@ -204,99 +206,53 @@ EQ | 2 |
 MACROCELL | 1 | 1 | io_TData_3_IOBUFE$BUF0
 ATTRIBUTES | 265986 | 0
 OUTPUTMC | 1 | 1 | 0
-INPUTS | 13 | io_RData<3>.PIN  | r_Data<2>.LFBK  | i_nTOE  | i_nTWE  | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_DataCount<0>  | r_DataCount<1>  | r_DataCount<2>  | r_DataCount<3>  | i_HData<2>  | r_TargetMode.LFBK
-INPUTMC | 6 | 1 | 0 | 4 | 17 | 4 | 15 | 4 | 9 | 4 | 12 | 1 | 10
-INPUTP | 7 | 86 | 41 | 38 | 20 | 19 | 18 | 25
+INPUTS | 9 | io_RData<3>.PIN  | i_nTOE  | i_nTWE  | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_AddrCount<1>.LFBK  | o_nReset.PIN  | r_AddrCount<0>.LFBK
+INPUTMC | 2 | 1 | 0 | 1 | 9
+INPUTP | 7 | 86 | 38 | 41 | 20 | 19 | 18 | 42
 EXPORTS | 1 | 1 | 0
-EQ | 8 | 
+EQ | 6 | 
    io_TData<3> = io_RData<3>.PIN;
-   io_TData<3>.OE = !i_nTOE & i_nTWE & r_TargetMode.LFBK;
-    io_TData_3_IOBUFE$BUF0.EXP  =  !i_HCmd<2> & i_HCmd<1> & i_HCmd<0> & 
-	!r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
-	i_HData<2> & !r_Data<2>.LFBK
-	# !i_HCmd<2> & i_HCmd<1> & i_HCmd<0> & 
-	!r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
-	!i_HData<2> & r_Data<2>.LFBK
+   io_TData<3>.OE = !i_nTOE & i_nTWE & o_nReset.PIN;
+    io_TData_3_IOBUFE$BUF0.EXP  =  !i_HCmd<2> & !i_HCmd<1> & i_HCmd<0> & 
+	r_AddrCount<0>.LFBK
+	# !i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
+	r_AddrCount<1>.LFBK
 
 MACROCELL | 1 | 2 | io_TData_4_IOBUFE$BUF0
 ATTRIBUTES | 265986 | 0
-OUTPUTMC | 1 | 1 | 3
-INPUTS | 14 | io_RData<4>.PIN  | r_Data<3>.LFBK  | i_nTOE  | i_nTWE  | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_DataCount<2>  | r_Data<4>.LFBK  | r_DataCount<3>  | io_RData<3>.PIN  | r_DataCount<0>  | r_DataCount<1>  | r_TargetMode.LFBK
-INPUTMC | 7 | 1 | 3 | 4 | 9 | 1 | 6 | 4 | 12 | 4 | 17 | 4 | 15 | 1 | 10
-INPUTP | 7 | 87 | 41 | 38 | 20 | 19 | 18 | 86
-EXPORTS | 1 | 1 | 3
-EQ | 9 | 
+INPUTS | 4 | io_RData<4>.PIN  | i_nTOE  | i_nTWE  | o_nReset.PIN
+INPUTP | 4 | 87 | 38 | 41 | 42
+EQ | 2 | 
    io_TData<4> = io_RData<4>.PIN;
-   io_TData<4>.OE = !i_nTOE & i_nTWE & r_TargetMode.LFBK;
-    io_TData_4_IOBUFE$BUF0.EXP  =  i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
-	r_DataCount<2> & !r_Data<3>.LFBK & r_Data<4>.LFBK
-	# i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
-	r_DataCount<3> & !r_Data<3>.LFBK & r_Data<4>.LFBK
-	# !i_HCmd<1> & !i_HCmd<0> & !io_RData<3>.PIN & 
-	r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
-	r_Data<3>.LFBK
+   io_TData<4>.OE = !i_nTOE & i_nTWE & o_nReset.PIN;
 
 MACROCELL | 1 | 4 | io_TData_5_IOBUFE$BUF0
 ATTRIBUTES | 265986 | 0
-OUTPUTMC | 1 | 1 | 3
-INPUTS | 14 | io_RData<5>.PIN  | r_Data<3>.LFBK  | i_nTOE  | i_nTWE  | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | io_RData<3>.PIN  | r_DataCount<0>  | r_DataCount<1>  | r_DataCount<2>  | r_DataCount<3>  | i_HData<3>  | r_TargetMode.LFBK
-INPUTMC | 6 | 1 | 3 | 4 | 17 | 4 | 15 | 4 | 9 | 4 | 12 | 1 | 10
-INPUTP | 8 | 88 | 41 | 38 | 20 | 19 | 18 | 86 | 27
-EXPORTS | 1 | 1 | 3
-EQ | 11 | 
+INPUTS | 4 | io_RData<5>.PIN  | i_nTOE  | i_nTWE  | o_nReset.PIN
+INPUTP | 4 | 88 | 38 | 41 | 42
+EQ | 2 | 
    io_TData<5> = io_RData<5>.PIN;
-   io_TData<5>.OE = !i_nTOE & i_nTWE & r_TargetMode.LFBK;
-    io_TData_5_IOBUFE$BUF0.EXP  =  i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
-	io_RData<3>.PIN & r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & 
-	!r_DataCount<3> & !r_Data<3>.LFBK
-	# !i_HCmd<2> & i_HCmd<1> & i_HCmd<0> & 
-	!r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
-	i_HData<3> & !r_Data<3>.LFBK
-	# !i_HCmd<2> & i_HCmd<1> & i_HCmd<0> & 
-	!r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
-	!i_HData<3> & r_Data<3>.LFBK
+   io_TData<5>.OE = !i_nTOE & i_nTWE & o_nReset.PIN;
 
 MACROCELL | 1 | 5 | io_TData_6_IOBUFE$BUF0
 ATTRIBUTES | 265986 | 0
-OUTPUTMC | 1 | 1 | 6
-INPUTS | 14 | io_RData<6>.PIN  | r_Data<4>.LFBK  | i_nTOE  | i_nTWE  | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_DataCount<2>  | r_Data<5>.LFBK  | r_DataCount<3>  | io_RData<4>.PIN  | r_DataCount<0>  | r_DataCount<1>  | r_TargetMode.LFBK
-INPUTMC | 7 | 1 | 6 | 4 | 9 | 1 | 9 | 4 | 12 | 4 | 17 | 4 | 15 | 1 | 10
-INPUTP | 7 | 89 | 41 | 38 | 20 | 19 | 18 | 87
-EXPORTS | 1 | 1 | 6
-EQ | 9 | 
+INPUTS | 4 | io_RData<6>.PIN  | i_nTOE  | i_nTWE  | o_nReset.PIN
+INPUTP | 4 | 89 | 38 | 41 | 42
+EQ | 2 | 
    io_TData<6> = io_RData<6>.PIN;
-   io_TData<6>.OE = !i_nTOE & i_nTWE & r_TargetMode.LFBK;
-    io_TData_6_IOBUFE$BUF0.EXP  =  i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
-	r_DataCount<2> & r_Data<5>.LFBK & !r_Data<4>.LFBK
-	# i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
-	r_DataCount<3> & r_Data<5>.LFBK & !r_Data<4>.LFBK
-	# !i_HCmd<1> & !i_HCmd<0> & !io_RData<4>.PIN & 
-	r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
-	r_Data<4>.LFBK
+   io_TData<6>.OE = !i_nTOE & i_nTWE & o_nReset.PIN;
 
 MACROCELL | 1 | 7 | io_TData_7_IOBUFE$BUF0
 ATTRIBUTES | 265986 | 0
-OUTPUTMC | 1 | 1 | 6
-INPUTS | 14 | io_RData<7>.PIN  | r_Data<4>.LFBK  | i_nTOE  | i_nTWE  | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | io_RData<4>.PIN  | r_DataCount<0>  | r_DataCount<1>  | r_DataCount<2>  | r_DataCount<3>  | i_HData<0>  | r_TargetMode.LFBK
-INPUTMC | 6 | 1 | 6 | 4 | 17 | 4 | 15 | 4 | 9 | 4 | 12 | 1 | 10
-INPUTP | 8 | 91 | 41 | 38 | 20 | 19 | 18 | 87 | 21
-EXPORTS | 1 | 1 | 6
-EQ | 11 | 
+INPUTS | 4 | io_RData<7>.PIN  | i_nTOE  | i_nTWE  | o_nReset.PIN
+INPUTP | 4 | 91 | 38 | 41 | 42
+EQ | 2 | 
    io_TData<7> = io_RData<7>.PIN;
-   io_TData<7>.OE = !i_nTOE & i_nTWE & r_TargetMode.LFBK;
-    io_TData_7_IOBUFE$BUF0.EXP  =  i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
-	io_RData<4>.PIN & r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & 
-	!r_DataCount<3> & !r_Data<4>.LFBK
-	# !i_HCmd<2> & i_HCmd<1> & i_HCmd<0> & 
-	r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
-	i_HData<0> & !r_Data<4>.LFBK
-	# !i_HCmd<2> & i_HCmd<1> & i_HCmd<0> & 
-	r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
-	!i_HData<0> & r_Data<4>.LFBK
+   io_TData<7>.OE = !i_nTOE & i_nTWE & o_nReset.PIN;
 
 MACROCELL | 4 | 17 | r_DataCount<0>
 ATTRIBUTES | 4424448 | 0
-OUTPUTMC | 21 | 0 | 1 | 1 | 17 | 1 | 15 | 1 | 13 | 1 | 10 | 0 | 5 | 0 | 15 | 1 | 2 | 1 | 5 | 1 | 8 | 1 | 11 | 1 | 14 | 0 | 6 | 1 | 1 | 1 | 4 | 1 | 7 | 4 | 16 | 4 | 17 | 4 | 15 | 4 | 9 | 4 | 12
+OUTPUTMC | 18 | 0 | 10 | 0 | 14 | 0 | 8 | 0 | 0 | 0 | 5 | 0 | 1 | 0 | 16 | 0 | 11 | 0 | 9 | 0 | 6 | 1 | 0 | 1 | 15 | 0 | 3 | 4 | 16 | 4 | 17 | 4 | 15 | 4 | 9 | 4 | 12
 INPUTS | 8 | i_HCmd<2>  | i_HCmd<1>  | r_DataCount<1>.LFBK  | i_HCmd<0>  | r_DataCount<2>.LFBK  | r_DataCount<3>.LFBK  | io_RData_4_IOBUFE.EXP  | r_DataCount<0>.LFBK
 INPUTMC | 5 | 4 | 15 | 4 | 9 | 4 | 12 | 4 | 16 | 4 | 17
 INPUTP | 3 | 20 | 19 | 18
@@ -316,7 +272,7 @@ GLOBALS | 1 | 2 | i_HClk
 
 MACROCELL | 4 | 15 | r_DataCount<1>
 ATTRIBUTES | 4424448 | 0
-OUTPUTMC | 28 | 0 | 14 | 1 | 17 | 1 | 15 | 1 | 13 | 1 | 11 | 0 | 0 | 1 | 0 | 1 | 3 | 1 | 6 | 1 | 9 | 1 | 12 | 1 | 14 | 0 | 6 | 0 | 5 | 0 | 1 | 0 | 15 | 1 | 1 | 1 | 2 | 1 | 4 | 1 | 5 | 1 | 7 | 1 | 8 | 1 | 10 | 4 | 16 | 4 | 17 | 4 | 15 | 4 | 9 | 4 | 12
+OUTPUTMC | 25 | 0 | 13 | 1 | 15 | 1 | 0 | 0 | 16 | 0 | 14 | 0 | 2 | 0 | 17 | 0 | 12 | 0 | 10 | 0 | 8 | 1 | 17 | 1 | 16 | 0 | 3 | 0 | 5 | 0 | 0 | 0 | 1 | 0 | 6 | 0 | 7 | 0 | 9 | 0 | 11 | 4 | 16 | 4 | 17 | 4 | 15 | 4 | 9 | 4 | 12
 INPUTS | 7 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_DataCount<2>.LFBK  | r_DataCount<3>.LFBK  | r_DataCount<0>.LFBK  | r_DataCount<1>.LFBK
 INPUTMC | 4 | 4 | 9 | 4 | 12 | 4 | 17 | 4 | 15
 INPUTP | 3 | 20 | 19 | 18
@@ -334,7 +290,7 @@ GLOBALS | 1 | 2 | i_HClk
 
 MACROCELL | 4 | 9 | r_DataCount<2>
 ATTRIBUTES | 4424448 | 0
-OUTPUTMC | 30 | 0 | 14 | 1 | 17 | 1 | 15 | 1 | 13 | 1 | 11 | 0 | 0 | 1 | 0 | 1 | 3 | 1 | 6 | 1 | 9 | 1 | 12 | 1 | 14 | 0 | 6 | 0 | 5 | 0 | 1 | 0 | 13 | 0 | 15 | 0 | 17 | 1 | 1 | 1 | 2 | 1 | 4 | 1 | 5 | 1 | 7 | 1 | 8 | 1 | 10 | 4 | 16 | 4 | 17 | 4 | 15 | 4 | 9 | 4 | 12
+OUTPUTMC | 25 | 0 | 13 | 1 | 15 | 1 | 0 | 0 | 16 | 0 | 14 | 0 | 2 | 0 | 17 | 0 | 12 | 0 | 10 | 0 | 7 | 1 | 17 | 1 | 16 | 0 | 3 | 0 | 5 | 0 | 0 | 0 | 1 | 0 | 6 | 0 | 8 | 0 | 9 | 0 | 11 | 4 | 16 | 4 | 17 | 4 | 15 | 4 | 9 | 4 | 12
 INPUTS | 6 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_DataCount<1>.LFBK  | r_DataCount<2>.LFBK  | r_DataCount<0>.LFBK
 INPUTMC | 3 | 4 | 15 | 4 | 9 | 4 | 17
 INPUTP | 3 | 20 | 19 | 18
@@ -350,7 +306,7 @@ GLOBALS | 1 | 2 | i_HClk
 
 MACROCELL | 4 | 12 | r_DataCount<3>
 ATTRIBUTES | 4424448 | 0
-OUTPUTMC | 27 | 0 | 14 | 1 | 17 | 1 | 15 | 1 | 13 | 0 | 0 | 1 | 0 | 1 | 3 | 1 | 6 | 1 | 9 | 1 | 12 | 1 | 14 | 0 | 6 | 0 | 5 | 0 | 1 | 0 | 15 | 1 | 1 | 1 | 2 | 1 | 4 | 1 | 5 | 1 | 7 | 1 | 8 | 1 | 10 | 1 | 11 | 4 | 16 | 4 | 17 | 4 | 15 | 4 | 12
+OUTPUTMC | 24 | 0 | 13 | 1 | 15 | 1 | 0 | 0 | 16 | 0 | 2 | 0 | 17 | 0 | 12 | 0 | 9 | 0 | 7 | 1 | 17 | 1 | 16 | 0 | 3 | 0 | 5 | 0 | 0 | 0 | 1 | 0 | 6 | 0 | 8 | 0 | 10 | 0 | 11 | 0 | 14 | 4 | 16 | 4 | 17 | 4 | 15 | 4 | 12
 INPUTS | 7 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_DataCount<0>.LFBK  | r_DataCount<1>.LFBK  | r_DataCount<2>.LFBK  | r_DataCount<3>.LFBK
 INPUTMC | 4 | 4 | 17 | 4 | 15 | 4 | 9 | 4 | 12
 INPUTP | 3 | 20 | 19 | 18
@@ -366,11 +322,11 @@ EQ | 9 |
    r_DataCount<3>.CLK = i_HClk;	// GCK
 GLOBALS | 1 | 2 | i_HClk
 
-MACROCELL | 2 | 3 | r_AddrCount<0>
+MACROCELL | 1 | 9 | r_AddrCount<0>
 ATTRIBUTES | 4424448 | 0
-OUTPUTMC | 18 | 5 | 16 | 0 | 17 | 0 | 7 | 0 | 16 | 0 | 10 | 0 | 8 | 3 | 17 | 5 | 17 | 0 | 12 | 0 | 13 | 0 | 11 | 0 | 9 | 2 | 3 | 2 | 2 | 2 | 17 | 2 | 12 | 2 | 9 | 2 | 6
+OUTPUTMC | 18 | 3 | 12 | 3 | 17 | 5 | 15 | 5 | 17 | 2 | 17 | 2 | 12 | 3 | 15 | 5 | 16 | 2 | 3 | 2 | 6 | 2 | 9 | 1 | 1 | 1 | 9 | 1 | 15 | 1 | 14 | 1 | 13 | 1 | 12 | 1 | 11
 INPUTS | 4 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_AddrCount<0>.LFBK
-INPUTMC | 1 | 2 | 3
+INPUTMC | 1 | 1 | 9
 INPUTP | 3 | 20 | 19 | 18
 EQ | 3 | 
    r_AddrCount<0>.T = !i_HCmd<2> & !i_HCmd<1> & i_HCmd<0>
@@ -378,14 +334,13 @@ EQ | 3 |
    r_AddrCount<0>.CLK = i_HClk;	// GCK
 GLOBALS | 1 | 2 | i_HClk
 
-MACROCELL | 0 | 17 | r_Addr<0>
+MACROCELL | 3 | 17 | r_Addr<0>
 ATTRIBUTES | 4424448 | 0
-OUTPUTMC | 18 | 2 | 4 | 5 | 16 | 2 | 17 | 2 | 12 | 3 | 17 | 5 | 17 | 2 | 9 | 2 | 6 | 0 | 0 | 0 | 17 | 0 | 16 | 0 | 12 | 0 | 13 | 0 | 11 | 0 | 10 | 0 | 9 | 0 | 8 | 0 | 7
-INPUTS | 10 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_AddrCount<0>  | r_Data<1>.LFBK  | r_AddrCount<1>  | i_HData<0>  | r_DataCount<2>  | r_Data<2>  | r_Addr<0>.LFBK
-INPUTMC | 6 | 2 | 3 | 0 | 0 | 2 | 2 | 4 | 9 | 1 | 0 | 0 | 17
+OUTPUTMC | 16 | 5 | 15 | 5 | 17 | 2 | 17 | 2 | 12 | 2 | 3 | 5 | 16 | 1 | 14 | 2 | 4 | 1 | 13 | 2 | 9 | 1 | 12 | 1 | 11 | 2 | 6 | 3 | 17 | 3 | 15 | 3 | 12
+INPUTS | 7 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_AddrCount<0>  | r_AddrCount<1>  | i_HData<0>  | r_Addr<0>.LFBK
+INPUTMC | 3 | 1 | 9 | 1 | 0 | 3 | 17
 INPUTP | 4 | 20 | 19 | 18 | 21
-EXPORTS | 1 | 0 | 0
-EQ | 9 | 
+EQ | 7 | 
    r_Addr<0>.T = !i_HCmd<2> & i_HCmd<1> & !i_HCmd<0>
 	# !i_HCmd<2> & !i_HCmd<0> & r_Addr<0>.LFBK
 	# !i_HCmd<2> & !i_HCmd<1> & !r_AddrCount<0> & 
@@ -393,89 +348,103 @@ EQ | 9 |
 	# !i_HCmd<2> & !i_HCmd<1> & i_HCmd<0> & 
 	!r_AddrCount<0> & !r_AddrCount<1> & i_HData<0> & !r_Addr<0>.LFBK;
    r_Addr<0>.CLK = i_HClk;	// GCK
-    r_Addr<0>.EXP  =  i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
-	r_DataCount<2> & r_Data<2> & !r_Data<1>.LFBK
 GLOBALS | 1 | 2 | i_HClk
 
-MACROCELL | 2 | 2 | r_AddrCount<1>
+MACROCELL | 1 | 0 | r_AddrCount<1>
 ATTRIBUTES | 4424448 | 0
-OUTPUTMC | 17 | 0 | 17 | 5 | 16 | 0 | 16 | 0 | 7 | 0 | 9 | 3 | 17 | 5 | 17 | 0 | 12 | 0 | 13 | 0 | 11 | 0 | 8 | 0 | 10 | 2 | 2 | 2 | 17 | 2 | 12 | 2 | 9 | 2 | 6
-INPUTS | 5 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_AddrCount<0>.LFBK  | r_AddrCount<1>.LFBK
-INPUTMC | 2 | 2 | 3 | 2 | 2
-INPUTP | 3 | 20 | 19 | 18
-EQ | 5 | 
-   r_AddrCount<1>.T = !i_HCmd<2> & !i_HCmd<1> & i_HCmd<0> & 
+OUTPUTMC | 18 | 3 | 17 | 5 | 15 | 5 | 17 | 2 | 17 | 2 | 12 | 3 | 15 | 5 | 16 | 3 | 12 | 2 | 3 | 2 | 6 | 2 | 9 | 1 | 17 | 1 | 1 | 1 | 15 | 1 | 14 | 1 | 13 | 1 | 12 | 1 | 11
+INPUTS | 12 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_DataCount<3>  | r_Data<7>.LFBK  | io_RData<6>.PIN  | r_DataCount<0>  | r_DataCount<1>  | r_DataCount<2>  | i_HData<2>  | io_TData_3_IOBUFE$BUF0.EXP  | r_Data<6>.LFBK
+INPUTMC | 7 | 4 | 12 | 1 | 16 | 4 | 17 | 4 | 15 | 4 | 9 | 1 | 1 | 1 | 17
+INPUTP | 5 | 20 | 19 | 18 | 89 | 25
+EXPORTS | 1 | 1 | 17
+IMPORTS | 1 | 1 | 1
+EQ | 20 | 
+   r_AddrCount<1>.T = ;Imported pterms FB2_2
+	  !i_HCmd<2> & !i_HCmd<1> & i_HCmd<0> & 
 	r_AddrCount<0>.LFBK
 	# !i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
 	r_AddrCount<1>.LFBK;
    r_AddrCount<1>.CLK = i_HClk;	// GCK
+    r_AddrCount<1>.EXP  =  i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
+	r_DataCount<3> & !r_Data<6>.LFBK & r_Data<7>.LFBK
+	# !i_HCmd<1> & !i_HCmd<0> & !io_RData<6>.PIN & 
+	r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
+	r_Data<6>.LFBK
+	# i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
+	io_RData<6>.PIN & r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & 
+	!r_DataCount<3> & !r_Data<6>.LFBK
+	# !i_HCmd<2> & i_HCmd<1> & i_HCmd<0> & 
+	r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
+	i_HData<2> & !r_Data<6>.LFBK
+	# !i_HCmd<2> & i_HCmd<1> & i_HCmd<0> & 
+	r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
+	!i_HData<2> & r_Data<6>.LFBK
 GLOBALS | 1 | 2 | i_HClk
 
-MACROCELL | 0 | 16 | r_Addr<10>
+MACROCELL | 5 | 17 | r_Addr<10>
 ATTRIBUTES | 4424448 | 0
-OUTPUTMC | 7 | 4 | 1 | 2 | 17 | 2 | 12 | 3 | 17 | 5 | 17 | 5 | 16 | 0 | 16
-INPUTS | 17 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_Addr<1>.LFBK  | r_Addr<2>.LFBK  | r_Addr<3>.LFBK  | r_Addr<5>.LFBK  | r_Addr<4>  | r_Addr<6>.LFBK  | r_Addr<7>.LFBK  | r_Addr<9>.LFBK  | r_Addr<8>  | r_Addr<10>.LFBK  | r_AddrCount<0>  | r_AddrCount<1>  | i_HData<2>  | r_Addr<0>.LFBK
-INPUTMC | 13 | 0 | 12 | 0 | 13 | 0 | 11 | 0 | 10 | 2 | 9 | 0 | 9 | 0 | 8 | 0 | 7 | 2 | 6 | 0 | 16 | 2 | 3 | 2 | 2 | 0 | 17
+OUTPUTMC | 7 | 4 | 1 | 2 | 17 | 2 | 12 | 3 | 15 | 5 | 17 | 5 | 16 | 5 | 15
+INPUTS | 17 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_Addr<0>  | r_Addr<1>  | r_Addr<2>  | r_Addr<3>  | r_Addr<4>  | r_Addr<5>  | r_Addr<6>  | r_Addr<7>  | r_Addr<8>  | r_Addr<9>  | r_AddrCount<0>  | r_AddrCount<1>  | i_HData<2>  | r_Addr<10>.LFBK
+INPUTMC | 13 | 3 | 17 | 1 | 15 | 1 | 14 | 1 | 13 | 2 | 9 | 1 | 12 | 1 | 11 | 2 | 6 | 2 | 3 | 3 | 12 | 1 | 9 | 1 | 0 | 5 | 17
 INPUTP | 4 | 20 | 19 | 18 | 25
-EQ | 11 | 
+EQ | 10 | 
    r_Addr<10>.T = !i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
 	r_Addr<10>.LFBK
 	# !i_HCmd<2> & !i_HCmd<1> & !r_AddrCount<0> & 
 	r_AddrCount<1> & !i_HData<2> & r_Addr<10>.LFBK
 	# !i_HCmd<2> & !i_HCmd<1> & i_HCmd<0> & 
 	!r_AddrCount<0> & r_AddrCount<1> & i_HData<2> & !r_Addr<10>.LFBK
-	# !i_HCmd<2> & i_HCmd<1> & !i_HCmd<0> & r_Addr<4> & 
-	r_Addr<8> & r_Addr<0>.LFBK & r_Addr<1>.LFBK & r_Addr<2>.LFBK & 
-	r_Addr<3>.LFBK & r_Addr<5>.LFBK & r_Addr<6>.LFBK & r_Addr<7>.LFBK & 
-	r_Addr<9>.LFBK;
+	# !i_HCmd<2> & i_HCmd<1> & !i_HCmd<0> & r_Addr<0> & 
+	r_Addr<1> & r_Addr<2> & r_Addr<3> & r_Addr<4> & r_Addr<5> & 
+	r_Addr<6> & r_Addr<7> & r_Addr<8> & r_Addr<9>;
    r_Addr<10>.CLK = i_HClk;	// GCK
 GLOBALS | 1 | 2 | i_HClk
 
 MACROCELL | 2 | 17 | r_Addr<11>
 ATTRIBUTES | 4424448 | 0
-OUTPUTMC | 6 | 4 | 2 | 5 | 16 | 3 | 17 | 5 | 17 | 2 | 17 | 2 | 12
-INPUTS | 18 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_Addr<0>  | r_Addr<10>  | r_Addr<1>  | r_Addr<2>  | r_Addr<3>  | r_Addr<8>.LFBK  | r_Addr<5>  | r_Addr<6>  | r_Addr<7>  | r_AddrCount<0>.LFBK  | r_Addr<9>  | r_AddrCount<1>.LFBK  | r_Addr<11>.LFBK  | i_HData<3>  | r_Addr<4>.LFBK
-INPUTMC | 14 | 0 | 17 | 0 | 16 | 0 | 12 | 0 | 13 | 0 | 11 | 2 | 6 | 0 | 10 | 0 | 9 | 0 | 8 | 2 | 3 | 0 | 7 | 2 | 2 | 2 | 17 | 2 | 9
+OUTPUTMC | 6 | 4 | 2 | 5 | 15 | 3 | 15 | 5 | 16 | 2 | 17 | 2 | 12
+INPUTS | 18 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_Addr<0>  | r_Addr<10>  | r_Addr<1>  | r_Addr<2>  | r_Addr<3>  | r_Addr<7>.LFBK  | r_Addr<5>  | r_Addr<6>  | r_Addr<8>.LFBK  | r_Addr<11>.LFBK  | r_Addr<9>  | r_AddrCount<0>  | r_AddrCount<1>  | i_HData<3>  | r_Addr<4>.LFBK
+INPUTMC | 14 | 3 | 17 | 5 | 17 | 1 | 15 | 1 | 14 | 1 | 13 | 2 | 6 | 1 | 12 | 1 | 11 | 2 | 3 | 2 | 17 | 3 | 12 | 1 | 9 | 1 | 0 | 2 | 9
 INPUTP | 4 | 20 | 19 | 18 | 27
 EQ | 11 | 
    r_Addr<11>.T = !i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
 	r_Addr<11>.LFBK
-	# !i_HCmd<2> & !i_HCmd<1> & !i_HData<3> & 
-	!r_AddrCount<0>.LFBK & r_AddrCount<1>.LFBK & r_Addr<11>.LFBK
-	# !i_HCmd<2> & !i_HCmd<1> & i_HCmd<0> & i_HData<3> & 
-	!r_AddrCount<0>.LFBK & r_AddrCount<1>.LFBK & !r_Addr<11>.LFBK
+	# !i_HCmd<2> & !i_HCmd<1> & !r_AddrCount<0> & 
+	r_AddrCount<1> & !i_HData<3> & r_Addr<11>.LFBK
+	# !i_HCmd<2> & !i_HCmd<1> & i_HCmd<0> & 
+	!r_AddrCount<0> & r_AddrCount<1> & i_HData<3> & !r_Addr<11>.LFBK
 	# !i_HCmd<2> & i_HCmd<1> & !i_HCmd<0> & r_Addr<0> & 
 	r_Addr<10> & r_Addr<1> & r_Addr<2> & r_Addr<3> & r_Addr<5> & 
-	r_Addr<6> & r_Addr<7> & r_Addr<9> & r_Addr<4>.LFBK & 
+	r_Addr<6> & r_Addr<9> & r_Addr<4>.LFBK & r_Addr<7>.LFBK & 
 	r_Addr<8>.LFBK;
    r_Addr<11>.CLK = i_HClk;	// GCK
 GLOBALS | 1 | 2 | i_HClk
 
 MACROCELL | 2 | 12 | r_Addr<12>
 ATTRIBUTES | 4424448 | 0
-OUTPUTMC | 5 | 4 | 4 | 3 | 17 | 5 | 17 | 5 | 16 | 2 | 12
-INPUTS | 19 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_Addr<0>  | r_Addr<10>  | r_Addr<4>.LFBK  | r_Addr<1>  | r_Addr<2>  | r_Addr<3>  | r_Addr<8>.LFBK  | r_Addr<5>  | r_Addr<6>  | r_Addr<7>  | r_AddrCount<0>.LFBK  | r_Addr<9>  | r_AddrCount<1>.LFBK  | r_Addr<12>.LFBK  | i_HData<0>  | r_Addr<11>.LFBK
-INPUTMC | 15 | 0 | 17 | 0 | 16 | 2 | 9 | 0 | 12 | 0 | 13 | 0 | 11 | 2 | 6 | 0 | 10 | 0 | 9 | 0 | 8 | 2 | 3 | 0 | 7 | 2 | 2 | 2 | 12 | 2 | 17
+OUTPUTMC | 5 | 4 | 4 | 3 | 15 | 5 | 16 | 5 | 15 | 2 | 12
+INPUTS | 19 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_Addr<0>  | r_Addr<10>  | r_Addr<4>.LFBK  | r_Addr<1>  | r_Addr<2>  | r_Addr<3>  | r_Addr<7>.LFBK  | r_Addr<5>  | r_Addr<6>  | r_Addr<8>.LFBK  | r_Addr<12>.LFBK  | r_Addr<9>  | r_AddrCount<0>  | r_AddrCount<1>  | i_HData<0>  | r_Addr<11>.LFBK
+INPUTMC | 15 | 3 | 17 | 5 | 17 | 2 | 9 | 1 | 15 | 1 | 14 | 1 | 13 | 2 | 6 | 1 | 12 | 1 | 11 | 2 | 3 | 2 | 12 | 3 | 12 | 1 | 9 | 1 | 0 | 2 | 17
 INPUTP | 4 | 20 | 19 | 18 | 21
 EQ | 11 | 
    r_Addr<12>.T = !i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
 	r_Addr<12>.LFBK
-	# !i_HCmd<2> & !i_HCmd<1> & !i_HData<0> & 
-	r_AddrCount<0>.LFBK & r_AddrCount<1>.LFBK & r_Addr<12>.LFBK
-	# !i_HCmd<2> & !i_HCmd<1> & i_HCmd<0> & i_HData<0> & 
-	r_AddrCount<0>.LFBK & r_AddrCount<1>.LFBK & !r_Addr<12>.LFBK
+	# !i_HCmd<2> & !i_HCmd<1> & r_AddrCount<0> & 
+	r_AddrCount<1> & !i_HData<0> & r_Addr<12>.LFBK
+	# !i_HCmd<2> & !i_HCmd<1> & i_HCmd<0> & 
+	r_AddrCount<0> & r_AddrCount<1> & i_HData<0> & !r_Addr<12>.LFBK
 	# !i_HCmd<2> & i_HCmd<1> & !i_HCmd<0> & r_Addr<0> & 
 	r_Addr<10> & r_Addr<1> & r_Addr<2> & r_Addr<3> & r_Addr<5> & 
-	r_Addr<6> & r_Addr<7> & r_Addr<9> & r_Addr<4>.LFBK & 
+	r_Addr<6> & r_Addr<9> & r_Addr<4>.LFBK & r_Addr<7>.LFBK & 
 	r_Addr<8>.LFBK & r_Addr<11>.LFBK;
    r_Addr<12>.CLK = i_HClk;	// GCK
 GLOBALS | 1 | 2 | i_HClk
 
-MACROCELL | 3 | 17 | r_Addr<13>
+MACROCELL | 3 | 15 | r_Addr<13>
 ATTRIBUTES | 4424448 | 0
-OUTPUTMC | 4 | 4 | 5 | 5 | 17 | 5 | 16 | 3 | 17
-INPUTS | 20 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_Addr<0>  | r_Addr<10>  | r_Addr<11>  | r_Addr<12>  | r_Addr<1>  | r_Addr<2>  | r_Addr<3>  | r_Addr<4>  | r_Addr<5>  | r_Addr<6>  | r_Addr<7>  | r_Addr<8>  | r_Addr<9>  | r_AddrCount<0>  | r_AddrCount<1>  | i_HData<1>  | r_Addr<13>.LFBK
-INPUTMC | 16 | 0 | 17 | 0 | 16 | 2 | 17 | 2 | 12 | 0 | 12 | 0 | 13 | 0 | 11 | 2 | 9 | 0 | 10 | 0 | 9 | 0 | 8 | 2 | 6 | 0 | 7 | 2 | 3 | 2 | 2 | 3 | 17
+OUTPUTMC | 4 | 4 | 5 | 5 | 16 | 5 | 15 | 3 | 15
+INPUTS | 20 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_Addr<9>.LFBK  | r_Addr<10>  | r_Addr<11>  | r_Addr<12>  | r_Addr<1>  | r_Addr<2>  | r_Addr<3>  | r_Addr<4>  | r_Addr<5>  | r_Addr<6>  | r_Addr<7>  | r_Addr<8>  | r_Addr<13>.LFBK  | r_AddrCount<0>  | r_AddrCount<1>  | i_HData<1>  | r_Addr<0>.LFBK
+INPUTMC | 16 | 3 | 12 | 5 | 17 | 2 | 17 | 2 | 12 | 1 | 15 | 1 | 14 | 1 | 13 | 2 | 9 | 1 | 12 | 1 | 11 | 2 | 6 | 2 | 3 | 3 | 15 | 1 | 9 | 1 | 0 | 3 | 17
 INPUTP | 4 | 20 | 19 | 18 | 23
 EQ | 11 | 
    r_Addr<13>.T = !i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
@@ -484,18 +453,18 @@ EQ | 11 |
 	r_AddrCount<1> & !i_HData<1> & r_Addr<13>.LFBK
 	# !i_HCmd<2> & !i_HCmd<1> & i_HCmd<0> & 
 	r_AddrCount<0> & r_AddrCount<1> & i_HData<1> & !r_Addr<13>.LFBK
-	# !i_HCmd<2> & i_HCmd<1> & !i_HCmd<0> & r_Addr<0> & 
-	r_Addr<10> & r_Addr<11> & r_Addr<12> & r_Addr<1> & r_Addr<2> & 
-	r_Addr<3> & r_Addr<4> & r_Addr<5> & r_Addr<6> & r_Addr<7> & 
-	r_Addr<8> & r_Addr<9>;
+	# !i_HCmd<2> & i_HCmd<1> & !i_HCmd<0> & r_Addr<10> & 
+	r_Addr<11> & r_Addr<12> & r_Addr<1> & r_Addr<2> & r_Addr<3> & 
+	r_Addr<4> & r_Addr<5> & r_Addr<6> & r_Addr<7> & r_Addr<8> & 
+	r_Addr<0>.LFBK & r_Addr<9>.LFBK;
    r_Addr<13>.CLK = i_HClk;	// GCK
 GLOBALS | 1 | 2 | i_HClk
 
-MACROCELL | 5 | 17 | r_Addr<14>
+MACROCELL | 5 | 16 | r_Addr<14>
 ATTRIBUTES | 4424448 | 0
-OUTPUTMC | 3 | 4 | 7 | 5 | 17 | 5 | 16
-INPUTS | 21 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_Addr<0>  | r_Addr<10>  | r_Addr<11>  | r_Addr<12>  | r_Addr<13>  | r_Addr<1>  | r_Addr<2>  | r_Addr<3>  | r_Addr<4>  | r_Addr<5>  | r_Addr<6>  | r_Addr<7>  | r_Addr<8>  | r_Addr<9>  | r_AddrCount<0>  | r_AddrCount<1>  | i_HData<2>  | r_Addr<14>.LFBK
-INPUTMC | 17 | 0 | 17 | 0 | 16 | 2 | 17 | 2 | 12 | 3 | 17 | 0 | 12 | 0 | 13 | 0 | 11 | 2 | 9 | 0 | 10 | 0 | 9 | 0 | 8 | 2 | 6 | 0 | 7 | 2 | 3 | 2 | 2 | 5 | 17
+OUTPUTMC | 3 | 4 | 7 | 5 | 16 | 5 | 15
+INPUTS | 21 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_Addr<0>  | r_Addr<14>.LFBK  | r_Addr<11>  | r_Addr<12>  | r_Addr<13>  | r_Addr<1>  | r_Addr<2>  | r_Addr<3>  | r_Addr<4>  | r_Addr<5>  | r_Addr<6>  | r_Addr<7>  | r_Addr<8>  | r_Addr<9>  | r_AddrCount<0>  | r_AddrCount<1>  | i_HData<2>  | r_Addr<10>.LFBK
+INPUTMC | 17 | 3 | 17 | 5 | 16 | 2 | 17 | 2 | 12 | 3 | 15 | 1 | 15 | 1 | 14 | 1 | 13 | 2 | 9 | 1 | 12 | 1 | 11 | 2 | 6 | 2 | 3 | 3 | 12 | 1 | 9 | 1 | 0 | 5 | 17
 INPUTP | 4 | 20 | 19 | 18 | 25
 EQ | 11 | 
    r_Addr<14>.T = !i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
@@ -505,129 +474,157 @@ EQ | 11 |
 	# !i_HCmd<2> & !i_HCmd<1> & i_HCmd<0> & 
 	r_AddrCount<0> & r_AddrCount<1> & i_HData<2> & !r_Addr<14>.LFBK
 	# !i_HCmd<2> & i_HCmd<1> & !i_HCmd<0> & r_Addr<0> & 
-	r_Addr<10> & r_Addr<11> & r_Addr<12> & r_Addr<13> & 
-	r_Addr<1> & r_Addr<2> & r_Addr<3> & r_Addr<4> & r_Addr<5> & 
-	r_Addr<6> & r_Addr<7> & r_Addr<8> & r_Addr<9>;
+	r_Addr<11> & r_Addr<12> & r_Addr<13> & r_Addr<1> & r_Addr<2> & 
+	r_Addr<3> & r_Addr<4> & r_Addr<5> & r_Addr<6> & r_Addr<7> & 
+	r_Addr<8> & r_Addr<9> & r_Addr<10>.LFBK;
    r_Addr<14>.CLK = i_HClk;	// GCK
 GLOBALS | 1 | 2 | i_HClk
 
-MACROCELL | 0 | 12 | r_Addr<1>
+MACROCELL | 1 | 15 | r_Addr<1>
 ATTRIBUTES | 4424448 | 0
-OUTPUTMC | 16 | 2 | 5 | 2 | 17 | 2 | 12 | 3 | 17 | 5 | 17 | 5 | 16 | 2 | 9 | 2 | 6 | 0 | 16 | 0 | 12 | 0 | 13 | 0 | 11 | 0 | 10 | 0 | 9 | 0 | 8 | 0 | 7
-INPUTS | 8 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_AddrCount<0>  | r_AddrCount<1>  | r_Addr<0>.LFBK  | i_HData<1>  | r_Addr<1>.LFBK
-INPUTMC | 4 | 2 | 3 | 2 | 2 | 0 | 17 | 0 | 12
-INPUTP | 4 | 20 | 19 | 18 | 23
-EQ | 9 | 
-   r_Addr<1>.T = !i_HCmd<2> & i_HCmd<1> & !i_HCmd<0> & 
-	r_Addr<0>.LFBK
+OUTPUTMC | 17 | 5 | 17 | 2 | 17 | 2 | 12 | 3 | 15 | 5 | 16 | 5 | 15 | 2 | 5 | 3 | 12 | 2 | 9 | 2 | 3 | 2 | 6 | 1 | 16 | 1 | 15 | 1 | 14 | 1 | 13 | 1 | 12 | 1 | 11
+INPUTS | 15 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_AddrCount<1>.LFBK  | r_Addr<1>.LFBK  | r_Data<7>.LFBK  | i_HData<1>  | io_RData<7>.PIN  | r_DataCount<0>  | r_DataCount<1>  | r_DataCount<2>  | r_DataCount<3>  | i_HData<3>  | r_Addr<2>.EXP  | r_AddrCount<0>.LFBK
+INPUTMC | 9 | 1 | 0 | 1 | 15 | 1 | 16 | 4 | 17 | 4 | 15 | 4 | 9 | 4 | 12 | 1 | 14 | 1 | 9
+INPUTP | 6 | 20 | 19 | 18 | 23 | 91 | 27
+EXPORTS | 1 | 1 | 16
+IMPORTS | 1 | 1 | 14
+EQ | 20 | 
+   r_Addr<1>.T = !i_HCmd<2> & !i_HCmd<1> & i_HCmd<0> & i_HData<1> & 
+	!r_AddrCount<0>.LFBK & !r_AddrCount<1>.LFBK & !r_Addr<1>.LFBK
+;Imported pterms FB2_15
+	# !i_HCmd<2> & i_HCmd<1> & !i_HCmd<0> & r_Addr<0>
 	# !i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
 	r_Addr<1>.LFBK
-	# !i_HCmd<2> & !i_HCmd<1> & !r_AddrCount<0> & 
-	!r_AddrCount<1> & !i_HData<1> & r_Addr<1>.LFBK
-	# !i_HCmd<2> & !i_HCmd<1> & i_HCmd<0> & 
-	!r_AddrCount<0> & !r_AddrCount<1> & i_HData<1> & !r_Addr<1>.LFBK;
+	# !i_HCmd<2> & !i_HCmd<1> & !i_HData<1> & 
+	!r_AddrCount<0>.LFBK & !r_AddrCount<1>.LFBK & r_Addr<1>.LFBK;
    r_Addr<1>.CLK = i_HClk;	// GCK
+    r_Addr<1>.EXP  =  !i_HCmd<1> & !i_HCmd<0> & !io_RData<7>.PIN & 
+	r_DataCount<0> & r_Data<7>.LFBK
+	# i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
+	io_RData<7>.PIN & r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & 
+	!r_DataCount<3> & !r_Data<7>.LFBK
+	# !i_HCmd<2> & i_HCmd<1> & i_HCmd<0> & 
+	r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
+	i_HData<3> & !r_Data<7>.LFBK
+	# !i_HCmd<2> & i_HCmd<1> & i_HCmd<0> & 
+	r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
+	!i_HData<3> & r_Data<7>.LFBK
 GLOBALS | 1 | 2 | i_HClk
 
-MACROCELL | 0 | 13 | r_Addr<2>
+MACROCELL | 1 | 14 | r_Addr<2>
 ATTRIBUTES | 4424448 | 0
-OUTPUTMC | 16 | 2 | 7 | 2 | 17 | 2 | 12 | 3 | 17 | 5 | 17 | 5 | 16 | 2 | 6 | 2 | 9 | 0 | 14 | 0 | 16 | 0 | 13 | 0 | 11 | 0 | 10 | 0 | 9 | 0 | 8 | 0 | 7
-INPUTS | 12 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_AddrCount<0>  | r_AddrCount<1>  | r_Addr<0>.LFBK  | i_HData<2>  | r_Addr<1>.LFBK  | r_Data<0>.LFBK  | r_Data<1>.LFBK  | r_DataCount<2>  | r_Addr<2>.LFBK
-INPUTMC | 8 | 2 | 3 | 2 | 2 | 0 | 17 | 0 | 12 | 0 | 14 | 0 | 0 | 4 | 9 | 0 | 13
-INPUTP | 4 | 20 | 19 | 18 | 25
-EXPORTS | 1 | 0 | 14
-EQ | 11 | 
-   r_Addr<2>.T = !i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
+OUTPUTMC | 16 | 5 | 17 | 2 | 17 | 2 | 12 | 3 | 15 | 5 | 16 | 2 | 7 | 5 | 15 | 2 | 9 | 3 | 12 | 2 | 3 | 2 | 6 | 1 | 15 | 1 | 14 | 1 | 13 | 1 | 12 | 1 | 11
+INPUTS | 11 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_AddrCount<1>.LFBK  | r_Addr<2>.LFBK  | r_Addr<1>.LFBK  | i_HData<2>  | r_Addr<0>  | i_HData<1>  | r_Addr<3>.EXP  | r_AddrCount<0>.LFBK
+INPUTMC | 6 | 1 | 0 | 1 | 14 | 1 | 15 | 3 | 17 | 1 | 13 | 1 | 9
+INPUTP | 5 | 20 | 19 | 18 | 25 | 23
+EXPORTS | 1 | 1 | 15
+IMPORTS | 1 | 1 | 13
+EQ | 15 | 
+   r_Addr<2>.T = !i_HCmd<2> & !i_HCmd<1> & !i_HData<2> & 
+	!r_AddrCount<0>.LFBK & !r_AddrCount<1>.LFBK & r_Addr<2>.LFBK
+	# !i_HCmd<2> & !i_HCmd<1> & i_HCmd<0> & i_HData<2> & 
+	!r_AddrCount<0>.LFBK & !r_AddrCount<1>.LFBK & !r_Addr<2>.LFBK
+;Imported pterms FB2_14
+	# !i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
 	r_Addr<2>.LFBK
-	# !i_HCmd<2> & i_HCmd<1> & !i_HCmd<0> & 
-	r_Addr<0>.LFBK & r_Addr<1>.LFBK
-	# !i_HCmd<2> & !i_HCmd<1> & !r_AddrCount<0> & 
-	!r_AddrCount<1> & !i_HData<2> & r_Addr<2>.LFBK
-	# !i_HCmd<2> & !i_HCmd<1> & i_HCmd<0> & 
-	!r_AddrCount<0> & !r_AddrCount<1> & i_HData<2> & !r_Addr<2>.LFBK;
+	# !i_HCmd<2> & i_HCmd<1> & !i_HCmd<0> & r_Addr<0> & 
+	r_Addr<1>.LFBK;
    r_Addr<2>.CLK = i_HClk;	// GCK
-    r_Addr<2>.EXP  =  i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
-	r_DataCount<2> & !r_Data<0>.LFBK & r_Data<1>.LFBK
+    r_Addr<2>.EXP  =  !i_HCmd<2> & i_HCmd<1> & !i_HCmd<0> & r_Addr<0>
+	# !i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
+	r_Addr<1>.LFBK
+	# !i_HCmd<2> & !i_HCmd<1> & !i_HData<1> & 
+	!r_AddrCount<0>.LFBK & !r_AddrCount<1>.LFBK & r_Addr<1>.LFBK
 GLOBALS | 1 | 2 | i_HClk
 
-MACROCELL | 0 | 11 | r_Addr<3>
+MACROCELL | 1 | 13 | r_Addr<3>
 ATTRIBUTES | 4424448 | 0
-OUTPUTMC | 14 | 2 | 8 | 2 | 17 | 2 | 12 | 3 | 17 | 5 | 17 | 5 | 16 | 2 | 9 | 2 | 6 | 0 | 16 | 0 | 11 | 0 | 10 | 0 | 9 | 0 | 8 | 0 | 7
-INPUTS | 10 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_AddrCount<0>  | r_AddrCount<1>  | r_Addr<0>.LFBK  | i_HData<3>  | r_Addr<1>.LFBK  | r_Addr<2>.LFBK  | r_Addr<3>.LFBK
-INPUTMC | 6 | 2 | 3 | 2 | 2 | 0 | 17 | 0 | 12 | 0 | 13 | 0 | 11
+OUTPUTMC | 15 | 5 | 17 | 2 | 17 | 2 | 12 | 3 | 15 | 5 | 16 | 2 | 8 | 2 | 9 | 5 | 15 | 3 | 12 | 2 | 6 | 2 | 3 | 1 | 14 | 1 | 13 | 1 | 12 | 1 | 11
+INPUTS | 11 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_AddrCount<1>.LFBK  | r_Addr<3>.LFBK  | r_Addr<1>.LFBK  | i_HData<3>  | r_Addr<0>  | r_Addr<2>.LFBK  | r_Addr<5>.EXP  | r_AddrCount<0>.LFBK
+INPUTMC | 7 | 1 | 0 | 1 | 13 | 1 | 15 | 3 | 17 | 1 | 14 | 1 | 12 | 1 | 9
 INPUTP | 4 | 20 | 19 | 18 | 27
-EQ | 9 | 
-   r_Addr<3>.T = !i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
-	r_Addr<3>.LFBK
-	# !i_HCmd<2> & i_HCmd<1> & !i_HCmd<0> & 
-	r_Addr<0>.LFBK & r_Addr<1>.LFBK & r_Addr<2>.LFBK
-	# !i_HCmd<2> & !i_HCmd<1> & !r_AddrCount<0> & 
-	!r_AddrCount<1> & !i_HData<3> & r_Addr<3>.LFBK
-	# !i_HCmd<2> & !i_HCmd<1> & i_HCmd<0> & 
-	!r_AddrCount<0> & !r_AddrCount<1> & i_HData<3> & !r_Addr<3>.LFBK;
+EXPORTS | 1 | 1 | 14
+IMPORTS | 1 | 1 | 12
+EQ | 14 | 
+   r_Addr<3>.T = !i_HCmd<2> & i_HCmd<1> & !i_HCmd<0> & r_Addr<0> & 
+	r_Addr<1>.LFBK & r_Addr<2>.LFBK
+	# !i_HCmd<2> & !i_HCmd<1> & !i_HData<3> & 
+	!r_AddrCount<0>.LFBK & !r_AddrCount<1>.LFBK & r_Addr<3>.LFBK
+	# !i_HCmd<2> & !i_HCmd<1> & i_HCmd<0> & i_HData<3> & 
+	!r_AddrCount<0>.LFBK & !r_AddrCount<1>.LFBK & !r_Addr<3>.LFBK
+;Imported pterms FB2_13
+	# !i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
+	r_Addr<3>.LFBK;
    r_Addr<3>.CLK = i_HClk;	// GCK
+    r_Addr<3>.EXP  =  !i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
+	r_Addr<2>.LFBK
+	# !i_HCmd<2> & i_HCmd<1> & !i_HCmd<0> & r_Addr<0> & 
+	r_Addr<1>.LFBK
 GLOBALS | 1 | 2 | i_HClk
 
 MACROCELL | 2 | 9 | r_Addr<4>
 ATTRIBUTES | 4424448 | 0
-OUTPUTMC | 13 | 0 | 16 | 0 | 8 | 5 | 16 | 3 | 17 | 5 | 17 | 0 | 7 | 0 | 10 | 0 | 9 | 2 | 17 | 2 | 12 | 2 | 9 | 2 | 6 | 2 | 10
-INPUTS | 11 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_AddrCount<1>.LFBK  | r_Addr<4>.LFBK  | i_HData<0>  | r_Addr<0>  | r_Addr<1>  | r_Addr<2>  | r_Addr<3>  | r_AddrCount<0>.LFBK
-INPUTMC | 7 | 2 | 2 | 2 | 9 | 0 | 17 | 0 | 12 | 0 | 13 | 0 | 11 | 2 | 3
+OUTPUTMC | 13 | 5 | 17 | 1 | 11 | 5 | 15 | 3 | 15 | 5 | 16 | 3 | 12 | 1 | 12 | 2 | 17 | 2 | 12 | 2 | 9 | 2 | 6 | 2 | 3 | 2 | 10
+INPUTS | 11 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_AddrCount<0>  | r_AddrCount<1>  | i_HData<0>  | r_Addr<0>  | r_Addr<1>  | r_Addr<2>  | r_Addr<3>  | r_Addr<4>.LFBK
+INPUTMC | 7 | 1 | 9 | 1 | 0 | 3 | 17 | 1 | 15 | 1 | 14 | 1 | 13 | 2 | 9
 INPUTP | 4 | 20 | 19 | 18 | 21
 EQ | 9 | 
    r_Addr<4>.T = !i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
 	r_Addr<4>.LFBK
-	# !i_HCmd<2> & !i_HCmd<1> & !i_HData<0> & 
-	r_AddrCount<0>.LFBK & !r_AddrCount<1>.LFBK & r_Addr<4>.LFBK
+	# !i_HCmd<2> & !i_HCmd<1> & r_AddrCount<0> & 
+	!r_AddrCount<1> & !i_HData<0> & r_Addr<4>.LFBK
 	# !i_HCmd<2> & i_HCmd<1> & !i_HCmd<0> & r_Addr<0> & 
 	r_Addr<1> & r_Addr<2> & r_Addr<3>
-	# !i_HCmd<2> & !i_HCmd<1> & i_HCmd<0> & i_HData<0> & 
-	r_AddrCount<0>.LFBK & !r_AddrCount<1>.LFBK & !r_Addr<4>.LFBK;
+	# !i_HCmd<2> & !i_HCmd<1> & i_HCmd<0> & 
+	r_AddrCount<0> & !r_AddrCount<1> & i_HData<0> & !r_Addr<4>.LFBK;
    r_Addr<4>.CLK = i_HClk;	// GCK
 GLOBALS | 1 | 2 | i_HClk
 
-MACROCELL | 0 | 10 | r_Addr<5>
+MACROCELL | 1 | 12 | r_Addr<5>
 ATTRIBUTES | 4424448 | 0
-OUTPUTMC | 12 | 2 | 11 | 2 | 17 | 2 | 12 | 3 | 17 | 5 | 17 | 5 | 16 | 2 | 6 | 0 | 16 | 0 | 10 | 0 | 9 | 0 | 8 | 0 | 7
-INPUTS | 12 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_Addr<1>.LFBK  | r_Addr<2>.LFBK  | r_Addr<3>.LFBK  | r_Addr<5>.LFBK  | r_Addr<4>  | r_AddrCount<0>  | r_AddrCount<1>  | i_HData<1>  | r_Addr<0>.LFBK
-INPUTMC | 8 | 0 | 12 | 0 | 13 | 0 | 11 | 0 | 10 | 2 | 9 | 2 | 3 | 2 | 2 | 0 | 17
+OUTPUTMC | 13 | 5 | 17 | 2 | 17 | 2 | 12 | 3 | 15 | 5 | 16 | 2 | 11 | 5 | 15 | 2 | 6 | 2 | 3 | 3 | 12 | 1 | 13 | 1 | 12 | 1 | 11
+INPUTS | 12 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_Addr<0>  | r_Addr<2>.LFBK  | r_Addr<3>.LFBK  | r_AddrCount<0>.LFBK  | r_Addr<4>  | r_AddrCount<1>.LFBK  | r_Addr<5>.LFBK  | i_HData<1>  | r_Addr<1>.LFBK
+INPUTMC | 8 | 3 | 17 | 1 | 14 | 1 | 13 | 1 | 9 | 2 | 9 | 1 | 0 | 1 | 12 | 1 | 15
 INPUTP | 4 | 20 | 19 | 18 | 23
-EQ | 9 | 
+EXPORTS | 1 | 1 | 13
+EQ | 11 | 
    r_Addr<5>.T = !i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
 	r_Addr<5>.LFBK
-	# !i_HCmd<2> & !i_HCmd<1> & r_AddrCount<0> & 
-	!r_AddrCount<1> & !i_HData<1> & r_Addr<5>.LFBK
-	# !i_HCmd<2> & !i_HCmd<1> & i_HCmd<0> & 
-	r_AddrCount<0> & !r_AddrCount<1> & i_HData<1> & !r_Addr<5>.LFBK
-	# !i_HCmd<2> & i_HCmd<1> & !i_HCmd<0> & r_Addr<4> & 
-	r_Addr<0>.LFBK & r_Addr<1>.LFBK & r_Addr<2>.LFBK & r_Addr<3>.LFBK;
+	# !i_HCmd<2> & !i_HCmd<1> & !i_HData<1> & 
+	r_AddrCount<0>.LFBK & !r_AddrCount<1>.LFBK & r_Addr<5>.LFBK
+	# !i_HCmd<2> & !i_HCmd<1> & i_HCmd<0> & i_HData<1> & 
+	r_AddrCount<0>.LFBK & !r_AddrCount<1>.LFBK & !r_Addr<5>.LFBK
+	# !i_HCmd<2> & i_HCmd<1> & !i_HCmd<0> & r_Addr<0> & 
+	r_Addr<4> & r_Addr<1>.LFBK & r_Addr<2>.LFBK & r_Addr<3>.LFBK;
    r_Addr<5>.CLK = i_HClk;	// GCK
+    r_Addr<5>.EXP  =  !i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
+	r_Addr<3>.LFBK
 GLOBALS | 1 | 2 | i_HClk
 
-MACROCELL | 0 | 9 | r_Addr<6>
+MACROCELL | 1 | 11 | r_Addr<6>
 ATTRIBUTES | 4424448 | 0
-OUTPUTMC | 11 | 2 | 13 | 2 | 17 | 2 | 12 | 3 | 17 | 5 | 17 | 5 | 16 | 2 | 6 | 0 | 16 | 0 | 9 | 0 | 8 | 0 | 7
-INPUTS | 13 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_Addr<1>.LFBK  | r_Addr<2>.LFBK  | r_Addr<3>.LFBK  | r_Addr<5>.LFBK  | r_Addr<4>  | r_Addr<6>.LFBK  | r_AddrCount<0>  | r_AddrCount<1>  | i_HData<2>  | r_Addr<0>.LFBK
-INPUTMC | 9 | 0 | 12 | 0 | 13 | 0 | 11 | 0 | 10 | 2 | 9 | 0 | 9 | 2 | 3 | 2 | 2 | 0 | 17
+OUTPUTMC | 11 | 5 | 17 | 2 | 17 | 2 | 12 | 3 | 15 | 5 | 16 | 2 | 13 | 2 | 6 | 2 | 3 | 3 | 12 | 5 | 15 | 1 | 11
+INPUTS | 13 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_Addr<0>  | r_Addr<2>.LFBK  | r_Addr<3>.LFBK  | r_Addr<5>.LFBK  | r_Addr<4>  | r_AddrCount<0>.LFBK  | r_AddrCount<1>.LFBK  | r_Addr<6>.LFBK  | i_HData<2>  | r_Addr<1>.LFBK
+INPUTMC | 9 | 3 | 17 | 1 | 14 | 1 | 13 | 1 | 12 | 2 | 9 | 1 | 9 | 1 | 0 | 1 | 11 | 1 | 15
 INPUTP | 4 | 20 | 19 | 18 | 25
 EQ | 10 | 
    r_Addr<6>.T = !i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
 	r_Addr<6>.LFBK
-	# !i_HCmd<2> & !i_HCmd<1> & r_AddrCount<0> & 
-	!r_AddrCount<1> & !i_HData<2> & r_Addr<6>.LFBK
-	# !i_HCmd<2> & !i_HCmd<1> & i_HCmd<0> & 
-	r_AddrCount<0> & !r_AddrCount<1> & i_HData<2> & !r_Addr<6>.LFBK
-	# !i_HCmd<2> & i_HCmd<1> & !i_HCmd<0> & r_Addr<4> & 
-	r_Addr<0>.LFBK & r_Addr<1>.LFBK & r_Addr<2>.LFBK & r_Addr<3>.LFBK & 
+	# !i_HCmd<2> & !i_HCmd<1> & !i_HData<2> & 
+	r_AddrCount<0>.LFBK & !r_AddrCount<1>.LFBK & r_Addr<6>.LFBK
+	# !i_HCmd<2> & !i_HCmd<1> & i_HCmd<0> & i_HData<2> & 
+	r_AddrCount<0>.LFBK & !r_AddrCount<1>.LFBK & !r_Addr<6>.LFBK
+	# !i_HCmd<2> & i_HCmd<1> & !i_HCmd<0> & r_Addr<0> & 
+	r_Addr<4> & r_Addr<1>.LFBK & r_Addr<2>.LFBK & r_Addr<3>.LFBK & 
 	r_Addr<5>.LFBK;
    r_Addr<6>.CLK = i_HClk;	// GCK
 GLOBALS | 1 | 2 | i_HClk
 
-MACROCELL | 0 | 8 | r_Addr<7>
+MACROCELL | 2 | 6 | r_Addr<7>
 ATTRIBUTES | 4424448 | 0
-OUTPUTMC | 10 | 2 | 14 | 2 | 17 | 2 | 12 | 3 | 17 | 5 | 17 | 5 | 16 | 2 | 6 | 0 | 16 | 0 | 8 | 0 | 7
-INPUTS | 14 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_Addr<1>.LFBK  | r_Addr<2>.LFBK  | r_Addr<3>.LFBK  | r_Addr<5>.LFBK  | r_Addr<4>  | r_Addr<6>.LFBK  | r_Addr<7>.LFBK  | r_AddrCount<0>  | r_AddrCount<1>  | i_HData<3>  | r_Addr<0>.LFBK
-INPUTMC | 10 | 0 | 12 | 0 | 13 | 0 | 11 | 0 | 10 | 2 | 9 | 0 | 9 | 0 | 8 | 2 | 3 | 2 | 2 | 0 | 17
+OUTPUTMC | 10 | 5 | 17 | 3 | 12 | 5 | 15 | 3 | 15 | 5 | 16 | 2 | 17 | 2 | 12 | 2 | 6 | 2 | 3 | 2 | 14
+INPUTS | 14 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_Addr<0>  | r_Addr<1>  | r_Addr<2>  | r_Addr<3>  | r_Addr<7>.LFBK  | r_Addr<5>  | r_Addr<6>  | r_AddrCount<0>  | r_AddrCount<1>  | i_HData<3>  | r_Addr<4>.LFBK
+INPUTMC | 10 | 3 | 17 | 1 | 15 | 1 | 14 | 1 | 13 | 2 | 6 | 1 | 12 | 1 | 11 | 1 | 9 | 1 | 0 | 2 | 9
 INPUTP | 4 | 20 | 19 | 18 | 27
 EQ | 10 | 
    r_Addr<7>.T = !i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
@@ -636,36 +633,36 @@ EQ | 10 |
 	!r_AddrCount<1> & !i_HData<3> & r_Addr<7>.LFBK
 	# !i_HCmd<2> & !i_HCmd<1> & i_HCmd<0> & 
 	r_AddrCount<0> & !r_AddrCount<1> & i_HData<3> & !r_Addr<7>.LFBK
-	# !i_HCmd<2> & i_HCmd<1> & !i_HCmd<0> & r_Addr<4> & 
-	r_Addr<0>.LFBK & r_Addr<1>.LFBK & r_Addr<2>.LFBK & r_Addr<3>.LFBK & 
-	r_Addr<5>.LFBK & r_Addr<6>.LFBK;
+	# !i_HCmd<2> & i_HCmd<1> & !i_HCmd<0> & r_Addr<0> & 
+	r_Addr<1> & r_Addr<2> & r_Addr<3> & r_Addr<5> & r_Addr<6> & 
+	r_Addr<4>.LFBK;
    r_Addr<7>.CLK = i_HClk;	// GCK
 GLOBALS | 1 | 2 | i_HClk
 
-MACROCELL | 2 | 6 | r_Addr<8>
+MACROCELL | 2 | 3 | r_Addr<8>
 ATTRIBUTES | 4424448 | 0
-OUTPUTMC | 9 | 0 | 16 | 0 | 7 | 5 | 16 | 3 | 17 | 5 | 17 | 2 | 17 | 2 | 12 | 2 | 6 | 2 | 15
-INPUTS | 15 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_Addr<0>  | r_Addr<1>  | r_Addr<2>  | r_Addr<3>  | r_AddrCount<0>.LFBK  | r_Addr<5>  | r_Addr<6>  | r_Addr<7>  | r_AddrCount<1>.LFBK  | r_Addr<8>.LFBK  | i_HData<0>  | r_Addr<4>.LFBK
-INPUTMC | 11 | 0 | 17 | 0 | 12 | 0 | 13 | 0 | 11 | 2 | 3 | 0 | 10 | 0 | 9 | 0 | 8 | 2 | 2 | 2 | 6 | 2 | 9
+OUTPUTMC | 9 | 5 | 17 | 3 | 12 | 5 | 15 | 3 | 15 | 5 | 16 | 2 | 17 | 2 | 12 | 2 | 3 | 2 | 15
+INPUTS | 15 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_Addr<0>  | r_Addr<1>  | r_Addr<2>  | r_Addr<3>  | r_Addr<7>.LFBK  | r_Addr<5>  | r_Addr<6>  | r_Addr<8>.LFBK  | r_AddrCount<0>  | r_AddrCount<1>  | i_HData<0>  | r_Addr<4>.LFBK
+INPUTMC | 11 | 3 | 17 | 1 | 15 | 1 | 14 | 1 | 13 | 2 | 6 | 1 | 12 | 1 | 11 | 2 | 3 | 1 | 9 | 1 | 0 | 2 | 9
 INPUTP | 4 | 20 | 19 | 18 | 21
 EQ | 10 | 
    r_Addr<8>.T = !i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
 	r_Addr<8>.LFBK
-	# !i_HCmd<2> & !i_HCmd<1> & !i_HData<0> & 
-	!r_AddrCount<0>.LFBK & r_AddrCount<1>.LFBK & r_Addr<8>.LFBK
-	# !i_HCmd<2> & !i_HCmd<1> & i_HCmd<0> & i_HData<0> & 
-	!r_AddrCount<0>.LFBK & r_AddrCount<1>.LFBK & !r_Addr<8>.LFBK
+	# !i_HCmd<2> & !i_HCmd<1> & !r_AddrCount<0> & 
+	r_AddrCount<1> & !i_HData<0> & r_Addr<8>.LFBK
+	# !i_HCmd<2> & !i_HCmd<1> & i_HCmd<0> & 
+	!r_AddrCount<0> & r_AddrCount<1> & i_HData<0> & !r_Addr<8>.LFBK
 	# !i_HCmd<2> & i_HCmd<1> & !i_HCmd<0> & r_Addr<0> & 
 	r_Addr<1> & r_Addr<2> & r_Addr<3> & r_Addr<5> & r_Addr<6> & 
-	r_Addr<7> & r_Addr<4>.LFBK;
+	r_Addr<4>.LFBK & r_Addr<7>.LFBK;
    r_Addr<8>.CLK = i_HClk;	// GCK
 GLOBALS | 1 | 2 | i_HClk
 
-MACROCELL | 0 | 7 | r_Addr<9>
+MACROCELL | 3 | 12 | r_Addr<9>
 ATTRIBUTES | 4424448 | 0
-OUTPUTMC | 8 | 2 | 16 | 2 | 17 | 2 | 12 | 3 | 17 | 5 | 17 | 5 | 16 | 0 | 16 | 0 | 7
-INPUTS | 16 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_Addr<1>.LFBK  | r_Addr<2>.LFBK  | r_Addr<3>.LFBK  | r_Addr<5>.LFBK  | r_Addr<4>  | r_Addr<6>.LFBK  | r_Addr<7>.LFBK  | r_Addr<9>.LFBK  | r_Addr<8>  | r_AddrCount<0>  | r_AddrCount<1>  | i_HData<1>  | r_Addr<0>.LFBK
-INPUTMC | 12 | 0 | 12 | 0 | 13 | 0 | 11 | 0 | 10 | 2 | 9 | 0 | 9 | 0 | 8 | 0 | 7 | 2 | 6 | 2 | 3 | 2 | 2 | 0 | 17
+OUTPUTMC | 8 | 5 | 17 | 2 | 17 | 2 | 12 | 2 | 16 | 5 | 16 | 5 | 15 | 3 | 15 | 3 | 12
+INPUTS | 16 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_Addr<9>.LFBK  | r_Addr<1>  | r_Addr<2>  | r_Addr<3>  | r_Addr<4>  | r_Addr<5>  | r_Addr<6>  | r_Addr<7>  | r_Addr<8>  | r_AddrCount<0>  | r_AddrCount<1>  | i_HData<1>  | r_Addr<0>.LFBK
+INPUTMC | 12 | 3 | 12 | 1 | 15 | 1 | 14 | 1 | 13 | 2 | 9 | 1 | 12 | 1 | 11 | 2 | 6 | 2 | 3 | 1 | 9 | 1 | 0 | 3 | 17
 INPUTP | 4 | 20 | 19 | 18 | 23
 EQ | 10 | 
    r_Addr<9>.T = !i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
@@ -674,33 +671,35 @@ EQ | 10 |
 	r_AddrCount<1> & !i_HData<1> & r_Addr<9>.LFBK
 	# !i_HCmd<2> & !i_HCmd<1> & i_HCmd<0> & 
 	!r_AddrCount<0> & r_AddrCount<1> & i_HData<1> & !r_Addr<9>.LFBK
-	# !i_HCmd<2> & i_HCmd<1> & !i_HCmd<0> & r_Addr<4> & 
-	r_Addr<8> & r_Addr<0>.LFBK & r_Addr<1>.LFBK & r_Addr<2>.LFBK & 
-	r_Addr<3>.LFBK & r_Addr<5>.LFBK & r_Addr<6>.LFBK & r_Addr<7>.LFBK;
+	# !i_HCmd<2> & i_HCmd<1> & !i_HCmd<0> & r_Addr<1> & 
+	r_Addr<2> & r_Addr<3> & r_Addr<4> & r_Addr<5> & r_Addr<6> & 
+	r_Addr<7> & r_Addr<8> & r_Addr<0>.LFBK;
    r_Addr<9>.CLK = i_HClk;	// GCK
 GLOBALS | 1 | 2 | i_HClk
 
-MACROCELL | 0 | 0 | r_Data<1>
+MACROCELL | 0 | 2 | r_Data<1>
 ATTRIBUTES | 4424448 | 0
-OUTPUTMC | 7 | 4 | 11 | 0 | 14 | 0 | 17 | 0 | 13 | 0 | 0 | 0 | 1 | 0 | 15
-INPUTS | 10 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_DataCount<1>  | r_Data<2>  | r_DataCount<2>  | r_DataCount<3>  | EXP0_.EXP  | r_Addr<0>.EXP  | r_Data<1>.LFBK
-INPUTMC | 7 | 4 | 15 | 1 | 0 | 4 | 9 | 4 | 12 | 0 | 1 | 0 | 17 | 0 | 0
+OUTPUTMC | 7 | 4 | 11 | 0 | 13 | 0 | 14 | 0 | 2 | 0 | 12 | 0 | 1 | 0 | 3
+INPUTS | 10 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_Data<2>.LFBK  | r_DataCount<1>  | r_DataCount<2>  | r_DataCount<3>  | EXP1_.EXP  | EXP2_.EXP  | r_Data<1>.LFBK
+INPUTMC | 7 | 0 | 17 | 4 | 15 | 4 | 9 | 4 | 12 | 0 | 1 | 0 | 3 | 0 | 2
 INPUTP | 3 | 20 | 19 | 18
-IMPORTS | 2 | 0 | 1 | 0 | 17
+IMPORTS | 2 | 0 | 1 | 0 | 3
 EQ | 29 | 
    r_Data<1>.T = !i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
 	r_Data<1>.LFBK
 	# !i_HCmd<1> & !i_HCmd<0> & r_DataCount<1> & 
-	!r_Data<2> & r_Data<1>.LFBK
+	r_Data<1>.LFBK & !r_Data<2>.LFBK
 	# !i_HCmd<1> & !i_HCmd<0> & r_DataCount<2> & 
-	!r_Data<2> & r_Data<1>.LFBK
+	r_Data<1>.LFBK & !r_Data<2>.LFBK
 	# !i_HCmd<1> & !i_HCmd<0> & r_DataCount<3> & 
-	!r_Data<2> & r_Data<1>.LFBK
+	r_Data<1>.LFBK & !r_Data<2>.LFBK
 	# i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
-	r_DataCount<1> & r_Data<2> & !r_Data<1>.LFBK
+	r_DataCount<1> & !r_Data<1>.LFBK & r_Data<2>.LFBK
 ;Imported pterms FB1_2
 	# i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
-	r_DataCount<3> & r_Data<2> & !r_Data<1>.LFBK
+	r_DataCount<2> & !r_Data<1>.LFBK & r_Data<2>.LFBK
+	# i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
+	r_DataCount<3> & !r_Data<1>.LFBK & r_Data<2>.LFBK
 	# !i_HCmd<1> & !i_HCmd<0> & !io_RData<1>.PIN & 
 	r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
 	r_Data<1>.LFBK
@@ -710,22 +709,20 @@ EQ | 29 |
 	# !i_HCmd<2> & i_HCmd<1> & i_HCmd<0> & 
 	!r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
 	i_HData<1> & !r_Data<1>.LFBK
+;Imported pterms FB1_4
 	# !i_HCmd<2> & i_HCmd<1> & i_HCmd<0> & 
 	!r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
-	!i_HData<1> & r_Data<1>.LFBK
-;Imported pterms FB1_18
-	# i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
-	r_DataCount<2> & r_Data<2> & !r_Data<1>.LFBK;
+	!i_HData<1> & r_Data<1>.LFBK;
    r_Data<1>.CLK = i_HClk;	// GCK
 GLOBALS | 1 | 2 | i_HClk
 
-MACROCELL | 1 | 0 | r_Data<2>
+MACROCELL | 0 | 17 | r_Data<2>
 ATTRIBUTES | 4424448 | 0
-OUTPUTMC | 7 | 4 | 13 | 0 | 0 | 0 | 17 | 0 | 1 | 1 | 1 | 1 | 0 | 1 | 17
-INPUTS | 10 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_Data<3>.LFBK  | r_DataCount<1>  | r_DataCount<2>  | r_DataCount<3>  | io_TData_3_IOBUFE$BUF0.EXP  | EXP4_.EXP  | r_Data<2>.LFBK
-INPUTMC | 7 | 1 | 3 | 4 | 15 | 4 | 9 | 4 | 12 | 1 | 1 | 1 | 17 | 1 | 0
+OUTPUTMC | 6 | 4 | 13 | 0 | 2 | 0 | 17 | 0 | 0 | 0 | 1 | 0 | 16
+INPUTS | 10 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_Data<3>.LFBK  | r_DataCount<1>  | r_DataCount<2>  | r_DataCount<3>  | EXP0_.EXP  | EXP6_.EXP  | r_Data<2>.LFBK
+INPUTMC | 7 | 0 | 12 | 4 | 15 | 4 | 9 | 4 | 12 | 0 | 0 | 0 | 16 | 0 | 17
 INPUTP | 3 | 20 | 19 | 18
-IMPORTS | 2 | 1 | 1 | 1 | 17
+IMPORTS | 2 | 0 | 0 | 0 | 16
 EQ | 29 | 
    r_Data<2>.T = !i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
 	r_Data<2>.LFBK
@@ -737,14 +734,11 @@ EQ | 29 |
 	r_Data<2>.LFBK & !r_Data<3>.LFBK
 	# i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
 	r_DataCount<1> & !r_Data<2>.LFBK & r_Data<3>.LFBK
-;Imported pterms FB2_2
-	# !i_HCmd<2> & i_HCmd<1> & i_HCmd<0> & 
-	!r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
-	i_HData<2> & !r_Data<2>.LFBK
+;Imported pterms FB1_1
 	# !i_HCmd<2> & i_HCmd<1> & i_HCmd<0> & 
 	!r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
 	!i_HData<2> & r_Data<2>.LFBK
-;Imported pterms FB2_18
+;Imported pterms FB1_17
 	# i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
 	r_DataCount<2> & !r_Data<2>.LFBK & r_Data<3>.LFBK
 	# i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
@@ -754,18 +748,22 @@ EQ | 29 |
 	r_Data<2>.LFBK
 	# i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
 	io_RData<2>.PIN & r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & 
-	!r_DataCount<3> & !r_Data<2>.LFBK;
+	!r_DataCount<3> & !r_Data<2>.LFBK
+	# !i_HCmd<2> & i_HCmd<1> & i_HCmd<0> & 
+	!r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
+	i_HData<2> & !r_Data<2>.LFBK;
    r_Data<2>.CLK = i_HClk;	// GCK
 GLOBALS | 1 | 2 | i_HClk
 
-MACROCELL | 1 | 3 | r_Data<3>
+MACROCELL | 0 | 12 | r_Data<3>
 ATTRIBUTES | 4424448 | 0
-OUTPUTMC | 6 | 4 | 14 | 1 | 2 | 1 | 4 | 1 | 0 | 1 | 3 | 1 | 17
-INPUTS | 10 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_Data<4>.LFBK  | r_DataCount<1>  | r_DataCount<2>  | r_DataCount<3>  | io_TData_4_IOBUFE$BUF0.EXP  | io_TData_5_IOBUFE$BUF0.EXP  | r_Data<3>.LFBK
-INPUTMC | 7 | 1 | 6 | 4 | 15 | 4 | 9 | 4 | 12 | 1 | 2 | 1 | 4 | 1 | 3
+OUTPUTMC | 7 | 4 | 14 | 0 | 13 | 0 | 17 | 0 | 12 | 0 | 10 | 0 | 11 | 0 | 16
+INPUTS | 11 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_Data<4>.LFBK  | r_DataCount<1>  | r_Data<0>.LFBK  | r_DataCount<2>  | r_DataCount<3>  | r_Data<1>.LFBK  | EXP5_.EXP  | r_Data<3>.LFBK
+INPUTMC | 8 | 0 | 10 | 4 | 15 | 0 | 13 | 4 | 9 | 4 | 12 | 0 | 2 | 0 | 11 | 0 | 12
 INPUTP | 3 | 20 | 19 | 18
-IMPORTS | 2 | 1 | 2 | 1 | 4
-EQ | 29 | 
+EXPORTS | 1 | 0 | 13
+IMPORTS | 1 | 0 | 11
+EQ | 31 | 
    r_Data<3>.T = !i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
 	r_Data<3>.LFBK
 	# !i_HCmd<1> & !i_HCmd<0> & r_DataCount<1> & 
@@ -774,9 +772,9 @@ EQ | 29 |
 	r_Data<3>.LFBK & !r_Data<4>.LFBK
 	# !i_HCmd<1> & !i_HCmd<0> & r_DataCount<3> & 
 	r_Data<3>.LFBK & !r_Data<4>.LFBK
+;Imported pterms FB1_12
 	# i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
 	r_DataCount<1> & !r_Data<3>.LFBK & r_Data<4>.LFBK
-;Imported pterms FB2_3
 	# i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
 	r_DataCount<2> & !r_Data<3>.LFBK & r_Data<4>.LFBK
 	# i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
@@ -784,10 +782,10 @@ EQ | 29 |
 	# !i_HCmd<1> & !i_HCmd<0> & !io_RData<3>.PIN & 
 	r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
 	r_Data<3>.LFBK
-;Imported pterms FB2_5
 	# i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
 	io_RData<3>.PIN & r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & 
 	!r_DataCount<3> & !r_Data<3>.LFBK
+;Imported pterms FB1_11
 	# !i_HCmd<2> & i_HCmd<1> & i_HCmd<0> & 
 	!r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
 	i_HData<3> & !r_Data<3>.LFBK
@@ -795,35 +793,38 @@ EQ | 29 |
 	!r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
 	!i_HData<3> & r_Data<3>.LFBK;
    r_Data<3>.CLK = i_HClk;	// GCK
+    r_Data<3>.EXP  =  i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
+	r_DataCount<2> & !r_Data<0>.LFBK & r_Data<1>.LFBK
 GLOBALS | 1 | 2 | i_HClk
 
-MACROCELL | 1 | 6 | r_Data<4>
+MACROCELL | 0 | 10 | r_Data<4>
 ATTRIBUTES | 4424448 | 0
-OUTPUTMC | 6 | 4 | 16 | 1 | 2 | 1 | 5 | 1 | 7 | 1 | 3 | 1 | 6
-INPUTS | 10 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_Data<5>.LFBK  | r_DataCount<1>  | r_DataCount<2>  | r_DataCount<3>  | io_TData_6_IOBUFE$BUF0.EXP  | io_TData_7_IOBUFE$BUF0.EXP  | r_Data<4>.LFBK
-INPUTMC | 7 | 1 | 9 | 4 | 15 | 4 | 9 | 4 | 12 | 1 | 5 | 1 | 7 | 1 | 6
-INPUTP | 3 | 20 | 19 | 18
-IMPORTS | 2 | 1 | 5 | 1 | 7
-EQ | 29 | 
+OUTPUTMC | 6 | 4 | 16 | 0 | 11 | 0 | 12 | 0 | 10 | 0 | 8 | 0 | 9
+INPUTS | 12 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_Data<5>.LFBK  | r_DataCount<1>  | r_Data<3>.LFBK  | r_DataCount<2>  | r_DataCount<0>  | r_DataCount<3>  | i_HData<3>  | EXP4_.EXP  | r_Data<4>.LFBK
+INPUTMC | 8 | 0 | 8 | 4 | 15 | 0 | 12 | 4 | 9 | 4 | 17 | 4 | 12 | 0 | 9 | 0 | 10
+INPUTP | 4 | 20 | 19 | 18 | 27
+EXPORTS | 1 | 0 | 11
+IMPORTS | 1 | 0 | 9
+EQ | 35 | 
    r_Data<4>.T = !i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
 	r_Data<4>.LFBK
 	# !i_HCmd<1> & !i_HCmd<0> & r_DataCount<1> & 
-	!r_Data<5>.LFBK & r_Data<4>.LFBK
+	r_Data<4>.LFBK & !r_Data<5>.LFBK
 	# !i_HCmd<1> & !i_HCmd<0> & r_DataCount<2> & 
-	!r_Data<5>.LFBK & r_Data<4>.LFBK
+	r_Data<4>.LFBK & !r_Data<5>.LFBK
+;Imported pterms FB1_10
 	# !i_HCmd<1> & !i_HCmd<0> & r_DataCount<3> & 
-	!r_Data<5>.LFBK & r_Data<4>.LFBK
+	r_Data<4>.LFBK & !r_Data<5>.LFBK
 	# i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
-	r_DataCount<1> & r_Data<5>.LFBK & !r_Data<4>.LFBK
-;Imported pterms FB2_6
+	r_DataCount<1> & !r_Data<4>.LFBK & r_Data<5>.LFBK
 	# i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
-	r_DataCount<2> & r_Data<5>.LFBK & !r_Data<4>.LFBK
+	r_DataCount<2> & !r_Data<4>.LFBK & r_Data<5>.LFBK
 	# i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
-	r_DataCount<3> & r_Data<5>.LFBK & !r_Data<4>.LFBK
+	r_DataCount<3> & !r_Data<4>.LFBK & r_Data<5>.LFBK
 	# !i_HCmd<1> & !i_HCmd<0> & !io_RData<4>.PIN & 
 	r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
 	r_Data<4>.LFBK
-;Imported pterms FB2_8
+;Imported pterms FB1_9
 	# i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
 	io_RData<4>.PIN & r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & 
 	!r_DataCount<3> & !r_Data<4>.LFBK
@@ -834,31 +835,39 @@ EQ | 29 |
 	r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
 	!i_HData<0> & r_Data<4>.LFBK;
    r_Data<4>.CLK = i_HClk;	// GCK
+    r_Data<4>.EXP  =  !i_HCmd<2> & i_HCmd<1> & i_HCmd<0> & 
+	!r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
+	i_HData<3> & !r_Data<3>.LFBK
+	# !i_HCmd<2> & i_HCmd<1> & i_HCmd<0> & 
+	!r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
+	!i_HData<3> & r_Data<3>.LFBK
 GLOBALS | 1 | 2 | i_HClk
 
-MACROCELL | 1 | 9 | r_Data<5>
+MACROCELL | 0 | 8 | r_Data<5>
 ATTRIBUTES | 4424448 | 0
-OUTPUTMC | 6 | 5 | 1 | 1 | 10 | 1 | 5 | 1 | 6 | 1 | 9 | 1 | 8
-INPUTS | 10 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_Data<6>.LFBK  | r_DataCount<1>  | r_DataCount<2>  | r_DataCount<3>  | EXP2_.EXP  | r_TargetMode.EXP  | r_Data<5>.LFBK
-INPUTMC | 7 | 1 | 12 | 4 | 15 | 4 | 9 | 4 | 12 | 1 | 8 | 1 | 10 | 1 | 9
-INPUTP | 3 | 20 | 19 | 18
-IMPORTS | 2 | 1 | 8 | 1 | 10
-EQ | 29 | 
+OUTPUTMC | 6 | 5 | 1 | 0 | 9 | 0 | 10 | 0 | 8 | 0 | 6 | 0 | 7
+INPUTS | 13 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_Data<4>.LFBK  | r_DataCount<1>  | r_Data<6>  | io_RData<4>.PIN  | r_DataCount<0>  | r_DataCount<2>  | r_DataCount<3>  | i_HData<0>  | EXP3_.EXP  | r_Data<5>.LFBK
+INPUTMC | 8 | 0 | 10 | 4 | 15 | 1 | 17 | 4 | 17 | 4 | 9 | 4 | 12 | 0 | 7 | 0 | 8
+INPUTP | 5 | 20 | 19 | 18 | 87 | 21
+EXPORTS | 1 | 0 | 9
+IMPORTS | 1 | 0 | 7
+EQ | 38 | 
    r_Data<5>.T = !i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
 	r_Data<5>.LFBK
 	# !i_HCmd<1> & !i_HCmd<0> & r_DataCount<1> & 
-	r_Data<5>.LFBK & !r_Data<6>.LFBK
+	!r_Data<6> & r_Data<5>.LFBK
+;Imported pterms FB1_8
 	# !i_HCmd<1> & !i_HCmd<0> & r_DataCount<2> & 
-	r_Data<5>.LFBK & !r_Data<6>.LFBK
+	!r_Data<6> & r_Data<5>.LFBK
 	# !i_HCmd<1> & !i_HCmd<0> & r_DataCount<3> & 
-	r_Data<5>.LFBK & !r_Data<6>.LFBK
+	!r_Data<6> & r_Data<5>.LFBK
 	# i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
-	r_DataCount<1> & !r_Data<5>.LFBK & r_Data<6>.LFBK
-;Imported pterms FB2_9
+	r_DataCount<1> & r_Data<6> & !r_Data<5>.LFBK
 	# i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
-	r_DataCount<2> & !r_Data<5>.LFBK & r_Data<6>.LFBK
+	r_DataCount<2> & r_Data<6> & !r_Data<5>.LFBK
 	# i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
-	r_DataCount<3> & !r_Data<5>.LFBK & r_Data<6>.LFBK
+	r_DataCount<3> & r_Data<6> & !r_Data<5>.LFBK
+;Imported pterms FB1_7
 	# !i_HCmd<1> & !i_HCmd<0> & !io_RData<5>.PIN & 
 	r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
 	r_Data<5>.LFBK
@@ -868,20 +877,28 @@ EQ | 29 |
 	# !i_HCmd<2> & i_HCmd<1> & i_HCmd<0> & 
 	r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
 	i_HData<1> & !r_Data<5>.LFBK
-;Imported pterms FB2_11
 	# !i_HCmd<2> & i_HCmd<1> & i_HCmd<0> & 
 	r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
 	!i_HData<1> & r_Data<5>.LFBK;
    r_Data<5>.CLK = i_HClk;	// GCK
+    r_Data<5>.EXP  =  i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
+	io_RData<4>.PIN & r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & 
+	!r_DataCount<3> & !r_Data<4>.LFBK
+	# !i_HCmd<2> & i_HCmd<1> & i_HCmd<0> & 
+	r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
+	i_HData<0> & !r_Data<4>.LFBK
+	# !i_HCmd<2> & i_HCmd<1> & i_HCmd<0> & 
+	r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
+	!i_HData<0> & r_Data<4>.LFBK
 GLOBALS | 1 | 2 | i_HClk
 
-MACROCELL | 1 | 12 | r_Data<6>
+MACROCELL | 1 | 17 | r_Data<6>
 ATTRIBUTES | 4424448 | 0
-OUTPUTMC | 6 | 5 | 2 | 1 | 13 | 1 | 9 | 1 | 12 | 1 | 8 | 1 | 11
-INPUTS | 10 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_Data<7>.LFBK  | r_DataCount<1>  | r_DataCount<2>  | r_DataCount<3>  | EXP3_.EXP  | o_nROE_OBUF.EXP  | r_Data<6>.LFBK
-INPUTMC | 7 | 1 | 14 | 4 | 15 | 4 | 9 | 4 | 12 | 1 | 11 | 1 | 13 | 1 | 12
+OUTPUTMC | 6 | 5 | 2 | 0 | 8 | 0 | 7 | 1 | 0 | 1 | 17 | 1 | 16
+INPUTS | 10 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_Data<7>.LFBK  | r_DataCount<1>  | r_DataCount<2>  | r_DataCount<3>  | r_AddrCount<1>.EXP  | r_Data<7>.EXP  | r_Data<6>.LFBK
+INPUTMC | 7 | 1 | 16 | 4 | 15 | 4 | 9 | 4 | 12 | 1 | 0 | 1 | 16 | 1 | 17
 INPUTP | 3 | 20 | 19 | 18
-IMPORTS | 2 | 1 | 11 | 1 | 13
+IMPORTS | 2 | 1 | 0 | 1 | 16
 EQ | 29 | 
    r_Data<6>.T = !i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
 	r_Data<6>.LFBK
@@ -893,9 +910,7 @@ EQ | 29 |
 	r_Data<6>.LFBK & !r_Data<7>.LFBK
 	# i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
 	r_DataCount<1> & !r_Data<6>.LFBK & r_Data<7>.LFBK
-;Imported pterms FB2_12
-	# i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
-	r_DataCount<2> & !r_Data<6>.LFBK & r_Data<7>.LFBK
+;Imported pterms FB2_1
 	# i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
 	r_DataCount<3> & !r_Data<6>.LFBK & r_Data<7>.LFBK
 	# !i_HCmd<1> & !i_HCmd<0> & !io_RData<6>.PIN & 
@@ -907,21 +922,24 @@ EQ | 29 |
 	# !i_HCmd<2> & i_HCmd<1> & i_HCmd<0> & 
 	r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
 	i_HData<2> & !r_Data<6>.LFBK
-;Imported pterms FB2_14
 	# !i_HCmd<2> & i_HCmd<1> & i_HCmd<0> & 
 	r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
-	!i_HData<2> & r_Data<6>.LFBK;
+	!i_HData<2> & r_Data<6>.LFBK
+;Imported pterms FB2_17
+	# i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
+	r_DataCount<2> & !r_Data<6>.LFBK & r_Data<7>.LFBK;
    r_Data<6>.CLK = i_HClk;	// GCK
 GLOBALS | 1 | 2 | i_HClk
 
-MACROCELL | 1 | 14 | r_Data<7>
+MACROCELL | 1 | 16 | r_Data<7>
 ATTRIBUTES | 4424448 | 0
-OUTPUTMC | 5 | 5 | 4 | 1 | 15 | 1 | 12 | 1 | 14 | 1 | 11
-INPUTS | 10 | i_HCmd<1>  | i_HCmd<0>  | r_DataCount<1>  | r_DataCount<2>  | r_DataCount<3>  | i_HCmd<2>  | io_RData<7>.PIN  | r_DataCount<0>  | o_nRWE_OBUF.EXP  | r_Data<7>.LFBK
-INPUTMC | 6 | 4 | 15 | 4 | 9 | 4 | 12 | 4 | 17 | 1 | 15 | 1 | 14
-INPUTP | 4 | 19 | 18 | 20 | 91
+OUTPUTMC | 5 | 5 | 4 | 1 | 17 | 1 | 0 | 1 | 15 | 1 | 16
+INPUTS | 9 | i_HCmd<1>  | i_HCmd<0>  | r_DataCount<1>  | r_Data<6>.LFBK  | r_DataCount<2>  | r_DataCount<3>  | i_HCmd<2>  | r_Addr<1>.EXP  | r_Data<7>.LFBK
+INPUTMC | 6 | 4 | 15 | 1 | 17 | 4 | 9 | 4 | 12 | 1 | 15 | 1 | 16
+INPUTP | 3 | 19 | 18 | 20
+EXPORTS | 1 | 1 | 17
 IMPORTS | 1 | 1 | 15
-EQ | 21 | 
+EQ | 23 | 
    r_Data<7>.T = !i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
 	r_Data<7>.LFBK
 	# !i_HCmd<1> & !i_HCmd<0> & r_DataCount<1> & 
@@ -930,9 +948,9 @@ EQ | 21 |
 	r_Data<7>.LFBK
 	# !i_HCmd<1> & !i_HCmd<0> & r_DataCount<3> & 
 	r_Data<7>.LFBK
+;Imported pterms FB2_16
 	# !i_HCmd<1> & !i_HCmd<0> & !io_RData<7>.PIN & 
 	r_DataCount<0> & r_Data<7>.LFBK
-;Imported pterms FB2_16
 	# i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
 	io_RData<7>.PIN & r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & 
 	!r_DataCount<3> & !r_Data<7>.LFBK
@@ -943,15 +961,17 @@ EQ | 21 |
 	r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
 	!i_HData<3> & r_Data<7>.LFBK;
    r_Data<7>.CLK = i_HClk;	// GCK
+    r_Data<7>.EXP  =  i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
+	r_DataCount<2> & !r_Data<6>.LFBK & r_Data<7>.LFBK
 GLOBALS | 1 | 2 | i_HClk
 
-MACROCELL | 5 | 16 | r_Addr<15>
+MACROCELL | 5 | 15 | r_Addr<15>
 ATTRIBUTES | 4424448 | 0
-OUTPUTMC | 2 | 4 | 8 | 5 | 16
-INPUTS | 22 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_Addr<0>  | r_Addr<10>  | r_Addr<11>  | r_Addr<12>  | r_Addr<13>  | r_Addr<15>.LFBK  | r_Addr<1>  | r_Addr<2>  | r_Addr<3>  | r_Addr<4>  | r_Addr<5>  | r_Addr<6>  | r_Addr<7>  | r_Addr<8>  | r_Addr<9>  | r_AddrCount<0>  | r_AddrCount<1>  | i_HData<3>  | r_Addr<14>.LFBK
-INPUTMC | 18 | 0 | 17 | 0 | 16 | 2 | 17 | 2 | 12 | 3 | 17 | 5 | 16 | 0 | 12 | 0 | 13 | 0 | 11 | 2 | 9 | 0 | 10 | 0 | 9 | 0 | 8 | 2 | 6 | 0 | 7 | 2 | 3 | 2 | 2 | 5 | 17
+OUTPUTMC | 2 | 4 | 8 | 5 | 15
+INPUTS | 22 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_Addr<0>  | r_Addr<14>.LFBK  | r_Addr<11>  | r_Addr<12>  | r_Addr<13>  | r_Addr<15>.LFBK  | r_Addr<1>  | r_Addr<2>  | r_Addr<3>  | r_Addr<4>  | r_Addr<5>  | r_Addr<6>  | r_Addr<7>  | r_Addr<8>  | r_Addr<9>  | r_AddrCount<0>  | r_AddrCount<1>  | i_HData<3>  | r_Addr<10>.LFBK
+INPUTMC | 18 | 3 | 17 | 5 | 16 | 2 | 17 | 2 | 12 | 3 | 15 | 5 | 15 | 1 | 15 | 1 | 14 | 1 | 13 | 2 | 9 | 1 | 12 | 1 | 11 | 2 | 6 | 2 | 3 | 3 | 12 | 1 | 9 | 1 | 0 | 5 | 17
 INPUTP | 4 | 20 | 19 | 18 | 27
-EQ | 12 | 
+EQ | 11 | 
    r_Addr<15>.T = !i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
 	r_Addr<15>.LFBK
 	# !i_HCmd<2> & !i_HCmd<1> & r_AddrCount<0> & 
@@ -959,36 +979,51 @@ EQ | 12 |
 	# !i_HCmd<2> & !i_HCmd<1> & i_HCmd<0> & 
 	r_AddrCount<0> & r_AddrCount<1> & i_HData<3> & !r_Addr<15>.LFBK
 	# !i_HCmd<2> & i_HCmd<1> & !i_HCmd<0> & r_Addr<0> & 
-	r_Addr<10> & r_Addr<11> & r_Addr<12> & r_Addr<13> & 
-	r_Addr<1> & r_Addr<2> & r_Addr<3> & r_Addr<4> & r_Addr<5> & 
-	r_Addr<6> & r_Addr<7> & r_Addr<8> & r_Addr<9> & 
-	r_Addr<14>.LFBK;
+	r_Addr<11> & r_Addr<12> & r_Addr<13> & r_Addr<1> & r_Addr<2> & 
+	r_Addr<3> & r_Addr<4> & r_Addr<5> & r_Addr<6> & r_Addr<7> & 
+	r_Addr<8> & r_Addr<9> & r_Addr<10>.LFBK & r_Addr<14>.LFBK;
    r_Addr<15>.CLK = i_HClk;	// GCK
 GLOBALS | 1 | 2 | i_HClk
 
 MACROCELL | 0 | 6 | r_nOE
 ATTRIBUTES | 4424448 | 0
-OUTPUTMC | 3 | 1 | 13 | 3 | 15 | 0 | 6
-INPUTS | 8 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_DataCount<0>  | r_DataCount<1>  | r_DataCount<2>  | r_DataCount<3>  | r_nOE.LFBK
-INPUTMC | 5 | 4 | 17 | 4 | 15 | 4 | 9 | 4 | 12 | 0 | 6
-INPUTP | 3 | 20 | 19 | 18
-EQ | 7 | 
+OUTPUTMC | 5 | 1 | 10 | 0 | 7 | 0 | 15 | 0 | 6 | 0 | 5
+INPUTS | 12 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_Data<5>.LFBK  | io_RData<5>.PIN  | r_DataCount<0>  | r_DataCount<1>  | r_DataCount<2>  | r_DataCount<3>  | i_HData<1>  | r_nWE.EXP  | r_nOE.LFBK
+INPUTMC | 7 | 0 | 8 | 4 | 17 | 4 | 15 | 4 | 9 | 4 | 12 | 0 | 5 | 0 | 6
+INPUTP | 5 | 20 | 19 | 18 | 88 | 23
+EXPORTS | 1 | 0 | 7
+IMPORTS | 1 | 0 | 5
+EQ | 20 | 
    r_nOE.T = !i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & !r_nOE.LFBK
+;Imported pterms FB1_6
 	# !i_HCmd<1> & !i_HCmd<0> & r_DataCount<0> & 
 	!r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & !r_nOE.LFBK
 	# i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
 	!r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
 	r_nOE.LFBK;
    r_nOE.CLK = i_HClk;	// GCK
+    r_nOE.EXP  =  !i_HCmd<1> & !i_HCmd<0> & !io_RData<5>.PIN & 
+	r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
+	r_Data<5>.LFBK
+	# i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
+	io_RData<5>.PIN & r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & 
+	!r_DataCount<3> & !r_Data<5>.LFBK
+	# !i_HCmd<2> & i_HCmd<1> & i_HCmd<0> & 
+	r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
+	i_HData<1> & !r_Data<5>.LFBK
+	# !i_HCmd<2> & i_HCmd<1> & i_HCmd<0> & 
+	r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
+	!i_HData<1> & r_Data<5>.LFBK
 GLOBALS | 1 | 2 | i_HClk
 
 MACROCELL | 0 | 5 | r_nWE
 ATTRIBUTES | 4424448 | 0
-OUTPUTMC | 3 | 1 | 15 | 3 | 15 | 0 | 5
-INPUTS | 8 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_DataCount<0>  | r_DataCount<1>  | r_DataCount<2>  | r_DataCount<3>  | r_nWE.LFBK
-INPUTMC | 5 | 4 | 17 | 4 | 15 | 4 | 9 | 4 | 12 | 0 | 5
+OUTPUTMC | 4 | 1 | 10 | 0 | 6 | 0 | 15 | 0 | 5
+INPUTS | 9 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_nOE.LFBK  | r_DataCount<0>  | r_DataCount<1>  | r_DataCount<2>  | r_DataCount<3>  | r_nWE.LFBK
+INPUTMC | 6 | 0 | 6 | 4 | 17 | 4 | 15 | 4 | 9 | 4 | 12 | 0 | 5
 INPUTP | 3 | 20 | 19 | 18
-EQ | 8 | 
+EXPORTS | 1 | 0 | 6
+EQ | 13 | 
    r_nWE.T = !i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & !r_nWE.LFBK
 	# !i_HCmd<2> & i_HCmd<1> & i_HCmd<0> & 
 	r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
@@ -997,22 +1032,27 @@ EQ | 8 |
 	!r_DataCount<0> & r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
 	!r_nWE.LFBK;
    r_nWE.CLK = i_HClk;	// GCK
+    r_nWE.EXP  =  !i_HCmd<1> & !i_HCmd<0> & r_DataCount<0> & 
+	!r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & !r_nOE.LFBK
+	# i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
+	!r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
+	r_nOE.LFBK
 GLOBALS | 1 | 2 | i_HClk
 
 MACROCELL | 2 | 4 | o_RAddr_0_OBUF
 ATTRIBUTES | 396034 | 0
-INPUTS | 3 | r_Addr<0>  | i_TAddr<0>  | o_nReset.PIN
-INPUTMC | 1 | 0 | 17
-INPUTP | 2 | 93 | 8
+INPUTS | 3 | r_Addr<0>  | i_TAddr<0>  | r_TargetMode.LFBK
+INPUTMC | 2 | 3 | 17 | 2 | 2
+INPUTP | 1 | 93
 EQ | 2 | 
-   o_RAddr<0> = r_Addr<0> & !o_nReset.PIN
-	# i_TAddr<0> & o_nReset.PIN;
+   o_RAddr<0> = r_Addr<0> & !r_TargetMode.LFBK
+	# i_TAddr<0> & r_TargetMode.LFBK;
 
 MACROCELL | 4 | 1 | o_RAddr_10_OBUF
 ATTRIBUTES | 396034 | 0
 INPUTS | 3 | r_Addr<10>  | i_TAddr<10>  | o_nReset.PIN
-INPUTMC | 1 | 0 | 16
-INPUTP | 2 | 116 | 8
+INPUTMC | 1 | 5 | 17
+INPUTP | 2 | 116 | 42
 EQ | 2 | 
    o_RAddr<10> = r_Addr<10> & !o_nReset.PIN
 	# i_TAddr<10> & o_nReset.PIN;
@@ -1021,7 +1061,7 @@ MACROCELL | 4 | 2 | o_RAddr_11_OBUF
 ATTRIBUTES | 396034 | 0
 INPUTS | 3 | r_Addr<11>  | i_TAddr<11>  | o_nReset.PIN
 INPUTMC | 1 | 2 | 17
-INPUTP | 2 | 117 | 8
+INPUTP | 2 | 117 | 42
 EQ | 2 | 
    o_RAddr<11> = r_Addr<11> & !o_nReset.PIN
 	# i_TAddr<11> & o_nReset.PIN;
@@ -1030,7 +1070,7 @@ MACROCELL | 4 | 4 | o_RAddr_12_OBUF
 ATTRIBUTES | 396034 | 0
 INPUTS | 3 | r_Addr<12>  | i_TAddr<12>  | o_nReset.PIN
 INPUTMC | 1 | 2 | 12
-INPUTP | 2 | 118 | 8
+INPUTP | 2 | 118 | 42
 EQ | 2 | 
    o_RAddr<12> = r_Addr<12> & !o_nReset.PIN
 	# i_TAddr<12> & o_nReset.PIN;
@@ -1038,8 +1078,8 @@ EQ | 2 |
 MACROCELL | 4 | 5 | o_RAddr_13_OBUF
 ATTRIBUTES | 396034 | 0
 INPUTS | 3 | r_Addr<13>  | i_TAddr<13>  | o_nReset.PIN
-INPUTMC | 1 | 3 | 17
-INPUTP | 2 | 120 | 8
+INPUTMC | 1 | 3 | 15
+INPUTP | 2 | 120 | 42
 EQ | 2 | 
    o_RAddr<13> = r_Addr<13> & !o_nReset.PIN
 	# i_TAddr<13> & o_nReset.PIN;
@@ -1047,8 +1087,8 @@ EQ | 2 |
 MACROCELL | 4 | 7 | o_RAddr_14_OBUF
 ATTRIBUTES | 396034 | 0
 INPUTS | 3 | r_Addr<14>  | i_TAddr<14>  | o_nReset.PIN
-INPUTMC | 1 | 5 | 17
-INPUTP | 2 | 121 | 8
+INPUTMC | 1 | 5 | 16
+INPUTP | 2 | 121 | 42
 EQ | 2 | 
    o_RAddr<14> = r_Addr<14> & !o_nReset.PIN
 	# i_TAddr<14> & o_nReset.PIN;
@@ -1056,113 +1096,127 @@ EQ | 2 |
 MACROCELL | 4 | 8 | o_RAddr_15_OBUF
 ATTRIBUTES | 396034 | 0
 INPUTS | 3 | r_Addr<15>  | i_TAddr<15>  | o_nReset.PIN
-INPUTMC | 1 | 5 | 16
-INPUTP | 2 | 122 | 8
+INPUTMC | 1 | 5 | 15
+INPUTP | 2 | 122 | 42
 EQ | 2 | 
    o_RAddr<15> = r_Addr<15> & !o_nReset.PIN
 	# i_TAddr<15> & o_nReset.PIN;
 
 MACROCELL | 2 | 5 | o_RAddr_1_OBUF
 ATTRIBUTES | 396034 | 0
-INPUTS | 3 | r_Addr<1>  | i_TAddr<1>  | o_nReset.PIN
-INPUTMC | 1 | 0 | 12
-INPUTP | 2 | 95 | 8
+INPUTS | 3 | r_Addr<1>  | i_TAddr<1>  | r_TargetMode.LFBK
+INPUTMC | 2 | 1 | 15 | 2 | 2
+INPUTP | 1 | 95
 EQ | 2 | 
-   o_RAddr<1> = r_Addr<1> & !o_nReset.PIN
-	# i_TAddr<1> & o_nReset.PIN;
+   o_RAddr<1> = r_Addr<1> & !r_TargetMode.LFBK
+	# i_TAddr<1> & r_TargetMode.LFBK;
 
 MACROCELL | 2 | 7 | o_RAddr_2_OBUF
 ATTRIBUTES | 396034 | 0
-INPUTS | 3 | r_Addr<2>  | i_TAddr<2>  | o_nReset.PIN
-INPUTMC | 1 | 0 | 13
-INPUTP | 2 | 97 | 8
+INPUTS | 3 | r_Addr<2>  | i_TAddr<2>  | r_TargetMode.LFBK
+INPUTMC | 2 | 1 | 14 | 2 | 2
+INPUTP | 1 | 97
 EQ | 2 | 
-   o_RAddr<2> = r_Addr<2> & !o_nReset.PIN
-	# i_TAddr<2> & o_nReset.PIN;
+   o_RAddr<2> = r_Addr<2> & !r_TargetMode.LFBK
+	# i_TAddr<2> & r_TargetMode.LFBK;
 
 MACROCELL | 2 | 8 | o_RAddr_3_OBUF
 ATTRIBUTES | 396034 | 0
-INPUTS | 3 | r_Addr<3>  | i_TAddr<3>  | o_nReset.PIN
-INPUTMC | 1 | 0 | 11
-INPUTP | 2 | 99 | 8
+INPUTS | 3 | r_Addr<3>  | i_TAddr<3>  | r_TargetMode.LFBK
+INPUTMC | 2 | 1 | 13 | 2 | 2
+INPUTP | 1 | 99
 EQ | 2 | 
-   o_RAddr<3> = r_Addr<3> & !o_nReset.PIN
-	# i_TAddr<3> & o_nReset.PIN;
+   o_RAddr<3> = r_Addr<3> & !r_TargetMode.LFBK
+	# i_TAddr<3> & r_TargetMode.LFBK;
 
 MACROCELL | 2 | 10 | o_RAddr_4_OBUF
 ATTRIBUTES | 396034 | 0
-INPUTS | 3 | o_nReset.PIN  | i_TAddr<4>  | r_Addr<4>.LFBK
-INPUTMC | 1 | 2 | 9
-INPUTP | 2 | 8 | 101
+INPUTS | 3 | r_Addr<4>.LFBK  | i_TAddr<4>  | r_TargetMode.LFBK
+INPUTMC | 2 | 2 | 9 | 2 | 2
+INPUTP | 1 | 101
 EQ | 2 | 
-   o_RAddr<4> = i_TAddr<4> & o_nReset.PIN
-	# r_Addr<4>.LFBK & !o_nReset.PIN;
+   o_RAddr<4> = i_TAddr<4> & r_TargetMode.LFBK
+	# !r_TargetMode.LFBK & r_Addr<4>.LFBK;
 
 MACROCELL | 2 | 11 | o_RAddr_5_OBUF
 ATTRIBUTES | 396034 | 0
-INPUTS | 3 | r_Addr<5>  | i_TAddr<5>  | o_nReset.PIN
-INPUTMC | 1 | 0 | 10
-INPUTP | 2 | 104 | 8
+INPUTS | 3 | r_Addr<5>  | i_TAddr<5>  | r_TargetMode.LFBK
+INPUTMC | 2 | 1 | 12 | 2 | 2
+INPUTP | 1 | 104
 EQ | 2 | 
-   o_RAddr<5> = r_Addr<5> & !o_nReset.PIN
-	# i_TAddr<5> & o_nReset.PIN;
+   o_RAddr<5> = r_Addr<5> & !r_TargetMode.LFBK
+	# i_TAddr<5> & r_TargetMode.LFBK;
 
 MACROCELL | 2 | 13 | o_RAddr_6_OBUF
 ATTRIBUTES | 396034 | 0
-INPUTS | 3 | r_Addr<6>  | i_TAddr<6>  | o_nReset.PIN
-INPUTMC | 1 | 0 | 9
-INPUTP | 2 | 106 | 8
+INPUTS | 3 | r_Addr<6>  | i_TAddr<6>  | r_TargetMode.LFBK
+INPUTMC | 2 | 1 | 11 | 2 | 2
+INPUTP | 1 | 106
 EQ | 2 | 
-   o_RAddr<6> = r_Addr<6> & !o_nReset.PIN
-	# i_TAddr<6> & o_nReset.PIN;
+   o_RAddr<6> = r_Addr<6> & !r_TargetMode.LFBK
+	# i_TAddr<6> & r_TargetMode.LFBK;
 
 MACROCELL | 2 | 14 | o_RAddr_7_OBUF
 ATTRIBUTES | 396034 | 0
-INPUTS | 3 | r_Addr<7>  | i_TAddr<7>  | o_nReset.PIN
-INPUTMC | 1 | 0 | 8
-INPUTP | 2 | 107 | 8
+INPUTS | 3 | r_Addr<7>.LFBK  | i_TAddr<7>  | r_TargetMode.LFBK
+INPUTMC | 2 | 2 | 6 | 2 | 2
+INPUTP | 1 | 107
 EQ | 2 | 
-   o_RAddr<7> = r_Addr<7> & !o_nReset.PIN
-	# i_TAddr<7> & o_nReset.PIN;
+   o_RAddr<7> = i_TAddr<7> & r_TargetMode.LFBK
+	# !r_TargetMode.LFBK & r_Addr<7>.LFBK;
 
 MACROCELL | 2 | 15 | o_RAddr_8_OBUF
 ATTRIBUTES | 396034 | 0
-INPUTS | 3 | i_TAddr<8>  | o_nReset.PIN  | r_Addr<8>.LFBK
-INPUTMC | 1 | 2 | 6
-INPUTP | 2 | 112 | 8
+INPUTS | 3 | r_Addr<8>.LFBK  | i_TAddr<8>  | r_TargetMode.LFBK
+INPUTMC | 2 | 2 | 3 | 2 | 2
+INPUTP | 1 | 112
 EQ | 2 | 
-   o_RAddr<8> = i_TAddr<8> & o_nReset.PIN
-	# r_Addr<8>.LFBK & !o_nReset.PIN;
+   o_RAddr<8> = i_TAddr<8> & r_TargetMode.LFBK
+	# !r_TargetMode.LFBK & r_Addr<8>.LFBK;
 
 MACROCELL | 2 | 16 | o_RAddr_9_OBUF
 ATTRIBUTES | 396034 | 0
-INPUTS | 3 | r_Addr<9>  | i_TAddr<9>  | o_nReset.PIN
-INPUTMC | 1 | 0 | 7
-INPUTP | 2 | 113 | 8
+INPUTS | 3 | r_Addr<9>  | i_TAddr<9>  | r_TargetMode.LFBK
+INPUTMC | 2 | 3 | 12 | 2 | 2
+INPUTP | 1 | 113
 EQ | 2 | 
-   o_RAddr<9> = r_Addr<9> & !o_nReset.PIN
-	# i_TAddr<9> & o_nReset.PIN;
+   o_RAddr<9> = r_Addr<9> & !r_TargetMode.LFBK
+	# i_TAddr<9> & r_TargetMode.LFBK;
 
-MACROCELL | 3 | 15 | io_RData_6_IOBUFE/io_RData_6_IOBUFE_TRST
+MACROCELL | 1 | 10 | io_RData_6_IOBUFE/io_RData_6_IOBUFE_TRST
 ATTRIBUTES | 133888 | 0
 OUTPUTMC | 8 | 4 | 10 | 4 | 11 | 4 | 13 | 4 | 14 | 4 | 16 | 5 | 1 | 5 | 2 | 5 | 4
 INPUTS | 5 | r_nOE  | r_nWE  | i_nTOE  | i_nTWE  | o_nReset.PIN
 INPUTMC | 2 | 0 | 6 | 0 | 5
-INPUTP | 3 | 41 | 38 | 8
+INPUTP | 3 | 38 | 41 | 42
 EQ | 2 | 
    io_RData_6_IOBUFE/io_RData_6_IOBUFE_TRST = i_nTOE & !i_nTWE & o_nReset.PIN
 	# r_nOE & !r_nWE & !o_nReset.PIN;
 
-MACROCELL | 0 | 1 | EXP0_
+MACROCELL | 0 | 0 | EXP0_
 ATTRIBUTES | 2048 | 0
-OUTPUTMC | 1 | 0 | 0
-INPUTS | 11 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_DataCount<3>  | r_Data<2>  | io_RData<1>.PIN  | r_DataCount<0>  | r_DataCount<1>  | r_DataCount<2>  | i_HData<1>  | r_Data<1>.LFBK
-INPUTMC | 6 | 4 | 12 | 1 | 0 | 4 | 17 | 4 | 15 | 4 | 9 | 0 | 0
+OUTPUTMC | 1 | 0 | 17
+INPUTS | 9 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_DataCount<0>  | r_DataCount<1>  | r_DataCount<2>  | r_DataCount<3>  | i_HData<2>  | r_Data<2>.LFBK
+INPUTMC | 5 | 4 | 17 | 4 | 15 | 4 | 9 | 4 | 12 | 0 | 17
+INPUTP | 4 | 20 | 19 | 18 | 25
+EXPORTS | 1 | 0 | 17
+EQ | 3 | 
+       EXP0_.EXP  =  !i_HCmd<2> & i_HCmd<1> & i_HCmd<0> & 
+	!r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
+	!i_HData<2> & r_Data<2>.LFBK
+
+MACROCELL | 0 | 1 | EXP1_
+ATTRIBUTES | 2048 | 0
+OUTPUTMC | 1 | 0 | 2
+INPUTS | 11 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_DataCount<2>  | r_Data<2>.LFBK  | r_DataCount<3>  | io_RData<1>.PIN  | r_DataCount<0>  | r_DataCount<1>  | i_HData<1>  | r_Data<1>.LFBK
+INPUTMC | 6 | 4 | 9 | 0 | 17 | 4 | 12 | 4 | 17 | 4 | 15 | 0 | 2
 INPUTP | 5 | 20 | 19 | 18 | 82 | 23
-EXPORTS | 1 | 0 | 0
-EQ | 14 | 
-       EXP0_.EXP  =  i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
-	r_DataCount<3> & r_Data<2> & !r_Data<1>.LFBK
+EXPORTS | 1 | 0 | 2
+EQ | 13 | 
+       EXP1_.EXP  =  i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
+	r_DataCount<2> & !r_Data<1>.LFBK & r_Data<2>.LFBK
+	# i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
+	r_DataCount<3> & !r_Data<1>.LFBK & r_Data<2>.LFBK
 	# !i_HCmd<1> & !i_HCmd<0> & !io_RData<1>.PIN & 
 	r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
 	r_Data<1>.LFBK
@@ -1172,45 +1226,39 @@ EQ | 14 |
 	# !i_HCmd<2> & i_HCmd<1> & i_HCmd<0> & 
 	!r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
 	i_HData<1> & !r_Data<1>.LFBK
-	# !i_HCmd<2> & i_HCmd<1> & i_HCmd<0> & 
+
+MACROCELL | 0 | 3 | EXP2_
+ATTRIBUTES | 2048 | 0
+OUTPUTMC | 1 | 0 | 2
+INPUTS | 9 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_DataCount<0>  | r_DataCount<1>  | r_DataCount<2>  | r_DataCount<3>  | i_HData<1>  | r_Data<1>.LFBK
+INPUTMC | 5 | 4 | 17 | 4 | 15 | 4 | 9 | 4 | 12 | 0 | 2
+INPUTP | 4 | 20 | 19 | 18 | 23
+EXPORTS | 1 | 0 | 2
+EQ | 3 | 
+       EXP2_.EXP  =  !i_HCmd<2> & i_HCmd<1> & i_HCmd<0> & 
 	!r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
 	!i_HData<1> & r_Data<1>.LFBK
 
-MACROCELL | 0 | 15 | EXP1_
+MACROCELL | 0 | 7 | EXP3_
 ATTRIBUTES | 2048 | 0
-OUTPUTMC | 1 | 0 | 14
-INPUTS | 11 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_Data<1>.LFBK  | r_DataCount<3>  | io_RData<0>.PIN  | r_DataCount<0>  | r_DataCount<1>  | r_DataCount<2>  | i_HData<0>  | r_Data<0>.LFBK
-INPUTMC | 6 | 0 | 0 | 4 | 12 | 4 | 17 | 4 | 15 | 4 | 9 | 0 | 14
-INPUTP | 5 | 20 | 19 | 18 | 80 | 21
-EXPORTS | 1 | 0 | 14
-EQ | 14 | 
-       EXP1_.EXP  =  i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
-	r_DataCount<3> & !r_Data<0>.LFBK & r_Data<1>.LFBK
-	# !i_HCmd<1> & !i_HCmd<0> & !io_RData<0>.PIN & 
-	r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
-	r_Data<0>.LFBK
+OUTPUTMC | 1 | 0 | 8
+INPUTS | 9 | i_HCmd<1>  | i_HCmd<0>  | r_DataCount<2>  | r_Data<6>  | r_DataCount<3>  | i_HCmd<2>  | r_DataCount<1>  | r_nOE.EXP  | r_Data<5>.LFBK
+INPUTMC | 6 | 4 | 9 | 1 | 17 | 4 | 12 | 4 | 15 | 0 | 6 | 0 | 8
+INPUTP | 3 | 19 | 18 | 20
+EXPORTS | 1 | 0 | 8
+IMPORTS | 1 | 0 | 6
+EQ | 23 | 
+       EXP3_.EXP  =  !i_HCmd<1> & !i_HCmd<0> & r_DataCount<2> & 
+	!r_Data<6> & r_Data<5>.LFBK
+	# !i_HCmd<1> & !i_HCmd<0> & r_DataCount<3> & 
+	!r_Data<6> & r_Data<5>.LFBK
 	# i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
-	io_RData<0>.PIN & r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & 
-	!r_DataCount<3> & !r_Data<0>.LFBK
-	# !i_HCmd<2> & i_HCmd<1> & i_HCmd<0> & 
-	!r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
-	i_HData<0> & !r_Data<0>.LFBK
-	# !i_HCmd<2> & i_HCmd<1> & i_HCmd<0> & 
-	!r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
-	!i_HData<0> & r_Data<0>.LFBK
-
-MACROCELL | 1 | 8 | EXP2_
-ATTRIBUTES | 2048 | 0
-OUTPUTMC | 1 | 1 | 9
-INPUTS | 11 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_DataCount<2>  | r_Data<6>.LFBK  | r_DataCount<3>  | io_RData<5>.PIN  | r_DataCount<0>  | r_DataCount<1>  | i_HData<1>  | r_Data<5>.LFBK
-INPUTMC | 6 | 4 | 9 | 1 | 12 | 4 | 12 | 4 | 17 | 4 | 15 | 1 | 9
-INPUTP | 5 | 20 | 19 | 18 | 88 | 23
-EXPORTS | 1 | 1 | 9
-EQ | 13 | 
-       EXP2_.EXP  =  i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
-	r_DataCount<2> & !r_Data<5>.LFBK & r_Data<6>.LFBK
+	r_DataCount<1> & r_Data<6> & !r_Data<5>.LFBK
 	# i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
-	r_DataCount<3> & !r_Data<5>.LFBK & r_Data<6>.LFBK
+	r_DataCount<2> & r_Data<6> & !r_Data<5>.LFBK
+	# i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
+	r_DataCount<3> & r_Data<6> & !r_Data<5>.LFBK
+;Imported pterms FB1_7
 	# !i_HCmd<1> & !i_HCmd<0> & !io_RData<5>.PIN & 
 	r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
 	r_Data<5>.LFBK
@@ -1220,38 +1268,79 @@ EQ | 13 |
 	# !i_HCmd<2> & i_HCmd<1> & i_HCmd<0> & 
 	r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
 	i_HData<1> & !r_Data<5>.LFBK
-
-MACROCELL | 1 | 11 | EXP3_
-ATTRIBUTES | 2048 | 0
-OUTPUTMC | 1 | 1 | 12
-INPUTS | 11 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_DataCount<2>  | r_Data<7>.LFBK  | r_DataCount<3>  | io_RData<6>.PIN  | r_DataCount<0>  | r_DataCount<1>  | i_HData<2>  | r_Data<6>.LFBK
-INPUTMC | 6 | 4 | 9 | 1 | 14 | 4 | 12 | 4 | 17 | 4 | 15 | 1 | 12
-INPUTP | 5 | 20 | 19 | 18 | 89 | 25
-EXPORTS | 1 | 1 | 12
-EQ | 13 | 
-       EXP3_.EXP  =  i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
-	r_DataCount<2> & !r_Data<6>.LFBK & r_Data<7>.LFBK
-	# i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
-	r_DataCount<3> & !r_Data<6>.LFBK & r_Data<7>.LFBK
-	# !i_HCmd<1> & !i_HCmd<0> & !io_RData<6>.PIN & 
-	r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
-	r_Data<6>.LFBK
-	# i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
-	io_RData<6>.PIN & r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & 
-	!r_DataCount<3> & !r_Data<6>.LFBK
 	# !i_HCmd<2> & i_HCmd<1> & i_HCmd<0> & 
 	r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
-	i_HData<2> & !r_Data<6>.LFBK
+	!i_HData<1> & r_Data<5>.LFBK
 
-MACROCELL | 1 | 17 | EXP4_
+MACROCELL | 0 | 9 | EXP4_
 ATTRIBUTES | 2048 | 0
-OUTPUTMC | 1 | 1 | 0
-INPUTS | 10 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_DataCount<2>  | r_Data<3>.LFBK  | r_DataCount<3>  | io_RData<2>.PIN  | r_DataCount<0>  | r_DataCount<1>  | r_Data<2>.LFBK
-INPUTMC | 6 | 4 | 9 | 1 | 3 | 4 | 12 | 4 | 17 | 4 | 15 | 1 | 0
-INPUTP | 4 | 20 | 19 | 18 | 83
-EXPORTS | 1 | 1 | 0
-EQ | 10 | 
-       EXP4_.EXP  =  i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
+OUTPUTMC | 1 | 0 | 10
+INPUTS | 11 | i_HCmd<1>  | i_HCmd<0>  | r_DataCount<3>  | r_Data<5>.LFBK  | i_HCmd<2>  | r_DataCount<1>  | r_DataCount<2>  | io_RData<4>.PIN  | r_DataCount<0>  | r_Data<5>.EXP  | r_Data<4>.LFBK
+INPUTMC | 7 | 4 | 12 | 0 | 8 | 4 | 15 | 4 | 9 | 4 | 17 | 0 | 8 | 0 | 10
+INPUTP | 4 | 19 | 18 | 20 | 87
+EXPORTS | 1 | 0 | 10
+IMPORTS | 1 | 0 | 8
+EQ | 21 | 
+       EXP4_.EXP  =  !i_HCmd<1> & !i_HCmd<0> & r_DataCount<3> & 
+	r_Data<4>.LFBK & !r_Data<5>.LFBK
+	# i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
+	r_DataCount<1> & !r_Data<4>.LFBK & r_Data<5>.LFBK
+	# i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
+	r_DataCount<2> & !r_Data<4>.LFBK & r_Data<5>.LFBK
+	# i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
+	r_DataCount<3> & !r_Data<4>.LFBK & r_Data<5>.LFBK
+	# !i_HCmd<1> & !i_HCmd<0> & !io_RData<4>.PIN & 
+	r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
+	r_Data<4>.LFBK
+;Imported pterms FB1_9
+	# i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
+	io_RData<4>.PIN & r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & 
+	!r_DataCount<3> & !r_Data<4>.LFBK
+	# !i_HCmd<2> & i_HCmd<1> & i_HCmd<0> & 
+	r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
+	i_HData<0> & !r_Data<4>.LFBK
+	# !i_HCmd<2> & i_HCmd<1> & i_HCmd<0> & 
+	r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
+	!i_HData<0> & r_Data<4>.LFBK
+
+MACROCELL | 0 | 11 | EXP5_
+ATTRIBUTES | 2048 | 0
+OUTPUTMC | 1 | 0 | 12
+INPUTS | 11 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_DataCount<1>  | r_Data<4>.LFBK  | r_DataCount<2>  | r_DataCount<3>  | io_RData<3>.PIN  | r_DataCount<0>  | r_Data<4>.EXP  | r_Data<3>.LFBK
+INPUTMC | 7 | 4 | 15 | 0 | 10 | 4 | 9 | 4 | 12 | 4 | 17 | 0 | 10 | 0 | 12
+INPUTP | 4 | 20 | 19 | 18 | 86
+EXPORTS | 1 | 0 | 12
+IMPORTS | 1 | 0 | 10
+EQ | 19 | 
+       EXP5_.EXP  =  i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
+	r_DataCount<1> & !r_Data<3>.LFBK & r_Data<4>.LFBK
+	# i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
+	r_DataCount<2> & !r_Data<3>.LFBK & r_Data<4>.LFBK
+	# i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
+	r_DataCount<3> & !r_Data<3>.LFBK & r_Data<4>.LFBK
+	# !i_HCmd<1> & !i_HCmd<0> & !io_RData<3>.PIN & 
+	r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
+	r_Data<3>.LFBK
+	# i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
+	io_RData<3>.PIN & r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & 
+	!r_DataCount<3> & !r_Data<3>.LFBK
+;Imported pterms FB1_11
+	# !i_HCmd<2> & i_HCmd<1> & i_HCmd<0> & 
+	!r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
+	i_HData<3> & !r_Data<3>.LFBK
+	# !i_HCmd<2> & i_HCmd<1> & i_HCmd<0> & 
+	!r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
+	!i_HData<3> & r_Data<3>.LFBK
+
+MACROCELL | 0 | 16 | EXP6_
+ATTRIBUTES | 2048 | 0
+OUTPUTMC | 1 | 0 | 17
+INPUTS | 11 | i_HCmd<2>  | i_HCmd<1>  | i_HCmd<0>  | r_DataCount<2>  | r_Data<3>.LFBK  | r_DataCount<3>  | io_RData<2>.PIN  | r_DataCount<0>  | r_DataCount<1>  | i_HData<2>  | r_Data<2>.LFBK
+INPUTMC | 6 | 4 | 9 | 0 | 12 | 4 | 12 | 4 | 17 | 4 | 15 | 0 | 17
+INPUTP | 5 | 20 | 19 | 18 | 83 | 25
+EXPORTS | 1 | 0 | 17
+EQ | 13 | 
+       EXP6_.EXP  =  i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
 	r_DataCount<2> & !r_Data<2>.LFBK & r_Data<3>.LFBK
 	# i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
 	r_DataCount<3> & !r_Data<2>.LFBK & r_Data<3>.LFBK
@@ -1261,17 +1350,20 @@ EQ | 10 |
 	# i_HCmd<2> & !i_HCmd<1> & !i_HCmd<0> & 
 	io_RData<2>.PIN & r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & 
 	!r_DataCount<3> & !r_Data<2>.LFBK
+	# !i_HCmd<2> & i_HCmd<1> & i_HCmd<0> & 
+	!r_DataCount<0> & !r_DataCount<1> & !r_DataCount<2> & !r_DataCount<3> & 
+	i_HData<2> & !r_Data<2>.LFBK
 
-PIN | i_HCmd<2> | 64 | 0 | N/A | 20 | 45 | 1 | 10 | 0 | 14 | 4 | 17 | 4 | 15 | 4 | 9 | 4 | 12 | 2 | 3 | 0 | 17 | 2 | 2 | 0 | 16 | 2 | 17 | 2 | 12 | 3 | 17 | 5 | 17 | 0 | 12 | 0 | 13 | 0 | 11 | 2 | 9 | 0 | 10 | 0 | 9 | 0 | 8 | 2 | 6 | 0 | 7 | 0 | 0 | 1 | 0 | 1 | 3 | 1 | 6 | 1 | 9 | 1 | 12 | 1 | 14 | 5 | 16 | 0 | 6 | 0 | 5 | 0 | 1 | 0 | 15 | 1 | 1 | 1 | 2 | 1 | 4 | 1 | 5 | 1 | 7 | 1 | 8 | 1 | 11 | 1 | 13 | 1 | 15 | 1 | 17
-PIN | i_HCmd<1> | 64 | 0 | N/A | 19 | 46 | 1 | 10 | 0 | 14 | 4 | 17 | 4 | 15 | 4 | 9 | 4 | 12 | 2 | 3 | 0 | 17 | 2 | 2 | 0 | 16 | 2 | 17 | 2 | 12 | 3 | 17 | 5 | 17 | 0 | 12 | 0 | 13 | 0 | 11 | 2 | 9 | 0 | 10 | 0 | 9 | 0 | 8 | 2 | 6 | 0 | 7 | 0 | 0 | 1 | 0 | 1 | 3 | 1 | 6 | 1 | 9 | 1 | 12 | 1 | 14 | 5 | 16 | 0 | 6 | 0 | 5 | 0 | 1 | 0 | 15 | 1 | 1 | 1 | 2 | 1 | 4 | 1 | 5 | 1 | 7 | 1 | 8 | 1 | 11 | 1 | 13 | 1 | 15 | 1 | 17 | 4 | 16
-PIN | i_HCmd<0> | 64 | 0 | N/A | 18 | 45 | 1 | 10 | 0 | 14 | 4 | 17 | 4 | 15 | 4 | 9 | 4 | 12 | 2 | 3 | 0 | 17 | 2 | 2 | 0 | 16 | 2 | 17 | 2 | 12 | 3 | 17 | 5 | 17 | 0 | 12 | 0 | 13 | 0 | 11 | 2 | 9 | 0 | 10 | 0 | 9 | 0 | 8 | 2 | 6 | 0 | 7 | 0 | 0 | 1 | 0 | 1 | 3 | 1 | 6 | 1 | 9 | 1 | 12 | 1 | 14 | 5 | 16 | 0 | 6 | 0 | 5 | 0 | 1 | 0 | 15 | 1 | 1 | 1 | 2 | 1 | 4 | 1 | 5 | 1 | 7 | 1 | 8 | 1 | 11 | 1 | 13 | 1 | 15 | 1 | 17
-PIN | i_HClk | 4096 | 0 | N/A | 29 | 33 | 1 | 10 | 0 | 14 | 4 | 17 | 4 | 15 | 4 | 9 | 4 | 12 | 2 | 3 | 0 | 17 | 2 | 2 | 0 | 16 | 2 | 17 | 2 | 12 | 3 | 17 | 5 | 17 | 0 | 12 | 0 | 13 | 0 | 11 | 2 | 9 | 0 | 10 | 0 | 9 | 0 | 8 | 2 | 6 | 0 | 7 | 0 | 0 | 1 | 0 | 1 | 3 | 1 | 6 | 1 | 9 | 1 | 12 | 1 | 14 | 5 | 16 | 0 | 6 | 0 | 5
-PIN | i_HData<0> | 64 | 0 | N/A | 21 | 7 | 1 | 10 | 0 | 15 | 0 | 17 | 2 | 12 | 2 | 9 | 2 | 6 | 1 | 7
-PIN | i_nTOE | 64 | 0 | N/A | 41 | 10 | 1 | 13 | 3 | 13 | 3 | 14 | 3 | 16 | 1 | 1 | 1 | 2 | 1 | 4 | 1 | 5 | 1 | 7 | 3 | 15
-PIN | i_nTWE | 64 | 0 | N/A | 38 | 10 | 1 | 15 | 3 | 13 | 3 | 14 | 3 | 16 | 1 | 1 | 1 | 2 | 1 | 4 | 1 | 5 | 1 | 7 | 3 | 15
-PIN | i_HData<2> | 64 | 0 | N/A | 25 | 7 | 0 | 16 | 5 | 17 | 0 | 13 | 0 | 9 | 1 | 11 | 1 | 1 | 1 | 13
-PIN | i_HData<3> | 64 | 0 | N/A | 27 | 6 | 2 | 17 | 0 | 11 | 0 | 8 | 5 | 16 | 1 | 4 | 1 | 15
-PIN | i_HData<1> | 64 | 0 | N/A | 23 | 7 | 3 | 17 | 0 | 12 | 0 | 10 | 0 | 7 | 1 | 8 | 0 | 1 | 1 | 10
+PIN | i_HCmd<2> | 64 | 0 | N/A | 20 | 42 | 2 | 2 | 0 | 13 | 4 | 17 | 4 | 15 | 4 | 9 | 4 | 12 | 1 | 9 | 3 | 17 | 0 | 16 | 5 | 17 | 2 | 17 | 2 | 12 | 3 | 15 | 5 | 16 | 1 | 15 | 1 | 14 | 1 | 13 | 2 | 9 | 1 | 12 | 1 | 11 | 2 | 6 | 2 | 3 | 3 | 12 | 0 | 2 | 0 | 17 | 0 | 12 | 0 | 10 | 0 | 8 | 1 | 17 | 1 | 16 | 5 | 15 | 0 | 6 | 0 | 5 | 0 | 0 | 0 | 1 | 0 | 3 | 0 | 7 | 0 | 9 | 0 | 11 | 0 | 14 | 1 | 0 | 1 | 1
+PIN | i_HCmd<1> | 64 | 0 | N/A | 19 | 43 | 2 | 2 | 0 | 13 | 4 | 17 | 4 | 15 | 4 | 9 | 4 | 12 | 1 | 9 | 3 | 17 | 0 | 16 | 5 | 17 | 2 | 17 | 2 | 12 | 3 | 15 | 5 | 16 | 1 | 15 | 1 | 14 | 1 | 13 | 2 | 9 | 1 | 12 | 1 | 11 | 2 | 6 | 2 | 3 | 3 | 12 | 0 | 2 | 0 | 17 | 0 | 12 | 0 | 10 | 0 | 8 | 1 | 17 | 1 | 16 | 5 | 15 | 0 | 6 | 0 | 5 | 0 | 0 | 0 | 1 | 0 | 3 | 0 | 7 | 0 | 9 | 0 | 11 | 0 | 14 | 1 | 0 | 1 | 1 | 4 | 16
+PIN | i_HCmd<0> | 64 | 0 | N/A | 18 | 42 | 2 | 2 | 0 | 13 | 4 | 17 | 4 | 15 | 4 | 9 | 4 | 12 | 1 | 9 | 3 | 17 | 0 | 16 | 5 | 17 | 2 | 17 | 2 | 12 | 3 | 15 | 5 | 16 | 1 | 15 | 1 | 14 | 1 | 13 | 2 | 9 | 1 | 12 | 1 | 11 | 2 | 6 | 2 | 3 | 3 | 12 | 0 | 2 | 0 | 17 | 0 | 12 | 0 | 10 | 0 | 8 | 1 | 17 | 1 | 16 | 5 | 15 | 0 | 6 | 0 | 5 | 0 | 0 | 0 | 1 | 0 | 3 | 0 | 7 | 0 | 9 | 0 | 11 | 0 | 14 | 1 | 0 | 1 | 1
+PIN | i_HClk | 4096 | 0 | N/A | 29 | 33 | 2 | 2 | 0 | 13 | 4 | 17 | 4 | 15 | 4 | 9 | 4 | 12 | 1 | 9 | 3 | 17 | 1 | 0 | 5 | 17 | 2 | 17 | 2 | 12 | 3 | 15 | 5 | 16 | 1 | 15 | 1 | 14 | 1 | 13 | 2 | 9 | 1 | 12 | 1 | 11 | 2 | 6 | 2 | 3 | 3 | 12 | 0 | 2 | 0 | 17 | 0 | 12 | 0 | 10 | 0 | 8 | 1 | 17 | 1 | 16 | 5 | 15 | 0 | 6 | 0 | 5
+PIN | i_HData<0> | 64 | 0 | N/A | 21 | 7 | 2 | 2 | 0 | 8 | 3 | 17 | 2 | 12 | 2 | 9 | 2 | 3 | 0 | 14
+PIN | i_nTOE | 64 | 0 | N/A | 38 | 10 | 1 | 10 | 3 | 13 | 3 | 14 | 3 | 16 | 1 | 1 | 1 | 2 | 1 | 4 | 1 | 5 | 1 | 7 | 0 | 15
+PIN | i_nTWE | 64 | 0 | N/A | 41 | 10 | 0 | 15 | 3 | 13 | 3 | 14 | 3 | 16 | 1 | 1 | 1 | 2 | 1 | 4 | 1 | 5 | 1 | 7 | 1 | 10
+PIN | i_HData<2> | 64 | 0 | N/A | 25 | 7 | 5 | 17 | 5 | 16 | 1 | 14 | 1 | 11 | 0 | 16 | 1 | 0 | 0 | 0
+PIN | i_HData<3> | 64 | 0 | N/A | 27 | 6 | 2 | 17 | 1 | 13 | 2 | 6 | 0 | 10 | 1 | 15 | 5 | 15
+PIN | i_HData<1> | 64 | 0 | N/A | 23 | 8 | 3 | 15 | 1 | 15 | 1 | 12 | 3 | 12 | 0 | 1 | 0 | 6 | 0 | 3 | 1 | 14
 PIN | i_TAddr<0> | 64 | 0 | N/A | 93 | 1 | 2 | 4
 PIN | i_TAddr<10> | 64 | 0 | N/A | 116 | 1 | 4 | 1
 PIN | i_TAddr<11> | 64 | 0 | N/A | 117 | 1 | 4 | 2
@@ -1288,8 +1380,8 @@ PIN | i_TAddr<6> | 64 | 0 | N/A | 106 | 1 | 2 | 13
 PIN | i_TAddr<7> | 64 | 0 | N/A | 107 | 1 | 2 | 14
 PIN | i_TAddr<8> | 64 | 0 | N/A | 112 | 1 | 2 | 15
 PIN | i_TAddr<9> | 64 | 0 | N/A | 113 | 1 | 2 | 16
-PIN | o_nROE | 536871040 | 0 | N/A | 12
-PIN | o_nRWE | 536871040 | 0 | N/A | 15
+PIN | o_nROE | 536871040 | 0 | N/A | 33
+PIN | o_nRWE | 536871040 | 0 | N/A | 36
 PIN | o_RAddr<0> | 536871040 | 0 | N/A | 46
 PIN | o_RAddr<10> | 536871040 | 0 | N/A | 67
 PIN | o_RAddr<11> | 536871040 | 0 | N/A | 70
@@ -1306,16 +1398,16 @@ PIN | o_RAddr<6> | 536871040 | 0 | N/A | 54
 PIN | o_RAddr<7> | 536871040 | 0 | N/A | 55
 PIN | o_RAddr<8> | 536871040 | 0 | N/A | 56
 PIN | o_RAddr<9> | 536871040 | 0 | N/A | 65
-PIN | io_RData<0> | 536870976 | 0 | N/A | 80 | 2 | 3 | 13 | 0 | 15
+PIN | io_RData<0> | 536870976 | 0 | N/A | 80 | 2 | 3 | 13 | 0 | 14
 PIN | io_RData<1> | 536870976 | 0 | N/A | 82 | 2 | 3 | 14 | 0 | 1
-PIN | io_RData<2> | 536870976 | 0 | N/A | 83 | 2 | 3 | 16 | 1 | 17
-PIN | io_RData<3> | 536870976 | 0 | N/A | 86 | 3 | 1 | 1 | 1 | 2 | 1 | 4
-PIN | io_RData<4> | 536870976 | 0 | N/A | 87 | 3 | 1 | 2 | 1 | 5 | 1 | 7
-PIN | io_RData<5> | 536870976 | 0 | N/A | 88 | 2 | 1 | 4 | 1 | 8
-PIN | io_RData<6> | 536870976 | 0 | N/A | 89 | 2 | 1 | 5 | 1 | 11
-PIN | io_RData<7> | 536870976 | 0 | N/A | 91 | 3 | 1 | 7 | 1 | 14 | 1 | 15
-PIN | o_nReset | 536870976 | 0 | N/A | 8 | 28 | 4 | 10 | 2 | 7 | 2 | 5 | 4 | 8 | 4 | 7 | 4 | 5 | 4 | 4 | 4 | 2 | 4 | 1 | 2 | 4 | 2 | 8 | 2 | 10 | 2 | 11 | 2 | 13 | 2 | 14 | 3 | 16 | 3 | 14 | 3 | 13 | 2 | 15 | 2 | 16 | 3 | 15 | 5 | 4 | 5 | 2 | 5 | 1 | 4 | 16 | 4 | 14 | 4 | 13 | 4 | 11
-PIN | o_HData | 536870976 | 0 | N/A | 33 | 1 | 4 | 10
+PIN | io_RData<2> | 536870976 | 0 | N/A | 83 | 2 | 3 | 16 | 0 | 16
+PIN | io_RData<3> | 536870976 | 0 | N/A | 86 | 2 | 1 | 1 | 0 | 11
+PIN | io_RData<4> | 536870976 | 0 | N/A | 87 | 3 | 1 | 2 | 0 | 9 | 0 | 8
+PIN | io_RData<5> | 536870976 | 0 | N/A | 88 | 2 | 1 | 4 | 0 | 6
+PIN | io_RData<6> | 536870976 | 0 | N/A | 89 | 2 | 1 | 5 | 1 | 0
+PIN | io_RData<7> | 536870976 | 0 | N/A | 91 | 2 | 1 | 7 | 1 | 15
+PIN | o_nReset | 536870976 | 0 | N/A | 42 | 24 | 4 | 10 | 4 | 5 | 4 | 4 | 4 | 2 | 4 | 1 | 4 | 8 | 1 | 7 | 1 | 5 | 1 | 4 | 1 | 2 | 1 | 1 | 3 | 16 | 3 | 14 | 3 | 13 | 0 | 15 | 1 | 10 | 4 | 7 | 5 | 4 | 5 | 2 | 5 | 1 | 4 | 16 | 4 | 14 | 4 | 13 | 4 | 11
+PIN | o_HData | 536870976 | 0 | N/A | 31 | 1 | 4 | 10
 PIN | io_TData<0> | 536870976 | 0 | N/A | 124 | 1 | 4 | 10
 PIN | io_TData<1> | 536870976 | 0 | N/A | 126 | 1 | 4 | 11
 PIN | io_TData<2> | 536870976 | 0 | N/A | 127 | 1 | 4 | 13
