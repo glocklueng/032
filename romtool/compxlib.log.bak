@@ -1,0 +1,69 @@
+    ____  ____
+   /   /\/   /
+  /___/  \  /    VENDOR      : Xilinx Inc.
+  \   \   \/     VERSION     : 13.2 (O.61xd)
+   \   \         APPLICATION : d:\Xilinx\13.2\ISE_DS\ISE\bin\nt64\unwrapped\compxlib.exe
+   /   /         CONTENTS    : Compilation Log
+  /___/   /\     FILENAME    : compxlib.log
+  \   \  /  \    
+   \___\/\___\
+
+Release 13.2 - d:\Xilinx\13.2\ISE_DS\ISE\bin\nt64\unwrapped\compxlib.exe 13.2 (nt64)
+Copyright (c) 1995-2011 Xilinx, Inc.  All rights reserved.
+
+Processing command line ...
+Library Source Paths => 'd:/Xilinx/13.2/ISE_DS/ISE'
+Current Working Directory => 'E:\032\romtool'
+Compilation Mode = FAST
+Execute Mode = ON
+Scheduling library installation & compilation for architectures: acr2 xa9500xl xbr xc9500 xc9500xl xpla3
+
+Scheduling library installation & compilation for libraries: uni9000 coolrunner
+
+Signature:-
+------------------------------------------------------------------------------
+d:\Xilinx\13.2\ISE_DS\ISE\bin\nt64\unwrapped\compxlib.exe -s mti_se -l verilog -arch cpld -lib unisim -lib simprim -lib uni9000 -lib coolrunner -intstyle ise 
+------------------------------------------------------------------------------
+ERROR:Compxlib - COMPXLIB[sim]: Unable to automatically find executables for simulator 'mti_se' from the following paths:
+    d:\Xilinx\13.2\ISE_DS\ISE\\lib\nt64
+   d:\Xilinx\13.2\ISE_DS\ISE\\bin\nt64
+   D:\Xilinx\13.2\ISE_DS\PlanAhead\bin
+   D:\Xilinx\13.2\ISE_DS\ISE\bin\nt64
+   D:\Xilinx\13.2\ISE_DS\ISE\lib\nt64
+   D:\Xilinx\13.2\ISE_DS\EDK\bin\nt64
+   D:\Xilinx\13.2\ISE_DS\EDK\lib\nt64
+   D:\Xilinx\13.2\ISE_DS\EDK\gnu\microblaze\nt64\bin
+   D:\Xilinx\13.2\ISE_DS\EDK\gnu\powerpc-eabi\nt64\bin
+   D:\Xilinx\13.2\ISE_DS\EDK\gnuwin\bin
+   D:\Xilinx\13.2\ISE_DS\common\bin\nt64
+   D:\Xilinx\13.2\ISE_DS\common\lib\nt64
+   C:\Program Files\Common Files\Microsoft Shared\Windows Live
+   C:\Program Files (x86)\Common Files\Microsoft Shared\Windows Live
+   C:\Program Files (x86)\AMD APP\bin\x86_64
+   C:\Program Files (x86)\AMD APP\bin\x86
+   C:\Users\charlie\Documents\AMD APP\bin\x86_64
+   C:\Users\charlie\Documents\AMD APP\bin\x86
+   C:\WinAVR-20100110\bin
+   C:\WinAVR-20100110\utils\bin
+   C:\Windows\system32
+   C:\Windows
+   C:\Windows\System32\Wbem
+   C:\Windows\System32\WindowsPowerShell\v1.0\
+   C:\Program Files\TortoiseSVN\bin
+   C:\Program Files (x86)\Altium Designer Summer 09\System
+   C:\Program Files (x86)\Windows Live\Shared
+   C:\Program Files (x86)\ATI Technologies\ATI.ACE\Core-Static
+   C:\Program Files\Microsoft Windows Performance Toolkit\
+   C:\Program Files (x86)\QuickTime\QTSystem\
+   C:\Program Files (x86)\GTK2-Runtime\bin
+   D:\Program Files\ATI Technologies\ATI.ACE\Core-Static
+   d:\doxygen\bin
+   C:\Program Files (x86)\IVI\bin
+   C:\Program Files (x86)\IVI Foundation\VISA\WinNT\Bin
+   C:\PROGRA~2\IVIFOU~1\VISA\WinNT\Bin
+   C:\Program Files (x86)\TortoiseSVN\bin
+   C:\Program Files (x86)\AMD APP\tools\AMD APP KernelAnalyzer 1.9\
+   C:\Program Files (x86)\ATMEL Corporation\SAM-BA v2.10
+   C:\Program Files (x86)\Nmap
+   d:\altera\11.0\modelsim_ase\win32aloem.
+Simulator 'mti_se' is ignored.

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="E:/032/romtool/RomEmuCtrl_isim_beh.wdb" id="1" type="auto">
+         <top_modules>
+            <top_module name="RomEmuCtrl" />
+            <top_module name="glbl" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <WVObjectSize size="22" />
+   <wvobject fp_name="/RomEmuCtrl/i_HCmd" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">i_HCmd[2:0]</obj_property>
+      <obj_property name="ObjectShortName">i_HCmd[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/RomEmuCtrl/i_HClk" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">i_HClk</obj_property>
+      <obj_property name="ObjectShortName">i_HClk</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+      <obj_property name="CustomSignalColor">#ffff00</obj_property>
+   </wvobject>
+   <wvobject fp_name="/RomEmuCtrl/i_HData" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">i_HData[3:0]</obj_property>
+      <obj_property name="ObjectShortName">i_HData[3:0]</obj_property>
+      <wvobject fp_name="/RomEmuCtrl/i_HData[3]" type="logic" db_ref_id="1">
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="ElementShortName">[3]</obj_property>
+         <obj_property name="ObjectShortName">i_HData[3]</obj_property>
+         <obj_property name="label">[3]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/RomEmuCtrl/i_HData[2]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[2]</obj_property>
+         <obj_property name="ObjectShortName">i_HData[2]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/RomEmuCtrl/i_HData[1]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[1]</obj_property>
+         <obj_property name="ObjectShortName">i_HData[1]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/RomEmuCtrl/i_HData[0]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[0]</obj_property>
+         <obj_property name="ObjectShortName">i_HData[0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="vbus53" type="vbus" db_ref_id="1">
+      <obj_property name="label">New Virtual Bus</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="/RomEmuCtrl/i_HData[0]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[0]</obj_property>
+         <obj_property name="ObjectShortName">i_HData[0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="/RomEmuCtrl/o_HData" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">o_HData</obj_property>
+      <obj_property name="ObjectShortName">o_HData</obj_property>
+   </wvobject>
+   <wvobject fp_name="/RomEmuCtrl/i_TAddr" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">i_TAddr[15:0]</obj_property>
+      <obj_property name="ObjectShortName">i_TAddr[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/RomEmuCtrl/io_TData" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">io_TData[7:0]</obj_property>
+      <obj_property name="ObjectShortName">io_TData[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/RomEmuCtrl/i_nTOE" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">i_nTOE</obj_property>
+      <obj_property name="ObjectShortName">i_nTOE</obj_property>
+   </wvobject>
+   <wvobject fp_name="/RomEmuCtrl/i_nTWE" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">i_nTWE</obj_property>
+      <obj_property name="ObjectShortName">i_nTWE</obj_property>
+   </wvobject>
+   <wvobject fp_name="/RomEmuCtrl/o_RAddr" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">o_RAddr[15:0]</obj_property>
+      <obj_property name="ObjectShortName">o_RAddr[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/RomEmuCtrl/io_RData" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">io_RData[7:0]</obj_property>
+      <obj_property name="ObjectShortName">io_RData[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/RomEmuCtrl/o_nROE" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">o_nROE</obj_property>
+      <obj_property name="ObjectShortName">o_nROE</obj_property>
+   </wvobject>
+   <wvobject fp_name="/RomEmuCtrl/o_nRWE" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">o_nRWE</obj_property>
+      <obj_property name="ObjectShortName">o_nRWE</obj_property>
+   </wvobject>
+   <wvobject fp_name="/RomEmuCtrl/o_nReset" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">o_nReset</obj_property>
+      <obj_property name="ObjectShortName">o_nReset</obj_property>
+   </wvobject>
+   <wvobject fp_name="/RomEmuCtrl/r_Addr" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">r_Addr[15:0]</obj_property>
+      <obj_property name="ObjectShortName">r_Addr[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/RomEmuCtrl/r_Data" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">r_Data[7:0]</obj_property>
+      <obj_property name="ObjectShortName">r_Data[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/RomEmuCtrl/r_nOE" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">r_nOE</obj_property>
+      <obj_property name="ObjectShortName">r_nOE</obj_property>
+   </wvobject>
+   <wvobject fp_name="/RomEmuCtrl/r_nWE" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">r_nWE</obj_property>
+      <obj_property name="ObjectShortName">r_nWE</obj_property>
+   </wvobject>
+   <wvobject fp_name="/RomEmuCtrl/r_TargetMode" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">r_TargetMode</obj_property>
+      <obj_property name="ObjectShortName">r_TargetMode</obj_property>
+   </wvobject>
+   <wvobject fp_name="/RomEmuCtrl/r_AddrCount" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">r_AddrCount[1:0]</obj_property>
+      <obj_property name="ObjectShortName">r_AddrCount[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/RomEmuCtrl/r_DataCount" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">r_DataCount[3:0]</obj_property>
+      <obj_property name="ObjectShortName">r_DataCount[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/RomEmuCtrl/i_HCmd" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">i_HCmd[2:0]</obj_property>
+      <obj_property name="ObjectShortName">i_HCmd[2:0]</obj_property>
+   </wvobject>
+</wave_config>
