@@ -5,5 +5,335 @@
      behavior or data corruption.  It is strongly advised that
      users do not edit the contents of this file. -->
 <messages>
+<msg type="warning" file="ConstraintSystem" num="0" >A target design object for the Locate constraint &apos;&lt;NET i_HCmd(0)        LOC = &quot;P1&quot; ;&gt; [RomEmuCtrl.ucf(2)]&apos; could not be found and so the Locate constraint will be removed.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="0" >A target design object for the Locate constraint &apos;&lt;NET i_HCmd(1)        LOC = &quot;P2&quot; ;&gt; [RomEmuCtrl.ucf(3)]&apos; could not be found and so the Locate constraint will be removed.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="0" >A target design object for the Locate constraint &apos;&lt;NET i_HCmd(2)        LOC = &quot;P3&quot; ;&gt; [RomEmuCtrl.ucf(4)]&apos; could not be found and so the Locate constraint will be removed.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="0" >A target design object for the Locate constraint &apos;&lt;NET i_HData(0)			LOC = &quot;P4&quot; ;&gt; [RomEmuCtrl.ucf(5)]&apos; could not be found and so the Locate constraint will be removed.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="0" >A target design object for the Locate constraint &apos;&lt;NET i_HData(1)			LOC = &quot;P5&quot; ;&gt; [RomEmuCtrl.ucf(6)]&apos; could not be found and so the Locate constraint will be removed.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="0" >A target design object for the Locate constraint &apos;&lt;NET i_HData(2)			LOC = &quot;P6&quot; ;&gt; [RomEmuCtrl.ucf(7)]&apos; could not be found and so the Locate constraint will be removed.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="0" >A target design object for the Locate constraint &apos;&lt;NET i_HData(3)			LOC = &quot;P7&quot; ;&gt; [RomEmuCtrl.ucf(8)]&apos; could not be found and so the Locate constraint will be removed.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="0" >A target design object for the Locate constraint &apos;&lt;NET o_RAddr(0)			LOC = &quot;P17&quot;;&gt; [RomEmuCtrl.ucf(10)]&apos; could not be found and so the Locate constraint will be removed.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="0" >A target design object for the Locate constraint &apos;&lt;NET o_RAddr(1)			LOC = &quot;P18&quot;;&gt; [RomEmuCtrl.ucf(11)]&apos; could not be found and so the Locate constraint will be removed.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="0" >A target design object for the Locate constraint &apos;&lt;NET o_RAddr(2)			LOC = &quot;P19&quot;;&gt; [RomEmuCtrl.ucf(12)]&apos; could not be found and so the Locate constraint will be removed.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="0" >A target design object for the Locate constraint &apos;&lt;NET o_RAddr(3)			LOC = &quot;P20&quot;;&gt; [RomEmuCtrl.ucf(13)]&apos; could not be found and so the Locate constraint will be removed.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="0" >A target design object for the Locate constraint &apos;&lt;NET o_RAddr(4)			LOC = &quot;P21&quot;;&gt; [RomEmuCtrl.ucf(14)]&apos; could not be found and so the Locate constraint will be removed.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="0" >A target design object for the Locate constraint &apos;&lt;NET o_RAddr(5)			LOC = &quot;P23&quot;;&gt; [RomEmuCtrl.ucf(15)]&apos; could not be found and so the Locate constraint will be removed.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="0" >A target design object for the Locate constraint &apos;&lt;NET o_RAddr(6)			LOC = &quot;P24&quot;;&gt; [RomEmuCtrl.ucf(16)]&apos; could not be found and so the Locate constraint will be removed.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="0" >A target design object for the Locate constraint &apos;&lt;NET o_RAddr(7)			LOC = &quot;P25&quot;;&gt; [RomEmuCtrl.ucf(17)]&apos; could not be found and so the Locate constraint will be removed.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="0" >A target design object for the Locate constraint &apos;&lt;NET o_RAddr(8)			LOC = &quot;P26&quot;;&gt; [RomEmuCtrl.ucf(18)]&apos; could not be found and so the Locate constraint will be removed.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="0" >A target design object for the Locate constraint &apos;&lt;NET o_RAddr(9)			LOC = &quot;P31&quot;;&gt; [RomEmuCtrl.ucf(19)]&apos; could not be found and so the Locate constraint will be removed.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="0" >A target design object for the Locate constraint &apos;&lt;NET o_RAddr(10)		LOC = &quot;P32&quot;;&gt; [RomEmuCtrl.ucf(20)]&apos; could not be found and so the Locate constraint will be removed.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="0" >A target design object for the Locate constraint &apos;&lt;NET o_RAddr(11)		LOC = &quot;P33&quot;;&gt; [RomEmuCtrl.ucf(21)]&apos; could not be found and so the Locate constraint will be removed.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="0" >A target design object for the Locate constraint &apos;&lt;NET o_RAddr(12)		LOC = &quot;P34&quot;;&gt; [RomEmuCtrl.ucf(22)]&apos; could not be found and so the Locate constraint will be removed.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="0" >A target design object for the Locate constraint &apos;&lt;NET o_RAddr(13)		LOC = &quot;P35&quot;;&gt; [RomEmuCtrl.ucf(23)]&apos; could not be found and so the Locate constraint will be removed.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="0" >A target design object for the Locate constraint &apos;&lt;NET o_RAddr(14)		LOC = &quot;P36&quot;;&gt; [RomEmuCtrl.ucf(24)]&apos; could not be found and so the Locate constraint will be removed.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="0" >A target design object for the Locate constraint &apos;&lt;NET o_RAddr(15)		LOC = &quot;P37&quot;;&gt; [RomEmuCtrl.ucf(25)]&apos; could not be found and so the Locate constraint will be removed.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="0" >A target design object for the Locate constraint &apos;&lt;NET io_RData(0)		LOC = &quot;P39&quot;;&gt; [RomEmuCtrl.ucf(26)]&apos; could not be found and so the Locate constraint will be removed.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="0" >A target design object for the Locate constraint &apos;&lt;NET io_RData(1)		LOC = &quot;P40&quot;;&gt; [RomEmuCtrl.ucf(27)]&apos; could not be found and so the Locate constraint will be removed.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="0" >A target design object for the Locate constraint &apos;&lt;NET io_RData(2)		LOC = &quot;P41&quot;;&gt; [RomEmuCtrl.ucf(28)]&apos; could not be found and so the Locate constraint will be removed.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="0" >A target design object for the Locate constraint &apos;&lt;NET io_RData(3)		LOC = &quot;P43&quot;;&gt; [RomEmuCtrl.ucf(29)]&apos; could not be found and so the Locate constraint will be removed.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="0" >A target design object for the Locate constraint &apos;&lt;NET io_RData(4)		LOC = &quot;P44&quot;;&gt; [RomEmuCtrl.ucf(30)]&apos; could not be found and so the Locate constraint will be removed.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="0" >A target design object for the Locate constraint &apos;&lt;NET io_RData(5)		LOC = &quot;P45&quot;;&gt; [RomEmuCtrl.ucf(31)]&apos; could not be found and so the Locate constraint will be removed.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="0" >A target design object for the Locate constraint &apos;&lt;NET io_RData(6)		LOC = &quot;P46&quot;;&gt; [RomEmuCtrl.ucf(32)]&apos; could not be found and so the Locate constraint will be removed.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="0" >A target design object for the Locate constraint &apos;&lt;NET io_RData(7)		LOC = &quot;P47&quot;;&gt; [RomEmuCtrl.ucf(33)]&apos; could not be found and so the Locate constraint will be removed.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="0" >A target design object for the Locate constraint &apos;&lt;NET i_TAddr(0)			LOC = &quot;P48&quot;;&gt; [RomEmuCtrl.ucf(34)]&apos; could not be found and so the Locate constraint will be removed.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="0" >A target design object for the Locate constraint &apos;&lt;NET i_TAddr(1)			LOC = &quot;P50&quot;;&gt; [RomEmuCtrl.ucf(35)]&apos; could not be found and so the Locate constraint will be removed.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="0" >A target design object for the Locate constraint &apos;&lt;NET i_TAddr(2)			LOC = &quot;P51&quot;;&gt; [RomEmuCtrl.ucf(36)]&apos; could not be found and so the Locate constraint will be removed.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="0" >A target design object for the Locate constraint &apos;&lt;NET i_TAddr(3)			LOC = &quot;P52&quot;;&gt; [RomEmuCtrl.ucf(37)]&apos; could not be found and so the Locate constraint will be removed.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="0" >A target design object for the Locate constraint &apos;&lt;NET i_TAddr(4)			LOC = &quot;P53&quot;;&gt; [RomEmuCtrl.ucf(38)]&apos; could not be found and so the Locate constraint will be removed.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="0" >A target design object for the Locate constraint &apos;&lt;NET i_TAddr(5)			LOC = &quot;P54&quot;;&gt; [RomEmuCtrl.ucf(39)]&apos; could not be found and so the Locate constraint will be removed.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="0" >A target design object for the Locate constraint &apos;&lt;NET i_TAddr(6)			LOC = &quot;P55&quot;;&gt; [RomEmuCtrl.ucf(40)]&apos; could not be found and so the Locate constraint will be removed.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="0" >A target design object for the Locate constraint &apos;&lt;NET i_TAddr(7)			LOC = &quot;P56&quot;;&gt; [RomEmuCtrl.ucf(41)]&apos; could not be found and so the Locate constraint will be removed.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="0" >A target design object for the Locate constraint &apos;&lt;NET i_TAddr(8)			LOC = &quot;P57&quot;;&gt; [RomEmuCtrl.ucf(42)]&apos; could not be found and so the Locate constraint will be removed.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="0" >A target design object for the Locate constraint &apos;&lt;NET i_TAddr(9)			LOC = &quot;P58&quot;;&gt; [RomEmuCtrl.ucf(43)]&apos; could not be found and so the Locate constraint will be removed.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="0" >A target design object for the Locate constraint &apos;&lt;NET i_TAddr(10)		LOC = &quot;P61&quot;;&gt; [RomEmuCtrl.ucf(44)]&apos; could not be found and so the Locate constraint will be removed.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="0" >A target design object for the Locate constraint &apos;&lt;NET i_TAddr(11)		LOC = &quot;P62&quot;;&gt; [RomEmuCtrl.ucf(45)]&apos; could not be found and so the Locate constraint will be removed.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="0" >A target design object for the Locate constraint &apos;&lt;NET i_TAddr(12)		LOC = &quot;P63&quot;;&gt; [RomEmuCtrl.ucf(46)]&apos; could not be found and so the Locate constraint will be removed.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="0" >A target design object for the Locate constraint &apos;&lt;NET i_TAddr(13)		LOC = &quot;P65&quot;;&gt; [RomEmuCtrl.ucf(47)]&apos; could not be found and so the Locate constraint will be removed.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="0" >A target design object for the Locate constraint &apos;&lt;NET i_TAddr(14)		LOC = &quot;P66&quot;;&gt; [RomEmuCtrl.ucf(48)]&apos; could not be found and so the Locate constraint will be removed.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="0" >A target design object for the Locate constraint &apos;&lt;NET i_TAddr(15)		LOC = &quot;P67&quot;;&gt; [RomEmuCtrl.ucf(49)]&apos; could not be found and so the Locate constraint will be removed.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="0" >A target design object for the Locate constraint &apos;&lt;NET io_TData(0)		LOC = &quot;P68&quot;;&gt; [RomEmuCtrl.ucf(50)]&apos; could not be found and so the Locate constraint will be removed.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="0" >A target design object for the Locate constraint &apos;&lt;NET io_TData(1)		LOC = &quot;P69&quot;;&gt; [RomEmuCtrl.ucf(51)]&apos; could not be found and so the Locate constraint will be removed.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="0" >A target design object for the Locate constraint &apos;&lt;NET io_TData(2)		LOC = &quot;P70&quot;;&gt; [RomEmuCtrl.ucf(52)]&apos; could not be found and so the Locate constraint will be removed.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="0" >A target design object for the Locate constraint &apos;&lt;NET io_TData(3)		LOC = &quot;P71&quot;;&gt; [RomEmuCtrl.ucf(53)]&apos; could not be found and so the Locate constraint will be removed.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="0" >A target design object for the Locate constraint &apos;&lt;NET io_TData(4)		LOC = &quot;P72&quot;;&gt; [RomEmuCtrl.ucf(54)]&apos; could not be found and so the Locate constraint will be removed.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="0" >A target design object for the Locate constraint &apos;&lt;NET io_TData(5)		LOC = &quot;P74&quot;;&gt; [RomEmuCtrl.ucf(55)]&apos; could not be found and so the Locate constraint will be removed.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="0" >A target design object for the Locate constraint &apos;&lt;NET io_TData(6)		LOC = &quot;P75&quot;;&gt; [RomEmuCtrl.ucf(56)]&apos; could not be found and so the Locate constraint will be removed.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="0" >A target design object for the Locate constraint &apos;&lt;NET io_TData(7)		LOC = &quot;P76&quot;;&gt; [RomEmuCtrl.ucf(57)]&apos; could not be found and so the Locate constraint will be removed.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1012" delta="new" >The constraint <arg fmt="%s" index="1">&lt;NET i_HCmd(0)        LOC = &quot;P1&quot; ;&gt; [RomEmuCtrl.ucf(2)]</arg> is overridden on the design object <arg fmt="%s" index="2">i_HCmd&lt;0&gt;</arg> by the constraint <arg fmt="%s" index="3">&lt;NET &quot;i_HCmd&lt;0&gt;&quot;      LOC =  &quot;S:PIN1&quot;;&gt; [RomEmuCtrl.ucf(64)]</arg>.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1012" delta="new" >The constraint <arg fmt="%s" index="1">&lt;NET i_HCmd(1)        LOC = &quot;P2&quot; ;&gt; [RomEmuCtrl.ucf(3)]</arg> is overridden on the design object <arg fmt="%s" index="2">i_HCmd&lt;1&gt;</arg> by the constraint <arg fmt="%s" index="3">&lt;NET &quot;i_HCmd&lt;1&gt;&quot;      LOC =  &quot;S:PIN2&quot;;&gt; [RomEmuCtrl.ucf(65)]</arg>.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1012" delta="new" >The constraint <arg fmt="%s" index="1">&lt;NET i_HCmd(2)        LOC = &quot;P3&quot; ;&gt; [RomEmuCtrl.ucf(4)]</arg> is overridden on the design object <arg fmt="%s" index="2">i_HCmd&lt;2&gt;</arg> by the constraint <arg fmt="%s" index="3">&lt;NET &quot;i_HCmd&lt;2&gt;&quot;      LOC =  &quot;S:PIN3&quot;;&gt; [RomEmuCtrl.ucf(66)]</arg>.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1012" delta="new" >The constraint <arg fmt="%s" index="1">&lt;NET i_HData(0)			LOC = &quot;P4&quot; ;&gt; [RomEmuCtrl.ucf(5)]</arg> is overridden on the design object <arg fmt="%s" index="2">i_HData&lt;0&gt;</arg> by the constraint <arg fmt="%s" index="3">&lt;NET &quot;i_HData&lt;0&gt;&quot;     LOC =  &quot;S:PIN4&quot;;&gt; [RomEmuCtrl.ucf(67)]</arg>.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1012" delta="new" >The constraint <arg fmt="%s" index="1">&lt;NET i_HData(1)			LOC = &quot;P5&quot; ;&gt; [RomEmuCtrl.ucf(6)]</arg> is overridden on the design object <arg fmt="%s" index="2">i_HData&lt;1&gt;</arg> by the constraint <arg fmt="%s" index="3">&lt;NET &quot;i_HData&lt;1&gt;&quot;     LOC =  &quot;S:PIN5&quot;;&gt; [RomEmuCtrl.ucf(68)]</arg>.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1012" delta="new" >The constraint <arg fmt="%s" index="1">&lt;NET i_HData(2)			LOC = &quot;P6&quot; ;&gt; [RomEmuCtrl.ucf(7)]</arg> is overridden on the design object <arg fmt="%s" index="2">i_HData&lt;2&gt;</arg> by the constraint <arg fmt="%s" index="3">&lt;NET &quot;i_HData&lt;2&gt;&quot;     LOC =  &quot;S:PIN6&quot;;&gt; [RomEmuCtrl.ucf(69)]</arg>.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1012" delta="new" >The constraint <arg fmt="%s" index="1">&lt;NET i_HData(3)			LOC = &quot;P7&quot; ;&gt; [RomEmuCtrl.ucf(8)]</arg> is overridden on the design object <arg fmt="%s" index="2">i_HData&lt;3&gt;</arg> by the constraint <arg fmt="%s" index="3">&lt;NET &quot;i_HData&lt;3&gt;&quot;     LOC =  &quot;S:PIN7&quot;;&gt; [RomEmuCtrl.ucf(70)]</arg>.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1012" delta="new" >The constraint <arg fmt="%s" index="1">&lt;NET o_RAddr(0)			LOC = &quot;P17&quot;;&gt; [RomEmuCtrl.ucf(10)]</arg> is overridden on the design object <arg fmt="%s" index="2">o_RAddr&lt;0&gt;</arg> by the constraint <arg fmt="%s" index="3">&lt;NET &quot;o_RAddr&lt;0&gt;&quot;     LOC =  &quot;S:PIN17&quot;;&gt; [RomEmuCtrl.ucf(105)]</arg>.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1012" delta="new" >The constraint <arg fmt="%s" index="1">&lt;NET o_RAddr(1)			LOC = &quot;P18&quot;;&gt; [RomEmuCtrl.ucf(11)]</arg> is overridden on the design object <arg fmt="%s" index="2">o_RAddr&lt;1&gt;</arg> by the constraint <arg fmt="%s" index="3">&lt;NET &quot;o_RAddr&lt;1&gt;&quot;     LOC =  &quot;S:PIN18&quot;;&gt; [RomEmuCtrl.ucf(112)]</arg>.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1012" delta="new" >The constraint <arg fmt="%s" index="1">&lt;NET o_RAddr(2)			LOC = &quot;P19&quot;;&gt; [RomEmuCtrl.ucf(12)]</arg> is overridden on the design object <arg fmt="%s" index="2">o_RAddr&lt;2&gt;</arg> by the constraint <arg fmt="%s" index="3">&lt;NET &quot;o_RAddr&lt;2&gt;&quot;     LOC =  &quot;S:PIN19&quot;;&gt; [RomEmuCtrl.ucf(113)]</arg>.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1012" delta="new" >The constraint <arg fmt="%s" index="1">&lt;NET o_RAddr(3)			LOC = &quot;P20&quot;;&gt; [RomEmuCtrl.ucf(13)]</arg> is overridden on the design object <arg fmt="%s" index="2">o_RAddr&lt;3&gt;</arg> by the constraint <arg fmt="%s" index="3">&lt;NET &quot;o_RAddr&lt;3&gt;&quot;     LOC =  &quot;S:PIN20&quot;;&gt; [RomEmuCtrl.ucf(114)]</arg>.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1012" delta="new" >The constraint <arg fmt="%s" index="1">&lt;NET o_RAddr(4)			LOC = &quot;P21&quot;;&gt; [RomEmuCtrl.ucf(14)]</arg> is overridden on the design object <arg fmt="%s" index="2">o_RAddr&lt;4&gt;</arg> by the constraint <arg fmt="%s" index="3">&lt;NET &quot;o_RAddr&lt;4&gt;&quot;     LOC =  &quot;S:PIN21&quot;;&gt; [RomEmuCtrl.ucf(115)]</arg>.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1012" delta="new" >The constraint <arg fmt="%s" index="1">&lt;NET o_RAddr(5)			LOC = &quot;P23&quot;;&gt; [RomEmuCtrl.ucf(15)]</arg> is overridden on the design object <arg fmt="%s" index="2">o_RAddr&lt;5&gt;</arg> by the constraint <arg fmt="%s" index="3">&lt;NET &quot;o_RAddr&lt;5&gt;&quot;     LOC =  &quot;S:PIN23&quot;;&gt; [RomEmuCtrl.ucf(116)]</arg>.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1012" delta="new" >The constraint <arg fmt="%s" index="1">&lt;NET o_RAddr(6)			LOC = &quot;P24&quot;;&gt; [RomEmuCtrl.ucf(16)]</arg> is overridden on the design object <arg fmt="%s" index="2">o_RAddr&lt;6&gt;</arg> by the constraint <arg fmt="%s" index="3">&lt;NET &quot;o_RAddr&lt;6&gt;&quot;     LOC =  &quot;S:PIN24&quot;;&gt; [RomEmuCtrl.ucf(117)]</arg>.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1012" delta="new" >The constraint <arg fmt="%s" index="1">&lt;NET o_RAddr(7)			LOC = &quot;P25&quot;;&gt; [RomEmuCtrl.ucf(17)]</arg> is overridden on the design object <arg fmt="%s" index="2">o_RAddr&lt;7&gt;</arg> by the constraint <arg fmt="%s" index="3">&lt;NET &quot;o_RAddr&lt;7&gt;&quot;     LOC =  &quot;S:PIN25&quot;;&gt; [RomEmuCtrl.ucf(118)]</arg>.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1012" delta="new" >The constraint <arg fmt="%s" index="1">&lt;NET o_RAddr(8)			LOC = &quot;P26&quot;;&gt; [RomEmuCtrl.ucf(18)]</arg> is overridden on the design object <arg fmt="%s" index="2">o_RAddr&lt;8&gt;</arg> by the constraint <arg fmt="%s" index="3">&lt;NET &quot;o_RAddr&lt;8&gt;&quot;     LOC =  &quot;S:PIN26&quot;;&gt; [RomEmuCtrl.ucf(119)]</arg>.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1012" delta="new" >The constraint <arg fmt="%s" index="1">&lt;NET o_RAddr(9)			LOC = &quot;P31&quot;;&gt; [RomEmuCtrl.ucf(19)]</arg> is overridden on the design object <arg fmt="%s" index="2">o_RAddr&lt;9&gt;</arg> by the constraint <arg fmt="%s" index="3">&lt;NET &quot;o_RAddr&lt;9&gt;&quot;     LOC =  &quot;S:PIN31&quot;;&gt; [RomEmuCtrl.ucf(120)]</arg>.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1012" delta="new" >The constraint <arg fmt="%s" index="1">&lt;NET o_RAddr(10)		LOC = &quot;P32&quot;;&gt; [RomEmuCtrl.ucf(20)]</arg> is overridden on the design object <arg fmt="%s" index="2">o_RAddr&lt;10&gt;</arg> by the constraint <arg fmt="%s" index="3">&lt;NET &quot;o_RAddr&lt;10&gt;&quot;    LOC =  &quot;S:PIN32&quot;;&gt; [RomEmuCtrl.ucf(106)]</arg>.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1012" delta="new" >The constraint <arg fmt="%s" index="1">&lt;NET o_RAddr(11)		LOC = &quot;P33&quot;;&gt; [RomEmuCtrl.ucf(21)]</arg> is overridden on the design object <arg fmt="%s" index="2">o_RAddr&lt;11&gt;</arg> by the constraint <arg fmt="%s" index="3">&lt;NET &quot;o_RAddr&lt;11&gt;&quot;    LOC =  &quot;S:PIN33&quot;;&gt; [RomEmuCtrl.ucf(107)]</arg>.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1012" delta="new" >The constraint <arg fmt="%s" index="1">&lt;NET o_RAddr(12)		LOC = &quot;P34&quot;;&gt; [RomEmuCtrl.ucf(22)]</arg> is overridden on the design object <arg fmt="%s" index="2">o_RAddr&lt;12&gt;</arg> by the constraint <arg fmt="%s" index="3">&lt;NET &quot;o_RAddr&lt;12&gt;&quot;    LOC =  &quot;S:PIN34&quot;;&gt; [RomEmuCtrl.ucf(108)]</arg>.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1012" delta="new" >The constraint <arg fmt="%s" index="1">&lt;NET o_RAddr(13)		LOC = &quot;P35&quot;;&gt; [RomEmuCtrl.ucf(23)]</arg> is overridden on the design object <arg fmt="%s" index="2">o_RAddr&lt;13&gt;</arg> by the constraint <arg fmt="%s" index="3">&lt;NET &quot;o_RAddr&lt;13&gt;&quot;    LOC =  &quot;S:PIN35&quot;;&gt; [RomEmuCtrl.ucf(109)]</arg>.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1012" delta="new" >The constraint <arg fmt="%s" index="1">&lt;NET o_RAddr(14)		LOC = &quot;P36&quot;;&gt; [RomEmuCtrl.ucf(24)]</arg> is overridden on the design object <arg fmt="%s" index="2">o_RAddr&lt;14&gt;</arg> by the constraint <arg fmt="%s" index="3">&lt;NET &quot;o_RAddr&lt;14&gt;&quot;    LOC =  &quot;S:PIN36&quot;;&gt; [RomEmuCtrl.ucf(110)]</arg>.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1012" delta="new" >The constraint <arg fmt="%s" index="1">&lt;NET o_RAddr(15)		LOC = &quot;P37&quot;;&gt; [RomEmuCtrl.ucf(25)]</arg> is overridden on the design object <arg fmt="%s" index="2">o_RAddr&lt;15&gt;</arg> by the constraint <arg fmt="%s" index="3">&lt;NET &quot;o_RAddr&lt;15&gt;&quot;    LOC =  &quot;S:PIN37&quot;;&gt; [RomEmuCtrl.ucf(111)]</arg>.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1012" delta="new" >The constraint <arg fmt="%s" index="1">&lt;NET io_RData(0)		LOC = &quot;P39&quot;;&gt; [RomEmuCtrl.ucf(26)]</arg> is overridden on the design object <arg fmt="%s" index="2">io_RData&lt;0&gt;</arg> by the constraint <arg fmt="%s" index="3">&lt;NET &quot;io_RData&lt;0&gt;&quot;    LOC =  &quot;S:PIN39&quot;;&gt; [RomEmuCtrl.ucf(89)]</arg>.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1012" delta="new" >The constraint <arg fmt="%s" index="1">&lt;NET io_RData(1)		LOC = &quot;P40&quot;;&gt; [RomEmuCtrl.ucf(27)]</arg> is overridden on the design object <arg fmt="%s" index="2">io_RData&lt;1&gt;</arg> by the constraint <arg fmt="%s" index="3">&lt;NET &quot;io_RData&lt;1&gt;&quot;    LOC =  &quot;S:PIN40&quot;;&gt; [RomEmuCtrl.ucf(90)]</arg>.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1012" delta="new" >The constraint <arg fmt="%s" index="1">&lt;NET io_RData(2)		LOC = &quot;P41&quot;;&gt; [RomEmuCtrl.ucf(28)]</arg> is overridden on the design object <arg fmt="%s" index="2">io_RData&lt;2&gt;</arg> by the constraint <arg fmt="%s" index="3">&lt;NET &quot;io_RData&lt;2&gt;&quot;    LOC =  &quot;S:PIN41&quot;;&gt; [RomEmuCtrl.ucf(91)]</arg>.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1012" delta="new" >The constraint <arg fmt="%s" index="1">&lt;NET io_RData(3)		LOC = &quot;P43&quot;;&gt; [RomEmuCtrl.ucf(29)]</arg> is overridden on the design object <arg fmt="%s" index="2">io_RData&lt;3&gt;</arg> by the constraint <arg fmt="%s" index="3">&lt;NET &quot;io_RData&lt;3&gt;&quot;    LOC =  &quot;S:PIN43&quot;;&gt; [RomEmuCtrl.ucf(92)]</arg>.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1012" delta="new" >The constraint <arg fmt="%s" index="1">&lt;NET io_RData(4)		LOC = &quot;P44&quot;;&gt; [RomEmuCtrl.ucf(30)]</arg> is overridden on the design object <arg fmt="%s" index="2">io_RData&lt;4&gt;</arg> by the constraint <arg fmt="%s" index="3">&lt;NET &quot;io_RData&lt;4&gt;&quot;    LOC =  &quot;S:PIN44&quot;;&gt; [RomEmuCtrl.ucf(93)]</arg>.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1012" delta="new" >The constraint <arg fmt="%s" index="1">&lt;NET io_RData(5)		LOC = &quot;P45&quot;;&gt; [RomEmuCtrl.ucf(31)]</arg> is overridden on the design object <arg fmt="%s" index="2">io_RData&lt;5&gt;</arg> by the constraint <arg fmt="%s" index="3">&lt;NET &quot;io_RData&lt;5&gt;&quot;    LOC =  &quot;S:PIN45&quot;;&gt; [RomEmuCtrl.ucf(94)]</arg>.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1012" delta="new" >The constraint <arg fmt="%s" index="1">&lt;NET io_RData(6)		LOC = &quot;P46&quot;;&gt; [RomEmuCtrl.ucf(32)]</arg> is overridden on the design object <arg fmt="%s" index="2">io_RData&lt;6&gt;</arg> by the constraint <arg fmt="%s" index="3">&lt;NET &quot;io_RData&lt;6&gt;&quot;    LOC =  &quot;S:PIN46&quot;;&gt; [RomEmuCtrl.ucf(95)]</arg>.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1012" delta="new" >The constraint <arg fmt="%s" index="1">&lt;NET io_RData(7)		LOC = &quot;P47&quot;;&gt; [RomEmuCtrl.ucf(33)]</arg> is overridden on the design object <arg fmt="%s" index="2">io_RData&lt;7&gt;</arg> by the constraint <arg fmt="%s" index="3">&lt;NET &quot;io_RData&lt;7&gt;&quot;    LOC =  &quot;S:PIN47&quot;;&gt; [RomEmuCtrl.ucf(96)]</arg>.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1012" delta="new" >The constraint <arg fmt="%s" index="1">&lt;NET i_TAddr(0)			LOC = &quot;P48&quot;;&gt; [RomEmuCtrl.ucf(34)]</arg> is overridden on the design object <arg fmt="%s" index="2">i_TAddr&lt;0&gt;</arg> by the constraint <arg fmt="%s" index="3">&lt;NET &quot;i_TAddr&lt;0&gt;&quot;     LOC =  &quot;S:PIN48&quot;;&gt; [RomEmuCtrl.ucf(71)]</arg>.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1012" delta="new" >The constraint <arg fmt="%s" index="1">&lt;NET i_TAddr(1)			LOC = &quot;P50&quot;;&gt; [RomEmuCtrl.ucf(35)]</arg> is overridden on the design object <arg fmt="%s" index="2">i_TAddr&lt;1&gt;</arg> by the constraint <arg fmt="%s" index="3">&lt;NET &quot;i_TAddr&lt;1&gt;&quot;     LOC =  &quot;S:PIN50&quot;;&gt; [RomEmuCtrl.ucf(78)]</arg>.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1012" delta="new" >The constraint <arg fmt="%s" index="1">&lt;NET i_TAddr(2)			LOC = &quot;P51&quot;;&gt; [RomEmuCtrl.ucf(36)]</arg> is overridden on the design object <arg fmt="%s" index="2">i_TAddr&lt;2&gt;</arg> by the constraint <arg fmt="%s" index="3">&lt;NET &quot;i_TAddr&lt;2&gt;&quot;     LOC =  &quot;S:PIN51&quot;;&gt; [RomEmuCtrl.ucf(79)]</arg>.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1012" delta="new" >The constraint <arg fmt="%s" index="1">&lt;NET i_TAddr(3)			LOC = &quot;P52&quot;;&gt; [RomEmuCtrl.ucf(37)]</arg> is overridden on the design object <arg fmt="%s" index="2">i_TAddr&lt;3&gt;</arg> by the constraint <arg fmt="%s" index="3">&lt;NET &quot;i_TAddr&lt;3&gt;&quot;     LOC =  &quot;S:PIN52&quot;;&gt; [RomEmuCtrl.ucf(80)]</arg>.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1012" delta="new" >The constraint <arg fmt="%s" index="1">&lt;NET i_TAddr(4)			LOC = &quot;P53&quot;;&gt; [RomEmuCtrl.ucf(38)]</arg> is overridden on the design object <arg fmt="%s" index="2">i_TAddr&lt;4&gt;</arg> by the constraint <arg fmt="%s" index="3">&lt;NET &quot;i_TAddr&lt;4&gt;&quot;     LOC =  &quot;S:PIN53&quot;;&gt; [RomEmuCtrl.ucf(81)]</arg>.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1012" delta="new" >The constraint <arg fmt="%s" index="1">&lt;NET i_TAddr(5)			LOC = &quot;P54&quot;;&gt; [RomEmuCtrl.ucf(39)]</arg> is overridden on the design object <arg fmt="%s" index="2">i_TAddr&lt;5&gt;</arg> by the constraint <arg fmt="%s" index="3">&lt;NET &quot;i_TAddr&lt;5&gt;&quot;     LOC =  &quot;S:PIN54&quot;;&gt; [RomEmuCtrl.ucf(82)]</arg>.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1012" delta="new" >The constraint <arg fmt="%s" index="1">&lt;NET i_TAddr(6)			LOC = &quot;P55&quot;;&gt; [RomEmuCtrl.ucf(40)]</arg> is overridden on the design object <arg fmt="%s" index="2">i_TAddr&lt;6&gt;</arg> by the constraint <arg fmt="%s" index="3">&lt;NET &quot;i_TAddr&lt;6&gt;&quot;     LOC =  &quot;S:PIN55&quot;;&gt; [RomEmuCtrl.ucf(83)]</arg>.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1012" delta="new" >The constraint <arg fmt="%s" index="1">&lt;NET i_TAddr(7)			LOC = &quot;P56&quot;;&gt; [RomEmuCtrl.ucf(41)]</arg> is overridden on the design object <arg fmt="%s" index="2">i_TAddr&lt;7&gt;</arg> by the constraint <arg fmt="%s" index="3">&lt;NET &quot;i_TAddr&lt;7&gt;&quot;     LOC =  &quot;S:PIN56&quot;;&gt; [RomEmuCtrl.ucf(84)]</arg>.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1012" delta="new" >The constraint <arg fmt="%s" index="1">&lt;NET i_TAddr(8)			LOC = &quot;P57&quot;;&gt; [RomEmuCtrl.ucf(42)]</arg> is overridden on the design object <arg fmt="%s" index="2">i_TAddr&lt;8&gt;</arg> by the constraint <arg fmt="%s" index="3">&lt;NET &quot;i_TAddr&lt;8&gt;&quot;     LOC =  &quot;S:PIN57&quot;;&gt; [RomEmuCtrl.ucf(85)]</arg>.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1012" delta="new" >The constraint <arg fmt="%s" index="1">&lt;NET i_TAddr(9)			LOC = &quot;P58&quot;;&gt; [RomEmuCtrl.ucf(43)]</arg> is overridden on the design object <arg fmt="%s" index="2">i_TAddr&lt;9&gt;</arg> by the constraint <arg fmt="%s" index="3">&lt;NET &quot;i_TAddr&lt;9&gt;&quot;     LOC =  &quot;S:PIN58&quot;;&gt; [RomEmuCtrl.ucf(86)]</arg>.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1012" delta="new" >The constraint <arg fmt="%s" index="1">&lt;NET i_TAddr(10)		LOC = &quot;P61&quot;;&gt; [RomEmuCtrl.ucf(44)]</arg> is overridden on the design object <arg fmt="%s" index="2">i_TAddr&lt;10&gt;</arg> by the constraint <arg fmt="%s" index="3">&lt;NET &quot;i_TAddr&lt;10&gt;&quot;    LOC =  &quot;S:PIN61&quot;;&gt; [RomEmuCtrl.ucf(72)]</arg>.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1012" delta="new" >The constraint <arg fmt="%s" index="1">&lt;NET i_TAddr(11)		LOC = &quot;P62&quot;;&gt; [RomEmuCtrl.ucf(45)]</arg> is overridden on the design object <arg fmt="%s" index="2">i_TAddr&lt;11&gt;</arg> by the constraint <arg fmt="%s" index="3">&lt;NET &quot;i_TAddr&lt;11&gt;&quot;    LOC =  &quot;S:PIN62&quot;;&gt; [RomEmuCtrl.ucf(73)]</arg>.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1012" delta="new" >The constraint <arg fmt="%s" index="1">&lt;NET i_TAddr(12)		LOC = &quot;P63&quot;;&gt; [RomEmuCtrl.ucf(46)]</arg> is overridden on the design object <arg fmt="%s" index="2">i_TAddr&lt;12&gt;</arg> by the constraint <arg fmt="%s" index="3">&lt;NET &quot;i_TAddr&lt;12&gt;&quot;    LOC =  &quot;S:PIN63&quot;;&gt; [RomEmuCtrl.ucf(74)]</arg>.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1012" delta="new" >The constraint <arg fmt="%s" index="1">&lt;NET i_TAddr(13)		LOC = &quot;P65&quot;;&gt; [RomEmuCtrl.ucf(47)]</arg> is overridden on the design object <arg fmt="%s" index="2">i_TAddr&lt;13&gt;</arg> by the constraint <arg fmt="%s" index="3">&lt;NET &quot;i_TAddr&lt;13&gt;&quot;    LOC =  &quot;S:PIN65&quot;;&gt; [RomEmuCtrl.ucf(75)]</arg>.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1012" delta="new" >The constraint <arg fmt="%s" index="1">&lt;NET i_TAddr(14)		LOC = &quot;P66&quot;;&gt; [RomEmuCtrl.ucf(48)]</arg> is overridden on the design object <arg fmt="%s" index="2">i_TAddr&lt;14&gt;</arg> by the constraint <arg fmt="%s" index="3">&lt;NET &quot;i_TAddr&lt;14&gt;&quot;    LOC =  &quot;S:PIN66&quot;;&gt; [RomEmuCtrl.ucf(76)]</arg>.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1012" delta="new" >The constraint <arg fmt="%s" index="1">&lt;NET i_TAddr(15)		LOC = &quot;P67&quot;;&gt; [RomEmuCtrl.ucf(49)]</arg> is overridden on the design object <arg fmt="%s" index="2">i_TAddr&lt;15&gt;</arg> by the constraint <arg fmt="%s" index="3">&lt;NET &quot;i_TAddr&lt;15&gt;&quot;    LOC =  &quot;S:PIN67&quot;;&gt; [RomEmuCtrl.ucf(77)]</arg>.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1012" delta="new" >The constraint <arg fmt="%s" index="1">&lt;NET io_TData(0)		LOC = &quot;P68&quot;;&gt; [RomEmuCtrl.ucf(50)]</arg> is overridden on the design object <arg fmt="%s" index="2">io_TData&lt;0&gt;</arg> by the constraint <arg fmt="%s" index="3">&lt;NET &quot;io_TData&lt;0&gt;&quot;    LOC =  &quot;S:PIN68&quot;;&gt; [RomEmuCtrl.ucf(97)]</arg>.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1012" delta="new" >The constraint <arg fmt="%s" index="1">&lt;NET io_TData(1)		LOC = &quot;P69&quot;;&gt; [RomEmuCtrl.ucf(51)]</arg> is overridden on the design object <arg fmt="%s" index="2">io_TData&lt;1&gt;</arg> by the constraint <arg fmt="%s" index="3">&lt;NET &quot;io_TData&lt;1&gt;&quot;    LOC =  &quot;S:PIN69&quot;;&gt; [RomEmuCtrl.ucf(98)]</arg>.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1012" delta="new" >The constraint <arg fmt="%s" index="1">&lt;NET io_TData(2)		LOC = &quot;P70&quot;;&gt; [RomEmuCtrl.ucf(52)]</arg> is overridden on the design object <arg fmt="%s" index="2">io_TData&lt;2&gt;</arg> by the constraint <arg fmt="%s" index="3">&lt;NET &quot;io_TData&lt;2&gt;&quot;    LOC =  &quot;S:PIN70&quot;;&gt; [RomEmuCtrl.ucf(99)]</arg>.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1012" delta="new" >The constraint <arg fmt="%s" index="1">&lt;NET io_TData(3)		LOC = &quot;P71&quot;;&gt; [RomEmuCtrl.ucf(53)]</arg> is overridden on the design object <arg fmt="%s" index="2">io_TData&lt;3&gt;</arg> by the constraint <arg fmt="%s" index="3">&lt;NET &quot;io_TData&lt;3&gt;&quot;    LOC =  &quot;S:PIN71&quot;;&gt; [RomEmuCtrl.ucf(100)]</arg>.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1012" delta="new" >The constraint <arg fmt="%s" index="1">&lt;NET io_TData(4)		LOC = &quot;P72&quot;;&gt; [RomEmuCtrl.ucf(54)]</arg> is overridden on the design object <arg fmt="%s" index="2">io_TData&lt;4&gt;</arg> by the constraint <arg fmt="%s" index="3">&lt;NET &quot;io_TData&lt;4&gt;&quot;    LOC =  &quot;S:PIN72&quot;;&gt; [RomEmuCtrl.ucf(101)]</arg>.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1012" delta="new" >The constraint <arg fmt="%s" index="1">&lt;NET io_TData(5)		LOC = &quot;P74&quot;;&gt; [RomEmuCtrl.ucf(55)]</arg> is overridden on the design object <arg fmt="%s" index="2">io_TData&lt;5&gt;</arg> by the constraint <arg fmt="%s" index="3">&lt;NET &quot;io_TData&lt;5&gt;&quot;    LOC =  &quot;S:PIN74&quot;;&gt; [RomEmuCtrl.ucf(102)]</arg>.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1012" delta="new" >The constraint <arg fmt="%s" index="1">&lt;NET io_TData(6)		LOC = &quot;P75&quot;;&gt; [RomEmuCtrl.ucf(56)]</arg> is overridden on the design object <arg fmt="%s" index="2">io_TData&lt;6&gt;</arg> by the constraint <arg fmt="%s" index="3">&lt;NET &quot;io_TData&lt;6&gt;&quot;    LOC =  &quot;S:PIN75&quot;;&gt; [RomEmuCtrl.ucf(103)]</arg>.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1012" delta="new" >The constraint <arg fmt="%s" index="1">&lt;NET io_TData(7)		LOC = &quot;P76&quot;;&gt; [RomEmuCtrl.ucf(57)]</arg> is overridden on the design object <arg fmt="%s" index="2">io_TData&lt;7&gt;</arg> by the constraint <arg fmt="%s" index="3">&lt;NET &quot;io_TData&lt;7&gt;&quot;    LOC =  &quot;S:PIN76&quot;;&gt; [RomEmuCtrl.ucf(104)]</arg>.
+</msg>
+
 </messages>
 

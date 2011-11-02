@@ -26,6 +26,7 @@
     <file xil_pn:fileType="FILE_CMD_LOG" xil_pn:name="RomEmuCtrl.cmd_log"/>
     <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_GYD" xil_pn:name="RomEmuCtrl.gyd"/>
     <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_JEDEC" xil_pn:name="RomEmuCtrl.jed"/>
+    <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_PIN2UCF_REPORT" xil_pn:name="RomEmuCtrl.lck"/>
     <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_LSO" xil_pn:name="RomEmuCtrl.lso"/>
     <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_MFD" xil_pn:name="RomEmuCtrl.mfd"/>
     <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_NGA" xil_pn:name="RomEmuCtrl.nga"/>
@@ -60,20 +61,20 @@
   </files>
 
   <transforms xmlns="http://www.xilinx.com/XMLSchema">
-    <transform xil_pn:end_ts="1320126541" xil_pn:name="TRANEXT_compLibraries_CPLD" xil_pn:prop_ck="8681498907089373142" xil_pn:start_ts="1320126541">
+    <transform xil_pn:end_ts="1320189211" xil_pn:name="TRANEXT_compLibraries_CPLD" xil_pn:prop_ck="-4686900976313188490" xil_pn:start_ts="1320189209">
       <status xil_pn:value="FailedRun"/>
       <status xil_pn:value="ReadyToRun"/>
       <outfile xil_pn:name="compxlib.log"/>
     </transform>
-    <transform xil_pn:end_ts="1319937741" xil_pn:name="TRAN_copyInitialToXSTAbstractSynthesis" xil_pn:start_ts="1319937741">
+    <transform xil_pn:end_ts="1320184009" xil_pn:name="TRAN_copyInitialToXSTAbstractSynthesis" xil_pn:start_ts="1320184009">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
     </transform>
-    <transform xil_pn:end_ts="1319937741" xil_pn:name="TRAN_schematicsToHdl" xil_pn:prop_ck="5920113425379052329" xil_pn:start_ts="1319937741">
+    <transform xil_pn:end_ts="1320184009" xil_pn:name="TRAN_schematicsToHdl" xil_pn:prop_ck="5920113425379052329" xil_pn:start_ts="1320184009">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
     </transform>
-    <transform xil_pn:end_ts="1320119923" xil_pn:in_ck="-8790174467390708688" xil_pn:name="TRANEXT_xstsynthesize_CPLD" xil_pn:prop_ck="-1966158870642298009" xil_pn:start_ts="1320119917">
+    <transform xil_pn:end_ts="1320184018" xil_pn:in_ck="-8790174467390708688" xil_pn:name="TRANEXT_xstsynthesize_CPLD" xil_pn:prop_ck="-1966158870642298009" xil_pn:start_ts="1320184009">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
       <outfile xil_pn:name="RomEmuCtrl.lso"/>
@@ -88,12 +89,13 @@
       <outfile xil_pn:name="webtalk_pn.xml"/>
       <outfile xil_pn:name="xst"/>
     </transform>
-    <transform xil_pn:end_ts="1320120272" xil_pn:in_ck="145019798047852182" xil_pn:name="TRAN_compileBCD2" xil_pn:prop_ck="8766412104767437644" xil_pn:start_ts="1320120272">
+    <transform xil_pn:end_ts="1320184056" xil_pn:in_ck="145019798047852182" xil_pn:name="TRAN_compileBCD2" xil_pn:prop_ck="8766412104767437644" xil_pn:start_ts="1320184056">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
     </transform>
-    <transform xil_pn:end_ts="1320120276" xil_pn:in_ck="-7186244187146486810" xil_pn:name="TRAN_ngdbuild" xil_pn:prop_ck="-5048631304759742094" xil_pn:start_ts="1320120272">
+    <transform xil_pn:end_ts="1320184062" xil_pn:in_ck="-7186244187146486810" xil_pn:name="TRAN_ngdbuild" xil_pn:prop_ck="-5048631304759742094" xil_pn:start_ts="1320184056">
       <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="WarningsGenerated"/>
       <status xil_pn:value="ReadyToRun"/>
       <outfile xil_pn:name="RomEmuCtrl.bld"/>
       <outfile xil_pn:name="RomEmuCtrl.ngd"/>
@@ -101,7 +103,7 @@
       <outfile xil_pn:name="_ngo"/>
       <outfile xil_pn:name="_xmsgs/ngdbuild.xmsgs"/>
     </transform>
-    <transform xil_pn:end_ts="1320120293" xil_pn:in_ck="145019798047844689" xil_pn:name="TRANEXT_vm6File_xc9500" xil_pn:prop_ck="-6693885353598625805" xil_pn:start_ts="1320120276">
+    <transform xil_pn:end_ts="1320184080" xil_pn:in_ck="145019798047844689" xil_pn:name="TRANEXT_vm6File_xc9500" xil_pn:prop_ck="-6693885353598625805" xil_pn:start_ts="1320184062">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="WarningsGenerated"/>
       <status xil_pn:value="ReadyToRun"/>
@@ -121,15 +123,26 @@
       <outfile xil_pn:name="RomEmuCtrl_html"/>
       <outfile xil_pn:name="RomEmuCtrl_pad.csv"/>
     </transform>
-    <transform xil_pn:end_ts="1320120294" xil_pn:in_ck="145019798047853553" xil_pn:name="TRANEXT_crtProg_xc9500" xil_pn:prop_ck="-9204593535224376705" xil_pn:start_ts="1320120293">
+    <transform xil_pn:end_ts="1320184082" xil_pn:in_ck="145019798047853553" xil_pn:name="TRANEXT_crtProg_xc9500" xil_pn:prop_ck="-9204593535224376705" xil_pn:start_ts="1320184080">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
       <outfile xil_pn:name="RomEmuCtrl.jed"/>
     </transform>
-    <transform xil_pn:end_ts="1320120306" xil_pn:in_ck="145019798047853553" xil_pn:name="TRAN_timRpt" xil_pn:prop_ck="111903974446" xil_pn:start_ts="1320120304">
+    <transform xil_pn:end_ts="1320184086" xil_pn:in_ck="145019798047840267" xil_pn:name="TRAN_configureTargetDevice_CPLD" xil_pn:prop_ck="-4642231692518494639" xil_pn:start_ts="1320184082">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+    </transform>
+    <transform xil_pn:end_ts="1320186849" xil_pn:in_ck="145019798047853553" xil_pn:name="TRAN_timRpt" xil_pn:prop_ck="111903974446" xil_pn:start_ts="1320186846">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="WarningsGenerated"/>
       <status xil_pn:value="ReadyToRun"/>
+    </transform>
+    <transform xil_pn:end_ts="1320184053" xil_pn:in_ck="-2453325580784245390" xil_pn:name="TRAN_lockPins" xil_pn:prop_ck="145019798047852182" xil_pn:start_ts="1320184051">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+      <status xil_pn:value="OutOfDateForInputs"/>
+      <status xil_pn:value="InputChanged"/>
+      <outfile xil_pn:name="RomEmuCtrl.lck"/>
     </transform>
     <transform xil_pn:end_ts="1320124903" xil_pn:in_ck="1364518373118077351" xil_pn:name="TRAN_createTimingConstraints" xil_pn:start_ts="1320124903">
       <status xil_pn:value="SuccessfullyRun"/>
