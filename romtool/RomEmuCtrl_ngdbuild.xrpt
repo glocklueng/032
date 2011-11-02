@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
-<document OS="nt64" product="ISE" version="13.2">
+<document OS="nt" product="ISE" version="13.3">
 
   <!--The data in this file is primarily intended for consumption by Xilinx tools.
     The structure and the elements are likely to change over the next few releases.
     This means code written to parse this file will need to be revisited each subsequent release.-->
 
-  <application stringID="NgdBuild" timeStamp="Mon Oct 31 21:04:35 2011">
+  <application stringID="NgdBuild" timeStamp="Tue Nov 01 14:47:41 2011">
     <section stringID="User_Env">
       <table stringID="User_EnvVar">
         <column stringID="variable"/>
         <column stringID="value"/>
         <row stringID="row" value="0">
           <item stringID="variable" value="Path"/>
-          <item stringID="value" value="d:\Xilinx\13.2\ISE_DS\ISE\\lib\nt64;d:\Xilinx\13.2\ISE_DS\ISE\\bin\nt64;D:\Xilinx\13.2\ISE_DS\PlanAhead\bin;D:\Xilinx\13.2\ISE_DS\ISE\bin\nt64;D:\Xilinx\13.2\ISE_DS\ISE\lib\nt64;D:\Xilinx\13.2\ISE_DS\EDK\bin\nt64;D:\Xilinx\13.2\ISE_DS\EDK\lib\nt64;D:\Xilinx\13.2\ISE_DS\EDK\gnu\microblaze\nt64\bin;D:\Xilinx\13.2\ISE_DS\EDK\gnu\powerpc-eabi\nt64\bin;D:\Xilinx\13.2\ISE_DS\EDK\gnuwin\bin;D:\Xilinx\13.2\ISE_DS\common\bin\nt64;D:\Xilinx\13.2\ISE_DS\common\lib\nt64;C:\Program Files\Common Files\Microsoft Shared\Windows Live;C:\Program Files (x86)\Common Files\Microsoft Shared\Windows Live;C:\Program Files (x86)\AMD APP\bin\x86_64;C:\Program Files (x86)\AMD APP\bin\x86;C:\Users\charlie\Documents\AMD APP\bin\x86_64;C:\Users\charlie\Documents\AMD APP\bin\x86;C:\WinAVR-20100110\bin;C:\WinAVR-20100110\utils\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\TortoiseSVN\bin;C:\Program Files (x86)\Altium Designer Summer 09\System;C:\Program Files (x86)\Windows Live\Shared;C:\Program Files (x86)\ATI Technologies\ATI.ACE\Core-Static;C:\Program Files\Microsoft Windows Performance Toolkit\;C:\Program Files (x86)\QuickTime\QTSystem\;C:\Program Files (x86)\GTK2-Runtime\bin;D:\Program Files\ATI Technologies\ATI.ACE\Core-Static;d:\doxygen\bin;C:\Program Files (x86)\IVI\bin;C:\Program Files (x86)\IVI Foundation\VISA\WinNT\Bin;C:\PROGRA~2\IVIFOU~1\VISA\WinNT\Bin;C:\Program Files (x86)\TortoiseSVN\bin;C:\Program Files (x86)\AMD APP\tools\AMD APP KernelAnalyzer 1.9\;C:\Program Files (x86)\ATMEL Corporation\SAM-BA v2.10;C:\Program Files (x86)\Nmap;d:\altera\11.0\modelsim_ase\win32aloem"/>
+          <item stringID="value" value="C:\Xilinx\13.3\ISE_DS\ISE\\lib\nt;C:\Xilinx\13.3\ISE_DS\ISE\\bin\nt;C:\Xilinx\13.3\ISE_DS\PlanAhead\bin;C:\Xilinx\13.3\ISE_DS\ISE\bin\nt;C:\Xilinx\13.3\ISE_DS\ISE\lib\nt;C:\Xilinx\13.3\ISE_DS\EDK\bin\nt;C:\Xilinx\13.3\ISE_DS\EDK\lib\nt;C:\Xilinx\13.3\ISE_DS\EDK\gnu\microblaze\nt\bin;C:\Xilinx\13.3\ISE_DS\EDK\gnu\powerpc-eabi\nt\bin;C:\Xilinx\13.3\ISE_DS\EDK\gnuwin\bin;C:\Xilinx\13.3\ISE_DS\common\bin\nt;C:\Xilinx\13.3\ISE_DS\common\lib\nt;D:\Program Files\Common Files\Microsoft Shared\Windows Live;C:\Actel\Libero_v9.1\Model\win32acoem;C:\Actel\Libero_v9.1\Designer\bin;D:\Program Files\NVIDIA Corporation\PhysX\Common;D:\powerVR\Utilities\PVRVFrame\OGLES-2.0\Windows\;D:\powerVR\Utilities\PVRVFrame\OGLES-1.1\Windows\;C:\Perl\site\bin;C:\Perl\bin;D:\Program Files\Intel\VTune\CGGlbCache;D:\Program Files\Intel\VTune\Analyzer\Bin;D:\Program Files\Intel\VTune\Shared\Bin;D:\WinAVR-20090313\bin;D:\WinAVR-20090313\utils\bin;D:\Windows\system32;D:\Windows;D:\Windows\System32\Wbem;D:\Windows\System32\WindowsPowerShell\v1.0\;d:\Program Files\Microsoft SQL Server\90\Tools\binn\;D:\Program Files\TortoiseSVN\bin;D:\Program Files\IVI Foundation\VISA\WinNT\Bin;D:\Program Files\IVI Foundation\VISA\WinNT\Bin\;D:\Program Files\jZip;D:\Program Files\Common Files\Compuware;D:\Program Files\Altium Designer Summer 09\System;D:\Program Files\IVI\bin;D:\Program Files\Intel\DMIX;C:\svn\bin;D:\CUDA\bin;D:\Program Files\Flash Magic;D:\Program Files\OpenOCD\0.4.0\bin;D:\Program Files\Windows Live\Shared;D:\Program Files\Diffuse;D:\Program Files\QuickTime\QTSystem\;D:\Program Files\ATI Technologies\ATI.ACE\Core-Static;d:\Program Files\Microsoft SQL Server\100\Tools\Binn\;d:\Program Files\Microsoft SQL Server\100\DTS\Binn\;D:\Program Files\Intel\OpenCL SDK\1.5\bin\x86;D:\Program Files\Microsoft Network Monitor 3\;D:\Program Files\Nmap"/>
         </row>
         <row stringID="row" value="1">
           <item stringID="variable" value="PATHEXT"/>
@@ -20,32 +20,32 @@
         </row>
         <row stringID="row" value="2">
           <item stringID="variable" value="XILINX"/>
-          <item stringID="value" value="d:\Xilinx\13.2\ISE_DS\ISE\"/>
+          <item stringID="value" value="C:\Xilinx\13.3\ISE_DS\ISE\"/>
         </row>
         <row stringID="row" value="3">
           <item stringID="variable" value="XILINX_DSP"/>
-          <item stringID="value" value="D:\Xilinx\13.2\ISE_DS\ISE"/>
+          <item stringID="value" value="C:\Xilinx\13.3\ISE_DS\ISE"/>
         </row>
         <row stringID="row" value="4">
           <item stringID="variable" value="XILINX_EDK"/>
-          <item stringID="value" value="D:\Xilinx\13.2\ISE_DS\EDK"/>
+          <item stringID="value" value="C:\Xilinx\13.3\ISE_DS\EDK"/>
         </row>
         <row stringID="row" value="5">
           <item stringID="variable" value="XILINX_PLANAHEAD"/>
-          <item stringID="value" value="D:\Xilinx\13.2\ISE_DS\PlanAhead"/>
+          <item stringID="value" value="C:\Xilinx\13.3\ISE_DS\PlanAhead"/>
         </row>
       </table>
       <item stringID="User_EnvOs" value="OS Information">
-        <item stringID="User_EnvOsname" value="Microsoft Windows 7 , 64-bit"/>
-        <item stringID="User_EnvOsrelease" value="major release  (build 7600)"/>
+        <item stringID="User_EnvOsname" value="Microsoft Windows 7 , 32-bit"/>
+        <item stringID="User_EnvOsrelease" value="Service Pack 1  (build 7601)"/>
       </item>
-      <item stringID="User_EnvHost" value="zombiemac"/>
+      <item stringID="User_EnvHost" value="zombie7"/>
       <table stringID="User_EnvCpu">
         <column stringID="arch"/>
         <column stringID="speed"/>
         <row stringID="row" value="0">
-          <item stringID="arch" value="Intel(R) Core(TM)2 Quad CPU    Q6600  @ 2.40GHz"/>
-          <item stringID="speed" value="2405 MHz"/>
+          <item stringID="arch" value="Intel(R) Core(TM)2 Quad CPU    Q9400  @ 2.66GHz"/>
+          <item stringID="speed" value="2666 MHz"/>
         </row>
       </table>
     </section>
@@ -61,7 +61,7 @@
       <section stringID="NGDBUILD_DESIGN_SUMMARY">
         <item dataType="int" stringID="NGDBUILD_NUM_ERRORS" value="0"/>
         <item dataType="int" stringID="NGDBUILD_FILTERED_WARNINGS" value="0"/>
-        <item dataType="int" stringID="NGDBUILD_NUM_WARNINGS" value="0"/>
+        <item dataType="int" stringID="NGDBUILD_NUM_WARNINGS" value="110"/>
         <item dataType="int" stringID="NGDBUILD_FILTERED_INFOS" value="0"/>
         <item dataType="int" stringID="NGDBUILD_NUM_INFOS" value="0"/>
       </section>

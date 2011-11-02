@@ -12,7 +12,7 @@
     <!-- Copyright (c) 1995-2011 Xilinx, Inc.  All rights reserved. -->
   </header>
 
-  <version xil_pn:ise_version="13.2" xil_pn:schema_version="2"/>
+  <version xil_pn:ise_version="13.3" xil_pn:schema_version="2"/>
 
   <files>
     <file xil_pn:name="RomEmulatorCtrl.v" xil_pn:type="FILE_VERILOG">
@@ -44,7 +44,6 @@
     <property xil_pn:name="Compile UNISIM (Functional) Simulation Library" xil_pn:value="true" xil_pn:valueState="default"/>
     <property xil_pn:name="Compile for HDL Debugging" xil_pn:value="true" xil_pn:valueState="default"/>
     <property xil_pn:name="Compile uni9000 (Functional) Simulation Library" xil_pn:value="true" xil_pn:valueState="default"/>
-    <property xil_pn:name="Compiled Library Directory" xil_pn:value="$XILINX/&lt;language>/&lt;simulator>" xil_pn:valueState="non-default"/>
     <property xil_pn:name="Create IEEE 1532 Configuration File" xil_pn:value="false" xil_pn:valueState="default"/>
     <property xil_pn:name="Create Programmable GND Pins on Unused I/O" xil_pn:value="false" xil_pn:valueState="default"/>
     <property xil_pn:name="Default Powerup Value of Registers" xil_pn:value="Low" xil_pn:valueState="default"/>
@@ -84,7 +83,7 @@
     <property xil_pn:name="Instantiation Template Target Language Xps" xil_pn:value="Verilog" xil_pn:valueState="default"/>
     <property xil_pn:name="Keep Hierarchy" xil_pn:value="No" xil_pn:valueState="default"/>
     <property xil_pn:name="Keep Hierarchy CPLD" xil_pn:value="Yes" xil_pn:valueState="default"/>
-    <property xil_pn:name="Language" xil_pn:value="Verilog" xil_pn:valueState="default"/>
+    <property xil_pn:name="Language" xil_pn:value="All" xil_pn:valueState="default"/>
     <property xil_pn:name="Last Applied Goal" xil_pn:value="Balanced" xil_pn:valueState="default"/>
     <property xil_pn:name="Last Applied Strategy" xil_pn:value="Xilinx Default (unlocked)" xil_pn:valueState="default"/>
     <property xil_pn:name="Last Unlock Status" xil_pn:value="false" xil_pn:valueState="default"/>
@@ -152,7 +151,7 @@
     <property xil_pn:name="Specify Top Level Instance Names Fit" xil_pn:value="Default" xil_pn:valueState="default"/>
     <property xil_pn:name="Speed Grade" xil_pn:value="-15" xil_pn:valueState="non-default"/>
     <property xil_pn:name="Synthesis Tool" xil_pn:value="XST (VHDL/Verilog)" xil_pn:valueState="default"/>
-    <property xil_pn:name="Target Simulator" xil_pn:value="Modelsim-PE Verilog" xil_pn:valueState="non-default"/>
+    <property xil_pn:name="Target Simulator" xil_pn:value="Modelsim-PE Mixed" xil_pn:valueState="non-default"/>
     <property xil_pn:name="Target UCF File Name" xil_pn:value="RomEmuCtrl.ucf" xil_pn:valueState="non-default"/>
     <property xil_pn:name="Timing Report Format" xil_pn:value="Summary" xil_pn:valueState="default"/>
     <property xil_pn:name="Top-Level Source Type" xil_pn:value="HDL" xil_pn:valueState="default"/>

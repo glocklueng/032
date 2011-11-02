@@ -1127,9 +1127,9 @@ EQ | 2 |
 
 MACROCELL | 2 | 15 | o_RAddr_8_OBUF
 ATTRIBUTES | 396034 | 0
-INPUTS | 3 | o_nReset.PIN  | i_TAddr<8>  | r_Addr<8>.LFBK
+INPUTS | 3 | i_TAddr<8>  | o_nReset.PIN  | r_Addr<8>.LFBK
 INPUTMC | 1 | 2 | 6
-INPUTP | 2 | 8 | 112
+INPUTP | 2 | 112 | 8
 EQ | 2 | 
    o_RAddr<8> = i_TAddr<8> & o_nReset.PIN
 	# r_Addr<8>.LFBK & !o_nReset.PIN;

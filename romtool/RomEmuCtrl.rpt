@@ -1,7 +1,7 @@
  
-cpldfit:  version O.61xd                            Xilinx Inc.
+cpldfit:  version O.76xd                            Xilinx Inc.
                                   Fitter Report
-Design Name: RomEmuCtrl                          Date: 10-31-2011,  9:04PM
+Design Name: RomEmuCtrl                          Date: 11- 1-2011,  2:47PM
 Device Used: XC95108-15-PC84
 Fitting Status: Successful
 
@@ -54,11 +54,6 @@ End of Mapped Resource Summary
 
 WARNING:Cpld - Unable to retrieve the path to the iSE Project Repository. Will
    use the default filename of 'RomEmuCtrl.ise'.
-INFO:Cpld - Inferring BUFG constraint for signal 'i_HClk' based upon the LOC
-   constraint 'P9'. It is recommended that you declare this BUFG explicitedly in
-   your design. Note that for certain device families the output of a BUFG
-   constraint can not drive a gated clock, and the BUFG constraint will be
-   ignored.
 *************************  Summary of Mapped Logic  ************************
 
 ** 36 Outputs **
