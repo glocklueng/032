@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='utf-8' ?>
-<!DOCTYPE document SYSTEM 'file:///C:/Xilinx/13.3/ISE_DS/ISE/chipviewer/data/xsl/buildXML.dtd'>
+<!DOCTYPE document SYSTEM 'file:///d:/Xilinx/13.2/ISE_DS/ISE/chipviewer/data/xsl/buildXML.dtd'>
 
 <document>
 <design name='RomEmuCtrl'/>
 <rptdir name='RomEmuCtrl'/>
-<xilinx path='C:/Xilinx/13.3/ISE_DS/ISE;'/>
-<projDir path='D:\032\032\romtool'/>
+<xilinx path='d:/Xilinx/13.2/ISE_DS/ISE;'/>
+<projDir path='E:\032\romtool'/>
 <xslDir path='chipviewer/data/xsl'/>
 <fileDir path='/chipviewer/data/html'/>
 <dataFile file='index.htm'/>
@@ -196,7 +196,7 @@
     <output file='fbs_FB6.htm'/>
   </xslFile>
 </xmlFile>
-<xmlFile file='C:/Xilinx/13.3/ISE_DS/ISE/chipviewer/data/xsl/pinlegend.xml'>
+<xmlFile file='d:/Xilinx/13.2/ISE_DS/ISE/chipviewer/data/xsl/pinlegend.xml'>
   <xslFile file='legend.xsl'>
     <param name='device' value='XC95108-15-PC84'/>
     <param name='verOn' value='0'/>
@@ -208,7 +208,7 @@
     <output file='pinlegendV.htm'/>
   </xslFile>
 </xmlFile>
-<xmlFile file='C:/Xilinx/13.3/ISE_DS/ISE/chipviewer/data/xsl/logiclegend.xml'>
+<xmlFile file='d:/Xilinx/13.2/ISE_DS/ISE/chipviewer/data/xsl/logiclegend.xml'>
   <xslFile file='legend.xsl'>
     <param name='device' value='XC95108-15-PC84'/>
     <param name='verOn' value='0'/>

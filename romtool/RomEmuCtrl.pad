@@ -1,7 +1,7 @@
-Release 8.1i - Fit O.76xd
+Release 8.1i - Fit O.61xd
 Copyright(c) 1995-2003 Xilinx Inc. All rights reserved
 
-11- 1-2011  2:47PM
+11- 1-2011 10:15PM
 
 NOTE: This file is designed to be imported into a spreadsheet program
 such as Microsoft Excel for viewing, printing and sorting. The pipe '|'
@@ -27,12 +27,12 @@ P6|i_HData<2>|I|I/O|INPUT|||||||||
 P7|i_HData<3>|I|I/O|INPUT|||||||||
 P8|GND||GND||||||||||
 P9|i_HClk|GCK|I/O/GCK1||||||||||
-P10|TIE||I/O/GCK2||||||||||
-P11|o_HData|I/O|I/O|BIDIR|||||||||
-P12|TIE||I/O/GCK3||||||||||
-P13|i_nTWE|I|I/O|INPUT|||||||||
-P14|i_nTOE|I|I/O|INPUT|||||||||
-P15|TIE||I/O||||||||||
+P10|o_HData|I/O|I/O/GCK2|BIDIR|||||||||
+P11|o_nROE|O|I/O|OUTPUT|||||||||
+P12|o_nRWE|O|I/O/GCK3|OUTPUT|||||||||
+P13|i_nTOE|I|I/O|INPUT|||||||||
+P14|i_nTWE|I|I/O|INPUT|||||||||
+P15|o_nReset|I/O|I/O|BIDIR|||||||||
 P16|GND||GND||||||||||
 P17|o_RAddr<0>|O|I/O|OUTPUT|||||||||
 P18|o_RAddr<1>|O|I/O|OUTPUT|||||||||
@@ -96,11 +96,11 @@ P75|io_TData<6>|I/O|I/O|BIDIR|||||||||
 P76|io_TData<7>|I/O|I/O/GTS1|BIDIR|||||||||
 P77|TIE||I/O/GTS2||||||||||
 P78|VCC||VCCINT||||||||||
-P79|o_nReset|I/O|I/O|BIDIR|||||||||
+P79|TIE||I/O||||||||||
 P80|TIE||I/O||||||||||
-P81|o_nROE|O|I/O|OUTPUT|||||||||
+P81|TIE||I/O||||||||||
 P82|TIE||I/O||||||||||
-P83|o_nRWE|O|I/O|OUTPUT|||||||||
+P83|TIE||I/O||||||||||
 P84|TIE||I/O||||||||||
 
 To preserve the pinout above for future design iterations in

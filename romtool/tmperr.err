@@ -1,4 +1,0 @@
-WARNING:Cpld:158 - We have detected that a large number of internal signals may
-   be switching at the same time. To avoid potential simultaneous
-   switching/ground bounce issues, please contact Xilinx customer support for
-   more information.
