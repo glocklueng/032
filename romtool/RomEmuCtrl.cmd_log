@@ -1,7 +1,0 @@
-xst -intstyle ise -ifn "D:/032/032/romtool/RomEmuCtrl.xst" -ofn "D:/032/032/romtool/RomEmuCtrl.syr" 
-ngdbuild -intstyle ise -dd _ngo -uc RomEmuCtrl.ucf -p xc95108-PC84-15 RomEmuCtrl.ngc RomEmuCtrl.ngd  
-cpldfit -intstyle ise -p xc95108-15-PC84 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 36 -pterms 25 -power std -localfbk -pinfbk RomEmuCtrl.ngd 
-XSLTProcess RomEmuCtrl_build.xml 
-tsim -intstyle ise RomEmuCtrl RomEmuCtrl.nga 
-taengine -intstyle ise -f RomEmuCtrl -w --format html1 -l RomEmuCtrl_html/tim/timing_report.htm 
-hprep6 -s IEEE1149 -n RomEmuCtrl -i RomEmuCtrl 
