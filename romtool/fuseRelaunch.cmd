@@ -1,1 +1,1 @@
--intstyle "ise" -incremental -lib "uni9000_ver" -lib "aim_ver" -lib "cpld_ver" -lib "xilinxcorelib_ver" -o "E:/032/romtool/RomEmuCtrl_isim_beh.exe" -prj "E:/032/romtool/RomEmuCtrl_beh.prj" "work.RomEmuCtrl" "work.glbl" 
+-intstyle "ise" -incremental -lib "uni9000_ver" -lib "aim_ver" -lib "cpld_ver" -lib "xilinxcorelib_ver" -o "D:/032/032/romtool/RomEmuCtrl_isim_beh.exe" -prj "D:/032/032/romtool/RomEmuCtrl_beh.prj" "work.RomEmuCtrl" "work.glbl" 

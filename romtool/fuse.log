@@ -1,17 +1,18 @@
-Running: d:\Xilinx\13.2\ISE_DS\ISE\bin\nt64\unwrapped\fuse.exe -intstyle ise -incremental -lib uni9000_ver -lib aim_ver -lib cpld_ver -lib xilinxcorelib_ver -o E:/032/romtool/RomEmuCtrl_isim_beh.exe -prj E:/032/romtool/RomEmuCtrl_beh.prj work.RomEmuCtrl work.glbl 
-ISim O.61xd (signature 0x1cce1bb2)
+Running: C:\Xilinx\13.3\ISE_DS\ISE\bin\nt\unwrapped\fuse.exe -intstyle ise -incremental -lib uni9000_ver -lib aim_ver -lib cpld_ver -lib xilinxcorelib_ver -o D:/032/032/romtool/RomEmuCtrl_isim_beh.exe -prj D:/032/032/romtool/RomEmuCtrl_beh.prj work.RomEmuCtrl work.glbl 
+ISim O.76xd (signature 0x2f00eba5)
 Number of CPUs detected in this system: 4
 Turning on mult-threading, number of parallel sub-compilation jobs: 8 
 Determining compilation order of HDL files
-Analyzing Verilog file \"E:/032/romtool/RomEmulatorCtrl.v\" into library work
-Analyzing Verilog file \"d:/Xilinx/13.2/ISE_DS/ISE//verilog/src/glbl.v\" into library work
+Analyzing Verilog file "D:/032/032/romtool/RomEmulatorCtrl.v" into library work
+Analyzing Verilog file "C:/Xilinx/13.3/ISE_DS/ISE//verilog/src/glbl.v" into library work
 Starting static elaboration
 Completed static elaboration
+Fuse Memory Usage: 103920 KB
+Fuse CPU Usage: 233 ms
 Compiling module RomEmuCtrl
 Compiling module glbl
 Time Resolution for simulation is 1ps.
-Waiting for 1 sub-compilation(s) to finish...
 Compiled 2 Verilog Units
-Built simulation executable E:/032/romtool/RomEmuCtrl_isim_beh.exe
-Fuse Memory Usage: 17032 KB
-Fuse CPU Usage: 139 ms
+Built simulation executable D:/032/032/romtool/RomEmuCtrl_isim_beh.exe
+Fuse Memory Usage: 108512 KB
+Fuse CPU Usage: 264 ms
