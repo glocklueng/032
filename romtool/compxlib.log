@@ -1,20 +1,20 @@
     ____  ____
    /   /\/   /
   /___/  \  /    VENDOR      : Xilinx Inc.
-  \   \   \/     VERSION     : 13.2 (O.61xd)
-   \   \         APPLICATION : d:\Xilinx\13.2\ISE_DS\ISE\bin\nt64\unwrapped\compxlib.exe
+  \   \   \/     VERSION     : 13.3 (O.76xd)
+   \   \         APPLICATION : C:\Xilinx\13.3\ISE_DS\ISE\bin\nt\unwrapped\compxlib.exe
    /   /         CONTENTS    : Compilation Log
   /___/   /\     FILENAME    : compxlib.log
   \   \  /  \    
    \___\/\___\
 
-Release 13.2 - d:\Xilinx\13.2\ISE_DS\ISE\bin\nt64\unwrapped\compxlib.exe 13.2 (nt64)
+Release 13.3 - C:\Xilinx\13.3\ISE_DS\ISE\bin\nt\unwrapped\compxlib.exe 13.3 (nt)
 Copyright (c) 1995-2011 Xilinx, Inc.  All rights reserved.
 
 Processing command line ...
 Reading the compxlib configuration file - 'compxlib.cfg' ...
-Library Source Paths => 'd:/Xilinx/13.2/ISE_DS/ISE'
-Current Working Directory => 'E:\032\romtool'
+Library Source Paths => 'C:/Xilinx/13.3/ISE_DS/ISE'
+Current Working Directory => 'D:\032\032\romtool'
 Compilation Mode = FAST
 Execute Mode = ON
 Scheduling library installation & compilation for architectures: acr2 xa9500xl xbr xc9500 xc9500xl xpla3
@@ -23,50 +23,784 @@ Scheduling library installation & compilation for libraries: uni9000 coolrunner
 
 Signature:-
 ------------------------------------------------------------------------------
-d:\Xilinx\13.2\ISE_DS\ISE\bin\nt64\unwrapped\compxlib.exe -s mti_se -l all -p C:/Modeltech_pe_edu_10.0c/win32pe_edu -arch cpld -lib unisim -lib simprim -lib uni9000 -lib coolrunner -intstyle ise 
+C:\Xilinx\13.3\ISE_DS\ISE\bin\nt\unwrapped\compxlib.exe -s mti_pe -l all -arch cpld -lib unisim -lib simprim -lib uni9000 -lib coolrunner -intstyle ise 
 ------------------------------------------------------------------------------
-ERROR:Compxlib - COMPXLIB[sim]: Unable to automatically find executables for simulator 'mti_se' from the following paths:
-    C:/Modeltech_pe_edu_10.0c/win32pe_edu
-   d:\Xilinx\13.2\ISE_DS\ISE\\lib\nt64
-   d:\Xilinx\13.2\ISE_DS\ISE\\bin\nt64
-   d:\Xilinx\13.2\ISE_DS\PlanAhead\bin
-   d:\Xilinx\13.2\ISE_DS\ISE\bin\nt64
-   d:\Xilinx\13.2\ISE_DS\ISE\lib\nt64
-   d:\Xilinx\13.2\ISE_DS\EDK\bin\nt64
-   d:\Xilinx\13.2\ISE_DS\EDK\lib\nt64
-   d:\Xilinx\13.2\ISE_DS\EDK\gnu\microblaze\nt64\bin
-   d:\Xilinx\13.2\ISE_DS\EDK\gnu\powerpc-eabi\nt64\bin
-   d:\Xilinx\13.2\ISE_DS\EDK\gnuwin\bin
-   d:\Xilinx\13.2\ISE_DS\common\bin\nt64
-   d:\Xilinx\13.2\ISE_DS\common\lib\nt64
-   C:\Program Files\Common Files\Microsoft Shared\Windows Live
-   C:\Program Files (x86)\Common Files\Microsoft Shared\Windows Live
-   C:\Program Files (x86)\AMD APP\bin\x86_64
-   C:\Program Files (x86)\AMD APP\bin\x86
-   C:\Users\charlie\Documents\AMD APP\bin\x86_64
-   C:\Users\charlie\Documents\AMD APP\bin\x86
-   C:\WinAVR-20100110\bin
-   C:\WinAVR-20100110\utils\bin
-   C:\Windows\system32
-   C:\Windows
-   C:\Windows\System32\Wbem
-   C:\Windows\System32\WindowsPowerShell\v1.0\
-   C:\Program Files\TortoiseSVN\bin
-   C:\Program Files (x86)\Altium Designer Summer 09\System
-   C:\Program Files (x86)\Windows Live\Shared
-   C:\Program Files (x86)\ATI Technologies\ATI.ACE\Core-Static
-   C:\Program Files\Microsoft Windows Performance Toolkit\
-   C:\Program Files (x86)\QuickTime\QTSystem\
-   C:\Program Files (x86)\GTK2-Runtime\bin
-   D:\Program Files\ATI Technologies\ATI.ACE\Core-Static
-   d:\doxygen\bin
-   C:\Program Files (x86)\IVI\bin
-   C:\Program Files (x86)\IVI Foundation\VISA\WinNT\Bin
-   C:\PROGRA~2\IVIFOU~1\VISA\WinNT\Bin
-   C:\Program Files (x86)\TortoiseSVN\bin
-   C:\Program Files (x86)\AMD APP\tools\AMD APP KernelAnalyzer 1.9\
-   C:\Program Files (x86)\ATMEL Corporation\SAM-BA v2.10
-   C:\Program Files (x86)\Nmap
-   d:\altera\11.0\modelsim_ase\win32aloem
-   C:\Modeltech_pe_edu_10.0c\win32pe_edu.
-Simulator 'mti_se' is ignored.
+
+Setting up the simulator 'mti_pe' for compilation ...
+The executable path is set to 'C:\modeltech_pe_10.0b\win32pe' ...
+Setting up the source libraries for simulator 'mti_pe' ...
+
+
+
+Compiling Xilinx HDL Libraries for 'mti_pe' simulator
+Model Technology ModelSim PE vlog 10.0b Compiler 2011.05 May  5 2011
+Language => 'vhdl,verilog'
+The modelsim.ini file not found, create it.
+Output directory => 'C:\Xilinx\13.3\ISE_DS\ISE'
+
+WARNING:Compxlib:312 - Output directory 'C:\Xilinx\13.3\ISE_DS\ISE\verilog\mti_pe\10.0b\nt' does not exist, it will be created.
+Directory 'C:\Xilinx\13.3\ISE_DS\ISE\verilog\mti_pe\10.0b\nt' is created.
+
+Library verilog.uni9000 will be compiled, because no precompiled info.
+--> Compiling verilog.uni9000 library ...
+    > verilog.uni9000 library compiled from C:/Xilinx/13.3/ISE_DS/ISE/verilog/src/uni9000
+    > verilog.uni9000 library compiled to C:\Xilinx\13.3\ISE_DS\ISE\verilog\mti_pe\10.0b\nt/uni9000_ver
+==============================================================================
+BEGIN_COMPILATION_MESSAGES(mti_pe:verilog:uni9000)
+Modifying modelsim.ini
+
+Model Technology ModelSim PE vlog 10.0b Compiler 2011.05 May  5 2011
+-- Compiling module AND2
+-- Compiling module AND2B1
+-- Compiling module AND2B2
+-- Compiling module AND3
+-- Compiling module AND3B1
+-- Compiling module AND3B2
+-- Compiling module AND3B3
+-- Compiling module AND4
+-- Compiling module AND4B1
+-- Compiling module AND4B2
+-- Compiling module AND4B3
+-- Compiling module AND4B4
+-- Compiling module AND5
+-- Compiling module AND5B1
+-- Compiling module AND5B2
+-- Compiling module AND5B3
+-- Compiling module AND5B4
+-- Compiling module AND5B5
+-- Compiling module AND6
+-- Compiling module AND7
+-- Compiling module AND8
+-- Compiling module BUF
+-- Compiling module BUFE
+-- Compiling module BUFFOE
+-- Compiling module BUFG
+-- Compiling module BUFGSR
+-- Compiling module BUFGTS
+-- Compiling module BUFT
+-- Compiling module CLK_DIV10
+-- Compiling module CLK_DIV10R
+-- Compiling module CLK_DIV10RSD
+-- Compiling module CLK_DIV10SD
+-- Compiling module CLK_DIV12
+-- Compiling module CLK_DIV12R
+-- Compiling module CLK_DIV12RSD
+-- Compiling module CLK_DIV12SD
+-- Compiling module CLK_DIV14
+-- Compiling module CLK_DIV14R
+-- Compiling module CLK_DIV14RSD
+-- Compiling module CLK_DIV14SD
+-- Compiling module CLK_DIV16
+-- Compiling module CLK_DIV16R
+-- Compiling module CLK_DIV16RSD
+-- Compiling module CLK_DIV16SD
+-- Compiling module CLK_DIV2
+-- Compiling module CLK_DIV2R
+-- Compiling module CLK_DIV2RSD
+-- Compiling module CLK_DIV2SD
+-- Compiling module CLK_DIV4
+-- Compiling module CLK_DIV4R
+-- Compiling module CLK_DIV4RSD
+-- Compiling module CLK_DIV4SD
+-- Compiling module CLK_DIV6
+-- Compiling module CLK_DIV6R
+-- Compiling module CLK_DIV6RSD
+-- Compiling module CLK_DIV6SD
+-- Compiling module CLK_DIV8
+-- Compiling module CLK_DIV8R
+-- Compiling module CLK_DIV8RSD
+-- Compiling module CLK_DIV8SD
+-- Compiling module CONFIG
+-- Compiling module FDCE
+-- Compiling module FDCP
+-- Compiling module FDCPE
+-- Compiling module FDD
+-- Compiling module FDDC
+-- Compiling module FDDCE
+-- Compiling module FDDCP
+-- Compiling module FDDCPE
+-- Compiling module FDDP
+-- Compiling module FDDPE
+-- Compiling module FDPE
+-- Compiling module FTC
+-- Compiling module FTCP
+-- Compiling module FTP
+-- Compiling module GND
+-- Compiling module IBUF
+-- Compiling module ILD
+-- Compiling module INV
+-- Compiling module IOBUFE
+-- Compiling module KEEP
+-- Compiling module KEEPER
+-- Compiling module LD
+-- Compiling module LDCP
+-- Compiling module LDG
+-- Compiling module MERGE
+-- Compiling module MIN_OFF
+-- Compiling module NAND2
+-- Compiling module NAND2B1
+-- Compiling module NAND2B2
+-- Compiling module NAND3
+-- Compiling module NAND3B1
+-- Compiling module NAND3B2
+-- Compiling module NAND3B3
+-- Compiling module NAND4
+-- Compiling module NAND4B1
+-- Compiling module NAND4B2
+-- Compiling module NAND4B3
+-- Compiling module NAND4B4
+-- Compiling module NAND5
+-- Compiling module NAND5B1
+-- Compiling module NAND5B2
+-- Compiling module NAND5B3
+-- Compiling module NAND5B4
+-- Compiling module NAND5B5
+-- Compiling module NOR2
+-- Compiling module NOR2B1
+-- Compiling module NOR2B2
+-- Compiling module NOR3
+-- Compiling module NOR3B1
+-- Compiling module NOR3B2
+-- Compiling module NOR3B3
+-- Compiling module NOR4
+-- Compiling module NOR4B1
+-- Compiling module NOR4B2
+-- Compiling module NOR4B3
+-- Compiling module NOR4B4
+-- Compiling module NOR5
+-- Compiling module NOR5B1
+-- Compiling module NOR5B2
+-- Compiling module NOR5B3
+-- Compiling module NOR5B4
+-- Compiling module NOR5B5
+-- Compiling module OBUF
+-- Compiling module OBUFE
+-- Compiling module OBUFT
+-- Compiling module OPT_OFF
+-- Compiling module OPT_UIM
+-- Compiling module OR2
+-- Compiling module OR2B1
+-- Compiling module OR2B2
+-- Compiling module OR3
+-- Compiling module OR3B1
+-- Compiling module OR3B2
+-- Compiling module OR3B3
+-- Compiling module OR4
+-- Compiling module OR4B1
+-- Compiling module OR4B2
+-- Compiling module OR4B3
+-- Compiling module OR4B4
+-- Compiling module OR5
+-- Compiling module OR5B1
+-- Compiling module OR5B2
+-- Compiling module OR5B3
+-- Compiling module OR5B4
+-- Compiling module OR5B5
+-- Compiling module OR6
+-- Compiling module OR7
+-- Compiling module OR8
+-- Compiling module PULLUP
+-- Compiling module TBLOCK
+-- Compiling module TIMEGRP
+-- Compiling module TIMESPEC
+-- Compiling module VCC
+-- Compiling module WIREAND
+-- Compiling module XNOR2
+-- Compiling module XNOR3
+-- Compiling module XNOR4
+-- Compiling module XOR2
+-- Compiling module XOR3
+-- Compiling module XOR4
+-- Compiling module XOR5
+
+Top level modules:
+	AND2
+	AND2B1
+	AND2B2
+	AND3
+	AND3B1
+	AND3B2
+	AND3B3
+	AND4
+	AND4B1
+	AND4B2
+	AND4B3
+	AND4B4
+	AND5
+	AND5B1
+	AND5B2
+	AND5B3
+	AND5B4
+	AND5B5
+	AND6
+	AND7
+	AND8
+	BUF
+	BUFE
+	BUFFOE
+	BUFG
+	BUFGSR
+	BUFGTS
+	BUFT
+	CLK_DIV10
+	CLK_DIV10R
+	CLK_DIV10RSD
+	CLK_DIV10SD
+	CLK_DIV12
+	CLK_DIV12R
+	CLK_DIV12RSD
+	CLK_DIV12SD
+	CLK_DIV14
+	CLK_DIV14R
+	CLK_DIV14RSD
+	CLK_DIV14SD
+	CLK_DIV16
+	CLK_DIV16R
+	CLK_DIV16RSD
+	CLK_DIV16SD
+	CLK_DIV2
+	CLK_DIV2R
+	CLK_DIV2RSD
+	CLK_DIV2SD
+	CLK_DIV4
+	CLK_DIV4R
+	CLK_DIV4RSD
+	CLK_DIV4SD
+	CLK_DIV6
+	CLK_DIV6R
+	CLK_DIV6RSD
+	CLK_DIV6SD
+	CLK_DIV8
+	CLK_DIV8R
+	CLK_DIV8RSD
+	CLK_DIV8SD
+	CONFIG
+	FDCE
+	FDCP
+	FDCPE
+	FDD
+	FDDC
+	FDDCE
+	FDDCP
+	FDDCPE
+	FDDP
+	FDDPE
+	FDPE
+	FTC
+	FTCP
+	FTP
+	GND
+	IBUF
+	ILD
+	INV
+	IOBUFE
+	KEEP
+	KEEPER
+	LD
+	LDCP
+	LDG
+	MERGE
+	MIN_OFF
+	NAND2
+	NAND2B1
+	NAND2B2
+	NAND3
+	NAND3B1
+	NAND3B2
+	NAND3B3
+	NAND4
+	NAND4B1
+	NAND4B2
+	NAND4B3
+	NAND4B4
+	NAND5
+	NAND5B1
+	NAND5B2
+	NAND5B3
+	NAND5B4
+	NAND5B5
+	NOR2
+	NOR2B1
+	NOR2B2
+	NOR3
+	NOR3B1
+	NOR3B2
+	NOR3B3
+	NOR4
+	NOR4B1
+	NOR4B2
+	NOR4B3
+	NOR4B4
+	NOR5
+	NOR5B1
+	NOR5B2
+	NOR5B3
+	NOR5B4
+	NOR5B5
+	OBUF
+	OBUFE
+	OBUFT
+	OPT_OFF
+	OPT_UIM
+	OR2
+	OR2B1
+	OR2B2
+	OR3
+	OR3B1
+	OR3B2
+	OR3B3
+	OR4
+	OR4B1
+	OR4B2
+	OR4B3
+	OR4B4
+	OR5
+	OR5B1
+	OR5B2
+	OR5B3
+	OR5B4
+	OR5B5
+	OR6
+	OR7
+	OR8
+	PULLUP
+	TBLOCK
+	TIMEGRP
+	TIMESPEC
+	VCC
+	WIREAND
+	XNOR2
+	XNOR3
+	XNOR4
+	XOR2
+	XOR3
+	XOR4
+	XOR5
+
+
+END_COMPILATION_MESSAGES(mti_pe:verilog:uni9000)
+==============================================================================
+    > Log file 'C:\Xilinx\13.3\ISE_DS\ISE\verilog\mti_pe\10.0b\nt/uni9000_ver/.cxl.verilog.uni9000.uni9000_ver.nt.log' generated
+compxlib[verilog.uni9000]: 0 error(s), 0 warning(s), 33.33 % complete
+
+
+WARNING:Compxlib:312 - Output directory 'C:\Xilinx\13.3\ISE_DS\ISE\vhdl\mti_pe\10.0b\nt' does not exist, it will be created.
+Directory 'C:\Xilinx\13.3\ISE_DS\ISE\vhdl\mti_pe\10.0b\nt' is created.
+
+Library vhdl.coolrunner will be compiled, because no precompiled info.
+--> Compiling vhdl.coolrunner library ...
+    > vhdl.coolrunner library compiled from C:/Xilinx/13.3/ISE_DS/ISE/vhdl/src/iSE/cpld
+    > vhdl.coolrunner library compiled to C:\Xilinx\13.3\ISE_DS\ISE\vhdl\mti_pe\10.0b\nt/cpld
+==============================================================================
+BEGIN_COMPILATION_MESSAGES(mti_pe:vhdl:coolrunner)
+Modifying modelsim.ini
+
+Model Technology ModelSim PE vcom 10.0b Compiler 2011.05 May  5 2011
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling package CPLD_DET_COMPONENTS
+-- Loading package std_logic_arith
+-- Loading package STD_LOGIC_UNSIGNED
+-- Compiling entity CBD16CE
+-- Compiling architecture Behavioral of CBD16CE
+-- Compiling entity CBD16CLE
+-- Compiling architecture Behavioral of CBD16CLE
+-- Compiling entity CBD16CLED
+-- Compiling architecture Behavioral of CBD16CLED
+-- Compiling entity CBD16RE
+-- Compiling architecture Behavioral of CBD16RE
+-- Compiling entity CBD16RLE
+-- Compiling architecture Behavioral of CBD16RLE
+-- Compiling entity CBD16X1
+-- Compiling architecture Behavioral of CBD16X1
+-- Compiling entity CBD16X2
+-- Compiling architecture Behavioral of CBD16X2
+-- Compiling entity CBD2CE
+-- Compiling architecture Behavioral of CBD2CE
+-- Compiling entity CBD2CLE
+-- Compiling architecture Behavioral of CBD2CLE
+-- Compiling entity CBD2CLED
+-- Compiling architecture Behavioral of CBD2CLED
+-- Compiling entity CBD2RE
+-- Compiling architecture Behavioral of CBD2RE
+-- Compiling entity CBD2RLE
+-- Compiling architecture Behavioral of CBD2RLE
+-- Compiling entity CBD2X1
+-- Compiling architecture Behavioral of CBD2X1
+-- Compiling entity CBD2X2
+-- Compiling architecture Behavioral of CBD2X2
+-- Compiling entity CBD4CE
+-- Compiling architecture Behavioral of CBD4CE
+-- Compiling entity CBD4CLE
+-- Compiling architecture Behavioral of CBD4CLE
+-- Compiling entity CBD4CLED
+-- Compiling architecture Behavioral of CBD4CLED
+-- Compiling entity CBD4RE
+-- Compiling architecture Behavioral of CBD4RE
+-- Compiling entity CBD4RLE
+-- Compiling architecture Behavioral of CBD4RLE
+-- Compiling entity CBD4X1
+-- Compiling architecture Behavioral of CBD4X1
+-- Compiling entity CBD4X2
+-- Compiling architecture Behavioral of CBD4X2
+-- Compiling entity CBD8CE
+-- Compiling architecture Behavioral of CBD8CE
+-- Compiling entity CBD8CLE
+-- Compiling architecture Behavioral of CBD8CLE
+-- Compiling entity CBD8CLED
+-- Compiling architecture Behavioral of CBD8CLED
+-- Compiling entity CBD8RE
+-- Compiling architecture Behavioral of CBD8RE
+-- Compiling entity CBD8RLE
+-- Compiling architecture Behavioral of CBD8RLE
+-- Compiling entity CBD8X1
+-- Compiling architecture Behavioral of CBD8X1
+-- Compiling entity CBD8X2
+-- Compiling architecture Behavioral of CBD8X2
+-- Compiling entity CDD4CE
+-- Compiling architecture Behavioral of CDD4CE
+-- Compiling entity CDD4CLE
+-- Compiling architecture Behavioral of CDD4CLE
+-- Compiling entity CDD4RE
+-- Compiling architecture Behavioral of CDD4RE
+-- Compiling entity CDD4RLE
+-- Compiling architecture Behavioral of CDD4RLE
+-- Compiling entity CJD4CE
+-- Compiling architecture Behavioral of CJD4CE
+-- Compiling entity CJD4RE
+-- Compiling architecture Behavioral of CJD4RE
+-- Compiling entity CJD5CE
+-- Compiling architecture Behavioral of CJD5CE
+-- Compiling entity CJD5RE
+-- Compiling architecture Behavioral of CJD5RE
+-- Compiling entity CJD8CE
+-- Compiling architecture Behavioral of CJD8CE
+-- Compiling entity CJD8RE
+-- Compiling architecture Behavioral of CJD8RE
+-- Compiling entity FDD
+-- Compiling architecture Behavioral of FDD
+-- Compiling entity FDD16
+-- Compiling architecture Behavioral of FDD16
+-- Compiling entity FDD16CE
+-- Compiling architecture Behavioral of FDD16CE
+-- Compiling entity FDD16RE
+-- Compiling architecture Behavioral of FDD16RE
+-- Compiling entity FDD4
+-- Compiling architecture Behavioral of FDD4
+-- Compiling entity FDD4CE
+-- Compiling architecture Behavioral of FDD4CE
+-- Compiling entity FDD4RE
+-- Compiling architecture Behavioral of FDD4RE
+-- Compiling entity FDD8
+-- Compiling architecture Behavioral of FDD8
+-- Compiling entity FDD8CE
+-- Compiling architecture Behavioral of FDD8CE
+-- Compiling entity FDD8RE
+-- Compiling architecture Behavioral of FDD8RE
+-- Compiling entity FDDC
+-- Compiling architecture Behavioral of FDDC
+-- Compiling entity FDDCE
+-- Compiling architecture Behavioral of FDDCE
+-- Compiling entity FDDCP
+-- Compiling architecture Behavioral of FDDCP
+-- Compiling entity FDDCPE
+-- Compiling architecture Behavioral of FDDCPE
+-- Compiling entity FDDP
+-- Compiling architecture Behavioral of FDDP
+-- Compiling entity FDDPE
+-- Compiling architecture Behavioral of FDDPE
+-- Compiling entity FDDR
+-- Compiling architecture Behavioral of FDDR
+-- Compiling entity FDDRE
+-- Compiling architecture Behavioral of FDDRE
+-- Compiling entity FDDRS
+-- Compiling architecture Behavioral of FDDRS
+-- Compiling entity FDDRSE
+-- Compiling architecture Behavioral of FDDRSE
+-- Compiling entity FDDSE
+-- Compiling architecture Behavioral of FDDSE
+-- Compiling entity FDDSR
+-- Compiling architecture Behavioral of FDDSR
+-- Compiling entity FDDSRE
+-- Compiling architecture Behavioral of FDDSRE
+-- Compiling entity FTDCE
+-- Compiling architecture Behavioral of FTDCE
+-- Compiling entity FTDCLE
+-- Compiling architecture Behavioral of FTDCLE
+-- Compiling entity FTDCLEX
+-- Compiling architecture Behavioral of FTDCLEX
+-- Compiling entity FTDCP
+-- Compiling architecture Behavioral of FTDCP
+-- Compiling entity FTDCPE
+-- Compiling architecture Behavioral of FTDCPE
+-- Compiling entity FTDRSE
+-- Compiling architecture Behavioral of FTDRSE
+-- Compiling entity FTDRSLE
+-- Compiling architecture Behavioral of FTDRSLE
+-- Compiling entity SRD16CE
+-- Compiling architecture Behavioral of SRD16CE
+-- Compiling entity SRD16CLE
+-- Compiling architecture Behavioral of SRD16CLE
+-- Compiling entity SRD16CLED
+-- Compiling architecture Behavioral of SRD16CLED
+-- Compiling entity SRD16RE
+-- Compiling architecture Behavioral of SRD16RE
+-- Compiling entity SRD16RLE
+-- Compiling architecture Behavioral of SRD16RLE
+-- Compiling entity SRD16RLED
+-- Compiling architecture Behavioral of SRD16RLED
+-- Compiling entity SRD4CE
+-- Compiling architecture Behavioral of SRD4CE
+-- Compiling entity SRD4CLE
+-- Compiling architecture Behavioral of SRD4CLE
+-- Compiling entity SRD4CLED
+-- Compiling architecture Behavioral of SRD4CLED
+-- Compiling entity SRD4RE
+-- Compiling architecture Behavioral of SRD4RE
+-- Compiling entity SRD4RLE
+-- Compiling architecture Behavioral of SRD4RLE
+-- Compiling entity SRD4RLED
+-- Compiling architecture Behavioral of SRD4RLED
+-- Compiling entity SRD8CE
+-- Compiling architecture Behavioral of SRD8CE
+-- Compiling entity SRD8CLE
+-- Compiling architecture Behavioral of SRD8CLE
+-- Compiling entity SRD8CLED
+-- Compiling architecture Behavioral of SRD8CLED
+-- Compiling entity SRD8RE
+-- Compiling architecture Behavioral of SRD8RE
+-- Compiling entity SRD8RLE
+-- Compiling architecture Behavioral of SRD8RLE
+-- Compiling entity SRD8RLED
+-- Compiling architecture Behavioral of SRD8RLED
+
+
+END_COMPILATION_MESSAGES(mti_pe:vhdl:coolrunner)
+==============================================================================
+    > Log file 'C:\Xilinx\13.3\ISE_DS\ISE\vhdl\mti_pe\10.0b\nt/cpld/.cxl.vhdl.coolrunner.cpld.nt.log' generated
+compxlib[vhdl.coolrunner]: 0 error(s), 0 warning(s), 66.67 % complete
+
+
+
+Library verilog.coolrunner will be compiled, because no precompiled info.
+--> Compiling verilog.coolrunner library ...
+    > verilog.coolrunner library compiled from C:/Xilinx/13.3/ISE_DS/ISE/verilog/src/iSE/cpld
+    > verilog.coolrunner library compiled to C:\Xilinx\13.3\ISE_DS\ISE\verilog\mti_pe\10.0b\nt/cpld_ver
+==============================================================================
+BEGIN_COMPILATION_MESSAGES(mti_pe:verilog:coolrunner)
+Modifying modelsim.ini
+
+Model Technology ModelSim PE vlog 10.0b Compiler 2011.05 May  5 2011
+-- Compiling module CBD16CE
+-- Compiling module CBD16CLE
+-- Compiling module CBD16CLED
+-- Compiling module CBD16RE
+-- Compiling module CBD16RLE
+-- Compiling module CBD16X1
+-- Compiling module CBD16X2
+-- Compiling module CBD2CE
+-- Compiling module CBD2CLE
+-- Compiling module CBD2CLED
+-- Compiling module CBD2RE
+-- Compiling module CBD2RLE
+-- Compiling module CBD2X1
+-- Compiling module CBD2X2
+-- Compiling module CBD4CE
+-- Compiling module CBD4CLE
+-- Compiling module CBD4CLED
+-- Compiling module CBD4RE
+-- Compiling module CBD4RLE
+-- Compiling module CBD4X1
+-- Compiling module CBD4X2
+-- Compiling module CBD8CE
+-- Compiling module CBD8CLE
+-- Compiling module CBD8CLED
+-- Compiling module CBD8RE
+-- Compiling module CBD8RLE
+-- Compiling module CBD8X1
+-- Compiling module CBD8X2
+-- Compiling module CDD4CE
+-- Compiling module CDD4CLE
+-- Compiling module CDD4RE
+-- Compiling module CDD4RLE
+-- Compiling module CJD4CE
+-- Compiling module CJD4RE
+-- Compiling module CJD5CE
+-- Compiling module CJD5RE
+-- Compiling module CJD8CE
+-- Compiling module CJD8RE
+-- Compiling module FDD
+-- Compiling module FDD16
+-- Compiling module FDD16CE
+-- Compiling module FDD16RE
+-- Compiling module FDD4
+-- Compiling module FDD4CE
+-- Compiling module FDD4RE
+-- Compiling module FDD8
+-- Compiling module FDD8CE
+-- Compiling module FDD8RE
+-- Compiling module FDDC
+-- Compiling module FDDCE
+-- Compiling module FDDCP
+-- Compiling module FDDCPE
+-- Compiling module FDDP
+-- Compiling module FDDPE
+-- Compiling module FDDR
+-- Compiling module FDDRE
+-- Compiling module FDDRS
+-- Compiling module FDDRSE
+-- Compiling module FDDS
+-- Compiling module FDDSE
+-- Compiling module FDDSR
+-- Compiling module FDDSRE
+-- Compiling module FTDC
+-- Compiling module FTDCE
+-- Compiling module FTDCLE
+-- Compiling module FTDCLEX
+-- Compiling module FTDCP
+-- Compiling module FTDCPE
+-- Compiling module FTDCPLE
+-- Compiling module FTDPE
+-- Compiling module FTDPLE
+-- Compiling module FTDRSE
+-- Compiling module FTDRSLE
+-- Compiling module FTDSRE
+-- Compiling module FTDSRLE
+-- Compiling module SRD16CE
+-- Compiling module SRD16CLE
+-- Compiling module SRD16CLED
+-- Compiling module SRD16RE
+-- Compiling module SRD16RLE
+-- Compiling module SRD16RLED
+-- Compiling module SRD4CE
+-- Compiling module SRD4CLE
+-- Compiling module SRD4CLED
+-- Compiling module SRD4RE
+-- Compiling module SRD4RLE
+-- Compiling module SRD4RLED
+-- Compiling module SRD8CE
+-- Compiling module SRD8CLE
+-- Compiling module SRD8CLED
+-- Compiling module SRD8RE
+-- Compiling module SRD8RLE
+-- Compiling module SRD8RLED
+
+Top level modules:
+	CBD16CE
+	CBD16CLE
+	CBD16CLED
+	CBD16RE
+	CBD16RLE
+	CBD16X1
+	CBD16X2
+	CBD2CE
+	CBD2CLE
+	CBD2CLED
+	CBD2RE
+	CBD2RLE
+	CBD2X1
+	CBD2X2
+	CBD4CE
+	CBD4CLE
+	CBD4CLED
+	CBD4RE
+	CBD4RLE
+	CBD4X1
+	CBD4X2
+	CBD8CE
+	CBD8CLE
+	CBD8CLED
+	CBD8RE
+	CBD8RLE
+	CBD8X1
+	CBD8X2
+	CDD4CE
+	CDD4CLE
+	CDD4RE
+	CDD4RLE
+	CJD4CE
+	CJD4RE
+	CJD5CE
+	CJD5RE
+	CJD8CE
+	CJD8RE
+	FDD
+	FDD16
+	FDD16CE
+	FDD16RE
+	FDD4
+	FDD4CE
+	FDD4RE
+	FDD8
+	FDD8CE
+	FDD8RE
+	FDDC
+	FDDCE
+	FDDCP
+	FDDCPE
+	FDDP
+	FDDPE
+	FDDR
+	FDDRE
+	FDDRS
+	FDDRSE
+	FDDS
+	FDDSE
+	FDDSR
+	FDDSRE
+	FTDC
+	FTDCE
+	FTDCLE
+	FTDCLEX
+	FTDCP
+	FTDCPE
+	FTDCPLE
+	FTDPE
+	FTDPLE
+	FTDRSE
+	FTDRSLE
+	FTDSRE
+	FTDSRLE
+	SRD16CE
+	SRD16CLE
+	SRD16CLED
+	SRD16RE
+	SRD16RLE
+	SRD16RLED
+	SRD4CE
+	SRD4CLE
+	SRD4CLED
+	SRD4RE
+	SRD4RLE
+	SRD4RLED
+	SRD8CE
+	SRD8CLE
+	SRD8CLED
+	SRD8RE
+	SRD8RLE
+	SRD8RLED
+
+
+END_COMPILATION_MESSAGES(mti_pe:verilog:coolrunner)
+==============================================================================
+    > Log file 'C:\Xilinx\13.3\ISE_DS\ISE\verilog\mti_pe\10.0b\nt/cpld_ver/.cxl.verilog.coolrunner.cpld_ver.nt.log' generated
+compxlib[verilog.coolrunner]: 0 error(s), 0 warning(s), 100.00 % complete
+
+
+**********************************************************************************************
+*                                   COMPILATION SUMMARY                                      *
+*                                                                                            *
+*  Simulator used: mti_pe                                                                    *
+*  Compiled on: Thu Nov 03 17:21:16 2011                                                     *
+*                                                                                            *
+**********************************************************************************************
+*               Library                |  Lang   |  Mapped Name(s)   | Err#(s)  |  Warn#(s)  *
+*--------------------------------------------------------------------------------------------*
+*  uni9000                             | verilog | uni9000_ver       | 0        | 0          *
+*--------------------------------------------------------------------------------------------*
+*  coolrunner                          | vhdl    | cpld              | 0        | 0          *
+*--------------------------------------------------------------------------------------------*
+*  coolrunner                          | verilog | cpld_ver          | 0        | 0          *
+*--------------------------------------------------------------------------------------------*
+

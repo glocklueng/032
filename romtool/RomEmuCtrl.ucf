@@ -7,17 +7,14 @@ NET i_HData(1)			LOC = "P5" ;
 NET i_HData(2)			LOC = "P6" ;
 NET i_HData(3)			LOC = "P7" ;
 NET i_HClk				LOC = "P9" ;
-
 // Busy
 NET o_HData				LOC = "P10";
 NET o_nROE				LOC = "P11";
 NET o_nRWE				LOC = "P12";
-
 // these are listed as outputs in the schematic
 NET i_nTOE				LOC = "P13";
 NET i_nTWE				LOC = "P14";
 NET o_nReset			LOC = "P15";
-
 NET o_RAddr(0)			LOC = "P17";
 NET o_RAddr(1)			LOC = "P18";
 NET o_RAddr(2)			LOC = "P19";
@@ -66,3 +63,71 @@ NET io_TData(4)		LOC = "P72";
 NET io_TData(5)		LOC = "P74";
 NET io_TData(6)		LOC = "P75";
 NET io_TData(7)		LOC = "P76";
+
+#PINLOCK_BEGIN
+
+#Thu Nov 03 17:05:23 2011
+
+NET "i_HClk"         LOC =  "S:PIN9";
+NET "i_HCmd<0>"      LOC =  "S:PIN1";
+NET "i_HCmd<1>"      LOC =  "S:PIN2";
+NET "i_HCmd<2>"      LOC =  "S:PIN3";
+NET "i_HData<0>"     LOC =  "S:PIN4";
+NET "i_HData<1>"     LOC =  "S:PIN5";
+NET "i_HData<2>"     LOC =  "S:PIN6";
+NET "i_HData<3>"     LOC =  "S:PIN7";
+NET "i_TAddr<0>"     LOC =  "S:PIN48";
+NET "i_TAddr<10>"    LOC =  "S:PIN61";
+NET "i_TAddr<11>"    LOC =  "S:PIN62";
+NET "i_TAddr<12>"    LOC =  "S:PIN63";
+NET "i_TAddr<13>"    LOC =  "S:PIN65";
+NET "i_TAddr<14>"    LOC =  "S:PIN66";
+NET "i_TAddr<15>"    LOC =  "S:PIN67";
+NET "i_TAddr<1>"     LOC =  "S:PIN50";
+NET "i_TAddr<2>"     LOC =  "S:PIN51";
+NET "i_TAddr<3>"     LOC =  "S:PIN52";
+NET "i_TAddr<4>"     LOC =  "S:PIN53";
+NET "i_TAddr<5>"     LOC =  "S:PIN54";
+NET "i_TAddr<6>"     LOC =  "S:PIN55";
+NET "i_TAddr<7>"     LOC =  "S:PIN56";
+NET "i_TAddr<8>"     LOC =  "S:PIN57";
+NET "i_TAddr<9>"     LOC =  "S:PIN58";
+NET "i_nTOE"         LOC =  "S:PIN13";
+NET "i_nTWE"         LOC =  "S:PIN14";
+NET "io_RData<0>"    LOC =  "S:PIN39";
+NET "io_RData<1>"    LOC =  "S:PIN40";
+NET "io_RData<2>"    LOC =  "S:PIN41";
+NET "io_RData<3>"    LOC =  "S:PIN43";
+NET "io_RData<4>"    LOC =  "S:PIN44";
+NET "io_RData<5>"    LOC =  "S:PIN45";
+NET "io_RData<6>"    LOC =  "S:PIN46";
+NET "io_RData<7>"    LOC =  "S:PIN47";
+NET "io_TData<0>"    LOC =  "S:PIN68";
+NET "io_TData<1>"    LOC =  "S:PIN69";
+NET "io_TData<2>"    LOC =  "S:PIN70";
+NET "io_TData<3>"    LOC =  "S:PIN71";
+NET "io_TData<4>"    LOC =  "S:PIN72";
+NET "io_TData<5>"    LOC =  "S:PIN74";
+NET "io_TData<6>"    LOC =  "S:PIN75";
+NET "io_TData<7>"    LOC =  "S:PIN76";
+NET "o_RAddr<0>"     LOC =  "S:PIN17";
+NET "o_RAddr<10>"    LOC =  "S:PIN32";
+NET "o_RAddr<11>"    LOC =  "S:PIN33";
+NET "o_RAddr<12>"    LOC =  "S:PIN34";
+NET "o_RAddr<13>"    LOC =  "S:PIN35";
+NET "o_RAddr<14>"    LOC =  "S:PIN36";
+NET "o_RAddr<15>"    LOC =  "S:PIN37";
+NET "o_RAddr<1>"     LOC =  "S:PIN18";
+NET "o_RAddr<2>"     LOC =  "S:PIN19";
+NET "o_RAddr<3>"     LOC =  "S:PIN20";
+NET "o_RAddr<4>"     LOC =  "S:PIN21";
+NET "o_RAddr<5>"     LOC =  "S:PIN23";
+NET "o_RAddr<6>"     LOC =  "S:PIN24";
+NET "o_RAddr<7>"     LOC =  "S:PIN25";
+NET "o_RAddr<8>"     LOC =  "S:PIN26";
+NET "o_RAddr<9>"     LOC =  "S:PIN31";
+NET "o_nROE"         LOC =  "S:PIN11";
+NET "o_nRWE"         LOC =  "S:PIN12";
+NET "o_HData"        LOC =  "S:PIN10";
+NET "o_nReset"       LOC =  "S:PIN15";
+#PINLOCK_END
