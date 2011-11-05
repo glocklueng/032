@@ -226,9 +226,7 @@ static void SetRC( unsigned char index )
 	unsigned char b1,b2;
 	unsigned char portb, ddrb,portd6=2;
 	DDRB = 0x0;
-	DDRD = 0x0;
 	PORTB =0x0;
-	PORTD = 0;
 
 	// get current values, Can't cache PORTD/DDRD since the sound interrupt can change, should cache DDRD6/PORTD6 instead
 	portb = PORTB;
@@ -456,18 +454,9 @@ int main(void)
 	{
 		mma_get_average(4, &ax, &ay, &az);
 
-		for ( X = 0 ; X < 5 ; X++ ) 
-			for ( R= 0 ; R < 30 ; R +=2) 
-			{
-				for ( c = 0 ; c < ax ; c ++) {
-					SetRC(29-R);	
-					//delay_ten_us(1);	
-					SetRC(R);
-//					delay_ten_us(2000);	
-				}
-				
-			}
-
+		ax = abs(ax);
+		
+		SetRC(ax%30);
 
 		
 #if 0
@@ -499,8 +488,6 @@ int main(void)
 			C--;
 			if( c == 0 ) c = 29;
 		}
-#endif
-
 		R= 0 ;
 
 		for ( X = 0 ; X < 200 ; X++ ) {
@@ -581,6 +568,7 @@ int main(void)
 				
 			}
 
+#endif
 /// end
 	}
 
