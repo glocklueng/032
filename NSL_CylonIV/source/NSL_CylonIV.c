@@ -430,7 +430,7 @@ int main(void)
 	DDRB = 0;
 
 	mma_init();
-	delay_ten_us(200);
+	_delay_ms(20);
 
 	uint8_t i2cad = mma_read( MMA_I2CAD );
 	mma_write( MMA_I2CAD, i2cad |= MMA_I2CDIS_bit ); // disable I2C

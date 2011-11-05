@@ -25,7 +25,7 @@
 
 
 // is on PORTA0
-#define MMA_SSa   (1<<6) // (CSn of the MMA can also be connected to GND permanently.) PD7 
+#define MMA_SSa   (1<<0) // (CSn of the MMA can also be connected to GND permanently.) PD7 
 
 // is on PORTA1
 #define MMA_MISOa (1<<1)  // miso SDO PD3 (18)
@@ -117,7 +117,7 @@ void mma_calibrate_offset( int16_t x, int16_t y, int16_t z )
 
 void mma_wait_until_ready()
 {
-   // while( ( mma_read( MMA_STATUS ) & MMA_DRDY_bit ) == 0 ) {};
+    while( ( mma_read( MMA_STATUS ) & MMA_DRDY_bit ) == 0 ) {};
 }
 
 // 1 <= power_of_two <= 6
