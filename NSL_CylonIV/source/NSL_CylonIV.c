@@ -227,6 +227,7 @@ static void SetRC( unsigned char index )
 	unsigned char portb, ddrb,portd6=2;
 	DDRB = 0x0;
 	PORTB =0x0;
+	PORTD &=3;
 
 	// get current values, Can't cache PORTD/DDRD since the sound interrupt can change, should cache DDRD6/PORTD6 instead
 	portb = PORTB;
@@ -454,8 +455,10 @@ int main(void)
 	{
 		mma_get_average(4, &ax, &ay, &az);
 
-		ax = abs(ax);
-		
+	ax+=128;
+
+		ax = abs(ax/2);
+				
 		SetRC(ax%30);
 
 		
@@ -567,8 +570,8 @@ int main(void)
 				delay_ten_us(X*R);
 				
 			}
-
 #endif
+
 /// end
 	}
 
