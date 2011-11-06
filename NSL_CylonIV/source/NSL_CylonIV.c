@@ -435,6 +435,7 @@ int main(void)
 	mma_write( MMA_I2CAD, i2cad |= MMA_I2CDIS_bit ); // disable I2C
 
     uint8_t ctl1 = mma_read( MMA_CTL1 );
+	// 125 h	z
     mma_write( MMA_CTL1, ctl1 |= MMA_DFBW_bit ); // high output data rate
 
     mma_write( MMA_MCTL, 0b00000101 ); // 2g range; measurement mode
@@ -453,127 +454,19 @@ int main(void)
 	
 	while( 1 ) 
 	{
-		mma_get_average(2, &ax, &ay, &az);
+	    ax = mma_read10( MMA_XOUT10 );
 
-		ax += 64;
+	//	mma_get_average(2, &ax, &ay, &az);
+
+		ax += 50;
 
 		ax = abs( ax / 4 );
 
 		for(X = 0 ; X < ax ; X ++ ) {
-			for ( i = 0 ; i < 30 ; i++ ) {
+			for ( i = 0 ; i < 50 ; i++ ) {
 				SetRC(X);
 			}
 		}
-	
-#if 0
-		R = 0;	
-		C = 29;			
-		for ( X = 0 ; X < 200 ; X++ ) {
-			for ( i = 0 ; i < 10 ; i++ ) {
-				SetRC(R);	
-				SetRC(R+1);	
-				delay_ten_us(10);	
-				SetRC(R+2);	
-				delay_ten_us(25);	
-				SetRC(R+3);	
-				delay_ten_us(10);	
-				SetRC(R+4);	
-
-				SetRC(C+15);	
-				SetRC(C+1+15);	
-				delay_ten_us(10);	
-				SetRC(C+2+15);	
-				delay_ten_us(25);	
-				SetRC(C+3+15);	
-				delay_ten_us(10);	
-				SetRC(C+4+15);	
-			}
-
-			R++;
-			if ( R == 30 ) R = 0;
-			C--;
-			if( c == 0 ) c = 29;
-		}
-		R= 0 ;
-
-		for ( X = 0 ; X < 200 ; X++ ) {
-			for ( i = 0 ; i < 20 ; i++ ) {
-				SetRC(R);	
-				SetRC(R+1);	
-				delay_ten_us(20);	
-				SetRC(R+2);	
-				delay_ten_us(100);	
-				SetRC(R+3);	
-				delay_ten_us(20);	
-				SetRC(R+4);	
-				delay_ten_us(10);	
-				SetRC(R+5);	
-			}
-
-			R++;
-			if ( R == 30 )  R = 0;
-
-		}
-
-		x = 30;
-
-		c = 0;
-
-		for ( X = 0 ; X < 200 ; X++ )  {
-
-			x--;
-
-			if ( x == 0 ) 
-				x = 29;
-
-			for ( i = 0 ; i < 20 ; i++ ) {
-				for ( R= 0 ; R < x ; R ++ ) 
-				{
-					SetRC(c+R);
-				}
-				delay_ten_us(30-R);
-				if( i&1 == 1 ) 
-					c++;
-
-			}
-		}
-		for ( X = 0 ; X < 400 ; X++ ) 
-			for ( R= 0 ; R < 30 ; R ++ ) 
-			{
-
-
-				SetRC(R);	
-				
-			}
-
-		for ( X = 0 ; X < 5 ; X++ ) 
-			for ( R= 0 ; R < 30 ; R ++ ) 
-			{
-
-				SetRC(R);
-				i = 150*(((R+1)*6));
-				delay_ten_us(i);
-
-			}
-
-		for ( X = 0 ; X < 5 ; X++ ) 
-			for ( R= 0 ; R < 30 ; R ++ ) 
-			{
-				SetRC(R);
-				i = 150*(((R+1)*6));
-				delay_ten_us(i);
-			}
-		
-		for ( X = 0 ; X < 200 ; X++ ) 
-			for ( R= 0 ; R < 30 ; R ++ ) 
-			{
-
-
-				SetRC(R);	
-				delay_ten_us(X*R);
-				
-			}
-#endif
 
 /// end
 	}
