@@ -225,6 +225,7 @@ static void SetRC( unsigned char index )
 {	
 	unsigned char b1,b2;
 	unsigned char portb, ddrb,portd6=2;
+	
 	DDRB = 0x0;
 	PORTB =0x0;
 	PORTD &=3;
@@ -233,7 +234,6 @@ static void SetRC( unsigned char index )
 	portb = PORTB;
 	ddrb = DDRB;
 	
-
 	index = index - 30 * (index / 30);
 
 //	read two values from array, we use pgm_read_byte because the data is in program memory space
@@ -453,15 +453,18 @@ int main(void)
 	
 	while( 1 ) 
 	{
-		mma_get_average(4, &ax, &ay, &az);
+		mma_get_average(2, &ax, &ay, &az);
 
-	ax+=128;
+		ax += 64;
 
-		ax = abs(ax/2);
-				
-		SetRC(ax%30);
+		ax = abs( ax / 4 );
 
-		
+		for(X = 0 ; X < ax ; X ++ ) {
+			for ( i = 0 ; i < 30 ; i++ ) {
+				SetRC(X);
+			}
+		}
+	
 #if 0
 		R = 0;	
 		C = 29;			
