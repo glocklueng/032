@@ -61,6 +61,10 @@
 #define IDC_ADD_FEEDER                  1048
 #define IDC_BUTTON1                     1049
 #define IDC_UPDATE                      1049
+#define IDC_LOAD_FEEDER                 1050
+#define IDC_SAVE_FEEDER                 1051
+#define IDC_UPDATE2                     1052
+#define IDC_UPDATE3                     1053
 
 // Next default values for new objects
 // 

@@ -118,6 +118,10 @@ BEGIN_MESSAGE_MAP(CPickobearDlg, CDialog)
 	ON_EN_KILLFOCUS(IDC_GOY, &CPickobearDlg::OnEnChangeGoy)
 	ON_BN_CLICKED(IDC_ADD_FEEDER, &CPickobearDlg::OnBnClickedAddFeeder)
 	ON_BN_CLICKED(IDC_UPDATE, &CPickobearDlg::OnBnClickedUpdate)
+	ON_BN_CLICKED(IDC_LOAD_FEEDER, &CPickobearDlg::OnBnClickedLoadFeeder)
+	ON_BN_CLICKED(IDC_SAVE_FEEDER, &CPickobearDlg::OnBnClickedSaveFeeder)
+	ON_BN_CLICKED(IDC_UPDATE2, &CPickobearDlg::OnBnClickedUpdate2)
+	ON_BN_CLICKED(IDC_UPDATE3, &CPickobearDlg::OnBnClickedUpdate3)
 END_MESSAGE_MAP()
 
 BEGIN_MESSAGE_MAP(CListCtrl_Components, CListCtrl)
@@ -763,7 +767,8 @@ CString GetSaveFile( const TCHAR *ptypes, const TCHAR*caption, const TCHAR *pSta
 	OPENFILENAME ofn;
 	ZeroMemory(szFile, MAX_PATH);
 
-	if( pStartDir){
+	if(pStartDir != NULL && _tcslen( pStartDir ) ) {
+
 		_tcscpy_s(szFile, sizeof(szFile)-1,pStartDir);
 	}
 
@@ -1061,7 +1066,7 @@ enum {
 	PNP_TOOL3,
 	PNP_TOOL4,
 	PNP_TOOL5,
-	PNP_TOOL6,g
+	PNP_TOOL6,
 };
 
 int CPickobearDlg::SendCommand( int command ) 
@@ -1107,4 +1112,39 @@ void CListCtrl_Components::OnNMRClickList2(NMHDR *pNMHDR, LRESULT *pResult)
 	entry = &m_Database.at( clist ) ;
 
 	pDlg->m_ComponentList.AssignFeeder( clist, item ) ;
+}
+
+
+void CPickobearDlg::OnBnClickedLoadFeeder()
+{
+	m_FeederList.LoadDatabase();
+}
+
+
+void CPickobearDlg::OnBnClickedSaveFeeder()
+{
+	m_FeederList.SaveDatabase();
+}
+
+
+void CPickobearDlg::OnBnClickedUpdate2()
+{
+	long cx,cy;
+	GetCurrentPosition(cx,cy);
+
+	cy += 73050;
+
+	MoveHead(cx,cy);
+}
+
+
+void CPickobearDlg::OnBnClickedUpdate3()
+{
+	long cx,cy;
+
+	GetCurrentPosition(cx,cy);
+
+	cy -= 73050;
+
+	MoveHead(cx,cy);
 }
