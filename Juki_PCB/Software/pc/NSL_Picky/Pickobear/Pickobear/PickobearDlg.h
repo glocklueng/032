@@ -8,6 +8,9 @@
 #include "Serial.h"
 #include "afxcmn.h"
 
+#include <iostream>
+#include <fstream>
+
 class CListCtrl_Components : public CListCtrl
 {
 	afx_msg void OnNcLButtonDblClk (UINT nFlags, CPoint point);
@@ -111,7 +114,6 @@ public:
 	afx_msg void OnNMRClickList2(NMHDR *pNMHDR, LRESULT *pResult);
 };
 
-
 class CListCtrl_FeederList : public CListCtrl
 {
 	afx_msg void OnNcLButtonDblClk (UINT nFlags, CPoint point);
@@ -123,15 +125,74 @@ public:
 		unsigned int item;
 		unsigned long x,y;
 		short rot;
-		CString label;
-		CString type;
+		char label[256];
+		char type[256];
 	} FeederDatabase;
 	
 	std::vector<FeederDatabase> m_Database;
 	
 	FeederDatabase *entry;
 
-	
+	void SaveDatabase ( void ) 
+	{
+		CString filename;
+		 
+		filename = ::GetSaveFile( _T("Supported Files Types(*.fdr)\0*.fdr\0\0"),_T("Pick name to save database too"),_T("") );
+
+		std::ofstream os (filename, std::ios::out | std::ios::binary);
+
+		int size1 = m_Database.size();
+		os.write((const char*)&size1, sizeof(size1));
+		os.write((const char*)&m_Database.front(), m_Database.size() * sizeof(FeederDatabase));
+		os.close();
+	}
+
+	void LoadDatabase ( void ) 
+	{
+		int size1;
+		CString filename;
+
+		filename = ::GetLoadFile( 
+			_T("Supported Files Types(*.fdr)\0*.fdr\0\0"),
+			_T("Pick name to load database from"),_T("") 
+		);
+
+		if( m_Count ) {
+			
+			m_Database.clear();
+		}
+
+		std::ifstream is( filename, std::ios::binary );
+			
+		is.read( (char*)&size1, sizeof( size1) );
+		
+		m_Count = size1;	
+		m_Database.resize(m_Count);
+		
+		is.read((char*)&m_Database.front(), m_Database.size() * sizeof( FeederDatabase ) );
+		
+		is.close();
+
+		CString temp;
+
+		for ( int i = 0 ; i < m_Count ; i ++ ) {
+		
+			entry = &m_Database.at( i  ) ;
+			
+			temp = entry->label;
+
+			int Index = InsertItem(LVIF_TEXT, 0,temp, 0, 0, 0, NULL);
+
+			SetItemText(Index,1,temp);
+			temp.Format(L"%d",entry->x);
+			SetItemText(Index,2,temp);
+			temp.Format(L"%d",entry->y);
+			SetItemText(Index,3,temp);
+			temp.Format(L"%d",entry->rot);
+			SetItemText(Index,4,temp);
+		}
+	}
+
 	/// Offset of item in PCB
 	long m_OffsetX;
 	long m_OffsetY;
@@ -143,7 +204,6 @@ public:
 		m_OffsetY = 0;
 		m_Count = 0;
 		entry = NULL;
-	
 	}
 
 	unsigned long m_Count ;
@@ -157,22 +217,26 @@ public:
 		return m_Database.at(i);
 	}
  
-	void AddItem( const char *label,const long x,long y,short rot)
+	void AddItem( const char *label,const long x,long y,short rot )
 	{
 		ASSERT( label ) ;
 		
 		FeederDatabase entry;
 
-		entry.label = label;
+		memset(&entry, 0, sizeof( FeederDatabase ) );
+
+		strcpy(entry.label,label );
 
 		// convert to level of accuracy pnp can handle
 		entry.x = (( x )/40)*40 ;
 		entry.y = (( y )/40)*40 ;
 		entry.rot = ( rot ) ;
 
-		int Index = InsertItem(LVIF_TEXT, 0,entry.label, 0, 0, 0, NULL);
-		CString temp;
-		SetItemText(Index,1,entry.label);
+		CString temp( label );
+
+		int Index = InsertItem(LVIF_TEXT, 0,temp, 0, 0, 0, NULL);
+
+		SetItemText(Index,1,temp);
 		temp.Format(L"%d",x);
 		SetItemText(Index,2,temp);
 		temp.Format(L"%d",y);
@@ -180,7 +244,7 @@ public:
 		temp.Format(L"%d",rot);
 		SetItemText(Index,4,temp);
 	
-	// add to database
+		// add to database
 		m_Database.push_back (entry );
 
 		m_Count ++;
@@ -304,4 +368,8 @@ public:
 	CListCtrl_FeederList m_FeederList;
 	afx_msg void OnBnClickedAddFeeder();
 	afx_msg void OnBnClickedUpdate();
+	afx_msg void OnBnClickedLoadFeeder();
+	afx_msg void OnBnClickedSaveFeeder();
+	afx_msg void OnBnClickedUpdate2();
+	afx_msg void OnBnClickedUpdate3();
 };
