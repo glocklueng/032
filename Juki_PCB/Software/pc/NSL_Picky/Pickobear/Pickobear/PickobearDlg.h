@@ -11,6 +11,8 @@
 #include <iostream>
 #include <fstream>
 
+
+// component class
 class CListCtrl_Components : public CListCtrl
 {
 	afx_msg void OnNcLButtonDblClk (UINT nFlags, CPoint point);
@@ -18,21 +20,39 @@ class CListCtrl_Components : public CListCtrl
 
 	void PreSubclassWindow();
 public:
+
+	// component database
 	typedef struct CompDatabase_tag  {
+		
+		// iten number
 		unsigned int item;
+		
+		// position
 		unsigned long x,y;
+		
+		// rotation of part
 		short rot;
+
+		// feeder id
 		int feeder;
-		CString label;
-		CString value;
-		CString type;
+		
+		// name of component
+		char label[256];
+		
+		// value of label
+		char value[256];
+		
+		// type
+		char type[256];
+
 	} CompDatabase;
 	
+	// database list
 	std::vector<CompDatabase> m_Database;
 	
+	// temp pointer
 	CompDatabase *entry;
 
-	
 	/// Offset of item in PCB
 	long m_OffsetX;
 	long m_OffsetY;
@@ -40,10 +60,10 @@ public:
 	int m_FeederId;
 
 public:
-	CListCtrl_Components()
+	CListCtrl_Components() :
+	  m_OffsetX(0),
+	  m_OffsetY(0)
 	{
-		m_OffsetX = 0 ;
-		m_OffsetY = 0;
 		m_FeederId = -1;
 		m_Count = 0;
 		entry = NULL;
@@ -81,9 +101,10 @@ public:
 
 		CompDatabase entry;
 
-		entry.label = label;
-		entry.type = type;
-		entry.value  = value;
+		strcpy_s( entry.label, label );
+		strcpy_s( entry.type, type);
+		strcpy_s( entry.value , value);
+		
 		entry.feeder = -1;
 
 		// convert to level of accuracy pnp can handle
@@ -91,24 +112,96 @@ public:
 		entry.y = (atol( y )/40)*40 ;
 		entry.rot = atoi( rot ) ;
 
-		int Index = InsertItem(LVIF_TEXT, 0,entry.label, 0, 0, 0, NULL);
+		CString temp( entry.label );
 
-			SetItemText(Index,1,entry.type);
-			SetItemText(Index,2,CString(value));
-			SetItemText(Index,3,CString(x));
-			SetItemText(Index,4,CString(y));
-			SetItemText(Index,5,CString(rot));
-			CString temp(L"NA");
-			if ( entry.feeder != -1 ) {
-				temp.Format(L"%d",entry.feeder);
-			}
-			SetItemText(Index,6,temp);
+		int Index = InsertItem(LVIF_TEXT, 0,temp, 0, 0, 0, NULL);
+
+		temp = type;
+
+		SetItemText(Index,1,temp);
+		SetItemText(Index,2,CString(value));
+		SetItemText(Index,3,CString(x));
+		SetItemText(Index,4,CString(y));
+		SetItemText(Index,5,CString(rot));
+		temp = L"NA";
+		if ( entry.feeder != -1 ) {
+			temp.Format(L"%d",entry.feeder);
+		}
+		SetItemText(Index,6,temp);
 
 		// add to database
 		m_Database.push_back (entry );
 
 		m_Count ++;
 	}
+
+	void SaveDatabase ( void ) 
+	{
+		CString filename;
+		 
+		filename = ::GetSaveFile( _T("Supported Files Types(*.pbr)\0*.pbr\0\0"),_T("Choose a filename to save components in"),_T("") );
+
+		std::ofstream os (filename, std::ios::out | std::ios::binary);
+
+		int size1 = m_Database.size();
+		os.write((const char*)&size1, sizeof(size1));
+		os.write((const char*)&m_Database.front(), m_Database.size() * sizeof(CompDatabase));
+		os.close();
+	}
+
+	void LoadDatabase ( void ) 
+	{
+		int size1;
+		CString filename;
+
+		filename = ::GetLoadFile( 
+			_T("Supported Files Types(*.fdr)\0*.fdr\0\0"),
+			_T("Choose name to load components from"),_T("") 
+		);
+
+		if(filename.GetLength() == 0 ) {
+			return ;
+
+		}
+
+		if( m_Count ) {
+			
+			m_Database.clear();
+		}
+
+		std::ifstream is( filename, std::ios::binary );
+			
+		is.read( (char*)&size1, sizeof( size1) );
+		
+		m_Count = size1;	
+		m_Database.resize(m_Count);
+		
+		is.read((char*)&m_Database.front(), m_Database.size() * sizeof( CompDatabase ) );
+		
+		is.close();
+
+		CString temp;
+
+		DeleteAllItems();
+
+		for ( unsigned int i = 0 ; i < m_Count ; i ++ ) {
+		
+			entry = &m_Database.at( i  ) ;
+			
+			temp = entry->label;
+
+			int Index = InsertItem(LVIF_TEXT, 0,temp, 0, 0, 0, NULL);
+
+			SetItemText(Index,1,temp);
+			temp.Format(L"%d",entry->x);
+			SetItemText(Index,2,temp);
+			temp.Format(L"%d",entry->y);
+			SetItemText(Index,3,temp);
+			temp.Format(L"%d",entry->rot);
+			SetItemText(Index,4,temp);
+		}
+	}
+
 	afx_msg void OnHdnItemdblclickList2(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnNMRClickList2(NMHDR *pNMHDR, LRESULT *pResult);
 };
@@ -127,7 +220,7 @@ public:
 		char label[256];
 	} FeederDatabase;
 		
-	CMenu cMenu;
+	CMenu *cMenu;
 
 	std::vector<FeederDatabase> m_Database;
 	
@@ -152,51 +245,66 @@ public:
 		int size1;
 		CString filename;
 
+		// get the name of the file to load
 		filename = ::GetLoadFile( 
 			_T("Supported Files Types(*.fdr)\0*.fdr\0\0"),
 			_T("Pick name to load database from"),_T("") 
 		);
 
+		// zero length file ?
 		if(filename.GetLength() == 0 ) {
 			return ;
 
 		}
 
+		// if anything in the database
 		if( m_Count ) {
 			
 			m_Database.clear();
 		}
 
+		// open the file stream
 		std::ifstream is( filename, std::ios::binary );
 			
+		// read the number of elements in the stream
 		is.read( (char*)&size1, sizeof( size1) );
 		
+		// store it
 		m_Count = size1;	
+	
+		// reserve space for the list
 		m_Database.resize(m_Count);
 		
+		// read into list
 		is.read((char*)&m_Database.front(), m_Database.size() * sizeof( FeederDatabase ) );
 		
+		// close file
 		is.close();
 
 		CString temp;
 
+		// remove any and all items from List
 		DeleteAllItems();
 
-		for ( int i = 0 ; i < m_Count ; i ++ ) {
+		// for all items loaded
+		for ( unsigned int i = 0 ; i < m_Count ; i ++ ) {
 		
+			// fetch entry 
 			entry = &m_Database.at( i  ) ;
 			
 			temp = entry->label;
 
+			// add first item
 			int Index = InsertItem(LVIF_TEXT, 0,temp, 0, 0, 0, NULL);
 
-			SetItemText(Index,1,temp);
+			// convert to string
 			temp.Format(L"%d",entry->x);
-			SetItemText(Index,2,temp);
+			//set next
+			SetItemText(Index,1,temp);
 			temp.Format(L"%d",entry->y);
-			SetItemText(Index,3,temp);
+			SetItemText(Index,2,temp);
 			temp.Format(L"%d",entry->rot);
-			SetItemText(Index,4,temp);
+			SetItemText(Index,3,temp);
 		}
 	}
 
@@ -213,6 +321,7 @@ public:
 		entry = NULL;
 	}
 
+	// number of items in list ( should match m_DataBase.size();
 	unsigned long m_Count ;
 
 	unsigned long GetCount( void )
@@ -220,25 +329,32 @@ public:
 		return m_Database.size();
 	}
 
-	FeederDatabase  at( int i ) {
+	// fetch entry at index
+	FeederDatabase at( int i ) {
 		return m_Database.at(i);
 	}
  
+	// add an item to the list
 	void AddItem( const char *label,const long x,long y,short rot )
 	{
 		ASSERT( label ) ;
 		
 		FeederDatabase entry;
 
+		// zero it
 		memset(&entry, 0, sizeof( FeederDatabase ) );
 
+		// copy the label
 		strcpy_s(entry.label,label );
 
 		// convert to level of accuracy pnp can handle
 		entry.x = (( x )/40)*40 ;
 		entry.y = (( y )/40)*40 ;
+
+		// rotation of the part
 		entry.rot = ( rot ) ;
 
+		// conver the sting from utf8
 		CString temp( label );
 
 		int Index = InsertItem(LVIF_TEXT, 0,temp, 0, 0, 0, NULL);
@@ -252,8 +368,12 @@ public:
 		// add to database
 		m_Database.push_back (entry );
 
+		// add one
 		m_Count ++;
 	}
+
+////
+
 	afx_msg void OnHdnItemdblclickList2(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnNMSetfocusList3(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnContextMenu(CWnd* pWnd,CPoint pos );
@@ -266,19 +386,25 @@ private:
 	// each of the camera windows
 	COpenGLControl m_oglWindow;
 	COpenGLControl m_oglWindow1;
-	
+
+	// camera update thread
 	COGLThread m_OGLThread;
 
+	// point to feeder dialogue
 	CFeederSetup *m_pFeederDlg ;
 	
+	// head state
 	char m_Head;
+
+	// tell thread to quit ( if true )
 	int m_Quit;
 
-
+	// states the machine could be in
 	enum eMachineState {
 		MS_IDLE,MS_GO
 	};
 
+	// current state
 	eMachineState m_MachineState;
 
 // Construction
@@ -287,22 +413,29 @@ public:
 	
 	int SendCommand( int command );
 
+	// set the camera threads
 	static DWORD WINAPI goCamera(LPVOID pThis);
 	static DWORD WINAPI goSetup(LPVOID pThis);
 
 	DWORD goThread(void );
 	DWORD cameraThread(void );
 
+	// check acknowledgement fron pnp
 	char CheckAck(char ack,char ack1);
+	
+	// move head to x,y
 	bool MoveHead( long x, long y );
 
 	~CPickobearDlg(){
 		
+		// tell thread to close
 		m_Quit = 1;
 
+		// close out serial
 		m_Serial.Close();
 	}
 
+	// send a command to the PNP
 	void SendCommand(const char *cmd)
 	{
 		DWORD written;
@@ -329,7 +462,6 @@ protected:
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
 public:
-//	CListCtrl m_Components;
 	CButton GO;
 	afx_msg void OnLbnSelchangeList1();
 	long m_headXPos;
