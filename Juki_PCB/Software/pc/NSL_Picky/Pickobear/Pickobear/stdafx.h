@@ -62,7 +62,7 @@
 #pragma comment(lib,"opencv_highgui231.lib")
 #pragma comment(lib,"opencv_imgproc231.lib")
 #pragma comment(lib,"opencv_core231.lib")
-#pragma comment(lib,"videoInput\\videoInput.lib")
+//#pragma comment(lib,"videoInput\\videoInput.lib")
 
 CString GetSaveFile( const TCHAR *ptypes, const TCHAR*caption, const TCHAR *pStartDir);
 CString GetLoadFile( const TCHAR *ptypes, const TCHAR*caption, const TCHAR *pStartDir);

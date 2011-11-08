@@ -3,14 +3,13 @@
 #include "pickobear.h"
 #include "pickobeardlg.h"
 
-COpenGLControl::COpenGLControl(void)
+COpenGLControl::COpenGLControl(void) :
+	img1(NULL),	
+	img2(NULL),
+	resultImg(NULL),
+	iCounter( 0),
+	m_camera( -1 )
 {
-	img1 = NULL;
-	m_camera = -1;
-	img2 = NULL;
-	resultImg = NULL;
-	iCounter = 0;
-
 }
 
 COpenGLControl::~COpenGLControl(void)
@@ -49,8 +48,10 @@ void COpenGLControl::OnRButtonDown(UINT nFlags, CPoint point )
 	point.x -= w;
 	point.y -= h;
 	
-	point.x *= 1.6;
-	point.y *= 1.6;
+	point.x *= 16;
+	point.y *= 16;
+	point.x /= 10;
+	point.y /= 10;
 
 	do {
 

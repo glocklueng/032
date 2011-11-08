@@ -1,4 +1,4 @@
-
+//
 // PickobearDlg.cpp : implementation file
 //
 
@@ -9,7 +9,6 @@
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
-
 
 // CAboutDlg dialog used for App About
 
@@ -41,12 +40,10 @@ void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CAboutDlg, CDialog)
 END_MESSAGE_MAP()
 
-
 // CPickobearDlg dialog
 
-
+// move this
 double m_Thresh1=0,m_Thresh2=10;
-
 
 CPickobearDlg::CPickobearDlg(CWnd* pParent /*=NULL*/)
 	: CDialog(CPickobearDlg::IDD, pParent)
@@ -134,8 +131,6 @@ BEGIN_MESSAGE_MAP(CListCtrl_FeederList, CListCtrl)
 	ON_WM_CONTEXTMENU()
 END_MESSAGE_MAP()
 
-
-
 void CListCtrl_Components::PreSubclassWindow()
 {
 	CListCtrl::PreSubclassWindow();
@@ -160,9 +155,7 @@ void CListCtrl_FeederList::PreSubclassWindow()
 	SetExtendedStyle(GetExtendedStyle() | LVS_EX_FULLROWSELECT| LVS_REPORT);
 }
 
-
 // CPickobearDlg message handlers
-
 
 BOOL CPickobearDlg::OnInitDialog()
 {
@@ -216,6 +209,7 @@ BOOL CPickobearDlg::OnInitDialog()
 	// Create OpenGL Control window	
 	( ( CWnd* ) GetDlgItem( IDC_UPCAM ) )->SetWindowText( m_oglWindow1.oglCreate( rect, rect1, this, 2 ) );
 
+	// convert to a picker
 	CString m_ComPort = _T("\\\\.\\COM14");
 	m_Serial.Open(m_ComPort );
 
@@ -245,7 +239,6 @@ BOOL CPickobearDlg::OnInitDialog()
 	// Start thread for 'goCamera'
 	HANDLE h = CreateThread(NULL, 0, &CPickobearDlg::goCamera, (LPVOID)this, 0, NULL);
 
-
 #if 0	
 	COGLThread* oglThread = new COGLThread() ;
 	oglThread->CreateThread(CREATE_SUSPENDED) ;
@@ -257,6 +250,7 @@ BOOL CPickobearDlg::OnInitDialog()
 #endif
 
 	// Setup the OpenGL Window's timer to render
+// threaded
 //	m_oglWindow.m_unpTimer = m_oglWindow.SetTimer(1, 100, 0);
 	m_oglWindow1.m_unpTimer = m_oglWindow1.SetTimer(1, 300, 0);
 
@@ -320,12 +314,6 @@ void CPickobearDlg::OnLbnSelchangeList1()
 
 void CPickobearDlg::OnEnChangeThreshold()
 {
-	// TODO:  If this is a RICHEDIT control, the control will not
-	// send this notification unless you override the CDialog::OnInitDialog()
-	// function and call CRichEditCtrl().SetEventMask()
-	// with the ENM_CHANGE flag ORed into the mask.
-
-	// TODO:  Add your control notification handler code here
 
 	UpdateData(TRUE);
 	m_Thresh1 = m_Threshold1;
@@ -334,11 +322,6 @@ void CPickobearDlg::OnEnChangeThreshold()
 
 void CPickobearDlg::OnEnChangeThreshold2()
 {
-	// TODO:  If this is a RICHEDIT control, the control will not
-	// send this notification unless you override the CDialog::OnInitDialog()
-	// function and call CRichEditCtrl().SetEventMask()
-	// with the ENM_CHANGE flag ORed into the mask.
-
 	UpdateData(TRUE);
 	m_Thresh2 = m_Threshold2;
 }
@@ -354,10 +337,12 @@ void CPickobearDlg::OnBnClickedHome()
 		switch( CheckAck('f','p') )
 		{
 		case 'f':
+
 			if( MessageBox(_T("Home failed!!"),_T("Error"),IDOK|IDRETRY) == IDRETRY)
 				pass = false;
 			else
 				pass = true;
+			
 			break;
 		case 'p':
 			
@@ -403,8 +388,7 @@ void CPickobearDlg::OnBnClickedHome()
 	} while( pass == false );
 
 	long cx,cy;
-	GetCurrentPosition(cx,cy);
-	
+	GetCurrentPosition(cx,cy);	
 }
 
 // move head can only go to (int)(x/40)*40,same for y
@@ -415,7 +399,7 @@ bool CPickobearDlg::MoveHead( long x, long y )
 	long cx,cy;
 	GetCurrentPosition(cx,cy);
 
-	sprintf(buffer,"g%d,%d\n",x,y);
+	sprintf_s(buffer,sizeof(buffer),"g%d,%d\n",x,y);
 
 	_RPT4(_CRT_WARN,"current pos = %dum,%dum\nGoing to %dum,%dum\n",cx,cy,x,y);
 	m_Serial.Write(buffer);
@@ -440,8 +424,9 @@ bool CPickobearDlg::MoveHead( long x, long y )
 
 char CPickobearDlg::CheckAck(char ack,char ack1)
 {
-	char ch;
-	// wait for ack.
+	unsigned char ch;
+
+	// wait for ack. needs a timeout
 	do { 
 		m_Serial.Read(&ch,1);
 	} while(ch!=ack && ch!=ack1);
@@ -693,7 +678,7 @@ void CPickobearDlg::OnBnClickedImport()
 
 		while (token != NULL) {
 
-			if( 1 == sscanf (token, "%s", &list[i] ) ) {
+			if( 1 == sscanf_s(token, "%s", &list[i] ) ) {
 				token = strtok (NULL, seps);
 				i++;
 				
@@ -715,7 +700,6 @@ void CPickobearDlg::OnBnClickedImport()
 	m_File.Close();	
 }
 
-
 CString GetLoadFile( const TCHAR *ptypes, const TCHAR*caption, const TCHAR *pStartDir)
 {
 	CString szFile;
@@ -724,9 +708,10 @@ CString GetLoadFile( const TCHAR *ptypes, const TCHAR*caption, const TCHAR *pSta
 	OPENFILENAME ofn;
 
 	szFile.Empty();
-	memset( tmpFile, 0, MAX_PATH );
 
-	if(pStartDir != NULL && _tcslen( pStartDir ) ) {
+	ZeroMemory( tmpFile, MAX_PATH );
+
+	if( pStartDir != NULL && _tcslen( pStartDir ) ) {
 
 		_tcscpy_s(
 			tmpFile, 
@@ -958,12 +943,12 @@ bool GetCurrentPosition( long &x,long &y)
 			token = strtok (lineBuffer, ",");
 			if( token) {
 				// convert token to a string
-				sscanf (token, "%s", &xString );
+				sscanf_s(token, "%s", &xString );
 
 				token = strtok (NULL, ",");
 				if( token ) {
 
-					sscanf(token, "%s", &yString );	
+					sscanf_s(token, "%s", &yString );	
 					break;
 				}
 			}
@@ -1168,35 +1153,31 @@ void CPickobearDlg::OnBnClickedUpdate3()
 
 void CListCtrl_FeederList::OnContextMenu(CWnd*, CPoint point)
 {
-  if((point.x == -1) && (point.y == -1))
-  {
-    // Keystroke invocation
-    CRect rect;
+	if((point.x == -1) && (point.y == -1)) {
+		// Keystroke invocation
+		CRect rect;
 
-    GetClientRect(rect);
-    ClientToScreen(rect);
+		GetClientRect(rect);
+		ClientToScreen(rect);
 
-    point = rect.TopLeft();
-    point.Offset(5, 5);
-  }
+		point = rect.TopLeft();
+		point.Offset(5, 5);
+	}
+	cMenu = new CMenu();
 
+	cMenu->CreatePopupMenu();
+		
+	cMenu->AppendMenu(MF_STRING, ID_FILE_CLOSE, _T("&Close"));
+	cMenu->AppendMenu(MF_STRING, ID_FILE_SAVE, _T("&Save\tCtrl+S"));
+	cMenu->AppendMenu(MF_STRING, ID_FILE_SAVE_AS, _T("Save &As..."));
+	cMenu->AppendMenu(MF_SEPARATOR);
+	cMenu->AppendMenu(MF_STRING, ID_FILE_PRINT, _T("&Print\tCtrl+P"));
+	cMenu->AppendMenu(MF_STRING, ID_FILE_PRINT_PREVIEW, _T("Print Pre&view"));
+	cMenu->TrackPopupMenu(
+		TPM_LEFTALIGN | TPM_RIGHTBUTTON, 
+		point.x, 
+		point.y,
+		NULL);
 
-
-	cMenu.CreatePopupMenu();
-
-	cMenu.AppendMenu(MF_STRING, ID_FILE_CLOSE, _T("&Close"));
-	cMenu.AppendMenu(MF_STRING, ID_FILE_SAVE, _T("&Save\tCtrl+S"));
-	cMenu.AppendMenu(MF_STRING, ID_FILE_SAVE_AS, _T("Save &As..."));
-	cMenu.AppendMenu(MF_SEPARATOR);
-	cMenu.AppendMenu(MF_STRING, ID_FILE_PRINT, _T("&Print\tCtrl+P"));
-	cMenu.AppendMenu(MF_STRING, ID_FILE_PRINT_PREVIEW, _T("Print Pre&view"));
-
-
- cMenu.TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, 
-                            point.x, 
-                            point.y,
-                            NULL);
-
-  //cMenu.DestroyMenu();
-
+	//cMenu->DestroyMenu();
 }
