@@ -66,7 +66,6 @@ public:
 
 	}
 
-
 	CompDatabase  at( int i ) {
 		return m_Database.at(i);
 	}
@@ -126,9 +125,10 @@ public:
 		unsigned long x,y;
 		short rot;
 		char label[256];
-		char type[256];
 	} FeederDatabase;
-	
+		
+	CMenu cMenu;
+
 	std::vector<FeederDatabase> m_Database;
 	
 	FeederDatabase *entry;
@@ -157,6 +157,11 @@ public:
 			_T("Pick name to load database from"),_T("") 
 		);
 
+		if(filename.GetLength() == 0 ) {
+			return ;
+
+		}
+
 		if( m_Count ) {
 			
 			m_Database.clear();
@@ -174,6 +179,8 @@ public:
 		is.close();
 
 		CString temp;
+
+		DeleteAllItems();
 
 		for ( int i = 0 ; i < m_Count ; i ++ ) {
 		
@@ -225,7 +232,7 @@ public:
 
 		memset(&entry, 0, sizeof( FeederDatabase ) );
 
-		strcpy(entry.label,label );
+		strcpy_s(entry.label,label );
 
 		// convert to level of accuracy pnp can handle
 		entry.x = (( x )/40)*40 ;
@@ -235,14 +242,12 @@ public:
 		CString temp( label );
 
 		int Index = InsertItem(LVIF_TEXT, 0,temp, 0, 0, 0, NULL);
-
-		SetItemText(Index,1,temp);
 		temp.Format(L"%d",x);
-		SetItemText(Index,2,temp);
+		SetItemText(Index,1,temp);
 		temp.Format(L"%d",y);
-		SetItemText(Index,3,temp);
+		SetItemText(Index,2,temp);
 		temp.Format(L"%d",rot);
-		SetItemText(Index,4,temp);
+		SetItemText(Index,3,temp);
 	
 		// add to database
 		m_Database.push_back (entry );
@@ -250,6 +255,8 @@ public:
 		m_Count ++;
 	}
 	afx_msg void OnHdnItemdblclickList2(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnNMSetfocusList3(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnContextMenu(CWnd* pWnd,CPoint pos );
 };
 
 // CPickobearDlg dialog
