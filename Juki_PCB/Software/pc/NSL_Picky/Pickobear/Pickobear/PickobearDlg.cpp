@@ -131,6 +131,7 @@ END_MESSAGE_MAP()
 
 BEGIN_MESSAGE_MAP(CListCtrl_FeederList, CListCtrl)
     ON_NOTIFY_REFLECT(NM_DBLCLK, OnHdnItemdblclickList2) 
+	ON_WM_CONTEXTMENU()
 END_MESSAGE_MAP()
 
 
@@ -234,13 +235,12 @@ BOOL CPickobearDlg::OnInitDialog()
 	m_Rotation.SetRange(0,360);
 		
 	m_FeederList.GetClientRect(&rect);
-	nInterval =( rect.Width() / 5 );
+	nInterval =( rect.Width() / 4 );
 
-	m_FeederList.InsertColumn(0, _T("ID"),LVCFMT_CENTER,nInterval);
-	m_FeederList.InsertColumn(1, _T("Name"),LVCFMT_CENTER,nInterval);
-	m_FeederList.InsertColumn(2, _T("X"),LVCFMT_CENTER,nInterval);
-	m_FeederList.InsertColumn(3, _T("Y"),LVCFMT_CENTER,nInterval);
-	m_FeederList.InsertColumn(4, _T("Rot"),LVCFMT_CENTER,nInterval);
+	m_FeederList.InsertColumn(0, _T("Name"),LVCFMT_CENTER,nInterval);
+	m_FeederList.InsertColumn(1, _T("X"),LVCFMT_CENTER,nInterval);
+	m_FeederList.InsertColumn(2, _T("Y"),LVCFMT_CENTER,nInterval);
+	m_FeederList.InsertColumn(3, _T("Rot"),LVCFMT_CENTER,nInterval);
 
 	// Start thread for 'goCamera'
 	HANDLE h = CreateThread(NULL, 0, &CPickobearDlg::goCamera, (LPVOID)this, 0, NULL);
@@ -1036,10 +1036,30 @@ void CPickobearDlg::OnEnChangeGoy()
 	UpdateData(TRUE);
 }
 
+CStringA UTF16toUTF8(const CStringW& utf16)
+{
+   CStringA utf8;
+   int len = WideCharToMultiByte(CP_UTF8, 0, utf16, -1, NULL, 0, 0, 0);
+   if (len>1)
+   { 
+      char *ptr = utf8.GetBuffer(len-1);
+      if (ptr) WideCharToMultiByte(CP_UTF8, 0, utf16, -1, ptr, len, 0, 0);
+      utf8.ReleaseBuffer();
+   }
+   return utf8;
+}
 
 void CPickobearDlg::OnBnClickedAddFeeder()
 {
-	m_FeederList.AddItem("LABEL",m_GOX, m_GOY, 0);
+	CTextEditDialog TextDialog;
+
+	TextDialog.DoModal();
+
+	CStringA userInput8( UTF16toUTF8( TextDialog.m_Text ) );
+
+	m_FeederList.AddItem(userInput8.GetString(),m_GOX, m_GOY, 0);
+	userInput8.ReleaseBuffer();
+
 }
 
 
@@ -1126,14 +1146,12 @@ void CPickobearDlg::OnBnClickedSaveFeeder()
 	m_FeederList.SaveDatabase();
 }
 
-
 void CPickobearDlg::OnBnClickedUpdate2()
 {
 	long cx,cy;
+
 	GetCurrentPosition(cx,cy);
-
 	cy += 73050;
-
 	MoveHead(cx,cy);
 }
 
@@ -1143,8 +1161,42 @@ void CPickobearDlg::OnBnClickedUpdate3()
 	long cx,cy;
 
 	GetCurrentPosition(cx,cy);
-
 	cy -= 73050;
-
 	MoveHead(cx,cy);
+}
+
+
+void CListCtrl_FeederList::OnContextMenu(CWnd*, CPoint point)
+{
+  if((point.x == -1) && (point.y == -1))
+  {
+    // Keystroke invocation
+    CRect rect;
+
+    GetClientRect(rect);
+    ClientToScreen(rect);
+
+    point = rect.TopLeft();
+    point.Offset(5, 5);
+  }
+
+
+
+	cMenu.CreatePopupMenu();
+
+	cMenu.AppendMenu(MF_STRING, ID_FILE_CLOSE, _T("&Close"));
+	cMenu.AppendMenu(MF_STRING, ID_FILE_SAVE, _T("&Save\tCtrl+S"));
+	cMenu.AppendMenu(MF_STRING, ID_FILE_SAVE_AS, _T("Save &As..."));
+	cMenu.AppendMenu(MF_SEPARATOR);
+	cMenu.AppendMenu(MF_STRING, ID_FILE_PRINT, _T("&Print\tCtrl+P"));
+	cMenu.AppendMenu(MF_STRING, ID_FILE_PRINT_PREVIEW, _T("Print Pre&view"));
+
+
+ cMenu.TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, 
+                            point.x, 
+                            point.y,
+                            NULL);
+
+  //cMenu.DestroyMenu();
+
 }

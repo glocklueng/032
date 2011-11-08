@@ -8,6 +8,7 @@
 #define IDD_PICKOBEAR_DIALOG            102
 #define IDR_MAINFRAME                   128
 #define IDD_FEEDERS                     130
+#define IDD_TEXTEDIT                    131
 #define IDC_LIST1                       1000
 #define IDC_GO                          1001
 #define IDC_UP                          1002
@@ -62,7 +63,9 @@
 #define IDC_BUTTON1                     1049
 #define IDC_UPDATE                      1049
 #define IDC_LOAD_FEEDER                 1050
+#define IDC_EDIT1                       1050
 #define IDC_SAVE_FEEDER                 1051
+#define IDC_TEXTBOX                     1051
 #define IDC_UPDATE2                     1052
 #define IDC_UPDATE3                     1053
 
@@ -70,9 +73,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        131
+#define _APS_NEXT_RESOURCE_VALUE        132
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1050
+#define _APS_NEXT_CONTROL_VALUE         1052
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
