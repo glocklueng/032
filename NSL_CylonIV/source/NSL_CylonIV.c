@@ -106,7 +106,7 @@
 
 
 
-#if 1
+#if 0
 #define CONST
 #define progmem 
 #else
@@ -114,7 +114,7 @@
 #define progmem PROGMEM
 #endif
 
-
+// combine these two
 static  CONST unsigned char progmem _portd6[30] = {
 	
 	2,2,2,2,2,2,
@@ -140,37 +140,33 @@ static CONST unsigned char progmem _portb[30] = {
 	0x02,0x01,0x02,0x00,0x01,0x00
 };
 
-static CONST  unsigned char progmem  _ddrb[16] = {
+static CONST  unsigned char progmem  _ddrb[15] = {
 // 0..15
 	24,20,18,
 	17,16,12,
 	10,9,8,
 	6,5,4,
-	3,2,1,2	
+	3,2,1	
 };
 
 // this routine is written to help understand how the process works, not be fast.
 static void SetRC( unsigned char index ) 
 {	
-	unsigned char portd6=2;
-
 	PORTD &=3;
 
-	PORTB  = (_portb[index]);
-	DDRB   = (_ddrb[index>>1]);
-	portd6 = (_portd6[index]) ;
-
-	if( (_ddrd[index]) == 0 ) {
+	PORTB  = pgm_read_byte(&_portb[index]);
+	DDRB   = pgm_read_byte(&_ddrb[index>>1]);
+	if( pgm_read_byte(&_ddrd[index]) == 0 ) {
 			CLR_BIT(DDRD,6 );
 	} else {
 			SET_BIT(DDRD,6 );
 	}
 
-	if(portd6 == 1 ) { 
+	if(pgm_read_byte(&_portd6[index]) == 1 ) { 
 	
 		SET_BIT(PORTD ,6 );
 
-	} else	if(portd6 == 0 ) {
+	} else	if(pgm_read_byte(&_portd6[index]) == 0 ) {
 		CLR_BIT(PORTD,6 ); 
 	}
 }
@@ -199,11 +195,7 @@ int main(void)
     mma_write( MMA_MCTL, 0b00000101 ); 				// 2g range; measurement mode
 
     mma_calibrate_offset( 0, 0, 0 );
-
-// switch on interrupts ( start speaker )
-
-//	sei();
-	
+		
 	while( 1 ) 
 	{
 
