@@ -1,4 +1,3 @@
-
 #ifndef _SPI_H_INCLUDE
 #define _SPI_H_INCLUDED
 
@@ -19,27 +18,10 @@
 #define SPI_CLOCK_MASK 0x03  // SPR1 = bit 1, SPR0 = bit 0 on SPCR
 #define SPI_2XCLOCK_MASK 0x01  // SPI2X = bit 0 on SPSR
 
-inline byte SPI_transfer(byte _data) 
-{
-  SPDR = _data;
-  while (!(SPSR & _BV(SPIF)))
-    ;
-  return SPDR;
-}
-
-void SPI_attachInterrupt() {
-  SPCR |= _BV(SPIE);
-}
-
-void SPI_detachInterrupt() {
-  SPCR &= ~_BV(SPIE);
-}
-
-void SPI_setClockDivider(uint8_t rate)
-{
-  SPCR = (SPCR & ~SPI_CLOCK_MASK) | (rate & SPI_CLOCK_MASK);
-  SPSR = (SPSR & ~SPI_2XCLOCK_MASK) | ((rate >> 2) & SPI_2XCLOCK_MASK);
-}
-
+byte SPI_transfer(byte _data);
+void SPI_attachInterrupt();
+void SPI_detachInterrupt();
+void SPI_setClockDivider(uint8_t rate);
+void SPI_begin( void );
 
 #endif
