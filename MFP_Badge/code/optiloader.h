@@ -2,6 +2,9 @@
 #define _OPTILOADER_H
 
 #include <avr/pgmspace.h>
+#include <util/delay.h>
+#include <avr/io.h> 
+#include <avr/eeprom.h> 
 
 typedef unsigned char byte;
 typedef unsigned char boolean;
@@ -21,22 +24,42 @@ typedef unsigned char boolean;
 #define CLOCKSPEED_FLASH   SPI_CLOCK_DIV8
 
 #define LED_ERR 8
-#define LED_PROGMODE A0
+#define LED_PROGMODE 0
+
+/*
+ * Pins to target
+ */
+#define SCK 13
+#define MISO 12
+#define MOSI 11
+#define	SS ( 0 )
+
+#define RESET 10
+#define CLOCK 9     // self-generate 8mhz clock - handy!
+
+#define BUTTON 1
+#define PIEZOPIN 3
+
+#define		OUTPUT	( 1 )
+#define		INPUT	( 0 )
+
+#include "spi.h"
+
 
 typedef struct image {
-    char image_name[30];	       /* Ie "optiboot_diecimila.hex" */
-    char image_chipname[12];	       /* ie "atmega168" */
+    const char image_name[30];	       /* Ie "optiboot_diecimila.hex" */
+    const char image_chipname[12];	       /* ie "atmega168" */
     uint16_t image_chipsig;	       /* Low two bytes of signature */
     byte image_progfuses[5];	       /* fuses to set during programming */
     byte image_normfuses[5];	       /* fuses to set after programming */
     byte fusemask[4];
     uint16_t chipsize;
     byte image_pagesize;	       /* page size for flash programming */
-    byte image_hexcode[20000];	       /* intel hex format image (text) */
+    const byte *image_hexcode;	       /* intel hex format image (text) */
 } image_t;
 
 typedef struct alias {
-  char image_chipname[12];
+  const char image_chipname[12];
   uint16_t image_chipsig;
   image_t * alias_image;
 } alias_t;
@@ -45,14 +68,14 @@ typedef struct alias {
 
 #define debug(string) // flashprint(PSTR(string));
 
+void pinMode( unsigned char pin, unsigned char io);
 
 void pulse (int pin, int times);
 void flashprint (const char p[]);
 
-
 uint16_t spi_transaction (uint8_t a, uint8_t b, uint8_t c, uint8_t d);
 image_t *findImage (uint16_t signature);
-
+void digitalWrite( unsigned char pin, unsigned char state  );
 
 uint16_t readSignature (void);
 boolean programFuses (const byte *fuses);
@@ -63,6 +86,6 @@ boolean flashPage (byte *pagebuff, uint16_t pageaddr, uint8_t pagesize);
 byte hexton (byte h);
 byte * readImagePage (byte *hextext, uint16_t pageaddr, uint8_t pagesize, byte *page);
 boolean verifyFuses (const byte *fuses, const byte *fusemask);
-void error(char *string);
+void error(const char *string);
 
 #endif
