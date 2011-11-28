@@ -132,7 +132,7 @@ int main(void)
 	while( 1 ) 
 	{
 		// varies on whether we need this or not by how long we hold the led
-		mma_wait_until_ready();
+		//mma_wait_until_ready();
 
 		// read accelerometer
 	    ax = mma_read( MMA_XOUT8 );
@@ -150,7 +150,6 @@ int main(void)
 		do {
 	
 			SetLED(ax);	
-			_delay_ms( 2 );
 
 		} while( ax-- );
 	}
