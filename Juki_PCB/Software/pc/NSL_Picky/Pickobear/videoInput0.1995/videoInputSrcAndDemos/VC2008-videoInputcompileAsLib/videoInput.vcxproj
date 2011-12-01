@@ -41,7 +41,7 @@
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\</IntDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(VCInstallDir)atlmfc\include;$(VCInstallDir)include;$(FrameworkSDKDir)\include;$(WindowsSdkDir)include;D:\032\Juki_PCB\Software\pc\NSL_Picky\Pickobear\videoInput0.1995\videoInputSrcAndDemos\libs\DShow\Include</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(VCInstallDir)atlmfc\include;$(VCInstallDir)include;$(FrameworkSDKDir)\include;$(WindowsSdkDir)include;E:\032\Juki_PCB\Software\pc\NSL_Picky\Pickobear\videoInput0.1995\videoInputSrcAndDemos\libs\DShow\Include</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
