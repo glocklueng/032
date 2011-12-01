@@ -135,7 +135,7 @@ inline void trapezoid_generator_tick() {
 // It is supported by The Stepper Port Reset Interrupt which it uses to reset the stepper port after each pulse.
 SIGNAL(TIMER1_COMPA_vect)
 {        
-  // TODO: Check if the busy-flag can be eliminated by just disabeling this interrupt while we are in it
+  // TODO: Check if the busy-flag can be eliminated by just disabling this interrupt while we are in it
   
   if(busy){ return; } // The busy-flag is used to avoid reentering this interrupt
   // Set the direction pins a couple of nanoseconds before we step the steppers

@@ -32,7 +32,7 @@
 // using a ring buffer (I think), in which rx_buffer_head is the index of the
 // location to which to write the next incoming character and rx_buffer_tail
 // is the index of the location from which to read.
-#ifdef __AVR_ATmega328P__
+#if defined  (__AVR_ATmega328P__ ) || defined( __AVCR_ATmega2560__ )    
 #define RX_BUFFER_SIZE 256
 #else
 #define RX_BUFFER_SIZE 64

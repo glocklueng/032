@@ -1062,30 +1062,30 @@ LOAD d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a
  .debug_frame   0x00000330       0xc0 stepper.o
  .debug_frame   0x000003f0       0xd0 wiring_serial.o
 
-.debug_str      0x00000000      0xba8
+.debug_str      0x00000000      0xbba
  *(.debug_str)
- .debug_str     0x00000000       0x98 coolant_control.o
-                                 0xd3 (size before relaxing)
- .debug_str     0x00000098       0xac eeprom.o
-                                0x156 (size before relaxing)
- .debug_str     0x00000144      0x239 gcode.o
-                                0x334 (size before relaxing)
- .debug_str     0x0000037d        0xf main.o
-                                 0xb7 (size before relaxing)
- .debug_str     0x0000038c       0x7a motion_control.o
-                                0x11d (size before relaxing)
- .debug_str     0x00000406      0x3fc planner.o
-                                0x5d2 (size before relaxing)
- .debug_str     0x00000802       0x37 serial_protocol.o
-                                0x105 (size before relaxing)
- .debug_str     0x00000839       0x7f settings.o
-                                0x1c1 (size before relaxing)
- .debug_str     0x000008b8       0x3b spindle_control.o
-                                 0xf1 (size before relaxing)
- .debug_str     0x000008f3      0x1a6 stepper.o
-                                0x3ed (size before relaxing)
- .debug_str     0x00000a99      0x10f wiring_serial.o
-                                0x1c8 (size before relaxing)
+ .debug_str     0x00000000       0xaa coolant_control.o
+                                 0xe5 (size before relaxing)
+ .debug_str     0x000000aa       0xac eeprom.o
+                                0x168 (size before relaxing)
+ .debug_str     0x00000156      0x239 gcode.o
+                                0x346 (size before relaxing)
+ .debug_str     0x0000038f        0xf main.o
+                                 0xc9 (size before relaxing)
+ .debug_str     0x0000039e       0x7a motion_control.o
+                                0x12f (size before relaxing)
+ .debug_str     0x00000418      0x3fc planner.o
+                                0x5e4 (size before relaxing)
+ .debug_str     0x00000814       0x37 serial_protocol.o
+                                0x117 (size before relaxing)
+ .debug_str     0x0000084b       0x7f settings.o
+                                0x1d3 (size before relaxing)
+ .debug_str     0x000008ca       0x3b spindle_control.o
+                                0x103 (size before relaxing)
+ .debug_str     0x00000905      0x1a6 stepper.o
+                                0x3ff (size before relaxing)
+ .debug_str     0x00000aab      0x10f wiring_serial.o
+                                0x1da (size before relaxing)
 
 .debug_loc      0x00000000     0x1386
  *(.debug_loc)
