@@ -173,7 +173,7 @@ uint8_t gc_execute_line(char *line) {
       switch(int_value) {
         case 0: gc.motion_mode = MOTION_MODE_SEEK; break;
         case 1: gc.motion_mode = MOTION_MODE_LINEAR; break;
-#ifdef __AVR_ATmega328P__        
+#if defined  (__AVR_ATmega328P__ ) || defined( __AVCR_ATmega2560__ )       
         case 2: gc.motion_mode = MOTION_MODE_CW_ARC; break;
         case 3: gc.motion_mode = MOTION_MODE_CCW_ARC; break;
 #endif        
