@@ -39,6 +39,7 @@
 
 int main(void)
 {
+	int i;
   sp_init();        
   settings_init();  
   plan_init();      
@@ -50,7 +51,7 @@ int main(void)
   // Once everything is initialized, send the standard "ok" to let clients
   // know it's okay to go ahead
   printPgmString(PSTR("ok\n\r"));
-  
+
   for(;;){
     sleep_mode(); // Wait for it ...
     sp_process(); // ... process the serial protocol
