@@ -38,7 +38,7 @@
 #define RX_BUFFER_SIZE 64
 #endif
 
-unsigned char rx_buffer[RX_BUFFER_SIZE];
+static unsigned char rx_buffer[RX_BUFFER_SIZE];
 
 int rx_buffer_head = 0;
 int rx_buffer_tail = 0;
@@ -65,7 +65,6 @@ void serialWrite(unsigned char c)
 {
 	while (!(UCSR0A & (1 << UDRE0)))
 		;
-
 	UDR0 = c;
 }
 
@@ -110,6 +109,9 @@ SIGNAL(USART0_RX_vect)
 		rx_buffer[rx_buffer_head] = c;
 		rx_buffer_head = i;
 	}
+
+//	UDR0 = c; // Echo back the received byte back to the computer 
+
 }
 
 // void printMode(int mode)

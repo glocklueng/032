@@ -32,7 +32,7 @@
 static char line[LINE_BUFFER_SIZE];
 static uint8_t char_counter;
 
-void status_message(int status_code) {
+static void status_message(int status_code) {
   switch(status_code) {          
     case GCSTATUS_OK:
     printPgmString(PSTR("ok\n\r")); break;
@@ -58,17 +58,18 @@ void sp_init()
   printPgmString(PSTR("\r\n"));  
 }
 
-void sp_process()
+void sp_process(void)
 {
-  char c;
+  // force signed
+  signed char c;
   while((c = serialRead()) != -1) 
   {
-    if((char_counter > 0) && ((c == '\n') || (c == '\r'))) {  // Line is complete. Then execute!
-      line[char_counter] = 0; // treminate string
+      if((char_counter > 0) && ((c == '\n') || (c == '\r'))) {  // Line is complete. Then execute!
+      line[char_counter] = 0; // terminate string
       status_message(gc_execute_line(line));
       char_counter = 0; // reset line buffer index
-    } else if (c <= ' ') { // Throw away whitepace and control characters
-    } else if (c >= 'a' && c <= 'z') { // Upcase lowercase
+    } else if (c <= ' ') { // Throw away whitespace and control characters
+    } else if (c >= 'a' && c <= 'z') { // Uppercase lowercase
       line[char_counter++] = c-'a'+'A';
     } else {
       line[char_counter++] = c;
