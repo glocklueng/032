@@ -131,7 +131,6 @@
 #define SPINDLE_DIRECTION_PORT    PORTB
 #define SPINDLE_DIRECTION_PIN     PINB
 #define SPINDLE_DIRECTION_BIT     7
-#define MORG					  5 // PB5
 #define SPINDLE_DIRECTION_INVERT  0
 
 #define FLOOD_COOLANT_DDR       DDRB
@@ -157,14 +156,24 @@
 #define HEAD					(5)
 #define VACUUM					(4)
 
-#define PANEL_LEFT				( 0 )
-#define PANEL_RIGHT				( 0 )
-#define PANEL_FORWARD			( 0 )
-#define PANEL_BACK				( 0 )
-#define PANEL_FAST				( 0 )
-#define PANEL_HOME				( 0 )
-#define PANEL_VAC				( 0 )
-#define PANEL_HEAD				( 0 )
+// switch panel
+#define PANEL_HOME				( 5 ) // PB5 (M.ORG)
+#define PANEL_HEAD				( 4 ) // PC4 HEAD
+#define PANEL_LEFT				( 5 ) // PE5 -X
+#define PANEL_FORWARD			( 4 ) // PE4 +Y
+#define PANEL_RIGHT				( 5 ) // PG5 +X
+#define PANEL_FAST				( 0 ) // PJ0 FAST
+#define PANEL_BACK				( 1 ) // PJ1 -Y
+#define PANEL_VAC				( 0 ) // PH0 VAC
+#define PANEL_TEACH				( 1 ) // PH1 TEACH
+
+// atc
+#define SPARE1					( 0 )
+#define SPARE2					( 0 )
+#define SPARE3					( 0 )
+#define SPARE4					( 0 )
+#define SPARE5					( 0 )
+#define SPARE6					( 0 )
 
 
 // The temporal resolution of the acceleration management subsystem. Higher number

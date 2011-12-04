@@ -43,7 +43,7 @@ LIBDIRS = -L"C:\WinAVR-20100110\avr\lib\avr6"
 LIBS = -lm 
 
 ## Objects that must be built in order to link
-OBJECTS = coolant_control.o eeprom.o gcode.o main.o motion_control.o planner.o serial_protocol.o settings.o spindle_control.o stepper.o wiring_serial.o head_control.o atc_tool.o vacuum_control.o panel_control.o 
+OBJECTS = coolant_control.o eeprom.o gcode.o main.o motion_control.o planner.o serial_protocol.o settings.o spindle_control.o stepper.o wiring_serial.o head_control.o vacuum_control.o panel_control.o atc_control.o 
 
 ## Objects explicitly added by the user
 LINKONLYOBJECTS = 
@@ -86,13 +86,13 @@ wiring_serial.o: ../wiring_serial.c
 head_control.o: ../head_control.c
 	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
 
-atc_tool.o: ../atc_tool.c
-	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
-
 vacuum_control.o: ../vacuum_control.c
 	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
 
 panel_control.o: ../panel_control.c
+	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
+
+atc_control.o: ../atc_control.c
 	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
 
 ##Link
