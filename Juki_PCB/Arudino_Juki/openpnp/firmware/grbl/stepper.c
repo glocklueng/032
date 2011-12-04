@@ -136,7 +136,10 @@ inline void trapezoid_generator_tick() {
 SIGNAL(TIMER1_COMPA_vect)
 {        
   // TODO: Check if the busy-flag can be eliminated by just disabling this interrupt while we are in it
-  
+
+// don't move if the head is down  
+  if( is_head_down() ) return;
+
   if(busy){ return; } // The busy-flag is used to avoid reentering this interrupt
 
   // Check limits

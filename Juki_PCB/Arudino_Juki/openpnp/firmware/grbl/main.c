@@ -29,9 +29,13 @@
 #include "motion_control.h"
 #include "gcode.h"
 #include "serial_protocol.h"
-
+#include "head_control.h"
+#include "atc_control.h"
+#include "vacuum_control.h"
+#include "panel_control.h"
 #include "settings.h"
 #include "wiring_serial.h"
+
 void limits_init(void);
 
 
@@ -41,7 +45,6 @@ void limits_init(void);
 
 int main(void)
 {
-	int i;
   sp_init();        
   settings_init();  
   plan_init();      
@@ -49,7 +52,12 @@ int main(void)
   limits_init();
   spindle_init();   
   coolant_init();
+  atc_init();
+  head_init();
+  vacuum_init();
+  panel_init();
   gc_init();
+ 
   
   // Once everything is initialized, send the standard "ok" to let clients
   // know it's okay to go ahead

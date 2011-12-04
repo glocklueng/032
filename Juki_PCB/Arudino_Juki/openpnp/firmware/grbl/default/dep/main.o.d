@@ -15,7 +15,8 @@ main.o: ../main.c d:/winavr-20100110/lib/gcc/../../avr/include/avr/io.h \
   d:/winavr-20100110/lib/gcc/../../avr/include/avr/pgmspace.h \
   d:\winavr-20100110\bin\../lib/gcc/avr/4.3.3/include/stddef.h \
   ../planner.h ../stepper.h ../spindle_control.h ../coolant_control.h \
-  ../motion_control.h ../gcode.h ../serial_protocol.h ../settings.h \
+  ../motion_control.h ../gcode.h ../serial_protocol.h ../head_control.h \
+  ../atc_control.h ../vacuum_control.h ../panel_control.h ../settings.h \
   d:/winavr-20100110/lib/gcc/../../avr/include/math.h ../wiring_serial.h
 
 d:/winavr-20100110/lib/gcc/../../avr/include/avr/io.h:
@@ -63,6 +64,14 @@ d:\winavr-20100110\bin\../lib/gcc/avr/4.3.3/include/stddef.h:
 ../gcode.h:
 
 ../serial_protocol.h:
+
+../head_control.h:
+
+../atc_control.h:
+
+../vacuum_control.h:
+
+../panel_control.h:
 
 ../settings.h:
 
