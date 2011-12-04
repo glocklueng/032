@@ -33,6 +33,7 @@
 #include "errno.h"
 #include "serial_protocol.h"
 #include "wiring_serial.h"
+#include "head_control.h"
 
 #include "config.h"
 
@@ -194,6 +195,16 @@ uint8_t gc_execute_line(char *line) {
 	      	printPgmString(PSTR("\r\n"));
 #endif
 
+	      	printPgmString(PSTR("head down = "));
+			printInteger( is_head_down() );
+	      	printPgmString(PSTR("\r\n"));
+
+	      	printPgmString(PSTR("rotated = "));
+			printInteger( is_rotated() );
+	      	printPgmString(PSTR("\r\n"));
+
+
+
 
 			if( bit_is_set( LIMIT_PIN, X1_LIMIT_BIT ) )
 		      	printPgmString(PSTR("XL1\r\n"));
@@ -252,6 +263,22 @@ uint8_t gc_execute_line(char *line) {
         case 5: gc.spindle_direction = 0; break;
         case 8: gc.coolant_flood = 1; break;
         case 9: gc.coolant_flood = 0; break;
+	// head control
+        case 10: head_down(1);break;
+        case 11: head_down(0);break;
+	// atc
+		case 12: atc_change(0);break;
+		case 13: atc_change(1);break;
+		case 14: atc_change(2);break;
+		case 15: atc_change(3);break;
+		case 16: atc_change(4);break;
+		case 17: atc_change(5);break;
+		case 18: atc_change(6);break;
+	// vacuum
+		case 19: vacuum(1);break;
+		case 20: vacuum(0);break;
+
+
         default: FAIL(GCSTATUS_UNSUPPORTED_STATEMENT);
       }            
       break;

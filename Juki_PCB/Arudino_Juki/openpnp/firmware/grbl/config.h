@@ -102,6 +102,7 @@
 #define X2_LIMIT_BIT         2
 #define Y1_LIMIT_BIT         0
 #define Y2_LIMIT_BIT         1
+#define TACSENSE			 7   // Taccuum sensor
 
 #define Z_LIMIT_BIT         2
 #define C_LIMIT_BIT         3
@@ -109,6 +110,7 @@
 // home switches
 #define XHM_DDR		       DDRA
 #define XHM_PIN      	   PINA
+
 #define YHM_DDR		       DDRG
 #define YHM_PIN      	   PING
 
@@ -127,13 +129,42 @@
 
 #define SPINDLE_DIRECTION_DDR     DDRB
 #define SPINDLE_DIRECTION_PORT    PORTB
+#define SPINDLE_DIRECTION_PIN     PINB
 #define SPINDLE_DIRECTION_BIT     7
+#define MORG					  5 // PB5
 #define SPINDLE_DIRECTION_INVERT  0
 
 #define FLOOD_COOLANT_DDR       DDRB
 #define FLOOD_COOLANT_PORT      PORTB
 #define FLOOD_COOLANT_BIT       4
 #define FLOOD_COOLAND_INVERT    0
+
+
+// head down sensor
+#define HEADDT_DDR				DDRC
+#define HEADDT_PORT				PORTC
+#define HEADDT_PIN				PINC
+
+// these two are swapped in the schematic
+#define	HEAD_DOWN_TEST			0 		// PC1
+#define	D90						1 		// PC0
+#define VACCUM_TEST				1
+
+// control the head up/down
+#define HEAD_DDR				DDRL
+#define HEAD_PORT				PORTL
+#define HEAD_PIN				PINL
+#define HEAD					(5)
+#define VACUUM					(4)
+
+#define PANEL_LEFT				( 0 )
+#define PANEL_RIGHT				( 0 )
+#define PANEL_FORWARD			( 0 )
+#define PANEL_BACK				( 0 )
+#define PANEL_FAST				( 0 )
+#define PANEL_HOME				( 0 )
+#define PANEL_VAC				( 0 )
+#define PANEL_HEAD				( 0 )
 
 
 // The temporal resolution of the acceleration management subsystem. Higher number
