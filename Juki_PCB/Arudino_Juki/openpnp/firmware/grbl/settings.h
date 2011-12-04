@@ -60,7 +60,7 @@ void settings_store_setting(int parameter, double value);
 #define DEFAULT_Z_STEPS_PER_MM (94.488188976378*MICROSTEPS)
 // G: For C_AXIS, equate 1mm == 1 degree of rotation (imaginary pulley circumference of 360mm)
 #define DEFAULT_C_STEPS_PER_MM (5.556*MICROSTEPS)
-#define DEFAULT_STEP_PULSE_MICROSECONDS 30
+#define DEFAULT_STEP_PULSE_MICROSECONDS (8)
 #define DEFAULT_MM_PER_ARC_SEGMENT 0.1
 #define DEFAULT_RAPID_FEEDRATE 480.0 // in millimeters per minute
 #define DEFAULT_FEEDRATE 480.0

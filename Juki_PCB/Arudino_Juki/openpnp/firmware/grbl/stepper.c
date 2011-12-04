@@ -32,7 +32,7 @@
 #include <avr/pgmspace.h>
 #include "planner.h"
 #include "wiring_serial.h"
-
+#include "motion_control.h"
 
 // Some useful constants
 #define STEP_MASK ((1<<X_STEP_BIT)|(1<<Y_STEP_BIT)|(1<<Z_STEP_BIT)|(1<<C_STEP_BIT)) // All step bits
@@ -40,7 +40,7 @@
 #define DIRECTION_MASK ((1<<X_DIRECTION_BIT)|(1<<Y_DIRECTION_BIT)|(1<<Z_DIRECTION_BIT)|(1<<C_DIRECTION_BIT)) // All direction bits
 #define DIRECTION_INVERT_MASK ((X_DIRECTION_INVERT<<X_DIRECTION_BIT)|(Y_DIRECTION_INVERT<<Y_DIRECTION_BIT)|(Z_DIRECTION_INVERT<<Z_DIRECTION_BIT)|(C_DIRECTION_INVERT<<C_DIRECTION_BIT)) // All direction bits
 #define LIMIT_MASK ((1<<X_LIMIT_BIT)|(1<<Y_LIMIT_BIT)|(1<<Z_LIMIT_BIT)|(1<<C_LIMIT_BIT)) // All limit bits
-#define LIMIT_INVERT_MASK ((X_LIMIT_INVERT<<X_LIMIT_BIT)|(Y_LIMIT_INVERT<<Y_LIMIT_BIT)|(Z_LIMIT_INVERT<<Z_LIMIT_BIT)|(C_LIMIT_INVERT<<C_LIMIT_BIT)) // All limit bits
+#define LIMIT_INVERT_MASK ((X1_LIMIT_INVERT<<X1_LIMIT_BIT)|(Y_LIMIT_INVERT<<Y1_LIMIT_BIT)|(Z_LIMIT_INVERT<<Z_LIMIT_BIT)|(C_LIMIT_INVERT<<C_LIMIT_BIT)) // All limit bits
 
 #define TICKS_PER_MICROSECOND (F_CPU/1000000)
 #define CYCLES_PER_ACCELERATION_TICK ((TICKS_PER_MICROSECOND*1000000)/ACCELERATION_TICKS_PER_SECOND)
@@ -138,6 +138,13 @@ SIGNAL(TIMER1_COMPA_vect)
   // TODO: Check if the busy-flag can be eliminated by just disabling this interrupt while we are in it
   
   if(busy){ return; } // The busy-flag is used to avoid reentering this interrupt
+
+  // Check limits
+  if( LIMIT_PIN & 0xf ) {
+  	gHomed = FALSE ;
+	return;
+  }
+
   // Set the direction pins a couple of nanoseconds before we step the steppers
   DIRECTION_PORT = (DIRECTION_PORT & ~DIRECTION_MASK) | (dir_bits & DIRECTION_MASK);
   // Then pulse the stepping pins
@@ -231,7 +238,8 @@ void st_init()
   STEPPING_DDR |= STEP_MASK;
   DIRECTION_DDR |= DIRECTION_MASK;
   STEPPING_PORT = (STEPPING_PORT & ~STEP_MASK) | STEP_INVERT_MASK;
-  LIMIT_DDR &= ~(LIMIT_MASK);
+ // see limit setup
+ // LIMIT_DDR &= ~(LIMIT_MASK);
   STEPPERS_ENABLE_DDR |= 1<<STEPPERS_ENABLE_BIT;
   
   st_disable();
@@ -324,7 +332,209 @@ void set_step_events_per_minute(uint32_t steps_per_minute) {
   cycles_per_step_event = config_step_timer((TICKS_PER_MICROSECOND*1000000*60)/steps_per_minute);
 }
 
+// global home flag ( machine should only do home move if this is FALSE)
+unsigned char gHomed = FALSE;
+
+static unsigned char xLimit1( void ) 
+{
+	unsigned char limit = bit_is_set( LIMIT_PIN, X1_LIMIT_BIT );
+	
+	if( limit ) {
+		// no longer homed
+		gHomed = FALSE;
+		printPgmString(PSTR("xLimit1\r\n"));
+	}
+
+	return limit;
+}
+
+static unsigned char xLimit2( void ) 
+{
+	unsigned char limit = bit_is_set( LIMIT_PIN, X2_LIMIT_BIT );
+	
+	if( limit ) {
+		// no longer homed
+		gHomed = FALSE;
+		printPgmString(PSTR("xLimit2\r\n"));
+	}
+
+	return limit;
+}
+static unsigned char yLimit1( void ) 
+{
+	unsigned char limit = bit_is_set( LIMIT_PIN, Y1_LIMIT_BIT );
+	
+	if( limit ) {
+		// no longer homed
+		gHomed = FALSE;
+		printPgmString(PSTR("yLimit1\r\n"));
+	}
+
+	return limit;
+}
+static unsigned char yLimit2( void ) 
+{
+	unsigned char limit = bit_is_set( LIMIT_PIN, Y2_LIMIT_BIT );
+	
+	if( limit ) {
+		// no longer homed
+		gHomed = FALSE;
+		printPgmString(PSTR("yLimit2\r\n"));
+	}
+
+	return limit;
+}
+
+enum {
+	STOP,LEFT,RIGHT,FORWARD,BACK
+};
+
+void moveLeft( unsigned int distance ) 
+{
+  // Set the direction pins a couple of nanoseconds before we step the steppers
+  DIRECTION_PORT = (DIRECTION_PORT & ~DIRECTION_MASK) | (0 & DIRECTION_MASK);
+  // Then pulse the stepping pins
+  while(distance--) {
+     STEPPING_PORT = (STEPPING_PORT & ~STEP_MASK) | (1<<X_STEP_BIT);	
+	 _delay_us( 7 ) ;
+     STEPPING_PORT = (STEPPING_PORT & ~STEP_MASK);	
+	 _delay_us( 280 ) ;
+  }
+}
+
+void moveRight( unsigned int distance ) 
+{
+  // Set the direction pins a couple of nanoseconds before we step the steppers
+  DIRECTION_PORT = (DIRECTION_PORT & ~DIRECTION_MASK) | ((1<<X_DIRECTION_BIT) & DIRECTION_MASK);
+  // Then pulse the stepping pins
+  while(distance--) {
+  	STEPPING_PORT = (STEPPING_PORT & ~STEP_MASK) | (1<<X_STEP_BIT);	
+	 _delay_us( 7 ) ;
+  	STEPPING_PORT = (STEPPING_PORT & ~STEP_MASK);
+	 _delay_us( 280 ) ;
+  }
+}
+
+void moveForward( unsigned int distance ) 
+{
+  // Set the direction pins a couple of nanoseconds before we step the steppers
+  DIRECTION_PORT = (DIRECTION_PORT & ~DIRECTION_MASK) | (0 & DIRECTION_MASK);
+  // Then pulse the stepping pins
+  while(distance--) {
+    STEPPING_PORT = (STEPPING_PORT & ~STEP_MASK) | (1<<Y_STEP_BIT);	
+	 _delay_us( 7 ) ;
+    STEPPING_PORT = (STEPPING_PORT & ~STEP_MASK);	
+	 _delay_us( 280 ) ;
+  }
+}
+
+void moveBack( unsigned int distance ) 
+{
+  // Set the direction pins a couple of nanoseconds before we step the steppers
+  DIRECTION_PORT = (DIRECTION_PORT & ~DIRECTION_MASK) | ((1<<Y_DIRECTION_BIT) & DIRECTION_MASK);
+  // Then pulse the stepping pins
+  while(distance--) {
+    STEPPING_PORT = (STEPPING_PORT & ~STEP_MASK) | (1<<Y_STEP_BIT);	
+	 _delay_us( 7 ) ;
+    STEPPING_PORT = (STEPPING_PORT & ~STEP_MASK);	
+	 _delay_us( 280 ) ;
+  }
+}
+
 void st_go_home()
 {
-  // Todo: Perform the homing cycle
+	// default direction is to go left and forward
+	unsigned char xDir = LEFT;
+	unsigned char yDir = FORWARD;
+
+	// not homed
+	gHomed = FALSE;
+
+	// no interrupts
+	cli();
+
+	printPgmString(PSTR("homing\r\n"));
+
+	// If in left most limit, move to right > more than size of home and limit area
+	if( xLimit1() ) {
+
+		// move out far enough that the home and limit switches are passed
+		moveRight( 1000 );
+
+	}
+
+	// If in front most limit, move to right > more than size of home and limit area
+	if( yLimit1() ) {
+		// move out far enough that the home and limit switches are passed
+		moveBack( 1000 );
+	}
+
+	// at here, we are definitely not in home, and also not in the XL2/Yl2 limits
+	do {
+
+		// are we homed ?	
+		if( bit_is_set( XHM_PIN, X_HOME ) ) {
+			xDir = STOP;
+		}
+
+		// no, crawl to home
+		if ( xDir == LEFT) {
+			moveLeft(1);
+		}
+
+
+	}while( xDir != STOP );
+
+	do {
+		if( bit_is_set( YHM_PIN, Y_HOME ) ) {
+			yDir = STOP;
+		}
+
+		if ( yDir == FORWARD ) {
+			moveForward(1);
+		}
+
+	} while( yDir != STOP );
+
+	sei();
+
+
+  if( ( LIMIT_PIN & 0xf) == 0x0 )
+   {
+		gHomed = TRUE ;
+		printPgmString(PSTR("pickobear is homed\r\n"));
+		return;
+	}
+
+	printPgmString(PSTR("pickobear is not homed\r\n"));
+
+}
+
+void limits_init(void)
+{
+
+	//pickobear specific
+	DDRA = 0x0;
+	DDRB = 0x2;
+	DDRC = 0x0;
+	DDRD = 0x0;
+	DDRE = 0x0;
+	DDRF = 0x8F;
+	DDRG = 0x0;
+	DDRH = 0x0;
+	DDRJ = 0x0;
+	DDRK = 0xCF;
+	DDRL = 0xF0;
+
+	PORTA = 0x9C;
+	PORTB = 0x22;
+	PORTC = 0x13;
+	PORTD = 0x8F;
+	PORTE = 0x30;
+	PORTF = 0x8F;
+	PORTG = 0x23;
+	PORTH = 0x3;
+	PORTJ = 0x3;
+	PORTK = 0xCF;
+	PORTL = 0xF0;
 }

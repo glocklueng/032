@@ -27,12 +27,20 @@
 #include <math.h>
 #include "nuts_bolts.h"
 #include <avr/pgmspace.h>
+#include "motion_control.h"
+
 #define LINE_BUFFER_SIZE 50
 
 static char line[LINE_BUFFER_SIZE];
 static uint8_t char_counter;
 
 static void status_message(int status_code) {
+
+	if( gHomed == FALSE ) {
+    	printPgmString(PSTR("Not homed\n\r"));
+	}
+
+
   switch(status_code) {          
     case GCSTATUS_OK:
     printPgmString(PSTR("ok\n\r")); break;

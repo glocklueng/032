@@ -32,7 +32,11 @@
 #include "coolant_control.h"
 #include "errno.h"
 #include "serial_protocol.h"
+#include "wiring_serial.h"
 
+#include "config.h"
+
+#include <avr/pgmspace.h>
 
 #define MM_PER_INCH (25.4)
 
@@ -168,12 +172,56 @@ uint8_t gc_execute_line(char *line) {
   // Pass 1: Commands
   while(next_statement(&letter, &value, line, &char_counter)) {
     int_value = trunc(value);
+
     switch(letter) {
+	  case 'D':
+		{	
+#if 0
+			unsigned char ch;
+			ch = DDRD;
+	      	printPgmString(PSTR("DDRD  = "));
+		  	printBinary( ch );
+	      	printPgmString(PSTR("\r\n"));
+
+			ch = PORTD;
+	      	printPgmString(PSTR("PORTD  = "));
+		  	printBinary( ch );
+	      	printPgmString(PSTR("\r\n"));
+
+			ch = PIND;
+	      	printPgmString(PSTR("PIND limits = "));
+		  	printBinary( ch );
+	      	printPgmString(PSTR("\r\n"));
+#endif
+
+
+			if( bit_is_set( LIMIT_PIN, X1_LIMIT_BIT ) )
+		      	printPgmString(PSTR("XL1\r\n"));
+			if( bit_is_set( LIMIT_PIN, X2_LIMIT_BIT ) )
+		      	printPgmString(PSTR("XL2\r\n"));
+
+			if( bit_is_set( LIMIT_PIN, Y1_LIMIT_BIT ))
+		      	printPgmString(PSTR("YL1\r\n"));
+			if( bit_is_set( LIMIT_PIN, Y2_LIMIT_BIT ) )
+		      	printPgmString(PSTR("YL2\r\n"));
+
+			if( bit_is_set( XHM_PIN, X_HOME ) )
+		      	printPgmString(PSTR("X_HOME\r\n"));
+
+			if( bit_is_set( YHM_PIN, Y_HOME ) )
+		      	printPgmString(PSTR("Y_HOME\r\n"));
+
+
+
+			}
+
+	       break;
+
       case 'G':
       switch(int_value) {
         case 0: gc.motion_mode = MOTION_MODE_SEEK; break;
         case 1: gc.motion_mode = MOTION_MODE_LINEAR; break;
-#if defined  (__AVR_ATmega328P__ ) || defined( __AVCR_ATmega2560__ )       
+#if defined  (__AVR_ATmega328P__ ) || defined( __AVR_ATmega2560__ )       
         case 2: gc.motion_mode = MOTION_MODE_CW_ARC; break;
         case 3: gc.motion_mode = MOTION_MODE_CCW_ARC; break;
 #endif        

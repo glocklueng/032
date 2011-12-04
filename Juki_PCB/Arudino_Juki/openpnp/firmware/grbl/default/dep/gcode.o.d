@@ -17,7 +17,8 @@ gcode.o: ../gcode.c ../gcode.h \
   ../motion_control.h ../planner.h ../spindle_control.h \
   ../coolant_control.h \
   d:/winavr-20100110/lib/gcc/../../avr/include/errno.h \
-  ../serial_protocol.h
+  ../serial_protocol.h ../wiring_serial.h ../config.h \
+  d:/winavr-20100110/lib/gcc/../../avr/include/avr/pgmspace.h
 
 ../gcode.h:
 
@@ -66,3 +67,9 @@ d:/winavr-20100110/lib/gcc/../../avr/include/math.h:
 d:/winavr-20100110/lib/gcc/../../avr/include/errno.h:
 
 ../serial_protocol.h:
+
+../wiring_serial.h:
+
+../config.h:
+
+d:/winavr-20100110/lib/gcc/../../avr/include/avr/pgmspace.h:

@@ -32,6 +32,8 @@
 
 #include "settings.h"
 #include "wiring_serial.h"
+void limits_init(void);
+
 
 // #ifndef __AVR_ATmega328P__
 // #  error "As of version 0.6 Grbl only supports atmega328p. If you want to run Grbl on an 168 check out 0.51 ('git co v0_51')"
@@ -44,13 +46,14 @@ int main(void)
   settings_init();  
   plan_init();      
   st_init();        
+  limits_init();
   spindle_init();   
   coolant_init();
   gc_init();
   
   // Once everything is initialized, send the standard "ok" to let clients
   // know it's okay to go ahead
-  printPgmString(PSTR("ok\n\r"));
+  printPgmString(PSTR("[NSL] pickoBear ok\n\r"));
 
   for(;;){
     sleep_mode(); // Wait for it ...

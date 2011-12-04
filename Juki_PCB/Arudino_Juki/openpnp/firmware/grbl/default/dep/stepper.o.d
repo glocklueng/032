@@ -19,7 +19,7 @@ stepper.o: ../stepper.c ../stepper.h \
   ../nuts_bolts.h d:/winavr-20100110/lib/gcc/../../avr/include/string.h \
   d:/winavr-20100110/lib/gcc/../../avr/include/avr/interrupt.h \
   d:/winavr-20100110/lib/gcc/../../avr/include/avr/pgmspace.h \
-  ../planner.h ../wiring_serial.h
+  ../planner.h ../wiring_serial.h ../motion_control.h
 
 ../stepper.h:
 
@@ -72,3 +72,5 @@ d:/winavr-20100110/lib/gcc/../../avr/include/avr/pgmspace.h:
 ../planner.h:
 
 ../wiring_serial.h:
+
+../motion_control.h:
