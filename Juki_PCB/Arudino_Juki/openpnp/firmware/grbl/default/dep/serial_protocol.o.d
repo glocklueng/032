@@ -14,7 +14,8 @@ serial_protocol.o: ../serial_protocol.c \
   d:/winavr-20100110/lib/gcc/../../avr/include/math.h ../config.h \
   ../nuts_bolts.h d:/winavr-20100110/lib/gcc/../../avr/include/string.h \
   d:\winavr-20100110\bin\../lib/gcc/avr/4.3.3/include/stddef.h \
-  d:/winavr-20100110/lib/gcc/../../avr/include/avr/pgmspace.h
+  d:/winavr-20100110/lib/gcc/../../avr/include/avr/pgmspace.h \
+  ../motion_control.h ../planner.h
 
 d:/winavr-20100110/lib/gcc/../../avr/include/avr/io.h:
 
@@ -57,3 +58,7 @@ d:/winavr-20100110/lib/gcc/../../avr/include/string.h:
 d:\winavr-20100110\bin\../lib/gcc/avr/4.3.3/include/stddef.h:
 
 d:/winavr-20100110/lib/gcc/../../avr/include/avr/pgmspace.h:
+
+../motion_control.h:
+
+../planner.h:

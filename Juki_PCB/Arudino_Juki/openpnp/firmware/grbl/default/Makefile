@@ -15,7 +15,7 @@ COMMON = -mmcu=$(MCU)
 
 ## Compile options common for all C compilation units.
 CFLAGS = $(COMMON)
-CFLAGS += -Wall -gdwarf-2 -std=gnu99 -ffunction-sections          -DF_CPU=16000000UL -Os -funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums
+CFLAGS += -Wall -gdwarf-2 -std=gnu99 -ffunction-sections                        -DF_CPU=16000000UL -O3 -funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums
 CFLAGS += -MD -MP -MT $(*F).o -MF dep/$(@F).d 
 
 ## Assembly specific flags
@@ -25,7 +25,7 @@ ASMFLAGS += -x assembler-with-cpp -Wa,-gdwarf2
 
 ## Linker flags
 LDFLAGS = $(COMMON)
-LDFLAGS +=  -Wl,-Map=grbl.map
+LDFLAGS += 
 
 
 ## Intel Hex file production flags
@@ -49,7 +49,7 @@ OBJECTS = coolant_control.o eeprom.o gcode.o main.o motion_control.o planner.o s
 LINKONLYOBJECTS = 
 
 ## Build
-all: $(TARGET) grbl.hex grbl.eep grbl.lss## Compile
+all: $(TARGET) grbl.hex grbl.eep## Compile
 coolant_control.o: ../coolant_control.c
 	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
 
@@ -99,8 +99,7 @@ $(TARGET): $(OBJECTS)
 ## Clean target
 .PHONY: clean
 clean:
-	-rm -rf $(OBJECTS) grbl.elf dep/* grbl.hex grbl.eep grbl.lss grbl.map
-
+	-rm -rf $(OBJECTS) grbl.elf dep/* grbl.hex grbl.eep
 
 ## Other dependencies
 -include $(shell mkdir dep 2>NUL) $(wildcard dep/*)

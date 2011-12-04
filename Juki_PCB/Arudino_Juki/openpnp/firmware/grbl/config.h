@@ -70,7 +70,7 @@
 #define C_STEP_BIT          5
 
 // Set INVERT to 0 for pulse high step or 1 for pulse low step
-#define X_STEP_INVERT       1
+#define X_STEP_INVERT       0
 #define Y_STEP_INVERT       0
 #define Z_STEP_INVERT       0
 #define C_STEP_INVERT       0
@@ -87,8 +87,8 @@
 #define C_DIRECTION_BIT     7
 
 // Set INVERT to 0 for pulse high direction or 1 for pulse low direction
-#define X_DIRECTION_INVERT  0
-#define Y_DIRECTION_INVERT  0
+#define X_DIRECTION_INVERT  1
+#define Y_DIRECTION_INVERT  1
 #define Z_DIRECTION_INVERT  0
 #define C_DIRECTION_INVERT  0
 
@@ -97,18 +97,31 @@
 // multiple ports.
 #define LIMIT_DDR           DDRD
 #define LIMIT_PORT          PORTD
-#define X_LIMIT_BIT         0
-#define Y_LIMIT_BIT         1
+#define LIMIT_PIN	        PIND
+#define X1_LIMIT_BIT         3
+#define X2_LIMIT_BIT         2
+#define Y1_LIMIT_BIT         0
+#define Y2_LIMIT_BIT         1
+
 #define Z_LIMIT_BIT         2
 #define C_LIMIT_BIT         3
+
+// home switches
+#define XHM_DDR		       DDRA
+#define XHM_PIN      	   PINA
+#define YHM_DDR		       DDRG
+#define YHM_PIN      	   PING
+
+#define X_HOME				4 //PA4
+#define Y_HOME				0 //PG0
 
 #define X_LIMIT_INVERT      0
 #define Y_LIMIT_INVERT      0
 #define Z_LIMIT_INVERT      0
 #define C_LIMIT_INVERT      0
 
-#define SPINDLE_ENABLE_DDR    DDRA
-#define SPINDLE_ENABLE_PORT   PORTA
+#define SPINDLE_ENABLE_DDR    DDRH
+#define SPINDLE_ENABLE_PORT   PORTH
 #define SPINDLE_ENABLE_BIT    6
 #define SPINDLE_ENABLE_INVERT 0
 
