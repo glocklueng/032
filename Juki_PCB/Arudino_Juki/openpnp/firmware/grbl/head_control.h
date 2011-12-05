@@ -24,6 +24,9 @@
 
 #include <avr/io.h>
 
+// length of time for ehad to transition state
+#define HEAD_SETTLE_TIME		( 200 )
+
 void head_init();
 void head_down(int state);
 unsigned char is_head_down( void );

@@ -25,8 +25,7 @@
 #include <avr/io.h>
 
 void panel_init();
-void panel_down(int state);
-unsigned char is_panel_down( void );
+
 unsigned char is_rotated( void );
 unsigned char is_pleft( void );
 unsigned char is_pright( void );
@@ -36,5 +35,6 @@ unsigned char is_phead( void );
 unsigned char is_pvac( void );
 unsigned char is_pfast( void );
 unsigned char is_phome( void );
+unsigned char is_pteach( void );
 
 #endif

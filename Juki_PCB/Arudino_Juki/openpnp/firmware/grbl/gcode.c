@@ -34,6 +34,7 @@
 #include "serial_protocol.h"
 #include "wiring_serial.h"
 #include "head_control.h"
+#include "tape_knock.h"
 
 #include "config.h"
 
@@ -274,9 +275,11 @@ uint8_t gc_execute_line(char *line) {
 		case 16: atc_change(4);break;
 		case 17: atc_change(5);break;
 		case 18: atc_change(6);break;
-	// vacuum
+// vacuum
 		case 19: vacuum(1);break;
 		case 20: vacuum(0);break;
+// tape knock
+		case 21: tape_knock();break;
 
 
         default: FAIL(GCSTATUS_UNSUPPORTED_STATEMENT);

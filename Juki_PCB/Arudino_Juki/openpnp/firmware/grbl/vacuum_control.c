@@ -17,7 +17,7 @@
 #include "config.h"
 #include "settings.h"
 
-void vacuum_init()
+void vacuum_init(void)
 {
 	// setup vacuum sensor TAC
 	LIMIT_DDR &= ~(_BV( TACSENSE ) );
@@ -25,6 +25,7 @@ void vacuum_init()
 
 	// Vacuum on/off control
 	HEAD_DDR |= _BV( VACUUM );
+	HEAD_PORT |= _BV( VACUUM );
 
 }
 
@@ -33,14 +34,20 @@ void vacuum(int state)
 {
   printPgmString(PSTR("vacuum change\n\r"));
 
-  
-// vacuum  on /off
-  if( state == 1 ) {
+// vacuum  on / off
+  if( state == 0 ) {
+
 	HEAD_PORT |= _BV( VACUUM );
+
   } else {
 
 	HEAD_PORT &= ~(_BV( VACUUM ));
+
   }
+
+   // wait for air to get settled
+   _delay_ms( AIR_SETTLE_TIME );
+
 }
 
 // is vacuum working ?
@@ -48,7 +55,7 @@ unsigned char vacuum_state( void )
 {
 	unsigned char state ;
 
-	state  = bit_is_set( LIMIT_DDR, TACSENSE );
+	state  = bit_is_set( LIMIT_DDR, TACSENSE )?0:1;
 
 	return state;
 }
