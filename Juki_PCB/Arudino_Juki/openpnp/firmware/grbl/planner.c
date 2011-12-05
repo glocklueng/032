@@ -62,10 +62,13 @@
 #include "settings.h"
 #include "config.h"
 #include "wiring_serial.h"
+#include "motion_control.h"
 
 // The number of linear motions that can be in the plan at any give time
-#if defined  (__AVR_ATmega328P__ ) || defined( __AVR_ATmega2560__ )    
+#if defined  (__AVR_ATmega328P__ ) 
 #define BLOCK_BUFFER_SIZE 5
+#elif defined( __AVR_ATmega2560__ )    
+#define BLOCK_BUFFER_SIZE (10)
 #else
 #define BLOCK_BUFFER_SIZE 5
 #endif
@@ -349,6 +352,11 @@ void plan_set_current(double x, double y, double z, double c) {
 // mm. Microseconds specify how many microseconds the move should take to perform. To aid acceleration
 // calculation the caller must also provide the physical length of the line in millimeters.
 void plan_buffer_line(double x, double y, double z, double c, double feed_rate, int invert_feed_rate) {
+  
+  
+  if( gHomed == FALSE ) 
+  	return;
+	  
   // The target position of the tool in absolute steps
   
   // Calculate target position in absolute steps

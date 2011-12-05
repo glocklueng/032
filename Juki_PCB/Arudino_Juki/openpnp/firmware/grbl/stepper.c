@@ -56,7 +56,7 @@ static block_t *current_block;  // A pointer to the block currently being traced
 
 // Variables used by The Stepper Driver Interrupt
 static uint8_t out_bits;        // The next stepping-bits to be output
-static uint8_t dir_bits;
+uint8_t dir_bits;
 static int32_t counter_x,       // Counter variables for the bresenham line tracer
                counter_y, 
                counter_z,
@@ -144,6 +144,9 @@ void set_busy(unsigned char state )
 SIGNAL(TIMER1_COMPA_vect)
 {        
   // TODO: Check if the busy-flag can be eliminated by just disabling this interrupt while we are in it
+
+	if ( gHomed == FALSE ) 
+		return;
 
 // don't move if the head is down  
   if( is_head_down() )
@@ -401,59 +404,73 @@ enum {
 	STOP,LEFT,RIGHT,FORWARD,BACK
 };
 
-void moveLeft( unsigned int distance ) 
+#define PULSE_LENGTH	( 10 )
+#define PULSE_OFF_LENGTH ( 280 )
+
+unsigned char moveLeft( unsigned int distance ) 
 {
   // Set the direction pins a couple of nanoseconds before we step the steppers
   DIRECTION_PORT = (DIRECTION_PORT & ~DIRECTION_MASK) | (0 & DIRECTION_MASK);
   // Then pulse the stepping pins
   while(distance--) {
+
+  	if( bit_is_set( LIMIT_PIN, X1_LIMIT_BIT ) ) return 0;
+
      STEPPING_PORT = (STEPPING_PORT & ~STEP_MASK) | (1<<X_STEP_BIT);	
-	 _delay_us( 7 ) ;
+	 _delay_us( PULSE_LENGTH ) ;
      STEPPING_PORT = (STEPPING_PORT & ~STEP_MASK);	
-	 _delay_us( 280 ) ;
+	 _delay_us( PULSE_OFF_LENGTH ) ;
   }
+
+	return TRUE;
 }
 
-void moveRight( unsigned int distance ) 
+unsigned char moveRight( unsigned int distance ) 
 {
   // Set the direction pins a couple of nanoseconds before we step the steppers
   DIRECTION_PORT = (DIRECTION_PORT & ~DIRECTION_MASK) | ((1<<X_DIRECTION_BIT) & DIRECTION_MASK);
   // Then pulse the stepping pins
   while(distance--) {
-  	STEPPING_PORT = (STEPPING_PORT & ~STEP_MASK) | (1<<X_STEP_BIT);	
-	 _delay_us( 7 ) ;
+
+  	if( bit_is_set( LIMIT_PIN, X2_LIMIT_BIT ) ) return 0;
+  	
+	STEPPING_PORT = (STEPPING_PORT & ~STEP_MASK) | (1<<X_STEP_BIT);	
+	 _delay_us( PULSE_LENGTH ) ;
   	STEPPING_PORT = (STEPPING_PORT & ~STEP_MASK);
-	 _delay_us( 280 ) ;
+	 _delay_us( PULSE_OFF_LENGTH ) ;
   }
+	return TRUE;
 }
 
-void moveForward( unsigned int distance ) 
+unsigned char moveForward( unsigned int distance ) 
 {
   // Set the direction pins a couple of nanoseconds before we step the steppers
   DIRECTION_PORT = (DIRECTION_PORT & ~DIRECTION_MASK) | (0 & DIRECTION_MASK);
   // Then pulse the stepping pins
   while(distance--) {
     STEPPING_PORT = (STEPPING_PORT & ~STEP_MASK) | (1<<Y_STEP_BIT);	
-	 _delay_us( 7 ) ;
+	 _delay_us( PULSE_LENGTH ) ;
     STEPPING_PORT = (STEPPING_PORT & ~STEP_MASK);	
-	 _delay_us( 280 ) ;
+	 _delay_us( PULSE_OFF_LENGTH ) ;
   }
+	return TRUE;
 }
 
-void moveBack( unsigned int distance ) 
+unsigned char moveBack( unsigned int distance ) 
 {
   // Set the direction pins a couple of nanoseconds before we step the steppers
   DIRECTION_PORT = (DIRECTION_PORT & ~DIRECTION_MASK) | ((1<<Y_DIRECTION_BIT) & DIRECTION_MASK);
   // Then pulse the stepping pins
   while(distance--) {
     STEPPING_PORT = (STEPPING_PORT & ~STEP_MASK) | (1<<Y_STEP_BIT);	
-	 _delay_us( 7 ) ;
+	 _delay_us( PULSE_LENGTH ) ;
     STEPPING_PORT = (STEPPING_PORT & ~STEP_MASK);	
-	 _delay_us( 280 ) ;
+	 _delay_us( PULSE_OFF_LENGTH ) ;
   }
+  return TRUE;
 }
 
-void st_go_home()
+void st_go_home(void)
 {
 	// default direction is to go left and forward
 	unsigned char xDir = LEFT;
@@ -462,63 +479,127 @@ void st_go_home()
 	// not homed
 	gHomed = FALSE;
 
+// reset position machine thinks we are at.
+	plan_init();
+	gc_init();
+
 	// no interrupts
 	cli();
 
+	// if head down, set head up
+	if( is_head_down() ) {
+		head_down(0);
+		
+		//check again
+		if(is_head_down() ){
+			printPgmString(PSTR("home failed\r\n"));
+			return;
+		}
+
+	}
+
+	// tool changer off
+	atc_change(0);	
+
+#ifdef VERBOSE_DEBUG
 	printPgmString(PSTR("homing\r\n"));
+#endif
 
 	// If in left most limit, move to right > more than size of home and limit area
 	if( xLimit1() ) {
 
+#ifdef VERBOSE_DEBUG
+		printPgmString(PSTR("xLimit1\r\n"));
+#endif
 		// move out far enough that the home and limit switches are passed
-		moveRight( 1000 );
+		if( moveRight( 1000 ) == 0 ) {
+			return;
+		}
+		// direction change delay
+		_delay_ms(200);
 
 	}
 
 	// If in front most limit, move to right > more than size of home and limit area
 	if( yLimit1() ) {
+
+#ifdef VERBOSE_DEBUG
+		printPgmString(PSTR("yLimit1\r\n"));
+#endif
 		// move out far enough that the home and limit switches are passed
-		moveBack( 1000 );
+		if( moveBack( 1000 ) == 0 ) {
+			return;
+		}
+		// direction change delay
+		_delay_ms(200);
 	}
 
-	// at here, we are definitely not in home, and also not in the XL2/Yl2 limits
+#ifdef VERBOSE_DEBUG
+	printPgmString(PSTR("homing left "));
+#endif
+
+	// at here, we are maybe  not in home, and also not in the XL1/Yl1 limits
 	do {
 
+#ifdef VERBOSE_DEBUG
+		printPgmString(PSTR("."));
+#endif
 		// are we homed ?	
 		if( bit_is_set( XHM_PIN, X_HOME ) ) {
 			xDir = STOP;
+			
 		}
 
 		// no, crawl to home
 		if ( xDir == LEFT) {
-			moveLeft(1);
+			if( moveLeft(1) == 0 ) 
+				goto error;
 		}
 
 
 	}while( xDir != STOP );
 
+	// direction change delay
+	_delay_ms(200);
+
+#ifdef VERBOSE_DEBUG
+	printPgmString(PSTR("\r\nhoming right "));
+#endif
+
 	do {
+
+#ifdef VERBOSE_DEBUG
+		printPgmString(PSTR("."));
+#endif
 		if( bit_is_set( YHM_PIN, Y_HOME ) ) {
 			yDir = STOP;
+			
 		}
 
 		if ( yDir == FORWARD ) {
-			moveForward(1);
+			if( moveForward(1) ==  0 ) {
+				goto error;
+			}
 		}
 
 	} while( yDir != STOP );
+error:;
 
 	sei();
 
 
-  if( ( LIMIT_PIN & 0xf) == 0x0 )
-   {
+  if( ( LIMIT_PIN & 0xf) == 0x0 )  {
 		gHomed = TRUE ;
-		printPgmString(PSTR("pickobear is homed\r\n"));
+#ifdef VERBOSE_DEBUG
+		printPgmString(PSTR("\r\npickobear is homed\r\n"));
+#endif
 		return;
 	}
 
-	printPgmString(PSTR("pickobear is not homed\r\n"));
+
+#ifdef VERBOSE_DEBUG
+	printPgmString(PSTR("\r\npickobear is not homed\r\n"));
+#endif
 
 }
 

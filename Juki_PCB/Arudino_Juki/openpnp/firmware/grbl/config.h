@@ -21,6 +21,9 @@
 #ifndef config_h
 #define config_h
 
+#define SET_BIT(p,m) ((p) |= (m)) 
+#define CLEAR_BIT(p,m) ((p) &= ~(m)) 
+
 #define BAUD_RATE (38400)
 
 // Updated default pin-assignments from 0.6 onwards 

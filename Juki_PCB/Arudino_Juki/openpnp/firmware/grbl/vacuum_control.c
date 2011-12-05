@@ -32,7 +32,9 @@ void vacuum_init(void)
 // switches vacuum on and off
 void vacuum(int state)
 {
-  printPgmString(PSTR("vacuum change\n\r"));
+#ifdef VERBOSE_DEBUG
+	printPgmString(PSTR("vacuum change\n\r"));
+#endif
 
 // vacuum  on / off
   if( state == 0 ) {

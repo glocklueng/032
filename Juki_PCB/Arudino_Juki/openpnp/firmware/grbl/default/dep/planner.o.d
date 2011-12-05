@@ -16,7 +16,7 @@ planner.o: ../planner.c \
   d:/winavr-20100110/lib/gcc/../../avr/include/avr/fuse.h \
   d:/winavr-20100110/lib/gcc/../../avr/include/avr/lock.h \
   d:/winavr-20100110/lib/gcc/../../avr/include/avr/sleep.h ../settings.h \
-  ../config.h ../wiring_serial.h
+  ../config.h ../wiring_serial.h ../motion_control.h
 
 d:/winavr-20100110/lib/gcc/../../avr/include/inttypes.h:
 
@@ -61,3 +61,5 @@ d:/winavr-20100110/lib/gcc/../../avr/include/avr/sleep.h:
 ../config.h:
 
 ../wiring_serial.h:
+
+../motion_control.h:

@@ -107,6 +107,7 @@ void gc_init() {
   select_plane(X_AXIS, Y_AXIS, Z_AXIS);
   gc.absolute_mode = TRUE;
 }
+extern uint8_t dir_bits;
 
 static float to_millimeters(double value) {
   return(gc.inches_mode ? (value * MM_PER_INCH) : value);
@@ -178,11 +179,11 @@ uint8_t gc_execute_line(char *line) {
     switch(letter) {
 	  case 'D':
 		{	
-#if 0
+#if 1
 			unsigned char ch;
 			ch = DDRD;
-	      	printPgmString(PSTR("DDRD  = "));
-		  	printBinary( ch );
+	      	printPgmString(PSTR("dir_bits  = "));
+		  	printBinary( dir_bits );
 	      	printPgmString(PSTR("\r\n"));
 
 			ch = PORTD;
@@ -205,8 +206,6 @@ uint8_t gc_execute_line(char *line) {
 	      	printPgmString(PSTR("\r\n"));
 
 
-
-
 			if( bit_is_set( LIMIT_PIN, X1_LIMIT_BIT ) )
 		      	printPgmString(PSTR("XL1\r\n"));
 			if( bit_is_set( LIMIT_PIN, X2_LIMIT_BIT ) )
@@ -222,9 +221,6 @@ uint8_t gc_execute_line(char *line) {
 
 			if( bit_is_set( YHM_PIN, Y_HOME ) )
 		      	printPgmString(PSTR("Y_HOME\r\n"));
-
-
-
 			}
 
 	       break;
@@ -354,7 +350,7 @@ uint8_t gc_execute_line(char *line) {
   
   // Perform any physical actions
   switch (next_action) {
-    case NEXT_ACTION_GO_HOME: mc_go_home(); break;
+    case NEXT_ACTION_GO_HOME: mc_go_home(); memset(target,0,sizeof(target));break;
     case NEXT_ACTION_DWELL: mc_dwell(trunc(p*1000)); break;
     case NEXT_ACTION_DEFAULT: 
     switch (gc.motion_mode) {
