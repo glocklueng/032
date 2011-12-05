@@ -18,12 +18,14 @@
   along with Grbl.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <avr/io.h>
-#include "settings.h"
-#include "motion_control.h"
+
 #include <util/delay.h>
 #include <math.h>
 #include <stdlib.h>
+#include <avr/io.h>
+
+#include "settings.h"
+#include "motion_control.h"
 #include "nuts_bolts.h"
 #include "stepper.h"
 #include "planner.h"
