@@ -145,36 +145,44 @@
 #define HEADDT_PIN				PINC
 
 // these two are swapped in the schematic
-#define	HEAD_DOWN_TEST			0 		// PC1
-#define	D90						1 		// PC0
-#define VACCUM_TEST				1
+#define	HEAD_DOWN_TEST			( 0 ) 			// PC1
+#define	D90						( 1 ) 			// PC0
 
 // control the head up/down
 #define HEAD_DDR				DDRL
 #define HEAD_PORT				PORTL
 #define HEAD_PIN				PINL
-#define HEAD					(5)
-#define VACUUM					(4)
+#define HEAD					(5)			// PL5
+#define VACUUM					(4)			// PL4
+
+#define TAPE_DDR				DDRK
+#define TAPE_PORT				PORTK
+#define TAPE_PIN				PINK
+#define TAPE_KNOCK				( 7 ) // PK7
 
 // switch panel
 #define PANEL_HOME				( 5 ) // PB5 (M.ORG)
 #define PANEL_HEAD				( 4 ) // PC4 HEAD
 #define PANEL_LEFT				( 5 ) // PE5 -X
-#define PANEL_FORWARD			( 4 ) // PE4 +Y
+#define PANEL_FORWARD			( 1 ) // PJ1 +Y
+#define PANEL_BACK				( 4 ) // PE4 -Y
 #define PANEL_RIGHT				( 5 ) // PG5 +X
 #define PANEL_FAST				( 0 ) // PJ0 FAST
-#define PANEL_BACK				( 1 ) // PJ1 -Y
 #define PANEL_VAC				( 0 ) // PH0 VAC
 #define PANEL_TEACH				( 1 ) // PH1 TEACH
 
 // atc
-#define SPARE1					( 0 )
-#define SPARE2					( 0 )
-#define SPARE3					( 0 )
-#define SPARE4					( 0 )
-#define SPARE5					( 0 )
-#define SPARE6					( 0 )
-
+#define SPARE_DDR				DDRK
+#define SPARE_PORT				PORTK
+#define SPARE_PIN				PINK
+			
+#define SPARE1					( 7 ) // PF7
+#define SPARE2					( 0 ) // PK0
+#define SPARE3					( 1 ) // PK1
+#define SPARE4					( 2 ) // PK2
+#define SPARE5					( 3 ) // PK3
+#define SPARE6					( 6 ) // PK6
+#define SPARE8					( 5 ) // PK5
 
 // The temporal resolution of the acceleration management subsystem. Higher number
 // give smoother acceleration but may impact performance

@@ -1,6 +1,5 @@
-
 /*
-  vacuum_control.h - vacuum control methods
+  tape_control.h - tape control methods
   Part of Grbl
 
   Copyright (c) 2009-2011 Simen Svale Skogsrud
@@ -19,16 +18,15 @@
   along with Grbl.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef vacuum_control_h
-#define vacuum_control_h 
+#ifndef tape_control_h
+#define tape_control_h 
 
 #include <avr/io.h>
 
-// ms needed for air to transistion
-#define AIR_SETTLE_TIME		( 500 )
+// number of ms to hold tape knock down
+#define TAPE_KNOCK_SETTLE ( 200 )
 
-void vacuum_init();
-void vacuum(int state);
-unsigned char vacuum_state( void );
+void tape_init();
+void tape_knock( void );
 
 #endif

@@ -43,4 +43,7 @@ void st_disable();
 
 int st_is_enabled();
 
+void set_busy(unsigned char state );
+
+
 #endif

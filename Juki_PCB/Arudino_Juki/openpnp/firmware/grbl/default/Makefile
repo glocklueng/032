@@ -15,7 +15,7 @@ COMMON = -mmcu=$(MCU)
 
 ## Compile options common for all C compilation units.
 CFLAGS = $(COMMON)
-CFLAGS += -Wall -gdwarf-2 -std=gnu99 -ffunction-sections                          -DF_CPU=16000000UL -O3 -funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums
+CFLAGS += -Wall -gdwarf-2 -std=gnu99 -ffunction-sections          -DF_CPU=16000000UL -Os -funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums
 CFLAGS += -MD -MP -MT $(*F).o -MF dep/$(@F).d 
 
 ## Assembly specific flags
@@ -43,7 +43,7 @@ LIBDIRS = -L"C:\WinAVR-20100110\avr\lib\avr6"
 LIBS = -lm 
 
 ## Objects that must be built in order to link
-OBJECTS = coolant_control.o eeprom.o gcode.o main.o motion_control.o planner.o serial_protocol.o settings.o spindle_control.o stepper.o wiring_serial.o head_control.o vacuum_control.o panel_control.o atc_control.o 
+OBJECTS = coolant_control.o eeprom.o gcode.o main.o motion_control.o planner.o serial_protocol.o settings.o spindle_control.o stepper.o wiring_serial.o atc_control.o head_control.o panel_control.o vacuum_control.o tape_knock.o 
 
 ## Objects explicitly added by the user
 LINKONLYOBJECTS = 
@@ -83,16 +83,19 @@ stepper.o: ../stepper.c
 wiring_serial.o: ../wiring_serial.c
 	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
 
-head_control.o: ../head_control.c
+atc_control.o: ../atc_control.c
 	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
 
-vacuum_control.o: ../vacuum_control.c
+head_control.o: ../head_control.c
 	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
 
 panel_control.o: ../panel_control.c
 	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
 
-atc_control.o: ../atc_control.c
+vacuum_control.o: ../vacuum_control.c
+	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
+
+tape_knock.o: ../tape_knock.c
 	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
 
 ##Link

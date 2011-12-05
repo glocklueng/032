@@ -21,18 +21,20 @@
 /* The timer calculations of this module informed by the 'RepRap cartesian firmware' by Zack Smith
    and Philipp Tiefenbacher. */
 
+#include <math.h>
+#include <stdlib.h>
+#include <avr/interrupt.h>
+#include <avr/pgmspace.h>
+#include <util/delay.h>
+
 #include "stepper.h"
 #include "config.h"
 #include "settings.h"
-#include <math.h>
-#include <stdlib.h>
-#include <util/delay.h>
 #include "nuts_bolts.h"
-#include <avr/interrupt.h>
-#include <avr/pgmspace.h>
 #include "planner.h"
 #include "wiring_serial.h"
 #include "motion_control.h"
+#include "head_control.h"
 
 // Some useful constants
 #define STEP_MASK ((1<<X_STEP_BIT)|(1<<Y_STEP_BIT)|(1<<Z_STEP_BIT)|(1<<C_STEP_BIT)) // All step bits
@@ -130,6 +132,12 @@ inline void trapezoid_generator_tick() {
   }
 }
 
+// need a way to tell the stepers not to move ( cli / sei ? )
+void set_busy(unsigned char state ) 
+{
+	busy = state;
+}
+
 // "The Stepper Driver Interrupt" - This timer interrupt is the workhorse of Grbl. It is  executed at the rate set with
 // config_step_timer. It pops blocks from the block_buffer and executes them by pulsing the stepper pins appropriately. 
 // It is supported by The Stepper Port Reset Interrupt which it uses to reset the stepper port after each pulse.
@@ -138,11 +146,12 @@ SIGNAL(TIMER1_COMPA_vect)
   // TODO: Check if the busy-flag can be eliminated by just disabling this interrupt while we are in it
 
 // don't move if the head is down  
-  if( is_head_down() ) return;
+  if( is_head_down() )
+  	return;
 
   if(busy){ return; } // The busy-flag is used to avoid reentering this interrupt
 
-  // Check limits
+  // Check all limit switches
   if( LIMIT_PIN & 0xf ) {
   	gHomed = FALSE ;
 	return;

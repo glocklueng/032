@@ -60,7 +60,59 @@ int main(void)
   
   // Once everything is initialized, send the standard "ok" to let clients
   // know it's okay to go ahead
-  printPgmString(PSTR("[NSL] pickoBear ok\n\r"));
+  printPgmString(PSTR("ok\n\r"));
+
+// test inputs	
+	while(0){
+		unsigned char ch = 0;
+
+	      	printPgmString(PSTR("head down = "));
+			printInteger( is_head_down() );
+	      	printPgmString(PSTR(" "));
+
+	      	printPgmString(PSTR("rotated = "));
+			printInteger( is_rotated() );
+	      	printPgmString(PSTR(" "));
+
+ch = is_pleft(  );
+	      	printPgmString(PSTR("is_pleft = "));
+			printInteger( ch );
+	      	printPgmString(PSTR("\t"));
+ch = is_pright(  );
+	      	printPgmString(PSTR("is_pright = "));
+			printInteger( ch );
+	      	printPgmString(PSTR("\t"));
+ch = is_pback(  );
+	      	printPgmString(PSTR("is_pback = "));
+			printInteger( ch );
+	      	printPgmString(PSTR("\t"));
+ch = is_pforward(  );
+	      	printPgmString(PSTR("is_pforward = "));
+			printInteger( ch );
+	      	printPgmString(PSTR("\t"));
+ch = is_phead(  );
+	      	printPgmString(PSTR("is_phead = "));
+			printInteger( ch );
+	      	printPgmString(PSTR("\t"));
+ch = is_pvac(  );
+	      	printPgmString(PSTR("is_pvac = "));
+			printInteger( ch );
+	      	printPgmString(PSTR("\t"));
+ch = is_pfast(  );
+	      	printPgmString(PSTR("is_pfast = "));
+			printInteger( ch );
+	      	printPgmString(PSTR("\t"));
+ch = is_pteach(  );
+	      	printPgmString(PSTR("is_pteach = "));
+			printInteger( ch );
+	      	printPgmString(PSTR("\t"));
+ch = is_phome(  );
+	      	printPgmString(PSTR("is_phome = "));
+			printInteger( ch );
+	      	printPgmString(PSTR("\r\n"));
+
+
+	}
 
   for(;;){
     sleep_mode(); // Wait for it ...

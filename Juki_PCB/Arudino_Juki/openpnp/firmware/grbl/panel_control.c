@@ -17,7 +17,7 @@
 #include "config.h"
 #include "settings.h"
 
-
+// Setup pin interrupts
 void panel_init()
 {
 // set the panel as inputs
@@ -57,7 +57,7 @@ unsigned char is_pleft( void )
 {
 	unsigned char state ;
 
-	state  = bit_is_set( PINB, PANEL_LEFT );
+	state  = bit_is_set( PINE, PANEL_LEFT )?0:1;
 
 	return state;
 }
@@ -66,7 +66,7 @@ unsigned char is_pright( void )
 {
 	unsigned char state ;
 
-	state  = bit_is_set( PING, PANEL_RIGHT );
+	state  = bit_is_set( PING, PANEL_RIGHT )?0:1;
 
 	return state;
 }
@@ -75,7 +75,7 @@ unsigned char is_pback( void )
 {
 	unsigned char state ;
 
-	state  = bit_is_set( PINJ, PANEL_BACK );
+	state  = bit_is_set( PINE, PANEL_BACK )?0:1;
 
 	return state;
 }
@@ -84,7 +84,7 @@ unsigned char is_pforward( void )
 {
 	unsigned char state ;
 
-	state  = bit_is_set( PINE, PANEL_FORWARD );
+	state  = bit_is_set( PINJ, PANEL_FORWARD )?0:1;
 
 	return state;
 }
@@ -93,17 +93,16 @@ unsigned char is_phead( void )
 {
 	unsigned char state ;
 
-	state  = bit_is_set( PINC, PANEL_HEAD );
+	state  = bit_is_set( PINC, PANEL_HEAD )?0:1;
 
 	return state;
 }
-
 
 unsigned char is_pvac( void )
 {
 	unsigned char state ;
 
-	state  = bit_is_set( PINH, PANEL_VAC );
+	state  = bit_is_set( PINH, PANEL_VAC )?0:1;
 
 	return state;
 }
@@ -112,7 +111,7 @@ unsigned char is_pfast( void )
 {
 	unsigned char state ;
 
-	state  = bit_is_set( PINJ, PANEL_FAST );
+	state  = bit_is_set( PINJ, PANEL_FAST )?0:1;
 
 	return state;
 }
@@ -121,7 +120,17 @@ unsigned char is_phome( void )
 {
 	unsigned char state ;
 
-	state  = bit_is_set( PINB, PANEL_HOME );
+	state  = bit_is_set( PINB, PANEL_HOME )?0:1;
+
+	return state;
+}
+
+
+unsigned char is_pteach( void )
+{
+	unsigned char state ;
+
+	state  = bit_is_set( PINH, PANEL_TEACH )?0:1;
 
 	return state;
 }
