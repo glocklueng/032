@@ -78,6 +78,9 @@
 #define Z_STEP_INVERT       0
 #define C_STEP_INVERT       0
 
+//DIRECTION_DDR   = 10001111
+//DIRECTION_PORT  = 10001010
+
 
 // For performance reasons it is neccesary to have all of the
 // direction outputs on one port. They cannot be split across
