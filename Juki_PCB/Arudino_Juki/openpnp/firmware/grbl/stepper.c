@@ -414,7 +414,9 @@ unsigned char moveLeft( unsigned int distance )
   // Then pulse the stepping pins
   while(distance--) {
 
-  	if( bit_is_set( LIMIT_PIN, X1_LIMIT_BIT ) ) return 0;
+	//  hit left limit ?
+  	if( bit_is_set( LIMIT_PIN, X1_LIMIT_BIT ) ) 
+		return 0;
 
      STEPPING_PORT = (STEPPING_PORT & ~STEP_MASK) | (1<<X_STEP_BIT);	
 	 _delay_us( PULSE_LENGTH ) ;
@@ -444,10 +446,18 @@ unsigned char moveRight( unsigned int distance )
 
 unsigned char moveForward( unsigned int distance ) 
 {
+
+
   // Set the direction pins a couple of nanoseconds before we step the steppers
   DIRECTION_PORT = (DIRECTION_PORT & ~DIRECTION_MASK) | (0 & DIRECTION_MASK);
   // Then pulse the stepping pins
   while(distance--) {
+
+	//  hit limit ?
+  	if( bit_is_set( LIMIT_PIN, Y1_LIMIT_BIT ) ) 
+		return 0;
+
+
     STEPPING_PORT = (STEPPING_PORT & ~STEP_MASK) | (1<<Y_STEP_BIT);	
 	 _delay_us( PULSE_LENGTH ) ;
     STEPPING_PORT = (STEPPING_PORT & ~STEP_MASK);	
@@ -462,6 +472,10 @@ unsigned char moveBack( unsigned int distance )
   DIRECTION_PORT = (DIRECTION_PORT & ~DIRECTION_MASK) | ((1<<Y_DIRECTION_BIT) & DIRECTION_MASK);
   // Then pulse the stepping pins
   while(distance--) {
+
+  	if( bit_is_set( LIMIT_PIN, Y2_LIMIT_BIT ) ) 
+		return 0;
+
     STEPPING_PORT = (STEPPING_PORT & ~STEP_MASK) | (1<<Y_STEP_BIT);	
 	 _delay_us( PULSE_LENGTH ) ;
     STEPPING_PORT = (STEPPING_PORT & ~STEP_MASK);	
@@ -475,6 +489,9 @@ void st_go_home(void)
 	// default direction is to go left and forward
 	unsigned char xDir = LEFT;
 	unsigned char yDir = FORWARD;
+
+	unsigned int counter = 0;
+
 
 	// not homed
 	gHomed = FALSE;
@@ -538,8 +555,11 @@ void st_go_home(void)
 	printPgmString(PSTR("homing left "));
 #endif
 
+	counter = 0;
+
 	// at here, we are maybe  not in home, and also not in the XL1/Yl1 limits
 	do {
+
 
 #ifdef VERBOSE_DEBUG
 		printPgmString(PSTR("."));
@@ -556,8 +576,16 @@ void st_go_home(void)
 				goto error;
 		}
 
+			counter ++;
 
 	}while( xDir != STOP );
+
+	printPgmString(PSTR("\r\nleft count = "));
+	printInteger( counter ) ;
+	printPgmString(PSTR("\r\n"));
+
+	counter = 0;
+
 
 	// direction change delay
 	_delay_ms(200);
@@ -567,6 +595,7 @@ void st_go_home(void)
 #endif
 
 	do {
+		int counter = 0;
 
 #ifdef VERBOSE_DEBUG
 		printPgmString(PSTR("."));
@@ -580,10 +609,18 @@ void st_go_home(void)
 			if( moveForward(1) ==  0 ) {
 				goto error;
 			}
+			counter ++;
 		}
 
 	} while( yDir != STOP );
+
+	printPgmString(PSTR("\r\nforward count = "));
+	printInteger( counter ) ;
+	printPgmString(PSTR("\r\n"));
+
 error:;
+
+
 
 	sei();
 

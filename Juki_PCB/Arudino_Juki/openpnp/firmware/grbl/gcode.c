@@ -182,8 +182,12 @@ uint8_t gc_execute_line(char *line) {
 #if 1
 			unsigned char ch;
 			ch = DDRD;
-	      	printPgmString(PSTR("dir_bits  = "));
-		  	printBinary( dir_bits );
+	      	printPgmString(PSTR("DIRECTION_DDR  = "));
+		  	printBinary( DIRECTION_DDR );
+	      	printPgmString(PSTR("\r\n"));
+
+	      	printPgmString(PSTR("DIRECTION_PORT  = "));
+		  	printBinary( DIRECTION_PORT );
 	      	printPgmString(PSTR("\r\n"));
 
 			ch = PORTD;

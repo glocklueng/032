@@ -25,7 +25,7 @@
 #include <math.h>
 #include <inttypes.h>
 
-#define GRBL_VERSION "0.76"
+#define GRBL_VERSION "0.76PB"
 
 // Version of the EEPROM data. Will be used to migrate existing data from older versions of Grbl
 // when firmware is upgraded. Always stored in byte 0 of eeprom
@@ -34,7 +34,7 @@
 // Current global settings (persisted in EEPROM from byte 1 onwards)
 typedef struct {
   double steps_per_mm[4]; // G: x, y, z, c
-  uint8_t microsteps;
+  uint8_t microstepsx;
   uint8_t pulse_microseconds;
   double default_feed_rate;
   double default_seek_rate;
@@ -53,10 +53,10 @@ void settings_dump();
 // A helper method to set new settings from command line
 void settings_store_setting(int parameter, double value);
 
-// Default settings (used when resetting eeprom-settings)
+// Default settings (used when resetting eeprom-settings) // 25.4mm to X1
 #define MICROSTEPS 8
-#define DEFAULT_X_STEPS_PER_MM (94.488188976378*MICROSTEPS)
-#define DEFAULT_Y_STEPS_PER_MM (94.488188976378*MICROSTEPS)
+#define DEFAULT_X_STEPS_PER_MM (127*MICROSTEPS)
+#define DEFAULT_Y_STEPS_PER_MM (127*MICROSTEPS)
 #define DEFAULT_Z_STEPS_PER_MM (94.488188976378*MICROSTEPS)
 // G: For C_AXIS, equate 1mm == 1 degree of rotation (imaginary pulley circumference of 360mm)
 #define DEFAULT_C_STEPS_PER_MM (5.556*MICROSTEPS)
@@ -65,6 +65,6 @@ void settings_store_setting(int parameter, double value);
 #define DEFAULT_RAPID_FEEDRATE 480.0 // in millimeters per minute
 #define DEFAULT_FEEDRATE 480.0
 #define DEFAULT_ACCELERATION (DEFAULT_FEEDRATE/100.0)
-#define DEFAULT_MAX_JERK 50.0
+#define DEFAULT_MAX_JERK (50.0)
 
 #endif
