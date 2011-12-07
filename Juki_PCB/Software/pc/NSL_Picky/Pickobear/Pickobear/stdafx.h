@@ -52,7 +52,7 @@
 
 #include "OpenGLControl.h"
 
-#include "Serial.h"
+#include "SerialMFC.h"
 
 #include "opencv.h"
 #include "FeederSetup.h"
@@ -64,12 +64,8 @@
 #pragma comment(lib,"opencv_core231.lib")
 //#pragma comment(lib,"videoInput\\videoInput.lib")
 
-CString GetSaveFile( const TCHAR *ptypes, const TCHAR*caption, const TCHAR *pStartDir);
-CString GetLoadFile( const TCHAR *ptypes, const TCHAR*caption, const TCHAR *pStartDir);
-bool SetCurrentPosition ( long x,long y);
+extern 	videoInput VI;
 
-extern 	videoInput VI; ;
-extern 	CSerial m_Serial;
 #ifdef _UNICODE
 #if defined _M_IX86
 #pragma comment(linker,"/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='x86' publicKeyToken='6595b64144ccf1df' language='*'\"")

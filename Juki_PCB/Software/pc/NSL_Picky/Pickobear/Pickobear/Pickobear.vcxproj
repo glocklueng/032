@@ -121,6 +121,8 @@
     <ClCompile Include="Pickobear.cpp" />
     <ClCompile Include="PickobearDlg.cpp" />
     <ClCompile Include="Serial.cpp" />
+    <ClCompile Include="SerialEx.cpp" />
+    <ClCompile Include="SerialWnd.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -135,6 +137,8 @@
     <ClInclude Include="PickobearDlg.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Serial.h" />
+    <ClInclude Include="SerialEx.h" />
+    <ClInclude Include="SerialMFC.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TextEditDialog.h" />

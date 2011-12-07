@@ -45,13 +45,10 @@ END_MESSAGE_MAP()
 // move this
 double m_Thresh1=0,m_Thresh2=10;
 
-long cx,cy;
-
-
 CPickobearDlg::CPickobearDlg(CWnd* pParent /*=NULL*/)
 	: CDialog(CPickobearDlg::IDD, pParent)
-	, m_headXPos(0)
-	, m_headYpos(0)
+	, m_headXPos(-1)
+	, m_headYPos(-1)
 	, m_Threshold1(m_Thresh1)
 	, m_Threshold2(m_Thresh2)
 	, m_Head(0)
@@ -59,6 +56,7 @@ CPickobearDlg::CPickobearDlg(CWnd* pParent /*=NULL*/)
 	, m_GOY(0)
 	, m_pFeederDlg( NULL )
 	, m_Quit(0)
+	, m_Speed(800)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -68,7 +66,7 @@ void CPickobearDlg::DoDataExchange(CDataExchange* pDX)
 	CDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_GO, GO);
 	DDX_Text(pDX, IDC_X_POS, m_headXPos);
-	DDX_Text(pDX, IDC_Y_POS, m_headYpos);
+	DDX_Text(pDX, IDC_Y_POS, m_headYPos);
 	DDX_Text(pDX, IDC_THRESHOLD, m_Threshold1);
 	DDX_Text(pDX, IDC_THRESHOLD2, m_Threshold2);
 	DDX_Control(pDX, IDC_ROTATE, m_Rotation);
@@ -80,7 +78,8 @@ void CPickobearDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_COMBO2, m_DownCamera);
 }
 
-BEGIN_MESSAGE_MAP(CPickobearDlg, CDialog)
+BEGIN_MESSAGE_MAP(CPickobearDlg, CDialog) 
+	ON_WM_SERIAL(OnSerialMsg)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
@@ -216,7 +215,7 @@ BOOL CPickobearDlg::OnInitDialog()
 
 	// convert to a picker
 	CString m_ComPort = _T("\\\\.\\COM31");
-	m_Serial.Open(m_ComPort );
+	m_Serial.Open(m_ComPort, this );
 
 	m_Serial.Setup(CSerial::EBaud38400 );
 	
@@ -230,8 +229,6 @@ BOOL CPickobearDlg::OnInitDialog()
 		} while( length ) ;
 	}
 
-
-	
 	m_ComponentList.GetClientRect(&rect);
 	int nInterval =( rect.Width() / 7);
 
@@ -357,7 +354,7 @@ void CPickobearDlg::OnBnClickedHome()
 		{
 		case 'f':
 
-			cx = -1 ; cy = -1;
+			m_headXPos = -1 ; m_headYPos = -1;
 
 			if( MessageBox(_T("Home failed!!"),_T("Error"),IDOK|IDRETRY) == IDRETRY)
 				pass = false;
@@ -367,7 +364,7 @@ void CPickobearDlg::OnBnClickedHome()
 			break;
 		case 'p':
 			
-			cx = 0 ; cy =0;
+			m_headXPos = 0 ; m_headYPos =0;
 
 			// enable the GO button
 			GO.EnableWindow( TRUE ) ;
@@ -410,7 +407,14 @@ void CPickobearDlg::OnBnClickedHome()
 		}
 	} while( pass == false );
 
-	SetCurrentPosition(cx,cy);		
+	SetCurrentPosition(m_headXPos,m_headYPos);		
+}
+
+void BuildGCodeMove( char *output, int length, int mode , long x,long y,long speed )
+{
+	ASSERT( output) ;
+
+	sprintf_s(output, length,"G%dX%dY%dG%d\r\n",mode,x,y,speed);
 }
 
 // move head can only go to (int)(x/40)*40,same for y
@@ -418,22 +422,22 @@ bool CPickobearDlg::MoveHead( long x, long y )
 {
 	char buffer[100];
 
-	SetCurrentPosition(cx,cy);
+	SetCurrentPosition(m_headXPos,m_headYPos);
 
-	sprintf_s(buffer,sizeof(buffer),"G1X%dY%dF800\r\n",x,y);
+	BuildGCodeMove(buffer,sizeof(buffer),1,x,y,m_Speed);
 
-	_RPT5(_CRT_WARN,"current pos = %dum,%dum\nGoing to %dum,%dum\n%s\n",cx,cy,x,y,buffer);
+	_RPT5(_CRT_WARN,"current pos = %dum,%dum\nGoing to %dum,%dum\n%s\n",m_headXPos,m_headYPos,x,y,buffer);
 	m_Serial.Write(buffer);
 
 	CheckAck("ok");
 
-	SetCurrentPosition(cx,cy);
-	_RPT2(_CRT_WARN,"current pos = %d,%d\n",cx,cy);
+	SetCurrentPosition(m_headXPos,m_headYPos);
+	_RPT2(_CRT_WARN,"current pos = %d,%d\n",m_headXPos,m_headYPos);
 
-	if( (cx) != x &&  (cy) != y) {
+	if( (m_headXPos) != x &&  (m_headYPos) != y) {
 		
 		_RPT2(_CRT_WARN,"Problem! wanted=(%d,%d)", x,y );
-		_RPT2(_CRT_WARN," converted=(%d,%d)\n",((cx/40)*40),((cy/40)*40) );
+		_RPT2(_CRT_WARN," converted=(%d,%d)\n",((m_headXPos/40)*40),((m_headYPos/40)*40) );
 	}
 
 	return true;
@@ -488,7 +492,7 @@ char CPickobearDlg::CheckAck( char *ack1 )
 
 
 
-	if(0==strnicmp((const char *)ack1,(const char *)&buffer[0], length   )  ) {
+	if(0==_strnicmp((const char *)ack1,(const char *)&buffer[0], length   )  ) {
 
 		return 'p';
 	}
@@ -500,17 +504,17 @@ char CPickobearDlg::CheckAck( char *ack1 )
 void CPickobearDlg::OnBnClickedRight()
 {
 	m_Serial.Write("r");
-	SetCurrentPosition(cx,cy);
+	SetCurrentPosition(m_headXPos,m_headYPos);
 }
 
 
 void CPickobearDlg::OnBnClickedPark()
 {
-	cx = 13; cy = 15;
+	m_headXPos = 13; m_headYPos = 15;
 
 	m_Serial.Write("G1X13Y15\r\n");
 
-	SetCurrentPosition(cx,cy);
+	SetCurrentPosition(m_headXPos,m_headYPos);
 }
 
 
@@ -539,21 +543,21 @@ void CPickobearDlg::OnBnClickedTool1()
 		}
 	} while( pass == false );
 
-	SetCurrentPosition(cx,cy);
+	SetCurrentPosition(m_headXPos,m_headYPos);
 }
 
 
 void CPickobearDlg::OnBnClickedTool2()
 {
 	m_Serial.Write("M13");
-	SetCurrentPosition(cx,cy);
+	SetCurrentPosition(m_headXPos,m_headYPos);
 }
 
 
 void CPickobearDlg::OnBnClickedTool3()
 {
 	m_Serial.Write("M14");
-	SetCurrentPosition(cx,cy);
+	SetCurrentPosition(m_headXPos,m_headYPos);
 }
 
 
@@ -561,7 +565,7 @@ void CPickobearDlg::OnBnClickedTool4()
 {
 	m_Serial.Write("M15");
 
-	SetCurrentPosition(cx,cy);
+	SetCurrentPosition(m_headXPos,m_headYPos);
 }
 
 
@@ -569,7 +573,7 @@ void CPickobearDlg::OnBnClickedTool5()
 {
 	m_Serial.Write("M16");
 
-	SetCurrentPosition(cx,cy);
+	SetCurrentPosition(m_headXPos,m_headYPos);
 }
 
 
@@ -577,7 +581,7 @@ void CPickobearDlg::OnBnClickedTool6()
 {
 	m_Serial.Write("M17");
 
-	SetCurrentPosition(cx,cy);
+	SetCurrentPosition(m_headXPos,m_headYPos);
 }
 
 
@@ -585,7 +589,7 @@ void CPickobearDlg::OnBnClickedUp()
 {
 	m_Serial.Write("u");
 
-	SetCurrentPosition(cx,cy);
+	SetCurrentPosition(m_headXPos,m_headYPos);
 }
 
 
@@ -593,7 +597,7 @@ void CPickobearDlg::OnBnClickedDown()
 {
 	m_Serial.Write("d");
 
-	SetCurrentPosition(cx,cy);
+	SetCurrentPosition(m_headXPos,m_headYPos);
 }
 
 
@@ -601,7 +605,7 @@ void CPickobearDlg::OnBnClickedLeft()
 {
 	m_Serial.Write("l");
 
-	SetCurrentPosition(cx,cy);
+	SetCurrentPosition(m_headXPos,m_headYPos);
 }
 
 
@@ -616,7 +620,7 @@ void CPickobearDlg::OnBnClickedHead()
 	m_Head = 1 - m_Head;
 
 
-	SetCurrentPosition(cx,cy);
+	SetCurrentPosition(m_headXPos,m_headYPos);
 
 }
 
@@ -634,7 +638,7 @@ void CPickobearDlg::OnBnClickedUpleft()
 	m_Serial.Write("l");
 	m_Serial.Write("u");
 
-	SetCurrentPosition(cx,cy);
+	SetCurrentPosition(m_headXPos,m_headYPos);
 }
 
 
@@ -643,7 +647,7 @@ void CPickobearDlg::OnBnClickedUpright()
 	m_Serial.Write("r");
 	m_Serial.Write("u");
 
-	SetCurrentPosition(cx,cy);
+	SetCurrentPosition(m_headXPos,m_headYPos);
 }
 
 
@@ -652,7 +656,7 @@ void CPickobearDlg::OnBnClickedLeftdown()
 	m_Serial.Write("l");
 	m_Serial.Write("d");
 
-	SetCurrentPosition(cx,cy);
+	SetCurrentPosition(m_headXPos,m_headYPos);
 }
 
 
@@ -661,7 +665,7 @@ void CPickobearDlg::OnBnClickedBottomleft()
 	m_Serial.Write("r");
 	m_Serial.Write("d");
 
-	SetCurrentPosition(cx,cy);
+	SetCurrentPosition(m_headXPos,m_headYPos);
 }
 
 void CPickobearDlg::OnBnClickedLoad()
@@ -895,7 +899,7 @@ DWORD CPickobearDlg::goThread(void )
 	}
 	 
 	// Park machine
-	m_Serial.Write("p");
+	m_Serial.Write("G1X14Y15F200\r\n");
 
 	// switch state to idle
 	m_MachineState = MS_IDLE ;
@@ -967,19 +971,16 @@ void CListCtrl_FeederList::OnHdnItemdblclickList2(NMHDR *pNMHDR, LRESULT *pResul
 
 bool SetCurrentPosition( long x,long y)
 {
-	char sbyte;
 	CPickobearDlg *pDlg = (CPickobearDlg*)AfxGetApp()->m_pMainWnd;
 
 	ASSERT( pDlg );
 
-	char lineBuffer[ 1024 ];
 	unsigned int linePtr = 0;
-	char *token;
 	char xString[200];
 	char yString[200];
 
-	sprintf(xString,"%d",x);
-	sprintf(yString,"%d",y);
+	sprintf_s(xString,sizeof(xString),"%d",x);
+	sprintf_s(yString,sizeof(xString),"%d",y);
 
 	pDlg->m_GOX = x;
 	pDlg->m_GOY = y;
@@ -1011,11 +1012,11 @@ void CPickobearDlg::OnBnClickedOffset()
 {
 	ASSERT( m_ComponentList.entry );
 
-	SetCurrentPosition(cx,cy);
+	SetCurrentPosition(m_headXPos,m_headYPos);
 
 	// set the offset.
-	m_ComponentList.m_OffsetX = cx - m_ComponentList.entry->x; 
-	m_ComponentList.m_OffsetY = cy - m_ComponentList.entry->y;
+	m_ComponentList.m_OffsetX = m_headXPos - m_ComponentList.entry->x; 
+	m_ComponentList.m_OffsetY = m_headYPos - m_ComponentList.entry->y;
 
 	GetDlgItem( IDC_OFFSET )->EnableWindow( FALSE );
 }
@@ -1070,13 +1071,10 @@ void CPickobearDlg::OnBnClickedAddFeeder()
 
 }
 
-
 void CPickobearDlg::OnBnClickedUpdate()
 {
-
-	SetCurrentPosition(cx,cy);
+	SetCurrentPosition(m_headXPos,m_headYPos);
 }
-
 
 enum {
 	PNP_NULL,
@@ -1106,7 +1104,7 @@ int CPickobearDlg::SendCommand( int command )
 
 		case PNP_CURRENTPOS:
 		
-			SetCurrentPosition(cx,cy);
+			SetCurrentPosition(m_headXPos,m_headXPos);
 			break;
 
 		default:
@@ -1158,9 +1156,9 @@ void CPickobearDlg::OnBnClickedUpdate2()
 {
 
 
-	SetCurrentPosition(cx,cy);
-	cy += 73050;
-	MoveHead(cx,cy);
+	SetCurrentPosition(m_headXPos,m_headYPos);
+	m_headYPos += 73050;
+	MoveHead(m_headXPos,m_headYPos);
 }
 
 
@@ -1168,9 +1166,9 @@ void CPickobearDlg::OnBnClickedUpdate3()
 {
 
 
-	SetCurrentPosition(cx,cy);
-	cy -= 73050;
-	MoveHead(cx,cy);
+	SetCurrentPosition(m_headXPos,m_headYPos);
+	m_headYPos -= 73050;
+	MoveHead(m_headXPos,m_headYPos);
 }
 
 
@@ -1203,4 +1201,23 @@ void CListCtrl_FeederList::OnContextMenu(CWnd*, CPoint point)
 		NULL);
 
 	//cMenu->DestroyMenu();
+}
+
+
+afx_msg LRESULT CPickobearDlg::OnSerialMsg (WPARAM wParam, LPARAM lParam)
+{
+    const CSerialMFC::EEvent eEvent = CSerialMFC::EEvent(LOWORD(wParam));
+    const CSerialMFC::EError eError = CSerialMFC::EError(HIWORD(wParam));
+
+    switch (eEvent)
+    {
+	    case CSerialMFC::EEventRecv:
+			_RPT0(_CRT_WARN,"EEventRecv\n");
+
+        break;
+    }
+   
+    // Return successful
+
+    return 0;
 }
