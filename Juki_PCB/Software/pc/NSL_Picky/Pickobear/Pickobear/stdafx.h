@@ -66,7 +66,7 @@
 
 CString GetSaveFile( const TCHAR *ptypes, const TCHAR*caption, const TCHAR *pStartDir);
 CString GetLoadFile( const TCHAR *ptypes, const TCHAR*caption, const TCHAR *pStartDir);
-bool GetCurrentPosition ( long &x,long &y);
+bool SetCurrentPosition ( long x,long y);
 
 extern 	videoInput VI; ;
 extern 	CSerial m_Serial;

@@ -401,7 +401,10 @@ private:
 
 	// states the machine could be in
 	enum eMachineState {
-		MS_IDLE,MS_GO
+
+		MS_IDLE,
+		MS_GO
+
 	};
 
 	// current state
@@ -421,8 +424,8 @@ public:
 	DWORD cameraThread(void );
 
 	// check acknowledgement fron pnp
-	char CheckAck(char ack,char ack1);
-	
+	char CheckAck(char *ack1);
+		
 	// move head to x,y
 	bool MoveHead( long x, long y );
 
@@ -511,4 +514,6 @@ public:
 	afx_msg void OnBnClickedSaveFeeder();
 	afx_msg void OnBnClickedUpdate2();
 	afx_msg void OnBnClickedUpdate3();
+	CComboBox m_UpCamera;
+	CComboBox m_DownCamera;
 };
