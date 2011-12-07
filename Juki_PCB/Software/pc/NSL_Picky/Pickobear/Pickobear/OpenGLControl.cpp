@@ -2,8 +2,6 @@
 #include "OpenGLControl.h"
 #include "pickobear.h"
 #include "pickobeardlg.h"
-extern long cx,cy;
-
 
 COpenGLControl::COpenGLControl(void) :
 	img1(NULL),	
@@ -59,28 +57,26 @@ void COpenGLControl::OnRButtonDown(UINT nFlags, CPoint point )
 
 		if( point.x > 0 ) {
 			point.x--;
-			m_Serial.Write("R");
+			pDlg->m_Serial.Write("R");
 		} else if( point.x < 0 ) {
 			point.x++;
-			m_Serial.Write("L");
+			pDlg->m_Serial.Write("L");
 		}
 
 		if( point.y > 0 ) {
 			point.y--;
-			m_Serial.Write("D");
+			pDlg->m_Serial.Write("D");
 		}
 		else if( point.y < 0 ) {
 			point.y++;
-			m_Serial.Write("U");
+			pDlg->m_Serial.Write("U");
 		}
 
 	} while( point.x!=0 || point.y != 0 ) ;
 
-	CPickobearDlg *pDlg = (CPickobearDlg*)AfxGetApp()->m_pMainWnd;
 	ASSERT( pDlg );
 
-
-	SetCurrentPosition(cx,cy);
+	SetCurrentPosition( pDlg->m_headXPos,pDlg->m_headYPos );
 }
 
 void COpenGLControl::OnSize(UINT nType, int cx, int cy)
@@ -107,6 +103,8 @@ void COpenGLControl::OnSize(UINT nType, int cx, int cy)
 int COpenGLControl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CWnd::OnCreate(lpCreateStruct) == -1) return -1;
+		
+	pDlg = (CPickobearDlg*)AfxGetApp()->m_pMainWnd;
 
 	oglInitialize();
 

@@ -5,12 +5,15 @@
 #pragma once
 #include "afxwin.h"
 
-#include "Serial.h"
+#include "SerialMFC.h"
 #include "afxcmn.h"
 
 #include <iostream>
 #include <fstream>
 
+CString GetSaveFile( const TCHAR *ptypes, const TCHAR*caption, const TCHAR *pStartDir);
+CString GetLoadFile( const TCHAR *ptypes, const TCHAR*caption, const TCHAR *pStartDir);
+bool SetCurrentPosition ( long x,long y);
 
 // component class
 class CListCtrl_Components : public CListCtrl
@@ -312,6 +315,7 @@ public:
 	long m_OffsetX;
 	long m_OffsetY;
 
+
 public:
 	CListCtrl_FeederList()
 	{
@@ -386,7 +390,6 @@ private:
 	// each of the camera windows
 	COpenGLControl m_oglWindow;
 	COpenGLControl m_oglWindow1;
-
 	// camera update thread
 	COGLThread m_OGLThread;
 
@@ -410,9 +413,13 @@ private:
 	// current state
 	eMachineState m_MachineState;
 
+	int m_Speed;
+
 // Construction
 public:
 	CPickobearDlg(CWnd* pParent = NULL);	// standard constructor
+
+	CSerialMFC m_Serial;
 	
 	int SendCommand( int command );
 
@@ -468,7 +475,7 @@ public:
 	CButton GO;
 	afx_msg void OnLbnSelchangeList1();
 	long m_headXPos;
-	long m_headYpos;
+	long m_headYPos;
 	double m_Threshold1;
 	double m_Threshold2;
 	afx_msg void OnEnChangeThreshold();
@@ -516,4 +523,7 @@ public:
 	afx_msg void OnBnClickedUpdate3();
 	CComboBox m_UpCamera;
 	CComboBox m_DownCamera;
+
+
+	afx_msg LRESULT OnSerialMsg (WPARAM wParam, LPARAM lParam);
 };

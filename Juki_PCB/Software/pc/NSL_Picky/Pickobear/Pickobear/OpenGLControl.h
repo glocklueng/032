@@ -1,3 +1,5 @@
+#include "stdafx.h"
+
 #pragma once
 #include "afxwin.h"
 #pragma comment(lib,"glu32.lib")
@@ -5,6 +7,9 @@
 
 #include <gl/gl.h>
 #include <gl/glu.h>
+
+class CPickobearDlg;
+
 
 class COpenGLControl : public CWnd
 {
@@ -19,6 +24,9 @@ class COpenGLControl : public CWnd
 		IplImage* img1;
 		IplImage* img2;
 		IplImage *resultImg;
+		
+		CPickobearDlg *pDlg;
+
 
 	private:
 		/*******************/

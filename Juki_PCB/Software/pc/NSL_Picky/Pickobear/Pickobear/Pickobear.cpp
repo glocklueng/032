@@ -18,7 +18,6 @@ BEGIN_MESSAGE_MAP(CPickobearApp, CWinAppEx)
 END_MESSAGE_MAP()
 
 videoInput VI; 
-CSerial m_Serial;
 
 // CPickobearApp construction
 
