@@ -68,8 +68,8 @@ static void status_message(int status_code)
 void sp_init() 
 {
   beginSerial(BAUD_RATE);  
-  printPgmString(PSTR("\r\nOpenPnP/Grbl " GRBL_VERSION));
-  printPgmString(PSTR("\r\n"));  
+//  printPgmString(PSTR("\r\nOpenPnP/Grbl " GRBL_VERSION));
+//  printPgmString(PSTR("\r\n"));  
 }
 
 void sp_process(void)

@@ -580,9 +580,11 @@ void st_go_home(void)
 
 	}while( xDir != STOP );
 
+#ifdef VERBOSE_DEBUG
 	printPgmString(PSTR("\r\nleft count = "));
 	printInteger( counter ) ;
 	printPgmString(PSTR("\r\n"));
+#endif
 
 	counter = 0;
 
@@ -612,11 +614,13 @@ void st_go_home(void)
 			counter ++;
 		}
 
-	} while( yDir != STOP );
-
+	} while( yDir !=
+	 STOP );
+#ifdef VERBOSE_DEBUG
 	printPgmString(PSTR("\r\nforward count = "));
 	printInteger( counter ) ;
 	printPgmString(PSTR("\r\n"));
+#endif
 
 error:;
 

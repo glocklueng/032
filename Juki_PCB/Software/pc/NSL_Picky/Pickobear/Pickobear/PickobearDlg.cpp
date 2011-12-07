@@ -45,6 +45,9 @@ END_MESSAGE_MAP()
 // move this
 double m_Thresh1=0,m_Thresh2=10;
 
+long cx,cy;
+
+
 CPickobearDlg::CPickobearDlg(CWnd* pParent /*=NULL*/)
 	: CDialog(CPickobearDlg::IDD, pParent)
 	, m_headXPos(0)
@@ -73,6 +76,8 @@ void CPickobearDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_GOX, m_GOX);
 	DDX_Text(pDX, IDC_GOY, m_GOY);
 	DDX_Control(pDX, IDC_LIST3, m_FeederList);
+	DDX_Control(pDX, IDC_COMBO1, m_UpCamera);
+	DDX_Control(pDX, IDC_COMBO2, m_DownCamera);
 }
 
 BEGIN_MESSAGE_MAP(CPickobearDlg, CDialog)
@@ -210,10 +215,22 @@ BOOL CPickobearDlg::OnInitDialog()
 	( ( CWnd* ) GetDlgItem( IDC_UPCAM ) )->SetWindowText( m_oglWindow1.oglCreate( rect, rect1, this, 2 ) );
 
 	// convert to a picker
-	CString m_ComPort = _T("\\\\.\\COM14");
+	CString m_ComPort = _T("\\\\.\\COM31");
 	m_Serial.Open(m_ComPort );
 
-	m_Serial.Setup(CSerial::EBaud9600 );
+	m_Serial.Setup(CSerial::EBaud38400 );
+	
+	m_Serial.Purge();
+	{
+		char buffer[100];
+		DWORD length;
+		do { 
+			length = 1;
+			m_Serial.Read( &buffer,100,&length,0,100);
+		} while( length ) ;
+	}
+
+
 	
 	m_ComponentList.GetClientRect(&rect);
 	int nInterval =( rect.Width() / 7);
@@ -332,11 +349,15 @@ void CPickobearDlg::OnBnClickedHome()
 	bool pass = false;
 
 	do { 
-		m_Serial.Write(" ");
+		m_Serial.Write("G28\r\n");
 
-		switch( CheckAck('f','p') )
+		Sleep( 100 );
+
+		switch( CheckAck("ok") )
 		{
 		case 'f':
+
+			cx = -1 ; cy = -1;
 
 			if( MessageBox(_T("Home failed!!"),_T("Error"),IDOK|IDRETRY) == IDRETRY)
 				pass = false;
@@ -346,6 +367,8 @@ void CPickobearDlg::OnBnClickedHome()
 			break;
 		case 'p':
 			
+			cx = 0 ; cy =0;
+
 			// enable the GO button
 			GO.EnableWindow( TRUE ) ;
 
@@ -387,30 +410,24 @@ void CPickobearDlg::OnBnClickedHome()
 		}
 	} while( pass == false );
 
-	long cx,cy;
-	GetCurrentPosition(cx,cy);	
+	SetCurrentPosition(cx,cy);		
 }
 
 // move head can only go to (int)(x/40)*40,same for y
 bool CPickobearDlg::MoveHead( long x, long y ) 
 {
-	char buffer[56];
+	char buffer[100];
 
-	long cx,cy;
-	GetCurrentPosition(cx,cy);
+	SetCurrentPosition(cx,cy);
 
-	sprintf_s(buffer,sizeof(buffer),"g%d,%d\n",x,y);
+	sprintf_s(buffer,sizeof(buffer),"G1X%dY%dF800\r\n",x,y);
 
-	_RPT4(_CRT_WARN,"current pos = %dum,%dum\nGoing to %dum,%dum\n",cx,cy,x,y);
+	_RPT5(_CRT_WARN,"current pos = %dum,%dum\nGoing to %dum,%dum\n%s\n",cx,cy,x,y,buffer);
 	m_Serial.Write(buffer);
 
-	char ch;
-	// wait for ack.
-	do { 
-		m_Serial.Read(&ch,1);
-	} while(ch!='A');
+	CheckAck("ok");
 
-	GetCurrentPosition(cx,cy);
+	SetCurrentPosition(cx,cy);
 	_RPT2(_CRT_WARN,"current pos = %d,%d\n",cx,cy);
 
 	if( (cx) != x &&  (cy) != y) {
@@ -422,32 +439,78 @@ bool CPickobearDlg::MoveHead( long x, long y )
 	return true;
 }
 
-char CPickobearDlg::CheckAck(char ack,char ack1)
+char CPickobearDlg::CheckAck( char *ack1 )
 {
+	unsigned int length = 1;
+
+	unsigned int index ;
 	unsigned char ch;
+	int ret;
+
+	unsigned char buffer[ 10 ];
+
+	memset(buffer,0,sizeof(buffer));
+
+	ASSERT( ack1 );
+	if( ack1 == NULL ){
+		return 'p';
+	}
+	index = 0;
 
 	// wait for ack. needs a timeout
 	do { 
-		m_Serial.Read(&ch,1);
-	} while(ch!=ack && ch!=ack1);
+
+		ret = m_Serial.Read( &ch, length );
+
+		if ( index < sizeof( buffer ) ) {
+
+			if( !( ch == 13 || ch == 10 ) ) 
+				buffer[ index++ ] = ch;
+
+		}
+
+	} while(ch!='\n');
 	
-	return ch;
+	m_Serial.Purge();
+	{
+		char bufferx[100];
+		DWORD length1;
+		do { 
+			length1 = 1;
+			m_Serial.Read( &bufferx,100,&length1,0,100);
+		} while( length1 ) ;
+	}
+
+
+	_RPT1(_CRT_WARN,"%s\n", buffer);
+
+	length = strlen( ack1 ) ;
+
+
+
+	if(0==strnicmp((const char *)ack1,(const char *)&buffer[0], length   )  ) {
+
+		return 'p';
+	}
+
+	return 'f';
 
 }
 
 void CPickobearDlg::OnBnClickedRight()
 {
 	m_Serial.Write("r");
-	long cx,cy;
-	GetCurrentPosition(cx,cy);
+	SetCurrentPosition(cx,cy);
 }
 
 
 void CPickobearDlg::OnBnClickedPark()
 {
-	m_Serial.Write("p");	
-	long cx,cy;
-	GetCurrentPosition(cx,cy);
+	cx = 13; cy = 15;
+
+	m_Serial.Write("G1X13Y15\r\n");
+
+	SetCurrentPosition(cx,cy);
 }
 
 
@@ -456,11 +519,11 @@ void CPickobearDlg::OnBnClickedTool1()
 	bool pass = false;
 
 	do { 
-		m_Serial.Write("1");
+		m_Serial.Write("M12");
 		
 		Sleep(400);
 
-		switch( CheckAck('f','p') )
+		switch( CheckAck("ok") )
 		{
 		case 'f':
 			if( MessageBox(_T("Tool change failed!!"),_T("Error"),IDOK|IDRETRY) == IDRETRY)
@@ -476,87 +539,84 @@ void CPickobearDlg::OnBnClickedTool1()
 		}
 	} while( pass == false );
 
-	long cx,cy;
-	GetCurrentPosition(cx,cy);
+	SetCurrentPosition(cx,cy);
 }
 
 
 void CPickobearDlg::OnBnClickedTool2()
 {
-	m_Serial.Write("2");
-	long cx,cy;
-	GetCurrentPosition(cx,cy);
+	m_Serial.Write("M13");
+	SetCurrentPosition(cx,cy);
 }
 
 
 void CPickobearDlg::OnBnClickedTool3()
 {
-	m_Serial.Write("3");
-	long cx,cy;
-	GetCurrentPosition(cx,cy);
+	m_Serial.Write("M14");
+	SetCurrentPosition(cx,cy);
 }
 
 
 void CPickobearDlg::OnBnClickedTool4()
 {
-	m_Serial.Write("4");
-	long cx,cy;
-	GetCurrentPosition(cx,cy);
+	m_Serial.Write("M15");
+
+	SetCurrentPosition(cx,cy);
 }
 
 
 void CPickobearDlg::OnBnClickedTool5()
 {
-	m_Serial.Write("5");
-	long cx,cy;
-	GetCurrentPosition(cx,cy);
+	m_Serial.Write("M16");
+
+	SetCurrentPosition(cx,cy);
 }
 
 
 void CPickobearDlg::OnBnClickedTool6()
 {
-	m_Serial.Write("6");
-	long cx,cy;
-	GetCurrentPosition(cx,cy);
+	m_Serial.Write("M17");
+
+	SetCurrentPosition(cx,cy);
 }
 
 
 void CPickobearDlg::OnBnClickedUp()
 {
 	m_Serial.Write("u");
-	long cx,cy;
-	GetCurrentPosition(cx,cy);
+
+	SetCurrentPosition(cx,cy);
 }
 
 
 void CPickobearDlg::OnBnClickedDown()
 {
 	m_Serial.Write("d");
-	long cx,cy;
-	GetCurrentPosition(cx,cy);
+
+	SetCurrentPosition(cx,cy);
 }
 
 
 void CPickobearDlg::OnBnClickedLeft()
 {
 	m_Serial.Write("l");
-	long cx,cy;
-	GetCurrentPosition(cx,cy);
+
+	SetCurrentPosition(cx,cy);
 }
 
 
 void CPickobearDlg::OnBnClickedHead()
 {
 	if( m_Head ) {
-		m_Serial.Write("h");
+		m_Serial.Write("M10");
 	} else { 
-		m_Serial.Write("H");
+		m_Serial.Write("M11");
 	}
 
 	m_Head = 1 - m_Head;
 
-	long cx,cy;
-	GetCurrentPosition(cx,cy);
+
+	SetCurrentPosition(cx,cy);
 
 }
 
@@ -573,8 +633,8 @@ void CPickobearDlg::OnBnClickedUpleft()
 {
 	m_Serial.Write("l");
 	m_Serial.Write("u");
-	long cx,cy;
-	GetCurrentPosition(cx,cy);
+
+	SetCurrentPosition(cx,cy);
 }
 
 
@@ -582,8 +642,8 @@ void CPickobearDlg::OnBnClickedUpright()
 {
 	m_Serial.Write("r");
 	m_Serial.Write("u");
-	long cx,cy;
-	GetCurrentPosition(cx,cy);
+
+	SetCurrentPosition(cx,cy);
 }
 
 
@@ -591,8 +651,8 @@ void CPickobearDlg::OnBnClickedLeftdown()
 {
 	m_Serial.Write("l");
 	m_Serial.Write("d");
-	long cx,cy;
-	GetCurrentPosition(cx,cy);
+
+	SetCurrentPosition(cx,cy);
 }
 
 
@@ -600,8 +660,8 @@ void CPickobearDlg::OnBnClickedBottomleft()
 {
 	m_Serial.Write("r");
 	m_Serial.Write("d");
-	long cx,cy;
-	GetCurrentPosition(cx,cy);
+
+	SetCurrentPosition(cx,cy);
 }
 
 void CPickobearDlg::OnBnClickedLoad()
@@ -905,23 +965,12 @@ void CListCtrl_FeederList::OnHdnItemdblclickList2(NMHDR *pNMHDR, LRESULT *pResul
 
 }
 
-bool GetCurrentPosition( long &x,long &y)
+bool SetCurrentPosition( long x,long y)
 {
 	char sbyte;
 	CPickobearDlg *pDlg = (CPickobearDlg*)AfxGetApp()->m_pMainWnd;
 
 	ASSERT( pDlg );
-
-	// read offset in pulses
-	m_Serial.Write("?");
-
-	// wait for ACK
-	do {
-		Sleep(200);
-		m_Serial.Read(&sbyte,1);
-	} while( sbyte != '?');
-			
-	Sleep(200);
 
 	char lineBuffer[ 1024 ];
 	unsigned int linePtr = 0;
@@ -929,43 +978,8 @@ bool GetCurrentPosition( long &x,long &y)
 	char xString[200];
 	char yString[200];
 
-	do {
-		// does this timeout ?
-		m_Serial.Read(&sbyte,1);
-
-		// end of line
-		if( sbyte == '\n' ) {
-
-			// ASCIZ terminate the buffer
-			lineBuffer[linePtr]  = 0;
-
-			// lineBuffer Should now contain something like 1000,1000
-			token = strtok (lineBuffer, ",");
-			if( token) {
-				// convert token to a string
-				sscanf_s(token, "%s", &xString );
-
-				token = strtok (NULL, ",");
-				if( token ) {
-
-					sscanf_s(token, "%s", &yString );	
-					break;
-				}
-			}
-		}
-
-		// add to buffer.
-		// it'll wrap automatically
-		if( linePtr < sizeof( lineBuffer) -1 ) {
-			lineBuffer[linePtr++] = sbyte;
-		} else {
-			return false ;
-		}
-
-	} while( 1 );
-
-	x = atol( xString );
-	y = atol( yString );
+	sprintf(xString,"%d",x);
+	sprintf(yString,"%d",y);
 
 	pDlg->m_GOX = x;
 	pDlg->m_GOY = y;
@@ -978,18 +992,26 @@ bool GetCurrentPosition( long &x,long &y)
 
 void CPickobearDlg::OnBnClickedZero()
 {
-	MoveHead(0,0);
+	int counter = 100;
+
+	long x,y;
+	do {
+		x = rand()%14;
+		y = rand()%16;
+		MoveHead(x,y);
+		Sleep( 3000 );
+	}while(counter--);
+
 }
 
-// 81775
+//  81775
 // 236275
 
 void CPickobearDlg::OnBnClickedOffset()
 {
 	ASSERT( m_ComponentList.entry );
 
-	long cx,cy;
-	GetCurrentPosition(cx,cy);
+	SetCurrentPosition(cx,cy);
 
 	// set the offset.
 	m_ComponentList.m_OffsetX = cx - m_ComponentList.entry->x; 
@@ -1031,6 +1053,7 @@ CStringA UTF16toUTF8(const CStringW& utf16)
       if (ptr) WideCharToMultiByte(CP_UTF8, 0, utf16, -1, ptr, len, 0, 0);
       utf8.ReleaseBuffer();
    }
+
    return utf8;
 }
 
@@ -1050,8 +1073,8 @@ void CPickobearDlg::OnBnClickedAddFeeder()
 
 void CPickobearDlg::OnBnClickedUpdate()
 {
-	long cx,cy;
-	GetCurrentPosition(cx,cy);
+
+	SetCurrentPosition(cx,cy);
 }
 
 
@@ -1082,8 +1105,8 @@ int CPickobearDlg::SendCommand( int command )
 			break;
 
 		case PNP_CURRENTPOS:
-			long cx,cy;
-			GetCurrentPosition(cx,cy);
+		
+			SetCurrentPosition(cx,cy);
 			break;
 
 		default:
@@ -1133,9 +1156,9 @@ void CPickobearDlg::OnBnClickedSaveFeeder()
 
 void CPickobearDlg::OnBnClickedUpdate2()
 {
-	long cx,cy;
 
-	GetCurrentPosition(cx,cy);
+
+	SetCurrentPosition(cx,cy);
 	cy += 73050;
 	MoveHead(cx,cy);
 }
@@ -1143,9 +1166,9 @@ void CPickobearDlg::OnBnClickedUpdate2()
 
 void CPickobearDlg::OnBnClickedUpdate3()
 {
-	long cx,cy;
 
-	GetCurrentPosition(cx,cy);
+
+	SetCurrentPosition(cx,cy);
 	cy -= 73050;
 	MoveHead(cx,cy);
 }

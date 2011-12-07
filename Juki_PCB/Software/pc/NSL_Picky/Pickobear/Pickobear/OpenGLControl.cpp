@@ -2,6 +2,8 @@
 #include "OpenGLControl.h"
 #include "pickobear.h"
 #include "pickobeardlg.h"
+extern long cx,cy;
+
 
 COpenGLControl::COpenGLControl(void) :
 	img1(NULL),	
@@ -77,8 +79,8 @@ void COpenGLControl::OnRButtonDown(UINT nFlags, CPoint point )
 	CPickobearDlg *pDlg = (CPickobearDlg*)AfxGetApp()->m_pMainWnd;
 	ASSERT( pDlg );
 
-	long cx,cy;
-	GetCurrentPosition(cx,cy);
+
+	SetCurrentPosition(cx,cy);
 }
 
 void COpenGLControl::OnSize(UINT nType, int cx, int cy)
