@@ -61,3 +61,19 @@ unsigned char vacuum_state( void )
 
 	return state;
 }
+
+
+void do_vacuum_test( void )
+{
+	if( vacuum_state() ) { 
+		
+		printPgmString(PSTR("y\r\n"));
+
+	} else {
+
+		printPgmString(PSTR("n\r\n"));
+
+	}
+
+}
+

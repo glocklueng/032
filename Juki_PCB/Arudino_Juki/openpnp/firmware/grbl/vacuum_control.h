@@ -30,5 +30,6 @@
 void vacuum_init();
 void vacuum(int state);
 unsigned char vacuum_state( void );
+void do_vacuum_test( void );
 
 #endif
