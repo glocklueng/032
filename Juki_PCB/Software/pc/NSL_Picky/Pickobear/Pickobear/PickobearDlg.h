@@ -31,7 +31,7 @@ public:
 		unsigned int item;
 		
 		// position
-		unsigned long x,y;
+		long x,y;
 		
 		// rotation of part
 		short rot;
@@ -395,7 +395,7 @@ private:
 
 	// point to feeder dialogue
 	CFeederSetup *m_pFeederDlg ;
-	
+
 	// head state
 	char m_Head;
 
@@ -421,6 +421,7 @@ public:
 
 	CSerialMFC m_Serial;
 	
+	void EmptySerial ( void ) ;
 	int SendCommand( int command );
 
 	// set the camera threads
@@ -434,7 +435,7 @@ public:
 	char CheckAck(char *ack1);
 		
 	// move head to x,y
-	bool MoveHead( long x, long y );
+	bool MoveHead( long  x, long y );
 
 	~CPickobearDlg(){
 		
@@ -526,4 +527,5 @@ public:
 
 
 	afx_msg LRESULT OnSerialMsg (WPARAM wParam, LPARAM lParam);
+	afx_msg void OnCbnSelchangeCombo1();
 };
