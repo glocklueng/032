@@ -280,6 +280,7 @@ uint8_t gc_execute_line(char *line) {
 		case 20: vacuum(0);break;
 // tape knock
 		case 21: tape_knock();break;
+		case 22: do_vacuum_test(); break;
 
 
         default: FAIL(GCSTATUS_UNSUPPORTED_STATEMENT);
@@ -287,6 +288,7 @@ uint8_t gc_execute_line(char *line) {
       break;
       case 'T': gc.tool = trunc(value); break;
     }
+
     if(gc.status_code) { break; }
   }
   

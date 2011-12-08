@@ -209,17 +209,67 @@ BOOL CPickobearDlg::OnInitDialog()
 		m_DownCamera.AddString( CString( VI.getDeviceName( i  ) ));
 
 	}
-	  
-	int i = GetProfileInt(pszKey, _T("upCamera"), 0);
-	if (i < 0 || i > numDevices-1 ) i = 0;
 
-	m_UpCamera.SetCurSel( i );
+	CRegKey regKey;
+	DWORD regEntry = 100;
+	long lResult;
 
-	i = GetProfileInt(pszKey, _T("downCamera"), 0);
-	if (i < 0 || i > numDevices-1 ) i = 0;
+	if ((lResult = regKey.Open(HKEY_CURRENT_USER,  _T("Software\\NullSpaceLabs\\PickoBear\\Settings"))) != ERROR_SUCCESS)
+		lResult = regKey.Create(HKEY_CURRENT_USER, _T("Software\\NullSpaceLabs\\PickoBear\\Settings"));
 
-	m_DownCamera.SetCurSel( i );
-		
+	if (ERROR_SUCCESS == lResult)
+	{
+		// Make 'regEntry' equal to zero
+		regEntry = 0;
+
+		// read the value back again
+		if ((lResult = regKey.QueryDWORDValue(_T("up"), regEntry)) != ERROR_SUCCESS)
+		{
+			// Save a value in the registry key
+			regKey.SetDWORDValue(_T("up"), regEntry);
+
+		} else {
+
+		}
+
+		// then close the registry key
+		regKey.Close();
+	}
+
+	if ( regEntry > numDevices-1 ) regEntry = 0;
+	
+	if( CB_ERR  == m_UpCamera.SetCurSel( regEntry ) ) {
+		_RPT0(_CRT_WARN,"Error\n");
+	}
+
+	if ((lResult = regKey.Open(HKEY_CURRENT_USER,  _T("Software\\NullSpaceLabs\\PickoBear\\Settings"))) != ERROR_SUCCESS)
+		lResult = regKey.Create(HKEY_CURRENT_USER, _T("Software\\NullSpaceLabs\\PickoBear\\Settings"));
+
+	if (ERROR_SUCCESS == lResult)
+	{
+
+		regEntry = 1;
+
+		// read the value back again
+		if ((lResult = regKey.QueryDWORDValue(_T("down"), regEntry)) != ERROR_SUCCESS)
+		{
+			// Save a value in the registry key
+			regKey.SetDWORDValue(_T("down"), regEntry);
+
+		} else {
+
+		}
+
+		// then close the registry key
+		regKey.Close();
+	}
+	
+	
+	if ( regEntry > numDevices-1 ) regEntry = 0;
+
+	if( CB_ERR  == m_DownCamera.SetCurSel( regEntry ) ) {
+		_RPT0(_CRT_WARN,"Error\n");
+	}
 	UpdateData();
 
 	CRect rect,rect1;
@@ -232,7 +282,7 @@ BOOL CPickobearDlg::OnInitDialog()
 	ScreenToClient(rect);
 
 	// Create OpenGL Control window
-	( ( CWnd* ) GetDlgItem( IDC_DOWNCAM ) )->SetWindowText( m_oglWindow.oglCreate( rect, rect1, this, m_UpCamera.GetCurSel()) );
+	 m_oglWindow.oglCreate( rect, rect1, this, m_UpCamera.GetCurSel());
 	
 	// Get size and position of the template textfield we created before in the dialog editor
 	GetDlgItem(IDC_CAM2)->GetWindowRect(rect);
@@ -242,7 +292,7 @@ BOOL CPickobearDlg::OnInitDialog()
 	ScreenToClient(rect);
 	
 	// Create OpenGL Control window	
-	( ( CWnd* ) GetDlgItem( IDC_UPCAM ) )->SetWindowText( m_oglWindow1.oglCreate( rect, rect1, this,m_DownCamera.GetCurSel() ));
+	m_oglWindow1.oglCreate( rect, rect1, this,m_DownCamera.GetCurSel() );
 
 
 	// convert to a picker
@@ -435,7 +485,7 @@ void CPickobearDlg::OnBnClickedHome()
 	SetCurrentPosition(m_headXPos,m_headYPos);		
 }
 
-void BuildGCodeMove( char *output, int length, int mode , long x,long y,long speed )
+void BuildGCodeMove( char *output, int length, int mode , long x, long y, long speed )
 {
 	long double tx,ty;
 
@@ -446,28 +496,54 @@ void BuildGCodeMove( char *output, int length, int mode , long x,long y,long spe
 	tx = x * 0.0000393700787;
 	ty = y * 0.0000393700787;
 
+	if ( tx < 0 ) tx = 0;
+	if ( ty < 0 ) ty = 0;
+
 	sprintf_s(output, length,"G%dX%gY%gF%d\r\n",mode,tx,ty,speed);
 }
 
 // move head can only go to (int)(x/40)*40,same for y
-bool CPickobearDlg::MoveHead( long x, long y ) 
+bool CPickobearDlg::MoveHead(  long x, long y ) 
 {
 	char buffer[ 256 ];
 
-	m_headXPos = x ; m_headYPos = y;
+	if ( x < 0 ) x = 0;
+	if ( y < 0 ) x = 0;
 
-	SetCurrentPosition(m_headXPos,m_headYPos);
+	m_headXPos = x ; 
+	m_headYPos = y;
 
 	BuildGCodeMove(buffer,sizeof(buffer),1,x,y,m_Speed);
 
 	_RPT5(_CRT_WARN,"current pos = %dum,%dum\nGoing to %dum,%dum\n%s\n",m_headXPos,m_headYPos,x,y,buffer);
 	m_Serial.Write(buffer);
 
-	CheckAck("ok");
+
+	if( CheckAck("ok") == 'p' ){
+
+		SetCurrentPosition(m_headXPos,m_headYPos);
+	}
 
 	return true;
 }
+// move head can only go to (int)(x/40)*40,same for y
+bool CPickobearDlg::MoveHeadRel(  long x, long y ) 
+{
+	char buffer[ 256 ];
 
+	BuildGCodeMove(buffer,sizeof(buffer),0,m_headXPos+x,m_headYPos+y,100);
+
+	_RPT5(_CRT_WARN,"current pos = %dum,%dum\nGoing to %dum,%dum\n%s\n",m_headXPos,m_headYPos,
+																		m_headXPos+x,m_headYPos+y,buffer);
+	m_Serial.Write( buffer );
+
+	if( CheckAck("ok") == 'p' ) {
+
+		SetCurrentPosition(m_headXPos+x,m_headYPos+y);
+	}
+
+	return true;
+}
 void CPickobearDlg::EmptySerial ( void ) 
 {
 	char bufferx[100];
@@ -537,18 +613,54 @@ void CPickobearDlg::OnBnClickedRight()
 void CPickobearDlg::OnBnClickedPark()
 {
 	MoveHead( 364000,517000 );
-	SetCurrentPosition(m_headXPos,m_headYPos);
 }
 
+#define pulsestoum(x) (x*25)
+
+
+void CPickobearDlg::GotoTestPad( void )
+{
+  MoveHead(pulsestoum(12308),pulsestoum(5002));
+}
+
+unsigned char CPickobearDlg::VacuumTest( void )
+{	
+	do { 
+		m_Serial.Write("M22\r\n");
+	}while( 'p' != CheckAck("ok"));
+
+	if( CheckAck("ok") == 'n'  ) {
+		return 0;
+	} 
+
+	return 1;
+}
 
 void CPickobearDlg::OnBnClickedTool1()
 {
 	bool pass = false;
 
+	GotoTestPad();
+
+	Sleep(2500);
+
+	if ( VacuumTest() == 1 ) {
+
+		// put away old tool first 
+	}
+
+	// Move to tool changer
+	MoveHead(13077*25,4657*25);
+
+	// we need a are we still moving test?
+	Sleep(2500);
+
 	do { 
-		m_Serial.Write("M12");
+
+		// tool up
+		m_Serial.Write("M13\r\n");
 		
-		Sleep(400);
+		Sleep(2500);
 
 		switch( CheckAck("ok") )
 		{
@@ -566,7 +678,10 @@ void CPickobearDlg::OnBnClickedTool1()
 		}
 	} while( pass == false );
 
-	SetCurrentPosition(m_headXPos,m_headYPos);
+	m_Serial.Write("M12\r\n");
+	Sleep(2500);
+	GotoTestPad();
+
 }
 
 
@@ -574,10 +689,21 @@ void CPickobearDlg::OnBnClickedTool2()
 {
 	bool pass = false;
 
+	
+	GotoTestPad();
+	Sleep(2500);
+
+	MoveHead(13077*25,3684*25);
+
+	// we need a are we still moving test?
+	Sleep(2500);
+
 	do { 
-		m_Serial.Write("M13");
+
+		// tool up
+		m_Serial.Write("M14\r\n");
 		
-		Sleep(400);
+		Sleep(2500);
 
 		switch( CheckAck("ok") )
 		{
@@ -595,31 +721,35 @@ void CPickobearDlg::OnBnClickedTool2()
 		}
 	} while( pass == false );
 
-	SetCurrentPosition(m_headXPos,m_headYPos);
+	m_Serial.Write("M12\r\n");
+	
+	Sleep(2500);
+
+	GotoTestPad();
 }
 
 
 void CPickobearDlg::OnBnClickedTool3()
 {
-	m_Serial.Write("M14");
+	//m_Serial.Write("M15\r\n");
 }
 
 
 void CPickobearDlg::OnBnClickedTool4()
 {
-	m_Serial.Write("M15");
+	m_Serial.Write("M16\r\n");
 }
 
 
 void CPickobearDlg::OnBnClickedTool5()
 {
-	m_Serial.Write("M16");
+	m_Serial.Write("M17\r\n");
 }
 
 
 void CPickobearDlg::OnBnClickedTool6()
 {
-	m_Serial.Write("M17");
+	m_Serial.Write("M18\r\n");
 }
 
 
@@ -649,11 +779,11 @@ void CPickobearDlg::OnBnClickedHead()
 {
 	if( m_Head ) {
 		// down
-		m_Serial.Write("M10");
+		m_Serial.Write("M10\r\n");
 		m_Head = 0;
 	} else { 
 		//up
-		m_Serial.Write("M11");
+		m_Serial.Write("M11\r\n");
 		m_Head = 1;
 	}
 }
@@ -732,7 +862,7 @@ void CPickobearDlg::OnBnClickedImport()
 	char* token,*next;
 	CFile m_File;
 
-	static char list[10][100];
+	static char list[10][1024];
 	static char buffer[1024];
 
 	CString m_LoadFile = ::GetLoadFile( 
@@ -766,6 +896,7 @@ void CPickobearDlg::OnBnClickedImport()
 
 		// Terminate last character
 		buffer[i] = 0;
+		next = NULL;
 
 		token = strtok_s( buffer, seps, &next);
 	
@@ -773,7 +904,7 @@ void CPickobearDlg::OnBnClickedImport()
 
 		while (token != NULL) {
 
-			if( 1 == sscanf_s(token, "%s", &list[i] ) ) {
+			if( 1 == sscanf(token, "%s", &list[i] ) ) {
 				token = strtok_s (NULL, seps, &next);
 				i++;
 				
@@ -1005,6 +1136,9 @@ bool SetCurrentPosition( long x,long y)
 	CPickobearDlg *pDlg = (CPickobearDlg*)AfxGetApp()->m_pMainWnd;
 
 	ASSERT( pDlg );
+		
+	if ( x < 0 ) x = 0;
+	if ( y < 0 ) y = 0;
 
 	unsigned int linePtr = 0;
 	char xString[200];
@@ -1016,6 +1150,9 @@ bool SetCurrentPosition( long x,long y)
 	pDlg->m_GOX = x;
 	pDlg->m_GOY = y;
 
+	pDlg->m_headXPos = x;
+	pDlg->m_headYPos = y;
+
 	( ( CWnd* ) pDlg->GetDlgItem( IDC_X_POS ) )->SetWindowText( CString(xString) ) ;
 	( ( CWnd* ) pDlg->GetDlgItem( IDC_Y_POS ) )->SetWindowText( CString(yString) ) ;
 
@@ -1024,16 +1161,19 @@ bool SetCurrentPosition( long x,long y)
 
 void CPickobearDlg::OnBnClickedZero()
 {
+	MoveHead(0,0);
+
+	return;
+
 	int counter = 100;
 
-	long x,y;
+	unsigned long x,y;
 	do {
-		x = rand()%14;
-		y = rand()%16;
+		x = (rand()*rand())%364000;
+		y = (rand()*rand())%517000;
 		MoveHead(x,y);
-		Sleep( 3000 );
-	}while(counter--);
-
+		Sleep( 400 );
+	} while(counter--);
 }
 
 //  81775

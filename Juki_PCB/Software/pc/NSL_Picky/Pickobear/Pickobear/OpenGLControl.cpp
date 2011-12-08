@@ -48,35 +48,13 @@ void COpenGLControl::OnRButtonDown(UINT nFlags, CPoint point )
 	point.x -= w;
 	point.y -= h;
 	
-	point.x *= 16;
-	point.y *= 16;
-	point.x /= 10;
-	point.y /= 10;
-
-	do {
-
-		if( point.x > 0 ) {
-			point.x--;
-			pDlg->m_Serial.Write("R");
-		} else if( point.x < 0 ) {
-			point.x++;
-			pDlg->m_Serial.Write("L");
-		}
-
-		if( point.y > 0 ) {
-			point.y--;
-			pDlg->m_Serial.Write("D");
-		}
-		else if( point.y < 0 ) {
-			point.y++;
-			pDlg->m_Serial.Write("U");
-		}
-
-	} while( point.x!=0 || point.y != 0 ) ;
+	point.x *= 400;
+	point.y *= 400;
 
 	ASSERT( pDlg );
 
-	SetCurrentPosition( pDlg->m_headXPos,pDlg->m_headYPos );
+	pDlg->MoveHeadRel(point.x,-point.y);
+
 }
 
 void COpenGLControl::OnSize(UINT nType, int cx, int cy)

@@ -335,7 +335,10 @@ public:
 
 	// fetch entry at index
 	FeederDatabase at( int i ) {
-		return m_Database.at(i);
+		if( i < m_Count ) 
+			return m_Database.at(i);
+		
+		return *entry ;
 	}
  
 	// add an item to the list
@@ -433,9 +436,11 @@ public:
 
 	// check acknowledgement fron pnp
 	char CheckAck(char *ack1);
-		
+
+	unsigned char VacuumTest( void );
 	// move head to x,y
 	bool MoveHead( long  x, long y );
+	bool MoveHeadRel(  long x, long y ); 
 
 	~CPickobearDlg(){
 		
@@ -525,7 +530,7 @@ public:
 	CComboBox m_UpCamera;
 	CComboBox m_DownCamera;
 
-
+	void GotoTestPad( void );
 	afx_msg LRESULT OnSerialMsg (WPARAM wParam, LPARAM lParam);
 	afx_msg void OnCbnSelchangeCombo1();
 };
