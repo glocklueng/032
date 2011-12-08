@@ -298,7 +298,7 @@ void videoDevice::destroyGraph(){
 			FilterInfo.pGraph->Release();
 
 			int count = 0;
-			char buffer[255];
+			WCHAR buffer[255];
 			memset(buffer, 0, 255 * sizeof(char));
 						
 			while( FilterInfo.achName[count] != 0x00 ) 
@@ -1089,7 +1089,7 @@ bool videoInput::setVideoSettingFilterPct(int deviceID, long Property, float pct
 	}else{
 		//we need to rasterize the value to the stepping amnt
 		long mod 		= value % stepAmnt;
-		float halfStep 	= (float)stepAmnt * 0.5;
+		float halfStep 	= (float)stepAmnt * 0.5f;
 		if( mod < halfStep ) rasterValue -= mod;
 		else rasterValue += stepAmnt - mod;	
 		printf("RASTER - pctValue is %f - value is %i - step is %i - mod is %i - rasterValue is %i\n", pctValue, value, stepAmnt, mod, rasterValue); 
@@ -1176,7 +1176,7 @@ bool videoInput::setVideoSettingCameraPct(int deviceID, long Property, float pct
 	}else{
 		//we need to rasterize the value to the stepping amnt
 		long mod 		= value % stepAmnt;
-		float halfStep 	= (float)stepAmnt * 0.5;
+		float halfStep 	= (float)stepAmnt * 0.5f;
 		if( mod < halfStep ) rasterValue -= mod;
 		else rasterValue += stepAmnt - mod;	
 		printf("RASTER - pctValue is %f - value is %i - step is %i - mod is %i - rasterValue is %i\n", pctValue, value, stepAmnt, mod, rasterValue); 
@@ -1530,25 +1530,25 @@ void videoInput::processPixels(unsigned char * src, unsigned char * dst, int wid
 void videoInput::getMediaSubtypeAsString(GUID type, char * typeAsString){
 
 	char tmpStr[8];
-	if( type == MEDIASUBTYPE_RGB24) sprintf(tmpStr, "RGB24");
-	else if(type == MEDIASUBTYPE_RGB32) sprintf(tmpStr, "RGB32");
-	else if(type == MEDIASUBTYPE_RGB555)sprintf(tmpStr, "RGB555");
-	else if(type == MEDIASUBTYPE_RGB565)sprintf(tmpStr, "RGB565");					
-	else if(type == MEDIASUBTYPE_YUY2) 	sprintf(tmpStr, "YUY2");
-	else if(type == MEDIASUBTYPE_YVYU) 	sprintf(tmpStr, "YVYU");
-	else if(type == MEDIASUBTYPE_YUYV) 	sprintf(tmpStr, "YUYV");
-	else if(type == MEDIASUBTYPE_IYUV) 	sprintf(tmpStr, "IYUV");
-	else if(type == MEDIASUBTYPE_UYVY)  sprintf(tmpStr, "UYVY");
-	else if(type == MEDIASUBTYPE_YV12)  sprintf(tmpStr, "YV12");
-	else if(type == MEDIASUBTYPE_YVU9)  sprintf(tmpStr, "YVU9");
-	else if(type == MEDIASUBTYPE_Y411) 	sprintf(tmpStr, "Y411");
-	else if(type == MEDIASUBTYPE_Y41P) 	sprintf(tmpStr, "Y41P");
-	else if(type == MEDIASUBTYPE_Y211)  sprintf(tmpStr, "Y211");
-	else if(type == MEDIASUBTYPE_AYUV) 	sprintf(tmpStr, "AYUV");
-	else if(type == MEDIASUBTYPE_Y800) 	sprintf(tmpStr, "Y800");  
-	else if(type == MEDIASUBTYPE_Y8)   	sprintf(tmpStr, "Y8");  
-	else if(type == MEDIASUBTYPE_GREY) 	sprintf(tmpStr, "GREY");  
-	else sprintf(tmpStr, "OTHER");
+	if( type == MEDIASUBTYPE_RGB24) sprintf_s(tmpStr, sizeof( tmpStr),  "RGB24");
+	else if(type == MEDIASUBTYPE_RGB32) sprintf_s(tmpStr, sizeof( tmpStr),  "RGB32");
+	else if(type == MEDIASUBTYPE_RGB555)sprintf_s(tmpStr, sizeof( tmpStr),  "RGB555");
+	else if(type == MEDIASUBTYPE_RGB565)sprintf_s(tmpStr, sizeof( tmpStr),  "RGB565");					
+	else if(type == MEDIASUBTYPE_YUY2) 	sprintf_s(tmpStr, sizeof( tmpStr),  "YUY2");
+	else if(type == MEDIASUBTYPE_YVYU) 	sprintf_s(tmpStr, sizeof( tmpStr),  "YVYU");
+	else if(type == MEDIASUBTYPE_YUYV) 	sprintf_s(tmpStr, sizeof( tmpStr),  "YUYV");
+	else if(type == MEDIASUBTYPE_IYUV) 	sprintf_s(tmpStr, sizeof( tmpStr),  "IYUV");
+	else if(type == MEDIASUBTYPE_UYVY)  sprintf_s(tmpStr, sizeof( tmpStr),  "UYVY");
+	else if(type == MEDIASUBTYPE_YV12)  sprintf_s(tmpStr, sizeof( tmpStr),  "YV12");
+	else if(type == MEDIASUBTYPE_YVU9)  sprintf_s(tmpStr, sizeof( tmpStr),  "YVU9");
+	else if(type == MEDIASUBTYPE_Y411) 	sprintf_s(tmpStr, sizeof( tmpStr),  "Y411");
+	else if(type == MEDIASUBTYPE_Y41P) 	sprintf_s(tmpStr, sizeof( tmpStr),  "Y41P");
+	else if(type == MEDIASUBTYPE_Y211)  sprintf_s(tmpStr, sizeof( tmpStr),  "Y211");
+	else if(type == MEDIASUBTYPE_AYUV) 	sprintf_s(tmpStr, sizeof( tmpStr),  "AYUV");
+	else if(type == MEDIASUBTYPE_Y800) 	sprintf_s(tmpStr, sizeof( tmpStr),  "Y800");  
+	else if(type == MEDIASUBTYPE_Y8)   	sprintf_s(tmpStr, sizeof( tmpStr),  "Y8");  
+	else if(type == MEDIASUBTYPE_GREY) 	sprintf_s(tmpStr, sizeof( tmpStr),  "GREY");  
+	else sprintf_s(tmpStr, sizeof( tmpStr),  "OTHER");
 
 	memcpy(typeAsString, tmpStr, sizeof(char)*8);
 }
