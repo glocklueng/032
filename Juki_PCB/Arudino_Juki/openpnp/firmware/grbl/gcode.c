@@ -52,6 +52,8 @@
 #define MOTION_MODE_CW_ARC 2  // G2
 #define MOTION_MODE_CCW_ARC 3  // G3
 #define MOTION_MODE_CANCEL 4 // G80
+#define MOTION_MODE_HEAD  (MOTION_MODE_CANCEL+5)// G1
+
 
 #define PATH_CONTROL_MODE_EXACT_PATH 0
 #define PATH_CONTROL_MODE_EXACT_STOP 1
@@ -139,7 +141,7 @@ uint8_t gc_execute_line(char *line) {
   double unit_converted_value;
   double inverse_feed_rate = -1; // negative inverse_feed_rate means no inverse_feed_rate specified
   int radius_mode = FALSE;
-  
+  unsigned short head = 0;
   uint8_t absolute_override = FALSE;          /* 1 = absolute motion for this block only {G53} */
   uint8_t next_action = NEXT_ACTION_DEFAULT;  /* The action that will be taken by the parsed line */
   
@@ -205,6 +207,10 @@ uint8_t gc_execute_line(char *line) {
 			printInteger( is_head_down() );
 	      	printPgmString(PSTR("\r\n"));
 
+	      	printPgmString(PSTR("vacuum_state = "));
+			printInteger( vacuum_state() );
+	      	printPgmString(PSTR("\r\n"));
+
 	      	printPgmString(PSTR("rotated = "));
 			printInteger( is_rotated() );
 	      	printPgmString(PSTR("\r\n"));
@@ -264,10 +270,12 @@ uint8_t gc_execute_line(char *line) {
         case 5: gc.spindle_direction = 0; break;
         case 8: gc.coolant_flood = 1; break;
         case 9: gc.coolant_flood = 0; break;
-	// head control
+
+		// head control
         case 10: head_down(1);break;
         case 11: head_down(0);break;
-	// atc
+
+		// atc
 		case 12: atc_change(0);break;
 		case 13: atc_change(1);break;
 		case 14: atc_change(2);break;
@@ -275,13 +283,15 @@ uint8_t gc_execute_line(char *line) {
 		case 16: atc_change(4);break;
 		case 17: atc_change(5);break;
 		case 18: atc_change(6);break;
-// vacuum
+
+		// vacuum
 		case 19: vacuum(1);break;
 		case 20: vacuum(0);break;
-// tape knock
+
+		// tape knock
 		case 21: tape_knock();break;
 		case 22: do_vacuum_test(); break;
-
+		case 23: check_for_tool(); break;
 
         default: FAIL(GCSTATUS_UNSUPPORTED_STATEMENT);
       }            
@@ -332,7 +342,14 @@ uint8_t gc_execute_line(char *line) {
       } else {
         target[C_AXIS] += unit_converted_value;
       }
-      break;      
+	  break;
+	  case 'H':
+
+			// amount to move
+	        head = unit_converted_value;
+		  // move the head
+		  gc.motion_mode = MOTION_MODE_HEAD;
+	      break;
     }
   }
   
@@ -368,6 +385,9 @@ uint8_t gc_execute_line(char *line) {
       mc_line(target[X_AXIS], target[Y_AXIS], target[Z_AXIS], target[C_AXIS],
         (gc.inverse_feed_rate_mode) ? inverse_feed_rate : gc.feed_rate, gc.inverse_feed_rate_mode);
       break;
+	  case MOTION_MODE_HEAD:
+	  rotate_head( head);
+	  break;
     }
     break;
     case NEXT_ACTION_SET_OFFSETS:

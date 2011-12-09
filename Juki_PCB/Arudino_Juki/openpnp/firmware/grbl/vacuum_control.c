@@ -21,10 +21,10 @@ void vacuum_init(void)
 {
 	// setup vacuum sensor TAC
 	LIMIT_DDR &= ~(_BV( TACSENSE ) );
-	LIMIT_DDR |= (_BV( TACSENSE ));
+	LIMIT_PORT |= (_BV( TACSENSE ) );
 
 	// Vacuum on/off control
-	HEAD_DDR |= _BV( VACUUM );
+	HEAD_DDR  |= _BV( VACUUM );
 	HEAD_PORT |= _BV( VACUUM );
 
 }
@@ -57,7 +57,7 @@ unsigned char vacuum_state( void )
 {
 	unsigned char state ;
 
-	state  = bit_is_set( LIMIT_DDR, TACSENSE )?0:1;
+	state  = bit_is_set( LIMIT_PIN, TACSENSE )?0:1;
 
 	return state;
 }
@@ -65,7 +65,7 @@ unsigned char vacuum_state( void )
 
 void do_vacuum_test( void )
 {
-	if( vacuum_state() ) { 
+	if( vacuum_state()  == 1 ) { 
 		
 		printPgmString(PSTR("y\r\n"));
 

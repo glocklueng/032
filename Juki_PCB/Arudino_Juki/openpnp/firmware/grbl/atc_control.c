@@ -76,14 +76,6 @@ void atc_change(int tool)
 
 	set_busy( TRUE ) ;
 
-	// make sure head is up before moving
-	if( is_head_down() ) {
-#ifdef VERBOSE_DEBUG
-		printPgmString(PSTR("TOOL headup\n\r"));
-#endif
-		head_down( FALSE ) ;
-	}
-
 	// turn off toolchanger
 	if( tool == 0 ) {
 

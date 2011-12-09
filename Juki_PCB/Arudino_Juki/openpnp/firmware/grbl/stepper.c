@@ -404,8 +404,8 @@ enum {
 	STOP,LEFT,RIGHT,FORWARD,BACK
 };
 
-#define PULSE_LENGTH	( 10 )
-#define PULSE_OFF_LENGTH ( 280 )
+#define PULSE_LENGTH			(  10 )
+#define PULSE_OFF_LENGTH 		( 280 )
 
 unsigned char moveLeft( unsigned int distance ) 
 {
