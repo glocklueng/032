@@ -9,6 +9,8 @@
 #define IDR_MAINFRAME                   128
 #define IDD_FEEDERS                     130
 #define IDD_TEXTEDIT                    131
+#define IDD_DIALOG1                     132
+#define IDD_XYCOUNT                     132
 #define IDC_LIST1                       1000
 #define IDC_GO                          1001
 #define IDC_UP                          1002
@@ -64,10 +66,13 @@
 #define IDC_UPDATE                      1049
 #define IDC_LOAD_FEEDER                 1050
 #define IDC_EDIT1                       1050
+#define IDC_COUNTX                      1050
 #define IDC_SAVE_FEEDER                 1051
 #define IDC_TEXTBOX                     1051
+#define IDC_COUNTY                      1051
 #define IDC_UPDATE2                     1052
 #define IDC_UPDATE3                     1053
+#define IDC_ADD_LOWERRIGHT              1054
 #define IDC_COMBO1                      1056
 #define IDC_COMBO2                      1057
 
@@ -75,7 +80,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        132
+#define _APS_NEXT_RESOURCE_VALUE        133
 #define _APS_NEXT_COMMAND_VALUE         32771
 #define _APS_NEXT_CONTROL_VALUE         1057
 #define _APS_NEXT_SYMED_VALUE           101

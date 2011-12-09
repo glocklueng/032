@@ -221,6 +221,29 @@ public:
 		unsigned long x,y;
 		short rot;
 		char label[256];
+
+/*
+ x,y is the centre of the component
+ count is the number of components
+ lx,ly is the centre of the right most, bottom most component.
+
+		                  count x --->
+		x,y------+-------+-------+-------+-------+
+		 |       |       |       |       |       | count y      
+		 +-------+-------+-------+-------+-------+ |
+		 |       |       |       |       |       | |    
+		 +-------+-------+-------+-------+-------+\ /
+		 |       |       |       |       |       |      
+		 +-------+-------+-------+-------+-------+lx,ly
+
+*/
+
+		// bottom right coordinate
+		unsigned long lx,ly;
+
+		// number in x, number in y
+		unsigned long countx,county;
+
 	} FeederDatabase;
 		
 	CMenu *cMenu;
@@ -533,4 +556,8 @@ public:
 	void GotoTestPad( void );
 	afx_msg LRESULT OnSerialMsg (WPARAM wParam, LPARAM lParam);
 	afx_msg void OnCbnSelchangeCombo1();
+	afx_msg void OnCbnSelchangeCombo2();
+	afx_msg void OnBnClickedAddLowerright();
+	CComboBox m_StepSize;
+	afx_msg void OnCbnSelchangeStepsize();
 };
