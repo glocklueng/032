@@ -115,6 +115,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Counts.cpp" />
     <ClCompile Include="FeederSetup.cpp" />
     <ClCompile Include="opencv.cpp" />
     <ClCompile Include="OpenGLControl.cpp" />
@@ -130,6 +131,7 @@
     <ClCompile Include="TextEditDialog.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Counts.h" />
     <ClInclude Include="FeederSetup.h" />
     <ClInclude Include="opencv.h" />
     <ClInclude Include="OpenGLControl.h" />

@@ -76,6 +76,7 @@ void CPickobearDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_LIST3, m_FeederList);
 	DDX_Control(pDX, IDC_COMBO1, m_UpCamera);
 	DDX_Control(pDX, IDC_COMBO2, m_DownCamera);
+	DDX_Control(pDX, IDC_STEPSIZE, m_StepSize);
 }
 
 BEGIN_MESSAGE_MAP(CPickobearDlg, CDialog) 
@@ -124,6 +125,9 @@ BEGIN_MESSAGE_MAP(CPickobearDlg, CDialog)
 	ON_BN_CLICKED(IDC_UPDATE2, &CPickobearDlg::OnBnClickedUpdate2)
 	ON_BN_CLICKED(IDC_UPDATE3, &CPickobearDlg::OnBnClickedUpdate3)
 	ON_CBN_SELCHANGE(IDC_COMBO1, &CPickobearDlg::OnCbnSelchangeCombo1)
+	ON_CBN_SELCHANGE(IDC_COMBO2, &CPickobearDlg::OnCbnSelchangeCombo2)
+	ON_BN_CLICKED(IDC_ADD_LOWERRIGHT, &CPickobearDlg::OnBnClickedAddLowerright)
+	ON_CBN_SELCHANGE(IDC_STEPSIZE, &CPickobearDlg::OnCbnSelchangeStepsize)
 END_MESSAGE_MAP()
 
 BEGIN_MESSAGE_MAP(CListCtrl_Components, CListCtrl)
@@ -199,7 +203,6 @@ BOOL CPickobearDlg::OnInitDialog()
 		
 	int numDevices = VI.listDevices();
 		
-	UpdateData(FALSE);
 
 	for( int i = 0 ; i < numDevices ; i++ ) {
 	
@@ -270,7 +273,7 @@ BOOL CPickobearDlg::OnInitDialog()
 	if( CB_ERR  == m_DownCamera.SetCurSel( regEntry ) ) {
 		_RPT0(_CRT_WARN,"Error\n");
 	}
-	UpdateData();
+	UpdateData(FALSE);
 
 	CRect rect,rect1;
 
@@ -316,12 +319,18 @@ BOOL CPickobearDlg::OnInitDialog()
 	m_Rotation.SetRange(0,360);
 		
 	m_FeederList.GetClientRect(&rect);
-	nInterval =( rect.Width() / 4 );
+	nInterval =( rect.Width() / 8 );
 
 	m_FeederList.InsertColumn(0, _T("Name"),LVCFMT_CENTER,nInterval);
 	m_FeederList.InsertColumn(1, _T("X"),LVCFMT_CENTER,nInterval);
 	m_FeederList.InsertColumn(2, _T("Y"),LVCFMT_CENTER,nInterval);
 	m_FeederList.InsertColumn(3, _T("Rot"),LVCFMT_CENTER,nInterval);
+
+	m_FeederList.InsertColumn(4, _T("LX"),LVCFMT_CENTER,nInterval);
+	m_FeederList.InsertColumn(5, _T("LY"),LVCFMT_CENTER,nInterval);
+
+	m_FeederList.InsertColumn(6, _T("CX"),LVCFMT_CENTER,nInterval);
+	m_FeederList.InsertColumn(7, _T("CY"),LVCFMT_CENTER,nInterval);
 
 	// Start thread for 'goCamera'
 	HANDLE h = CreateThread(NULL, 0, &CPickobearDlg::goCamera, (LPVOID)this, 0, NULL);
@@ -341,6 +350,48 @@ BOOL CPickobearDlg::OnInitDialog()
 //	m_oglWindow.m_unpTimer = m_oglWindow.SetTimer(1, 100, 0);
 	m_oglWindow1.m_unpTimer = m_oglWindow1.SetTimer(1, 300, 0);
 
+		
+	m_StepSize.ResetContent();
+
+
+	for( int i = 0; i < 1010 ; i+=10 ) {
+	
+		CString num;
+		num.Format(L"%d",i);
+		if( i == 0 ) 
+			m_StepSize.AddString( L"1" );
+		else
+			m_StepSize.AddString( num );
+
+	}
+	
+	if ((lResult = regKey.Open(HKEY_CURRENT_USER,  _T("Software\\NullSpaceLabs\\PickoBear\\Settings"))) != ERROR_SUCCESS)
+		lResult = regKey.Create(HKEY_CURRENT_USER, _T("Software\\NullSpaceLabs\\PickoBear\\Settings"));
+
+	if (ERROR_SUCCESS == lResult)
+	{
+		// Make 'regEntry' equal to zero
+		regEntry = 0;
+
+		// read the value back again
+		if ((lResult = regKey.QueryDWORDValue(_T("stepSize"), regEntry)) != ERROR_SUCCESS)
+		{
+			// Save a value in the registry key
+			regKey.SetDWORDValue(_T("stepSize"), regEntry);
+
+		} else {
+
+		}
+
+		// then close the registry key
+		regKey.Close();
+	}
+
+	if ( regEntry > m_StepSize.GetCount()-1 ) regEntry = 0;
+	
+	if( CB_ERR  == m_StepSize.SetCurSel( regEntry ) ) {
+		_RPT0(_CRT_WARN,"Error\n");
+	}
 
 
 	return TRUE;  // return TRUE  unless you set the focus to a control
@@ -799,32 +850,48 @@ void CPickobearDlg::OnNMCustomdrawRotate(NMHDR *pNMHDR, LRESULT *pResult)
 
 void CPickobearDlg::OnBnClickedUpleft()
 {
-	m_headXPos -= 1000;
-	m_headYPos += 1000;
+	long stepsize = (m_StepSize.GetCurSel() * 10);
+	if( stepsize == 0 ) stepsize = 1;
+
+	m_headXPos -= stepsize;
+	m_headYPos += stepsize;
 	
 	MoveHead( m_headXPos, m_headYPos) ;
 }
 
 void CPickobearDlg::OnBnClickedUpright()
 {
-	m_headXPos += 1000;
-	m_headYPos += 1000;
+	long stepsize = (m_StepSize.GetCurSel() * 10);
+	if( stepsize == 0 ) 
+		stepsize = 1;
+
+	m_headXPos += stepsize;
+	m_headYPos += stepsize;
 	
 	MoveHead( m_headXPos, m_headYPos) ;
 }
 
 void CPickobearDlg::OnBnClickedLeftdown()
 {
-	m_headXPos -= 1000;
-	m_headYPos += 1000;
+	long stepsize = (m_StepSize.GetCurSel() * 10);
+	if( stepsize == 0 ) 
+		stepsize = 1;
+
+
+	m_headXPos -= stepsize;
+	m_headYPos += stepsize;
 	
 	MoveHead( m_headXPos, m_headYPos) ;
 }
 
 void CPickobearDlg::OnBnClickedBottomleft()
 {
-	m_headXPos -= 1000;
-	m_headYPos -= 1000;
+	long stepsize = (m_StepSize.GetCurSel() * 10);
+	if( stepsize == 0 ) 
+		stepsize = 1;
+
+	m_headXPos -= stepsize;
+	m_headYPos -= stepsize;
 	
 	MoveHead( m_headXPos, m_headYPos) ;
 }
@@ -1393,8 +1460,109 @@ afx_msg LRESULT CPickobearDlg::OnSerialMsg (WPARAM wParam, LPARAM lParam)
     return 0;
 }
 
+//bottom camera
+
+void CPickobearDlg::OnCbnSelchangeCombo2()
+{
+	CRegKey regKey;
+	DWORD regEntry = 100;
+	long lResult;
+	
+	UpdateData(FALSE);
+
+	if ((lResult = regKey.Open(HKEY_CURRENT_USER,  _T("Software\\NullSpaceLabs\\PickoBear\\Settings"))) != ERROR_SUCCESS)
+		lResult = regKey.Create(HKEY_CURRENT_USER, _T("Software\\NullSpaceLabs\\PickoBear\\Settings"));
+
+	if (ERROR_SUCCESS == lResult)
+	{
+		// Make 'regEntry' equal to zero
+		regEntry = m_DownCamera.GetCurSel();
+
+			// Save a value in the registry key
+		regKey.SetDWORDValue(_T("down"), regEntry);
+
+		// then close the registry key
+		regKey.Close();
+	}
+
+}
+
+//top camera
 
 void CPickobearDlg::OnCbnSelchangeCombo1()
 {
+	UpdateData();
+	CString str;
+	CRegKey regKey;
+	DWORD regEntry = 100;
+	long lResult;
+
+	UpdateData(FALSE);
+
+	if ((lResult = regKey.Open(HKEY_CURRENT_USER,  _T("Software\\NullSpaceLabs\\PickoBear\\Settings"))) != ERROR_SUCCESS)
+		lResult = regKey.Create(HKEY_CURRENT_USER, _T("Software\\NullSpaceLabs\\PickoBear\\Settings"));
+
+	if (ERROR_SUCCESS == lResult)
+	{
+		// Make 'regEntry' equal to zero
+		regEntry = m_UpCamera.GetCurSel();
+
+			// Save a value in the registry key
+		regKey.SetDWORDValue(_T("up"), regEntry);
+
+		// then close the registry key
+		regKey.Close();
+	}
+
+
+}
+
+
+void CPickobearDlg::OnBnClickedAddLowerright()
+{
+	UpdateData();
+	CString str;
+	int item = m_FeederList.GetSelectedCount();
+
+	if( item == 0 ) {
+		return ;
+	}
+	
+	item = (m_FeederList.GetCount()-1)-m_FeederList.GetNextItem(-1, LVNI_SELECTED);
+	
+	CListCtrl_FeederList::FeederDatabase entry(m_FeederList.at( item ) );
+
+	// set bottom/left to where head is.
+	entry.lx = m_headXPos;
+	entry.ly = m_headXPos;
+
+
+	CCounts CountDialog;
+
+	CountDialog.DoModal();
+}
+
+
+void CPickobearDlg::OnCbnSelchangeStepsize()
+{
+	CRegKey regKey;
+	DWORD regEntry = 100;
+	long lResult;
+
+
+	if ((lResult = regKey.Open(HKEY_CURRENT_USER,  _T("Software\\NullSpaceLabs\\PickoBear\\Settings"))) != ERROR_SUCCESS)
+		lResult = regKey.Create(HKEY_CURRENT_USER, _T("Software\\NullSpaceLabs\\PickoBear\\Settings"));
+
+	if (ERROR_SUCCESS == lResult)
+	{
+		// Make 'regEntry' equal to zero
+		regEntry = m_StepSize.GetCurSel();
+
+			// Save a value in the registry key
+		regKey.SetDWORDValue(_T("stepSize"), regEntry);
+
+		// then close the registry key
+		regKey.Close();
+	}
 
 }

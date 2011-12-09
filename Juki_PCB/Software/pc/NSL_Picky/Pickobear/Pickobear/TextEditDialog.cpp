@@ -15,7 +15,16 @@ CTextEditDialog::CTextEditDialog(CWnd* pParent /*=NULL*/)
 	: CDialogEx(CTextEditDialog::IDD, pParent)
 	, m_Text(_T(""))
 {
+}
 
+BOOL CTextEditDialog::OnInitDialog() 
+{
+   BOOL b = CDialogEx::OnInitDialog();
+
+   ( ( CWnd* ) GetDlgItem( IDC_TEXTBOX ) )->SetFocus() ;
+
+   // must return false if focus set elsewhere
+   return FALSE;
 }
 
 CTextEditDialog::~CTextEditDialog()
