@@ -56,7 +56,7 @@ CPickobearDlg::CPickobearDlg(CWnd* pParent /*=NULL*/)
 	, m_GOY(0)
 	, m_pFeederDlg( NULL )
 	, m_Quit(0)
-	, m_Speed(800)
+	, m_Speed(600)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -212,7 +212,7 @@ BOOL CPickobearDlg::OnInitDialog()
 		m_DownCamera.AddString( CString( VI.getDeviceName( i  ) ));
 
 	}
-
+				GetDlgItem( IDC_TOOL1 )->EnableWindow( TRUE );
 	CRegKey regKey;
 	DWORD regEntry = 100;
 	long lResult;
@@ -299,7 +299,7 @@ BOOL CPickobearDlg::OnInitDialog()
 
 
 	// convert to a picker
-	CString m_ComPort = _T("\\\\.\\COM31");
+	CString m_ComPort = _T("\\\\.\\COM14");
 	m_Serial.Open(m_ComPort, this );
 
 	m_Serial.Setup(CSerial::EBaud38400 );
@@ -554,6 +554,30 @@ void BuildGCodeMove( char *output, int length, int mode , long x, long y, long s
 }
 
 // move head can only go to (int)(x/40)*40,same for y
+bool CPickobearDlg::MoveHeadSlow(  long x, long y ) 
+{
+	char buffer[ 256 ];
+
+	if ( x < 0 ) x = 0;
+	if ( y < 0 ) x = 0;
+
+	m_headXPos = x ; 
+	m_headYPos = y;
+
+	BuildGCodeMove(buffer,sizeof(buffer),1,x,y,100);
+
+	_RPT5(_CRT_WARN,"current pos = %dum,%dum\nGoing to %dum,%dum\n%s\n",m_headXPos,m_headYPos,x,y,buffer);
+	m_Serial.Write(buffer);
+
+
+	if( CheckAck("ok") == 'p' ){
+
+		SetCurrentPosition(m_headXPos,m_headYPos);
+	}
+
+	return true;
+}
+// move head can only go to (int)(x/40)*40,same for y
 bool CPickobearDlg::MoveHead(  long x, long y ) 
 {
 	char buffer[ 256 ];
@@ -577,6 +601,7 @@ bool CPickobearDlg::MoveHead(  long x, long y )
 
 	return true;
 }
+
 // move head can only go to (int)(x/40)*40,same for y
 bool CPickobearDlg::MoveHeadRel(  long x, long y ) 
 {
@@ -640,7 +665,7 @@ char CPickobearDlg::CheckAck( char *ack1 )
 
 	} while(ch!='\n');
 	
-	_RPT1(_CRT_WARN,"%s\n", buffer);
+	_RPT1(_CRT_WARN,"CheckAck(%s)\n", buffer);
 
 	length = strlen( ack1 ) ;
 
@@ -671,75 +696,192 @@ void CPickobearDlg::OnBnClickedPark()
 
 void CPickobearDlg::GotoTestPad( void )
 {
-  MoveHead(pulsestoum(12308),pulsestoum(5002));
+  MoveHeadSlow(pulsestoum(12308),pulsestoum(5002));
 }
 
 unsigned char CPickobearDlg::VacuumTest( void )
 {	
+
+	EmptySerial();
+
 	do { 
+
 		m_Serial.Write("M22\r\n");
+
 	}while( 'p' != CheckAck("ok"));
 
-	if( CheckAck("ok") == 'n'  ) {
+	// wait for reply
+	if( CheckAck("n") == 'p'  ) {
 		return 0;
 	} 
 
 	return 1;
 }
+/*
+void CPickobearDlg::OnBnClickedTool1()
+{
+	// head down
+	m_Serial.Write("M10\r\n");
+	Sleep(600);
+	// tool up
+	m_Serial.Write("M13\r\n");
+	Sleep(1000);
+	//tool down
+	m_Serial.Write("M12\r\n");
+	Sleep(1000);
+	// Head up
+	m_Serial.Write("M11\r\n");
+	Sleep(1000);
+}
+*/
+
 
 void CPickobearDlg::OnBnClickedTool1()
 {
+
+	// vacuum on	
+	m_Serial.Write("M20\r\n");
+	Sleep(500);
+	_RPT1( _CRT_WARN, "Vacuum is %d\n",VacuumTest());
+	// vacuum on	
+	m_Serial.Write("M19\r\n");
+	Sleep(500);
+	_RPT1( _CRT_WARN, "Vacuum is %d\n",VacuumTest());
+	// vacuum on	
+	m_Serial.Write("M20\r\n");
+	Sleep(500);
+	_RPT1( _CRT_WARN, "Vacuum is %d\n",VacuumTest());
+	// vacuum on	
+	m_Serial.Write("M19\r\n");
+	Sleep(500);
+	_RPT1( _CRT_WARN, "Vacuum is %d\n",VacuumTest());
+	// vacuum on	
+	m_Serial.Write("M20\r\n");
+	Sleep(500);
+	_RPT1( _CRT_WARN, "Vacuum is %d\n",VacuumTest());
+	// vacuum on	
+	m_Serial.Write("M19\r\n");
+	Sleep(500);
+	_RPT1( _CRT_WARN, "Vacuum is %d\n",VacuumTest());
+
+	m_Serial.Write("M20\r\n");
+
+	return;
+
+	
 	bool pass = false;
+	char putAway = false;
 
-	GotoTestPad();
+	// move to vacuum pad
+	MoveHead(pulsestoum(12308),pulsestoum(5002));
 
-	Sleep(2500);
+	Sleep( 2500 );
+
+	// vacuum on	
+	m_Serial.Write("M19\r\n");
+	Sleep(500);
+
+	// Head down
+	m_Serial.Write("M10\r\n");
+
+	Sleep(1500);
 
 	if ( VacuumTest() == 1 ) {
 
-		// put away old tool first 
+		_RPT0( _CRT_WARN, "Vacuum is on, has tool, putting away\n");
+		
+		// vacuum off	
+		m_Serial.Write("M20\r\n");
+
+		// head up
+		m_Serial.Write("M11\r\n");
+
+		Sleep(500);
+
+		putAway = true;
 	}
 
-	// Move to tool changer
-	MoveHead(13077*25,4657*25);
+	// head up
+	m_Serial.Write("M11\r\n");
+
+	// vacuum off	
+	m_Serial.Write("M20\r\n");
+	Sleep(500);
+
+	MoveHead(326400,117800);
+	
 
 	// we need a are we still moving test?
 	Sleep(2500);
+	
+	// Head down
+	m_Serial.Write("M10\r\n");
+	Sleep(800);
 
-	do { 
-
-		// tool up
-		m_Serial.Write("M13\r\n");
+	// tool up
+	m_Serial.Write("M13\r\n");
 		
-		Sleep(2500);
+	Sleep(1000);
 
-		switch( CheckAck("ok") )
-		{
-		case 'f':
-			if( MessageBox(_T("Tool change failed!!"),_T("Error"),IDOK|IDRETRY) == IDRETRY)
-				pass = false;
-			else
-				pass = true;
-			break;
-		case 'p':
-			pass = true;
-			break;
-		default:
-			break;
-		}
-	} while( pass == false );
+	if( putAway == false ) { 
 
-	m_Serial.Write("M12\r\n");
-	Sleep(2500);
+		_RPT0(_CRT_WARN,"Picking up tool\n");
+
+		// Head up
+		m_Serial.Write("M11\r\n");
+		Sleep(1000);
+
+		//atc off
+		m_Serial.Write("M12\r\n");
+		Sleep(1000);
+	} else {
+
+		_RPT0(_CRT_WARN,"Putting away tool\n");
+
+		//atc off
+		m_Serial.Write("M12\r\n");
+		Sleep(1000);
+
+		// Head up
+		m_Serial.Write("M11\r\n");
+		Sleep(1000);
+
+	}
+
 	GotoTestPad();
 
+	// vacuum on	
+	m_Serial.Write("M19\r\n");
+	Sleep(500);
+
+	// Head down
+	m_Serial.Write("M10\r\n");
+	Sleep(800);
+
+	if ( VacuumTest() == 1 ) {
+
+		_RPT0( _CRT_WARN, "Afterward test has tool check\n");
+
+		if ( putAway == true  ){
+
+			_RPT0( _CRT_WARN, "failed to putaway tool\n");
+		}
+	}
+
+	// head up
+	m_Serial.Write("M11\r\n");
+
+	// vacuum off	
+	m_Serial.Write("M20\r\n");
 }
 
 
 void CPickobearDlg::OnBnClickedTool2()
 {
 	bool pass = false;
+	MoveHead(326400,117800);
 
+	return;
 	
 	GotoTestPad();
 	Sleep(2500);
@@ -1231,7 +1373,13 @@ void CPickobearDlg::OnBnClickedZero()
 	MoveHead(0,0);
 
 	return;
+}
 
+//  81775
+// 236275
+
+void CPickobearDlg::OnBnClickedOffset()
+{
 	int counter = 100;
 
 	unsigned long x,y;
@@ -1241,13 +1389,9 @@ void CPickobearDlg::OnBnClickedZero()
 		MoveHead(x,y);
 		Sleep( 400 );
 	} while(counter--);
-}
 
-//  81775
-// 236275
+	return;
 
-void CPickobearDlg::OnBnClickedOffset()
-{
 	ASSERT( m_ComponentList.entry );
 
 	SetCurrentPosition(m_headXPos,m_headYPos);

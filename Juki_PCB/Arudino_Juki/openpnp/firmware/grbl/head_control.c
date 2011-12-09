@@ -79,7 +79,7 @@ unsigned char is_rotated( void )
 {
 	unsigned char state ;
 
-	state  = bit_is_set( HEADDT_PIN, D90 )?0:1;
+	state  = bit_is_set( HEADDT_PIN, D90 )?1:0;
 
 	return state;
 }

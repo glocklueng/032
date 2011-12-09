@@ -62,6 +62,9 @@
 // Set INVERT to 0 for high enable or 1 for low enable
 #define STEPPERS_ENABLE_INVERT  1
 
+#define HEAD_ROT				(6)
+
+
 // For performance reasons it is neccesary to have all of the
 // step outputs on one port. They cannot be split across
 // multiple ports.
@@ -108,7 +111,8 @@
 #define X2_LIMIT_BIT         2
 #define Y1_LIMIT_BIT         0
 #define Y2_LIMIT_BIT         1
-#define TACSENSE			 7   // Taccuum sensor
+
+#define TACSENSE			 7   // Taccuum sensor PD7
 
 #define Z_LIMIT_BIT         2
 #define C_LIMIT_BIT         3

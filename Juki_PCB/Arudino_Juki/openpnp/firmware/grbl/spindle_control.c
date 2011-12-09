@@ -23,11 +23,15 @@
 #include "config.h"
 
 #include <avr/io.h>
+#include <avr/delay.h>
 
 void spindle_init()
 {
   SPINDLE_ENABLE_DDR |= 1<<SPINDLE_ENABLE_BIT;
   SPINDLE_DIRECTION_DDR |= 1<<SPINDLE_DIRECTION_BIT;
+
+  STEPPERS_ENABLE_DDR |= _BV( HEAD_ROT );
+
 }
 
 void spindle_run(int direction, uint32_t rpm) 
@@ -43,4 +47,20 @@ void spindle_run(int direction, uint32_t rpm)
 void spindle_stop()
 {
   SPINDLE_ENABLE_PORT &= ~(1<<SPINDLE_ENABLE_BIT);
+}
+
+
+
+void rotate_head( int steps )
+{
+	do {
+
+		STEPPERS_ENABLE_PORT |= _BV( HEAD_ROT  );
+		_delay_us( 10 );
+
+	    STEPPERS_ENABLE_PORT &= ~_BV(HEAD_ROT);
+		_delay_us(1500);
+
+	} while( steps-- );
+
 }

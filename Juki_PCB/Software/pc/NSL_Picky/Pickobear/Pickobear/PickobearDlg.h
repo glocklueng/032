@@ -464,6 +464,7 @@ public:
 	// move head to x,y
 	bool MoveHead( long  x, long y );
 	bool MoveHeadRel(  long x, long y ); 
+	bool MoveHeadSlow(  long x, long y );
 
 	~CPickobearDlg(){
 		
