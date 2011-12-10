@@ -122,12 +122,13 @@ BEGIN_MESSAGE_MAP(CPickobearDlg, CDialog)
 	ON_BN_CLICKED(IDC_UPDATE, &CPickobearDlg::OnBnClickedUpdate)
 	ON_BN_CLICKED(IDC_LOAD_FEEDER, &CPickobearDlg::OnBnClickedLoadFeeder)
 	ON_BN_CLICKED(IDC_SAVE_FEEDER, &CPickobearDlg::OnBnClickedSaveFeeder)
-	ON_BN_CLICKED(IDC_UPDATE2, &CPickobearDlg::OnBnClickedUpdate2)
-	ON_BN_CLICKED(IDC_UPDATE3, &CPickobearDlg::OnBnClickedUpdate3)
+	ON_BN_CLICKED(IDC_UPDATE2, &CPickobearDlg::OnBnClickedH2C)
+	ON_BN_CLICKED(IDC_UPDATE3, &CPickobearDlg::OnBnClickedC2H)
 	ON_CBN_SELCHANGE(IDC_COMBO1, &CPickobearDlg::OnCbnSelchangeCombo1)
 	ON_CBN_SELCHANGE(IDC_COMBO2, &CPickobearDlg::OnCbnSelchangeCombo2)
 	ON_BN_CLICKED(IDC_ADD_LOWERRIGHT, &CPickobearDlg::OnBnClickedAddLowerright)
 	ON_CBN_SELCHANGE(IDC_STEPSIZE, &CPickobearDlg::OnCbnSelchangeStepsize)
+	ON_BN_CLICKED(IDC_EDITFEEDER, &CPickobearDlg::OnBnClickedEditfeeder)
 END_MESSAGE_MAP()
 
 BEGIN_MESSAGE_MAP(CListCtrl_Components, CListCtrl)
@@ -212,7 +213,7 @@ BOOL CPickobearDlg::OnInitDialog()
 		m_DownCamera.AddString( CString( VI.getDeviceName( i  ) ));
 
 	}
-				GetDlgItem( IDC_TOOL1 )->EnableWindow( TRUE );
+	
 	CRegKey regKey;
 	DWORD regEntry = 100;
 	long lResult;
@@ -239,7 +240,9 @@ BOOL CPickobearDlg::OnInitDialog()
 		regKey.Close();
 	}
 
-	if ( regEntry > numDevices-1 ) regEntry = 0;
+	if ( regEntry > numDevices-1 ) {
+		regEntry = 0;
+	}
 	
 	if( CB_ERR  == m_UpCamera.SetCurSel( regEntry ) ) {
 		_RPT0(_CRT_WARN,"Error\n");
@@ -285,7 +288,7 @@ BOOL CPickobearDlg::OnInitDialog()
 	ScreenToClient(rect);
 
 	// Create OpenGL Control window
-	 m_oglWindow.oglCreate( rect, rect1, this, m_UpCamera.GetCurSel());
+	 m_UpCameraWindow.oglCreate( rect, rect1, this, m_UpCamera.GetCurSel());
 	
 	// Get size and position of the template textfield we created before in the dialog editor
 	GetDlgItem(IDC_CAM2)->GetWindowRect(rect);
@@ -295,7 +298,7 @@ BOOL CPickobearDlg::OnInitDialog()
 	ScreenToClient(rect);
 	
 	// Create OpenGL Control window	
-	m_oglWindow1.oglCreate( rect, rect1, this,m_DownCamera.GetCurSel() );
+	m_DownCameraWindow.oglCreate( rect, rect1, this,m_DownCamera.GetCurSel() );
 
 
 	// convert to a picker
@@ -348,7 +351,7 @@ BOOL CPickobearDlg::OnInitDialog()
 	// Setup the OpenGL Window's timer to render
 // threaded
 //	m_oglWindow.m_unpTimer = m_oglWindow.SetTimer(1, 100, 0);
-	m_oglWindow1.m_unpTimer = m_oglWindow1.SetTimer(1, 300, 0);
+	m_DownCameraWindow.m_unpTimer = m_DownCameraWindow.SetTimer(1, 300, 0);
 
 		
 	m_StepSize.ResetContent();
@@ -678,13 +681,6 @@ char CPickobearDlg::CheckAck( char *ack1 )
 
 }
 
-void CPickobearDlg::OnBnClickedRight()
-{
-	m_headXPos += 1000;
-	
-	MoveHead( m_headXPos, m_headYPos) ;
-}
-
 
 void CPickobearDlg::OnBnClickedPark()
 {
@@ -770,7 +766,7 @@ void CPickobearDlg::OnBnClickedTool1()
 
 	
 	bool pass = false;
-	char putAway = false;
+	bool putAway = false;
 
 	// move to vacuum pad
 	MoveHead(pulsestoum(12308),pulsestoum(5002));
@@ -946,27 +942,6 @@ void CPickobearDlg::OnBnClickedTool6()
 }
 
 
-void CPickobearDlg::OnBnClickedUp()
-{
-	m_headYPos += 1000;
-	
-	MoveHead( m_headXPos, m_headYPos) ;
-}
-
-void CPickobearDlg::OnBnClickedDown()
-{
-
-	m_headYPos -= 1000;
-	
-	MoveHead( m_headXPos, m_headYPos) ;
-}
-
-void CPickobearDlg::OnBnClickedLeft()
-{
-	m_headXPos -= 1000;
-	
-	MoveHead( m_headXPos, m_headYPos) ;
-}
 
 void CPickobearDlg::OnBnClickedHead()
 {
@@ -989,10 +964,54 @@ void CPickobearDlg::OnNMCustomdrawRotate(NMHDR *pNMHDR, LRESULT *pResult)
 	*pResult = 0;
 }
 
+void CPickobearDlg::OnBnClickedUp()
+{
+	long stepsize = (m_StepSize.GetCurSel() * 10);
+	_RPT1(_CRT_WARN,"StepSize %d\n",stepsize);
+	if( stepsize == 0 ) stepsize = 1;
+
+	m_headYPos += stepsize;
+	
+	MoveHead( m_headXPos, m_headYPos) ;
+}
+
+void CPickobearDlg::OnBnClickedDown()
+{
+	long stepsize = (m_StepSize.GetCurSel() * 10);
+	_RPT1(_CRT_WARN,"StepSize %d\n",stepsize);
+	if( stepsize == 0 ) stepsize = 1;
+
+	m_headYPos -= stepsize;
+	
+	MoveHead( m_headXPos, m_headYPos) ;
+}
+
+void CPickobearDlg::OnBnClickedLeft()
+{
+	long stepsize = (m_StepSize.GetCurSel() * 10);
+	_RPT1(_CRT_WARN,"StepSize %d\n",stepsize);
+	if( stepsize == 0 ) stepsize = 1;
+
+	m_headXPos -= stepsize;
+	
+	MoveHead( m_headXPos, m_headYPos) ;
+}
+
+void CPickobearDlg::OnBnClickedRight()
+{
+	long stepsize = (m_StepSize.GetCurSel() * 10);
+	_RPT1(_CRT_WARN,"StepSize %d\n",stepsize);
+	if( stepsize == 0 ) stepsize = 1;
+
+	m_headXPos += stepsize;
+	
+	MoveHead( m_headXPos, m_headYPos) ;
+}
 
 void CPickobearDlg::OnBnClickedUpleft()
 {
 	long stepsize = (m_StepSize.GetCurSel() * 10);
+	_RPT1(_CRT_WARN,"StepSize %d\n",stepsize);
 	if( stepsize == 0 ) stepsize = 1;
 
 	m_headXPos -= stepsize;
@@ -1004,6 +1023,9 @@ void CPickobearDlg::OnBnClickedUpleft()
 void CPickobearDlg::OnBnClickedUpright()
 {
 	long stepsize = (m_StepSize.GetCurSel() * 10);
+
+	_RPT1(_CRT_WARN,"StepSize %d\n",stepsize);
+
 	if( stepsize == 0 ) 
 		stepsize = 1;
 
@@ -1016,6 +1038,7 @@ void CPickobearDlg::OnBnClickedUpright()
 void CPickobearDlg::OnBnClickedLeftdown()
 {
 	long stepsize = (m_StepSize.GetCurSel() * 10);
+	_RPT1(_CRT_WARN,"StepSize %d\n",stepsize);
 	if( stepsize == 0 ) 
 		stepsize = 1;
 
@@ -1029,6 +1052,7 @@ void CPickobearDlg::OnBnClickedLeftdown()
 void CPickobearDlg::OnBnClickedBottomleft()
 {
 	long stepsize = (m_StepSize.GetCurSel() * 10);
+	_RPT1(_CRT_WARN,"StepSize %d\n",stepsize);
 	if( stepsize == 0 ) 
 		stepsize = 1;
 
@@ -1222,10 +1246,10 @@ DWORD WINAPI CPickobearDlg::goCamera(LPVOID pThis)
 DWORD CPickobearDlg::cameraThread(void )
 {
 	while( m_Quit == 0 ) {
-		m_oglWindow.UpdateCamera( 1 ) ;
+		m_UpCameraWindow.UpdateCamera( 1 ) ;
 		Sleep(1);
 		
-		//m_oglWindow1.UpdateCamera( 1 ) ;
+		//m_DownCameraWindow.UpdateCamera( 1 ) ;
 		Sleep(1);
 
 	}
@@ -1528,28 +1552,24 @@ void CPickobearDlg::OnBnClickedLoadFeeder()
 	m_FeederList.LoadDatabase();
 }
 
-
 void CPickobearDlg::OnBnClickedSaveFeeder()
 {
 	m_FeederList.SaveDatabase();
 }
 
-void CPickobearDlg::OnBnClickedUpdate2()
+// swap head and camera, this should be one function.
+void CPickobearDlg::OnBnClickedH2C()
 {
-
-
 	SetCurrentPosition(m_headXPos,m_headYPos);
-	m_headYPos += 73050;
+	m_headYPos += (73050);
 	MoveHead(m_headXPos,m_headYPos);
 }
 
 
-void CPickobearDlg::OnBnClickedUpdate3()
+void CPickobearDlg::OnBnClickedC2H()
 {
-
-
 	SetCurrentPosition(m_headXPos,m_headYPos);
-	m_headYPos -= 73050;
+	m_headYPos -= (73050);
 	MoveHead(m_headXPos,m_headYPos);
 }
 
@@ -1629,6 +1649,7 @@ void CPickobearDlg::OnCbnSelchangeCombo2()
 		regKey.Close();
 	}
 
+	m_DownCameraWindow.SetCamera( regEntry );
 }
 
 //top camera
@@ -1651,14 +1672,14 @@ void CPickobearDlg::OnCbnSelchangeCombo1()
 		// Make 'regEntry' equal to zero
 		regEntry = m_UpCamera.GetCurSel();
 
-			// Save a value in the registry key
+		// Save a value in the registry key
 		regKey.SetDWORDValue(_T("up"), regEntry);
 
 		// then close the registry key
 		regKey.Close();
 	}
 
-
+	m_UpCameraWindow.SetCamera( regEntry );
 }
 
 
@@ -1674,18 +1695,24 @@ void CPickobearDlg::OnBnClickedAddLowerright()
 	
 	item = (m_FeederList.GetCount()-1)-m_FeederList.GetNextItem(-1, LVNI_SELECTED);
 	
-	CListCtrl_FeederList::FeederDatabase entry(m_FeederList.at( item ) );
-
 	// set bottom/left to where head is.
-	entry.lx = m_headXPos;
-	entry.ly = m_headXPos;
-
+	// this updates the database, but not the list
+	m_FeederList.at( item ).lx = m_headXPos;
+	m_FeederList.at( item ).ly = m_headXPos;
 
 	CCounts CountDialog;
 
 	CountDialog.DoModal();
-}
 
+	// set counts
+	// this updates the database, but not the list
+	m_FeederList.at( item ).countx = CountDialog.m_CountX;
+	m_FeederList.at( item ).county = CountDialog.m_CountY;
+
+	// rebuild the list
+	m_FeederList.RebuildList();
+
+}
 
 void CPickobearDlg::OnCbnSelchangeStepsize()
 {
@@ -1693,6 +1720,7 @@ void CPickobearDlg::OnCbnSelchangeStepsize()
 	DWORD regEntry = 100;
 	long lResult;
 
+	UpdateData();
 
 	if ((lResult = regKey.Open(HKEY_CURRENT_USER,  _T("Software\\NullSpaceLabs\\PickoBear\\Settings"))) != ERROR_SUCCESS)
 		lResult = regKey.Create(HKEY_CURRENT_USER, _T("Software\\NullSpaceLabs\\PickoBear\\Settings"));
@@ -1702,11 +1730,44 @@ void CPickobearDlg::OnCbnSelchangeStepsize()
 		// Make 'regEntry' equal to zero
 		regEntry = m_StepSize.GetCurSel();
 
-			// Save a value in the registry key
+		// Save a value in the registry key
 		regKey.SetDWORDValue(_T("stepSize"), regEntry);
 
 		// then close the registry key
 		regKey.Close();
 	}
+}
 
+
+void CPickobearDlg::OnBnClickedEditfeeder()
+{
+	FeederEdit FeederDialog;
+
+	int item = m_FeederList.GetSelectedCount();
+
+	if( item == 0 ) {
+		return ;
+	}
+	
+	item = m_FeederList.GetNextItem(-1, LVNI_SELECTED);
+
+	// iItem is item number, database is backwards
+	int clist = (m_FeederList.GetCount()-1) - m_FeederList.GetNextItem(-1, LVNI_SELECTED);
+
+	FeederDialog.entry = m_FeederList.m_Database.at( clist ) ;
+
+	FeederDialog.m_FeederName = FeederDialog.entry.label;
+
+	FeederDialog.DoModal();
+
+	CStringA userInput8( UTF16toUTF8( FeederDialog.m_FeederName ) );
+
+	// Since CString doesn't like being in a vector for load/save then we're using a char array, which makes this bit ugly
+	strcpy( FeederDialog.entry.label,userInput8 );
+	userInput8.ReleaseBuffer();
+
+	m_FeederList.m_Database.at( clist ) = FeederDialog.entry;
+
+	//ugly
+	m_FeederList.RebuildList();
 }

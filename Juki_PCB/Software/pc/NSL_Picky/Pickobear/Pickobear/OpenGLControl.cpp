@@ -135,7 +135,6 @@ void COpenGLControl::UpdateCamera( UINT nIDEvent )
 	int ddepth;  
 	int ind =1 , ni = 100;
 	
-
 	if( m_camera == -1 ) 
 		return;
 
@@ -273,6 +272,21 @@ void COpenGLControl::UpdateCamera( UINT nIDEvent )
 
 }
 
+void  COpenGLControl::SetCamera( int DeviceID)
+{	
+	if (m_camera!=-1) {
+
+		VI.stopDevice( m_camera) ;
+		_RPT2(_CRT_WARN,"Stopping Camera %d, name is [%s]\n",m_camera,VI.getDeviceName(m_camera));
+	}
+
+	int numDevices = VI.listDevices();
+	m_camera = DeviceID;
+
+	_RPT2(_CRT_WARN,"Starting Camera %d, name is [%s]\n",m_camera,VI.getDeviceName(m_camera));
+	VI.setupDevice(m_camera); 
+}
+
 CString COpenGLControl::oglCreate(CRect rect, CRect orect, CWnd *parent, int DeviceID)
 {
 	CString className = AfxRegisterWndClass(CS_HREDRAW | CS_VREDRAW | CS_OWNDC, NULL, (HBRUSH)GetStockObject(BLACK_BRUSH), NULL);
@@ -282,23 +296,17 @@ CString COpenGLControl::oglCreate(CRect rect, CRect orect, CWnd *parent, int Dev
 	// Set initial variables' values
 	m_oldWindow	   = rect;
 	m_originalRect = rect;
-	m_size = orect;
+	m_size		 = orect;
 
 	hWnd = parent;
 
 	int numDevices = VI.listDevices();
 
-	for( int i = 0 ; i < numDevices ; i++ ) {
-	
-		_RPT2(_CRT_WARN,"%d) Camera name is [%s]\n",i, VI.getDeviceName( i  ));
-
-	}
-
 	m_camera = DeviceID;
 
 	VI.setupDevice(m_camera); 
 
-	_RPT1(_CRT_WARN,"Camera name is [%s]\n",VI.getDeviceName(m_camera));
+	_RPT2(_CRT_WARN,"Camera %d name is [%s]\n",m_camera,VI.getDeviceName(m_camera));
 
 	img1 = cvCreateImage(cvSize(VI.getWidth(m_camera),VI.getHeight(m_camera) ),IPL_DEPTH_8U,3);
 	assert(img1);
