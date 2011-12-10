@@ -217,9 +217,17 @@ class CListCtrl_FeederList : public CListCtrl
 	void PreSubclassWindow();
 public:
 	typedef struct CompDatabase_tag  {
+		
+		// index ( not used )
 		unsigned int item;
-		unsigned long x,y;
+		
+		// coordinates in um
+		long x,y;
+		
+		// rotation in degrees
 		short rot;
+
+		// name for feeder
 		char label[256];
 
 /*
@@ -239,10 +247,9 @@ public:
 */
 
 		// bottom right coordinate
-		// bottom right coordinaet
-		unsigned long lx,ly;
+		long lx,ly;
 
-		// number in x, number in y
+		// number off components  --->x, --->y
 		unsigned long countx,county;
 
 	} FeederDatabase;
