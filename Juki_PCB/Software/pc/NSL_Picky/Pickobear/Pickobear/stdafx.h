@@ -53,9 +53,11 @@
 #include "OpenGLControl.h"
 
 #include "SerialMFC.h"
+#include "FeederSetup.h"
+#include "PickobearDlg.h"
 
 #include "opencv.h"
-#include "FeederSetup.h"
+#include "FeederEdit.h"
 
 #include "TextEditDialog.h"
 

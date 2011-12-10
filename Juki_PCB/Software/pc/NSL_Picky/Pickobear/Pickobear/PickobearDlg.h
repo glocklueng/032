@@ -239,6 +239,7 @@ public:
 */
 
 		// bottom right coordinate
+		// bottom right coordinaet
 		unsigned long lx,ly;
 
 		// number in x, number in y
@@ -307,31 +308,9 @@ public:
 		// close file
 		is.close();
 
-		CString temp;
-
-		// remove any and all items from List
-		DeleteAllItems();
-
-		// for all items loaded
-		for ( unsigned int i = 0 ; i < m_Count ; i ++ ) {
 		
-			// fetch entry 
-			entry = &m_Database.at( i  ) ;
-			
-			temp = entry->label;
+		RebuildList();
 
-			// add first item
-			int Index = InsertItem(LVIF_TEXT, 0,temp, 0, 0, 0, NULL);
-
-			// convert to string
-			temp.Format(L"%d",entry->x);
-			//set next
-			SetItemText(Index,1,temp);
-			temp.Format(L"%d",entry->y);
-			SetItemText(Index,2,temp);
-			temp.Format(L"%d",entry->rot);
-			SetItemText(Index,3,temp);
-		}
 	}
 
 	/// Offset of item in PCB
@@ -357,13 +336,56 @@ public:
 	}
 
 	// fetch entry at index
-	FeederDatabase at( int i ) {
+	FeederDatabase &at( int i ) {
 		if( i < m_Count ) 
 			return m_Database.at(i);
 		
 		return *entry ;
 	}
  
+	void RebuildList ( void ) 
+	{		
+		CString temp;
+
+		// remove any and all items from List
+		DeleteAllItems();
+
+		// for all items loaded
+		for ( unsigned int i = 0 ; i < m_Count ; i ++ ) {
+		
+			// fetch entry 
+			entry = &m_Database.at( i  ) ;
+			
+			temp = entry->label;
+
+			// add first item
+			int Index = InsertItem(LVIF_TEXT, 0,temp, 0, 0, 0, NULL);
+
+			// convert to string
+			temp.Format(L"%d",entry->x);
+			//set next
+			SetItemText(Index,1,temp);
+			
+			temp.Format(L"%d",entry->y);
+			SetItemText(Index,2,temp);
+
+			temp.Format(L"%d",entry->rot);
+			SetItemText(Index,3,temp);
+
+			temp.Format(L"%d",entry->lx);
+			SetItemText(Index,4,temp);
+			temp.Format(L"%d",entry->ly);
+			SetItemText(Index,5,temp);
+
+			temp.Format(L"%d",entry->countx);
+			SetItemText(Index,6,temp);
+			temp.Format(L"%d",entry->county);
+			SetItemText(Index,7,temp);
+
+
+		}
+	}
+
 	// add an item to the list
 	void AddItem( const char *label,const long x,long y,short rot )
 	{
@@ -414,8 +436,8 @@ class CPickobearDlg : public CDialog
 {
 private:
 	// each of the camera windows
-	COpenGLControl m_oglWindow;
-	COpenGLControl m_oglWindow1;
+	COpenGLControl m_UpCameraWindow;
+	COpenGLControl m_DownCameraWindow;
 	// camera update thread
 	COGLThread m_OGLThread;
 
@@ -549,8 +571,8 @@ public:
 	afx_msg void OnBnClickedUpdate();
 	afx_msg void OnBnClickedLoadFeeder();
 	afx_msg void OnBnClickedSaveFeeder();
-	afx_msg void OnBnClickedUpdate2();
-	afx_msg void OnBnClickedUpdate3();
+	afx_msg void OnBnClickedH2C();
+	afx_msg void OnBnClickedC2H();
 	CComboBox m_UpCamera;
 	CComboBox m_DownCamera;
 
@@ -561,4 +583,5 @@ public:
 	afx_msg void OnBnClickedAddLowerright();
 	CComboBox m_StepSize;
 	afx_msg void OnCbnSelchangeStepsize();
+	afx_msg void OnBnClickedEditfeeder();
 };
