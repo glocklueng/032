@@ -52,6 +52,10 @@
 #define ENABLE_STEPPER_DRIVER_INTERRUPT()  TIMSK1 |= (1<<OCIE1A)
 #define DISABLE_STEPPER_DRIVER_INTERRUPT() TIMSK1 &= ~(1<<OCIE1A)
 
+// if stepper interrupt is enabled, machine is moving ?
+#define IS_STEPPER_DRIVER_INTERRUPT_ENABLED() (TIMSK1 & (1<<OCIE1A))
+
+
 static block_t *current_block;  // A pointer to the block currently being traced
 
 // Variables used by The Stepper Driver Interrupt
@@ -643,6 +647,12 @@ error:;
 #endif
 
 }
+
+unsigned char head_moving( void ) 
+{
+	return IS_STEPPER_DRIVER_INTERRUPT_ENABLED();
+}
+
 
 void limits_init(void)
 {

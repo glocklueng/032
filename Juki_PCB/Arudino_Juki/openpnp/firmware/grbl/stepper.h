@@ -45,5 +45,7 @@ int st_is_enabled();
 
 void set_busy(unsigned char state );
 
+unsigned char head_moving( void ) ;
+
 
 #endif

@@ -25,7 +25,7 @@
 #include <avr/io.h>
 
 void atc_init();
-void atc_change(int tool);
+unsigned char atc_change(int tool);
 unsigned char has_tool( void );
 
 #endif
