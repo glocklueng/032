@@ -63,7 +63,7 @@ unsigned char vacuum_state( void )
 }
 
 
-void do_vacuum_test( void )
+void vacuum_test( void )
 {
 	if( vacuum_state()  == 1 ) { 
 		
@@ -74,6 +74,22 @@ void do_vacuum_test( void )
 		printPgmString(PSTR("n\r\n"));
 
 	}
+}
+
+/* This runs the whole test , vaccum on, goes to pad, head down, test vacuum, head up, returns state */
+unsigned char run_vacuum_test( void )
+{
+// switch vacuum on, faster, wastes air
+	vacuum( 1 );
+
+	// move to pad
+	gotoxy( VACUUM_PAD_X, VACUUM_PAD_Y ,-1,-1) ;
+
+	// this only checks if the interrupt is enable right now, not really if the machine is moving, which should be the same thing.
+	while( head_moving() ) ;
+
+	// settle head
+	_delay_us( HEAD_MOVE_SETTLE_TIME );
 
 }
 

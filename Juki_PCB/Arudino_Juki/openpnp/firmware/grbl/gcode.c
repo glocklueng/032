@@ -21,11 +21,16 @@
 /* This code is inspired by the Arduino GCode Interpreter by Mike Ellery and the NIST RS274/NGC Interpreter
    by Kramer, Proctor and Messina. */
 
-#include "gcode.h"
+
+
 #include <stdlib.h>
 #include <string.h>
-#include "nuts_bolts.h"
 #include <math.h>
+
+#include <avr/pgmspace.h>
+
+#include "nuts_bolts.h"
+#include "gcode.h"
 #include "settings.h"
 #include "motion_control.h"
 #include "spindle_control.h"
@@ -35,10 +40,12 @@
 #include "wiring_serial.h"
 #include "head_control.h"
 #include "tape_knock.h"
+#include "vacuum_control.h"
+#include "atc_control.h"
+
 
 #include "config.h"
 
-#include <avr/pgmspace.h>
 
 #define MM_PER_INCH (25.4)
 
@@ -109,6 +116,7 @@ void gc_init() {
   select_plane(X_AXIS, Y_AXIS, Z_AXIS);
   gc.absolute_mode = TRUE;
 }
+
 extern uint8_t dir_bits;
 
 static float to_millimeters(double value) {
@@ -290,7 +298,7 @@ uint8_t gc_execute_line(char *line) {
 
 		// tape knock
 		case 21: tape_knock();break;
-		case 22: do_vacuum_test(); break;
+		case 22: vacuum_test(); break;
 		case 23: check_for_tool(); break;
 
         default: FAIL(GCSTATUS_UNSUPPORTED_STATEMENT);
@@ -460,3 +468,28 @@ int read_double(char *line,               //!< string: line of RS274/NGC code be
    group 13 = {G61, G61.1, G64} path control mode
 */
 
+
+/*
+ * goto xyzc 
+ *
+ */
+
+void gotoxy( double x,double y, double z,double c )
+{
+
+  // if -1 use current pos
+  if( x == -1) z = gc.position[X_AXIS] ;
+  if( y == -1) c = gc.position[Y_AXIS] ;
+  if( z == -1) z = gc.position[Z_AXIS] ;
+  if( c == -1) c = gc.position[C_AXIS] ;
+
+   // could also use gc_execute_line("G1X100Y100Z100F100\r\n");	
+   mc_line(x, y, z, c, gc.seek_rate, FALSE);
+ 
+   // update position  
+   gc.position[X_AXIS] = x;
+   gc.position[Y_AXIS] = y;
+   gc.position[Z_AXIS] = z;
+   gc.position[C_AXIS] = c;
+
+}

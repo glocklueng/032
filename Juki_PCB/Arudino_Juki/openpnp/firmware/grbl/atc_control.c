@@ -14,8 +14,10 @@
 #include "serial_protocol.h"
 #include "wiring_serial.h"
 #include "atc_control.h"
+#include "head_control.h"
+#include "vacuum_control.h"
 #include "config.h"
-#include "settings.h"
+#include "stepper.h"
 
 void atc_init()
 {
@@ -65,10 +67,105 @@ unsigned char check_for_tool( void )
 	}
 }
 
+// has no tool to start of with
+static unsigned char toolId = 255;
+
+// this should to the whole procedure
+
+// these two are similatr enough they could be one function
+char PickupTool( unsigned char tool )
+{
+	// head down, won't return til its done
+	if( head_down( 1 ) == 0 ) {
+		// Head failed to go down.
+		return 0;
+	}
+
+	// bring up atc, inbuilt delay, marked as busy so gantry can't move, atc doesn't know if its up or down
+	atc_change( tool ) ;
+
+	// head back up
+	head_down( 0 );
+
+	_delay_us(100);
+
+	// tool changer down, should no longer be marked as busy, head can move.
+	atc_change( 0 );
+	
+}
+
+void DropTool( unsigned char tool )
+{
+	// head down, won't return til its done
+	if( head_down( 1 ) == 0 ) {
+		// Head failed to go down.
+		return 0;
+	}
+
+	// bring up atc, inbuilt delay, marked as busy so gantry can't move, atc doesn't know if its up or down
+	atc_fire( tool ) ;
+
+	// tool changer down, should no longer be marked as busy, head can move.
+	atc_fire( 0 );
+
+	// head back up
+	head_down( 0 );
+	
+}
+
+/* 
+If current tool  = requested tool , return 
+
+  Move to vacuum pad
+  Switch on vacuum
+  Head down
+  Wait
+  Test vacuum 
+  Head up
+  If vacuum on, put tool away first into toolId hole
+
+If Putting away
+	Move to toolId tool holder
+	pause
+	Head down
+	ATC up
+	Head Up
+	Atc Down
+
+If Picking up
+	Move to requested tool holder
+	pause
+	Head down
+	ATC up
+	Atc Down
+	Head Up
+
+Test to seee if has tool
+	Move to vacuum table
+
+	Failed ?
+
+*/
+
+unsigned char atc_change(int tool)
+{
+	// do we have that tool already ?
+	if( tool == toolId ) {
+		return 1;
+	}
+	
+	if( run_vacuum_test() == 0 ) {
+		PickupTool(tool);
+	} else { 
+		DropTool(tool);
+	}
+
+}
 
 
-// changes tool , 0 put back, 1-6 picks up
-void atc_change(int tool)
+
+// tool changer
+void atc_fire(int tool)
 {
 #ifdef VERBOSE_DEBUG
 	printPgmString(PSTR("atc change\n\r"));

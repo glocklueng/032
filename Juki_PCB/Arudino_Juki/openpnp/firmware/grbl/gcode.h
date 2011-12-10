@@ -35,4 +35,6 @@ void gc_init();
 // Execute one block of rs275/ngc/g-code
 uint8_t gc_execute_line(char *line);
 
+void gotoxy( double x,double y, double z,double c );
+
 #endif

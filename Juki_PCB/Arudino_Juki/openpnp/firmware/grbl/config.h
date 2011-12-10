@@ -198,6 +198,12 @@
 // give smoother acceleration but may impact performance
 #define ACCELERATION_TICKS_PER_SECOND 40L
 
+
+// uS timings
+
+// time for head to settle after a move
+#define HEAD_MOVE_SETTLE_TIME	( 100 )
+
 #endif
 
 // Pin-assignments from Grbl 0.5

@@ -34,7 +34,7 @@ void head_init()
 }
 
 // todo: don't allow head down while not homed?
-void head_down(int state)
+char head_down(int state)
 {
 #ifdef VERBOSE_DEBUG
 	printPgmString(PSTR("dbg: head_down\n\r"));
@@ -60,10 +60,13 @@ void head_down(int state)
   if(is_head_down() != state ) {
 
 	  printPgmString(PSTR("Head down error\n\r"));
+	  
+	  return 0;
   }
 
  set_busy( FALSE );
 
+	return 1;
 }
 
 unsigned char is_head_down( void )

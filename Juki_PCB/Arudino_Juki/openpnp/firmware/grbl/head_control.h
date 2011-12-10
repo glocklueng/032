@@ -28,7 +28,7 @@
 #define HEAD_SETTLE_TIME		( 200 )
 
 void head_init();
-void head_down(int state);
+char head_down(int state);
 unsigned char is_head_down( void );
 unsigned char is_rotated( void );
 
