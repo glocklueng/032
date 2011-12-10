@@ -1763,7 +1763,7 @@ void CPickobearDlg::OnBnClickedEditfeeder()
 	CStringA userInput8( UTF16toUTF8( FeederDialog.m_FeederName ) );
 
 	// Since CString doesn't like being in a vector for load/save then we're using a char array, which makes this bit ugly
-	strcpy( FeederDialog.entry.label,userInput8 );
+	strcpy_s( FeederDialog.entry.label,userInput8 );
 	userInput8.ReleaseBuffer();
 
 	m_FeederList.m_Database.at( clist ) = FeederDialog.entry;
