@@ -11,9 +11,16 @@
 #include <iostream>
 #include <fstream>
 
+
+#define pulsestoum(x) (x*25)
+
+
 CString GetSaveFile( const TCHAR *ptypes, const TCHAR*caption, const TCHAR *pStartDir);
 CString GetLoadFile( const TCHAR *ptypes, const TCHAR*caption, const TCHAR *pStartDir);
 bool SetCurrentPosition ( long x,long y);
+void BuildGCodeMove( char *output, int length, int mode , long x, long y, long speed );
+
+
 
 // component class
 class CListCtrl_Components : public CListCtrl
@@ -87,6 +94,7 @@ public:
 
 		m_Database.at(idd).feeder = id;
 
+
 	}
 
 	CompDatabase  at( int i ) {
@@ -158,7 +166,7 @@ public:
 		CString filename;
 
 		filename = ::GetLoadFile( 
-			_T("Supported Files Types(*.fdr)\0*.fdr\0\0"),
+			_T("Supported Files Types(*.pbr)\0*.pbr\0\0"),
 			_T("Choose name to load components from"),_T("") 
 		);
 
@@ -182,28 +190,12 @@ public:
 		is.read((char*)&m_Database.front(), m_Database.size() * sizeof( CompDatabase ) );
 		
 		is.close();
-
-		CString temp;
-
-		DeleteAllItems();
-
-		for ( unsigned int i = 0 ; i < m_Count ; i ++ ) {
 		
-			entry = &m_Database.at( i  ) ;
-			
-			temp = entry->label;
+		RebuildList();
 
-			int Index = InsertItem(LVIF_TEXT, 0,temp, 0, 0, 0, NULL);
-
-			SetItemText(Index,1,temp);
-			temp.Format(L"%d",entry->x);
-			SetItemText(Index,2,temp);
-			temp.Format(L"%d",entry->y);
-			SetItemText(Index,3,temp);
-			temp.Format(L"%d",entry->rot);
-			SetItemText(Index,4,temp);
-		}
 	}
+
+	void RebuildList( void );
 
 	afx_msg void OnHdnItemdblclickList2(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnNMRClickList2(NMHDR *pNMHDR, LRESULT *pResult);
@@ -251,6 +243,9 @@ public:
 
 		// number off components  --->x, --->y
 		unsigned long countx,county;
+
+		// which tool to use
+		unsigned char tool;
 
 	} FeederDatabase;
 		
@@ -315,7 +310,6 @@ public:
 		// close file
 		is.close();
 
-		
 		RebuildList();
 
 	}
@@ -370,7 +364,6 @@ public:
 
 			// convert to string
 			temp.Format(L"%d",entry->x);
-			//set next
 			SetItemText(Index,1,temp);
 			
 			temp.Format(L"%d",entry->y);
@@ -381,11 +374,13 @@ public:
 
 			temp.Format(L"%d",entry->lx);
 			SetItemText(Index,4,temp);
+
 			temp.Format(L"%d",entry->ly);
 			SetItemText(Index,5,temp);
 
 			temp.Format(L"%d",entry->countx);
 			SetItemText(Index,6,temp);
+
 			temp.Format(L"%d",entry->county);
 			SetItemText(Index,7,temp);
 
@@ -461,6 +456,7 @@ private:
 	enum eMachineState {
 
 		MS_IDLE,
+		MS_STOP,
 		MS_GO
 
 	};
@@ -469,6 +465,8 @@ private:
 	eMachineState m_MachineState;
 
 	int m_Speed;
+	// camera goto (1) or head goto ( 0 )s
+	int m_CameraMode ;
 
 // Construction
 public:
@@ -591,4 +589,5 @@ public:
 	CComboBox m_StepSize;
 	afx_msg void OnCbnSelchangeStepsize();
 	afx_msg void OnBnClickedEditfeeder();
+	afx_msg void OnBnClickedAssignfeeder();
 };

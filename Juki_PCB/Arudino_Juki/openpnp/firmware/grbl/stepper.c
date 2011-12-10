@@ -520,7 +520,7 @@ void st_go_home(void)
 	}
 
 	// tool changer off
-	atc_change(0);	
+	atc_fire(0);	
 
 #ifdef VERBOSE_DEBUG
 	printPgmString(PSTR("homing\r\n"));
@@ -650,7 +650,7 @@ error:;
 
 unsigned char head_moving( void ) 
 {
-	return IS_STEPPER_DRIVER_INTERRUPT_ENABLED();
+	return IS_STEPPER_DRIVER_INTERRUPT_ENABLED()?1:0;
 }
 
 

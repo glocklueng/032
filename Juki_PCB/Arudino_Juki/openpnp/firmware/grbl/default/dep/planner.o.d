@@ -4,8 +4,7 @@ planner.o: ../planner.c \
   d:/winavr-20100110/lib/gcc/../../avr/include/math.h \
   d:/winavr-20100110/lib/gcc/../../avr/include/stdlib.h \
   d:\winavr-20100110\bin\../lib/gcc/avr/4.3.3/include/stddef.h \
-  ../planner.h ../nuts_bolts.h \
-  d:/winavr-20100110/lib/gcc/../../avr/include/string.h ../stepper.h \
+  d:/winavr-20100110/lib/gcc/../../avr/include/avr/pgmspace.h \
   d:/winavr-20100110/lib/gcc/../../avr/include/avr/io.h \
   d:/winavr-20100110/lib/gcc/../../avr/include/avr/sfr_defs.h \
   d:/winavr-20100110/lib/gcc/../../avr/include/avr/iom2560.h \
@@ -14,9 +13,10 @@ planner.o: ../planner.c \
   d:/winavr-20100110/lib/gcc/../../avr/include/avr/common.h \
   d:/winavr-20100110/lib/gcc/../../avr/include/avr/version.h \
   d:/winavr-20100110/lib/gcc/../../avr/include/avr/fuse.h \
-  d:/winavr-20100110/lib/gcc/../../avr/include/avr/lock.h \
-  d:/winavr-20100110/lib/gcc/../../avr/include/avr/sleep.h ../settings.h \
-  ../config.h ../wiring_serial.h ../motion_control.h
+  d:/winavr-20100110/lib/gcc/../../avr/include/avr/lock.h ../planner.h \
+  ../nuts_bolts.h d:/winavr-20100110/lib/gcc/../../avr/include/string.h \
+  ../stepper.h d:/winavr-20100110/lib/gcc/../../avr/include/avr/sleep.h \
+  ../settings.h ../config.h ../wiring_serial.h ../motion_control.h
 
 d:/winavr-20100110/lib/gcc/../../avr/include/inttypes.h:
 
@@ -28,13 +28,7 @@ d:/winavr-20100110/lib/gcc/../../avr/include/stdlib.h:
 
 d:\winavr-20100110\bin\../lib/gcc/avr/4.3.3/include/stddef.h:
 
-../planner.h:
-
-../nuts_bolts.h:
-
-d:/winavr-20100110/lib/gcc/../../avr/include/string.h:
-
-../stepper.h:
+d:/winavr-20100110/lib/gcc/../../avr/include/avr/pgmspace.h:
 
 d:/winavr-20100110/lib/gcc/../../avr/include/avr/io.h:
 
@@ -53,6 +47,14 @@ d:/winavr-20100110/lib/gcc/../../avr/include/avr/version.h:
 d:/winavr-20100110/lib/gcc/../../avr/include/avr/fuse.h:
 
 d:/winavr-20100110/lib/gcc/../../avr/include/avr/lock.h:
+
+../planner.h:
+
+../nuts_bolts.h:
+
+d:/winavr-20100110/lib/gcc/../../avr/include/string.h:
+
+../stepper.h:
 
 d:/winavr-20100110/lib/gcc/../../avr/include/avr/sleep.h:
 

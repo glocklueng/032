@@ -48,8 +48,8 @@ void COpenGLControl::OnRButtonDown(UINT nFlags, CPoint point )
 	point.x -= w;
 	point.y -= h;
 	
-	point.x *= 400;
-	point.y *= 400;
+	point.x *= 40;
+	point.y *= 40;
 
 	ASSERT( pDlg );
 

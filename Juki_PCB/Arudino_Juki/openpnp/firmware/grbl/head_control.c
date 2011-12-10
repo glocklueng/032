@@ -64,7 +64,7 @@ char head_down(int state)
 	  return 0;
   }
 
- set_busy( FALSE );
+ 	set_busy( FALSE );
 
 	return 1;
 }

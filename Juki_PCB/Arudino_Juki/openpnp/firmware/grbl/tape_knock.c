@@ -31,7 +31,14 @@ void tape_knock( void )
 	printPgmString(PSTR("tape knock\n\r"));
 #endif
 
- set_busy( TRUE );
+	if( gHomed == FALSE ) {
+   		return ;
+   	}
+
+
+	while( head_moving() );
+
+	 set_busy( TRUE );
 
 	TAPE_PORT &= ~(_BV( TAPE_KNOCK ));
 
@@ -41,5 +48,5 @@ void tape_knock( void )
 
 	_delay_ms( TAPE_KNOCK_SETTLE );
 
- set_busy( FALSE );
+	 set_busy( FALSE );
 }

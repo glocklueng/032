@@ -57,6 +57,9 @@ static void status_message(int status_code)
     case GCSTATUS_FLOATING_POINT_ERROR:
    		printPgmString(PSTR("error: Floating point error\n\r")); 
 		break;
+    case GCSTATUS_FAILED_COMMAND:
+   		printPgmString(PSTR("error: Command Failed\n\r")); 
+		break;
     default:
     	printPgmString(PSTR("error: "));
     	printInteger(status_code);

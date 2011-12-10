@@ -24,8 +24,15 @@
 
 #include <avr/io.h>
 
+
+#define ATC_1_X		( 12.8504 ) 
+#define ATC_1_Y 	(  4.6378 )
+
+
 void atc_init();
 unsigned char atc_change(int tool);
 unsigned char has_tool( void );
+void atc_fire(int tool);
+unsigned char check_for_tool( void );
 
 #endif
