@@ -32,6 +32,7 @@
 #include "nuts_bolts.h"
 #include "gcode.h"
 #include "settings.h"
+#include "stepper.h"
 #include "motion_control.h"
 #include "spindle_control.h"
 #include "coolant_control.h"
@@ -215,6 +216,10 @@ uint8_t gc_execute_line(char *line) {
 			printInteger( is_head_down() );
 	      	printPgmString(PSTR("\r\n"));
 
+	      	printPgmString(PSTR("head_moving = "));
+			printInteger( head_moving() );
+	      	printPgmString(PSTR("\r\n"));
+
 	      	printPgmString(PSTR("vacuum_state = "));
 			printInteger( vacuum_state() );
 	      	printPgmString(PSTR("\r\n"));
@@ -240,6 +245,7 @@ uint8_t gc_execute_line(char *line) {
 			if( bit_is_set( YHM_PIN, Y_HOME ) )
 		      	printPgmString(PSTR("Y_HOME\r\n"));
 			}
+			return(gc.status_code);
 
 	       break;
 
@@ -300,6 +306,8 @@ uint8_t gc_execute_line(char *line) {
 		case 21: tape_knock();break;
 		case 22: vacuum_test(); break;
 		case 23: check_for_tool(); break;
+		case 24: gc.status_code = goto_vacpad() ;next_action = NEXT_ACTION_DWELL ; break;
+		case 25: vacuum_test() ;next_action = NEXT_ACTION_DWELL ; break;
 
         default: FAIL(GCSTATUS_UNSUPPORTED_STATEMENT);
       }            
@@ -353,11 +361,11 @@ uint8_t gc_execute_line(char *line) {
 	  break;
 	  case 'H':
 
-			// amount to move
-	        head = unit_converted_value;
-		  // move the head
-		  gc.motion_mode = MOTION_MODE_HEAD;
-	      break;
+		// amount to move
+		head = unit_converted_value;
+		// move the head
+		gc.motion_mode = MOTION_MODE_HEAD;
+		break;
     }
   }
   

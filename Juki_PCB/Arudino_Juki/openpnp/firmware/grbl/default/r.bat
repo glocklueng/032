@@ -1,2 +1,2 @@
 call p.bat grbl.hex 14
-putty @pnpa
+start /c c:\tools\putty @pnpa

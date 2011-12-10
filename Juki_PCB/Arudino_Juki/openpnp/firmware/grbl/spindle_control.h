@@ -27,4 +27,5 @@ void spindle_init();
 void spindle_run(int direction, uint32_t rpm);
 void spindle_stop();
 void rotate_head( int steps );
+
 #endif

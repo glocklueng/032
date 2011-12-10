@@ -29,6 +29,7 @@
 
 void head_init();
 char head_down(int state);
+
 unsigned char is_head_down( void );
 unsigned char is_rotated( void );
 

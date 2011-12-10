@@ -34,15 +34,6 @@ void atc_init()
 
 }
 
-void goto_vacpad( void ) 
-{
-	if( is_head_down() ) {
-		head_down( FALSE) ;
-	}
-
-	// move head to vacuum pad
-	//gotoxy(12308,5002);
-}
 
 // check to see if the head has a tool in it
 unsigned char check_for_tool( void ) 
@@ -63,7 +54,7 @@ unsigned char check_for_tool( void )
 		return TRUE;
 	} else {
 		head_down( FALSE) ;
-		return FALSE;
+		return FALSE; 
 	}
 }
 
@@ -78,7 +69,7 @@ char PickupTool( unsigned char tool )
 	// head down, won't return til its done
 	if( head_down( 1 ) == 0 ) {
 		// Head failed to go down.
-		return 0;
+		return GCSTATUS_FAILED_COMMAND;
 	}
 
 	// bring up atc, inbuilt delay, marked as busy so gantry can't move, atc doesn't know if its up or down
@@ -92,14 +83,16 @@ char PickupTool( unsigned char tool )
 	// tool changer down, should no longer be marked as busy, head can move.
 	atc_change( 0 );
 	
+	return GCSTATUS_OK;
+
 }
 
-void DropTool( unsigned char tool )
+char DropTool( unsigned char tool )
 {
 	// head down, won't return til its done
 	if( head_down( 1 ) == 0 ) {
 		// Head failed to go down.
-		return 0;
+		return GCSTATUS_FAILED_COMMAND;
 	}
 
 	// bring up atc, inbuilt delay, marked as busy so gantry can't move, atc doesn't know if its up or down
@@ -111,6 +104,8 @@ void DropTool( unsigned char tool )
 	// head back up
 	head_down( 0 );
 	
+	return GCSTATUS_OK;
+
 }
 
 /* 
@@ -151,7 +146,7 @@ unsigned char atc_change(int tool)
 {
 	// do we have that tool already ?
 	if( tool == toolId ) {
-		return 1;
+		return GCSTATUS_OK;
 	}
 	
 	if( run_vacuum_test() == 0 ) {
@@ -160,6 +155,7 @@ unsigned char atc_change(int tool)
 		DropTool(tool);
 	}
 
+	return GCSTATUS_OK;
 }
 
 

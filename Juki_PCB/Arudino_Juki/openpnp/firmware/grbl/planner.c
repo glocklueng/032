@@ -55,6 +55,7 @@
 #include <inttypes.h>
 #include <math.h>       
 #include <stdlib.h>
+#include <avr/pgmspace.h>
 
 #include "planner.h"
 #include "nuts_bolts.h"
@@ -351,8 +352,22 @@ void plan_set_current(double x, double y, double z, double c) {
 // Add a new linear movement to the buffer. steps_x, _y, _z and _c is the absolute position in 
 // mm. Microseconds specify how many microseconds the move should take to perform. To aid acceleration
 // calculation the caller must also provide the physical length of the line in millimeters.
-void plan_buffer_line(double x, double y, double z, double c, double feed_rate, int invert_feed_rate) {
-  
+void plan_buffer_line(double x, double y, double z, double c, double feed_rate, int invert_feed_rate) 
+{
+
+#ifdef VERBOSE_DEBUG
+	printPgmString(PSTR("x = "));
+	printFloat( x );
+	printPgmString(PSTR("\r\n"));
+
+	printPgmString(PSTR("y = "));
+	printFloat( y );
+	printPgmString(PSTR("\r\n"));
+
+	printPgmString(PSTR("z = "));
+	printFloat( z );
+	printPgmString(PSTR("\r\n"));
+#endif
   
   if( gHomed == FALSE ) 
   	return;

@@ -27,14 +27,14 @@
 // ms needed for air to transistion
 #define AIR_SETTLE_TIME		( 500 )
 
-#define	VACUUM_PAD_X		( 1.3 )
-#define	VACUUM_PAD_Y		( 1.2 )
-
+#define	VACUUM_PAD_X		( 12.1142 )
+#define	VACUUM_PAD_Y		( 4.92323 )
 
 void vacuum_init();
 void vacuum(int state);
 unsigned char vacuum_state( void );
 void vacuum_test( void );
 unsigned char run_vacuum_test( void );
+unsigned char goto_vacpad( void ) ;
 
 #endif
