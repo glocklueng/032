@@ -21,6 +21,8 @@
 #ifndef config_h
 #define config_h
 
+//#define VERBOSE_DEBUG (1)
+
 #define SET_BIT(p,m) ((p) |= (m)) 
 #define CLEAR_BIT(p,m) ((p) &= ~(m)) 
 

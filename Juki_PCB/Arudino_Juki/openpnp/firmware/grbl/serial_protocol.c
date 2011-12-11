@@ -37,42 +37,64 @@ static uint8_t char_counter;
 
 static void status_message(int status_code)
 {
+	// Always override
 	if( gHomed == FALSE ) {
-    	printPgmString(PSTR("\r\nNot homed\n\r"));status_code = 99;
+		status_code = GCSTATUS_NOT_HOMED;
 	}
 
-  switch(status_code) {          
-    case GCSTATUS_OK:
-    	printPgmString(PSTR("ok\n\r")); 
-		break;
-    case GCSTATUS_BAD_NUMBER_FORMAT:
-    	printPgmString(PSTR("error: Bad number format\n\r")); 
-		break;
-    case GCSTATUS_EXPECTED_COMMAND_LETTER:
-    	printPgmString(PSTR("error: Expected command letter\n\r")); 
-		break;
-    case GCSTATUS_UNSUPPORTED_STATEMENT:
-    	printPgmString(PSTR("error: Unsupported statement\n\r")); 
-		break;
-    case GCSTATUS_FLOATING_POINT_ERROR:
-   		printPgmString(PSTR("error: Floating point error\n\r")); 
-		break;
-    case GCSTATUS_FAILED_COMMAND:
-   		printPgmString(PSTR("error: Command Failed\n\r")); 
-		break;
-    default:
-    	printPgmString(PSTR("error: "));
-    	printInteger(status_code);
-    	printPgmString(PSTR("\n\r"));
-		break;
-  }
+	switch(status_code) {          
+		case GCSTATUS_OK:
+			printPgmString(PSTR("ok\n\r")); 
+			break;
+		case GCSTATUS_BAD_NUMBER_FORMAT:
+			printPgmString(PSTR("error: Bad number format\n\r")); 
+			// typos are ok
+			return;
+		case GCSTATUS_EXPECTED_COMMAND_LETTER:
+			printPgmString(PSTR("error: Expected command letter\n\r")); 
+			// typos are ok
+			return;
+		case GCSTATUS_UNSUPPORTED_STATEMENT:
+			printPgmString(PSTR("error: Unsupported statement\n\r")); 
+			// typos are ok
+			return;
+
+		case GCSTATUS_FLOATING_POINT_ERROR:
+			printPgmString(PSTR("error: Floating point error\n\r")); 
+			break;
+		case GCSTATUS_FAILED_COMMAND:
+			printPgmString(PSTR("error: Command Failed\n\r")); 
+			break;
+		case GCSTATUS_NOT_HOMED:
+			printPgmString(PSTR("error: Not homed\n\r")); 
+			break;
+		default:
+			printPgmString(PSTR("error: "));
+			printInteger(status_code);
+			printPgmString(PSTR("\n\r"));
+			break;
+	}
+
+
+	// if didn't pass, stop everything , can only do home after this
+	if( status_code != GCSTATUS_OK ) {
+
+		vacuum(0);
+		head_down(0);
+		atc_fire(0);
+
+
+		// do these two last, or the previous ones won't work
+		gHomed = FALSE ;
+
+		// stops all but home
+		set_busy(TRUE);
+	}
 }
 
 void sp_init() 
 {
-  beginSerial(BAUD_RATE);  
-//  printPgmString(PSTR("\r\nOpenPnP/Grbl " GRBL_VERSION));
-//  printPgmString(PSTR("\r\n"));  
+  beginSerial(BAUD_RATE);    
 }
 
 void sp_process(void)

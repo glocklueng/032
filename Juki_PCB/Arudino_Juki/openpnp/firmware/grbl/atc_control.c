@@ -38,6 +38,11 @@ void atc_init()
 // check to see if the head has a tool in it
 unsigned char check_for_tool( void ) 
 {	
+	if( gHomed == FALSE  ){ 
+		return GCSTATUS_NOT_HOMED;
+	}
+
+
 	//move head up
 	if( is_head_down() ) {
 		head_down( FALSE) ;
@@ -66,6 +71,10 @@ static unsigned char toolId = 255;
 // these two are similatr enough they could be one function
 char PickupTool( unsigned char tool )
 {
+	if( gHomed == FALSE  ){ 
+		return GCSTATUS_NOT_HOMED;
+	}
+
 	// head down, won't return til its done
 	if( head_down( 1 ) == 0 ) {
 		// Head failed to go down.
@@ -89,6 +98,10 @@ char PickupTool( unsigned char tool )
 
 char DropTool( unsigned char tool )
 {
+	if( gHomed == FALSE  ){ 
+		return GCSTATUS_NOT_HOMED;
+	}
+
 	// head down, won't return til its done
 	if( head_down( 1 ) == 0 ) {
 		// Head failed to go down.
@@ -144,6 +157,11 @@ Test to seee if has tool
 
 unsigned char atc_change(int tool)
 {
+	if( gHomed == FALSE  ){ 
+		return GCSTATUS_NOT_HOMED;
+	}
+
+
 	// do we have that tool already ?
 	if( tool == toolId ) {
 		return GCSTATUS_OK;
@@ -163,6 +181,11 @@ unsigned char atc_change(int tool)
 // tool changer
 void atc_fire(int tool)
 {
+	if( gHomed == FALSE  ){ 
+		return ;
+	}
+
+
 #ifdef VERBOSE_DEBUG
 	printPgmString(PSTR("atc change\n\r"));
 #endif

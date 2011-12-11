@@ -20,6 +20,7 @@
 #ifndef __SERIAL_MFC_H
 #define __SERIAL_MFC_H
 
+//#define SERIAL_NO_OVERLAPPED
 
 //////////////////////////////////////////////////////////////////////
 // Include CSerialWnd base class

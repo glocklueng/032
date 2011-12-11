@@ -34,6 +34,9 @@ void vacuum_init(void)
 // switches vacuum on and off
 void vacuum(int state)
 {
+	if( gHomed == FALSE ) return;
+
+
 #ifdef VERBOSE_DEBUG
 	printPgmString(PSTR("vacuum change\n\r"));
 #endif
@@ -78,6 +81,10 @@ void vacuum_test( void )
 /* This runs the whole test , vaccum on, goes to pad, head down, test vacuum, head up, returns state */
 unsigned char run_vacuum_test( void )
 {
+	if( gHomed == FALSE  ){ 
+		return GCSTATUS_NOT_HOMED;
+	}
+
 // switch vacuum on, faster, wastes air
 	vacuum( 1 );
 
@@ -90,12 +97,20 @@ unsigned char run_vacuum_test( void )
 	// settle head
 	_delay_us( HEAD_MOVE_SETTLE_TIME );
 
+	return GCSTATUS_OK;
+
 }
 
 unsigned char goto_vacpad( void ) 
 {
-
 	unsigned char hasTool = FALSE;
+
+	if( gHomed == FALSE ) {
+		return GCSTATUS_NOT_HOMED;
+	}
+#ifdef VERBOSE_DEBUG
+			printPgmString(PSTR("goto_vacpad\r\n"));
+#endif
 
 	if( is_head_down() ) {
 		head_down( FALSE )  ;
@@ -118,6 +133,10 @@ unsigned char goto_vacpad( void )
    _delay_ms( AIR_SETTLE_TIME );
 
 	if( head_down( 1 ) == 0 ) {
+
+#ifdef VERBOSE_DEBUG
+			printPgmString(PSTR("goto_vacpad:  head failed to go down\r\n"));
+#endif
 
 		vacuum ( 0 );
 		return GCSTATUS_FAILED_COMMAND;	
@@ -148,6 +167,10 @@ unsigned char goto_vacpad( void )
 // head up
 	if( head_down( 0 ) == 0 ) {
 
+#ifdef VERBOSE_DEBUG
+			printPgmString(PSTR("goto_vacpad:  head failed to go back up\r\n"));
+#endif
+
 		return GCSTATUS_FAILED_COMMAND;
 	}
 
@@ -163,10 +186,14 @@ unsigned char goto_vacpad( void )
 
 	_delay_us( HEAD_MOVE_SETTLE_TIME );
 
-	_delay_ms( 200 );
+	_delay_ms( 400 );
 
 //head down
 	if( head_down( 1 ) == 0 ) {
+
+#ifdef VERBOSE_DEBUG
+			printPgmString(PSTR("goto_vacpad:  head failed to go down\r\n"));
+#endif
 
 		return GCSTATUS_FAILED_COMMAND;	
 
@@ -175,36 +202,40 @@ unsigned char goto_vacpad( void )
 	// wait til head is down
 	while( is_head_down() == 0 ) ;
 	
-	_delay_ms( 800 );
+	_delay_ms( 1000 );
 
 
 	// atc up
 	atc_fire( 1 ) ;
 
 	//wait 
-	_delay_ms( 500 );
+	_delay_ms( 800 );
 
 	if( hasTool == FALSE ) {
 
+		// tool changer off
+		atc_fire ( 0 );
+		
 		// head up
 		if( head_down( 0 ) == 0 ) {
 
-			atc_fire ( 0 );
+#ifdef VERBOSE_DEBUG
+			printPgmString(PSTR("goto_vacpad:  head failed to go \r\n"));
+#endif
 
 			return GCSTATUS_FAILED_COMMAND;	
 		}
 
-	// tool changer off
-		atc_fire ( 0 );
 	} else {
-
-		// tool changer off
-		atc_fire ( 0 );
 	
 		_delay_ms( 500 );
 
 	// head up
 		if( head_down( 0 ) == 0 ) {
+
+#ifdef VERBOSE_DEBUG
+			printPgmString(PSTR("goto_vacpad:  head failed to up \r\n"));
+#endif
 
 
 			return GCSTATUS_FAILED_COMMAND;	
@@ -232,6 +263,10 @@ unsigned char goto_vacpad( void )
 
 	if( head_down( 1 ) == 0 ) {
 
+#ifdef VERBOSE_DEBUG
+			printPgmString(PSTR("goto_vacpad:  head failed to down\r\n"));
+#endif
+
 		vacuum ( 0 );
 		return GCSTATUS_FAILED_COMMAND;	
 
@@ -243,6 +278,10 @@ unsigned char goto_vacpad( void )
 	if( vacuum_state() ) {
 
 		// vacuum is blocked
+#ifdef VERBOSE_DEBUG
+			printPgmString(PSTR("goto_vacpad:  detected blockage\r\n"));
+#endif
+
 		
 		// were we picking up?
 		if( hasTool == FALSE  ) { 
@@ -253,12 +292,23 @@ unsigned char goto_vacpad( void )
 #ifdef VERBOSE_DEBUG
 			printPgmString(PSTR("tool pickup failed\r\n"));
 #endif
+
+// oops
+		head_down(0);
+		vacuum( 0 );
+
 		return GCSTATUS_FAILED_COMMAND;
 		}
 
 	} else {
 
-		// vacuum is free
+		// vacuum is free (no block on test pad)
+#ifdef VERBOSE_DEBUG
+			printPgmString(PSTR("goto_vacpad:  no blockage\r\n"));
+#endif
+
+			// vacuuum =  0
+			// drop or pick
 
 		// were we dropping off?
 		if( hasTool == TRUE ) { 
@@ -269,6 +319,10 @@ unsigned char goto_vacpad( void )
 #ifdef VERBOSE_DEBUG
 			printPgmString(PSTR("tool drop failed\r\n"));
 #endif
+
+			head_down(0);
+			vacuum( 0 );
+
 			return GCSTATUS_FAILED_COMMAND;
 		}
 
@@ -279,6 +333,9 @@ unsigned char goto_vacpad( void )
 
 // head up
 	if( head_down( 0 ) == 0 ) {
+#ifdef VERBOSE_DEBUG
+			printPgmString(PSTR("goto_vacpad:  head failed to go up\r\n"));
+#endif
 
 		return GCSTATUS_FAILED_COMMAND;
 	}

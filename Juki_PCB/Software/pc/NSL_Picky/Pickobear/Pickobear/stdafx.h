@@ -51,6 +51,7 @@
 #include "opencv2/imgproc/imgproc.hpp"
 
 #include "OpenGLControl.h"
+#include "TextDump.h"
 
 #include "SerialMFC.h"
 #include "FeederSetup.h"
@@ -70,6 +71,7 @@
 //#pragma comment(lib,"videoInput\\videoInput.lib")
 
 extern 	videoInput VI;
+extern CStringA UTF16toUTF8(const CStringW& utf16);
 
 #ifdef _UNICODE
 #if defined _M_IX86

@@ -6,9 +6,6 @@
 //OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //THE SOFTWARE.
 
-#define DEBUG 1
-#define _DEBUG 1
-
 #include "videoInput.h"
 #include "tchar.h"
 
@@ -1996,7 +1993,8 @@ int videoInput::start(int deviceID, videoDevice *VD){
 	
 	}
 		
-	if(verbose)_RPT0(_CRT_WARN,"SETUP: Device is setup and ready to capture.\n\n");
+	if(verbose)
+		_RPT0(_CRT_WARN,"SETUP: Device is setup and ready to capture.\n\n");
 	VD->readyToCapture = true;  
 		
 	//Release filters - seen someone else do this

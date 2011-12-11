@@ -55,6 +55,9 @@ public:
 		// type
 		char type[256];
 
+		// side of pcb
+		char side;
+
 	} CompDatabase;
 	
 	// database list
@@ -101,7 +104,7 @@ public:
 		return m_Database.at(i);
 	}
  
-	void AddItem( const char *label,const char *type,const char *value,const char *x,const char *y,const char *rot)
+	void AddItem( const char *label,const char *type,const char *value,const char *x,const char *y,const char *rot,const char *side)
 	{
 		ASSERT( label ) ;
 		ASSERT( type ) ;
@@ -122,6 +125,7 @@ public:
 		entry.x = (atol( x )/40)*40 ;
 		entry.y = (atol( y )/40)*40 ;
 		entry.rot = atoi( rot ) ;
+		entry.side = atoi (side);
 
 		CString temp( entry.label );
 
@@ -139,6 +143,8 @@ public:
 			temp.Format(L"%d",entry.feeder);
 		}
 		SetItemText(Index,6,temp);
+
+		SetItemText(Index,7,CString(side));
 
 		// add to database
 		m_Database.push_back (entry );
@@ -160,20 +166,43 @@ public:
 		os.close();
 	}
 
-	void LoadDatabase ( void ) 
+	void LoadDatabase ( CString name ) 
 	{
 		int size1;
 		CString filename;
 
-		filename = ::GetLoadFile( 
-			_T("Supported Files Types(*.pbr)\0*.pbr\0\0"),
-			_T("Choose name to load components from"),_T("") 
-		);
+		if( name.GetLength() == 0 ){
 
-		if(filename.GetLength() == 0 ) {
-			return ;
+			filename = ::GetLoadFile( 
+				_T("Supported Files Types(*.pbr)\0*.pbr\0\0"),
+				_T("Choose name to load components from"),_T("") 
+			);
 
-		}
+			if(filename.GetLength() == 0 ) {
+				return ;
+
+			}
+
+
+			CRegKey regKey;
+			DWORD regEntry = 100;
+			long lResult;
+
+			if ((lResult = regKey.Open(HKEY_CURRENT_USER,  _T("Software\\NullSpaceLabs\\PickoBear\\Settings"))) != ERROR_SUCCESS)
+				lResult = regKey.Create(HKEY_CURRENT_USER, _T("Software\\NullSpaceLabs\\PickoBear\\Settings"));
+
+			if (ERROR_SUCCESS == lResult)
+			{
+	
+				regKey.SetStringValue(_T("componentDatabase"), filename,REG_SZ);
+
+				// then close the registry key
+				regKey.Close();
+			}
+
+
+		} else 
+			filename = name;
 
 		if( m_Count ) {
 			
@@ -212,7 +241,7 @@ public:
 		
 		// index ( not used )
 		unsigned int item;
-		
+
 		// coordinates in um
 		long x,y;
 		
@@ -269,21 +298,43 @@ public:
 		os.close();
 	}
 
-	void LoadDatabase ( void ) 
+	void LoadDatabase ( CString name ) 
 	{
 		int size1;
 		CString filename;
 
-		// get the name of the file to load
-		filename = ::GetLoadFile( 
-			_T("Supported Files Types(*.fdr)\0*.fdr\0\0"),
-			_T("Pick name to load database from"),_T("") 
-		);
+		if( name.GetLength() == 0 ) {
+			// get the name of the file to load
+			filename = ::GetLoadFile( 
+				_T("Supported Files Types(*.fdr)\0*.fdr\0\0"),
+				_T("Pick name to load database from"),_T("") 
+			);
 
-		// zero length file ?
-		if(filename.GetLength() == 0 ) {
-			return ;
+			// zero length file ?
+			if(filename.GetLength() == 0 ) {
+				return ;
 
+			}
+				
+			CRegKey regKey;
+			DWORD regEntry = 100;
+			long lResult;
+
+			if ((lResult = regKey.Open(HKEY_CURRENT_USER,  _T("Software\\NullSpaceLabs\\PickoBear\\Settings"))) != ERROR_SUCCESS)
+				lResult = regKey.Create(HKEY_CURRENT_USER, _T("Software\\NullSpaceLabs\\PickoBear\\Settings"));
+
+			if (ERROR_SUCCESS == lResult)
+			{
+	
+				regKey.SetStringValue(_T("feederDatabase"), filename,REG_SZ);
+
+				// then close the registry key
+				regKey.Close();
+			}
+
+
+		} else {
+			filename = name;
 		}
 
 		// if anything in the database
@@ -384,6 +435,9 @@ public:
 			temp.Format(L"%d",entry->county);
 			SetItemText(Index,7,temp);
 
+			temp.Format(L"%d",entry->tool);
+			SetItemText(Index,8,temp);
+
 
 		}
 	}
@@ -446,6 +500,9 @@ private:
 	// point to feeder dialogue
 	CFeederSetup *m_pFeederDlg ;
 
+	CTextDump	*m_TextEdit;
+
+	bool bSetWaitDone;
 	// head state
 	char m_Head;
 
@@ -473,7 +530,9 @@ public:
 	CPickobearDlg(CWnd* pParent = NULL);	// standard constructor
 
 	CSerialMFC m_Serial;
-	
+
+	void WriteSerial( const char *text);
+
 	void EmptySerial ( void ) ;
 	int SendCommand( int command );
 
@@ -486,6 +545,7 @@ public:
 
 	// check acknowledgement fron pnp
 	char CheckAck(char *ack1);
+	char CheckX( void );
 
 	unsigned char VacuumTest( void );
 	// move head to x,y
@@ -590,4 +650,6 @@ public:
 	afx_msg void OnCbnSelchangeStepsize();
 	afx_msg void OnBnClickedEditfeeder();
 	afx_msg void OnBnClickedAssignfeeder();
+	afx_msg void OnBnClickedConsole();
+	afx_msg void OnBnClickedGo2();
 };

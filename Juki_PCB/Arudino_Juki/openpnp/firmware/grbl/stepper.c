@@ -142,6 +142,11 @@ void set_busy(unsigned char state )
 	busy = state;
 }
 
+int get_busy( void ) 
+{
+	return busy;
+}
+
 // "The Stepper Driver Interrupt" - This timer interrupt is the workhorse of Grbl. It is  executed at the rate set with
 // config_step_timer. It pops blocks from the block_buffer and executes them by pulsing the stepper pins appropriately. 
 // It is supported by The Stepper Port Reset Interrupt which it uses to reset the stepper port after each pulse.
@@ -149,18 +154,26 @@ SIGNAL(TIMER1_COMPA_vect)
 {        
   // TODO: Check if the busy-flag can be eliminated by just disabling this interrupt while we are in it
 
-	if ( gHomed == FALSE ) 
+	if ( gHomed == FALSE )  {
+		serialWrite('H');
+		DISABLE_STEPPER_DRIVER_INTERRUPT();
 		return;
+	}
 
-// don't move if the head is down  
-  if( is_head_down() )
+// don't move if the head is down, this one is ok to let it keep running  
+  if( is_head_down() ) {
   	return;
+ }
 
-  if(busy){ return; } // The busy-flag is used to avoid reentering this interrupt
+  if(busy){ 
+  	return; 
+  } // The busy-flag is used to avoid reentering this interrupt
 
   // Check all limit switches
   if( LIMIT_PIN & 0xf ) {
-  	gHomed = FALSE ;
+	gHomed = FALSE ;
+	serialWrite('L');
+	DISABLE_STEPPER_DRIVER_INTERRUPT();
 	return;
   }
 
@@ -192,6 +205,7 @@ SIGNAL(TIMER1_COMPA_vect)
       step_events_completed = 0;
     } else {
       DISABLE_STEPPER_DRIVER_INTERRUPT();
+	  serialWrite('X');
     }    
   } 
 
@@ -635,6 +649,10 @@ error:;
 
   if( ( LIMIT_PIN & 0xf) == 0x0 )  {
 		gHomed = TRUE ;
+		
+		// marks as no longer busy
+		set_busy(FALSE);
+
 #ifdef VERBOSE_DEBUG
 		printPgmString(PSTR("\r\npickobear is homed\r\n"));
 #endif

@@ -227,6 +227,9 @@ uint8_t gc_execute_line(char *line) {
 	      	printPgmString(PSTR("rotated = "));
 			printInteger( is_rotated() );
 	      	printPgmString(PSTR("\r\n"));
+	      	printPgmString(PSTR("get_busy = "));
+			printInteger( get_busy() );
+	      	printPgmString(PSTR("\r\n"));
 
 
 			if( bit_is_set( LIMIT_PIN, X1_LIMIT_BIT ) )
@@ -286,8 +289,8 @@ uint8_t gc_execute_line(char *line) {
         case 9: gc.coolant_flood = 0; break;
 
 		// head control
-        case 10: head_down(1);break;
-        case 11: head_down(0);break;
+        case 10: head_down(1);next_action = NEXT_ACTION_DWELL ;break;
+        case 11: head_down(0);next_action = NEXT_ACTION_DWELL ;break;
 
 		// atc
 		case 12: atc_change(0);break;
@@ -299,13 +302,13 @@ uint8_t gc_execute_line(char *line) {
 		case 18: atc_change(6);break;
 
 		// vacuum
-		case 19: vacuum(1);break;
-		case 20: vacuum(0);break;
+		case 19: vacuum(1);next_action = NEXT_ACTION_DWELL ;break;
+		case 20: vacuum(0);next_action = NEXT_ACTION_DWELL ;break;
 
 		// tape knock
-		case 21: tape_knock();break;
-		case 22: vacuum_test(); break;
-		case 23: check_for_tool(); break;
+		case 21: tape_knock();next_action = NEXT_ACTION_DWELL ;break;
+		case 22: vacuum_test();next_action = NEXT_ACTION_DWELL ; break;
+		case 23: check_for_tool();next_action = NEXT_ACTION_DWELL ; break;
 		case 24: gc.status_code = goto_vacpad() ;next_action = NEXT_ACTION_DWELL ; break;
 		case 25: vacuum_test() ;next_action = NEXT_ACTION_DWELL ; break;
 
