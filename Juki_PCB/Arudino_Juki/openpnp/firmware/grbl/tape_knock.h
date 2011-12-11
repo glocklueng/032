@@ -29,4 +29,8 @@
 void tape_init();
 void tape_knock( void );
 
+char pickup_part ( void );
+char putdown_part ( void );
+
+
 #endif

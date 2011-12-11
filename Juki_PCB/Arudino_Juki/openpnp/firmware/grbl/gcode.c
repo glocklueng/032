@@ -311,6 +311,8 @@ uint8_t gc_execute_line(char *line) {
 		case 23: check_for_tool();next_action = NEXT_ACTION_DWELL ; break;
 		case 24: gc.status_code = goto_vacpad() ;next_action = NEXT_ACTION_DWELL ; break;
 		case 25: vacuum_test() ;next_action = NEXT_ACTION_DWELL ; break;
+		case 26:  gc.status_code = pickup_part() ;next_action = NEXT_ACTION_DWELL ; break;
+		case 27:  gc.status_code = putdown_part() ;next_action = NEXT_ACTION_DWELL ; break;
 
         default: FAIL(GCSTATUS_UNSUPPORTED_STATEMENT);
       }            

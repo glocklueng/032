@@ -147,6 +147,9 @@ int get_busy( void )
 	return busy;
 }
 
+char ackHost = 0;
+
+
 // "The Stepper Driver Interrupt" - This timer interrupt is the workhorse of Grbl. It is  executed at the rate set with
 // config_step_timer. It pops blocks from the block_buffer and executes them by pulsing the stepper pins appropriately. 
 // It is supported by The Stepper Port Reset Interrupt which it uses to reset the stepper port after each pulse.
@@ -155,7 +158,8 @@ SIGNAL(TIMER1_COMPA_vect)
   // TODO: Check if the busy-flag can be eliminated by just disabling this interrupt while we are in it
 
 	if ( gHomed == FALSE )  {
-		serialWrite('H');
+		// set ack
+		ackHost = 'H';
 		DISABLE_STEPPER_DRIVER_INTERRUPT();
 		return;
 	}
@@ -172,7 +176,8 @@ SIGNAL(TIMER1_COMPA_vect)
   // Check all limit switches
   if( LIMIT_PIN & 0xf ) {
 	gHomed = FALSE ;
-	serialWrite('L');
+		// set ack
+	  ackHost = 'L';
 	DISABLE_STEPPER_DRIVER_INTERRUPT();
 	return;
   }
@@ -205,7 +210,10 @@ SIGNAL(TIMER1_COMPA_vect)
       step_events_completed = 0;
     } else {
       DISABLE_STEPPER_DRIVER_INTERRUPT();
-	  serialWrite('X');
+
+		// set ack
+	  ackHost = 'X';
+
     }    
   } 
 
@@ -518,8 +526,7 @@ void st_go_home(void)
 	plan_init();
 	gc_init();
 
-	// no interrupts
-	cli();
+
 
 	// if head down, set head up
 	if( is_head_down() ) {
@@ -532,7 +539,7 @@ void st_go_home(void)
 		}
 
 	}
-
+	cli();
 	// tool changer off
 	atc_fire(0);	
 
@@ -548,6 +555,7 @@ void st_go_home(void)
 #endif
 		// move out far enough that the home and limit switches are passed
 		if( moveRight( 1000 ) == 0 ) {
+			sei();
 			return;
 		}
 		// direction change delay
@@ -563,6 +571,7 @@ void st_go_home(void)
 #endif
 		// move out far enough that the home and limit switches are passed
 		if( moveBack( 1000 ) == 0 ) {
+			sei();
 			return;
 		}
 		// direction change delay
@@ -632,8 +641,9 @@ void st_go_home(void)
 			counter ++;
 		}
 
-	} while( yDir !=
-	 STOP );
+	} while( yDir != STOP );
+
+
 #ifdef VERBOSE_DEBUG
 	printPgmString(PSTR("\r\nforward count = "));
 	printInteger( counter ) ;
@@ -641,8 +651,6 @@ void st_go_home(void)
 #endif
 
 error:;
-
-
 
 	sei();
 

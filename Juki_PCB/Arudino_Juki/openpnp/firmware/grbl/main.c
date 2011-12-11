@@ -42,6 +42,10 @@ void limits_init(void);
 // #  error "As of version 0.6 Grbl only supports atmega328p. If you want to run Grbl on an 168 check out 0.51 ('git co v0_51')"
 // #endif
 
+
+// stepper interrupt ack to host
+extern char ackHost;
+
 int main(void)
 {
   sp_init();        
@@ -116,7 +120,15 @@ ch = is_phome(  );
 
   for(;;){
     sleep_mode(); // Wait for it ...
+	
+	if( ackHost != 0 ) {
+		serialWrite( ackHost );
+		ackHost = 0;
+	}
+
     sp_process(); // ... process the serial protocol
+
+	process_panel(); // check the panel
   }
   return 0;   /* never reached */
 }

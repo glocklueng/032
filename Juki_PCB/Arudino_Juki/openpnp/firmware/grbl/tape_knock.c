@@ -14,6 +14,9 @@
 #include "serial_protocol.h"
 #include "wiring_serial.h"
 #include "tape_knock.h"
+#include "head_control.h"
+#include "stepper.h"
+
 #include "config.h"
 #include "settings.h"
 
@@ -51,3 +54,94 @@ void tape_knock( void )
 
 	 set_busy( FALSE );
 }
+
+
+char pickup_part ( void ) 
+{
+	if( is_head_down() ){
+		return GCSTATUS_FAILED_COMMAND;
+	}
+
+#if 0
+	 Sleep( 100 );
+
+	 // This will stall the machine till it can knock
+	 WriteSerial("M21\r\n");
+	 Sleep( 100 );
+
+	 _RPT0(_CRT_WARN,"Picking up part\n");
+	 // head down
+	 WriteSerial("M10\r\n");
+	 //wait
+	 Sleep( 500 );
+	 // vacuum on
+	 WriteSerial("M19\r\n");
+	 //wait
+	 Sleep( 500 );
+	 // head up
+	 WriteSerial("M11\r\n");
+	 //wait
+	 Sleep( 500 );
+
+#endif
+
+	// advance part, waits til head has done
+	tape_knock();
+
+	// vacuum on
+	vacuum ( 1 );
+
+	// push head down
+	head_down( 1 );
+
+	_delay_ms( 500 );
+
+	// head up
+	head_down ( 0 ) ;
+
+	return GCSTATUS_OK;
+
+}
+
+char putdown_part ( void )
+{
+	if( is_head_down() ){
+		return GCSTATUS_FAILED_COMMAND;
+	}
+
+#if 0
+
+	 // head down/air off/up
+	 _RPT0(_CRT_WARN,"dropping off part\n");
+	 // head down
+	 WriteSerial("M10\r\n");
+	 //wait
+	 Sleep( 800 );
+	 // vacuum off
+	 WriteSerial("M20\r\n");
+	 //wait
+	 Sleep( 500 );
+	 // head up
+	 WriteSerial("M11\r\n");
+
+
+#endif
+
+	// wait til head stops
+	while( head_moving() );
+
+	// push head down
+	head_down( 1 );
+
+	_delay_ms( 500 );
+
+	// vacuum on
+	vacuum ( 0 );
+
+	// head up
+	head_down ( 0 ) ;
+
+	return GCSTATUS_OK;
+
+}
+

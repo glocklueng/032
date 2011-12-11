@@ -37,4 +37,6 @@ unsigned char is_pfast( void );
 unsigned char is_phome( void );
 unsigned char is_pteach( void );
 
+void process_panel(void );
+
 #endif
