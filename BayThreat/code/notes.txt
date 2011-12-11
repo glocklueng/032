@@ -1,0 +1,4 @@
+fuses are default settings for attiny2313
+you can unset ckdiv/8 to make change the clock speed to 8Mhz
+make sure the speed for the ISP programmer is 125Khz for more time
+dont go lower than 1Mhz clock speed if using a dragon to program
