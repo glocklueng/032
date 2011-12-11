@@ -30,6 +30,7 @@ void CTextDump::DoDataExchange(CDataExchange* pDX)
 
 
 BEGIN_MESSAGE_MAP(CTextDump, CDialogEx)
+/// set def id so don't need this	ON_MESSAGE(DM_GETDEFID, OnGetDefID)
 	ON_BN_CLICKED(IDC_SEND, &CTextDump::OnBnClickedSend)
 	ON_BN_CLICKED(IDC_SAVE_TEXT, &CTextDump::OnBnClickedSaveText)
 	ON_BN_CLICKED(IDC_CLEAR, &CTextDump::OnBnClickedClear)

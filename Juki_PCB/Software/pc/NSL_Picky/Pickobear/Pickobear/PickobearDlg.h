@@ -506,8 +506,14 @@ private:
 	// head state
 	char m_Head;
 
+	// machine has been homed
+	bool m_Homed;
+
 	// tell thread to quit ( if true )
 	int m_Quit;
+
+	//how long Sleep is in camera updates
+	int m_CameraUpdateRate;
 
 	// states the machine could be in
 	enum eMachineState {
@@ -555,6 +561,9 @@ public:
 	bool MoveHead( long  x, long y );
 	bool MoveHeadRel(  long x, long y ); 
 	bool MoveHeadSlow(  long x, long y );
+
+	// check to see if if gui thinks we are homed
+	bool HomeTest( void ); 
 
 	~CPickobearDlg(){
 		

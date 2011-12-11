@@ -28,8 +28,22 @@ public:
 	enum { IDD = IDD_TEXT_DIALOG };
 
 protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 
+		BOOL OnInitDialog(){
+			CDialogEx::OnInitDialog();
+
+			SetDefID(IDC_SEND);
+			return false;
+		}
+
+
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+#if 0
+	LRESULT OnGetDefID(WPARAM wp, LPARAM lp) 
+	{
+	  return MAKELONG(0,DC_HASDEFID); 
+	}
+#endif
 	DECLARE_MESSAGE_MAP()
 public:
 	CString m_InputBuffer;

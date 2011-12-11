@@ -3,7 +3,7 @@
 #include <math.h>
 #include <util/delay.h>
 #include <avr/pgmspace.h>
-
+#include <avr/interrupt.h>
 #include "gcode.h"
 #include "nuts_bolts.h"
 #include "settings.h"
@@ -50,6 +50,12 @@ void panel_init()
 // teach mode
 	DDRH  &= ~(_BV( PANEL_TEACH ));
 	PORTH |=   _BV( PANEL_TEACH );
+
+	TCCR3A |= (1 << WGM21); //ctc mode
+	OCR3A   = 124; //set timer maximum to 124
+	TCNT3   = 0;//reset timer
+	TCCR3B  = 0b00000100; //((1 << CS22)|(1 << CS20));  //prescaler 64
+	TIMSK3 |= (1 << OCIE2A);  //enable timer interrupt
 
 }
 
@@ -134,3 +140,19 @@ unsigned char is_pteach( void )
 
 	return state;
 }
+
+void process_panel(void ) 
+{
+
+	if( is_phome() ) mc_go_home();
+
+}
+
+
+// Put the panel on an interrupt
+SIGNAL(TIMER3_COMPA_vect)
+{
+	return;
+}
+
+

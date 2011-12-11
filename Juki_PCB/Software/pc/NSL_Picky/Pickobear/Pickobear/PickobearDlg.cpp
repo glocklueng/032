@@ -58,6 +58,8 @@ CPickobearDlg::CPickobearDlg(CWnd* pParent /*=NULL*/)
 	, m_Quit(0)
 	, m_Speed(700)
 	, m_CameraMode(1)
+	, m_Homed(false)
+	, m_CameraUpdateRate(10)
 	, bSetWaitDone(false)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
@@ -69,8 +71,6 @@ void CPickobearDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_GO, GO);
 	DDX_Text(pDX, IDC_X_POS, m_headXPos);
 	DDX_Text(pDX, IDC_Y_POS, m_headYPos);
-	DDX_Text(pDX, IDC_THRESHOLD, m_Threshold1);
-	DDX_Text(pDX, IDC_THRESHOLD2, m_Threshold2);
 	DDX_Control(pDX, IDC_ROTATE, m_Rotation);
 	DDX_Control(pDX, IDC_LIST2, m_ComponentList);
 	DDX_Text(pDX, IDC_GOX, m_GOX);
@@ -576,7 +576,8 @@ void CPickobearDlg::OnBnClickedHome()
 			GetDlgItem( IDC_GOFF )->EnableWindow( TRUE );
 
 			GetDlgItem( IDC_GO2 )->EnableWindow( TRUE );
-
+			
+			m_Homed = true ;
 			
 			pass = true;
 			break;
@@ -605,9 +606,28 @@ void BuildGCodeMove( char *output, int length, int mode , long x, long y, long s
 	sprintf_s(output, length,"G%dX%gY%gF%d\r\n",mode,tx,ty,speed);
 }
 
+bool CPickobearDlg::HomeTest( void ) 
+{
+
+	if( m_Homed == false ) {
+		int ret = AfxMessageBox(L"Not Homed",MB_OK);
+		if( ret == IDOK ) 
+			return false;
+	}
+
+	// ping machine ?
+
+	return true;
+
+}
+
 // move head can only go to (int)(x/40)*40,same for y
 bool CPickobearDlg::MoveHeadSlow(  long x, long y ) 
 {
+	if( false == HomeTest( ) ) {
+		return false;
+	}
+
 	char buffer[ 256 ];
 
 	if ( x < 0 ) x = 0;
@@ -623,7 +643,7 @@ again:;
 	WriteSerial(buffer);
 
 	if( CheckX() == false ) {
-		int ret = AfxMessageBox(L"Move Failed",MB_RETRYCANCEL);
+		int ret = AfxMessageBox(L"MoveHeadSlow: Move Failed",MB_RETRYCANCEL);
 		if(ret == IDRETRY ) 
 			goto again;
 		if( ret == IDCANCEL ) 
@@ -637,6 +657,10 @@ again:;
 // move head can only go to (int)(x/40)*40,same for y
 bool CPickobearDlg::MoveHead(  long x, long y ) 
 {
+	if( false == HomeTest( ) ) {
+		return false;
+	}
+
 	char buffer[ 256 ];
 
 	if ( x < 0 ) x = 0;
@@ -665,7 +689,7 @@ again:;
 
 	
 	if( CheckX() == false ) {
-		int ret = AfxMessageBox(L"Move Failed",MB_RETRYCANCEL);
+		int ret = AfxMessageBox(L"MoveHead: Move Failed",MB_RETRYCANCEL);
 		if(ret == IDRETRY ) 
 			goto again;
 		if( ret == IDCANCEL ) 
@@ -683,6 +707,10 @@ again:;
 // move head can only go to (int)(x/40)*40,same for y
 bool CPickobearDlg::MoveHeadRel(  long x, long y ) 
 {
+	if( false == HomeTest( ) ) {
+		return false;
+	}
+
 	char buffer[ 256 ];
 
 	BuildGCodeMove(buffer,sizeof(buffer),0,m_headXPos+x,m_headYPos+y,100);
@@ -692,7 +720,7 @@ again:;
 	WriteSerial( buffer );
 
 	if( CheckX() == false ) {
-		int ret = AfxMessageBox(L"Move Failed",MB_RETRYCANCEL);
+		int ret = AfxMessageBox(L"MoveHeadRel: Move Failed",MB_RETRYCANCEL);
 		if(ret == IDRETRY ) 
 			goto again;
 		if( ret == IDCANCEL ) 
@@ -725,16 +753,21 @@ char CPickobearDlg::CheckX( void )
 
 	// wait for ack. needs a timeout
 	
-	int counter = 1000;
+	int counter = 100;
 
 	do { 
 		
 		counter --;
 
 		ret = m_Serial.Read( &ch, 1, &length );
+		
+		if( length == 0 ) 
+			Sleep( 100 );
+		
 		switch ( ret ) {
 
 			case ERROR_SUCCESS:
+				_RPT1(_CRT_WARN,"%c ", ch);
 				break;
 			default:
 				break;
@@ -743,9 +776,9 @@ char CPickobearDlg::CheckX( void )
 	} while( ch!='X' && (counter ) );
 	
 	if( counter == 0 ) 
-		_RPT1(_CRT_WARN,"Timed out\n", ch);
+		_RPT1(_CRT_WARN,"\r\nCheckX: Timed out\n", ch);
 	else
-		_RPT1(_CRT_WARN,"CheckAck(%c)\n", ch);
+		_RPT1(_CRT_WARN,"\r\nCheckX: CheckAck(%c)\n", ch);
 
 	if( ch == 'X' && ( counter > 0 ) ) {
 
@@ -840,40 +873,63 @@ unsigned char CPickobearDlg::VacuumTest( void )
 
 void CPickobearDlg::OnBnClickedTool1()
 {
+	if( false == HomeTest( ) ) {
+		return ;
+	}
+
 	WriteSerial("M24\r\n");
 }
 
 
 void CPickobearDlg::OnBnClickedTool2()
 {
+	if( false == HomeTest( ) ) {
+		return ;
+	}
 	WriteSerial("M24\r\n");
 }
 
 void CPickobearDlg::OnBnClickedTool3()
 {
+	if( false == HomeTest( ) ) {
+		return ;
+	}
 	WriteSerial("M24\r\n");
 }
 
 
 void CPickobearDlg::OnBnClickedTool4()
 {
+	if( false == HomeTest( ) ) {
+		return ;
+	}
 	WriteSerial("M24\r\n");
 }
 
 
 void CPickobearDlg::OnBnClickedTool5()
 {
+	if( false == HomeTest( ) ) {
+		return ;
+	}
 	WriteSerial("M24\r\n");
 }
 
 
 void CPickobearDlg::OnBnClickedTool6()
 {
+	if( false == HomeTest( ) ) {
+		return ;
+	}
 	WriteSerial("M24\r\n");
 }
 
 void CPickobearDlg::OnBnClickedHead()
 {
+	if( false == HomeTest( ) ) {
+		return ;
+	}
+
 	if( m_Head ) {
 		// down
 		WriteSerial("M10\r\n");
@@ -888,6 +944,17 @@ void CPickobearDlg::OnBnClickedHead()
 
 void CPickobearDlg::OnNMCustomdrawRotate(NMHDR *pNMHDR, LRESULT *pResult)
 {
+	static int firstTime = 1;
+
+	if (firstTime == 1 ) {
+		firstTime = 0 ;
+		return;
+	}
+
+	if( false == HomeTest( ) ) {
+		return ;
+	}
+
 	LPNMCUSTOMDRAW pNMCD = reinterpret_cast<LPNMCUSTOMDRAW>(pNMHDR);
 	// TODO: Add your control notification handler code here
 	*pResult = 0;
@@ -1173,10 +1240,11 @@ DWORD CPickobearDlg::cameraThread(void )
 {
 	while( m_Quit == 0 ) {
 		m_UpCameraWindow.UpdateCamera( 1 ) ;
-		Sleep(1);
+		
+		Sleep( m_CameraUpdateRate );
 		
 		//m_DownCameraWindow.UpdateCamera( 1 ) ;
-		Sleep(1);
+//		Sleep(1);
 
 	}
 	return true;
@@ -1312,6 +1380,8 @@ DWORD CPickobearDlg::goThread(void )
 
 	// switch state to idle
 	m_MachineState = MS_IDLE ;
+	busy = 0;
+
 	return true;
 }
 
@@ -1340,12 +1410,16 @@ void CPickobearDlg::OnBnClickedFeeder()
 
 void CListCtrl_Components::OnHdnItemdblclickList2(NMHDR *pNMHDR, LRESULT *pResult)
 {
+	CPickobearDlg *pDlg = (CPickobearDlg*)AfxGetApp()->m_pMainWnd;
+	ASSERT( pDlg );
+
 	LPNMHEADER phdr = reinterpret_cast<LPNMHEADER>(pNMHDR);
 	// TODO: Add your control notification handler code here
 	*pResult = 0;
 
-	CPickobearDlg *pDlg = (CPickobearDlg*)AfxGetApp()->m_pMainWnd;
-	ASSERT( pDlg );
+	if( false == pDlg->HomeTest( ) ) {
+		return ;
+	}
 
 	// iItem is item number, list is backwards
 	int item = (GetCount()-1)-phdr->iItem;
@@ -1813,11 +1887,16 @@ void CPickobearDlg::OnBnClickedAssignfeeder()
 
 	_RPT2(_CRT_WARN,"feeder = %d, component = %d\n",feederItem, componentItem );
 }
+
 void CListCtrl_Components::RebuildList( void )
 {
 	CPickobearDlg *pDlg = (CPickobearDlg*)AfxGetApp()->m_pMainWnd;
 	ASSERT( pDlg );
 	CString temp;
+
+	int i;
+
+	i = GetNextItem(-1, LVNI_SELECTED);
 
 	DeleteAllItems();
 
@@ -1853,15 +1932,19 @@ void CListCtrl_Components::RebuildList( void )
 			// iItem is item number, list is backwards
 			int item = (pDlg->m_FeederList.GetCount()-1) - entry->feeder;
 
-			CListCtrl_FeederList::FeederDatabase entry =pDlg->m_FeederList.at( item ) ;
+			CListCtrl_FeederList::FeederDatabase entry = pDlg->m_FeederList.at( item ) ;
 
 			temp.Format(L"%s",CString(entry.label));
 		}
+
 		SetItemText(Index,6,temp);
-		
-
-
+	
 	}
+	 
+	
+	 SetItemState(i, LVIS_SELECTED, LVIS_SELECTED);
+	 EnsureVisible( i ,TRUE );
+
 }
 
 
@@ -1906,6 +1989,7 @@ void CPickobearDlg::OnBnClickedGo2()
 	 unsigned int i ;
 	 char buffer[5];
 	 CListCtrl_Components::CompDatabase entry; 
+	 
 
 	 ZeroMemory(buffer,sizeof(buffer));
 
@@ -1917,6 +2001,8 @@ void CPickobearDlg::OnBnClickedGo2()
 
 	 EmptySerial();
 
+	 Sleep( 500 ) ;
+
 	 int componentItem = m_ComponentList.GetNextItem(-1, LVNI_SELECTED);
 
 	 i = (m_ComponentList.GetCount()-1) - componentItem;
@@ -1925,18 +2011,20 @@ void CPickobearDlg::OnBnClickedGo2()
 
 	 _RPT1(_CRT_WARN,"Placing %s\r\n",entry.label);
 
-
 	 if (entry.feeder == -1) {
 		 int ret = AfxMessageBox(L"Feeder not defined", MB_OK);
 	 }
 
-	 CListCtrl_FeederList::FeederDatabase feeder = m_FeederList.at( (m_FeederList.GetCount()-1) - entry.feeder );
+	 CListCtrl_FeederList::FeederDatabase feeder = m_FeederList.at ((m_FeederList.GetCount()-1) - entry.feeder );
 
 	 if (feeder.tool < 1 || feeder.tool > 6 ) {
 		 int ret = AfxMessageBox(L"Tool not defined", MB_OK);
 	 }
+	 
+	 int in = (m_ComponentList.GetCount()-1)-i;
+	 m_ComponentList.SetItemState(in, LVIS_SELECTED, LVIS_SELECTED);
+	 m_ComponentList.EnsureVisible( in ,TRUE );
 
-	 _RPT1(_CRT_WARN,"Using feeder %s\r\n",feeder.label );
 
 	 _RPT1(_CRT_WARN,"Going to tool %d\n", feeder.tool );
 
@@ -1966,63 +2054,80 @@ void CPickobearDlg::OnBnClickedGo2()
 	 return true;
 #endif
 
+	 /// slow the camera down
+	 m_CameraUpdateRate = 20 ;
+
 	 _RPT1(_CRT_WARN,"Going to feeder %s\n", feeder.label );
 
 	 MoveHead(feeder.x, feeder.y  - 73740 );
 
-	 Sleep( 800 );
-
-	 // This will stall the machine till it can knock
-	 WriteSerial("M21\r\n");
-	 Sleep( 1000 );
-
 	 _RPT0(_CRT_WARN,"Picking up part\n");
-	 // head down
-	 WriteSerial("M10\r\n");
-	 //wait
-	 Sleep( 500 );
-	 // vacuum on
-	 WriteSerial("M19\r\n");
-	 //wait
-	 Sleep( 500 );
-	 // head up
-	 WriteSerial("M11\r\n");
-	 //wait
-	 Sleep( 500 );
 
-	 _RPT1(_CRT_WARN,"Going to component %s\n", entry.label );
+	 // Put Part down
+	 WriteSerial("M26\r\n");
 
-	 MoveHead(entry.x+m_ComponentList.m_OffsetX,
-		 entry.y+m_ComponentList.m_OffsetY - 73740);
+	 Sleep( 1000 );
+	 
+	_RPT1(_CRT_WARN,"Going to component %s\n", entry.label );
+	
+	 MoveHead(entry.x+m_ComponentList.m_OffsetX, entry.y+m_ComponentList.m_OffsetY - 73740);
 
+	 if( entry.rot ) {
 
-	 int in = (m_ComponentList.GetCount()-1)-i;
-	 m_ComponentList.SetItemState(in, LVIS_SELECTED, LVIS_SELECTED);
-	 m_ComponentList.EnsureVisible( in ,TRUE );
+		_RPT1(_CRT_WARN,"Rotating part %d degrees \n", entry.rot );
+		
+		double angle = entry.rot;
 
+		// calculate pulses
+		angle = ( 1000.0 / 360.0  ) * angle ;
+
+		char buffer[256];
+		int pulses;
+
+		// calculate pulses
+		pulses = ( int) ( angle );
+		sprintf_s(buffer,sizeof(buffer),"G0H%d\r\n", pulses );
+				
+		_RPT1(_CRT_WARN,"Executing GCODE %s\r\n",buffer);
+
+		// do the rotate
+		WriteSerial( buffer );
+		Sleep( 500 );
+	 }
 	 // head down/air off/up
 	 _RPT0(_CRT_WARN,"dropping off part\n");
-	 // head down
-	 WriteSerial("M10\r\n");
-	 //wait
-	 Sleep( 800 );
-	 // vacuum off
-	 WriteSerial("M20\r\n");
+	 
+	 // Put Part down
+	 WriteSerial("M27\r\n");
+
+
 	 //wait
 	 Sleep( 100 );
-	 // head up
-	 WriteSerial("M11\r\n");
 
-	 busy = 0;
-	 m_MachineState =MS_IDLE;
+	 if( m_MachineState == MS_STOP ) {
+		 busy = 0;
+		 m_MachineState =MS_IDLE;
+		 /// reset the camera update rate
+		m_CameraUpdateRate = 10 ;
+		
+		 return true ;
+	 }
+
 	 UpdateWindow();
 
-	 // Park machine
-	 WriteSerial("G1X14Y15F300\r\n");
+	 Sleep( 500 );
+	 // Camera
+	 MoveHead(entry.x+m_ComponentList.m_OffsetX,entry.y+m_ComponentList.m_OffsetY );
 
 	 // switch state to idle
-
 	 m_MachineState = MS_IDLE ;
 
+	 busy  = 0 ;
+
+	 /// slow the camera down
+	 m_CameraUpdateRate = 10 ;
+
 	 return true;
+
+
  }
