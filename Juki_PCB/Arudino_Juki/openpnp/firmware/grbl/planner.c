@@ -395,7 +395,15 @@ void plan_buffer_line(double x, double y, double z, double c, double feed_rate, 
   block->steps_c = labs(target[C_AXIS]-position[C_AXIS]);
   block->step_event_count = max(block->steps_x, max(block->steps_y, max(block->steps_z, block->steps_c)));  
   // Bail if this is a zero-length block
-  if (block->step_event_count == 0) { return; };
+  if (block->step_event_count == 0) { 
+#ifdef VERBOSE_DEBUG
+	printPgmString(PSTR("didn't move"));
+#endif
+
+// needs for ACK
+ 	serialWrite('X');
+  	return; 
+  };
   
   double delta_x_mm = (target[X_AXIS]-position[X_AXIS])/settings.steps_per_mm[X_AXIS];
   double delta_y_mm = (target[Y_AXIS]-position[Y_AXIS])/settings.steps_per_mm[Y_AXIS];

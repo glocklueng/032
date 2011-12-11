@@ -540,8 +540,11 @@ public:
 	static DWORD WINAPI goCamera(LPVOID pThis);
 	static DWORD WINAPI goSetup(LPVOID pThis);
 
+	static DWORD WINAPI goSingleSetup(LPVOID pThis);
+
 	DWORD goThread(void );
 	DWORD cameraThread(void );
+	DWORD goSingleThread(void );
 
 	// check acknowledgement fron pnp
 	char CheckAck(char *ack1);

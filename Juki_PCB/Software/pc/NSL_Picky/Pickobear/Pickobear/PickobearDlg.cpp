@@ -724,7 +724,12 @@ char CPickobearDlg::CheckX( void )
 	int ret;
 
 	// wait for ack. needs a timeout
+	
+	int counter = 1000;
+
 	do { 
+		
+		counter --;
 
 		ret = m_Serial.Read( &ch, 1, &length );
 		switch ( ret ) {
@@ -735,11 +740,14 @@ char CPickobearDlg::CheckX( void )
 				break;
 		}
 
-	} while( ch!='X');
+	} while( ch!='X' && (counter ) );
 	
-	_RPT1(_CRT_WARN,"CheckAck(%c)\n", ch);
+	if( counter == 0 ) 
+		_RPT1(_CRT_WARN,"Timed out\n", ch);
+	else
+		_RPT1(_CRT_WARN,"CheckAck(%c)\n", ch);
 
-	if( ch == 'X' ) {
+	if( ch == 'X' && ( counter > 0 ) ) {
 
 		return true;
 	}
@@ -768,9 +776,11 @@ char CPickobearDlg::CheckAck( char *ack1 )
 	}
 	index = 0;
 
+	int counter = 1000;
+
 	// wait for ack. needs a timeout
 	do { 
-
+		counter -- ;
 		ret = m_Serial.Read( &ch, length );
 		if ( index < sizeof( buffer ) ) {
 
@@ -779,9 +789,13 @@ char CPickobearDlg::CheckAck( char *ack1 )
 
 		}
 
-	} while(ch!='\n');
+	} while(ch!='\n' && (counter != 0 ));
 	
-	_RPT1(_CRT_WARN,"CheckAck(%s)\n", buffer);
+	if (counter == 0 ) {
+		_RPT1(_CRT_WARN,"Timed out\n", buffer);
+		return 'f';
+	}else
+		_RPT1(_CRT_WARN,"CheckAck(%s)\n", buffer);
 
 	length = strlen( ack1 ) ;
 
@@ -1866,127 +1880,149 @@ void CPickobearDlg::OnBnClickedConsole()
 
 void CPickobearDlg::OnBnClickedGo2()
 {
-	static int busy = 0;
+	static HANDLE h=0;
 
-	unsigned int i ;
-	char buffer[5];
-	CListCtrl_Components::CompDatabase entry; 
-	
-	ZeroMemory(buffer,sizeof(buffer));
-
-	if ( busy ) {
-		return ;
+	if ( m_MachineState == MS_GO  ) { 
+		m_MachineState = MS_STOP;
+		return;
 	}
 
-	busy = 1;
+	// switch state to GO
+	m_MachineState = MS_GO ;
 
-	EmptySerial();
-		
-	int componentItem = m_ComponentList.GetNextItem(-1, LVNI_SELECTED);
-
-	i = (m_ComponentList.GetCount()-1) - componentItem;
-
-		entry = m_ComponentList.at(i);
-		
-		_RPT1(_CRT_WARN,"Placing %s\r\n",entry.label);
-
-
-		if (entry.feeder == -1) {
-			int ret = AfxMessageBox(L"Feeder not defined", MB_OK);
-		}
-
-		CListCtrl_FeederList::FeederDatabase feeder = m_FeederList.at( (m_FeederList.GetCount()-1) - entry.feeder );
-
-		if (feeder.tool < 1 || feeder.tool > 6 ) {
-			int ret = AfxMessageBox(L"Tool not defined", MB_OK);
-		}
-
-		_RPT1(_CRT_WARN,"Using feeder %s\r\n",feeder.label );
-
-		_RPT1(_CRT_WARN,"Going to tool %d\n", feeder.tool );
-		
-		// can't tool change at the moment...
-#if 0
-		switch ( feeder.tool ) {
-			case 1:
-				WriteSerial("M24\r\n");
-				break;
-			case 2:
-				WriteSerial("M24\r\n");
-				break;
-			case 3:
-				WriteSerial("M24\r\n");
-				break;
-			case 4:
-				WriteSerial("M24\r\n");
-				break;
-			case 5:
-				WriteSerial("M24\r\n");
-				break;
-			case 6:
-				WriteSerial("M24\r\n");
-				break;
-		}
-		
-		return true;
-#endif
-	
-		_RPT1(_CRT_WARN,"Going to feeder %s\n", feeder.label );
-
-		MoveHead(feeder.x, feeder.y  - 73740 );
-
-		Sleep( 800 );
-		
-		// This will stall the machine till it can knock
-		WriteSerial("M21\r\n");
-		Sleep( 1000 );
-
-		_RPT0(_CRT_WARN,"Picking up part\n");
-		// head down
-		WriteSerial("M10\r\n");
-		//wait
-		Sleep( 500 );
-		// vacuum on
-		WriteSerial("M19\r\n");
-		//wait
-		Sleep( 500 );
-		// head up
-		WriteSerial("M11\r\n");
-		//wait
-		Sleep( 500 );
-
-		_RPT1(_CRT_WARN,"Going to component %s\n", entry.label );
-		 
-		MoveHead(entry.x+m_ComponentList.m_OffsetX,
-			     entry.y+m_ComponentList.m_OffsetY - 73740);
-		
-
-		int in = (m_ComponentList.GetCount()-1)-i;
-		m_ComponentList.SetItemState(in, LVIS_SELECTED, LVIS_SELECTED);
-		m_ComponentList.EnsureVisible( in ,TRUE );
-
-		// head down/air off/up
-		_RPT0(_CRT_WARN,"dropping off part\n");
-		// head down
-		WriteSerial("M10\r\n");
-		//wait
-		Sleep( 800 );
-		// vacuum off
-		WriteSerial("M20\r\n");
-		//wait
-		Sleep( 100 );
-		// head up
-		WriteSerial("M11\r\n");
-
-		busy = 0;
-		m_MachineState =MS_IDLE;
-		UpdateWindow();
-
-
-	 
-	// Park machine
-	WriteSerial("G1X14Y15F300\r\n");
-
-	// switch state to idle
-	m_MachineState = MS_IDLE ;
+	// Start thread for 'GO'
+	h = CreateThread(NULL, 0, &CPickobearDlg::goSingleSetup, (LPVOID)this, 0, NULL);
 }
+
+ DWORD WINAPI CPickobearDlg::goSingleSetup(LPVOID pThis)
+{
+	return ((CPickobearDlg*)pThis)->goSingleThread();
+}
+
+ DWORD CPickobearDlg::goSingleThread(void )
+ {
+	 static int busy = 0;
+
+	 unsigned int i ;
+	 char buffer[5];
+	 CListCtrl_Components::CompDatabase entry; 
+
+	 ZeroMemory(buffer,sizeof(buffer));
+
+	 if ( busy ) {
+		 return true ;
+	 }
+
+	 busy = 1;
+
+	 EmptySerial();
+
+	 int componentItem = m_ComponentList.GetNextItem(-1, LVNI_SELECTED);
+
+	 i = (m_ComponentList.GetCount()-1) - componentItem;
+
+	 entry = m_ComponentList.at(i);
+
+	 _RPT1(_CRT_WARN,"Placing %s\r\n",entry.label);
+
+
+	 if (entry.feeder == -1) {
+		 int ret = AfxMessageBox(L"Feeder not defined", MB_OK);
+	 }
+
+	 CListCtrl_FeederList::FeederDatabase feeder = m_FeederList.at( (m_FeederList.GetCount()-1) - entry.feeder );
+
+	 if (feeder.tool < 1 || feeder.tool > 6 ) {
+		 int ret = AfxMessageBox(L"Tool not defined", MB_OK);
+	 }
+
+	 _RPT1(_CRT_WARN,"Using feeder %s\r\n",feeder.label );
+
+	 _RPT1(_CRT_WARN,"Going to tool %d\n", feeder.tool );
+
+	 // can't tool change at the moment...
+#if 0
+	 switch ( feeder.tool ) {
+	 case 1:
+		 WriteSerial("M24\r\n");
+		 break;
+	 case 2:
+		 WriteSerial("M24\r\n");
+		 break;
+	 case 3:
+		 WriteSerial("M24\r\n");
+		 break;
+	 case 4:
+		 WriteSerial("M24\r\n");
+		 break;
+	 case 5:
+		 WriteSerial("M24\r\n");
+		 break;
+	 case 6:
+		 WriteSerial("M24\r\n");
+		 break;
+	 }
+
+	 return true;
+#endif
+
+	 _RPT1(_CRT_WARN,"Going to feeder %s\n", feeder.label );
+
+	 MoveHead(feeder.x, feeder.y  - 73740 );
+
+	 Sleep( 800 );
+
+	 // This will stall the machine till it can knock
+	 WriteSerial("M21\r\n");
+	 Sleep( 1000 );
+
+	 _RPT0(_CRT_WARN,"Picking up part\n");
+	 // head down
+	 WriteSerial("M10\r\n");
+	 //wait
+	 Sleep( 500 );
+	 // vacuum on
+	 WriteSerial("M19\r\n");
+	 //wait
+	 Sleep( 500 );
+	 // head up
+	 WriteSerial("M11\r\n");
+	 //wait
+	 Sleep( 500 );
+
+	 _RPT1(_CRT_WARN,"Going to component %s\n", entry.label );
+
+	 MoveHead(entry.x+m_ComponentList.m_OffsetX,
+		 entry.y+m_ComponentList.m_OffsetY - 73740);
+
+
+	 int in = (m_ComponentList.GetCount()-1)-i;
+	 m_ComponentList.SetItemState(in, LVIS_SELECTED, LVIS_SELECTED);
+	 m_ComponentList.EnsureVisible( in ,TRUE );
+
+	 // head down/air off/up
+	 _RPT0(_CRT_WARN,"dropping off part\n");
+	 // head down
+	 WriteSerial("M10\r\n");
+	 //wait
+	 Sleep( 800 );
+	 // vacuum off
+	 WriteSerial("M20\r\n");
+	 //wait
+	 Sleep( 100 );
+	 // head up
+	 WriteSerial("M11\r\n");
+
+	 busy = 0;
+	 m_MachineState =MS_IDLE;
+	 UpdateWindow();
+
+	 // Park machine
+	 WriteSerial("G1X14Y15F300\r\n");
+
+	 // switch state to idle
+
+	 m_MachineState = MS_IDLE ;
+
+	 return true;
+ }
