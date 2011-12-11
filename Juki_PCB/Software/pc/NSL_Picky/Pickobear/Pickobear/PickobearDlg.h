@@ -11,16 +11,12 @@
 #include <iostream>
 #include <fstream>
 
-
 #define pulsestoum(x) (x*25)
-
 
 CString GetSaveFile( const TCHAR *ptypes, const TCHAR*caption, const TCHAR *pStartDir);
 CString GetLoadFile( const TCHAR *ptypes, const TCHAR*caption, const TCHAR *pStartDir);
 bool SetCurrentPosition ( long x,long y);
-void BuildGCodeMove( char *output, int length, int mode , long x, long y, long speed );
-
-
+bool BuildGCodeMove( char *output, int length, int mode , long x, long y, long speed );
 
 // component class
 class CListCtrl_Components : public CListCtrl

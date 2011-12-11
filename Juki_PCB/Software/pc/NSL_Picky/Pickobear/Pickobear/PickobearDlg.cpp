@@ -74,11 +74,13 @@ void CPickobearDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_ROTATE, m_Rotation);
 	DDX_Control(pDX, IDC_LIST2, m_ComponentList);
 	DDX_Text(pDX, IDC_GOX, m_GOX);
+	DDV_MinMaxLong(pDX,IDC_GOX,0,364550);
 	DDX_Text(pDX, IDC_GOY, m_GOY);
 	DDX_Control(pDX, IDC_LIST3, m_FeederList);
 	DDX_Control(pDX, IDC_COMBO1, m_UpCamera);
 	DDX_Control(pDX, IDC_COMBO2, m_DownCamera);
 	DDX_Control(pDX, IDC_STEPSIZE, m_StepSize);
+
 }
 
 BEGIN_MESSAGE_MAP(CPickobearDlg, CDialog) 
@@ -429,14 +431,6 @@ BOOL CPickobearDlg::OnInitDialog()
 	if( CB_ERR  == m_StepSize.SetCurSel( regEntry ) ) {
 		_RPT0(_CRT_WARN,"Error\n");
 	}
-
-	{
-		char buffer[256];
-	
-		BuildGCodeMove(buffer,sizeof(buffer),1,326400,117800,100);
-		_RPT0(_CRT_WARN,buffer);
-	}
-
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
 
@@ -589,12 +583,24 @@ void CPickobearDlg::OnBnClickedHome()
 	SetCurrentPosition(m_headXPos,m_headYPos);		
 }
 
-void BuildGCodeMove( char *output, int length, int mode , long x, long y, long speed )
+bool BuildGCodeMove( char *output, int length, int mode , long x, long y, long speed )
 {
 	long double tx,ty;
 
 	ASSERT( output) ;
 	
+	// limit the move
+	if( x > 364550 ) {
+		
+		int ret = AfxMessageBox(L"X out of limits, press OK to change to stay within limits, or cancel to stop move",MB_OKCANCEL);
+		if( ret == IDCANCEL ) {
+			sprintf_s(output,length,"");
+			return false;
+		}
+
+		x = 364550 ;
+	}
+
 	memset(output,0,length);
 
 	tx = x * 0.0000393700787;
@@ -604,6 +610,8 @@ void BuildGCodeMove( char *output, int length, int mode , long x, long y, long s
 	if ( ty < 0 ) ty = 0;
 
 	sprintf_s(output, length,"G%dX%gY%gF%d\r\n",mode,tx,ty,speed);
+
+	return true;
 }
 
 bool CPickobearDlg::HomeTest( void ) 
@@ -636,7 +644,9 @@ bool CPickobearDlg::MoveHeadSlow(  long x, long y )
 	m_headXPos = x ; 
 	m_headYPos = y;
 
-	BuildGCodeMove(buffer,sizeof(buffer),1,x,y,100);
+	if ( false == BuildGCodeMove(buffer,sizeof(buffer),1,x,y,100) ) {
+		return false;
+	}
 again:;
 
 //	_RPT5(_CRT_WARN,"current pos = %dum,%dum\nGoing to %dum,%dum\n%s\n",m_headXPos,m_headYPos,x,y,buffer);
@@ -680,7 +690,8 @@ bool CPickobearDlg::MoveHead(  long x, long y )
 	if ( m_headXPos < 0 ) m_headXPos = 0;
 	if ( m_headXPos < 0 ) m_headYPos = 0;
 
-	BuildGCodeMove(buffer,sizeof(buffer),1,x,y,m_Speed);
+	if( false == BuildGCodeMove(buffer,sizeof(buffer),1,x,y,m_Speed) ) 
+		return false;
 
 again:;
 
@@ -713,10 +724,11 @@ bool CPickobearDlg::MoveHeadRel(  long x, long y )
 
 	char buffer[ 256 ];
 
-	BuildGCodeMove(buffer,sizeof(buffer),0,m_headXPos+x,m_headYPos+y,100);
+	if(false == BuildGCodeMove(buffer,sizeof(buffer),0,m_headXPos+x,m_headYPos+y,100) ) 
+		return false;
 
 again:;
-//	_RPT5(_CRT_WARN,"current pos = %dum,%dum\nGoing to %dum,%dum\n%s\n",m_headXPos,m_headYPos,m_headXPos+x,m_headYPos+y,buffer);
+
 	WriteSerial( buffer );
 
 	if( CheckX() == false ) {
@@ -727,7 +739,7 @@ again:;
 			return false;
 	}
 		
-	SetCurrentPosition(m_headXPos+x,m_headYPos+y);
+	SetCurrentPosition( m_headXPos + x, m_headYPos+y);
 
 	return true;
 }
@@ -1990,7 +2002,6 @@ void CPickobearDlg::OnBnClickedGo2()
 	 char buffer[5];
 	 CListCtrl_Components::CompDatabase entry; 
 	 
-
 	 ZeroMemory(buffer,sizeof(buffer));
 
 	 if ( busy ) {
@@ -2024,7 +2035,6 @@ void CPickobearDlg::OnBnClickedGo2()
 	 int in = (m_ComponentList.GetCount()-1)-i;
 	 m_ComponentList.SetItemState(in, LVIS_SELECTED, LVIS_SELECTED);
 	 m_ComponentList.EnsureVisible( in ,TRUE );
-
 
 	 _RPT1(_CRT_WARN,"Going to tool %d\n", feeder.tool );
 
@@ -2116,12 +2126,14 @@ void CPickobearDlg::OnBnClickedGo2()
 	 UpdateWindow();
 
 	 Sleep( 500 );
-	 // Camera
+
+	 // Move Camera to part
 	 MoveHead(entry.x+m_ComponentList.m_OffsetX,entry.y+m_ComponentList.m_OffsetY );
 
 	 // switch state to idle
 	 m_MachineState = MS_IDLE ;
 
+	 // no longer busy
 	 busy  = 0 ;
 
 	 /// slow the camera down
