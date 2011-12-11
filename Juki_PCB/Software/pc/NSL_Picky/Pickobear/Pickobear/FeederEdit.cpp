@@ -33,11 +33,19 @@ void FeederEdit::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_ROT, entry.rot);
 	DDX_Text(pDX, IDC_FCOUNTX, entry.countx);
 	DDX_Text(pDX, IDC_FCOUNTY, entry.county);
+	DDX_Text(pDX, IDC_TOOLBOX, entry.tool);
 }
 
 
 BEGIN_MESSAGE_MAP(FeederEdit, CDialogEx)
+	ON_CBN_SELCHANGE(IDC_TOOLBOX, &FeederEdit::OnCbnSelchangeToolbox)
 END_MESSAGE_MAP()
 
 
 // FeederEdit message handlers
+
+
+void FeederEdit::OnCbnSelchangeToolbox()
+{
+
+}

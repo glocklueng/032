@@ -36,6 +36,13 @@ void head_init()
 // todo: don't allow head down while not homed?
 char head_down(int state)
 {
+
+	// this one is interesting, it can't rely on the busy flag so lets use gHomed instead
+	if( gHomed == FALSE  ){ 
+		return 0;
+	}
+
+
 #ifdef VERBOSE_DEBUG
 	printPgmString(PSTR("dbg: head_down\n\r"));
 #endif

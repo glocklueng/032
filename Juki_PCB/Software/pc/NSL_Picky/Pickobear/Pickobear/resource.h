@@ -11,7 +11,9 @@
 #define IDD_TEXTEDIT                    131
 #define IDD_XYCOUNT                     132
 #define IDD_FEEDER_EDIT                 133
+#define IDD_TEXT_DIALOG                 135
 #define IDC_LIST1                       1000
+#define IDC_TEXTOUT                     1000
 #define IDC_GO                          1001
 #define IDC_UP                          1002
 #define IDC_RIGHT                       1003
@@ -49,6 +51,7 @@
 #define IDC_SAVE                        1033
 #define IDC_IMPORT                      1034
 #define IDC_DOWNCAM                     1035
+#define IDC_GO2                         1035
 #define IDC_UPCAM                       1036
 #define IDC_FEEDER                      1037
 #define IDC_GOFF                        1038
@@ -64,10 +67,12 @@
 #define IDC_ADD_FEEDER                  1048
 #define IDC_BUTTON1                     1049
 #define IDC_UPDATE                      1049
+#define IDC_SEND                        1049
 #define IDC_LOAD_FEEDER                 1050
 #define IDC_EDIT1                       1050
 #define IDC_COUNTX                      1050
 #define IDC_FEEDER_NAME                 1050
+#define IDC_COMMAND_INPUT               1050
 #define IDC_SAVE_FEEDER                 1051
 #define IDC_TEXTBOX                     1051
 #define IDC_COUNTY                      1051
@@ -85,16 +90,19 @@
 #define IDC_EDIT8                       1063
 #define IDC_ROT                         1063
 #define IDC_EDITFEEDER                  1064
-#define IDC_ASSIGN                      1065
 #define IDC_ASSIGNFEEDER                1065
+#define IDC_TOOLBOX                     1066
+#define IDC_CONSOLE                     1067
+#define IDC_SAVE_TEXT                   1068
+#define IDC_CLEAR                       1069
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        134
+#define _APS_NEXT_RESOURCE_VALUE        136
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1066
+#define _APS_NEXT_CONTROL_VALUE         1070
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

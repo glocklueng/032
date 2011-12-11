@@ -27,6 +27,7 @@ void tape_init(void)
 // tape 
 void tape_knock( void )
 {
+
 #ifdef VERBOSE_DEBUG
 	printPgmString(PSTR("tape knock\n\r"));
 #endif
@@ -38,7 +39,7 @@ void tape_knock( void )
 
 	while( head_moving() );
 
-	 set_busy( TRUE );
+	set_busy( TRUE );
 
 	TAPE_PORT &= ~(_BV( TAPE_KNOCK ));
 
