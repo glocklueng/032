@@ -130,12 +130,14 @@ char putdown_part ( void )
 	// wait til head stops
 	while( head_moving() );
 
+	_delay_ms( 100 );
+
 	// push head down
 	head_down( 1 );
 
-	_delay_ms( 500 );
+	_delay_ms( 250 );
 
-	// vacuum on
+	// vacuum off
 	vacuum ( 0 );
 
 	// head up

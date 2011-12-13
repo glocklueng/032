@@ -730,7 +730,7 @@ bool CPickobearDlg::MoveHeadRel(  long x, long y )
 
 	char buffer[ 256 ];
 
-	if(false == BuildGCodeMove(buffer,sizeof(buffer),0,m_headXPos+x,m_headYPos+y,100) ) 
+	if(false == BuildGCodeMove(buffer,sizeof(buffer),0,m_headXPos+x,m_headYPos+y,200) ) 
 		return false;
 
 again:;
@@ -1271,136 +1271,6 @@ DWORD CPickobearDlg::cameraThread(void )
  DWORD WINAPI CPickobearDlg::goSetup(LPVOID pThis)
 {
 	return ((CPickobearDlg*)pThis)->goThread();
-}
-
-DWORD CPickobearDlg::goThread(void )
-{
-	static int busy = 0;
-
-	unsigned int i ;
-	char buffer[5];
-	CListCtrl_Components::CompDatabase entry; 
-	
-	ZeroMemory(buffer,sizeof(buffer));
-
-	if ( busy ) {
-		return true;
-	}
-
-	busy = 1;
-
-	EmptySerial();
-
-	for (i = 0 ; i < m_ComponentList.GetCount(); i ++ ) {
-		
-		entry = m_ComponentList.at(i);
-		
-		if (entry.feeder == -1) {
-			int ret = AfxMessageBox(L"Feeder not defined", MB_OK);
-		}
-
-		CListCtrl_FeederList::FeederDatabase feeder = m_FeederList.at ((m_FeederList.GetCount()-1) - entry.feeder );
-
-		if (feeder.tool < 1 || feeder.tool > 6 ) {
-			int ret = AfxMessageBox(L"Tool not defined", MB_OK);
-		}
-
-		_RPT1(_CRT_WARN,"Going to tool %d\n", feeder.tool );
-		
-		// can't tool change at the moment...
-#if 0
-		switch ( feeder.tool ) {
-			case 1:
-				WriteSerial("M24\r\n");
-				break;
-			case 2:
-				WriteSerial("M24\r\n");
-				break;
-			case 3:
-				WriteSerial("M24\r\n");
-				break;
-			case 4:
-				WriteSerial("M24\r\n");
-				break;
-			case 5:
-				WriteSerial("M24\r\n");
-				break;
-			case 6:
-				WriteSerial("M24\r\n");
-				break;
-		}
-		
-		return true;
-#endif
-	
-		_RPT1(_CRT_WARN,"Going to feeder %s\n", feeder.label );
-
-		MoveHead(feeder.x, feeder.y  - CAMERA_OFFSET );
-
-		Sleep( 100 );
-		
-		// This will stall the machine till it can knock
-		WriteSerial("M21\r\n");
-		Sleep( 100 );
-
-		_RPT0(_CRT_WARN,"Picking up part\n");
-		// head down
-		WriteSerial("M10\r\n");
-		//wait
-		Sleep( 500 );
-		// vacuum on
-		WriteSerial("M19\r\n");
-		//wait
-		Sleep( 500 );
-		// head up
-		WriteSerial("M11\r\n");
-		//wait
-		Sleep( 500 );
-
-		_RPT1(_CRT_WARN,"Going to component %s\n", entry.label );
-		 
-		MoveHead(entry.x+m_ComponentList.m_OffsetX,
-			     entry.y+m_ComponentList.m_OffsetY - CAMERA_OFFSET );
-		
-
-		int in = (m_ComponentList.GetCount()-1)-i;
-		m_ComponentList.SetItemState(in, LVIS_SELECTED, LVIS_SELECTED);
-		m_ComponentList.EnsureVisible( in ,TRUE );
-
-		// head down/air off/up
-		_RPT0(_CRT_WARN,"dropping off part\n");
-		// head down
-		WriteSerial("M10\r\n");
-		//wait
-		Sleep( 800 );
-		// vacuum off
-		WriteSerial("M20\r\n");
-		//wait
-		Sleep( 500 );
-		// head up
-		WriteSerial("M11\r\n");
-		
-		//wait
-		Sleep( 100 );
-
-		if( m_MachineState == MS_STOP ) {
-			busy = 0;
-			m_MachineState =MS_IDLE;
-			break;
-		}
-
-		UpdateWindow();
-
-	}
-	 
-	// Park machine
-	WriteSerial("G1X14Y15F200\r\n");
-
-	// switch state to idle
-	m_MachineState = MS_IDLE ;
-	busy = 0;
-
-	return true;
 }
 
 void CPickobearDlg::OnBnClickedGo()
@@ -2000,6 +1870,208 @@ void CPickobearDlg::OnBnClickedGo2()
 	return ((CPickobearDlg*)pThis)->goSingleThread();
 }
 
+
+ void CPickobearDlg::OnBnClickedSwapHeadCamera()
+ {
+	if( bCameraHead == false ) {
+		MoveHeadRel( 0, -CAMERA_OFFSET) ;
+		bCameraHead = true;
+	} else { 
+		MoveHeadRel( 0, CAMERA_OFFSET) ;
+		bCameraHead = false;
+	}
+ }
+
+
+
+ void CPickobearDlg::OnBnClickedEditComponent()
+{
+	EditComponent EditDialog;
+
+	int item = m_ComponentList.GetSelectedCount();
+
+	if( item == 0 ) {
+		return ;
+	}
+	
+	item = m_ComponentList.GetNextItem( -1, LVNI_SELECTED );
+
+	// iItem is item number, database is backwards
+	int clist = (m_ComponentList.GetCount()-1) - m_ComponentList.GetNextItem(-1, LVNI_SELECTED);
+
+	EditDialog.entry = m_ComponentList.m_Database.at( clist ) ;
+
+	// push the names out
+	EditDialog.m_Name    = EditDialog.entry.label;
+	EditDialog.m_Value   = EditDialog.entry.value;
+	EditDialog.m_Type    = EditDialog.entry.type;
+
+	EditDialog.DoModal();
+
+	// grab them back
+	// Since CString doesn't like being in a vector for load/save then we're using a char array, which makes this bit ugly
+	CStringA userInput8( UTF16toUTF8( EditDialog.m_Name ) );
+	strcpy_s( EditDialog.entry.label, userInput8 );
+	userInput8.ReleaseBuffer();
+
+	userInput8 =  UTF16toUTF8( EditDialog.m_Value ) ;
+	strcpy_s( EditDialog.entry.value, userInput8 );
+	userInput8.ReleaseBuffer();
+
+	userInput8 = UTF16toUTF8( EditDialog.m_Type );
+	strcpy_s( EditDialog.entry.type, userInput8 );
+	userInput8.ReleaseBuffer();
+
+
+	m_ComponentList.m_Database.at( clist ) = EditDialog.entry;
+
+	//ugly
+	m_ComponentList.RebuildList();
+}
+
+
+
+ DWORD CPickobearDlg::goThread(void )
+ {
+	 static int busy = 0;
+
+	 unsigned int i ;
+	 char buffer[5];
+	 CListCtrl_Components::CompDatabase entry; 
+
+	 ZeroMemory(buffer,sizeof(buffer));
+
+	 if ( busy ) {
+		 return true;
+	 }
+
+	 busy = 1;
+
+	 EmptySerial();
+
+	 for (i = 0 ; i < m_ComponentList.GetCount(); i ++ ) {
+
+		 
+		 int in = (m_ComponentList.GetCount()-1)-i;
+		 m_ComponentList.SetItemState(in, LVIS_SELECTED, LVIS_SELECTED);
+		 m_ComponentList.EnsureVisible( in ,TRUE );
+
+
+		 entry = m_ComponentList.at(i);
+
+		 if (entry.feeder == -1) {
+			 
+			 int ret = AfxMessageBox(L"Feeder not defined", MB_OK);
+	
+			 /// skip part
+			 continue;
+		 }
+
+		 CListCtrl_FeederList::FeederDatabase feeder = m_FeederList.at ((m_FeederList.GetCount()-1) - entry.feeder );
+
+		 if (feeder.tool < 1 || feeder.tool > 6 ) {
+			 int ret = AfxMessageBox(L"Tool not defined", MB_OK);
+		 }
+
+		 _RPT1(_CRT_WARN,"Going to tool %d\n", feeder.tool );
+
+		 // can't tool change at the moment...
+#if 0
+		 switch ( feeder.tool ) {
+		 case 1:
+			 WriteSerial("M24\r\n");
+			 break;
+		 case 2:
+			 WriteSerial("M24\r\n");
+			 break;
+		 case 3:
+			 WriteSerial("M24\r\n");
+			 break;
+		 case 4:
+			 WriteSerial("M24\r\n");
+			 break;
+		 case 5:
+			 WriteSerial("M24\r\n");
+			 break;
+		 case 6:
+			 WriteSerial("M24\r\n");
+			 break;
+		 }
+
+		 return true;
+#endif
+
+
+		 /// slow the camera down
+		 m_CameraUpdateRate = 10 ;
+
+		 _RPT1(_CRT_WARN,"Going to feeder %s\n", feeder.label );
+		 MoveHead(feeder.x, feeder.y  -  CAMERA_OFFSET );
+
+		 _RPT0(_CRT_WARN,"Picking up part\n");
+		 WriteSerial("M26\r\n");
+
+		 Sleep( 1000 );
+
+		 _RPT1(_CRT_WARN,"Going to component %s\n", entry.label );
+
+		 MoveHead(entry.x+m_ComponentList.m_OffsetX, entry.y+m_ComponentList.m_OffsetY - CAMERA_OFFSET);
+
+		 if( entry.rot ) {
+
+			 _RPT1(_CRT_WARN,"Rotating part %d degrees \n", entry.rot );
+
+			 double angle = entry.rot;
+
+			 // calculate pulses
+			 angle = ( 1000.0 / 360.0  ) * angle ;
+
+			 char buffer[256];
+			 int pulses;
+
+			 // calculate pulses
+			 pulses = ( int) ( angle );
+			 sprintf_s(buffer,sizeof(buffer),"G0H%d\r\n", pulses );
+
+			 _RPT1(_CRT_WARN,"Executing GCODE %s\r\n",buffer);
+
+			 // do the rotate
+			 WriteSerial( buffer );
+			 Sleep( 500 );
+		 }
+
+		 _RPT0(_CRT_WARN,"dropping off part\n");
+
+		 // head down/air off/up
+		 // Put Part down
+		 WriteSerial("M27\r\n");
+
+		 //wait
+		 Sleep( 100 );
+
+		 if( m_MachineState == MS_STOP ) {
+			 busy = 0;
+			 m_MachineState =MS_IDLE;
+			 break;
+		 }
+
+		 UpdateWindow();
+
+	 }
+
+	 // Park machine
+	 WriteSerial("G1X14Y15F200\r\n");
+
+	 /// slow the camera down
+	m_CameraUpdateRate = 10 ;
+
+	 // switch state to idle
+	 m_MachineState = MS_IDLE ;
+	 busy = 0;
+
+	 return true;
+ }
+
  DWORD CPickobearDlg::goSingleThread(void )
  {
 	 static int busy = 0;
@@ -2079,7 +2151,7 @@ void CPickobearDlg::OnBnClickedGo2()
 
 	 _RPT0(_CRT_WARN,"Picking up part\n");
 
-	 // Put Part down
+	 // Pickup
 	 WriteSerial("M26\r\n");
 
 	 Sleep( 1000 );
@@ -2149,61 +2221,4 @@ void CPickobearDlg::OnBnClickedGo2()
 
 
  }
-
-
- void CPickobearDlg::OnBnClickedEditComponent()
-{
-	EditComponent EditDialog;
-
-	int item = m_ComponentList.GetSelectedCount();
-
-	if( item == 0 ) {
-		return ;
-	}
-	
-	item = m_ComponentList.GetNextItem( -1, LVNI_SELECTED );
-
-	// iItem is item number, database is backwards
-	int clist = (m_ComponentList.GetCount()-1) - m_ComponentList.GetNextItem(-1, LVNI_SELECTED);
-
-	EditDialog.entry = m_ComponentList.m_Database.at( clist ) ;
-
-	// push the names out
-	EditDialog.m_Name    = EditDialog.entry.label;
-	EditDialog.m_Value   = EditDialog.entry.value;
-	EditDialog.m_Type    = EditDialog.entry.type;
-
-	EditDialog.DoModal();
-
-	// grab them back
-	// Since CString doesn't like being in a vector for load/save then we're using a char array, which makes this bit ugly
-	CStringA userInput8( UTF16toUTF8( EditDialog.m_Name ) );
-	strcpy_s( EditDialog.entry.label, userInput8 );
-	userInput8.ReleaseBuffer();
-
-	userInput8 =  UTF16toUTF8( EditDialog.m_Value ) ;
-	strcpy_s( EditDialog.entry.value, userInput8 );
-	userInput8.ReleaseBuffer();
-
-	userInput8 = UTF16toUTF8( EditDialog.m_Type );
-	strcpy_s( EditDialog.entry.type, userInput8 );
-	userInput8.ReleaseBuffer();
-
-
-	m_ComponentList.m_Database.at( clist ) = EditDialog.entry;
-
-	//ugly
-	m_ComponentList.RebuildList();
-}
-
-
- void CPickobearDlg::OnBnClickedSwapHeadCamera()
- {
-	if( bCameraHead == false ) {
-		MoveHeadRel( 0, -CAMERA_OFFSET) ;
-		bCameraHead = true;
-	} else { 
-		MoveHeadRel( 0, CAMERA_OFFSET) ;
-		bCameraHead = false;
-	}
- }
+ 
