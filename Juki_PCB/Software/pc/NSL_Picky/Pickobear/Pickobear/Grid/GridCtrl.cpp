@@ -118,7 +118,7 @@
 /////////////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
-#include "..\sxtune\CMemDC.h"
+#include "CMemDC.h"
 #include "GridCtrl.h"
 #include <algorithm>
 
