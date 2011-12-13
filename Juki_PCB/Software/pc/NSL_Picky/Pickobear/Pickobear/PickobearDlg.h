@@ -52,7 +52,7 @@ public:
 		char type[256];
 
 		// side of pcb
-		char side;
+		BYTE side;
 
 	} CompDatabase;
 	
@@ -498,6 +498,8 @@ private:
 
 	CTextDump	*m_TextEdit;
 
+	bool bCameraHead;
+
 	bool bSetWaitDone;
 	// head state
 	char m_Head;
@@ -660,4 +662,6 @@ public:
 	afx_msg void OnBnClickedAssignfeeder();
 	afx_msg void OnBnClickedConsole();
 	afx_msg void OnBnClickedGo2();
+	afx_msg void OnBnClickedEditComponent();
+	afx_msg void OnBnClickedSwapHeadCamera();
 };

@@ -12,6 +12,7 @@
 #define IDD_XYCOUNT                     132
 #define IDD_FEEDER_EDIT                 133
 #define IDD_TEXT_DIALOG                 135
+#define IDD_COMPONENT_EDIT              136
 #define IDC_LIST1                       1000
 #define IDC_TEXTOUT                     1000
 #define IDC_GO                          1001
@@ -53,6 +54,7 @@
 #define IDC_DOWNCAM                     1035
 #define IDC_GO2                         1035
 #define IDC_UPCAM                       1036
+#define IDC_EDIT_COMPONENT              1036
 #define IDC_FEEDER                      1037
 #define IDC_GOFF                        1038
 #define IDC_ZERO                        1039
@@ -76,6 +78,7 @@
 #define IDC_SAVE_FEEDER                 1051
 #define IDC_TEXTBOX                     1051
 #define IDC_COUNTY                      1051
+#define IDC_FEEDER_NAME2                1051
 #define IDC_UPDATE2                     1052
 #define IDC_UPDATE3                     1053
 #define IDC_ADD_LOWERRIGHT              1054
@@ -95,6 +98,8 @@
 #define IDC_CONSOLE                     1067
 #define IDC_SAVE_TEXT                   1068
 #define IDC_CLEAR                       1069
+#define IDC_BUTTON2                     1070
+#define IDC_SWAP_HEAD_CAMERA            1070
 
 // Next default values for new objects
 // 
@@ -102,7 +107,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        136
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1070
+#define _APS_NEXT_CONTROL_VALUE         1071
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
