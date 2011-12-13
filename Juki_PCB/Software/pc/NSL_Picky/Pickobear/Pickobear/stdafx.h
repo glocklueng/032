@@ -64,6 +64,7 @@
 
 #include "Counts.h"
 
+#include "EditComponent.h"
 
 #pragma comment(lib,"opencv_highgui231.lib")
 #pragma comment(lib,"opencv_imgproc231.lib")
@@ -72,6 +73,8 @@
 
 extern 	videoInput VI;
 extern CStringA UTF16toUTF8(const CStringW& utf16);
+
+#define CAMERA_OFFSET ( 73900 )
 
 #ifdef _UNICODE
 #if defined _M_IX86

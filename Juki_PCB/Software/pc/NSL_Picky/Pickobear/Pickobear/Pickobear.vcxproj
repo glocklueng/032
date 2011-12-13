@@ -115,6 +115,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Counts.cpp" />
+    <ClCompile Include="EditComponent.cpp" />
     <ClCompile Include="FeederEdit.cpp" />
     <ClCompile Include="FeederSetup.cpp" />
     <ClCompile Include="opencv.cpp" />
@@ -133,6 +134,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Counts.h" />
+    <ClInclude Include="EditComponent.h" />
     <ClInclude Include="FeederEdit.h" />
     <ClInclude Include="FeederSetup.h" />
     <ClInclude Include="opencv.h" />

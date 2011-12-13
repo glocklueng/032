@@ -61,6 +61,7 @@ CPickobearDlg::CPickobearDlg(CWnd* pParent /*=NULL*/)
 	, m_Homed(false)
 	, m_CameraUpdateRate(10)
 	, bSetWaitDone(false)
+	, bCameraHead( false )
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -136,6 +137,8 @@ BEGIN_MESSAGE_MAP(CPickobearDlg, CDialog)
 	ON_BN_CLICKED(IDC_ASSIGNFEEDER, &CPickobearDlg::OnBnClickedAssignfeeder)
 	ON_BN_CLICKED(IDC_CONSOLE, &CPickobearDlg::OnBnClickedConsole)
 	ON_BN_CLICKED(IDC_GO2, &CPickobearDlg::OnBnClickedGo2)
+	ON_BN_CLICKED(IDC_EDIT_COMPONENT, &CPickobearDlg::OnBnClickedEditComponent)
+	ON_BN_CLICKED(IDC_SWAP_HEAD_CAMERA, &CPickobearDlg::OnBnClickedSwapHeadCamera)
 END_MESSAGE_MAP()
 
 BEGIN_MESSAGE_MAP(CListCtrl_Components, CListCtrl)
@@ -539,6 +542,9 @@ void CPickobearDlg::OnBnClickedHome()
 			// enable the GO button
 			GO.EnableWindow( TRUE ) ;
 
+			GetDlgItem( IDC_SWAP_HEAD_CAMERA )->EnableWindow( TRUE );
+
+
 			// enable tool changers
 			GetDlgItem( IDC_TOOL1 )->EnableWindow( TRUE );
 			GetDlgItem( IDC_TOOL2 )->EnableWindow( TRUE );
@@ -681,9 +687,9 @@ bool CPickobearDlg::MoveHead(  long x, long y )
 
 #if 0
 	if( m_CameraMode == 1 ) {
-		m_headYPos += ( 73740 );
+		m_headYPos += ( CAMERA_OFFSET );
 	} else {
-		m_headYPos -= ( 73740 );
+		m_headYPos -= ( CAMERA_OFFSET );
 	}
 #endif
 
@@ -1329,7 +1335,7 @@ DWORD CPickobearDlg::goThread(void )
 	
 		_RPT1(_CRT_WARN,"Going to feeder %s\n", feeder.label );
 
-		MoveHead(feeder.x, feeder.y  - 73740 );
+		MoveHead(feeder.x, feeder.y  - CAMERA_OFFSET );
 
 		Sleep( 100 );
 		
@@ -1354,7 +1360,7 @@ DWORD CPickobearDlg::goThread(void )
 		_RPT1(_CRT_WARN,"Going to component %s\n", entry.label );
 		 
 		MoveHead(entry.x+m_ComponentList.m_OffsetX,
-			     entry.y+m_ComponentList.m_OffsetY - 73740);
+			     entry.y+m_ComponentList.m_OffsetY - CAMERA_OFFSET );
 		
 
 		int in = (m_ComponentList.GetCount()-1)-i;
@@ -1442,7 +1448,7 @@ void CListCtrl_Components::OnHdnItemdblclickList2(NMHDR *pNMHDR, LRESULT *pResul
 
 	if( m_OffsetX == 0 && m_OffsetY == 0 ) {
 		
-		pDlg->MoveHead(36960,222570);
+		pDlg->MoveHead(36240,222890);
 	}else {
 		// GotoXY in micrometers
 		pDlg->MoveHead(entry->x+pDlg->m_ComponentList.m_OffsetX,entry->y+pDlg->m_ComponentList.m_OffsetY);
@@ -2065,11 +2071,11 @@ void CPickobearDlg::OnBnClickedGo2()
 #endif
 
 	 /// slow the camera down
-	 m_CameraUpdateRate = 20 ;
+	 m_CameraUpdateRate = 10 ;
 
 	 _RPT1(_CRT_WARN,"Going to feeder %s\n", feeder.label );
 
-	 MoveHead(feeder.x, feeder.y  - 73740 );
+	 MoveHead(feeder.x, feeder.y  -  CAMERA_OFFSET );
 
 	 _RPT0(_CRT_WARN,"Picking up part\n");
 
@@ -2080,7 +2086,7 @@ void CPickobearDlg::OnBnClickedGo2()
 	 
 	_RPT1(_CRT_WARN,"Going to component %s\n", entry.label );
 	
-	 MoveHead(entry.x+m_ComponentList.m_OffsetX, entry.y+m_ComponentList.m_OffsetY - 73740);
+	 MoveHead(entry.x+m_ComponentList.m_OffsetX, entry.y+m_ComponentList.m_OffsetY - CAMERA_OFFSET);
 
 	 if( entry.rot ) {
 
@@ -2142,4 +2148,62 @@ void CPickobearDlg::OnBnClickedGo2()
 	 return true;
 
 
+ }
+
+
+ void CPickobearDlg::OnBnClickedEditComponent()
+{
+	EditComponent EditDialog;
+
+	int item = m_ComponentList.GetSelectedCount();
+
+	if( item == 0 ) {
+		return ;
+	}
+	
+	item = m_ComponentList.GetNextItem( -1, LVNI_SELECTED );
+
+	// iItem is item number, database is backwards
+	int clist = (m_ComponentList.GetCount()-1) - m_ComponentList.GetNextItem(-1, LVNI_SELECTED);
+
+	EditDialog.entry = m_ComponentList.m_Database.at( clist ) ;
+
+	// push the names out
+	EditDialog.m_Name    = EditDialog.entry.label;
+	EditDialog.m_Value   = EditDialog.entry.value;
+	EditDialog.m_Type    = EditDialog.entry.type;
+
+	EditDialog.DoModal();
+
+	// grab them back
+	// Since CString doesn't like being in a vector for load/save then we're using a char array, which makes this bit ugly
+	CStringA userInput8( UTF16toUTF8( EditDialog.m_Name ) );
+	strcpy_s( EditDialog.entry.label, userInput8 );
+	userInput8.ReleaseBuffer();
+
+	userInput8 =  UTF16toUTF8( EditDialog.m_Value ) ;
+	strcpy_s( EditDialog.entry.value, userInput8 );
+	userInput8.ReleaseBuffer();
+
+	userInput8 = UTF16toUTF8( EditDialog.m_Type );
+	strcpy_s( EditDialog.entry.type, userInput8 );
+	userInput8.ReleaseBuffer();
+
+
+	m_ComponentList.m_Database.at( clist ) = EditDialog.entry;
+
+	//ugly
+	m_ComponentList.RebuildList();
+}
+
+
+ void CPickobearDlg::OnBnClickedSwapHeadCamera()
+ {
+	if( bCameraHead == false ) {
+		MoveHeadRel( 0, -CAMERA_OFFSET) ;
+		bCameraHead = true;
+	} else { 
+		MoveHeadRel( 0, CAMERA_OFFSET) ;
+		bCameraHead = false;
+	}
  }
