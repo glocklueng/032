@@ -11,6 +11,16 @@
 #include <iostream>
 #include <fstream>
 
+enum {
+	NT_REAL = 0,
+	NT_INTEGER = 1,
+	NT_DOUBLE = 2,
+	NT_HEX = 3,
+	NT_BINARY = 4
+};
+
+
+
 #define pulsestoum(x) (x*25)
 
 CString GetSaveFile( const TCHAR *ptypes, const TCHAR*caption, const TCHAR *pStartDir);
@@ -567,9 +577,9 @@ public:
 		
 		// tell thread to close
 		m_Quit = 1;
-
-		// close out serial
-		m_Serial.Close();
+		if( m_Serial.IsOpen() )
+			// close out serial
+			m_Serial.Close();
 	}
 
 	// send a command to the PNP
@@ -664,4 +674,5 @@ public:
 	afx_msg void OnBnClickedGo2();
 	afx_msg void OnBnClickedEditComponent();
 	afx_msg void OnBnClickedSwapHeadCamera();
+	CGridCtrl m_FeederGrid;
 };

@@ -6,6 +6,9 @@
 #include "Pickobear.h"
 #include "PickobearDlg.h"
 
+
+#include "Grid\GridCellNumeric.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -81,7 +84,7 @@ void CPickobearDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_COMBO1, m_UpCamera);
 	DDX_Control(pDX, IDC_COMBO2, m_DownCamera);
 	DDX_Control(pDX, IDC_STEPSIZE, m_StepSize);
-
+	DDX_Control(pDX, IDC_FEEDER_GRID, m_FeederGrid);
 }
 
 BEGIN_MESSAGE_MAP(CPickobearDlg, CDialog) 
@@ -239,6 +242,75 @@ BOOL CPickobearDlg::OnInitDialog()
 	m_FeederList.InsertColumn(6, _T("CX"),LVCFMT_CENTER,nInterval);
 	m_FeederList.InsertColumn(7, _T("CY"),LVCFMT_CENTER,nInterval);
 	m_FeederList.InsertColumn(8, _T("T"),LVCFMT_CENTER,nInterval/1.5);
+
+// setup new grids	
+	m_FeederGrid.SetRowCount(10);
+	m_FeederGrid.SetColumnCount(9);
+	m_FeederGrid.SetItemText(0,0,_T("Name"));
+	m_FeederGrid.SetItemText(0,1,_T("X"));
+	m_FeederGrid.SetItemText(0,2,_T("Y"));
+	m_FeederGrid.SetItemText(0,3,_T("Rot"));
+	m_FeederGrid.SetItemText(0,4,_T("LX"));
+	m_FeederGrid.SetItemText(0,5,_T("LY"));
+	m_FeederGrid.SetItemText(0,6,_T("CX"));
+	m_FeederGrid.SetItemText(0,7,_T("CY"));
+	m_FeederGrid.SetItemText(0,8,_T("T"));
+
+	m_FeederGrid.SetColumnWidth(0,nInterval+(nInterval/1.5));
+	m_FeederGrid.SetColumnWidth(1,nInterval/1.1);
+	m_FeederGrid.SetColumnWidth(2,nInterval/1.1);
+	m_FeederGrid.SetColumnWidth(3,nInterval/1.4);
+
+	m_FeederGrid.SetColumnWidth(4,nInterval);
+	m_FeederGrid.SetColumnWidth(5,nInterval);
+
+	m_FeederGrid.SetColumnWidth(6,nInterval);
+	m_FeederGrid.SetColumnWidth(7,nInterval);
+	m_FeederGrid.SetColumnWidth(8,nInterval/1.5);
+
+	m_FeederGrid.SetGridLines( GVL_BOTH );
+	  
+	m_FeederGrid.SetFixedColumnSelection(TRUE);
+    m_FeederGrid.SetFixedRowSelection(TRUE);
+
+	m_FeederGrid.SetFixedRowCount( 1 );
+
+	m_FeederGrid.SetTrackFocusCell( true );
+	m_FeederGrid.SetFrameFocusCell( true );
+
+	m_FeederGrid.SetFixedRowSelection( true );
+
+	m_FeederGrid.SetGridLines( GVL_BOTH );
+
+	for (int row = m_FeederGrid.GetFixedRowCount(); row < m_FeederGrid.GetRowCount(); row++)
+	{
+			m_FeederGrid.SetCellType(row,2, RUNTIME_CLASS(CGridCellNumeric));
+			
+			CGridCellNumeric *pCell = (CGridCellNumeric *)m_FeederGrid.GetCell(row,2);
+			
+			if( pCell ){
+			
+				pCell->SetFlags(NT_INTEGER);
+				pCell->SetNumber( 0 );
+			}
+
+			m_FeederGrid.SetRowHeight(row,20);
+	}
+
+	for (int row = m_FeederGrid.GetFixedRowCount(); row < m_FeederGrid.GetRowCount(); row++)
+	{
+			m_FeederGrid.SetCellType(row,1, RUNTIME_CLASS(CGridCellNumeric));
+			
+			CGridCellNumeric *pCell = (CGridCellNumeric *)m_FeederGrid.GetCell(row,1);
+			
+			if( pCell ){
+			
+				pCell->SetFlags(NT_INTEGER);
+				pCell->SetNumber( 0 );
+			}
+
+			m_FeederGrid.SetRowHeight(row,20);
+	}
 
 
 	m_UpCamera.ResetContent();
@@ -434,6 +506,9 @@ BOOL CPickobearDlg::OnInitDialog()
 	if( CB_ERR  == m_StepSize.SetCurSel( regEntry ) ) {
 		_RPT0(_CRT_WARN,"Error\n");
 	}
+
+
+
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
 
