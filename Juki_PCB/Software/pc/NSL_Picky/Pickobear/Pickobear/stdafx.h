@@ -48,6 +48,11 @@
 
 #include <cv.h>
 #include <highgui.h>
+#define min(a, b)  (((a) < (b)) ? (a) : (b))
+#define max(a, b)  (((a) > (b)) ? (a) : (b))
+
+#include "Grid/GridCtrl.h"
+
 #include "opencv2/imgproc/imgproc.hpp"
 
 #include "OpenGLControl.h"
