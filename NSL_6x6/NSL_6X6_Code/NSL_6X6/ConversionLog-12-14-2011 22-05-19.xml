@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<?xml-stylesheet type='text/xsl' href='AVRStudioConversionLog.xslt'?>
+<ConversionLog>
+  <GeneralFailureInformation name="General Failure Information" id="GeneralFailureInformation" status="Failure">
+    <LogEntry>
+      <Type>Error</Type>
+      <DateTime>12/14/2011 10:05:17 PM</DateTime>
+      <Message>Failure: 'et' is an unexpected token. The expected token is '='. Line 2, position 1.</Message>
+      <Exception>System.Xml.XmlException: 'et' is an unexpected token. The expected token is '='. Line 2, position 1.
+   at System.Xml.XmlTextReaderImpl.Throw(Exception e)
+   at System.Xml.XmlTextReaderImpl.Throw(String res, String[] args)
+   at System.Xml.XmlTextReaderImpl.ThrowUnexpectedToken(String expectedToken1, String expectedToken2)
+   at System.Xml.XmlTextReaderImpl.ParseAttributes()
+   at System.Xml.XmlTextReaderImpl.ParseElement()
+   at System.Xml.XmlTextReaderImpl.ParseElementContent()
+   at System.Xml.XmlTextReaderImpl.Read()
+   at System.Xml.XmlLoader.LoadNode(Boolean skipOverWhitespace)
+   at System.Xml.XmlLoader.LoadDocSequence(XmlDocument parentDoc)
+   at System.Xml.XmlLoader.Load(XmlDocument doc, XmlReader reader, Boolean preserveWhitespace)
+   at System.Xml.XmlDocument.Load(XmlReader reader)
+   at System.Xml.XmlDocument.LoadXml(String xml)
+   at Atmel.VsIde.AvrStudio.Project.AvrStudio4ProjectImporter.AvrStudio4.Avr4ProjectFileHandler.GetProjectFileHandler(String projectFileName, Avr4ProjectType&amp; avr4ProjectType)
+   at Atmel.VsIde.AvrStudio.Project.AvrStudio4ProjectImporter.AVR4ConversionEngine.InitializeSourceProject()
+   at Atmel.VsIde.AvrStudio.Project.AvrStudio4ProjectImporter.AVR4ConversionEngine.GetProjectInfoProvider()
+   at Atmel.VsIde.AvrStudio.Project.AvrStudio4ProjectImporter.AVR4ConversionEngine.&lt;GetSourceProjectsAndTargets&gt;d__1.MoveNext()
+   at ProjectImporter.Core.AVRConversionEngine.ConvertProjects()</Exception>
+    </LogEntry>
+  </GeneralFailureInformation>
+</ConversionLog>
