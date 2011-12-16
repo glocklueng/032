@@ -299,14 +299,14 @@ BOOL CPickobearDlg::OnInitDialog()
 	m_ComponentList.GetClientRect(&rect);
 	int nInterval =( rect.Width() /8);
 
-	m_ComponentList.InsertColumn(0, _T("Name"),(int)(LVCFMT_CENTER,nInterval/1.2));
-	m_ComponentList.InsertColumn(1, _T("Value"),(int)(LVCFMT_CENTER,nInterval/1.5));
-	m_ComponentList.InsertColumn(2, _T("Type"),LVCFMT_CENTER,nInterval);
-	m_ComponentList.InsertColumn(3, _T("X"),LVCFMT_CENTER,nInterval);
-	m_ComponentList.InsertColumn(4, _T("Y"),LVCFMT_CENTER,nInterval);
-	m_ComponentList.InsertColumn(5, _T("R"),LVCFMT_CENTER,nInterval/2);
-	m_ComponentList.InsertColumn(6, _T("Feeder"),(int)(LVCFMT_CENTER,nInterval*1.8));
-	m_ComponentList.InsertColumn(7, _T("L"),LVCFMT_CENTER,nInterval);
+	m_ComponentList.InsertColumn(0, _T("Name"),LVCFMT_CENTER,(int)(nInterval/1.2));
+	m_ComponentList.InsertColumn(1, _T("Value"),LVCFMT_CENTER,(int)(nInterval/1.5));
+	m_ComponentList.InsertColumn(2, _T("Type"),		LVCFMT_CENTER,nInterval);
+	m_ComponentList.InsertColumn(3, _T("X"),		LVCFMT_CENTER,nInterval);
+	m_ComponentList.InsertColumn(4, _T("Y"),		LVCFMT_CENTER,nInterval);
+	m_ComponentList.InsertColumn(5, _T("R"),		LVCFMT_CENTER,nInterval/2);
+	m_ComponentList.InsertColumn(6, _T("Feeder"),	LVCFMT_CENTER,(int)(nInterval*1.8));
+	m_ComponentList.InsertColumn(7, _T("L"),		LVCFMT_CENTER,nInterval);
 
 	m_Rotation.SetRange(0,360);
 		
@@ -739,7 +739,7 @@ bool CPickobearDlg::MoveHeadSlow(  long x, long y )
 	if ( y < 0 ) x = 0;
 
 	m_headXPos = x ; 
-	m_headYPos = y;
+	m_headYPos = y ;
 
 	if ( false == BuildGCodeMove(buffer,sizeof(buffer),1,x,y,100) ) {
 		return false;
@@ -1191,74 +1191,56 @@ void CPickobearDlg::OnBnClickedSave()
 
 void CPickobearDlg::OnBnClickedImport()
 {
-	int i;
-	const char seps[] = ",";
-	char* token,*next;
-	CFile m_File;
-
-	static char list[10][1024];
-	static char buffer[1024];
-
 	CString m_LoadFile = ::GetLoadFile( 
 		_T("Supported Files Types(*.csv)\0*.csv\0\0"),
 		_T("Pick board to load"),
 		NULL
 	);
 
-	if(  FALSE == m_File.Open( m_LoadFile  ,CFile::modeRead ) ) { 
-		return;
-	}
 	m_ComponentList.DeleteAllItems();
 
-	do {
-		
-		ZeroMemory( buffer, sizeof( buffer ) );
-
-		for( i = 0 ; i < sizeof( buffer) - 1 ; i++ ) {
+	m_ComponentList.m_Database.clear();
 	
-			// if ended
-			if( 0 == m_File.Read( &buffer[i],1) ) {
-				
-				m_File.Close();
+	const char field_terminator = ',';
+    const char line_terminator  = '\n';
+    const char enclosure_char   = '\"';
 
-				return;
-			}
+    csv_parser file_parser;
+	/* Define how many records we're gonna skip. This could be used to skip the column definitions. */
+    file_parser.set_skip_lines(1);
 
-			// line end
-			if( buffer[i] == '\n')
-				break;
-		}
+    /* Specify the file to parse */
+    file_parser.init( 
+		CStringA(m_LoadFile.GetString()) 
+	);
+			
+	m_LoadFile.ReleaseBuffer();
 
-		// Terminate last character
-		buffer[i] = 0;
-		next = NULL;
+    /* Here we tell the parser how to parse the file */
+    file_parser.set_enclosed_char(enclosure_char, ENCLOSURE_REQUIRED);
 
-		token = strtok_s( buffer, seps, &next);
+    file_parser.set_field_term_char(field_terminator);
+
+    file_parser.set_line_term_char(line_terminator);
 	
-		i = 0;
+	unsigned int row_count = 1U;
 
-		while (token != NULL) {
+	while(file_parser.has_more_rows()) {
 
-			if( 1 == sscanf(token, "%s", &list[i] ) ) {
-				token = strtok_s (NULL, seps, &next);
-				i++;
-				
-				if( i == 7 ) {
-					// too many inputs
-					token = NULL;
-				}
+		csv_row row = file_parser.get_row();
 
-			} else {
-				// error in input
-				token = NULL;
-			}
-		}
+		m_ComponentList.AddItem(
+								row[0].c_str(), 
+								row[1].c_str(), 
+								row[2].c_str(), 
+								row[3].c_str(), 
+								row[4].c_str(), 
+								row[5].c_str(), 
+								row[6].c_str()
+								);
 
-		m_ComponentList.AddItem(list[0], list[1], list[2], list[3], list[4], list[5],list[6] );
+	}	;
 
-	}	while( 1 ) ;
-
-	m_File.Close();	
 }
 
 CString GetLoadFile( const TCHAR *ptypes, const TCHAR*caption, const TCHAR *pStartDir)
@@ -2185,14 +2167,17 @@ void CPickobearDlg::OnBnClickedGo2()
 			 
 			 int ret = AfxMessageBox(L"Feeder not defined", MB_OK);
 	
-			 /// skip part
-			 continue;
+				goto skip;
 		 }
 
-		 CListCtrl_FeederList::FeederDatabase feeder = m_FeederList.at ((m_FeederList.GetCount()-1) - entry.feeder );
+		 CListCtrl_FeederList::FeederDatabase feeder;
+		 
+		 feeder = m_FeederList.at ((m_FeederList.GetCount()-1) - entry.feeder );
 
 		 if (feeder.tool < 1 || feeder.tool > 6 ) {
 			 int ret = AfxMessageBox(L"Tool not defined", MB_OK);
+			 
+				goto skip;
 		 }
 
 		 _RPT1(_CRT_WARN,"Going to tool %d\n", feeder.tool );
@@ -2260,6 +2245,7 @@ void CPickobearDlg::OnBnClickedGo2()
 			 // do the rotate
 			 WriteSerial( buffer );
 			 Sleep( 500 );
+skip:;
 		 }
 
 		 _RPT0(_CRT_WARN,"dropping off part\n");

@@ -41,7 +41,7 @@
 
 #include <afxcontrolbars.h>     // MFC support for ribbons and control bars
 
-
+#include "csv_parser.h"
 
 // http://muonics.net/school/spring05/videoInput/
 #include "VideoInput/include/videoInput.h"
