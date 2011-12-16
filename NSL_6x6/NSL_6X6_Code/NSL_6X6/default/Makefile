@@ -1,150 +1,71 @@
-################################################################################
-# Automatically-generated file. Do not edit!
-################################################################################
+###############################################################################
+# Makefile for the project NSL_6X6
+###############################################################################
 
-SHELL := cmd.exe
-RM := rm -rf
+## General Flags
+PROJECT = NSL_6X6
+MCU = attiny2313
+TARGET = NSL_6X6.elf
+CC = avr-gcc
 
-USER_OBJS :=
+CPP = avr-g++
 
-LIBS := 
-PROJ := 
+## Options common to compile, link and assembly rules
+COMMON = -mmcu=$(MCU)
 
-O_SRCS := 
-C_SRCS := 
-S_SRCS := 
-S_UPPER_SRCS := 
-OBJ_SRCS := 
-ASM_SRCS := 
-PREPROCESSING_SRCS := 
-OBJS := 
-OBJS_AS_ARGS := 
-C_DEPS := 
-C_DEPS_AS_ARGS := 
-EXECUTABLES := 
-LIB_AS_ARGS :=
-OUTPUT_FILE_PATH :=
-OUTPUT_FILE_PATH_AS_ARGS :=
-HEX_FLASH_FILE_PATH :=
-HEX_FLASH_FILE_PATH_AS_ARGS :=
-HEX_EEPROM_FILE_PATH :=
-HEX_EEPROM_FILE_PATH_AS_ARGS :=
-LSS_FILE_PATH :=
-LSS_FILE_PATH_AS_ARGS :=
-MAP_FILE_PATH :=
-MAP_FILE_PATH_AS_ARGS :=
-AVR_APP_PATH :=C:/Program Files (x86)/Atmel/AVR Studio 5.0/extensions/Application/Avr ToolChain/bin/
-QUOTE := "
-ADDITIONAL_DEPENDENCIES:=
-OUTPUT_FILE_DEP:=
+## Compile options common for all C compilation units.
+CFLAGS = $(COMMON)
+CFLAGS += -Wall -gdwarf-2 -std=gnu99                                                                              -DF_CPU=1000000UL -O2 -funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums
+CFLAGS += -MD -MP -MT $(*F).o -MF dep/$(@F).d 
 
-# Every subdirectory with source files must be described here
-SUBDIRS := 
+## Assembly specific flags
+ASMFLAGS = $(COMMON)
+ASMFLAGS += $(CFLAGS)
+ASMFLAGS += -x assembler-with-cpp -Wa,-gdwarf2
+
+## Linker flags
+LDFLAGS = $(COMMON)
+LDFLAGS +=  -Wl,-Map=NSL_6X6.map
 
 
-# Add inputs and outputs from these tool invocations to the build variables 
-C_SRCS +=  \
-../NSL_6X6.c
+## Intel Hex file production flags
+HEX_FLASH_FLAGS = -R .eeprom -R .fuse -R .lock -R .signature
+
+HEX_EEPROM_FLAGS = -j .eeprom
+HEX_EEPROM_FLAGS += --set-section-flags=.eeprom="alloc,load"
+HEX_EEPROM_FLAGS += --change-section-lma .eeprom=0 --no-change-warnings
 
 
-PREPROCESSING_SRCS += 
+## Objects that must be built in order to link
+OBJECTS = NSL_6X6.o 
 
+## Objects explicitly added by the user
+LINKONLYOBJECTS = 
 
-ASM_SRCS += 
+## Build
+all: $(TARGET) NSL_6X6.hex NSL_6X6.eep NSL_6X6.lss## Compile
+NSL_6X6.o: ../NSL_6X6.c
+	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
 
+##Link
+$(TARGET): $(OBJECTS)
+	 $(CC) $(LDFLAGS) $(OBJECTS) $(LINKONLYOBJECTS) $(LIBDIRS) $(LIBS) -o $(TARGET)
 
-OBJS +=  \
-NSL_6X6.o
+%.hex: $(TARGET)
+	avr-objcopy -O ihex $(HEX_FLASH_FLAGS)  $< $@
 
+%.eep: $(TARGET)
+	-avr-objcopy $(HEX_EEPROM_FLAGS) -O ihex $< $@ || exit 0
 
-OBJS_AS_ARGS +=  \
-NSL_6X6.o
+%.lss: $(TARGET)
+	avr-objdump -h -S $< > $@
 
-
-C_DEPS +=  \
-NSL_6X6.d
-
-
-C_DEPS_AS_ARGS +=  \
-NSL_6X6.d
-
-
-OUTPUT_FILE_PATH +=NSL_6X6.elf
-
-OUTPUT_FILE_PATH_AS_ARGS +=NSL_6X6.elf
-
-HEX_FLASH_FILE_PATH +=NSL_6X6.hex
-
-HEX_FLASH_FILE_PATH_AS_ARGS +=NSL_6X6.hex
-
-HEX_EEPROM_FILE_PATH +=NSL_6X6.eep
-
-HEX_EEPROM_FILE_PATH_AS_ARGS +=NSL_6X6.eep
-
-LSS_FILE_PATH +=NSL_6X6.lss
-
-LSS_FILE_PATH_AS_ARGS +=NSL_6X6.lss
-
-MAP_FILE_PATH =NSL_6X6.map
-
-MAP_FILE_PATH_AS_ARGS =NSL_6X6.map
-
-LIB_AS_ARGS +=libNSL_6X6.a
-
-ADDITIONAL_DEPENDENCIES:= $(HEX_FLASH_FILE_PATH) size
-
-OUTPUT_FILE_DEP:= ./Outputfile.d
-
-# AVR/GNU C Compiler
-
-
-
-./%.o: .././%.c
-	@echo Building file: $<
-	@echo Invoking: AVR/GNU C Compiler
-	$(QUOTE)$(AVR_APP_PATH)avr-gcc.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DF_CPU=1000000UL  -O2 -fpack-struct -fshort-enums -Wall -c -gdwarf-2 -std=gnu99   -mmcu=attiny2313   -MD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o"$@" "$<"
-	@echo Finished building: $<
-
-
-
-# AVR/GNU Assembler
-
-
-
-
-ifneq ($(MAKECMDGOALS),clean)
-ifneq ($(strip $(C_DEPS)),)
--include $(C_DEPS)
-endif
-endif
-
-# Add inputs and outputs from these tool invocations to the build variables 
-
-# All Target
-all: $(OUTPUT_FILE_PATH) $(ADDITIONAL_DEPENDENCIES)
-
-# AVR/GNU C Linker
-$(OUTPUT_FILE_PATH): $(OBJS) $(USER_OBJS) $(OUTPUT_FILE_DEP)
-	@echo Building target: $@
-	@echo Invoking: AVR/GNU C Linker
-	$(QUOTE)$(AVR_APP_PATH)avr-gcc.exe$(QUOTE)  -mmcu=attiny2313   -o$(OUTPUT_FILE_PATH_AS_ARGS) $(OBJS_AS_ARGS) $(USER_OBJS) $(LIBS)
-	@echo Finished building target: $@
-
-
-
-$(HEX_FLASH_FILE_PATH): $(OUTPUT_FILE_PATH)
-	$(QUOTE)$(AVR_APP_PATH)avr-objcopy.exe$(QUOTE) -O ihex -R .eeprom -R .fuse -R .lock -R .signature  $(QUOTE)$<$(QUOTE) $(QUOTE)$@$(QUOTE)
-
-$(HEX_EEPROM_FILE_PATH): $(OUTPUT_FILE_PATH)
-	-$(QUOTE)$(AVR_APP_PATH)avr-objcopy.exe$(QUOTE) -j .eeprom --set-section-flags=.eeprom=alloc,load --change-section-lma .eeprom=0 --no-change-warnings -O ihex $(QUOTE)$<$(QUOTE) $(QUOTE)$@$(QUOTE) || exit 0
-
-$(LSS_FILE_PATH): $(OUTPUT_FILE_PATH)
-	$(QUOTE)$(AVR_APP_PATH)avr-objdump.exe$(QUOTE) -h -S $(QUOTE)$<$(QUOTE) > $(QUOTE)$@$(QUOTE)
-
-size: $(OUTPUT_FILE_PATH)
-	@$(QUOTE)$(AVR_APP_PATH)avr-size.exe$(QUOTE) -C --mcu=attiny2313 $(OUTPUT_FILE_PATH_AS_ARGS)
-
-# Other Targets
+## Clean target
+.PHONY: clean
 clean:
-	-$(RM) $(OBJS_AS_ARGS)$(C_DEPS_AS_ARGS) $(EXECUTABLES) $(LIB_AS_ARGS) $(HEX_FLASH_FILE_PATH_AS_ARGS) $(HEX_EEPROM_FILE_PATH_AS_ARGS) $(LSS_FILE_PATH_AS_ARGS) $(MAP_FILE_PATH_AS_ARGS)
+	-rm -rf $(OBJECTS) NSL_6X6.elf dep/* NSL_6X6.hex NSL_6X6.eep NSL_6X6.lss NSL_6X6.map
+
+
+## Other dependencies
+-include $(shell mkdir dep 2>NUL) $(wildcard dep/*)
 
