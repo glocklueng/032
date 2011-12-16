@@ -52,7 +52,8 @@ void CTextDump::OnBnClickedSend()
 		// add a return
 		userInput8 += "\r\n";
 
-		pDlg->m_Serial.Write( userInput8.GetString() );
+		if (pDlg->m_Simulate == false )
+			pDlg->m_Serial.Write( userInput8.GetString() );
 
 		userInput8.ReleaseBuffer();
 
