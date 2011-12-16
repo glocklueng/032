@@ -163,8 +163,17 @@ public:
 	void SaveDatabase ( void ) 
 	{
 		CString filename;
-		 
+				
+		if( m_Database.size() == 0 ) {
+			return;
+		}
+
+
 		filename = ::GetSaveFile( _T("Supported Files Types(*.pbr)\0*.pbr\0\0"),_T("Choose a filename to save components in"),_T("") );
+
+		if( filename.Find(L".pbr") ) {
+			filename.Append(L".pbr");
+		}
 
 		std::ofstream os (filename, std::ios::out | std::ios::binary);
 
@@ -172,6 +181,23 @@ public:
 		os.write((const char*)&size1, sizeof(size1));
 		os.write((const char*)&m_Database.front(), m_Database.size() * sizeof(CompDatabase));
 		os.close();
+
+		CRegKey regKey;
+		DWORD regEntry = 100;
+		long lResult;
+
+		if ((lResult = regKey.Open(HKEY_CURRENT_USER,  _T("Software\\NullSpaceLabs\\PickoBear\\Settings"))) != ERROR_SUCCESS)
+			lResult = regKey.Create(HKEY_CURRENT_USER, _T("Software\\NullSpaceLabs\\PickoBear\\Settings"));
+
+		if (ERROR_SUCCESS == lResult)
+		{
+
+			regKey.SetStringValue(_T("componentDatabase"), filename,REG_SZ);
+
+			// then close the registry key
+			regKey.Close();
+		}
+
 	}
 
 	void LoadDatabase ( CString name ) 
@@ -294,9 +320,22 @@ public:
 
 	void SaveDatabase ( void ) 
 	{
+
+		if( m_Database.size() == 0 ) {
+			return;
+		}
+
 		CString filename;
 		 
 		filename = ::GetSaveFile( _T("Supported Files Types(*.fdr)\0*.fdr\0\0"),_T("Pick name to save database too"),_T("") );
+		
+		if( filename.Find(L".fdr") ) {
+			filename.Append(L".fdr");
+		}
+
+		// clear old files ( could be append )
+
+		m_Database.clear();
 
 		std::ofstream os (filename, std::ios::out | std::ios::binary);
 
@@ -429,6 +468,7 @@ private:
 
 	CTextDump	*m_TextEdit;
 
+
 	bool bCameraHead;
 
 	bool bSetWaitDone;
@@ -518,6 +558,8 @@ public:
 	};
 
 
+	bool m_Simulate;
+
 // Dialog Data
 	enum { IDD = IDD_PICKOBEAR_DIALOG };
 
@@ -602,4 +644,5 @@ public:
 	afx_msg void OnBnClickedEditComponent();
 	afx_msg void OnBnClickedSwapHeadCamera();
 	CGridCtrl m_FeederGrid;
+	int m_Side;
 };

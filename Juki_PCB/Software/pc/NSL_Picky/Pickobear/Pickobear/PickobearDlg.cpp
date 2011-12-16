@@ -65,6 +65,8 @@ CPickobearDlg::CPickobearDlg(CWnd* pParent /*=NULL*/)
 	, m_CameraUpdateRate(10)
 	, bSetWaitDone(false)
 	, bCameraHead( false )
+	, m_Side(0)
+	, m_Simulate(false)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -85,6 +87,7 @@ void CPickobearDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_COMBO2, m_DownCamera);
 	DDX_Control(pDX, IDC_STEPSIZE, m_StepSize);
 	DDX_Control(pDX, IDC_FEEDER_GRID, m_FeederGrid);
+	DDX_CBIndex(pDX, IDC_COMBO3, m_Side);
 }
 
 BEGIN_MESSAGE_MAP(CPickobearDlg, CDialog) 
@@ -602,7 +605,11 @@ void CPickobearDlg::WriteSerial( const char *text)
 	ASSERT( text );
 	CString out( text  );
 	m_TextEdit->Print( out ) ;
-	m_Serial.Write( text );
+	
+	m_Simulate = true;
+
+	if( m_Simulate == false ) 
+		m_Serial.Write( text );
 }
 
 void CPickobearDlg::OnBnClickedHome()
@@ -864,6 +871,10 @@ char CPickobearDlg::CheckX( void )
 	
 	int counter = 100;
 
+	if( m_Simulate == true ) {
+		return true;
+	}
+
 	do { 
 		
 		counter --;
@@ -908,7 +919,8 @@ char CPickobearDlg::CheckAck( char *ack1 )
 
 	unsigned char buffer[ 10 ];
 	
-	return 'p';
+	if( m_Simulate == true ) 
+			return 'p';
 
 	memset(buffer,0,sizeof(buffer));
 
@@ -1343,12 +1355,15 @@ DWORD CPickobearDlg::cameraThread(void )
 
  DWORD WINAPI CPickobearDlg::goSetup(LPVOID pThis)
 {
+
 	return ((CPickobearDlg*)pThis)->goThread();
 }
 
 void CPickobearDlg::OnBnClickedGo()
 {
 	static HANDLE h=0;
+		
+	UpdateData();
 
 	if ( m_MachineState == MS_GO  ) { 
 		m_MachineState = MS_STOP;
@@ -2056,6 +2071,9 @@ void CPickobearDlg::OnBnClickedConsole()
 void CPickobearDlg::OnBnClickedGo2()
 {
 	static HANDLE h=0;
+		
+	UpdateData();
+
 
 	if ( m_MachineState == MS_GO  ) { 
 		m_MachineState = MS_STOP;
@@ -2143,6 +2161,7 @@ void CPickobearDlg::OnBnClickedGo2()
 	 char buffer[5];
 	 CListCtrl_Components::CompDatabase entry; 
 
+
 	 ZeroMemory(buffer,sizeof(buffer));
 
 	 if ( busy ) {
@@ -2160,8 +2179,15 @@ void CPickobearDlg::OnBnClickedGo2()
 		 m_ComponentList.SetItemState(in, LVIS_SELECTED, LVIS_SELECTED);
 		 m_ComponentList.EnsureVisible( in ,TRUE );
 
-
 		 entry = m_ComponentList.at(i);
+
+		 if( entry.side !=  m_Side ) {
+
+			 _RPT1(_CRT_WARN,"skipping %s, wrong side selected\n",entry.label);
+			 goto skip;
+		 } else {
+			 _RPT1(_CRT_WARN,"this side %s selected\n",entry.label);
+		 }
 
 		 if (entry.feeder == -1) {
 			 
@@ -2245,7 +2271,6 @@ void CPickobearDlg::OnBnClickedGo2()
 			 // do the rotate
 			 WriteSerial( buffer );
 			 Sleep( 500 );
-skip:;
 		 }
 
 		 _RPT0(_CRT_WARN,"dropping off part\n");
@@ -2256,6 +2281,7 @@ skip:;
 
 		 //wait
 		 Sleep( 100 );
+skip:;
 
 		 if( m_MachineState == MS_STOP ) {
 			 busy = 0;
@@ -2306,13 +2332,22 @@ skip:;
 
 	 entry = m_ComponentList.at(i);
 
+	 if( entry.side !=  m_Side ) {
+
+		 _RPT1(_CRT_WARN,"skipping %s, wrong side selected\n",entry.label);
+		 goto skip;
+	 }
+
+
 	 _RPT1(_CRT_WARN,"Placing %s\r\n",entry.label);
 
 	 if (entry.feeder == -1) {
 		 int ret = AfxMessageBox(L"Feeder not defined", MB_OK);
 	 }
 
-	 CListCtrl_FeederList::FeederDatabase feeder = m_FeederList.at ((m_FeederList.GetCount()-1) - entry.feeder );
+	 CListCtrl_FeederList::FeederDatabase feeder ;
+	 
+	 feeder = m_FeederList.at ((m_FeederList.GetCount()-1) - entry.feeder );
 
 	 if (feeder.tool < 1 || feeder.tool > 6 ) {
 		 int ret = AfxMessageBox(L"Tool not defined", MB_OK);
@@ -2389,6 +2424,9 @@ skip:;
 		// do the rotate
 		WriteSerial( buffer );
 		Sleep( 500 );
+
+skip:;
+
 	 }
 	 // head down/air off/up
 	 _RPT0(_CRT_WARN,"dropping off part\n");
