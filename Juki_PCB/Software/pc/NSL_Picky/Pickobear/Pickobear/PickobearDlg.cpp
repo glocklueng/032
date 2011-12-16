@@ -1052,12 +1052,12 @@ void CPickobearDlg::OnBnClickedHead()
 	}
 
 	if( m_Head ) {
-		// down
-		WriteSerial("M10\r\n");
+		// up
+		WriteSerial("M11\r\n");
 		m_Head = 0;
 	} else { 
-		//up
-		WriteSerial("M11\r\n");
+		//down
+		WriteSerial("M10\r\n");
 		m_Head = 1;
 	}
 }
