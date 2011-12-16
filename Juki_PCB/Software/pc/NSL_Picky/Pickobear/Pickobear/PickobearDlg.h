@@ -19,6 +19,8 @@ enum {
 	NT_BINARY = 4
 };
 
+#define MAX_X_TABLE		( 190000 )
+#define MAX_Y_TABLE		( 190000 )
 
 
 #define pulsestoum(x) (x*25)
@@ -153,7 +155,7 @@ public:
 		SetItemText(Index,7,CString(side));
 
 		// add to database
-		m_Database.push_back (entry );
+		m_Database.push_back ( entry );
 
 		m_Count ++;
 	}
@@ -401,91 +403,10 @@ public:
 		return *entry ;
 	}
  
-	void RebuildList ( void ) 
-	{		
-		CString temp;
-
-		// remove any and all items from List
-		DeleteAllItems();
-
-		// for all items loaded
-		for ( unsigned int i = 0 ; i < m_Count ; i ++ ) {
-		
-			// fetch entry 
-			entry = &m_Database.at( i  ) ;
-			
-			temp = entry->label;
-
-			// add first item
-			int Index = InsertItem(LVIF_TEXT, 0,temp, 0, 0, 0, NULL);
-
-			// convert to string
-			temp.Format(L"%d",entry->x);
-			SetItemText(Index,1,temp);
-			
-			temp.Format(L"%d",entry->y);
-			SetItemText(Index,2,temp);
-
-			temp.Format(L"%d",entry->rot);
-			SetItemText(Index,3,temp);
-
-			temp.Format(L"%d",entry->lx);
-			SetItemText(Index,4,temp);
-
-			temp.Format(L"%d",entry->ly);
-			SetItemText(Index,5,temp);
-
-			temp.Format(L"%d",entry->countx);
-			SetItemText(Index,6,temp);
-
-			temp.Format(L"%d",entry->county);
-			SetItemText(Index,7,temp);
-
-			temp.Format(L"%d",entry->tool);
-			SetItemText(Index,8,temp);
-
-
-		}
-	}
+	void RebuildList ( void ) ;
 
 	// add an item to the list
-	void AddItem( const char *label,const long x,long y,short rot )
-	{
-		ASSERT( label ) ;
-		
-		FeederDatabase entry;
-
-		// zero it
-		memset(&entry, 0, sizeof( FeederDatabase ) );
-
-		// copy the label
-		strcpy_s(entry.label,label );
-
-		// convert to level of accuracy pnp can handle
-		entry.x = (( x )/40)*40 ;
-		entry.y = (( y )/40)*40 ;
-
-		// rotation of the part
-		entry.rot = ( rot ) ;
-
-		// conver the sting from utf8
-		CString temp( label );
-
-		int Index = InsertItem(LVIF_TEXT, 0,temp, 0, 0, 0, NULL);
-		temp.Format(L"%d",x);
-		SetItemText(Index,1,temp);
-		temp.Format(L"%d",y);
-		SetItemText(Index,2,temp);
-		temp.Format(L"%d",rot);
-		SetItemText(Index,3,temp);
-	
-		// add to database
-		m_Database.push_back (entry );
-
-		// add one
-		m_Count ++;
-	}
-
+	void AddItem( const char *label,const long x,long y,short rot );
 ////
 
 	afx_msg void OnHdnItemdblclickList2(NMHDR *pNMHDR, LRESULT *pResult);
@@ -572,6 +493,12 @@ public:
 
 	// check to see if if gui thinks we are homed
 	bool HomeTest( void ); 
+	void OnGridEndEdit(NMHDR *pNotifyStruct, LRESULT* pResult);
+	void OnDBLClicked(NMHDR *pNMHDR, LRESULT *pResult);
+	void ResetFeederGrid( void );
+
+	void AddRow( CListCtrl_FeederList::FeederDatabase *entry );
+	void SetValue(int row,int col, double value );
 
 	~CPickobearDlg(){
 		
