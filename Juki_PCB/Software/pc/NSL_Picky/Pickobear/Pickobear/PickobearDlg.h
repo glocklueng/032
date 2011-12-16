@@ -171,7 +171,7 @@ public:
 
 		filename = ::GetSaveFile( _T("Supported Files Types(*.pbr)\0*.pbr\0\0"),_T("Choose a filename to save components in"),_T("") );
 
-		if( filename.Find(L".pbr") ) {
+		if( filename.Find(L".pbr") ==0 ) {
 			filename.Append(L".pbr");
 		}
 
@@ -329,7 +329,7 @@ public:
 		 
 		filename = ::GetSaveFile( _T("Supported Files Types(*.fdr)\0*.fdr\0\0"),_T("Pick name to save database too"),_T("") );
 		
-		if( filename.Find(L".fdr") ) {
+		if( filename.Find(L".fdr") ==0 ) {
 			filename.Append(L".fdr");
 		}
 
@@ -453,6 +453,8 @@ public:
 	afx_msg void OnContextMenu(CWnd* pWnd,CPoint pos );
 };
 
+class CFeederSetup;
+
 // CPickobearDlg dialog
 class CPickobearDlg : public CDialog
 {
@@ -468,7 +470,6 @@ private:
 
 	CTextDump	*m_TextEdit;
 
-
 	bool bCameraHead;
 
 	bool bSetWaitDone;
@@ -478,8 +479,6 @@ private:
 	// machine has been homed
 	bool m_Homed;
 
-	// tell thread to quit ( if true )
-	int m_Quit;
 
 	//how long Sleep is in camera updates
 	int m_CameraUpdateRate;
@@ -499,6 +498,11 @@ private:
 	int m_Speed;
 	// camera goto (1) or head goto ( 0 )s
 	int m_CameraMode ;
+public:
+
+		// tell thread to quit ( if true )
+	int m_Quit;
+
 
 // Construction
 public:
@@ -533,12 +537,7 @@ public:
 
 	// check to see if if gui thinks we are homed
 	bool HomeTest( void ); 
-	void OnGridEndEdit(NMHDR *pNotifyStruct, LRESULT* pResult);
-	void OnDBLClicked(NMHDR *pNMHDR, LRESULT *pResult);
-	void ResetFeederGrid( void );
 
-	void AddRow( CListCtrl_FeederList::FeederDatabase *entry );
-	void SetValue(int row,int col, double value );
 
 	~CPickobearDlg(){
 		
@@ -643,6 +642,6 @@ public:
 	afx_msg void OnBnClickedGo2();
 	afx_msg void OnBnClickedEditComponent();
 	afx_msg void OnBnClickedSwapHeadCamera();
-	CGridCtrl m_FeederGrid;
 	int m_Side;
+	afx_msg void OnBnClickedDeleteFeeder();
 };

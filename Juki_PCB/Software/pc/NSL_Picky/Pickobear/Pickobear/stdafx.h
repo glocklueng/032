@@ -63,6 +63,8 @@
 #include "PickobearDlg.h"
 
 #include "opencv.h"
+#include "Grid\GridCellNumeric.h"
+
 #include "FeederEdit.h"
 
 #include "TextEditDialog.h"
@@ -70,6 +72,7 @@
 #include "Counts.h"
 
 #include "EditComponent.h"
+
 
 #pragma comment(lib,"opencv_highgui231.lib")
 #pragma comment(lib,"opencv_imgproc231.lib")

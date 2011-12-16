@@ -6,9 +6,6 @@
 #include "Pickobear.h"
 #include "PickobearDlg.h"
 
-
-#include "Grid\GridCellNumeric.h"
-
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -86,7 +83,6 @@ void CPickobearDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_COMBO1, m_UpCamera);
 	DDX_Control(pDX, IDC_COMBO2, m_DownCamera);
 	DDX_Control(pDX, IDC_STEPSIZE, m_StepSize);
-	DDX_Control(pDX, IDC_FEEDER_GRID, m_FeederGrid);
 	DDX_CBIndex(pDX, IDC_COMBO3, m_Side);
 }
 
@@ -145,8 +141,7 @@ BEGIN_MESSAGE_MAP(CPickobearDlg, CDialog)
 	ON_BN_CLICKED(IDC_GO2, &CPickobearDlg::OnBnClickedGo2)
 	ON_BN_CLICKED(IDC_EDIT_COMPONENT, &CPickobearDlg::OnBnClickedEditComponent)
 	ON_BN_CLICKED(IDC_SWAP_HEAD_CAMERA, &CPickobearDlg::OnBnClickedSwapHeadCamera)
-	ON_NOTIFY(GVN_ENDLABELEDIT, IDC_FEEDER_GRID, OnGridEndEdit)
-    ON_NOTIFY_REFLECT(NM_DBLCLK, OnDBLClicked) 
+	ON_BN_CLICKED(IDC_DELETE_FEEDER, &CPickobearDlg::OnBnClickedDeleteFeeder)
 END_MESSAGE_MAP()
 
 BEGIN_MESSAGE_MAP(CListCtrl_Components, CListCtrl)
@@ -186,84 +181,6 @@ void CListCtrl_FeederList::PreSubclassWindow()
 // CPickobearDlg message handlers
  
 
-void CPickobearDlg::ResetFeederGrid( void ) 
-{
-	CRect rect;
-	m_FeederList.GetClientRect(&rect);
-	int nInterval =( rect.Width() / 9 );
-
-	m_FeederGrid.DeleteAllItems();
-
-	m_FeederGrid.SetRowCount( 1 );
-	m_FeederGrid.SetColumnCount( 9 );
-	m_FeederGrid.SetListMode( true );
-
-	m_FeederGrid.SetItemText(0,0,_T("Name"));
-	m_FeederGrid.SetItemText(0,1,_T("X"));
-	m_FeederGrid.SetItemText(0,2,_T("Y"));
-	m_FeederGrid.SetItemText(0,3,_T("Rot"));
-	m_FeederGrid.SetItemText(0,4,_T("LX"));
-	m_FeederGrid.SetItemText(0,5,_T("LY"));
-	m_FeederGrid.SetItemText(0,6,_T("CX"));
-	m_FeederGrid.SetItemText(0,7,_T("CY"));
-	m_FeederGrid.SetItemText(0,8,_T("T"));
-
-	m_FeederGrid.SetColumnWidth(0,(int)(nInterval+(nInterval/1.5)));
-	m_FeederGrid.SetColumnWidth(1,(int)(nInterval/1.1));
-	m_FeederGrid.SetColumnWidth(2,(int)(nInterval/1.1));
-	m_FeederGrid.SetColumnWidth(3,(int)(nInterval/1.4));
-
-	m_FeederGrid.SetColumnWidth(4,nInterval);
-	m_FeederGrid.SetColumnWidth(5,nInterval);
-
-	m_FeederGrid.SetColumnWidth(6,nInterval);
-	m_FeederGrid.SetColumnWidth(7,nInterval);
-	m_FeederGrid.SetColumnWidth(8,(int)(nInterval/1.5));
-
-	m_FeederGrid.SetGridLines( GVL_BOTH );
-	  
-	m_FeederGrid.SetFixedColumnSelection(TRUE);
-    m_FeederGrid.SetFixedRowSelection(TRUE);
-
-	m_FeederGrid.SetFixedRowCount( 1 );
-
-	m_FeederGrid.SetTrackFocusCell( true );
-	m_FeederGrid.SetFrameFocusCell( true );
-
-	m_FeederGrid.SetFixedRowSelection( true );
-
-	m_FeederGrid.SetGridLines( GVL_BOTH );
-
-	for (int row = m_FeederGrid.GetFixedRowCount(); row < m_FeederGrid.GetRowCount(); row++)
-	{
-			m_FeederGrid.SetCellType(row,2, RUNTIME_CLASS(CGridCellNumeric));
-			
-			CGridCellNumeric *pCell = (CGridCellNumeric *)m_FeederGrid.GetCell(row,2);
-			
-			if( pCell ){
-			
-				pCell->SetFlags(NT_INTEGER);
-				pCell->SetNumber( 0 );
-			}
-
-			m_FeederGrid.SetRowHeight(row,20);
-	}
-
-	for (int row = m_FeederGrid.GetFixedRowCount(); row < m_FeederGrid.GetRowCount(); row++)
-	{
-			m_FeederGrid.SetCellType(row,1, RUNTIME_CLASS(CGridCellNumeric));
-			
-			CGridCellNumeric *pCell = (CGridCellNumeric *)m_FeederGrid.GetCell(row,1);
-			
-			if( pCell ){
-			
-				pCell->SetFlags(NT_INTEGER);
-				pCell->SetNumber( 0 );
-			}
-
-			m_FeederGrid.SetRowHeight(row,20);
-	}
-}
 
 static const WCHAR *pszName = L"cameras";
 static const WCHAR *pszKey = L"PickoBear";
@@ -327,9 +244,6 @@ BOOL CPickobearDlg::OnInitDialog()
 	m_FeederList.InsertColumn(6, _T("CX"),LVCFMT_CENTER,nInterval);
 	m_FeederList.InsertColumn(7, _T("CY"),LVCFMT_CENTER,nInterval);
 	m_FeederList.InsertColumn(8, _T("T"),LVCFMT_CENTER,(int)(nInterval/1.5));
-
-// setup new grids	
-	ResetFeederGrid();
 
 
 	m_UpCamera.ResetContent();
@@ -543,6 +457,10 @@ void CPickobearDlg::OnSysCommand(UINT nID, LPARAM lParam)
 		CDialog::OnSysCommand(nID, lParam);
 	}
 }
+#include <objidl.h>
+#include <gdiplus.h>
+using namespace Gdiplus;
+#pragma comment (lib,"Gdiplus.lib")
 
 // If you add a minimize button to your dialog, you will need the code below
 //  to draw the icon.  For MFC applications using the document/view model,
@@ -553,14 +471,13 @@ void CPickobearDlg::OnPaint()
 	if (IsIconic())
 	{
 		CPaintDC dc(this); // device context for painting
-
+		CRect rect;
 		SendMessage(WM_ICONERASEBKGND, reinterpret_cast<WPARAM>(dc.GetSafeHdc()), 0);
 
 		// Center icon in client rectangle
 		int cxIcon = GetSystemMetrics(SM_CXICON);
 		int cyIcon = GetSystemMetrics(SM_CYICON);
-		CRect rect;
-		GetClientRect(&rect);
+
 		int x = (rect.Width() - cxIcon + 1) / 2;
 		int y = (rect.Height() - cyIcon + 1) / 2;
 
@@ -570,6 +487,19 @@ void CPickobearDlg::OnPaint()
 	else
 	{
 		CDialog::OnPaint();
+#if 0
+		CRect rect;
+
+		CWnd *wnd = GetDlgItem(IDC_SIMULATION);
+		wnd->GetClientRect( rect) ;
+
+
+		CPaintDC dc(this); // device context for painting
+		Graphics graphics(dc);
+
+		Pen      pen(Color(255, 0, 0, 255));
+		graphics.DrawLine(&pen, rect.top,rect.left,rect.bottom,rect.right);
+#endif
 	}
 }
 
@@ -591,7 +521,6 @@ void CPickobearDlg::OnEnChangeThreshold()
 
 	UpdateData(TRUE);
 	m_Thresh1 = m_Threshold1;
-
 }
 
 void CPickobearDlg::OnEnChangeThreshold2()
@@ -1354,8 +1283,7 @@ DWORD CPickobearDlg::cameraThread(void )
 }
 
  DWORD WINAPI CPickobearDlg::goSetup(LPVOID pThis)
-{
-
+ {
 	return ((CPickobearDlg*)pThis)->goThread();
 }
 
@@ -1382,6 +1310,8 @@ void CPickobearDlg::OnBnClickedFeeder()
 	m_pFeederDlg = new CFeederSetup(this);
 	m_pFeederDlg->Create(CFeederSetup::IDD,GetDesktopWindow());
 	m_pFeederDlg->ShowWindow(SW_SHOW);
+	
+	m_FeederList.RebuildList();
 }
 
 void CListCtrl_Components::OnHdnItemdblclickList2(NMHDR *pNMHDR, LRESULT *pResult)
@@ -1390,7 +1320,7 @@ void CListCtrl_Components::OnHdnItemdblclickList2(NMHDR *pNMHDR, LRESULT *pResul
 	ASSERT( pDlg );
 
 	LPNMHEADER phdr = reinterpret_cast<LPNMHEADER>(pNMHDR);
-	// TODO: Add your control notification handler code here
+	
 	*pResult = 0;
 
 	if( false == pDlg->HomeTest( ) ) {
@@ -1443,7 +1373,6 @@ void CListCtrl_FeederList::OnHdnItemdblclickList2(NMHDR *pNMHDR, LRESULT *pResul
 
 		// remove any and all items from List
 		DeleteAllItems();
-		pDlg->ResetFeederGrid();
 
 		// for all items loaded
 		for ( unsigned int i = 0 ; i < m_Count ; i ++ ) {
@@ -1452,8 +1381,6 @@ void CListCtrl_FeederList::OnHdnItemdblclickList2(NMHDR *pNMHDR, LRESULT *pResul
 			entry = &m_Database.at( i  ) ;
 			
 			temp = entry->label;
-
-			pDlg->AddRow( entry ) ;
 
 			// add first item
 			int Index = InsertItem(LVIF_TEXT, 0,temp, 0, 0, 0, NULL);
@@ -1576,42 +1503,6 @@ CStringA UTF16toUTF8(const CStringW& utf16)
 
    return utf8;
 }
-	
-void CPickobearDlg::SetValue(int row, int col, double value ) 
-{
-	m_FeederGrid.SetCellType( row, col, RUNTIME_CLASS(CGridCellNumeric));
-	CGridCellNumeric *pCell = (CGridCellNumeric *)m_FeederGrid.GetCell( row, col );
-
-	if( pCell ){
-		pCell->SetFlags( CGridCellNumeric::Integer );
-		pCell->SetNumber( (int)value );
-	}
-}
-
-void CPickobearDlg::AddRow( CListCtrl_FeederList::FeederDatabase *entry ) 
-{
-	int i ;
-	
-	ASSERT( entry );
-
-	i =  m_FeederGrid.GetRowCount() + 1;
-	m_FeederGrid.SetRowCount(  i );
-
-	i--;
-
-	m_FeederGrid.SetItemText(i ,0 ,CString(entry->label));
-	SetValue( i,1, entry->x );
-	SetValue( i,2, entry->y );
-	SetValue( i,3, entry->rot );
-	SetValue( i,4, entry->lx );
-	SetValue( i,5, entry->lx );
-	SetValue( i,6, entry->countx );
-	SetValue( i,7, entry->county );
-	SetValue( i,8, entry->tool );
-
-	m_FeederGrid.SetRowHeight(i ,20);
-}
-
 
 
 void CPickobearDlg::OnBnClickedAddFeeder()
@@ -1746,7 +1637,6 @@ void CListCtrl_FeederList::AddItem( const char *label,const long x,long y,short 
 
 	// add to database
 	m_Database.push_back (entry );
-	pDlg->AddRow( &entry );
 
 	// add one
 	m_Count ++;
@@ -2001,9 +1891,9 @@ void CListCtrl_Components::RebuildList( void )
 	ASSERT( pDlg );
 	CString temp;
 
-	int i;
+	int selected;
 
-	i = GetNextItem(-1, LVNI_SELECTED);
+	selected = GetNextItem(-1, LVNI_SELECTED);
 
 	DeleteAllItems();
 
@@ -2048,10 +1938,10 @@ void CListCtrl_Components::RebuildList( void )
 	
 	}
 	 
-	
-	 SetItemState(i, LVIS_SELECTED, LVIS_SELECTED);
-	 EnsureVisible( i ,TRUE );
-
+	if (selected != -1 ) {
+		SetItemState(selected, LVIS_SELECTED, LVIS_SELECTED);
+		EnsureVisible( selected ,TRUE );
+	}
 }
 
 
@@ -2465,93 +2355,9 @@ skip:;
 
 	 return true;
  }
- 
 
- void CPickobearDlg::OnGridEndEdit(NMHDR *pNotifyStruct, LRESULT* pResult)
+
+ void CPickobearDlg::OnBnClickedDeleteFeeder()
  {
-	 NM_GRIDVIEW* pItem = (NM_GRIDVIEW*) pNotifyStruct;
-
-	 // AcceptChange is a fictional routine that should return TRUE
-	 // if you want to accept the new value for the cell.
-	 BOOL bAcceptChange = TRUE; //AcceptChange(pItem->iRow, pItem->iColumn);
-
-	 CStringA str;
-	 CListCtrl_FeederList::FeederDatabase feeder = m_FeederList.at ( pItem->iRow-1 );
-
-	 CGridCellNumeric *pCell = (CGridCellNumeric *)m_FeederGrid.GetCell(pItem->iRow, pItem->iColumn);
-
-	 _RPT1(_CRT_WARN, "Editing cell %s\r\n",feeder.label);
-
-	 switch (  pItem->iColumn ) {
-		 case 0:
-
-			 str = UTF16toUTF8( m_FeederGrid.GetCell(pItem->iRow, pItem->iColumn)->GetText() );
-
-			 strcpy_s( m_FeederList.at ( pItem->iRow-1 ).label, 256, str );
-			 break;
-		 case 1: 
-			 if ( !( pCell->GetNumber() < 0  ||pCell->GetNumber() > MAX_X_TABLE ) && m_FeederList.at ( pItem->iRow-1 ).x != (long)pCell->GetNumber() )
-				 m_FeederList.at ( pItem->iRow-1 ).x = (long)pCell->GetNumber();
-			 else 
-				 bAcceptChange =  FALSE;
-			 break;
-
-		 case 2: 
-			 if ( !( pCell->GetNumber() < 0  || pCell->GetNumber() > MAX_Y_TABLE )  &&  m_FeederList.at ( pItem->iRow-1 ).y != (long)pCell->GetNumber() )
-				 m_FeederList.at ( pItem->iRow-1 ).y = (long)pCell->GetNumber();
-			 else 
-				 bAcceptChange =  FALSE;
-			 break;
-		 case 3: 
-			 if ( !( pCell->GetNumber() < 0  || pCell->GetNumber() > 360 ) && m_FeederList.at ( pItem->iRow-1 ).rot != (short) pCell->GetNumber())
-				 m_FeederList.at ( pItem->iRow-1 ).rot =(short) pCell->GetNumber();
-			 else 
-				 bAcceptChange =  FALSE;
-			 break;
-
-		 case 4:
-			if( m_FeederList.at ( pItem->iRow-1 ).lx != (long)pCell->GetNumber() ) 
-				m_FeederList.at ( pItem->iRow-1 ).lx = (long)pCell->GetNumber();
-			 else 
-				 bAcceptChange =  FALSE;
-			 break;
-
-		 case 5: 
-			if( m_FeederList.at ( pItem->iRow-1 ).ly != (long)pCell->GetNumber() ) 
-			 m_FeederList.at ( pItem->iRow-1 ).ly = (long)pCell->GetNumber();
-			 else 
-				 bAcceptChange =  FALSE;
-			 break;
-
-		 case 6: 
-			 if( m_FeederList.at ( pItem->iRow-1 ).countx != (unsigned long)pCell->GetNumber() )
-				m_FeederList.at ( pItem->iRow-1 ).countx = (unsigned long)pCell->GetNumber();
-			 else 
-				 bAcceptChange =  FALSE;
-			 break;
-
-		 case 7: 
-			 if( m_FeederList.at ( pItem->iRow-1 ).county != (unsigned long)pCell->GetNumber() ) 
-				 m_FeederList.at ( pItem->iRow-1 ).county = (unsigned long)pCell->GetNumber();
-			 break;
-
-		 case 8: 
-			 if( m_FeederList.at ( pItem->iRow-1 ).tool != (unsigned char )pCell->GetNumber() )
-				m_FeederList.at ( pItem->iRow-1 ).tool = (unsigned char )pCell->GetNumber();
-			 break;
-	 }
-
-	 if( bAcceptChange ) {
-	//	 m_FeederGrid.AutoSize();
-		 m_FeederGrid.Refresh();
-
-		 m_FeederList.RebuildList();
-
-	 }
-
-	 *pResult = (bAcceptChange)? 0 : -1;
  }
 
-void CPickobearDlg::OnDBLClicked(NMHDR *pNMHDR, LRESULT *pResult)
-{
-}
