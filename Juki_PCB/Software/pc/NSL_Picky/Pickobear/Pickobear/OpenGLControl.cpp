@@ -14,6 +14,8 @@ COpenGLControl::COpenGLControl(void) :
 
 COpenGLControl::~COpenGLControl(void)
 {
+	pDlg->m_Quit = 1;
+
 	if( m_camera!=-1) {
 		VI.stopDevice (m_camera);
 	}
@@ -135,6 +137,9 @@ void COpenGLControl::UpdateCamera( UINT nIDEvent )
 	int ddepth;  
 	int ind =1 , ni = 100;
 	
+	if (pDlg, pDlg->m_Quit == 1 ) 
+		return;
+
 	if( m_camera == -1 ) 
 		return;
 

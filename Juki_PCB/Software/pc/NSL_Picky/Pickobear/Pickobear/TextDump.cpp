@@ -63,6 +63,44 @@ void CTextDump::OnBnClickedSend()
 
 void CTextDump::OnBnClickedSaveText()
 {
+	CString filename = ::GetSaveFile( _T("Supported Files Types(*.txt)\0*.txt\0\0"),_T("Choose filename to save commands too"),_T("") );
+
+	if (filename.GetLength() == 0 ) 
+		return;
+
+	if( filename.Find(L".txt") == 0 ) {
+		filename.Append(L".txt");
+	}
+	
+	CStdioFile File;
+    CFileException ex;
+
+    if (!File.Open(filename, CFile::modeWrite | CFile::modeCreate| CFile::typeText, &ex))
+    {
+        ex.ReportError();
+        return;
+    }
+
+TRY
+    {
+		int nNumItems = m_TextOutput.GetCount() ;
+        for (int i = 0; i < nNumItems; i++)
+        {
+        
+				CString temp;
+				m_TextOutput.GetText(i,temp);
+                File.WriteString(temp);
+        }
+
+        File.Close();
+    }
+
+    CATCH (CFileException, e)
+    {
+        AfxMessageBox(_T("Unable to save grid list"));
+        return ;
+    }
+    END_CATCH
 }
 
 
