@@ -1927,6 +1927,7 @@ void CListCtrl_Components::RebuildList( void )
 		} else {
 			//todo: fix this, search on name of feeder, not the id in
 			//this will break as soon as feeders get reordered
+			//charlie: changed, and testing
 
 			// iItem is item number, list is backwards
 
