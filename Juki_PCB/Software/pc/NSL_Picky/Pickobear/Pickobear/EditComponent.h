@@ -24,4 +24,5 @@ public:
 	CString m_Name;
 	CString m_Value;
 	CString m_Type;
+	CString m_Feeder;
 };

@@ -137,7 +137,7 @@ void COpenGLControl::UpdateCamera( UINT nIDEvent )
 	int ddepth;  
 	int ind =1 , ni = 100;
 	
-	if (pDlg, pDlg->m_Quit == 1 ) 
+	if (pDlg && pDlg->m_Quit == 1 ) 
 		return;
 
 	if( m_camera == -1 ) 
@@ -218,6 +218,9 @@ void COpenGLControl::UpdateCamera( UINT nIDEvent )
 			filter2D(src, dst, ddepth , kernel, anchor, delta, cv::BORDER_DEFAULT );
 #endif		
 			//	cvFilter2D(img2,img2,kernel,anchor);
+				
+	if (pDlg && pDlg->m_Quit == 1 ) 
+		return;
 
 			// Create Texture
 			gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, img1->width, img1->height, GL_RGB, GL_UNSIGNED_BYTE, img1->imageData);

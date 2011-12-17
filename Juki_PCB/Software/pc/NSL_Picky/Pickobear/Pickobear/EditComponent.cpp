@@ -16,6 +16,7 @@ EditComponent::EditComponent(CWnd* pParent /*=NULL*/)
 	, m_Name(_T(""))
 	, m_Value(_T(""))
 	, m_Type(_T(""))
+	, m_Feeder(_T(""))
 {
 
 }
@@ -31,7 +32,7 @@ void EditComponent::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_FEEDER_NAME2, m_Value);
 	DDX_Text(pDX, IDC_XPOS, entry.x);
 	DDX_Text(pDX, IDC_YPOS, entry.y);
-	DDX_Text(pDX, IDC_LX, entry.feeder);
+	DDX_Text(pDX, IDC_LX, m_Feeder);
 	DDX_Text(pDX, IDC_LY,entry.side);
 	DDX_Text(pDX, IDC_FCOUNTX, m_Type);
 	DDX_Text(pDX, IDC_ROT, entry.rot);
