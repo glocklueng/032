@@ -534,8 +534,6 @@ void CPickobearDlg::WriteSerial( const char *text)
 	ASSERT( text );
 	CString out( text  );
 	m_TextEdit->Print( out ) ;
-	
-	m_Simulate = true;
 
 	if( m_Simulate == false ) 
 		m_Serial.Write( text );
@@ -1335,8 +1333,15 @@ void CListCtrl_Components::OnHdnItemdblclickList2(NMHDR *pNMHDR, LRESULT *pResul
 		
 		pDlg->MoveHead(36240,222890);
 	}else {
+		
 		// GotoXY in micrometers
-		pDlg->MoveHead(entry->x+pDlg->m_ComponentList.m_OffsetX,entry->y+pDlg->m_ComponentList.m_OffsetY);
+		
+		pDlg->MoveHead(
+			(entry->x+pDlg->m_ComponentList.m_OffsetX),
+			(pDlg->m_ComponentList.m_OffsetY)+(entry->y)
+		);
+
+		// if board is flipped then invert x?
 	}
 
 	pDlg->GetDlgItem( IDC_OFFSET )->EnableWindow( TRUE );

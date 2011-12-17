@@ -173,8 +173,7 @@ void COpenGLControl::UpdateCamera( UINT nIDEvent )
 				iCounter ++ ;
 			}
 
-			if ( iCounter  < 10 )
-			{
+			if ( iCounter  < 10 ) {
 			//	return;
 			}
 
@@ -183,7 +182,6 @@ void COpenGLControl::UpdateCamera( UINT nIDEvent )
 			wglMakeCurrent(hdc, hrc);
 
 			//Squares( img1 , m_Thresh1, m_Thresh2, VI.getDeviceName( m_camera ) ) ;
-
 
 			CvPoint cx;
 			CvPoint cy;
@@ -202,6 +200,7 @@ void COpenGLControl::UpdateCamera( UINT nIDEvent )
 			cvCircle(img1,cx,150,CV_RGB(0,0,200),2);
 			cvCircle(img1,cx,200,CV_RGB(0,0,200),2);
 
+//			cvSaveImage("c:\\test.jpg", img1);
 
 			//cvConvertImage(img1, img2, CV_CVTIMG_FLIP);
          
@@ -219,8 +218,8 @@ void COpenGLControl::UpdateCamera( UINT nIDEvent )
 #endif		
 			//	cvFilter2D(img2,img2,kernel,anchor);
 				
-	if (pDlg && pDlg->m_Quit == 1 ) 
-		return;
+			if (pDlg && pDlg->m_Quit == 1 ) 
+				return;
 
 			// Create Texture
 			gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, img1->width, img1->height, GL_RGB, GL_UNSIGNED_BYTE, img1->imageData);
