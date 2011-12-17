@@ -51,8 +51,8 @@ public:
 		// rotation of part
 		short rot;
 
-		// feeder id
-		int feeder;
+		// feeder id (by name)
+		char feeder[256];
 		
 		// name of component
 		char label[256];
@@ -99,12 +99,11 @@ public:
 	}
 
 
-	void AssignFeeder(int idd, int id ) {
+	void AssignFeeder(int idd, const char *string ) {
 
-		m_FeederId = id;
+		ASSERT( string );
 
-		m_Database.at(idd).feeder = id;
-
+		strncpy_s( m_Database.at(idd).feeder,string, 256 );
 
 	}
 
@@ -127,7 +126,7 @@ public:
 		strcpy_s( entry.type, type);
 		strcpy_s( entry.value , value);
 		
-		entry.feeder = -1;
+		memset(entry.feeder,0,sizeof(entry.feeder));
 
 		// convert to level of accuracy pnp can handle
 		entry.x = (atol( x )/40)*40 ;
@@ -147,8 +146,8 @@ public:
 		SetItemText(Index,4,CString(y));
 		SetItemText(Index,5,CString(rot));
 		temp = L"NA";
-		if ( entry.feeder != -1 ) {
-			temp.Format(L"%d",entry.feeder);
+		if ( strlen( entry.feeder ) == 0  ) {
+			temp.Format(L"%s",entry.feeder);
 		}
 		SetItemText(Index,6,temp);
 
@@ -216,7 +215,6 @@ public:
 				return ;
 
 			}
-
 
 			CRegKey regKey;
 			DWORD regEntry = 100;
@@ -411,6 +409,23 @@ public:
 		RebuildList();
 
 	}
+
+	// search for feeder by name
+	int Search( const char *name ) 
+	{
+		ASSERT( name );
+
+		for( int i = 0 ; i < m_Count ; i++ ) {
+			
+			if(strcmp(name, m_Database.at(i).label) == 0 ) {
+				return i;
+			}
+		}
+
+		// nope
+		return -1;
+	}
+
 
 	/// Offset of item in PCB
 	long m_OffsetX;

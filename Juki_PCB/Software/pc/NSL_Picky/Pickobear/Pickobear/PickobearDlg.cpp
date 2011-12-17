@@ -1120,14 +1120,11 @@ void CPickobearDlg::OnBnClickedBottomleft()
 void CPickobearDlg::OnBnClickedLoad()
 {
 	m_ComponentList.LoadDatabase( L"" );
-
 }
 
 void CPickobearDlg::OnBnClickedSave()
 {
-
 	m_ComponentList.SaveDatabase();
-
 }
 
 void CPickobearDlg::OnBnClickedImport()
@@ -1586,14 +1583,14 @@ void CListCtrl_Components::OnNMRClickList2(NMHDR *pNMHDR, LRESULT *pResult)
 	int feederItem = pDlg->m_FeederList.GetNextItem(-1, LVNI_SELECTED);
 
 	for( int i = 0 ; i < numberComponentsSelected ; i++ ) {
-		// nItem is component index slected, -1 first time
+		// nItem is component index selected, -1 first time
 		nItem = pDlg->m_ComponentList.GetNextItem(nItem, LVNI_SELECTED);
 		 if( nItem == -1 ) {
 			 break;
 		}
-		entry = &m_Database.at( (GetCount()-1)-nItem ) ;
 
-		pDlg->m_ComponentList.AssignFeeder( (GetCount()-1)-nItem, feederItem ) ;
+		entry = &m_Database.at( (GetCount()-1)-nItem ) ;
+		pDlg->m_ComponentList.AssignFeeder( (GetCount()-1)-nItem, pDlg->m_FeederList.m_Database.at(feederItem).label ) ;
 
 	}
 
@@ -1923,11 +1920,25 @@ void CListCtrl_Components::RebuildList( void )
 		temp.Format(L"%d",entry->side);
 		SetItemText(Index,7,temp);
 
-		if( entry->feeder == -1 ) { 
+		if( strlen( entry->feeder ) == 0 ) { 
+
 			temp.Format(L"NA");
+
 		} else {
+			//todo: fix this, search on name of feeder, not the id in
+			//this will break as soon as feeders get reordered
+
 			// iItem is item number, list is backwards
-			int item = (pDlg->m_FeederList.GetCount()-1) - entry->feeder;
+
+			int feederIndex ;
+			feederIndex = pDlg->m_FeederList.Search( entry->feeder );
+			if( feederIndex == -1 ) {
+	
+				int ret = AfxMessageBox(L"Feeder not found ", MB_OK);
+				return;
+			}
+
+			int item = (pDlg->m_FeederList.GetCount()-1) - feederIndex;
 
 			CListCtrl_FeederList::FeederDatabase entry = pDlg->m_FeederList.at( item ) ;
 
@@ -2017,6 +2028,7 @@ void CPickobearDlg::OnBnClickedGo2()
 	EditDialog.m_Name    = EditDialog.entry.label;
 	EditDialog.m_Value   = EditDialog.entry.value;
 	EditDialog.m_Type    = EditDialog.entry.type;
+	EditDialog.m_Feeder  = EditDialog.entry.feeder;
 
 	EditDialog.DoModal();
 
@@ -2032,6 +2044,10 @@ void CPickobearDlg::OnBnClickedGo2()
 
 	userInput8 = UTF16toUTF8( EditDialog.m_Type );
 	strcpy_s( EditDialog.entry.type, userInput8 );
+	userInput8.ReleaseBuffer();
+
+	userInput8 = UTF16toUTF8( EditDialog.m_Feeder );
+	strcpy_s( EditDialog.entry.feeder, userInput8 );
 	userInput8.ReleaseBuffer();
 
 
@@ -2079,7 +2095,7 @@ void CPickobearDlg::OnBnClickedGo2()
 			 _RPT1(_CRT_WARN,"this side %s selected\n",entry.label);
 		 }
 
-		 if (entry.feeder == -1) {
+		 if ( strlen( entry.feeder ) == 0 ) {
 			 
 			 int ret = AfxMessageBox(L"Feeder not defined", MB_OK);
 	
@@ -2088,7 +2104,9 @@ void CPickobearDlg::OnBnClickedGo2()
 
 		 CListCtrl_FeederList::FeederDatabase feeder;
 		 
-		 feeder = m_FeederList.at ((m_FeederList.GetCount()-1) - entry.feeder );
+		 int feederEntry = m_FeederList.Search( entry.feeder  );
+
+		 feeder = m_FeederList.at ((m_FeederList.GetCount()-1) - feederEntry);
 
 		 if (feeder.tool < 1 || feeder.tool > 6 ) {
 			 int ret = AfxMessageBox(L"Tool not defined", MB_OK);
@@ -2231,13 +2249,20 @@ skip:;
 
 	 _RPT1(_CRT_WARN,"Placing %s\r\n",entry.label);
 
-	 if (entry.feeder == -1) {
+	 if (strlen( entry.feeder) == 0) {
 		 int ret = AfxMessageBox(L"Feeder not defined", MB_OK);
 	 }
 
-	 CListCtrl_FeederList::FeederDatabase feeder ;
+	CListCtrl_FeederList::FeederDatabase feeder ;
 	 
-	 feeder = m_FeederList.at ((m_FeederList.GetCount()-1) - entry.feeder );
+	int feederEntry = m_FeederList.Search( entry.feeder  );
+	if( feederEntry == -1 ) {
+	
+		 int ret = AfxMessageBox(L"Feeder not found ", MB_OK);
+		 return 0;
+	}
+
+	feeder = m_FeederList.at ((m_FeederList.GetCount()-1) - feederEntry );
 
 	 if (feeder.tool < 1 || feeder.tool > 6 ) {
 		 int ret = AfxMessageBox(L"Tool not defined", MB_OK);

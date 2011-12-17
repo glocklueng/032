@@ -63,6 +63,12 @@ void CTextDump::OnBnClickedSend()
 
 void CTextDump::OnBnClickedSaveText()
 {
+	int nNumItems = m_TextOutput.GetCount() ;
+
+	if ( nNumItems == 0 ) {
+		return;
+	}
+
 	CString filename = ::GetSaveFile( _T("Supported Files Types(*.txt)\0*.txt\0\0"),_T("Choose filename to save commands too"),_T("") );
 
 	if (filename.GetLength() == 0 ) 
@@ -82,8 +88,7 @@ void CTextDump::OnBnClickedSaveText()
     }
 
 TRY
-    {
-		int nNumItems = m_TextOutput.GetCount() ;
+	    {
         for (int i = 0; i < nNumItems; i++)
         {
         
