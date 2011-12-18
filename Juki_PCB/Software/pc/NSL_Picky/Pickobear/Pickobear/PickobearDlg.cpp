@@ -2347,7 +2347,6 @@ skip:;
 		WriteSerial( buffer );
 		Sleep( 500 );
 
-skip:;
 
 	 }
 	 // head down/air off/up
@@ -2359,6 +2358,8 @@ skip:;
 
 	 //wait
 	 Sleep( 100 );
+
+skip:;
 
 	 if( m_MachineState == MS_STOP ) {
 		 busy = 0;
