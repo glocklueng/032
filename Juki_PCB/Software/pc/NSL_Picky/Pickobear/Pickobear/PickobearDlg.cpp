@@ -6,6 +6,11 @@
 #include "Pickobear.h"
 #include "PickobearDlg.h"
 
+#include <objidl.h>
+#include <gdiplus.h>
+using namespace Gdiplus;
+#pragma comment (lib,"Gdiplus.lib")
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -66,6 +71,7 @@ CPickobearDlg::CPickobearDlg(CWnd* pParent /*=NULL*/)
 	, m_Simulate(false)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+//	m_Simulate = true;
 }
 
 void CPickobearDlg::DoDataExchange(CDataExchange* pDX)
@@ -231,7 +237,7 @@ BOOL CPickobearDlg::OnInitDialog()
 	m_Rotation.SetRange(0,360);
 		
 	m_FeederList.GetClientRect(&rect);
-	nInterval =( rect.Width() / 9 );
+	nInterval =( rect.Width() / 10 );
 
 	m_FeederList.InsertColumn(0, _T("Name"),LVCFMT_CENTER,(int)(nInterval+(nInterval/1.3)));
 	m_FeederList.InsertColumn(1, _T("X"),LVCFMT_CENTER,nInterval);
@@ -244,6 +250,7 @@ BOOL CPickobearDlg::OnInitDialog()
 	m_FeederList.InsertColumn(6, _T("CX"),LVCFMT_CENTER,nInterval);
 	m_FeederList.InsertColumn(7, _T("CY"),LVCFMT_CENTER,nInterval);
 	m_FeederList.InsertColumn(8, _T("T"),LVCFMT_CENTER,(int)(nInterval/1.5));
+	m_FeederList.InsertColumn(9, _T("CNT"),LVCFMT_CENTER,(int)(nInterval));
 
 
 	m_UpCamera.ResetContent();
@@ -458,10 +465,7 @@ void CPickobearDlg::OnSysCommand(UINT nID, LPARAM lParam)
 		CDialog::OnSysCommand(nID, lParam);
 	}
 }
-#include <objidl.h>
-#include <gdiplus.h>
-using namespace Gdiplus;
-#pragma comment (lib,"Gdiplus.lib")
+
 
 // If you add a minimize button to your dialog, you will need the code below
 //  to draw the icon.  For MFC applications using the document/view model,
@@ -536,6 +540,8 @@ void CPickobearDlg::WriteSerial( const char *text)
 	CString out( text  );
 	m_TextEdit->Print( out ) ;
 
+//	m_Simulate = true;
+
 	if( m_Simulate == false ) 
 		m_Serial.Write( text );
 }
@@ -544,71 +550,72 @@ void CPickobearDlg::OnBnClickedHome()
 {	
 	bool pass = false;
 
+	EmptySerial();
+
 	do { 
 		WriteSerial("G28\r\n");
 
 		Sleep( 100 );
 
-		switch( CheckAck("ok") )
-		{
-		case 'f':
+		switch( CheckAck("ok") ) {
+			case 'f':
 
-			m_headXPos = -1 ; m_headYPos = -1;
+				m_headXPos = -1 ; m_headYPos = -1;
 
-			if( MessageBox(_T("Home failed!!"),_T("Error"),IDOK|IDRETRY) == IDRETRY)
-				pass = false;
-			else
+				if( MessageBox(_T("Home failed!!"),_T("Error"),IDOK|IDRETRY) == IDRETRY)
+					pass = false;
+				else
+					pass = true;
+			
+				break;
+			case 'p':
+			
+				m_headXPos = 0 ; m_headYPos =0;
+
+				// enable the GO button
+				GO.EnableWindow( TRUE ) ;
+
+				GetDlgItem( IDC_SWAP_HEAD_CAMERA )->EnableWindow( TRUE );
+
+
+				// enable tool changers
+				GetDlgItem( IDC_TOOL1 )->EnableWindow( TRUE );
+				GetDlgItem( IDC_TOOL2 )->EnableWindow( TRUE );
+				GetDlgItem( IDC_TOOL3 )->EnableWindow( TRUE );
+				GetDlgItem( IDC_TOOL4 )->EnableWindow( TRUE );
+				GetDlgItem( IDC_TOOL5 )->EnableWindow( TRUE );
+				GetDlgItem( IDC_TOOL6 )->EnableWindow( TRUE );
+
+				// Park enable
+				GetDlgItem( IDC_PARK )->EnableWindow( TRUE );
+
+				// Cursor pad
+				GetDlgItem( IDC_UPLEFT )->EnableWindow( TRUE );
+				GetDlgItem( IDC_UPRIGHT )->EnableWindow( TRUE );
+				GetDlgItem( IDC_LEFTDOWN )->EnableWindow( TRUE );
+				GetDlgItem( IDC_BOTTOMLEFT )->EnableWindow( TRUE );
+				GetDlgItem( IDC_UP )->EnableWindow( TRUE );
+				GetDlgItem( IDC_DOWN )->EnableWindow( TRUE );
+				GetDlgItem( IDC_LEFT )->EnableWindow( TRUE );
+				GetDlgItem( IDC_RIGHT )->EnableWindow( TRUE );
+
+				// head up/down
+				GetDlgItem( IDC_HEAD )->EnableWindow( TRUE );
+
+				//zero
+				GetDlgItem( IDC_ZERO )->EnableWindow( TRUE );
+
+				GetDlgItem( IDC_GOXY )->EnableWindow( TRUE );
+				GetDlgItem( IDC_GOFF )->EnableWindow( TRUE );
+
+				GetDlgItem( IDC_GO2 )->EnableWindow( TRUE );
+			
+				m_Homed = true ;
+			
 				pass = true;
-			
-			break;
-		case 'p':
-			
-			m_headXPos = 0 ; m_headYPos =0;
-
-			// enable the GO button
-			GO.EnableWindow( TRUE ) ;
-
-			GetDlgItem( IDC_SWAP_HEAD_CAMERA )->EnableWindow( TRUE );
-
-
-			// enable tool changers
-			GetDlgItem( IDC_TOOL1 )->EnableWindow( TRUE );
-			GetDlgItem( IDC_TOOL2 )->EnableWindow( TRUE );
-			GetDlgItem( IDC_TOOL3 )->EnableWindow( TRUE );
-			GetDlgItem( IDC_TOOL4 )->EnableWindow( TRUE );
-			GetDlgItem( IDC_TOOL5 )->EnableWindow( TRUE );
-			GetDlgItem( IDC_TOOL6 )->EnableWindow( TRUE );
-
-			// Park enable
-			GetDlgItem( IDC_PARK )->EnableWindow( TRUE );
-
-			// Cursor pad
-			GetDlgItem( IDC_UPLEFT )->EnableWindow( TRUE );
-			GetDlgItem( IDC_UPRIGHT )->EnableWindow( TRUE );
-			GetDlgItem( IDC_LEFTDOWN )->EnableWindow( TRUE );
-			GetDlgItem( IDC_BOTTOMLEFT )->EnableWindow( TRUE );
-			GetDlgItem( IDC_UP )->EnableWindow( TRUE );
-			GetDlgItem( IDC_DOWN )->EnableWindow( TRUE );
-			GetDlgItem( IDC_LEFT )->EnableWindow( TRUE );
-			GetDlgItem( IDC_RIGHT )->EnableWindow( TRUE );
-
-			// head up/down
-			GetDlgItem( IDC_HEAD )->EnableWindow( TRUE );
-
-			//zero
-			GetDlgItem( IDC_ZERO )->EnableWindow( TRUE );
-
-			GetDlgItem( IDC_GOXY )->EnableWindow( TRUE );
-			GetDlgItem( IDC_GOFF )->EnableWindow( TRUE );
-
-			GetDlgItem( IDC_GO2 )->EnableWindow( TRUE );
-			
-			m_Homed = true ;
-			
-			pass = true;
-			break;
-		default:
-			break;
+				break;
+			default:
+				break;
 		}
 	} while( pass == false );
 
@@ -1351,73 +1358,111 @@ void CListCtrl_Components::OnHdnItemdblclickList2(NMHDR *pNMHDR, LRESULT *pResul
 void CListCtrl_FeederList::OnHdnItemdblclickList2(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	LPNMHEADER phdr = reinterpret_cast<LPNMHEADER>(pNMHDR);
-	// TODO: Add your control notification handler code here
+	
 	*pResult = 0;
 	CPickobearDlg *pDlg = (CPickobearDlg*)AfxGetApp()->m_pMainWnd;
 	ASSERT( pDlg );
 
 	// iItem is item number, list is backwards
-	int item = (GetCount()-1)-phdr->iItem;
+	int item = (GetCount()-1) - phdr->iItem;
 
 	entry = &m_Database.at( item ) ;
 	// entry is item.
 	ASSERT( entry );
 
-	// GotoXY in micrometers
-	pDlg->MoveHead(entry->x,entry->y);
+	if( GetKeyState ( VK_SHIFT ) & 0x80 ){
+		// GotoXY in micrometers
+		pDlg->MoveHead(entry->lx,entry->ly);
+	} else if( GetKeyState ( VK_CONTROL ) & 0x80 ){
 
+		// GotoXY in micrometers
+		long x,y;
+
+		// start position
+		x = entry->x ;
+		y = entry->y ;
+
+		_RPT2(_CRT_WARN," x = %d,  y = %d\n",x,y);
+
+		long dx,dy;
+
+		dx = entry->lx - entry->x ;
+		dy = abs(entry->y - entry->ly );
+
+		dx /= entry->countx;
+		dy /= entry->county;
+		
+		_RPT2(_CRT_WARN,"dx = %d, dy = %d\n",dx,dy);
+
+		int ix,iy;
+
+		ix = entry->componentIndex % (entry->countx+1) ;
+		iy = entry->componentIndex / (entry->countx  ) ;
+		_RPT2(_CRT_WARN,"ix = %d, iy = %d\n",ix,iy);
+
+		x +=  (dx * ix );
+		y -= ( dy * iy );
+
+		_RPT2(_CRT_WARN," x = %d,  y = %d\n",x,y);
+		pDlg->MoveHead( x , y );
+
+
+	} else {
+		// GotoXY in micrometers
+		pDlg->MoveHead(entry->x,entry->y);
+	}
 }
 
-	void CListCtrl_FeederList::RebuildList ( void ) 
-	{		
-		CString temp;
-		CPickobearDlg *pDlg = (CPickobearDlg*)AfxGetApp()->m_pMainWnd;
-		ASSERT( pDlg );
+void CListCtrl_FeederList::RebuildList ( void ) 
+{		
+	CString temp;
+	CPickobearDlg *pDlg = (CPickobearDlg*)AfxGetApp()->m_pMainWnd;
+	ASSERT( pDlg );
 
-		// remove any and all items from List
-		DeleteAllItems();
+	// remove any and all items from List
+	DeleteAllItems();
 
-		// for all items loaded
-		for ( unsigned int i = 0 ; i < m_Count ; i ++ ) {
-		
-			// fetch entry 
-			entry = &m_Database.at( i  ) ;
-			
-			temp = entry->label;
+	// for all items loaded
+	for ( unsigned int i = 0 ; i < m_Count ; i ++ ) {
 
-			// add first item
-			int Index = InsertItem(LVIF_TEXT, 0,temp, 0, 0, 0, NULL);
+		// fetch entry 
+		entry = &m_Database.at( i  ) ;
 
-			// convert to string
-			temp.Format(L"%d",entry->x);
-			SetItemText(Index,1,temp);
-			
-			temp.Format(L"%d",entry->y);
-			SetItemText(Index,2,temp);
+		temp = entry->label;
 
-			temp.Format(L"%d",entry->rot);
-			SetItemText(Index,3,temp);
+		// add first item
+		int Index = InsertItem(LVIF_TEXT, 0,temp, 0, 0, 0, NULL);
 
-			temp.Format(L"%d",entry->lx);
-			SetItemText(Index,4,temp);
+		// convert to string
+		temp.Format(L"%d",entry->x);
+		SetItemText(Index,1,temp);
 
-			temp.Format(L"%d",entry->ly);
-			SetItemText(Index,5,temp);
+		temp.Format(L"%d",entry->y);
+		SetItemText(Index,2,temp);
 
-			temp.Format(L"%d",entry->countx);
-			SetItemText(Index,6,temp);
+		temp.Format(L"%d",entry->rot);
+		SetItemText(Index,3,temp);
 
-			temp.Format(L"%d",entry->county);
-			SetItemText(Index,7,temp);
+		temp.Format(L"%d",entry->lx);
+		SetItemText(Index,4,temp);
 
-			temp.Format(L"%d",entry->tool);
-			SetItemText(Index,8,temp);
+		temp.Format(L"%d",entry->ly);
+		SetItemText(Index,5,temp);
 
+		temp.Format(L"%d",entry->countx);
+		SetItemText(Index,6,temp);
 
-		}
+		temp.Format(L"%d",entry->county);
+		SetItemText(Index,7,temp);
+
+		temp.Format(L"%d",entry->tool);
+		SetItemText(Index,8,temp);
+
+		temp.Format(L"%d",entry->componentIndex);
+		SetItemText(Index,9,temp);
+
 	}
-
-
+}
 
 bool SetCurrentPosition( long x,long y)
 {
@@ -1595,8 +1640,12 @@ void CListCtrl_Components::OnNMRClickList2(NMHDR *pNMHDR, LRESULT *pResult)
 			 break;
 		}
 
+
 		entry = &m_Database.at( (GetCount()-1)-nItem ) ;
-		pDlg->m_ComponentList.AssignFeeder( (GetCount()-1)-nItem, pDlg->m_FeederList.m_Database.at(feederItem).label ) ;
+		 
+		_RPT2(_CRT_WARN,"OnNMRClickList2: assigning feeder %s to %s\r\n",pDlg->m_FeederList.m_Database.at(feederItem).label, entry->label );
+
+		 pDlg->m_ComponentList.AssignFeeder( (GetCount()-1)-nItem, pDlg->m_FeederList.m_Database.at(feederItem).label ) ;
 
 	}
 
@@ -2151,7 +2200,7 @@ void CPickobearDlg::OnBnClickedGo2()
 
 
 		 /// slow the camera down
-		 m_CameraUpdateRate = 10 ;
+		 m_CameraUpdateRate = 250 ;
 
 		 _RPT1(_CRT_WARN,"Going to feeder %s\n", feeder.label );
 		 MoveHead(feeder.x, feeder.y  -  CAMERA_OFFSET );
@@ -2211,8 +2260,8 @@ skip:;
 	 // Park machine
 	 WriteSerial("G1X14Y15F200\r\n");
 
-	 /// slow the camera down
-	m_CameraUpdateRate = 10 ;
+	 /// reset the camera speed 
+	m_CameraUpdateRate = 250 ;
 
 	 // switch state to idle
 	 m_MachineState = MS_IDLE ;
@@ -2221,6 +2270,23 @@ skip:;
 	 return true;
  }
 
+ /*
+
+ 
+	// get first item in feeder list ( only one can be selected
+	int feederItem = pDlg->m_FeederList.GetNextItem(-1, LVNI_SELECTED);
+
+	for( int i = 0 ; i < numberComponentsSelected ; i++ ) {
+		// nItem is component index selected, -1 first time
+		nItem = pDlg->m_ComponentList.GetNextItem(nItem, LVNI_SELECTED);
+		 if( nItem == -1 ) {
+			 break;
+		}
+
+
+		*/
+
+
  DWORD CPickobearDlg::goSingleThread(void )
  {
 	 static int busy = 0;
@@ -2228,7 +2294,7 @@ skip:;
 	 unsigned int i ;
 	 char buffer[5];
 	 CListCtrl_Components::CompDatabase entry; 
-	 
+
 	 ZeroMemory(buffer,sizeof(buffer));
 
 	 if ( busy ) {
@@ -2241,141 +2307,162 @@ skip:;
 
 	 Sleep( 500 ) ;
 
-	 int componentItem = m_ComponentList.GetNextItem(-1, LVNI_SELECTED);
+	 // find number of parts selected
+	 int numberComponentsSelected = m_ComponentList.GetSelectedCount();
 
-	 i = (m_ComponentList.GetCount()-1) - componentItem;
-
-	 entry = m_ComponentList.at(i);
-
-	 if( entry.side !=  m_Side ) {
-
-		 _RPT1(_CRT_WARN,"skipping %s, wrong side selected\n",entry.label);
-		 goto skip;
+	 // nothing selected
+	 if( numberComponentsSelected == 0 ) {
+		 return false;
 	 }
 
 
-	 _RPT1(_CRT_WARN,"Placing %s\r\n",entry.label);
+	 // First entry
+	 int componentItem = -1;
 
-	 if (strlen( entry.feeder) == 0) {
-		 int ret = AfxMessageBox(L"Feeder not defined", MB_OK);
-	 }
+	 for (int itemSelected = 0 ; itemSelected < numberComponentsSelected ; itemSelected ++ ) {
 
-	CListCtrl_FeederList::FeederDatabase feeder ;
-	 
-	int feederEntry = m_FeederList.Search( entry.feeder  );
-	if( feederEntry == -1 ) {
-	
-		 int ret = AfxMessageBox(L"Feeder not found ", MB_OK);
-		 return 0;
-	}
 
-	feeder = m_FeederList.at ((m_FeederList.GetCount()-1) - feederEntry );
+		 // get next item
+		 componentItem = m_ComponentList.GetNextItem(componentItem, LVNI_SELECTED);
 
-	 if (feeder.tool < 1 || feeder.tool > 6 ) {
-		 int ret = AfxMessageBox(L"Tool not defined", MB_OK);
-	 }
-	 
-	 int in = (m_ComponentList.GetCount()-1)-i;
-	 m_ComponentList.SetItemState(in, LVIS_SELECTED, LVIS_SELECTED);
-	 m_ComponentList.EnsureVisible( in ,TRUE );
+		 // no more found
+		 if ( componentItem == -1 ) 
+			 break;
 
-	 _RPT1(_CRT_WARN,"Going to tool %d\n", feeder.tool );
 
-	 // can't tool change at the moment...
+		 i = (m_ComponentList.GetCount()-1) - componentItem;
+
+		 entry = m_ComponentList.at(i);
+
+		 if( entry.side !=  m_Side ) {
+
+			 _RPT1(_CRT_WARN,"skipping %s, wrong side selected\n",entry.label);
+			 goto skip;
+		 }
+
+		 _RPT1(_CRT_WARN,"Placing %s\r\n",entry.label);
+
+		 if (strlen( entry.feeder) == 0) {
+			 int ret = AfxMessageBox(L"Feeder not defined", MB_OK);
+		 }
+
+		 CListCtrl_FeederList::FeederDatabase feeder ;
+
+		 int feederEntry = m_FeederList.Search( entry.feeder  );
+		 if( feederEntry == -1 ) {
+
+			 int ret = AfxMessageBox(L"Feeder not found ", MB_OK);
+			 return 0;
+		 }
+
+		 feeder = m_FeederList.at ((m_FeederList.GetCount()-1) - feederEntry );
+
+		 if (feeder.tool < 1 || feeder.tool > 6 ) {
+			 int ret = AfxMessageBox(L"Tool not defined", MB_OK);
+		 }
+
+		 int in = (m_ComponentList.GetCount()-1)-i;
+		 m_ComponentList.SetItemState(in, LVIS_SELECTED, LVIS_SELECTED);
+		 m_ComponentList.EnsureVisible( in ,TRUE );
+
+		 _RPT1(_CRT_WARN,"Going to tool %d\n", feeder.tool );
+
+		 // can't tool change at the moment...
 #if 0
-	 switch ( feeder.tool ) {
-	 case 1:
-		 WriteSerial("M24\r\n");
-		 break;
-	 case 2:
-		 WriteSerial("M24\r\n");
-		 break;
-	 case 3:
-		 WriteSerial("M24\r\n");
-		 break;
-	 case 4:
-		 WriteSerial("M24\r\n");
-		 break;
-	 case 5:
-		 WriteSerial("M24\r\n");
-		 break;
-	 case 6:
-		 WriteSerial("M24\r\n");
-		 break;
-	 }
+		 switch ( feeder.tool ) {
+		 case 1:
+			 WriteSerial("M24\r\n");
+			 break;
+		 case 2:
+			 WriteSerial("M24\r\n");
+			 break;
+		 case 3:
+			 WriteSerial("M24\r\n");
+			 break;
+		 case 4:
+			 WriteSerial("M24\r\n");
+			 break;
+		 case 5:
+			 WriteSerial("M24\r\n");
+			 break;
+		 case 6:
+			 WriteSerial("M24\r\n");
+			 break;
+		 }
 
-	 return true;
+		 return true;
 #endif
 
-	 /// slow the camera down
-	 m_CameraUpdateRate = 10 ;
+		 /// slow the camera down
+		 m_CameraUpdateRate = 250 ;
 
-	 _RPT1(_CRT_WARN,"Going to feeder %s\n", feeder.label );
+		 _RPT1(_CRT_WARN,"Going to feeder %s\n", feeder.label );
 
-	 MoveHead(feeder.x, feeder.y  -  CAMERA_OFFSET );
+		 MoveHead(feeder.x, feeder.y  -  CAMERA_OFFSET );
 
-	 _RPT0(_CRT_WARN,"Picking up part\n");
+		 _RPT0(_CRT_WARN,"Picking up part\n");
 
-	 // Pickup
-	 WriteSerial("M26\r\n");
+		 // Pickup
+		 WriteSerial("M26\r\n");
 
-	 Sleep( 1000 );
-	 
-	_RPT1(_CRT_WARN,"Going to component %s\n", entry.label );
-	
-	 MoveHead(entry.x+m_ComponentList.m_OffsetX, entry.y+m_ComponentList.m_OffsetY - CAMERA_OFFSET);
+		 Sleep( 1000 );
 
-	 if( entry.rot ) {
+		 _RPT1(_CRT_WARN,"Going to component %s\n", entry.label );
 
-		_RPT1(_CRT_WARN,"Rotating part %d degrees \n", entry.rot );
-		
-		double angle = entry.rot;
+		 MoveHead(entry.x+m_ComponentList.m_OffsetX, entry.y+m_ComponentList.m_OffsetY - CAMERA_OFFSET);
 
-		// calculate pulses
-		angle = ( 1000.0 / 360.0  ) * angle ;
+		 if( entry.rot ) {
 
-		char buffer[256];
-		int pulses;
+			 _RPT1(_CRT_WARN,"Rotating part %d degrees \n", entry.rot );
 
-		// calculate pulses
-		pulses = ( int) ( angle );
-		sprintf_s(buffer,sizeof(buffer),"G0H%d\r\n", pulses );
-				
-		_RPT1(_CRT_WARN,"Executing GCODE %s\r\n",buffer);
+			 double angle = entry.rot;
 
-		// do the rotate
-		WriteSerial( buffer );
-		Sleep( 500 );
+			 // calculate pulses
+			 angle = ( 1000.0 / 360.0  ) * angle ;
 
+			 char buffer[256];
+			 int pulses;
 
-	 }
-	 // head down/air off/up
-	 _RPT0(_CRT_WARN,"dropping off part\n");
-	 
-	 // Put Part down
-	 WriteSerial("M27\r\n");
+			 // calculate pulses
+			 pulses = ( int) ( angle );
+			 sprintf_s(buffer,sizeof(buffer),"G0H%d\r\n", pulses );
+
+			 _RPT1(_CRT_WARN,"Executing GCODE %s\r\n",buffer);
+
+			 // do the rotate
+			 WriteSerial( buffer );
+			 Sleep( 500 );
 
 
-	 //wait
-	 Sleep( 100 );
+		 }
+		 // head down/air off/up
+		 _RPT0(_CRT_WARN,"dropping off part\n");
+
+		 // Put Part down
+		 WriteSerial("M27\r\n");
+
+
+		 //wait
+		 Sleep( 100 );
 
 skip:;
 
-	 if( m_MachineState == MS_STOP ) {
-		 busy = 0;
-		 m_MachineState =MS_IDLE;
-		 /// reset the camera update rate
-		m_CameraUpdateRate = 10 ;
-		
-		 return true ;
+		 if( m_MachineState == MS_STOP ) {
+			 busy = 0;
+			 m_MachineState =MS_IDLE;
+			 /// reset the camera update rate
+			 m_CameraUpdateRate = 250 ;
+
+			 return true ;
+		 }
+
+		 UpdateWindow();
+
+		 Sleep( 500 );
+
+		 // Move Camera to part
+		 MoveHead(entry.x+m_ComponentList.m_OffsetX,entry.y+m_ComponentList.m_OffsetY );
 	 }
-
-	 UpdateWindow();
-
-	 Sleep( 500 );
-
-	 // Move Camera to part
-	 MoveHead(entry.x+m_ComponentList.m_OffsetX,entry.y+m_ComponentList.m_OffsetY );
 
 	 // switch state to idle
 	 m_MachineState = MS_IDLE ;
@@ -2383,8 +2470,8 @@ skip:;
 	 // no longer busy
 	 busy  = 0 ;
 
-	 /// slow the camera down
-	 m_CameraUpdateRate = 10 ;
+	 /// reset  the camera speed
+	 m_CameraUpdateRate = 250 ;
 
 	 return true;
  }

@@ -57,12 +57,12 @@ void CFeederSetup::ResetFeederGrid( void )
 		wnd->GetClientRect( rect) ;
 	}
 
-	int nInterval =( rect.Width() / 9 );
+	int nInterval =( rect.Width() / 10 );
 
 	m_FeederGrid.DeleteAllItems();
 
 	m_FeederGrid.SetRowCount( 1 );
-	m_FeederGrid.SetColumnCount( 9 );
+	m_FeederGrid.SetColumnCount( 10 );
 	m_FeederGrid.SetListMode( true );
 
 	m_FeederGrid.SetItemText(0,0,_T("Name"));
@@ -74,6 +74,7 @@ void CFeederSetup::ResetFeederGrid( void )
 	m_FeederGrid.SetItemText(0,6,_T("CX"));
 	m_FeederGrid.SetItemText(0,7,_T("CY"));
 	m_FeederGrid.SetItemText(0,8,_T("T"));
+	m_FeederGrid.SetItemText(0,9,_T("CNT"));
 
 	m_FeederGrid.SetColumnWidth(0,(int)(nInterval));
 	m_FeederGrid.SetColumnWidth(1,(int)(nInterval));
@@ -86,6 +87,7 @@ void CFeederSetup::ResetFeederGrid( void )
 	m_FeederGrid.SetColumnWidth(6,nInterval);
 	m_FeederGrid.SetColumnWidth(7,nInterval);
 	m_FeederGrid.SetColumnWidth(8,(int)(nInterval));
+	m_FeederGrid.SetColumnWidth(9,(int)(nInterval));
 
 	m_FeederGrid.SetGridLines( GVL_BOTH );
 
@@ -152,6 +154,7 @@ void CFeederSetup::AddRow( CListCtrl_FeederList::FeederDatabase *entry )
 	SetValue( i,6, entry->countx );
 	SetValue( i,7, entry->county );
 	SetValue( i,8, entry->tool );
+	SetValue( i,9, entry->componentIndex );
 
 	m_FeederGrid.SetRowHeight(i ,20);
 }
@@ -259,8 +262,13 @@ void CFeederSetup::RebuildList ( void )
 			 break;
 
 		 case 8: 
-			 if( m_FeederList.at ( pItem->iRow-1 ).tool != (unsigned char )pCell->GetNumber() )
+			 if( m_FeederList.at( pItem->iRow-1 ).tool != (unsigned char )pCell->GetNumber() )
 				m_FeederList.at ( pItem->iRow-1 ).tool = (unsigned char )pCell->GetNumber();
+			 break;
+
+		 case 9: 
+			 if( m_FeederList.at ( pItem->iRow-1 ).componentIndex != (unsigned char )pCell->GetNumber() )
+				 m_FeederList.at ( pItem->iRow-1 ).componentIndex = (unsigned char )pCell->GetNumber();
 			 break;
 	 }
 

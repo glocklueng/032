@@ -65,12 +65,14 @@ void CTextDump::OnBnClickedSaveText()
 {
 	int nNumItems = m_TextOutput.GetCount() ;
 
+	// nothing to save
 	if ( nNumItems == 0 ) {
 		return;
 	}
 
 	CString filename = ::GetSaveFile( _T("Supported Files Types(*.txt)\0*.txt\0\0"),_T("Choose filename to save commands too"),_T("") );
 
+	// no file passed back
 	if (filename.GetLength() == 0 ) 
 		return;
 
@@ -108,7 +110,7 @@ TRY
     END_CATCH
 }
 
-
+/// Clear the buffer
 void CTextDump::OnBnClickedClear()
 {
 	m_TextOutput.ResetContent();
