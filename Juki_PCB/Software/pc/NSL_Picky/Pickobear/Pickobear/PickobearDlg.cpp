@@ -394,7 +394,8 @@ BOOL CPickobearDlg::OnInitDialog()
 	// Setup the OpenGL Window's timer to render
 // threaded
 //	m_oglWindow.m_unpTimer = m_oglWindow.SetTimer(1, 100, 0);
-	m_DownCameraWindow.m_unpTimer = m_DownCameraWindow.SetTimer(1, 300, 0);
+	if( m_DownCameraWindow.m_camera != -1 )
+		m_DownCameraWindow.m_unpTimer = m_DownCameraWindow.SetTimer(1, 300, 0);
 
 		
 	m_StepSize.ResetContent();

@@ -8,12 +8,16 @@ COpenGLControl::COpenGLControl(void) :
 	img2(NULL),
 	resultImg(NULL),
 	iCounter( 0),
+	pDlg(NULL),
 	m_camera( -1 )
 {
 }
 
 COpenGLControl::~COpenGLControl(void)
 {
+	if ( pDlg == NULL) 
+		return;
+
 	pDlg->m_Quit = 1;
 
 	if( m_camera!=-1) {
@@ -296,6 +300,8 @@ void  COpenGLControl::SetCamera( int DeviceID)
 
 CString COpenGLControl::oglCreate(CRect rect, CRect orect, CWnd *parent, int DeviceID)
 {
+	if (DeviceID == -1 ) return  L"NULL";
+
 	CString className = AfxRegisterWndClass(CS_HREDRAW | CS_VREDRAW | CS_OWNDC, NULL, (HBRUSH)GetStockObject(BLACK_BRUSH), NULL);
 
 	CreateEx(0, className, CAMCTRL_CLASSNAME, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN, rect, parent, 0);
