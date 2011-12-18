@@ -74,7 +74,7 @@ void CTextDump::OnBnClickedSaveText()
 	if (filename.GetLength() == 0 ) 
 		return;
 
-	if( filename.Find(L".txt") == 0 ) {
+	if( filename.Find(L".txt") == -1 ) {
 		filename.Append(L".txt");
 	}
 	

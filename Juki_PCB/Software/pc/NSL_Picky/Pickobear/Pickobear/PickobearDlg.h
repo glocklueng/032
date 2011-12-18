@@ -170,7 +170,7 @@ public:
 
 		filename = ::GetSaveFile( _T("Supported Files Types(*.pbr)\0*.pbr\0\0"),_T("Choose a filename to save components in"),_T("") );
 
-		if( filename.Find(L".pbr") ==0 ) {
+		if( filename.Find(L".pbr") == -1 ) {
 			filename.Append(L".pbr");
 		}
 
@@ -332,7 +332,7 @@ public:
 
 		}
 				
-		if( filename.Find(L".fdr") < 0 ) {
+		if( filename.Find(L".fdr") == -1 ) {
 			filename.Append(L".fdr");
 		}
 
