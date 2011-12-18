@@ -326,14 +326,16 @@ public:
 		CString filename;
 		 
 		filename = ::GetSaveFile( _T("Supported Files Types(*.fdr)\0*.fdr\0\0"),_T("Pick name to save database too"),_T("") );
-		
-		if( filename.Find(L".fdr") ==0 ) {
+		// zero length file ?
+		if(filename.GetLength() == 0 ) {
+			return ;
+
+		}
+				
+		if( filename.Find(L".fdr") < 0 ) {
 			filename.Append(L".fdr");
 		}
 
-		// clear old files ( could be append )
-
-		m_Database.clear();
 
 		std::ofstream os (filename, std::ios::out | std::ios::binary);
 
