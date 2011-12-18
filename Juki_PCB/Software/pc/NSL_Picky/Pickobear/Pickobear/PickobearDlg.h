@@ -269,10 +269,10 @@ class CListCtrl_FeederList : public CListCtrl
 
 	void PreSubclassWindow();
 public:
-	typedef struct CompDatabase_tag  {
+	typedef struct FeederDatabase_tag  {
 		
-		// index ( not used )
-		unsigned int item;
+		// component index, starts at 0, goes up
+		unsigned int componentIndex;
 
 		// coordinates in um
 		long x,y;

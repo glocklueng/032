@@ -34,6 +34,7 @@ void FeederEdit::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_FCOUNTX, entry.countx);
 	DDX_Text(pDX, IDC_FCOUNTY, entry.county);
 	DDX_Text(pDX, IDC_TOOLBOX, entry.tool);
+	DDX_Text(pDX, IDC_COUNT_EDIT, entry.componentIndex );
 }
 
 
