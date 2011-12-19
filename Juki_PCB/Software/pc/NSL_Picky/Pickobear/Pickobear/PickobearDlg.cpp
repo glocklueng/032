@@ -25,7 +25,7 @@
 //   tidy up headers
 //   add localisation to strings?
 //   reflect limit switches in GUI
-//   handle flipped pcbs!! (Most important)
+//   handle flipped pcbs!! (Most important) (done)
 
 #include "stdafx.h"
 #include "Pickobear.h"
@@ -85,6 +85,8 @@ CPickobearDlg::CPickobearDlg(CWnd* pParent /*=NULL*/)
 	, m_Head(0)
 	, m_GOX(0)
 	, m_GOY(0)
+	, m_FeedersModified(false)
+	, m_ComponentsModified(false)
 	, m_pFeederDlg( NULL )
 	, m_Quit(0)
 	, m_Speed(700)
@@ -94,11 +96,11 @@ CPickobearDlg::CPickobearDlg(CWnd* pParent /*=NULL*/)
 	, bSetWaitDone(false)
 	, bCameraHead( false )
 	, m_Side(0)
+	, bFlip(false)
 	, bBusy(false)
-	, m_Simulate(true)
+	, m_Simulate(false)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
-	//	m_Simulate = true;
 }
 
 void CPickobearDlg::DoDataExchange(CDataExchange* pDX)
@@ -175,6 +177,7 @@ BEGIN_MESSAGE_MAP(CPickobearDlg, CDialog)
 	ON_BN_CLICKED(IDC_EDIT_COMPONENT, &CPickobearDlg::OnBnClickedEditComponent)
 	ON_BN_CLICKED(IDC_SWAP_HEAD_CAMERA, &CPickobearDlg::OnBnClickedSwapHeadCamera)
 	ON_BN_CLICKED(IDC_DELETE_FEEDER, &CPickobearDlg::OnBnClickedDeleteFeeder)
+	ON_BN_CLICKED(IDC_PCB_FLIP, &CPickobearDlg::OnBnClickedPcbFlip)
 END_MESSAGE_MAP()
 
 BEGIN_MESSAGE_MAP(CListCtrl_Components, CListCtrl)
@@ -277,7 +280,7 @@ BOOL CPickobearDlg::OnInitDialog()
 	m_FeederList.InsertColumn(6, _T("CX"),LVCFMT_CENTER,nInterval);
 	m_FeederList.InsertColumn(7, _T("CY"),LVCFMT_CENTER,nInterval);
 	m_FeederList.InsertColumn(8, _T("T"),LVCFMT_CENTER,(int)(nInterval/1.5));
-	m_FeederList.InsertColumn(9, _T("CNT"),LVCFMT_CENTER,(int)(nInterval));
+	m_FeederList.InsertColumn(9, _T("Index"),LVCFMT_CENTER,(int)(nInterval));
 
 
 	m_UpCamera.ResetContent();
@@ -1478,12 +1481,19 @@ void CListCtrl_Components::OnHdnItemdblclickList2(NMHDR *pNMHDR, LRESULT *pResul
 
 		// GotoXY in micrometers
 
-		pDlg->MoveHead(
-			(entry->x+pDlg->m_ComponentList.m_OffsetX),
-			(pDlg->m_ComponentList.m_OffsetY)+(entry->y)
+		// if board is flipped then invert y
+		if( pDlg->bFlip == false ) {
+			pDlg->MoveHead(
+				(entry->x+pDlg->m_ComponentList.m_OffsetX),
+				(entry->y)+(pDlg->m_ComponentList.m_OffsetY)
 			);
+		} else { 
+			pDlg->MoveHead(
+				(entry->x+pDlg->m_ComponentList.m_OffsetX),
+				(0-entry->y)+(pDlg->m_ComponentList.m_OffsetY)
+			);
+		}
 
-		// if board is flipped then invert x?
 	}
 
 	pDlg->GetDlgItem( IDC_OFFSET )->EnableWindow( TRUE );
@@ -1629,8 +1639,22 @@ void CPickobearDlg::OnBnClickedOffset()
 
 	// set the offset.
 	m_ComponentList.m_OffsetX = m_headXPos - m_ComponentList.entry->x; 
-	m_ComponentList.m_OffsetY = m_headYPos - m_ComponentList.entry->y;
 
+	// board is natural side up (top)
+	if( bFlip == false ) {
+		m_ComponentList.m_OffsetY = m_headYPos - (m_ComponentList.entry->y);
+
+		m_ComponentList.m_OffsetX_top = m_ComponentList.m_OffsetX;
+		m_ComponentList.m_OffsetY_top = m_ComponentList.m_OffsetY;
+
+	} else {
+
+		// board is upside down
+		m_ComponentList.m_OffsetY = m_headYPos - (0-m_ComponentList.entry->y);
+
+		m_ComponentList.m_OffsetX_bottom = m_ComponentList.m_OffsetX;
+		m_ComponentList.m_OffsetY_bottom = m_ComponentList.m_OffsetY;
+	}
 	GetDlgItem( IDC_OFFSET )->EnableWindow( FALSE );
 }
 
@@ -2356,6 +2380,9 @@ DWORD CPickobearDlg::goThread(void )
 			// next part
 			CurrentFeeder.AdvancePart();
 
+			// reflect quantities
+			m_FeederList.RebuildList();
+
 		} else {
 
 			CString Error ;			
@@ -2374,7 +2401,11 @@ DWORD CPickobearDlg::goThread(void )
 
 		_RPT1(_CRT_WARN,"Going to component %s\n", entry.label );
 
-		MoveHead(entry.x+m_ComponentList.m_OffsetX, entry.y+m_ComponentList.m_OffsetY - CAMERA_OFFSET);
+		if( bFlip == false ) {
+			MoveHead(entry.x+m_ComponentList.m_OffsetX, entry.y+m_ComponentList.m_OffsetY - CAMERA_OFFSET);
+		} else {
+			MoveHead(entry.x+m_ComponentList.m_OffsetX, (0-entry.y)+m_ComponentList.m_OffsetY - CAMERA_OFFSET);
+		}
 
 		if( entry.rot ) {
 
@@ -2578,6 +2609,9 @@ DWORD CPickobearDlg::goSingleThread(void )
 			// next part
 			CurrentFeeder.AdvancePart();
 
+			// reflect quantities
+			m_FeederList.RebuildList();
+
 		} else {
 
 			CString Error ;			
@@ -2598,7 +2632,12 @@ DWORD CPickobearDlg::goSingleThread(void )
 
 		_RPT1(_CRT_WARN,"goSingleThread: Going to component %s\n", entry.label );
 
-		MoveHead(entry.x+m_ComponentList.m_OffsetX, entry.y+m_ComponentList.m_OffsetY - CAMERA_OFFSET);
+	
+		if( bFlip == false ) {
+			MoveHead(entry.x+m_ComponentList.m_OffsetX, entry.y+m_ComponentList.m_OffsetY - CAMERA_OFFSET);
+		} else {
+			MoveHead(entry.x+m_ComponentList.m_OffsetX, (0-entry.y)+m_ComponentList.m_OffsetY - CAMERA_OFFSET);
+		}
 
 		if( entry.rot ) {
 
@@ -2653,7 +2692,11 @@ skip:;
 		Sleep( 500 );
 
 		// Move Camera to part
-		MoveHead(entry.x+m_ComponentList.m_OffsetX,entry.y+m_ComponentList.m_OffsetY );
+		if( bFlip == false ) {
+			MoveHead(entry.x+m_ComponentList.m_OffsetX, entry.y+m_ComponentList.m_OffsetY );
+		} else {
+			MoveHead(entry.x+m_ComponentList.m_OffsetX, (0-entry.y)+m_ComponentList.m_OffsetY );
+		}
 	}
 
 	// switch state to idle
@@ -2665,6 +2708,7 @@ skip:;
 	/// reset  the camera speed
 	m_CameraUpdateRate = CAMERA_DEFAULT_UPDATE_RATE_MS ;
 
+
 	return true;
 }
 
@@ -2673,3 +2717,17 @@ void CPickobearDlg::OnBnClickedDeleteFeeder()
 {
 }
 
+
+
+void CPickobearDlg::OnBnClickedPcbFlip()
+{
+	if ( bFlip == true ) {
+		bFlip = false;
+		m_ComponentList.m_OffsetX = m_ComponentList.m_OffsetX_top;
+		m_ComponentList.m_OffsetY = m_ComponentList.m_OffsetY_top;
+	} else {
+		bFlip = true;
+		m_ComponentList.m_OffsetX = m_ComponentList.m_OffsetX_bottom;
+		m_ComponentList.m_OffsetY = m_ComponentList.m_OffsetY_bottom;
+	}
+}

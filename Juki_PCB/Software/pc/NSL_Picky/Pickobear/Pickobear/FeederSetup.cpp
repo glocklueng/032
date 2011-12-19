@@ -217,6 +217,8 @@ void CFeederSetup::RebuildList ( void )
 
 	 _RPT1(_CRT_WARN, "Editing cell %s\r\n",feeder.label);
 
+	pDlg->m_FeedersModified = true;
+
 	 switch (  pItem->iColumn ) {
 		 case 0:
 

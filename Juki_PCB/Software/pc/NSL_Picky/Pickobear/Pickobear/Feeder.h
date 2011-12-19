@@ -32,9 +32,15 @@ public:
 
 
 	Feeder() {};
+	
+	
+	CListCtrl_FeederList::FeederDatabase  *entry;
 
 	// constructor from feeder
 	Feeder( CListCtrl_FeederList::FeederDatabase &e ) {
+
+		// store pointer to entry.
+		entry = &e;
 
 		SetPosition( e.x , e.y );
 		SetRightBottomXY (e.lx, e.ly);
@@ -43,7 +49,7 @@ public:
 		SetYCount( e.county );
 		SetCount( e.countx * e.county );
 		SetLabel( CString(e.label) );
-		SetPart(e.componentIndex );
+		SetPart( e.componentIndex );
 
 	}
 
@@ -236,10 +242,15 @@ public:
 	// Advance index to next part
 	bool AdvancePart( void )
 	{
+		_RPT2(_CRT_WARN,"AdvancePart: %d %d\n",current_part, number_of_parts);
+
 		// if there are any parts left available
 		if (current_part < number_of_parts ) {
 		
 			current_part ++ ;
+
+			entry->componentIndex = current_part;
+			
 
 			return true;
 		}
@@ -253,6 +264,7 @@ public:
 	bool PartsLeft( long &remaining )
 	{
 		remaining = ( number_of_parts - current_part );
+		_RPT1(_CRT_WARN,"PartsLeft: remaining %d\n",remaining);
 
 		return true;
 	}
@@ -308,8 +320,8 @@ public:
 		int ix,iy;
 
 		// take the current part index, calculate remainder against parts in ---> x 
-		ix = current_part % ( number_parts_x + 1 ) ;
-		iy = current_part / ( number_parts_x     ) ;
+		ix = current_part % ( number_parts_x  + 1 ) ;
+		iy = current_part / ( number_parts_x  + 1 ) ;
 
 		_RPT2(_CRT_WARN,"ix = %d, iy = %d\n",ix,iy);
 
