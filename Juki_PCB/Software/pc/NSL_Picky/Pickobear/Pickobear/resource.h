@@ -65,8 +65,6 @@
 #define IDC_SEND                        1049
 #define IDC_LOAD_FEEDER                 1050
 #define IDC_SAVE_FEEDER                 1051
-#define IDC_UPDATE2                     1052
-#define IDC_UPDATE3                     1053
 #define IDC_ADD_LOWERRIGHT              1054
 #define IDC_UP_CAMERA                   1056
 #define IDC_DOWN_CAMERA                 1057

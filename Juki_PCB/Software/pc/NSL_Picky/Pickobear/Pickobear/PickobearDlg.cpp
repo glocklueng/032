@@ -127,8 +127,6 @@ BEGIN_MESSAGE_MAP(CPickobearDlg, CDialog)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
 	//}}AFX_MSG_MAP
-	ON_EN_KILLFOCUS(IDC_THRESHOLD, &CPickobearDlg::OnEnChangeThreshold)
-	ON_EN_KILLFOCUS(IDC_THRESHOLD2, &CPickobearDlg::OnEnChangeThreshold2)
 	ON_BN_CLICKED(IDC_HOME, &CPickobearDlg::OnBnClickedHome)
 	ON_BN_CLICKED(IDC_RIGHT, &CPickobearDlg::OnBnClickedRight)
 	ON_BN_CLICKED(IDC_PARK, &CPickobearDlg::OnBnClickedPark)
@@ -163,8 +161,6 @@ BEGIN_MESSAGE_MAP(CPickobearDlg, CDialog)
 	ON_BN_CLICKED(IDC_UPDATE, &CPickobearDlg::OnBnClickedUpdate)
 	ON_BN_CLICKED(IDC_LOAD_FEEDER, &CPickobearDlg::OnBnClickedLoadFeeder)
 	ON_BN_CLICKED(IDC_SAVE_FEEDER, &CPickobearDlg::OnBnClickedSaveFeeder)
-	ON_BN_CLICKED(IDC_UPDATE2, &CPickobearDlg::OnBnClickedH2C)
-	ON_BN_CLICKED(IDC_UPDATE3, &CPickobearDlg::OnBnClickedC2H)
 	ON_CBN_SELCHANGE(IDC_UP_CAMERA, &CPickobearDlg::OnCbnSelchangeUpCamera)
 	ON_CBN_SELCHANGE(IDC_DOWN_CAMERA, &CPickobearDlg::OnCbnSelchangeDownCamera)
 	ON_BN_CLICKED(IDC_ADD_LOWERRIGHT, &CPickobearDlg::OnBnClickedAddLowerright)
@@ -410,7 +406,6 @@ BOOL CPickobearDlg::OnInitDialog()
 	m_Serial.Setup(CSerial::EBaud38400 );
 	EmptySerial();
 
-
 	m_TextEdit = new CTextDump();
 	m_TextEdit->Create(IDD_TEXT_DIALOG, this);
 	m_TextEdit->ShowWindow(SW_HIDE);
@@ -546,19 +541,6 @@ HCURSOR CPickobearDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
-
-void CPickobearDlg::OnEnChangeThreshold()
-{
-
-	UpdateData(TRUE);
-	m_Thresh1 = m_Threshold1;
-}
-
-void CPickobearDlg::OnEnChangeThreshold2()
-{
-	UpdateData(TRUE);
-	m_Thresh2 = m_Threshold2;
-}
 
 void CPickobearDlg::WriteSerial( const char *text)
 {
@@ -1853,21 +1835,6 @@ void CPickobearDlg::OnBnClickedSaveFeeder()
 {
 	m_FeederList.SaveDatabase();
 }
-
-// swap head and camera, this should be one function.
-void CPickobearDlg::OnBnClickedH2C()
-{
-	m_CameraMode = 1 - m_CameraMode;
-
-	MoveHead(m_headXPos,m_headYPos);
-}
-
-
-void CPickobearDlg::OnBnClickedC2H()
-{
-	MoveHead(m_headXPos,m_headYPos);
-}
-
 
 void CListCtrl_FeederList::OnContextMenu(CWnd*, CPoint point)
 {
