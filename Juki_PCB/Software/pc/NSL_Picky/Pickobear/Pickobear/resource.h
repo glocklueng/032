@@ -111,6 +111,7 @@
 #define IDC_COUNT_EDIT                  1075
 #define IDC_MACHINE_BUSY                1076
 #define IDC_CHECK1                      1077
+#define IDC_PCB_FLIP                    1077
 
 // Next default values for new objects
 // 

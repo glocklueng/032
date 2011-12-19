@@ -85,12 +85,22 @@ public:
 	long m_OffsetX;
 	long m_OffsetY;
 
+	long m_OffsetX_bottom;
+	long m_OffsetY_bottom;
+
+	long m_OffsetX_top;
+	long m_OffsetY_top;
+
 	int m_FeederId;
 
 public:
 	CListCtrl_Components() :
 	  m_OffsetX(0),
-	  m_OffsetY(0)
+	  m_OffsetY(0),
+	  m_OffsetX_top(0),
+	  m_OffsetY_top(0),
+	  m_OffsetX_bottom(0),
+	  m_OffsetY_bottom(0)
 	{
 		m_FeederId = -1;
 		m_Count = 0;
@@ -531,6 +541,9 @@ private:
 	int m_CameraMode ;
 public:
 
+	// if board is flipped
+	bool bFlip;
+
 		// tell thread to quit ( if true )
 	int m_Quit;
 
@@ -574,8 +587,20 @@ public:
 	bool HomeTest( void ); 
 
 
+	bool m_FeedersModified;
+	bool m_ComponentsModified;
+
+
 	~CPickobearDlg(){
 		
+		if (m_ComponentsModified ) {
+			m_ComponentList.SaveDatabase();
+		}
+
+		if (m_FeedersModified ) {
+			m_FeederList.SaveDatabase();
+		}
+
 		// tell thread to close
 		m_Quit = 1;
 		if( m_Serial.IsOpen() )
@@ -679,4 +704,5 @@ public:
 	afx_msg void OnBnClickedSwapHeadCamera();
 	int m_Side;
 	afx_msg void OnBnClickedDeleteFeeder();
+	afx_msg void OnBnClickedPcbFlip();
 };
