@@ -110,13 +110,13 @@ void CPickobearDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_X_POS, m_headXPos);
 	DDX_Text(pDX, IDC_Y_POS, m_headYPos);
 	DDX_Control(pDX, IDC_ROTATE, m_Rotation);
-	DDX_Control(pDX, IDC_LIST2, m_ComponentList);
+	DDX_Control(pDX, IDC_COMPONENT_LIST, m_ComponentList);
 	DDX_Text(pDX, IDC_GOX, m_GOX);
 	DDV_MinMaxLong(pDX,IDC_GOX,0,364550);
 	DDX_Text(pDX, IDC_GOY, m_GOY);
-	DDX_Control(pDX, IDC_LIST3, m_FeederList);
-	DDX_Control(pDX, IDC_COMBO1, m_UpCamera);
-	DDX_Control(pDX, IDC_COMBO2, m_DownCamera);
+	DDX_Control(pDX, IDC_FEEDER_LIST, m_FeederList);
+	DDX_Control(pDX, IDC_UP_CAMERA, m_UpCamera);
+	DDX_Control(pDX, IDC_DOWN_CAMERA, m_DownCamera);
 	DDX_Control(pDX, IDC_STEPSIZE, m_StepSize);
 	DDX_CBIndex(pDX, IDC_COMBO3, m_Side);
 }
@@ -127,7 +127,6 @@ BEGIN_MESSAGE_MAP(CPickobearDlg, CDialog)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
 	//}}AFX_MSG_MAP
-	ON_LBN_SELCHANGE(IDC_LIST1, &CPickobearDlg::OnLbnSelchangeList1)
 	ON_EN_KILLFOCUS(IDC_THRESHOLD, &CPickobearDlg::OnEnChangeThreshold)
 	ON_EN_KILLFOCUS(IDC_THRESHOLD2, &CPickobearDlg::OnEnChangeThreshold2)
 	ON_BN_CLICKED(IDC_HOME, &CPickobearDlg::OnBnClickedHome)
@@ -166,8 +165,8 @@ BEGIN_MESSAGE_MAP(CPickobearDlg, CDialog)
 	ON_BN_CLICKED(IDC_SAVE_FEEDER, &CPickobearDlg::OnBnClickedSaveFeeder)
 	ON_BN_CLICKED(IDC_UPDATE2, &CPickobearDlg::OnBnClickedH2C)
 	ON_BN_CLICKED(IDC_UPDATE3, &CPickobearDlg::OnBnClickedC2H)
-	ON_CBN_SELCHANGE(IDC_COMBO1, &CPickobearDlg::OnCbnSelchangeCombo1)
-	ON_CBN_SELCHANGE(IDC_COMBO2, &CPickobearDlg::OnCbnSelchangeCombo2)
+	ON_CBN_SELCHANGE(IDC_UP_CAMERA, &CPickobearDlg::OnCbnSelchangeUpCamera)
+	ON_CBN_SELCHANGE(IDC_DOWN_CAMERA, &CPickobearDlg::OnCbnSelchangeDownCamera)
 	ON_BN_CLICKED(IDC_ADD_LOWERRIGHT, &CPickobearDlg::OnBnClickedAddLowerright)
 	ON_CBN_SELCHANGE(IDC_STEPSIZE, &CPickobearDlg::OnCbnSelchangeStepsize)
 	ON_BN_CLICKED(IDC_EDITFEEDER, &CPickobearDlg::OnBnClickedEditfeeder)
@@ -178,6 +177,7 @@ BEGIN_MESSAGE_MAP(CPickobearDlg, CDialog)
 	ON_BN_CLICKED(IDC_SWAP_HEAD_CAMERA, &CPickobearDlg::OnBnClickedSwapHeadCamera)
 	ON_BN_CLICKED(IDC_DELETE_FEEDER, &CPickobearDlg::OnBnClickedDeleteFeeder)
 	ON_BN_CLICKED(IDC_PCB_FLIP, &CPickobearDlg::OnBnClickedPcbFlip)
+	ON_NOTIFY_EX_RANGE(TTN_NEEDTEXT, 0, 0xFFFF, OnToolTipNotify)
 END_MESSAGE_MAP()
 
 BEGIN_MESSAGE_MAP(CListCtrl_Components, CListCtrl)
@@ -226,6 +226,7 @@ BOOL CPickobearDlg::OnInitDialog()
 	CDialog::OnInitDialog();
 
 	// Add "About..." menu item to system menu.
+	EnableToolTips();
 
 	// IDM_ABOUTBOX must be in the system command range.
 	ASSERT((IDM_ABOUTBOX & 0xFFF0) == IDM_ABOUTBOX);
@@ -545,11 +546,6 @@ HCURSOR CPickobearDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
-
-void CPickobearDlg::OnLbnSelchangeList1()
-{
-	// TODO: Add your control notification handler code here
-}
 
 void CPickobearDlg::OnEnChangeThreshold()
 {
@@ -1443,9 +1439,14 @@ void CPickobearDlg::OnBnClickedFeeder()
 			delete m_pFeederDlg;
 			return;
 		}
-		m_FeederList.RebuildList();
+		
+//		m_FeederList.RebuildList();
 		m_pFeederDlg->ShowWindow(SW_SHOW);
+
 	} else {
+
+		m_pFeederDlg->RebuildList();
+
 		if( !m_pFeederDlg->IsWindowVisible() )
 			m_pFeederDlg->ShowWindow(SW_SHOW);
 
@@ -1921,7 +1922,7 @@ afx_msg LRESULT CPickobearDlg::OnSerialMsg (WPARAM wParam, LPARAM lParam)
 
 //bottom camera
 
-void CPickobearDlg::OnCbnSelchangeCombo2()
+void CPickobearDlg::OnCbnSelchangeDownCamera()
 {
 	CRegKey regKey;
 	DWORD regEntry = 100;
@@ -1949,7 +1950,7 @@ void CPickobearDlg::OnCbnSelchangeCombo2()
 
 //top camera
 
-void CPickobearDlg::OnCbnSelchangeCombo1()
+void CPickobearDlg::OnCbnSelchangeUpCamera()
 {
 	UpdateData();
 	CString str;
@@ -2730,4 +2731,153 @@ void CPickobearDlg::OnBnClickedPcbFlip()
 		m_ComponentList.m_OffsetX = m_ComponentList.m_OffsetX_bottom;
 		m_ComponentList.m_OffsetY = m_ComponentList.m_OffsetY_bottom;
 	}
+}
+
+
+BOOL CPickobearDlg::OnToolTipNotify( UINT id,
+                                  NMHDR * pNMHDR,
+                                  LRESULT * pResult )
+{
+    // Get the tooltip structure.
+    TOOLTIPTEXT *pTTT = (TOOLTIPTEXT *)pNMHDR;
+
+    // Actually the idFrom holds Control's handle.
+    UINT CtrlHandle = pNMHDR->idFrom;
+
+    // Check once again that the idFrom holds handle itself.
+    if (pTTT->uFlags & TTF_IDISHWND)
+    {
+        // Get the control's ID.
+        UINT nID = ::GetDlgCtrlID( HWND( CtrlHandle ));
+
+        // Now you have the ID. depends on control,
+        // set your tooltip message.
+        switch( nID )
+        {
+        case IDC_GO:
+                // Set the tooltip text.
+                pTTT->lpszText = _T("This starts the pick and place operation after everything has been setup, runs through one side");
+            break;
+
+        case IDC_HEAD:
+            // Set the tooltip text.
+            pTTT->lpszText = _T("Toggles head up and down, be careful with this one\nIt is useful for teaching location but typically better to use the camera");
+            break;
+
+		case IDC_LEFT:
+            pTTT->lpszText = _T("Move head to the Left by <steps>");
+            break;
+		case IDC_RIGHT:
+            pTTT->lpszText = _T("Move head to the Right by <steps>");
+            break;
+		case IDC_UP:
+            pTTT->lpszText = _T("Move head to the Up by <steps>");
+            break;
+		case IDC_DOWN:
+            pTTT->lpszText = _T("Move head to the Down by <steps>");
+            break;
+
+		case IDC_TOOL1:
+            pTTT->lpszText = _T("Loads tool A");
+            break;
+
+		case IDC_TOOL2:
+            pTTT->lpszText = _T("Loads tool A");
+            break;
+
+		case IDC_TOOL3:
+            pTTT->lpszText = _T("Loads tool A");
+            break;
+
+		case IDC_TOOL4:
+            pTTT->lpszText = _T("Loads tool A");
+            break;
+
+		case IDC_TOOL5:
+            pTTT->lpszText = _T("Loads tool A");
+            break;
+
+		case IDC_TOOL6:
+            pTTT->lpszText = _T("Loads tool A");
+            break;
+		
+		case IDC_FEEDER_GRID_EDIT:
+            pTTT->lpszText = _T("Pops up the feeder editing grid");
+            break;
+		
+		case IDC_GOFF:
+            pTTT->lpszText = _T("Move head to current X,Y offset");
+            break;
+		
+		case IDC_EDIT_COMPONENT:
+            pTTT->lpszText = _T("Brings up edit component dialog");
+            break;
+		
+		case IDC_ZERO:
+            pTTT->lpszText = _T("Move head to 0,0 position (same as home, but doesn't home, useful for testing for any accuracy loses)");
+            break;
+		
+		case IDC_UPCAM:
+            pTTT->lpszText = _T("Up Camera");
+            break;
+
+		case IDC_IMPORT:
+            pTTT->lpszText = _T("Import CSV file into components grid");
+            break;
+
+		case IDC_SAVE:
+            pTTT->lpszText = _T("Save components to file");
+            break;
+
+		case IDC_LOAD:
+            pTTT->lpszText = _T("Load components from file");
+            break;
+
+		case IDC_OFFSET:
+            pTTT->lpszText = _T("Set offset of component selected in components list");
+            break;
+
+		case IDC_GO2:
+            pTTT->lpszText = _T("Places single or multiple parts that are selected in the component list");
+            break;
+
+		case IDC_DOWNCAM:
+            pTTT->lpszText = _T("Down Camera");
+            break;
+
+		case IDC_PCB_FLIP:
+            pTTT->lpszText = _T("Set when the pcb is flipped to the back side\n\\nAlso toggles offets so you can have different offsets for each side of PCB");
+            break;
+
+		case IDC_XL1:
+            pTTT->lpszText = _T("X limit 1 ( left side)");
+            break;
+
+		case IDC_XL2:
+            pTTT->lpszText = _T("X limit 2 ( right side)");
+            break;
+
+		case IDC_YL1:
+            pTTT->lpszText = _T("Y limit 1 ( near side)");
+            break;
+
+		case IDC_YL2:
+            pTTT->lpszText = _T("Y limit 2 ( far side)");
+            break;
+
+		case IDC_HOME:
+            pTTT->lpszText = _T("Home the machine (bug: fails on long travels homes, just reclick it)");
+            break;
+
+		default:
+            // Set the tooltip text.
+            pTTT->lpszText = _T("Not yet documented");
+            break;
+        }
+
+        return TRUE;
+    }
+
+    // Not handled.
+    return FALSE;
 }

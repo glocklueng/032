@@ -688,11 +688,11 @@ public:
 	afx_msg void OnBnClickedC2H();
 	CComboBox m_UpCamera;
 	CComboBox m_DownCamera;
-
+	afx_msg BOOL OnToolTipNotify( UINT id,NMHDR* pNMHDR,LRESULT* pResult );
 	void GotoTestPad( void );
 	afx_msg LRESULT OnSerialMsg (WPARAM wParam, LPARAM lParam);
-	afx_msg void OnCbnSelchangeCombo1();
-	afx_msg void OnCbnSelchangeCombo2();
+	afx_msg void OnCbnSelchangeDownCamera();
+	afx_msg void OnCbnSelchangeUpCamera();
 	afx_msg void OnBnClickedAddLowerright();
 	CComboBox m_StepSize;
 	afx_msg void OnCbnSelchangeStepsize();
