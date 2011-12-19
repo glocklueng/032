@@ -21,6 +21,7 @@ CFeederSetup::~CFeederSetup()
 {
 }
 
+
 void CFeederSetup::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
@@ -30,6 +31,7 @@ void CFeederSetup::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CFeederSetup, CDialog)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
+	ON_WM_DESTROY()
 	//}}AFX_MSG_MAP
 	ON_NOTIFY(GVN_ENDLABELEDIT, IDC_FEEDER_GRID_EDIT, OnGridEndEdit)
 END_MESSAGE_MAP()
@@ -134,6 +136,13 @@ void CFeederSetup::ResetFeederGrid( void )
 	}
 }
 
+void CFeederSetup::OnDestroy()
+{
+    GetParent()->SendMessage(UWM_IDD_FEEDERS_CLOSED);
+    CDialog::OnDestroy();
+}
+
+
 void CFeederSetup::AddRow( CListCtrl_FeederList::FeederDatabase *entry ) 
 {
 	int i ;
@@ -184,7 +193,7 @@ void CFeederSetup::RebuildList ( void )
 	for ( unsigned int i = 0 ; i < pDlg->m_FeederList.m_Count ; i ++ ) {
 
 		// fetch entry 
-		pDlg->m_FeederList.entry = &pDlg->m_FeederList.m_Database.at( i  ) ;
+		pDlg->m_FeederList.entry = &pDlg->m_FeederList.mFeederDatabase.at( i  ) ;
 		AddRow( pDlg->m_FeederList.entry ) ;
 
 	}
@@ -267,8 +276,8 @@ void CFeederSetup::RebuildList ( void )
 			 break;
 
 		 case 9: 
-			 if( m_FeederList.at ( pItem->iRow-1 ).componentIndex != (unsigned char )pCell->GetNumber() )
-				 m_FeederList.at ( pItem->iRow-1 ).componentIndex = (unsigned char )pCell->GetNumber();
+			 if( m_FeederList.at ( pItem->iRow-1 ).componentIndex != (unsigned int )pCell->GetNumber() )
+				 m_FeederList.at ( pItem->iRow-1 ).componentIndex = (unsigned int )pCell->GetNumber();
 			 break;
 	 }
 
@@ -282,3 +291,20 @@ void CFeederSetup::RebuildList ( void )
 
 	 *pResult = (bAcceptChange)? 0 : -1;
  }
+
+    void CFeederSetup::OnCancel()
+      {
+       // CDialog::OnCancel();  // MUST remove this line
+       ShowWindow(SW_HIDE);
+      }
+    void CFeederSetup::OnOK()
+      {
+       // CDialog::OnOK(); // MUST remove this line
+       ShowWindow(SW_HIDE);
+      }
+
+	   void CFeederSetup::OnClose()
+      {
+       // CDialog::OnClose(); // MUST remove this line
+       ShowWindow(SW_HIDE);
+      }

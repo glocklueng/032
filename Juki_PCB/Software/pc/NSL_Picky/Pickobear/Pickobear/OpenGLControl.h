@@ -2,11 +2,9 @@
 
 #pragma once
 #include "afxwin.h"
-#pragma comment(lib,"glu32.lib")
-#pragma comment(lib,"opengl32.lib")
 
-#include <gl/gl.h>
-#include <gl/glu.h>
+
+#include "opencv2/imgproc/imgproc.hpp"
 
 class CPickobearDlg;
 
