@@ -643,8 +643,6 @@ public:
 	long m_headYPos;
 	double m_Threshold1;
 	double m_Threshold2;
-	afx_msg void OnEnChangeThreshold();
-	afx_msg void OnEnChangeThreshold2();
 	afx_msg void OnBnClickedHome();
 	afx_msg void OnBnClickedRight();
 	afx_msg void OnBnClickedPark();
@@ -684,8 +682,6 @@ public:
 	afx_msg void OnBnClickedUpdate();
 	afx_msg void OnBnClickedLoadFeeder();
 	afx_msg void OnBnClickedSaveFeeder();
-	afx_msg void OnBnClickedH2C();
-	afx_msg void OnBnClickedC2H();
 	CComboBox m_UpCamera;
 	CComboBox m_DownCamera;
 	afx_msg BOOL OnToolTipNotify( UINT id,NMHDR* pNMHDR,LRESULT* pResult );
