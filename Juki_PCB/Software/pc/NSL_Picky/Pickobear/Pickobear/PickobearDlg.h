@@ -24,7 +24,7 @@ enum {
 #define MAX_X_TABLE		( 190000 )
 #define MAX_Y_TABLE		( 190000 )
 
-#define CAMERA_DEFAULT_UPDATE_RATE_MS		( 100 )
+#define CAMERA_DEFAULT_UPDATE_RATE_MS		( 30 )
 #define CAMERA_SLOW_UPDATE_RATE_MS			( 300 )
 
 #define pulsestoum(x) (x*25)
