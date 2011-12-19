@@ -23,14 +23,7 @@
 
 #include <afxwin.h>         // MFC core and standard components
 #include <afxext.h>         // MFC extensions
-
-
 #include <afxdisp.h>        // MFC Automation classes
-
-#include <vector>
-
-#include "resource.h"
-
 
 #ifndef _AFX_NO_OLE_SUPPORT
 #include <afxdtctl.h>           // MFC support for Internet Explorer 4 Common Controls
@@ -41,19 +34,29 @@
 
 #include <afxcontrolbars.h>     // MFC support for ribbons and control bars
 
+// C++ headers
+#include <vector>
+
+#include <gl/gl.h>
+#include <gl/glu.h>
+
+#define min(a, b)  (((a) < (b)) ? (a) : (b))
+#define max(a, b)  (((a) > (b)) ? (a) : (b))
+
+
+// Pickobear specific headers
+#include "resource.h"
+#include "Feeder.h"
 #include "csv_parser.h"
 
 // http://muonics.net/school/spring05/videoInput/
 #include "VideoInput/include/videoInput.h"
+#include "opencv2/imgproc/imgproc.hpp"
 
 #include <cv.h>
 #include <highgui.h>
-#define min(a, b)  (((a) < (b)) ? (a) : (b))
-#define max(a, b)  (((a) > (b)) ? (a) : (b))
 
 #include "Grid/GridCtrl.h"
-
-#include "opencv2/imgproc/imgproc.hpp"
 
 #include "OpenGLControl.h"
 #include "TextDump.h"
@@ -73,7 +76,8 @@
 
 #include "EditComponent.h"
 
-
+#pragma comment(lib,"glu32.lib")
+#pragma comment(lib,"opengl32.lib")
 #pragma comment(lib,"opencv_highgui231.lib")
 #pragma comment(lib,"opencv_imgproc231.lib")
 #pragma comment(lib,"opencv_core231.lib")

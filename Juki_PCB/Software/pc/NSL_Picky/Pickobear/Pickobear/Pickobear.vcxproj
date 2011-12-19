@@ -144,6 +144,7 @@
     <ClInclude Include="Counts.h" />
     <ClInclude Include="csv_parser.h" />
     <ClInclude Include="EditComponent.h" />
+    <ClInclude Include="Feeder.h" />
     <ClInclude Include="FeederEdit.h" />
     <ClInclude Include="FeederSetup.h" />
     <ClInclude Include="Grid\CellRange.h" />

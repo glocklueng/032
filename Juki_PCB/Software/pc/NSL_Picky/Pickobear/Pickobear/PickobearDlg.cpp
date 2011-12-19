@@ -1,6 +1,31 @@
 //
 // PickobearDlg.cpp : implementation file
 //
+// charliex - null space labs 032.la
+//
+// Todo list :-
+//   add items to todo list
+//   remove all the utf8 buffers, choose CString or std::string ?
+//   fully implement new feeder classes
+//   update component classes to make it simpler
+//   too much relies on the index in the CListCtrl's
+//   make busy status reflect in GUI
+//   add a status print somewhere in the GUI
+//   more error checking
+//   figure out the problem with CheckX / CheckAck and see if it can be handled better
+//   add last feeder XY to Grbl and add new GCODE parameter to set feeder
+//   more help documentation
+//   document GCODE
+//   add 'Append' option to feeder load/import
+//   plain text for all load/save files ? XML i guess since everyones going with that.
+//   finish adding machine plot area to GUI (simulate)
+//   double check rotation
+//   add picker for serial port, add registry key, add more error checking for serial port
+//   more camera controls, fine tune the slow/fast modes
+//   tidy up headers
+//   add localisation to strings?
+//   reflect limit switches in GUI
+//   handle flipped pcbs!! (Most important)
 
 #include "stdafx.h"
 #include "Pickobear.h"
@@ -15,6 +40,7 @@ using namespace Gdiplus;
 #define new DEBUG_NEW
 #endif
 
+
 // CAboutDlg dialog used for App About
 
 class CAboutDlg : public CDialog
@@ -22,13 +48,13 @@ class CAboutDlg : public CDialog
 public:
 	CAboutDlg();
 
-// Dialog Data
+	// Dialog Data
 	enum { IDD = IDD_ABOUTBOX };
 
-	protected:
+protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 
-// Implementation5
+	// Implementation5
 protected:
 	DECLARE_MESSAGE_MAP()
 };
@@ -64,14 +90,15 @@ CPickobearDlg::CPickobearDlg(CWnd* pParent /*=NULL*/)
 	, m_Speed(700)
 	, m_CameraMode(1)
 	, m_Homed(false)
-	, m_CameraUpdateRate(10)
+	, m_CameraUpdateRate(CAMERA_DEFAULT_UPDATE_RATE_MS)
 	, bSetWaitDone(false)
 	, bCameraHead( false )
 	, m_Side(0)
-	, m_Simulate(false)
+	, bBusy(false)
+	, m_Simulate(true)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
-//	m_Simulate = true;
+	//	m_Simulate = true;
 }
 
 void CPickobearDlg::DoDataExchange(CDataExchange* pDX)
@@ -151,12 +178,12 @@ BEGIN_MESSAGE_MAP(CPickobearDlg, CDialog)
 END_MESSAGE_MAP()
 
 BEGIN_MESSAGE_MAP(CListCtrl_Components, CListCtrl)
-    ON_NOTIFY_REFLECT(NM_DBLCLK, OnHdnItemdblclickList2) 
+	ON_NOTIFY_REFLECT(NM_DBLCLK, OnHdnItemdblclickList2) 
 	ON_NOTIFY_REFLECT(NM_RCLICK ,  &CListCtrl_Components::OnNMRClickList2)
 END_MESSAGE_MAP()
 
 BEGIN_MESSAGE_MAP(CListCtrl_FeederList, CListCtrl)
-    ON_NOTIFY_REFLECT(NM_DBLCLK, OnHdnItemdblclickList2) 
+	ON_NOTIFY_REFLECT(NM_DBLCLK, OnHdnItemdblclickList2) 
 	ON_WM_CONTEXTMENU()
 END_MESSAGE_MAP()
 
@@ -185,7 +212,7 @@ void CListCtrl_FeederList::PreSubclassWindow()
 }
 
 // CPickobearDlg message handlers
- 
+
 
 
 static const WCHAR *pszName = L"cameras";
@@ -219,7 +246,7 @@ BOOL CPickobearDlg::OnInitDialog()
 	//  when the application's main window is not a dialog
 	SetIcon(m_hIcon, TRUE);			// Set big icon
 	SetIcon(m_hIcon, FALSE);		// Set small icon		
-	
+
 	CRect rect,rect1;
 
 	m_ComponentList.GetClientRect(&rect);
@@ -235,7 +262,7 @@ BOOL CPickobearDlg::OnInitDialog()
 	m_ComponentList.InsertColumn(7, _T("L"),		LVCFMT_CENTER,nInterval);
 
 	m_Rotation.SetRange(0,360);
-		
+
 	m_FeederList.GetClientRect(&rect);
 	nInterval =( rect.Width() / 10 );
 
@@ -255,19 +282,19 @@ BOOL CPickobearDlg::OnInitDialog()
 
 	m_UpCamera.ResetContent();
 	m_DownCamera.ResetContent();
-		
-	int numDevices = VI.listDevices();
-		
 
-	for( int i = 0 ; i < numDevices ; i++ ) {
-	
+	DWORD numDevices = VI.listDevices();
+
+
+	for( DWORD i = 0 ; i < numDevices ; i++ ) {
+
 		_RPT2(_CRT_WARN,"%d) Camera name is [%s]\n",i, VI.getDeviceName( i  ));
 
 		m_UpCamera.AddString( CString(VI.getDeviceName( i  )) );
 		m_DownCamera.AddString( CString( VI.getDeviceName( i  ) ));
 
 	}
-	
+
 	CRegKey regKey;
 	DWORD regEntry = 100;
 	long lResult;
@@ -297,7 +324,7 @@ BOOL CPickobearDlg::OnInitDialog()
 	if ( regEntry > numDevices-1 ) {
 		regEntry = 0;
 	}
-	
+
 	if( CB_ERR  == m_UpCamera.SetCurSel( regEntry ) ) {
 		_RPT0(_CRT_WARN,"Error\n");
 	}
@@ -341,8 +368,8 @@ BOOL CPickobearDlg::OnInitDialog()
 		// then close the registry key
 		regKey.Close();
 	}
-	
-	
+
+
 	if ( regEntry > numDevices-1 ) regEntry = 0;
 
 	if( CB_ERR  == m_DownCamera.SetCurSel( regEntry ) ) {
@@ -359,15 +386,15 @@ BOOL CPickobearDlg::OnInitDialog()
 	ScreenToClient(rect);
 
 	// Create OpenGL Control window
-	 m_UpCameraWindow.oglCreate( rect, rect1, this, m_UpCamera.GetCurSel());
-	
+	m_UpCameraWindow.oglCreate( rect, rect1, this, m_UpCamera.GetCurSel());
+
 	// Get size and position of the template textfield we created before in the dialog editor
 	GetDlgItem(IDC_CAM2)->GetWindowRect(rect);
 	GetDlgItem(IDC_CAM2)->GetWindowRect(rect1);
 
 	// Convert screen coordinates to client coordinates
 	ScreenToClient(rect);
-	
+
 	// Create OpenGL Control window	
 	m_DownCameraWindow.oglCreate( rect, rect1, this,m_DownCamera.GetCurSel() );
 
@@ -379,7 +406,7 @@ BOOL CPickobearDlg::OnInitDialog()
 	m_Serial.Setup(CSerial::EBaud38400 );
 	EmptySerial();
 
-	
+
 	m_TextEdit = new CTextDump();
 	m_TextEdit->Create(IDD_TEXT_DIALOG, this);
 	m_TextEdit->ShowWindow(SW_HIDE);
@@ -399,17 +426,17 @@ BOOL CPickobearDlg::OnInitDialog()
 #endif
 
 	// Setup the OpenGL Window's timer to render
-// threaded
-//	m_oglWindow.m_unpTimer = m_oglWindow.SetTimer(1, 100, 0);
+	// threaded
+	//	m_oglWindow.m_unpTimer = m_oglWindow.SetTimer(1, 100, 0);
 	if( m_DownCameraWindow.m_camera != -1 )
 		m_DownCameraWindow.m_unpTimer = m_DownCameraWindow.SetTimer(1, 300, 0);
 
-		
+
 	m_StepSize.ResetContent();
 
 
 	for( int i = 0; i < 1010 ; i+=10 ) {
-	
+
 		CString num;
 
 		num.Format(L"%d",i);
@@ -418,7 +445,7 @@ BOOL CPickobearDlg::OnInitDialog()
 		else
 			m_StepSize.AddString( num );
 	}
-	
+
 	if ((lResult = regKey.Open(HKEY_CURRENT_USER,  _T("Software\\NullSpaceLabs\\PickoBear\\Settings"))) != ERROR_SUCCESS)
 		lResult = regKey.Create(HKEY_CURRENT_USER, _T("Software\\NullSpaceLabs\\PickoBear\\Settings"));
 
@@ -441,9 +468,9 @@ BOOL CPickobearDlg::OnInitDialog()
 		regKey.Close();
 	}
 
-	if ( regEntry > m_StepSize.GetCount()-1 ) 
+	if ( regEntry > (DWORD)m_StepSize.GetCount()-1 ) 
 		regEntry = 0;
-	
+
 	if( CB_ERR  == m_StepSize.SetCurSel( regEntry ) ) {
 		_RPT0(_CRT_WARN,"Error\n");
 	}
@@ -540,7 +567,7 @@ void CPickobearDlg::WriteSerial( const char *text)
 	CString out( text  );
 	m_TextEdit->Print( out ) ;
 
-//	m_Simulate = true;
+	//	m_Simulate = true;
 
 	if( m_Simulate == false ) 
 		m_Serial.Write( text );
@@ -558,64 +585,64 @@ void CPickobearDlg::OnBnClickedHome()
 		Sleep( 100 );
 
 		switch( CheckAck("ok") ) {
-			case 'f':
+		case 'f':
 
-				m_headXPos = -1 ; m_headYPos = -1;
+			m_headXPos = -1 ; m_headYPos = -1;
 
-				if( MessageBox(_T("Home failed!!"),_T("Error"),IDOK|IDRETRY) == IDRETRY)
-					pass = false;
-				else
-					pass = true;
-			
-				break;
-			case 'p':
-			
-				m_headXPos = 0 ; m_headYPos =0;
-
-				// enable the GO button
-				GO.EnableWindow( TRUE ) ;
-
-				GetDlgItem( IDC_SWAP_HEAD_CAMERA )->EnableWindow( TRUE );
-
-
-				// enable tool changers
-				GetDlgItem( IDC_TOOL1 )->EnableWindow( TRUE );
-				GetDlgItem( IDC_TOOL2 )->EnableWindow( TRUE );
-				GetDlgItem( IDC_TOOL3 )->EnableWindow( TRUE );
-				GetDlgItem( IDC_TOOL4 )->EnableWindow( TRUE );
-				GetDlgItem( IDC_TOOL5 )->EnableWindow( TRUE );
-				GetDlgItem( IDC_TOOL6 )->EnableWindow( TRUE );
-
-				// Park enable
-				GetDlgItem( IDC_PARK )->EnableWindow( TRUE );
-
-				// Cursor pad
-				GetDlgItem( IDC_UPLEFT )->EnableWindow( TRUE );
-				GetDlgItem( IDC_UPRIGHT )->EnableWindow( TRUE );
-				GetDlgItem( IDC_LEFTDOWN )->EnableWindow( TRUE );
-				GetDlgItem( IDC_BOTTOMLEFT )->EnableWindow( TRUE );
-				GetDlgItem( IDC_UP )->EnableWindow( TRUE );
-				GetDlgItem( IDC_DOWN )->EnableWindow( TRUE );
-				GetDlgItem( IDC_LEFT )->EnableWindow( TRUE );
-				GetDlgItem( IDC_RIGHT )->EnableWindow( TRUE );
-
-				// head up/down
-				GetDlgItem( IDC_HEAD )->EnableWindow( TRUE );
-
-				//zero
-				GetDlgItem( IDC_ZERO )->EnableWindow( TRUE );
-
-				GetDlgItem( IDC_GOXY )->EnableWindow( TRUE );
-				GetDlgItem( IDC_GOFF )->EnableWindow( TRUE );
-
-				GetDlgItem( IDC_GO2 )->EnableWindow( TRUE );
-			
-				m_Homed = true ;
-			
+			if( MessageBox(_T("Home failed!!"),_T("Error"),IDOK|IDRETRY) == IDRETRY)
+				pass = false;
+			else
 				pass = true;
-				break;
-			default:
-				break;
+
+			break;
+		case 'p':
+
+			m_headXPos = 0 ; m_headYPos =0;
+
+			// enable the GO button
+			GO.EnableWindow( TRUE ) ;
+
+			GetDlgItem( IDC_SWAP_HEAD_CAMERA )->EnableWindow( TRUE );
+
+
+			// enable tool changers
+			GetDlgItem( IDC_TOOL1 )->EnableWindow( TRUE );
+			GetDlgItem( IDC_TOOL2 )->EnableWindow( TRUE );
+			GetDlgItem( IDC_TOOL3 )->EnableWindow( TRUE );
+			GetDlgItem( IDC_TOOL4 )->EnableWindow( TRUE );
+			GetDlgItem( IDC_TOOL5 )->EnableWindow( TRUE );
+			GetDlgItem( IDC_TOOL6 )->EnableWindow( TRUE );
+
+			// Park enable
+			GetDlgItem( IDC_PARK )->EnableWindow( TRUE );
+
+			// Cursor pad
+			GetDlgItem( IDC_UPLEFT )->EnableWindow( TRUE );
+			GetDlgItem( IDC_UPRIGHT )->EnableWindow( TRUE );
+			GetDlgItem( IDC_LEFTDOWN )->EnableWindow( TRUE );
+			GetDlgItem( IDC_BOTTOMLEFT )->EnableWindow( TRUE );
+			GetDlgItem( IDC_UP )->EnableWindow( TRUE );
+			GetDlgItem( IDC_DOWN )->EnableWindow( TRUE );
+			GetDlgItem( IDC_LEFT )->EnableWindow( TRUE );
+			GetDlgItem( IDC_RIGHT )->EnableWindow( TRUE );
+
+			// head up/down
+			GetDlgItem( IDC_HEAD )->EnableWindow( TRUE );
+
+			//zero
+			GetDlgItem( IDC_ZERO )->EnableWindow( TRUE );
+
+			GetDlgItem( IDC_GOXY )->EnableWindow( TRUE );
+			GetDlgItem( IDC_GOFF )->EnableWindow( TRUE );
+
+			GetDlgItem( IDC_GO2 )->EnableWindow( TRUE );
+
+			m_Homed = true ;
+
+			pass = true;
+			break;
+		default:
+			break;
 		}
 	} while( pass == false );
 
@@ -627,10 +654,10 @@ bool BuildGCodeMove( char *output, int length, int mode , long x, long y, long s
 	long double tx,ty;
 
 	ASSERT( output) ;
-	
+
 	// limit the move
 	if( x > 364550 ) {
-		
+
 		int ret = AfxMessageBox(L"X out of limits, press OK to change to stay within limits, or cancel to stop move",MB_OKCANCEL);
 		if( ret == IDCANCEL ) {
 			sprintf_s(output,length,"");
@@ -688,7 +715,7 @@ bool CPickobearDlg::MoveHeadSlow(  long x, long y )
 	}
 again:;
 
-//	_RPT5(_CRT_WARN,"current pos = %dum,%dum\nGoing to %dum,%dum\n%s\n",m_headXPos,m_headYPos,x,y,buffer);
+	//	_RPT5(_CRT_WARN,"current pos = %dum,%dum\nGoing to %dum,%dum\n%s\n",m_headXPos,m_headYPos,x,y,buffer);
 	WriteSerial(buffer);
 
 	if( CheckX() == false ) {
@@ -734,10 +761,10 @@ bool CPickobearDlg::MoveHead(  long x, long y )
 
 again:;
 
-//	_RPT5(_CRT_WARN,"current pos = %dum,%dum\nGoing to %dum,%dum\n%s\n",m_headXPos,m_headYPos,x,y,buffer);
+	//	_RPT5(_CRT_WARN,"current pos = %dum,%dum\nGoing to %dum,%dum\n%s\n",m_headXPos,m_headYPos,x,y,buffer);
 	WriteSerial(buffer);
 
-	
+
 	if( CheckX() == false ) {
 		int ret = AfxMessageBox(L"MoveHead: Move Failed",MB_RETRYCANCEL);
 		if(ret == IDRETRY ) 
@@ -777,7 +804,7 @@ again:;
 		if( ret == IDCANCEL ) 
 			return false;
 	}
-		
+
 	SetCurrentPosition( m_headXPos + x, m_headYPos+y);
 
 	return true;
@@ -803,7 +830,7 @@ char CPickobearDlg::CheckX( void )
 	int ret;
 
 	// wait for ack. needs a timeout
-	
+
 	int counter = 100;
 
 	if( m_Simulate == true ) {
@@ -811,25 +838,25 @@ char CPickobearDlg::CheckX( void )
 	}
 
 	do { 
-		
+
 		counter --;
 
 		ret = m_Serial.Read( &ch, 1, &length );
-		
+
 		if( length == 0 ) 
 			Sleep( 100 );
-		
+
 		switch ( ret ) {
 
-			case ERROR_SUCCESS:
-				_RPT1(_CRT_WARN,"%c ", ch);
-				break;
-			default:
-				break;
+		case ERROR_SUCCESS:
+			_RPT1(_CRT_WARN,"%c ", ch);
+			break;
+		default:
+			break;
 		}
 
 	} while( ch!='X' && (counter ) );
-	
+
 	if( counter == 0 ) 
 		_RPT1(_CRT_WARN,"\r\nCheckX: Timed out\n", ch);
 	else
@@ -853,9 +880,9 @@ char CPickobearDlg::CheckAck( char *ack1 )
 	int ret;
 
 	unsigned char buffer[ 10 ];
-	
+
 	if( m_Simulate == true ) 
-			return 'p';
+		return 'p';
 
 	memset(buffer,0,sizeof(buffer));
 
@@ -879,7 +906,7 @@ char CPickobearDlg::CheckAck( char *ack1 )
 		}
 
 	} while(ch!='\n' && (counter != 0 ));
-	
+
 	if (counter == 0 ) {
 		_RPT1(_CRT_WARN,"Timed out\n", buffer);
 		return 'f';
@@ -906,7 +933,7 @@ void CPickobearDlg::OnBnClickedPark()
 
 void CPickobearDlg::GotoTestPad( void )
 {
-  MoveHeadSlow(pulsestoum(12308),pulsestoum(5002));
+	MoveHeadSlow(pulsestoum(12308),pulsestoum(5002));
 }
 
 unsigned char CPickobearDlg::VacuumTest( void )
@@ -1032,7 +1059,7 @@ void CPickobearDlg::OnBnClickedUp()
 	if( stepsize == 0 ) stepsize = 1;
 
 	m_headYPos += stepsize;
-	
+
 	MoveHead( m_headXPos, m_headYPos) ;
 }
 
@@ -1043,7 +1070,7 @@ void CPickobearDlg::OnBnClickedDown()
 	if( stepsize == 0 ) stepsize = 1;
 
 	m_headYPos -= stepsize;
-	
+
 	MoveHead( m_headXPos, m_headYPos) ;
 }
 
@@ -1054,7 +1081,7 @@ void CPickobearDlg::OnBnClickedLeft()
 	if( stepsize == 0 ) stepsize = 1;
 
 	m_headXPos -= stepsize;
-	
+
 	MoveHead( m_headXPos, m_headYPos) ;
 }
 
@@ -1065,7 +1092,7 @@ void CPickobearDlg::OnBnClickedRight()
 	if( stepsize == 0 ) stepsize = 1;
 
 	m_headXPos += stepsize;
-	
+
 	MoveHead( m_headXPos, m_headYPos) ;
 }
 
@@ -1077,7 +1104,7 @@ void CPickobearDlg::OnBnClickedUpleft()
 
 	m_headXPos -= stepsize;
 	m_headYPos += stepsize;
-	
+
 	MoveHead( m_headXPos, m_headYPos) ;
 }
 
@@ -1092,7 +1119,7 @@ void CPickobearDlg::OnBnClickedUpright()
 
 	m_headXPos += stepsize;
 	m_headYPos += stepsize;
-	
+
 	MoveHead( m_headXPos, m_headYPos) ;
 }
 
@@ -1106,7 +1133,7 @@ void CPickobearDlg::OnBnClickedLeftdown()
 
 	m_headXPos -= stepsize;
 	m_headYPos += stepsize;
-	
+
 	MoveHead( m_headXPos, m_headYPos) ;
 }
 
@@ -1119,7 +1146,7 @@ void CPickobearDlg::OnBnClickedBottomleft()
 
 	m_headXPos -= stepsize;
 	m_headYPos -= stepsize;
-	
+
 	MoveHead( m_headXPos, m_headYPos) ;
 }
 
@@ -1139,34 +1166,34 @@ void CPickobearDlg::OnBnClickedImport()
 		_T("Supported Files Types(*.csv)\0*.csv\0\0"),
 		_T("Pick board to load"),
 		NULL
-	);
+		);
 
 	m_ComponentList.DeleteAllItems();
 
-	m_ComponentList.m_Database.clear();
-	
+	m_ComponentList.m_ComponentDatabase.clear();
+
 	const char field_terminator = ',';
-    const char line_terminator  = '\n';
-    const char enclosure_char   = '\"';
+	const char line_terminator  = '\n';
+	const char enclosure_char   = '\"';
 
-    csv_parser file_parser;
+	csv_parser file_parser;
 	/* Define how many records we're gonna skip. This could be used to skip the column definitions. */
-    file_parser.set_skip_lines(1);
+	file_parser.set_skip_lines(1);
 
-    /* Specify the file to parse */
-    file_parser.init( 
+	/* Specify the file to parse */
+	file_parser.init( 
 		CStringA(m_LoadFile.GetString()) 
-	);
-			
+		);
+
 	m_LoadFile.ReleaseBuffer();
 
-    /* Here we tell the parser how to parse the file */
-    file_parser.set_enclosed_char(enclosure_char, ENCLOSURE_REQUIRED);
+	/* Here we tell the parser how to parse the file */
+	file_parser.set_enclosed_char(enclosure_char, ENCLOSURE_REQUIRED);
 
-    file_parser.set_field_term_char(field_terminator);
+	file_parser.set_field_term_char(field_terminator);
 
-    file_parser.set_line_term_char(line_terminator);
-	
+	file_parser.set_line_term_char(line_terminator);
+
 	unsigned int row_count = 1U;
 
 	while(file_parser.has_more_rows()) {
@@ -1174,14 +1201,14 @@ void CPickobearDlg::OnBnClickedImport()
 		csv_row row = file_parser.get_row();
 
 		m_ComponentList.AddItem(
-								row[0].c_str(), 
-								row[1].c_str(), 
-								row[2].c_str(), 
-								row[3].c_str(), 
-								row[4].c_str(), 
-								row[5].c_str(), 
-								row[6].c_str()
-								);
+			row[0].c_str(), 
+			row[1].c_str(), 
+			row[2].c_str(), 
+			row[3].c_str(), 
+			row[4].c_str(), 
+			row[5].c_str(), 
+			row[6].c_str()
+			);
 
 	}	;
 
@@ -1204,7 +1231,7 @@ CString GetLoadFile( const TCHAR *ptypes, const TCHAR*caption, const TCHAR *pSta
 			tmpFile, 
 			MAX_PATH,
 			pStartDir
-		);
+			);
 	}
 
 	ZeroMemory(&ofn, sizeof(OPENFILENAME));
@@ -1220,7 +1247,7 @@ CString GetLoadFile( const TCHAR *ptypes, const TCHAR*caption, const TCHAR *pSta
 
 	ofn.lpstrFile	= &tmpFile[0];
 	ofn.nMaxFile	= MAX_PATH;
-	
+
 	if (IDOK != GetOpenFileName(&ofn)) {
 
 		return _T("");
@@ -1235,7 +1262,7 @@ CString GetSaveFile( const TCHAR *ptypes, const TCHAR*caption, const TCHAR *pSta
 {
 
 	TCHAR szFile[MAX_PATH];
-		
+
 	OPENFILENAME ofn;
 	ZeroMemory(szFile, MAX_PATH);
 
@@ -1257,7 +1284,7 @@ CString GetSaveFile( const TCHAR *ptypes, const TCHAR*caption, const TCHAR *pSta
 
 	ofn.lpstrFile	= szFile;
 	ofn.nMaxFile	= MAX_PATH;
-	
+
 	if (IDOK != GetSaveFileName(&ofn)) {
 
 		return _T("");
@@ -1275,31 +1302,123 @@ DWORD CPickobearDlg::cameraThread(void )
 {
 	while( m_Quit == 0 ) {
 		m_UpCameraWindow.UpdateCamera( 1 ) ;
-		
+
 		Sleep( m_CameraUpdateRate );
-		
+
 		//m_DownCameraWindow.UpdateCamera( 1 ) ;
-//		Sleep(1);
+		//		Sleep(1);
 
 	}
 	return true;
 }
 
- DWORD WINAPI CPickobearDlg::goSetup(LPVOID pThis)
- {
+DWORD WINAPI CPickobearDlg::goSetup(LPVOID pThis)
+{
 	return ((CPickobearDlg*)pThis)->goThread();
+}
+
+bool CPickobearDlg::PreRunCheck( bool all_parts=false )
+{
+	CListCtrl_Components::CompDatabase CompDatabase_Entry; 
+
+	// things to check before starting a placing run (has to know if its single/grouped part or all parts 
+
+	// homed
+	if( m_Homed == false ){
+		AfxMessageBox(L"PreRunCheck: Machine isn't homed, clear table, check head is up, compressor etc and use HOME button",MB_OK ) ;
+		return false;
+	}
+
+	// all feeders defined
+	// all feeders used have parts
+	// all feeders are in table bounds
+	// all parts to be placed are in table bounds
+
+	// there are parts on the side choosen	
+	bool flag = false;
+
+	if ( all_parts ) {
+		for ( unsigned int i = 0 ; i < m_ComponentList.GetCount(); i ++ ) {
+
+			int in = (m_ComponentList.GetCount()-1) - i;
+
+			CompDatabase_Entry = m_ComponentList.at(i);
+
+			if( CompDatabase_Entry.side ==  m_Side ) {
+				flag = true;
+			}
+		}
+	} else {
+
+		// single or multiple select mode
+
+		// number of items selected in components list
+		int numberComponentsSelected = m_ComponentList.GetSelectedCount();
+
+		if( numberComponentsSelected == 0 ){
+			AfxMessageBox(L"PreRunCheck: Nothing will be place\n\nNo components are selected in the component list",MB_OK);
+			return false;
+		}
+
+		// First entry
+		int componentItem = -1;
+
+		for (int itemSelected = 0 ; itemSelected < numberComponentsSelected ; itemSelected ++ ) {
+
+			// get next item
+			componentItem = m_ComponentList.GetNextItem(componentItem, LVNI_SELECTED);
+
+			// no more found
+			if ( componentItem == -1 ) 
+				break;	
+
+			int i = (m_ComponentList.GetCount()-1) - componentItem;
+
+			CompDatabase_Entry = m_ComponentList.at( i );
+
+			_RPT1(_CRT_WARN,"PreRunCheck: Checking component %s\n",CompDatabase_Entry.label );
+
+			if( CompDatabase_Entry.side ==  m_Side ) {
+				flag = true;
+			}
+		}
+	}
+
+	if( flag == false ){
+
+		AfxMessageBox(L"PreRunCheck: No parts will be placed as there are none on the Side you selected\n\nCheck that you have selected the correct parts/side", MB_OK);
+		return false;
+	}
+
+	// offset is defined
+	// I can't see how this would fly, i suppose if a board is perfectly matched
+	if (m_ComponentList.m_OffsetX == 0 && m_ComponentList.m_OffsetY == 0  ) {
+
+		AfxMessageBox(L"PreRunCheck: Offsets not defined\n\nDouble click a valid component from the component list\nMove camera to correct centroid location of part on PCB\nPress OFFSET button to register correct offset\nCheck location of other components by double clicking in component list (OFFSET button can be reused to make changes)",MB_OK ) ;
+		return false;
+	}
+
+	// should be ready to run
+	return true;
 }
 
 void CPickobearDlg::OnBnClickedGo()
 {
 	static HANDLE h=0;
-		
+
 	UpdateData();
 
 	if ( m_MachineState == MS_GO  ) { 
 		m_MachineState = MS_STOP;
 		return;
 	}
+
+	// do a check on feeders, tools etc here
+
+	if( PreRunCheck( true ) == false ) {
+		return;
+	}
+
 
 	// switch state to GO
 	m_MachineState = MS_GO ;
@@ -1310,11 +1429,26 @@ void CPickobearDlg::OnBnClickedGo()
 
 void CPickobearDlg::OnBnClickedFeeder()
 {
-	m_pFeederDlg = new CFeederSetup(this);
-	m_pFeederDlg->Create(CFeederSetup::IDD,GetDesktopWindow());
-	m_pFeederDlg->ShowWindow(SW_SHOW);
-	
-	m_FeederList.RebuildList();
+	static bool active = false;
+
+	if (active == false ) {
+		active = true; 
+		m_pFeederDlg = new CFeederSetup(this);
+
+		// need to add deleting to modeless dialog
+		if(!m_pFeederDlg->Create(CFeederSetup::IDD,GetDesktopWindow()) ) {
+			delete m_pFeederDlg;
+			return;
+		}
+		m_FeederList.RebuildList();
+		m_pFeederDlg->ShowWindow(SW_SHOW);
+	} else {
+		if( !m_pFeederDlg->IsWindowVisible() )
+			m_pFeederDlg->ShowWindow(SW_SHOW);
+
+		m_pFeederDlg->BringWindowToTop();
+	}
+
 }
 
 void CListCtrl_Components::OnHdnItemdblclickList2(NMHDR *pNMHDR, LRESULT *pResult)
@@ -1323,7 +1457,7 @@ void CListCtrl_Components::OnHdnItemdblclickList2(NMHDR *pNMHDR, LRESULT *pResul
 	ASSERT( pDlg );
 
 	LPNMHEADER phdr = reinterpret_cast<LPNMHEADER>(pNMHDR);
-	
+
 	*pResult = 0;
 
 	if( false == pDlg->HomeTest( ) ) {
@@ -1333,21 +1467,21 @@ void CListCtrl_Components::OnHdnItemdblclickList2(NMHDR *pNMHDR, LRESULT *pResul
 	// iItem is item number, list is backwards
 	int item = (GetCount()-1)-phdr->iItem;
 
-	entry = &m_Database.at( item ) ;
+	entry = &m_ComponentDatabase.at( item ) ;
 	// entry is item.
 	ASSERT( entry );
 
 	if( m_OffsetX == 0 && m_OffsetY == 0 ) {
-		
+
 		pDlg->MoveHead(36240,222890);
 	}else {
-		
+
 		// GotoXY in micrometers
-		
+
 		pDlg->MoveHead(
 			(entry->x+pDlg->m_ComponentList.m_OffsetX),
 			(pDlg->m_ComponentList.m_OffsetY)+(entry->y)
-		);
+			);
 
 		// if board is flipped then invert x?
 	}
@@ -1358,7 +1492,7 @@ void CListCtrl_Components::OnHdnItemdblclickList2(NMHDR *pNMHDR, LRESULT *pResul
 void CListCtrl_FeederList::OnHdnItemdblclickList2(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	LPNMHEADER phdr = reinterpret_cast<LPNMHEADER>(pNMHDR);
-	
+
 	*pResult = 0;
 	CPickobearDlg *pDlg = (CPickobearDlg*)AfxGetApp()->m_pMainWnd;
 	ASSERT( pDlg );
@@ -1366,45 +1500,23 @@ void CListCtrl_FeederList::OnHdnItemdblclickList2(NMHDR *pNMHDR, LRESULT *pResul
 	// iItem is item number, list is backwards
 	int item = (GetCount()-1) - phdr->iItem;
 
-	entry = &m_Database.at( item ) ;
+	entry = &mFeederDatabase.at( item ) ;
 	// entry is item.
 	ASSERT( entry );
+
+	Feeder CurrentFeeder( m_Feeders.at( item ) );
 
 	if( GetKeyState ( VK_SHIFT ) & 0x80 ){
 		// GotoXY in micrometers
 		pDlg->MoveHead(entry->lx,entry->ly);
+
 	} else if( GetKeyState ( VK_CONTROL ) & 0x80 ){
 
-		// GotoXY in micrometers
-		long x,y;
+		unsigned long feederX,feederY;
 
-		// start position
-		x = entry->x ;
-		y = entry->y ;
-
-		_RPT2(_CRT_WARN," x = %d,  y = %d\n",x,y);
-
-		long dx,dy;
-
-		dx = entry->lx - entry->x ;
-		dy = abs(entry->y - entry->ly );
-
-		dx /= entry->countx;
-		dy /= entry->county;
-		
-		_RPT2(_CRT_WARN,"dx = %d, dy = %d\n",dx,dy);
-
-		int ix,iy;
-
-		ix = entry->componentIndex % (entry->countx+1) ;
-		iy = entry->componentIndex / (entry->countx  ) ;
-		_RPT2(_CRT_WARN,"ix = %d, iy = %d\n",ix,iy);
-
-		x +=  (dx * ix );
-		y -= ( dy * iy );
-
-		_RPT2(_CRT_WARN," x = %d,  y = %d\n",x,y);
-		pDlg->MoveHead( x , y );
+		if( CurrentFeeder.GetNextPartPosition( feederX, feederY ) ) {
+			pDlg->MoveHead(feederX , feederY );
+		}
 
 
 	} else {
@@ -1421,12 +1533,16 @@ void CListCtrl_FeederList::RebuildList ( void )
 
 	// remove any and all items from List
 	DeleteAllItems();
+	m_Feeders.clear();
 
 	// for all items loaded
 	for ( unsigned int i = 0 ; i < m_Count ; i ++ ) {
 
 		// fetch entry 
-		entry = &m_Database.at( i  ) ;
+		entry = &mFeederDatabase.at( i  ) ;
+
+		// add to new feeder entry
+		m_Feeders.push_back( *entry );
 
 		temp = entry->label;
 
@@ -1469,9 +1585,12 @@ bool SetCurrentPosition( long x,long y)
 	CPickobearDlg *pDlg = (CPickobearDlg*)AfxGetApp()->m_pMainWnd;
 
 	ASSERT( pDlg );
-		
-	if ( x < 0 ) x = 0;
-	if ( y < 0 ) y = 0;
+
+	if ( x < 0 ) 
+		x = 0;
+
+	if ( y < 0 )
+		y = 0;
 
 	unsigned int linePtr = 0;
 	char xString[200];
@@ -1540,16 +1659,16 @@ void CPickobearDlg::OnEnChangeGoy()
 
 CStringA UTF16toUTF8(const CStringW& utf16)
 {
-   CStringA utf8;
-   int len = WideCharToMultiByte(CP_UTF8, 0, utf16, -1, NULL, 0, 0, 0);
-   if (len>1)
-   { 
-      char *ptr = utf8.GetBuffer(len-1);
-      if (ptr) WideCharToMultiByte(CP_UTF8, 0, utf16, -1, ptr, len, 0, 0);
-      utf8.ReleaseBuffer();
-   }
+	CStringA utf8;
+	int len = WideCharToMultiByte(CP_UTF8, 0, utf16, -1, NULL, 0, 0, 0);
+	if (len>1)
+	{ 
+		char *ptr = utf8.GetBuffer(len-1);
+		if (ptr) WideCharToMultiByte(CP_UTF8, 0, utf16, -1, ptr, len, 0, 0);
+		utf8.ReleaseBuffer();
+	}
 
-   return utf8;
+	return utf8;
 }
 
 
@@ -1594,16 +1713,16 @@ int CPickobearDlg::SendCommand( int command )
 {
 	switch( command  ) {
 
-		case PNP_GOTO:
-			break;
+	case PNP_GOTO:
+		break;
 
-		case PNP_CURRENTPOS:
-		
-			SetCurrentPosition(m_headXPos,m_headXPos);
-			break;
+	case PNP_CURRENTPOS:
 
-		default:
-			break;
+		SetCurrentPosition(m_headXPos,m_headXPos);
+		break;
+
+	default:
+		break;
 	}
 
 	return 0;
@@ -1617,7 +1736,7 @@ void CListCtrl_Components::OnNMRClickList2(NMHDR *pNMHDR, LRESULT *pResult)
 
 	CPickobearDlg *pDlg = (CPickobearDlg*)AfxGetApp()->m_pMainWnd;
 	ASSERT( pDlg );
-	
+
 	if( pDlg->m_FeederList.GetSelectedCount() == 0 )
 		return;
 
@@ -1627,7 +1746,7 @@ void CListCtrl_Components::OnNMRClickList2(NMHDR *pNMHDR, LRESULT *pResult)
 	if( numberComponentsSelected == 0 ) {
 		return ;
 	}
-	
+
 	int nItem = -1;
 
 	// get first item in feeder list ( only one can be selected
@@ -1636,16 +1755,21 @@ void CListCtrl_Components::OnNMRClickList2(NMHDR *pNMHDR, LRESULT *pResult)
 	for( int i = 0 ; i < numberComponentsSelected ; i++ ) {
 		// nItem is component index selected, -1 first time
 		nItem = pDlg->m_ComponentList.GetNextItem(nItem, LVNI_SELECTED);
-		 if( nItem == -1 ) {
-			 break;
+		if( nItem == -1 ) {
+			break;
 		}
 
 
-		entry = &m_Database.at( (GetCount()-1)-nItem ) ;
-		 
-		_RPT2(_CRT_WARN,"OnNMRClickList2: assigning feeder %s to %s\r\n",pDlg->m_FeederList.m_Database.at(feederItem).label, entry->label );
+		int componentEntry ;
 
-		 pDlg->m_ComponentList.AssignFeeder( (GetCount()-1)-nItem, pDlg->m_FeederList.m_Database.at(feederItem).label ) ;
+		componentEntry = (GetCount()-1 )-nItem;
+
+		// component entry
+		entry = &m_ComponentDatabase.at( componentEntry ) ;
+
+		_RPT2(_CRT_WARN,"OnNMRClickList2: assigning feeder %s to %s\r\n",pDlg->m_FeederList.mFeederDatabase.at(feederItem).label, entry->label );
+
+		pDlg->m_ComponentList.AssignFeeder( (GetCount()-1)-nItem, pDlg->m_FeederList.mFeederDatabase.at(feederItem).label ) ;
 
 	}
 
@@ -1656,10 +1780,10 @@ void CListCtrl_Components::OnNMRClickList2(NMHDR *pNMHDR, LRESULT *pResult)
 void CListCtrl_FeederList::AddItem( const char *label,const long x,long y,short rot )
 {
 	ASSERT( label ) ;
-	
+
 	CPickobearDlg *pDlg = (CPickobearDlg*)AfxGetApp()->m_pMainWnd;
 	ASSERT( pDlg );
-	
+
 
 	FeederDatabase entry;
 
@@ -1688,7 +1812,8 @@ void CListCtrl_FeederList::AddItem( const char *label,const long x,long y,short 
 	SetItemText(Index,3,temp);
 
 	// add to database
-	m_Database.push_back (entry );
+	mFeederDatabase.push_back (entry );
+	m_Feeders.push_back ( entry );
 
 	// add one
 	m_Count ++;
@@ -1734,7 +1859,7 @@ void CListCtrl_FeederList::OnContextMenu(CWnd*, CPoint point)
 	cMenu = new CMenu();
 
 	cMenu->CreatePopupMenu();
-		
+
 	cMenu->AppendMenu(MF_STRING, ID_FILE_CLOSE, _T("&Close"));
 	cMenu->AppendMenu(MF_STRING, ID_FILE_SAVE, _T("&Save\tCtrl+S"));
 	cMenu->AppendMenu(MF_STRING, ID_FILE_SAVE_AS, _T("Save &As..."));
@@ -1754,20 +1879,20 @@ void CListCtrl_FeederList::OnContextMenu(CWnd*, CPoint point)
 
 afx_msg LRESULT CPickobearDlg::OnSerialMsg (WPARAM wParam, LPARAM lParam)
 {
-    const CSerialMFC::EEvent eEvent = CSerialMFC::EEvent(LOWORD(wParam));
-    const CSerialMFC::EError eError = CSerialMFC::EError(HIWORD(wParam));
-	
+	const CSerialMFC::EEvent eEvent = CSerialMFC::EEvent(LOWORD(wParam));
+	const CSerialMFC::EError eError = CSerialMFC::EError(HIWORD(wParam));
 
-    switch (eEvent)
-    {
-	    case CSerialMFC::EEventRecv:
 
-        break;
-    }
-   
-    // Return successful
+	switch (eEvent)
+	{
+	case CSerialMFC::EEventRecv:
 
-    return 0;
+		break;
+	}
+
+	// Return successful
+
+	return 0;
 }
 
 //bottom camera
@@ -1777,7 +1902,7 @@ void CPickobearDlg::OnCbnSelchangeCombo2()
 	CRegKey regKey;
 	DWORD regEntry = 100;
 	long lResult;
-	
+
 	UpdateData(FALSE);
 
 	if ((lResult = regKey.Open(HKEY_CURRENT_USER,  _T("Software\\NullSpaceLabs\\PickoBear\\Settings"))) != ERROR_SUCCESS)
@@ -1788,7 +1913,7 @@ void CPickobearDlg::OnCbnSelchangeCombo2()
 		// Make 'regEntry' equal to zero
 		regEntry = m_DownCamera.GetCurSel();
 
-			// Save a value in the registry key
+		// Save a value in the registry key
 		regKey.SetDWORDValue(_T("down"), regEntry);
 
 		// then close the registry key
@@ -1838,9 +1963,9 @@ void CPickobearDlg::OnBnClickedAddLowerright()
 	if( item == 0 ) {
 		return ;
 	}
-	
+
 	item = (m_FeederList.GetCount()-1)-m_FeederList.GetNextItem(-1, LVNI_SELECTED);
-	
+
 	// set bottom/left to where head is.
 	// this updates the database, but not the list
 	m_FeederList.at( item ).lx = m_headXPos;
@@ -1894,13 +2019,13 @@ void CPickobearDlg::OnBnClickedEditfeeder()
 	if( item == 0 ) {
 		return ;
 	}
-	
+
 	item = m_FeederList.GetNextItem(-1, LVNI_SELECTED);
 
 	// iItem is item number, database is backwards
 	int clist = (m_FeederList.GetCount()-1) - m_FeederList.GetNextItem(-1, LVNI_SELECTED);
 
-	FeederDialog.entry = m_FeederList.m_Database.at( clist ) ;
+	FeederDialog.entry = m_FeederList.mFeederDatabase.at( clist ) ;
 
 	FeederDialog.m_FeederName = FeederDialog.entry.label;
 
@@ -1912,7 +2037,7 @@ void CPickobearDlg::OnBnClickedEditfeeder()
 	strcpy_s( FeederDialog.entry.label, userInput8 );
 	userInput8.ReleaseBuffer();
 
-	m_FeederList.m_Database.at( clist ) = FeederDialog.entry;
+	m_FeederList.mFeederDatabase.at( clist ) = FeederDialog.entry;
 
 	//ugly
 	m_FeederList.RebuildList();
@@ -1930,7 +2055,7 @@ void CPickobearDlg::OnBnClickedAssignfeeder()
 	if( feederItem == 0 ) {
 		return ;
 	}
-	
+
 	feederItem = m_FeederList.GetNextItem(-1, LVNI_SELECTED);
 	componentItem = m_ComponentList.GetNextItem(-1, LVNI_SELECTED);
 
@@ -1951,7 +2076,7 @@ void CListCtrl_Components::RebuildList( void )
 
 	for ( unsigned int i = 0 ; i < m_Count ; i ++ ) {
 
-		entry = &m_Database.at( i  ) ;
+		entry = &m_ComponentDatabase.at( i  ) ;
 
 		temp = entry->label;
 
@@ -1971,7 +2096,7 @@ void CListCtrl_Components::RebuildList( void )
 
 		temp.Format(L"%d",entry->rot);
 		SetItemText(Index,5,temp);
-		
+
 		temp.Format(L"%d",entry->side);
 		SetItemText(Index,7,temp);
 
@@ -1982,14 +2107,14 @@ void CListCtrl_Components::RebuildList( void )
 		} else {
 			//todo: fix this, search on name of feeder, not the id in
 			//this will break as soon as feeders get reordered
-			//charlie: changed, and testing
+			//charlie: changed, and testing, tested working
 
 			// iItem is item number, list is backwards
 
 			int feederIndex ;
 			feederIndex = pDlg->m_FeederList.Search( entry->feeder );
 			if( feederIndex == -1 ) {
-	
+
 				int ret = AfxMessageBox(L"Feeder not found ", MB_OK);
 				return;
 			}
@@ -2002,9 +2127,9 @@ void CListCtrl_Components::RebuildList( void )
 		}
 
 		SetItemText(Index,6,temp);
-	
+
 	}
-	 
+
 	if (selected != -1 ) {
 		SetItemState(selected, LVIS_SELECTED, LVIS_SELECTED);
 		EnsureVisible( selected ,TRUE );
@@ -2015,7 +2140,7 @@ void CListCtrl_Components::RebuildList( void )
 void CPickobearDlg::OnBnClickedConsole()
 {
 	static int nconsole = 0;
-	
+
 	if( nconsole == 0 )
 		m_TextEdit->ShowWindow(SW_SHOW);
 	else
@@ -2028,8 +2153,13 @@ void CPickobearDlg::OnBnClickedConsole()
 void CPickobearDlg::OnBnClickedGo2()
 {
 	static HANDLE h=0;
-		
+
 	UpdateData();
+
+	if ( bBusy ) {
+		AfxMessageBox(L"Machine is already running a task",MB_OK);
+		return;
+	}
 
 
 	if ( m_MachineState == MS_GO  ) { 
@@ -2037,21 +2167,29 @@ void CPickobearDlg::OnBnClickedGo2()
 		return;
 	}
 
+	if( PreRunCheck() == false ) {
+		return;
+	}
+
 	// switch state to GO
 	m_MachineState = MS_GO ;
+
+	bBusy = true;
+
+	UpdateData(FALSE);
 
 	// Start thread for 'GO'
 	h = CreateThread(NULL, 0, &CPickobearDlg::goSingleSetup, (LPVOID)this, 0, NULL);
 }
 
- DWORD WINAPI CPickobearDlg::goSingleSetup(LPVOID pThis)
+DWORD WINAPI CPickobearDlg::goSingleSetup(LPVOID pThis)
 {
 	return ((CPickobearDlg*)pThis)->goSingleThread();
 }
 
 
- void CPickobearDlg::OnBnClickedSwapHeadCamera()
- {
+void CPickobearDlg::OnBnClickedSwapHeadCamera()
+{
 	if( bCameraHead == false ) {
 		MoveHeadRel( 0, -CAMERA_OFFSET) ;
 		bCameraHead = true;
@@ -2059,11 +2197,11 @@ void CPickobearDlg::OnBnClickedGo2()
 		MoveHeadRel( 0, CAMERA_OFFSET) ;
 		bCameraHead = false;
 	}
- }
+}
 
 
 
- void CPickobearDlg::OnBnClickedEditComponent()
+void CPickobearDlg::OnBnClickedEditComponent()
 {
 	EditComponent EditDialog;
 
@@ -2072,13 +2210,13 @@ void CPickobearDlg::OnBnClickedGo2()
 	if( item == 0 ) {
 		return ;
 	}
-	
+
 	item = m_ComponentList.GetNextItem( -1, LVNI_SELECTED );
 
 	// iItem is item number, database is backwards
 	int clist = (m_ComponentList.GetCount()-1) - m_ComponentList.GetNextItem(-1, LVNI_SELECTED);
 
-	EditDialog.entry = m_ComponentList.m_Database.at( clist ) ;
+	EditDialog.entry = m_ComponentList.m_ComponentDatabase.at( clist ) ;
 
 	// push the names out
 	EditDialog.m_Name    = EditDialog.entry.label;
@@ -2107,7 +2245,7 @@ void CPickobearDlg::OnBnClickedGo2()
 	userInput8.ReleaseBuffer();
 
 
-	m_ComponentList.m_Database.at( clist ) = EditDialog.entry;
+	m_ComponentList.m_ComponentDatabase.at( clist ) = EditDialog.entry;
 
 	//ugly
 	m_ComponentList.RebuildList();
@@ -2115,369 +2253,423 @@ void CPickobearDlg::OnBnClickedGo2()
 
 
 
- DWORD CPickobearDlg::goThread(void )
- {
-	 static int busy = 0;
+DWORD CPickobearDlg::goThread(void )
+{
+	Feeder CurrentFeeder;
 
-	 unsigned int i ;
-	 char buffer[5];
-	 CListCtrl_Components::CompDatabase entry; 
+	unsigned int i ;
 
+	CListCtrl_Components::CompDatabase entry; 
 
-	 ZeroMemory(buffer,sizeof(buffer));
+	_RPT0(_CRT_WARN,"goThread\r\n");
 
-	 if ( busy ) {
-		 return true;
-	 }
+	if ( bBusy ) {
+		AfxMessageBox(L"Machine is already running a task",MB_OK);
+		return true;
+	}
 
-	 busy = 1;
+	bBusy = true;
 
-	 EmptySerial();
+	EmptySerial();
 
-	 for (i = 0 ; i < m_ComponentList.GetCount(); i ++ ) {
-
-		 
-		 int in = (m_ComponentList.GetCount()-1)-i;
-		 m_ComponentList.SetItemState(in, LVIS_SELECTED, LVIS_SELECTED);
-		 m_ComponentList.EnsureVisible( in ,TRUE );
-
-		 entry = m_ComponentList.at(i);
-
-		 if( entry.side !=  m_Side ) {
-
-			 _RPT1(_CRT_WARN,"skipping %s, wrong side selected\n",entry.label);
-			 goto skip;
-		 } else {
-			 _RPT1(_CRT_WARN,"this side %s selected\n",entry.label);
-		 }
-
-		 if ( strlen( entry.feeder ) == 0 ) {
-			 
-			 int ret = AfxMessageBox(L"Feeder not defined", MB_OK);
-	
-				goto skip;
-		 }
-
-		 CListCtrl_FeederList::FeederDatabase feeder;
-		 
-		 int feederEntry = m_FeederList.Search( entry.feeder  );
-
-		 feeder = m_FeederList.at ((m_FeederList.GetCount()-1) - feederEntry);
-
-		 if (feeder.tool < 1 || feeder.tool > 6 ) {
-			 int ret = AfxMessageBox(L"Tool not defined", MB_OK);
-			 
-				goto skip;
-		 }
-
-		 _RPT1(_CRT_WARN,"Going to tool %d\n", feeder.tool );
-
-		 // can't tool change at the moment...
-#if 0
-		 switch ( feeder.tool ) {
-		 case 1:
-			 WriteSerial("M24\r\n");
-			 break;
-		 case 2:
-			 WriteSerial("M24\r\n");
-			 break;
-		 case 3:
-			 WriteSerial("M24\r\n");
-			 break;
-		 case 4:
-			 WriteSerial("M24\r\n");
-			 break;
-		 case 5:
-			 WriteSerial("M24\r\n");
-			 break;
-		 case 6:
-			 WriteSerial("M24\r\n");
-			 break;
-		 }
-
-		 return true;
-#endif
+	for (i = 0 ; i < m_ComponentList.GetCount(); i ++ ) {
 
 
-		 /// slow the camera down
-		 m_CameraUpdateRate = 250 ;
+		int in = (m_ComponentList.GetCount()-1)-i;
+		m_ComponentList.SetItemState(in, LVIS_SELECTED, LVIS_SELECTED);
+		m_ComponentList.EnsureVisible( in ,TRUE );
 
-		 _RPT1(_CRT_WARN,"Going to feeder %s\n", feeder.label );
-		 MoveHead(feeder.x, feeder.y  -  CAMERA_OFFSET );
+		entry = m_ComponentList.at(i);
 
-		 _RPT0(_CRT_WARN,"Picking up part\n");
-		 WriteSerial("M26\r\n");
+		if( entry.side !=  m_Side ) {
 
-		 Sleep( 1000 );
-
-		 _RPT1(_CRT_WARN,"Going to component %s\n", entry.label );
-
-		 MoveHead(entry.x+m_ComponentList.m_OffsetX, entry.y+m_ComponentList.m_OffsetY - CAMERA_OFFSET);
-
-		 if( entry.rot ) {
-
-			 _RPT1(_CRT_WARN,"Rotating part %d degrees \n", entry.rot );
-
-			 double angle = entry.rot;
-
-			 // calculate pulses
-			 angle = ( 1000.0 / 360.0  ) * angle ;
-
-			 char buffer[256];
-			 int pulses;
-
-			 // calculate pulses
-			 pulses = ( int) ( angle );
-			 sprintf_s(buffer,sizeof(buffer),"G0H%d\r\n", pulses );
-
-			 _RPT1(_CRT_WARN,"Executing GCODE %s\r\n",buffer);
-
-			 // do the rotate
-			 WriteSerial( buffer );
-			 Sleep( 500 );
-		 }
-
-		 _RPT0(_CRT_WARN,"dropping off part\n");
-
-		 // head down/air off/up
-		 // Put Part down
-		 WriteSerial("M27\r\n");
-
-		 //wait
-		 Sleep( 100 );
-skip:;
-
-		 if( m_MachineState == MS_STOP ) {
-			 busy = 0;
-			 m_MachineState =MS_IDLE;
-			 break;
-		 }
-
-		 UpdateWindow();
-
-	 }
-
-	 // Park machine
-	 WriteSerial("G1X14Y15F200\r\n");
-
-	 /// reset the camera speed 
-	m_CameraUpdateRate = 250 ;
-
-	 // switch state to idle
-	 m_MachineState = MS_IDLE ;
-	 busy = 0;
-
-	 return true;
- }
-
- /*
-
- 
-	// get first item in feeder list ( only one can be selected
-	int feederItem = pDlg->m_FeederList.GetNextItem(-1, LVNI_SELECTED);
-
-	for( int i = 0 ; i < numberComponentsSelected ; i++ ) {
-		// nItem is component index selected, -1 first time
-		nItem = pDlg->m_ComponentList.GetNextItem(nItem, LVNI_SELECTED);
-		 if( nItem == -1 ) {
-			 break;
+			_RPT1(_CRT_WARN,"skipping %s, wrong side selected\n",entry.label);
+			goto skip;
+		} else {
+			_RPT1(_CRT_WARN,"this side %s selected\n",entry.label);
 		}
 
+		if ( strlen( entry.feeder ) == 0 ) {
 
-		*/
+			int ret = AfxMessageBox(L"Feeder not defined", MB_OK);
 
+			goto skip;
+		}
 
- DWORD CPickobearDlg::goSingleThread(void )
- {
-	 static int busy = 0;
+		CListCtrl_FeederList::FeederDatabase feeder;
 
-	 unsigned int i ;
-	 char buffer[5];
-	 CListCtrl_Components::CompDatabase entry; 
+		int feederEntry = m_FeederList.Search( entry.feeder  );
 
-	 ZeroMemory(buffer,sizeof(buffer));
+		int feederIndex ;
+		feederIndex = (m_FeederList.GetCount()-1) - feederEntry;
 
-	 if ( busy ) {
-		 return true ;
-	 }
+		feeder = m_FeederList.at ( feederIndex );
+		// duplication as we change over to the new class
+		CurrentFeeder = m_FeederList.m_Feeders.at( feederIndex );
 
-	 busy = 1;
+		if (feeder.tool < 1 || feeder.tool > 6 ) {
+			int ret = AfxMessageBox(L"Tool not defined", MB_OK);
 
-	 EmptySerial();
+			goto skip;
+		}
 
-	 Sleep( 500 ) ;
+		_RPT1(_CRT_WARN,"Going to tool %d\n", feeder.tool );
 
-	 // find number of parts selected
-	 int numberComponentsSelected = m_ComponentList.GetSelectedCount();
-
-	 // nothing selected
-	 if( numberComponentsSelected == 0 ) {
-		 return false;
-	 }
-
-
-	 // First entry
-	 int componentItem = -1;
-
-	 for (int itemSelected = 0 ; itemSelected < numberComponentsSelected ; itemSelected ++ ) {
-
-
-		 // get next item
-		 componentItem = m_ComponentList.GetNextItem(componentItem, LVNI_SELECTED);
-
-		 // no more found
-		 if ( componentItem == -1 ) 
-			 break;
-
-
-		 i = (m_ComponentList.GetCount()-1) - componentItem;
-
-		 entry = m_ComponentList.at(i);
-
-		 if( entry.side !=  m_Side ) {
-
-			 _RPT1(_CRT_WARN,"skipping %s, wrong side selected\n",entry.label);
-			 goto skip;
-		 }
-
-		 _RPT1(_CRT_WARN,"Placing %s\r\n",entry.label);
-
-		 if (strlen( entry.feeder) == 0) {
-			 int ret = AfxMessageBox(L"Feeder not defined", MB_OK);
-		 }
-
-		 CListCtrl_FeederList::FeederDatabase feeder ;
-
-		 int feederEntry = m_FeederList.Search( entry.feeder  );
-		 if( feederEntry == -1 ) {
-
-			 int ret = AfxMessageBox(L"Feeder not found ", MB_OK);
-			 return 0;
-		 }
-
-		 feeder = m_FeederList.at ((m_FeederList.GetCount()-1) - feederEntry );
-
-		 if (feeder.tool < 1 || feeder.tool > 6 ) {
-			 int ret = AfxMessageBox(L"Tool not defined", MB_OK);
-		 }
-
-		 int in = (m_ComponentList.GetCount()-1)-i;
-		 m_ComponentList.SetItemState(in, LVIS_SELECTED, LVIS_SELECTED);
-		 m_ComponentList.EnsureVisible( in ,TRUE );
-
-		 _RPT1(_CRT_WARN,"Going to tool %d\n", feeder.tool );
-
-		 // can't tool change at the moment...
+		// can't tool change at the moment...
 #if 0
-		 switch ( feeder.tool ) {
-		 case 1:
-			 WriteSerial("M24\r\n");
-			 break;
-		 case 2:
-			 WriteSerial("M24\r\n");
-			 break;
-		 case 3:
-			 WriteSerial("M24\r\n");
-			 break;
-		 case 4:
-			 WriteSerial("M24\r\n");
-			 break;
-		 case 5:
-			 WriteSerial("M24\r\n");
-			 break;
-		 case 6:
-			 WriteSerial("M24\r\n");
-			 break;
-		 }
+		switch ( feeder.tool ) {
+		case 1:
+			WriteSerial("M24\r\n");
+			break;
+		case 2:
+			WriteSerial("M24\r\n");
+			break;
+		case 3:
+			WriteSerial("M24\r\n");
+			break;
+		case 4:
+			WriteSerial("M24\r\n");
+			break;
+		case 5:
+			WriteSerial("M24\r\n");
+			break;
+		case 6:
+			WriteSerial("M24\r\n");
+			break;
+		}
 
-		 return true;
+		return true;
 #endif
 
-		 /// slow the camera down
-		 m_CameraUpdateRate = 250 ;
 
-		 _RPT1(_CRT_WARN,"Going to feeder %s\n", feeder.label );
+		/// slow the camera down
+		m_CameraUpdateRate = CAMERA_SLOW_UPDATE_RATE_MS ;
 
-		 MoveHead(feeder.x, feeder.y  -  CAMERA_OFFSET );
+		_RPT1(_CRT_WARN,"Going to feeder %s\n", feeder.label );
 
-		 _RPT0(_CRT_WARN,"Picking up part\n");
+		unsigned long feederX,feederY;
 
-		 // Pickup
-		 WriteSerial("M26\r\n");
+		if( CurrentFeeder.GetNextPartPosition( feederX, feederY ) ) {
 
-		 Sleep( 1000 );
+			MoveHead(feederX , feederY - CAMERA_OFFSET );
 
-		 _RPT1(_CRT_WARN,"Going to component %s\n", entry.label );
+			// next part
+			CurrentFeeder.AdvancePart();
 
-		 MoveHead(entry.x+m_ComponentList.m_OffsetX, entry.y+m_ComponentList.m_OffsetY - CAMERA_OFFSET);
+		} else {
 
-		 if( entry.rot ) {
+			CString Error ;			
+			Error = CurrentFeeder.ErrorMessage();
+			int ret = AfxMessageBox(Error ,MB_OK );
+			
+			bBusy = false;
 
-			 _RPT1(_CRT_WARN,"Rotating part %d degrees \n", entry.rot );
+			return 0;
+		}
 
-			 double angle = entry.rot;
+		_RPT0(_CRT_WARN,"Picking up part\n");
+		WriteSerial("M26\r\n");
 
-			 // calculate pulses
-			 angle = ( 1000.0 / 360.0  ) * angle ;
+		Sleep( 1000 );
 
-			 char buffer[256];
-			 int pulses;
+		_RPT1(_CRT_WARN,"Going to component %s\n", entry.label );
 
-			 // calculate pulses
-			 pulses = ( int) ( angle );
-			 sprintf_s(buffer,sizeof(buffer),"G0H%d\r\n", pulses );
+		MoveHead(entry.x+m_ComponentList.m_OffsetX, entry.y+m_ComponentList.m_OffsetY - CAMERA_OFFSET);
 
-			 _RPT1(_CRT_WARN,"Executing GCODE %s\r\n",buffer);
+		if( entry.rot ) {
 
-			 // do the rotate
-			 WriteSerial( buffer );
-			 Sleep( 500 );
+			_RPT1(_CRT_WARN,"Rotating part %d degrees \n", entry.rot );
+
+			double angle = entry.rot;
+
+			// calculate pulses
+			angle = ( 1000.0 / 360.0  ) * angle ;
+
+			char buffer[256];
+			int pulses;
+
+			// calculate pulses
+			pulses = ( int) ( angle );
+			sprintf_s(buffer,sizeof(buffer),"G0H%d\r\n", pulses );
+
+			_RPT1(_CRT_WARN,"Executing GCODE %s\r\n",buffer);
+
+			// do the rotate
+			WriteSerial( buffer );
+			Sleep( 500 );
+		}
+
+		_RPT0(_CRT_WARN,"dropping off part\n");
+
+		// head down/air off/up
+		// Put Part down
+		WriteSerial("M27\r\n");
+
+		//wait
+		Sleep( 100 );
+skip:;
+
+		if( m_MachineState == MS_STOP ) {
+			m_MachineState = MS_IDLE;
+			break;
+		}
+
+		UpdateWindow();
+
+	}
+
+	// Park machine
+	WriteSerial("G1X14Y15F200\r\n");
+
+	/// reset the camera speed 
+	m_CameraUpdateRate = CAMERA_DEFAULT_UPDATE_RATE_MS ;
+
+	// switch state to idle
+	m_MachineState = MS_IDLE ;
+	
+	bBusy = false;
+
+	return true;
+}
+
+/*
 
 
-		 }
-		 // head down/air off/up
-		 _RPT0(_CRT_WARN,"dropping off part\n");
+// get first item in feeder list ( only one can be selected
+int feederItem = pDlg->m_FeederList.GetNextItem(-1, LVNI_SELECTED);
 
-		 // Put Part down
-		 WriteSerial("M27\r\n");
+for( int i = 0 ; i < numberComponentsSelected ; i++ ) {
+// nItem is component index selected, -1 first time
+nItem = pDlg->m_ComponentList.GetNextItem(nItem, LVNI_SELECTED);
+if( nItem == -1 ) {
+break;
+}
 
 
-		 //wait
-		 Sleep( 100 );
+*/
+
+
+DWORD CPickobearDlg::goSingleThread(void )
+{
+	Feeder CurrentFeeder;
+
+	unsigned int i ;
+	CListCtrl_Components::CompDatabase entry; 
+
+
+	EmptySerial();
+
+	Sleep( 500 ) ;
+
+	// find number of parts selected
+	int numberComponentsSelected = m_ComponentList.GetSelectedCount();
+
+	// nothing selected
+	if( numberComponentsSelected == 0 ) {
+		
+		bBusy = false;
+		
+		return false;
+	}
+
+
+	// First entry
+	int componentItem = -1;
+
+	for (int itemSelected = 0 ; itemSelected < numberComponentsSelected ; itemSelected ++ ) {
+
+
+		// get next item
+		componentItem = m_ComponentList.GetNextItem(componentItem, LVNI_SELECTED);
+
+		// no more found
+		if ( componentItem == -1 ) 
+			break;
+
+
+		i = (m_ComponentList.GetCount()-1) - componentItem;
+
+		entry = m_ComponentList.at(i);
+
+		if( entry.side !=  m_Side ) {
+
+			_RPT1(_CRT_WARN,"goSingleThread: skipping %s, wrong side selected\n",entry.label);
+			goto skip;
+		}
+
+		_RPT1(_CRT_WARN,"goSingleThread: Placing %s\r\n",entry.label);
+
+		if (strlen( entry.feeder) == 0) {
+			int ret = AfxMessageBox(L"Feeder not defined", MB_OK);
+			
+			bBusy = false;
+			
+			return 0;
+		}
+
+		CListCtrl_FeederList::FeederDatabase feeder ;
+
+		int feederEntry = m_FeederList.Search( entry.feeder  );
+		if( feederEntry == -1 ) {
+
+			int ret = AfxMessageBox(L"Feeder not found ", MB_OK);
+
+			bBusy = false;
+
+			return 0;
+		}
+
+		int feederIndex ;
+		feederIndex = (m_FeederList.GetCount()-1) - feederEntry;
+
+		feeder = m_FeederList.at ( feederIndex );
+
+		// duplication as we change over to the new class
+		CurrentFeeder = m_FeederList.m_Feeders.at( feederIndex );
+
+
+		if (feeder.tool < 1 || feeder.tool > 6 ) {
+			int ret = AfxMessageBox(L"Tool not defined", MB_OK);
+		}
+
+		int in = (m_ComponentList.GetCount()-1)-i;
+		m_ComponentList.SetItemState(in, LVIS_SELECTED, LVIS_SELECTED);
+		m_ComponentList.EnsureVisible( in ,TRUE );
+
+		_RPT1(_CRT_WARN,"goSingleThread: Going to tool %d\n", feeder.tool );
+
+		// can't tool change at the moment...
+#if 0
+		switch ( feeder.tool ) {
+		case 1:
+			WriteSerial("M24\r\n");
+			break;
+		case 2:
+			WriteSerial("M24\r\n");
+			break;
+		case 3:
+			WriteSerial("M24\r\n");
+			break;
+		case 4:
+			WriteSerial("M24\r\n");
+			break;
+		case 5:
+			WriteSerial("M24\r\n");
+			break;
+		case 6:
+			WriteSerial("M24\r\n");
+			break;
+		}
+
+		return true;
+#endif
+
+		/// slow the camera down
+		m_CameraUpdateRate = CAMERA_SLOW_UPDATE_RATE_MS ;
+
+		_RPT1(_CRT_WARN,"goSingleThread: Going to feeder %s\n", feeder.label );
+
+		unsigned long feederX,feederY;
+
+		if( CurrentFeeder.GetNextPartPosition( feederX, feederY ) ) {
+
+			MoveHead(feederX , feederY - CAMERA_OFFSET );
+			
+			// next part
+			CurrentFeeder.AdvancePart();
+
+		} else {
+
+			CString Error ;			
+			Error = CurrentFeeder.ErrorMessage();
+			int ret = AfxMessageBox(Error ,MB_OK );
+
+			bBusy = false;
+
+			return 0;
+		}
+
+		_RPT0(_CRT_WARN,"vPicking up part\n");
+
+		// Pickup
+		WriteSerial("M26\r\n");
+
+		Sleep( 1000 );
+
+		_RPT1(_CRT_WARN,"goSingleThread: Going to component %s\n", entry.label );
+
+		MoveHead(entry.x+m_ComponentList.m_OffsetX, entry.y+m_ComponentList.m_OffsetY - CAMERA_OFFSET);
+
+		if( entry.rot ) {
+
+			_RPT1(_CRT_WARN,"goSingleThread: Rotating part %d degrees \n", entry.rot );
+
+			double angle = entry.rot;
+
+			// calculate pulses
+			angle = ( 1000.0 / 360.0  ) * angle ;
+
+			char buffer[256];
+			int pulses;
+
+			// calculate pulses
+			pulses = ( int) ( angle );
+			sprintf_s(buffer,sizeof(buffer),"G0H%d\r\n", pulses );
+
+			_RPT1(_CRT_WARN,"goSingleThread: Executing GCODE %s\r\n",buffer);
+
+			// do the rotate
+			WriteSerial( buffer );
+			Sleep( 500 );
+
+
+		}
+		// head down/air off/up
+		_RPT0(_CRT_WARN,"goSingleThread: dropping off part\n");
+
+		// Put Part down
+		WriteSerial("M27\r\n");
+
+
+		//wait
+		Sleep( 100 );
 
 skip:;
 
-		 if( m_MachineState == MS_STOP ) {
-			 busy = 0;
-			 m_MachineState =MS_IDLE;
-			 /// reset the camera update rate
-			 m_CameraUpdateRate = 250 ;
+		if( m_MachineState == MS_STOP ) {
 
-			 return true ;
-		 }
+			m_MachineState = MS_IDLE;
 
-		 UpdateWindow();
+			/// reset the camera update rate
+			m_CameraUpdateRate = CAMERA_DEFAULT_UPDATE_RATE_MS ;
 
-		 Sleep( 500 );
+			bBusy = false;
 
-		 // Move Camera to part
-		 MoveHead(entry.x+m_ComponentList.m_OffsetX,entry.y+m_ComponentList.m_OffsetY );
-	 }
+			return true ;
+		}
 
-	 // switch state to idle
-	 m_MachineState = MS_IDLE ;
+		UpdateWindow();
 
-	 // no longer busy
-	 busy  = 0 ;
+		Sleep( 500 );
 
-	 /// reset  the camera speed
-	 m_CameraUpdateRate = 250 ;
+		// Move Camera to part
+		MoveHead(entry.x+m_ComponentList.m_OffsetX,entry.y+m_ComponentList.m_OffsetY );
+	}
 
-	 return true;
- }
+	// switch state to idle
+	m_MachineState = MS_IDLE ;
+
+	// no longer busy
+	bBusy  =  false;
+
+	/// reset  the camera speed
+	m_CameraUpdateRate = CAMERA_DEFAULT_UPDATE_RATE_MS ;
+
+	return true;
+}
 
 
- void CPickobearDlg::OnBnClickedDeleteFeeder()
- {
- }
+void CPickobearDlg::OnBnClickedDeleteFeeder()
+{
+}
 

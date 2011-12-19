@@ -7,6 +7,8 @@
 
 #include "SerialMFC.h"
 #include "afxcmn.h"
+#include "OpenGLControl.h"
+#include "TextDump.h"
 
 #include <iostream>
 #include <fstream>
@@ -22,6 +24,8 @@ enum {
 #define MAX_X_TABLE		( 190000 )
 #define MAX_Y_TABLE		( 190000 )
 
+#define CAMERA_DEFAULT_UPDATE_RATE_MS		( 100 )
+#define CAMERA_SLOW_UPDATE_RATE_MS			( 300 )
 
 #define pulsestoum(x) (x*25)
 
@@ -29,6 +33,9 @@ CString GetSaveFile( const TCHAR *ptypes, const TCHAR*caption, const TCHAR *pSta
 CString GetLoadFile( const TCHAR *ptypes, const TCHAR*caption, const TCHAR *pStartDir);
 bool SetCurrentPosition ( long x,long y);
 bool BuildGCodeMove( char *output, int length, int mode , long x, long y, long speed );
+
+class Feeder;
+
 
 // component class
 class CListCtrl_Components : public CListCtrl
@@ -69,7 +76,7 @@ public:
 	} CompDatabase;
 	
 	// database list
-	std::vector<CompDatabase> m_Database;
+	std::vector<CompDatabase> m_ComponentDatabase;
 	
 	// temp pointer
 	CompDatabase *entry;
@@ -95,7 +102,7 @@ public:
 
 	unsigned long GetCount( void )
 	{
-		return m_Database.size();
+		return m_ComponentDatabase.size();
 	}
 
 
@@ -103,12 +110,12 @@ public:
 
 		ASSERT( string );
 
-		strncpy_s( m_Database.at(idd).feeder,string, 256 );
+		strncpy_s( m_ComponentDatabase.at(idd).feeder,string, 256 );
 
 	}
 
 	CompDatabase  at( int i ) {
-		return m_Database.at(i);
+		return m_ComponentDatabase.at(i);
 	}
  
 	void AddItem( const char *label,const char *type,const char *value,const char *x,const char *y,const char *rot,const char *side)
@@ -154,7 +161,7 @@ public:
 		SetItemText(Index,7,CString(side));
 
 		// add to database
-		m_Database.push_back ( entry );
+		m_ComponentDatabase.push_back ( entry );
 
 		m_Count ++;
 	}
@@ -163,7 +170,7 @@ public:
 	{
 		CString filename;
 				
-		if( m_Database.size() == 0 ) {
+		if( m_ComponentDatabase.size() == 0 ) {
 			return;
 		}
 
@@ -176,9 +183,9 @@ public:
 
 		std::ofstream os (filename, std::ios::out | std::ios::binary);
 
-		int size1 = m_Database.size();
+		int size1 = m_ComponentDatabase.size();
 		os.write((const char*)&size1, sizeof(size1));
-		os.write((const char*)&m_Database.front(), m_Database.size() * sizeof(CompDatabase));
+		os.write((const char*)&m_ComponentDatabase.front(), m_ComponentDatabase.size() * sizeof(CompDatabase));
 		os.close();
 
 		CRegKey regKey;
@@ -238,7 +245,7 @@ public:
 
 		if( m_Count ) {
 			
-			m_Database.clear();
+			m_ComponentDatabase.clear();
 		}
 
 		std::ifstream is( filename, std::ios::binary );
@@ -246,9 +253,9 @@ public:
 		is.read( (char*)&size1, sizeof( size1) );
 		
 		m_Count = size1;	
-		m_Database.resize(m_Count);
+		m_ComponentDatabase.resize(m_Count);
 		
-		is.read((char*)&m_Database.front(), m_Database.size() * sizeof( CompDatabase ) );
+		is.read((char*)&m_ComponentDatabase.front(), m_ComponentDatabase.size() * sizeof( CompDatabase ) );
 		
 		is.close();
 		
@@ -312,14 +319,17 @@ public:
 		
 	CMenu *cMenu;
 
-	std::vector<FeederDatabase> m_Database;
+	std::vector<FeederDatabase> mFeederDatabase;
+
+	// New feeder list
+	std::vector<Feeder> m_Feeders;
 	
 	FeederDatabase *entry;
 
 	void SaveDatabase ( void ) 
 	{
 
-		if( m_Database.size() == 0 ) {
+		if( mFeederDatabase.size() == 0 ) {
 			return;
 		}
 
@@ -339,9 +349,9 @@ public:
 
 		std::ofstream os (filename, std::ios::out | std::ios::binary);
 
-		int size1 = m_Database.size();
+		int size1 = mFeederDatabase.size();
 		os.write((const char*)&size1, sizeof(size1));
-		os.write((const char*)&m_Database.front(), m_Database.size() * sizeof(FeederDatabase));
+		os.write((const char*)&mFeederDatabase.front(), mFeederDatabase.size() * sizeof(FeederDatabase));
 		os.close();
 	}
 
@@ -387,7 +397,7 @@ public:
 		// if anything in the database
 		if( m_Count ) {
 			
-			m_Database.clear();
+			mFeederDatabase.clear();
 		}
 
 		// open the file stream
@@ -400,10 +410,10 @@ public:
 		m_Count = size1;	
 	
 		// reserve space for the list
-		m_Database.resize(m_Count);
+		mFeederDatabase.resize(m_Count);
 		
 		// read into list
-		is.read((char*)&m_Database.front(), m_Database.size() * sizeof( FeederDatabase ) );
+		is.read((char*)&mFeederDatabase.front(), mFeederDatabase.size() * sizeof( FeederDatabase ) );
 		
 		// close file
 		is.close();
@@ -419,7 +429,7 @@ public:
 
 		for( int i = 0 ; i < m_Count ; i++ ) {
 			
-			if(strcmp(name, m_Database.at(i).label) == 0 ) {
+			if(strcmp(name, mFeederDatabase.at(i).label) == 0 ) {
 				return i;
 			}
 		}
@@ -443,18 +453,18 @@ public:
 		entry = NULL;
 	}
 
-	// number of items in list ( should match m_DataBase.size();
+	// number of items in list ( should match mFeederDatabase.size();
 	unsigned long m_Count ;
 
 	unsigned long GetCount( void )
 	{
-		return m_Database.size();
+		return mFeederDatabase.size();
 	}
 
 	// fetch entry at index
 	FeederDatabase &at( int i ) {
 		if( i < m_Count ) 
-			return m_Database.at(i);
+			return mFeederDatabase.at(i);
 		
 		return *entry ;
 	}
@@ -490,6 +500,10 @@ private:
 	bool bCameraHead;
 
 	bool bSetWaitDone;
+
+	// machine is doing something
+	bool bBusy;
+
 	// head state
 	char m_Head;
 
@@ -497,8 +511,8 @@ private:
 	bool m_Homed;
 
 
-	//how long Sleep is in camera updates
-	int m_CameraUpdateRate;
+	//how long Sleep is in camera updates (ms)
+	unsigned int m_CameraUpdateRate;
 
 	// states the machine could be in
 	enum eMachineState {
@@ -531,6 +545,10 @@ public:
 
 	void EmptySerial ( void ) ;
 	int SendCommand( int command );
+	
+	// checks all the parts and feeders etc are all defined correctly, pass true if all parts(on side) are being placed.
+
+	bool PreRunCheck( bool all_parts );
 
 	// set the camera threads
 	static DWORD WINAPI goCamera(LPVOID pThis);
