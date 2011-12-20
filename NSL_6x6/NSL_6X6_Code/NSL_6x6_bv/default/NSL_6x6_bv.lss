@@ -1,0 +1,300 @@
+
+NSL_6x6_bv.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000136  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .bss          00000002  00800060  00800060  000001aa  2**0
+                  ALLOC
+  2 .debug_aranges 00000020  00000000  00000000  000001aa  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  3 .debug_pubnames 00000032  00000000  00000000  000001ca  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  4 .debug_info   00000215  00000000  00000000  000001fc  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_abbrev 00000124  00000000  00000000  00000411  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_line   000001fc  00000000  00000000  00000535  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_frame  00000030  00000000  00000000  00000734  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_str    00000102  00000000  00000000  00000764  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	14 c0       	rjmp	.+40     	; 0x2a <__ctors_end>
+   2:	21 c0       	rjmp	.+66     	; 0x46 <__bad_interrupt>
+   4:	20 c0       	rjmp	.+64     	; 0x46 <__bad_interrupt>
+   6:	1f c0       	rjmp	.+62     	; 0x46 <__bad_interrupt>
+   8:	1e c0       	rjmp	.+60     	; 0x46 <__bad_interrupt>
+   a:	1d c0       	rjmp	.+58     	; 0x46 <__bad_interrupt>
+   c:	1c c0       	rjmp	.+56     	; 0x46 <__bad_interrupt>
+   e:	1b c0       	rjmp	.+54     	; 0x46 <__bad_interrupt>
+  10:	1a c0       	rjmp	.+52     	; 0x46 <__bad_interrupt>
+  12:	19 c0       	rjmp	.+50     	; 0x46 <__bad_interrupt>
+  14:	18 c0       	rjmp	.+48     	; 0x46 <__bad_interrupt>
+  16:	17 c0       	rjmp	.+46     	; 0x46 <__bad_interrupt>
+  18:	16 c0       	rjmp	.+44     	; 0x46 <__bad_interrupt>
+  1a:	15 c0       	rjmp	.+42     	; 0x46 <__bad_interrupt>
+  1c:	14 c0       	rjmp	.+40     	; 0x46 <__bad_interrupt>
+  1e:	13 c0       	rjmp	.+38     	; 0x46 <__bad_interrupt>
+  20:	12 c0       	rjmp	.+36     	; 0x46 <__bad_interrupt>
+  22:	11 c0       	rjmp	.+34     	; 0x46 <__bad_interrupt>
+  24:	10 c0       	rjmp	.+32     	; 0x46 <__bad_interrupt>
+  26:	0f c0       	rjmp	.+30     	; 0x46 <__bad_interrupt>
+  28:	0e c0       	rjmp	.+28     	; 0x46 <__bad_interrupt>
+
+0000002a <__ctors_end>:
+  2a:	11 24       	eor	r1, r1
+  2c:	1f be       	out	0x3f, r1	; 63
+  2e:	cf ed       	ldi	r28, 0xDF	; 223
+  30:	cd bf       	out	0x3d, r28	; 61
+
+00000032 <__do_clear_bss>:
+  32:	10 e0       	ldi	r17, 0x00	; 0
+  34:	a0 e6       	ldi	r26, 0x60	; 96
+  36:	b0 e0       	ldi	r27, 0x00	; 0
+  38:	01 c0       	rjmp	.+2      	; 0x3c <.do_clear_bss_start>
+
+0000003a <.do_clear_bss_loop>:
+  3a:	1d 92       	st	X+, r1
+
+0000003c <.do_clear_bss_start>:
+  3c:	a2 36       	cpi	r26, 0x62	; 98
+  3e:	b1 07       	cpc	r27, r17
+  40:	e1 f7       	brne	.-8      	; 0x3a <.do_clear_bss_loop>
+  42:	18 d0       	rcall	.+48     	; 0x74 <main>
+  44:	76 c0       	rjmp	.+236    	; 0x132 <_exit>
+
+00000046 <__bad_interrupt>:
+  46:	dc cf       	rjmp	.-72     	; 0x0 <__vectors>
+
+00000048 <delay_ten_us>:
+
+
+// This function delays the specified number of 10 microseconds
+void delay_ten_us(unsigned long int us) 
+{
+	us /= 8;
+  48:	23 e0       	ldi	r18, 0x03	; 3
+  4a:	96 95       	lsr	r25
+  4c:	87 95       	ror	r24
+  4e:	77 95       	ror	r23
+  50:	67 95       	ror	r22
+  52:	2a 95       	dec	r18
+  54:	d1 f7       	brne	.-12     	; 0x4a <delay_ten_us+0x2>
+    can be achieved.
+*/
+void
+_delay_loop_1(uint8_t __count)
+{
+	__asm__ volatile (
+  56:	33 e0       	ldi	r19, 0x03	; 3
+  58:	07 c0       	rjmp	.+14     	; 0x68 <delay_ten_us+0x20>
+  5a:	23 2f       	mov	r18, r19
+  5c:	2a 95       	dec	r18
+  5e:	f1 f7       	brne	.-4      	; 0x5c <delay_ten_us+0x14>
+
+  while (us != 0) {
+	_delay_us(10);
+    us--;
+  60:	61 50       	subi	r22, 0x01	; 1
+  62:	70 40       	sbci	r23, 0x00	; 0
+  64:	80 40       	sbci	r24, 0x00	; 0
+  66:	90 40       	sbci	r25, 0x00	; 0
+// This function delays the specified number of 10 microseconds
+void delay_ten_us(unsigned long int us) 
+{
+	us /= 8;
+
+  while (us != 0) {
+  68:	61 15       	cp	r22, r1
+  6a:	71 05       	cpc	r23, r1
+  6c:	81 05       	cpc	r24, r1
+  6e:	91 05       	cpc	r25, r1
+  70:	a1 f7       	brne	.-24     	; 0x5a <delay_ten_us+0x12>
+	_delay_us(10);
+    us--;
+  }
+}
+  72:	08 95       	ret
+
+00000074 <main>:
+
+int main(void)
+{
+  74:	0f 93       	push	r16
+  76:	1f 93       	push	r17
+	unsigned char R,C;
+	unsigned int i;
+
+	DDRA   = _BV( 0 ) | _BV( 1 );
+  78:	83 e0       	ldi	r24, 0x03	; 3
+  7a:	8a bb       	out	0x1a, r24	; 26
+	DDRB   =  (_BV(0) | _BV(1) |_BV(2) |_BV(3) |_BV(4) |_BV(5) );
+  7c:	8f e3       	ldi	r24, 0x3F	; 63
+  7e:	87 bb       	out	0x17, r24	; 23
+	DDRD   = _BV( 6) |_BV( 5 ) | _BV( 4 ) |_BV( 3 ) |_BV( 2 );
+  80:	8c e7       	ldi	r24, 0x7C	; 124
+  82:	81 bb       	out	0x11, r24	; 17
+  84:	00 e0       	ldi	r16, 0x00	; 0
+  86:	10 e0       	ldi	r17, 0x00	; 0
+	
+		//if( i== 900 ) 
+		//	i=0;
+
+	
+		delay_ten_us(12000);
+  88:	60 ee       	ldi	r22, 0xE0	; 224
+  8a:	7e e2       	ldi	r23, 0x2E	; 46
+  8c:	80 e0       	ldi	r24, 0x00	; 0
+  8e:	90 e0       	ldi	r25, 0x00	; 0
+  90:	db df       	rcall	.-74     	; 0x48 <delay_ten_us>
+#define BO_ON ( D6_ON | DD_ON )
+
+
+static void SetLED( unsigned char row, unsigned char col ) 
+{	
+	PORTD &= ( _BV( PD0 ) | _BV( PD1 ) );
+  92:	82 b3       	in	r24, 0x12	; 18
+  94:	83 70       	andi	r24, 0x03	; 3
+  96:	82 bb       	out	0x12, r24	; 18
+	PORTD |= ( _BV( PD5 ) | _BV( PD4 ) | _BV( PD3 ) | _BV( PD2 ) );
+  98:	82 b3       	in	r24, 0x12	; 18
+  9a:	8c 63       	ori	r24, 0x3C	; 60
+  9c:	82 bb       	out	0x12, r24	; 18
+	PORTB &= ( _BV( PB5 ) | _BV( PB6 ) | _BV ( PB7) ) ;
+  9e:	88 b3       	in	r24, 0x18	; 24
+  a0:	80 7e       	andi	r24, 0xE0	; 224
+  a2:	88 bb       	out	0x18, r24	; 24
+	PORTA |= ( _BV(PA0) | _BV(PA1) );
+  a4:	8b b3       	in	r24, 0x1b	; 27
+  a6:	83 60       	ori	r24, 0x03	; 3
+  a8:	8b bb       	out	0x1b, r24	; 27
+
+	switch( col ) {
+  aa:	12 30       	cpi	r17, 0x02	; 2
+  ac:	91 f0       	breq	.+36     	; 0xd2 <main+0x5e>
+  ae:	13 30       	cpi	r17, 0x03	; 3
+  b0:	28 f4       	brcc	.+10     	; 0xbc <main+0x48>
+  b2:	11 23       	and	r17, r17
+  b4:	51 f0       	breq	.+20     	; 0xca <main+0x56>
+  b6:	11 30       	cpi	r17, 0x01	; 1
+  b8:	99 f4       	brne	.+38     	; 0xe0 <__stack+0x1>
+  ba:	09 c0       	rjmp	.+18     	; 0xce <main+0x5a>
+  bc:	14 30       	cpi	r17, 0x04	; 4
+  be:	69 f0       	breq	.+26     	; 0xda <main+0x66>
+  c0:	14 30       	cpi	r17, 0x04	; 4
+  c2:	48 f0       	brcs	.+18     	; 0xd6 <main+0x62>
+  c4:	15 30       	cpi	r17, 0x05	; 5
+  c6:	61 f4       	brne	.+24     	; 0xe0 <__stack+0x1>
+  c8:	0a c0       	rjmp	.+20     	; 0xde <main+0x6a>
+		case 0:
+			PORTD  |= _BV(PD6);
+  ca:	96 9a       	sbi	0x12, 6	; 18
+  cc:	09 c0       	rjmp	.+18     	; 0xe0 <__stack+0x1>
+			break;
+		case 1:
+			PORTB  |= _BV(PB0);
+  ce:	c0 9a       	sbi	0x18, 0	; 24
+  d0:	07 c0       	rjmp	.+14     	; 0xe0 <__stack+0x1>
+			break;
+		case 2:
+			PORTB  |= _BV(PB1);
+  d2:	c1 9a       	sbi	0x18, 1	; 24
+  d4:	05 c0       	rjmp	.+10     	; 0xe0 <__stack+0x1>
+			break;
+		case 3:
+			PORTB  |= _BV(PB2);
+  d6:	c2 9a       	sbi	0x18, 2	; 24
+  d8:	03 c0       	rjmp	.+6      	; 0xe0 <__stack+0x1>
+			break;
+		case 4:
+			PORTB  |= _BV(PB3);
+  da:	c3 9a       	sbi	0x18, 3	; 24
+  dc:	01 c0       	rjmp	.+2      	; 0xe0 <__stack+0x1>
+			break;
+		case 5:
+			PORTB  |= _BV(PB4);
+  de:	c4 9a       	sbi	0x18, 4	; 24
+			break;
+	}
+	
+	switch( row ) {
+  e0:	02 30       	cpi	r16, 0x02	; 2
+  e2:	91 f0       	breq	.+36     	; 0x108 <__stack+0x29>
+  e4:	03 30       	cpi	r16, 0x03	; 3
+  e6:	28 f4       	brcc	.+10     	; 0xf2 <__stack+0x13>
+  e8:	00 23       	and	r16, r16
+  ea:	51 f0       	breq	.+20     	; 0x100 <__stack+0x21>
+  ec:	01 30       	cpi	r16, 0x01	; 1
+  ee:	99 f4       	brne	.+38     	; 0x116 <__stack+0x37>
+  f0:	09 c0       	rjmp	.+18     	; 0x104 <__stack+0x25>
+  f2:	04 30       	cpi	r16, 0x04	; 4
+  f4:	69 f0       	breq	.+26     	; 0x110 <__stack+0x31>
+  f6:	04 30       	cpi	r16, 0x04	; 4
+  f8:	48 f0       	brcs	.+18     	; 0x10c <__stack+0x2d>
+  fa:	05 30       	cpi	r16, 0x05	; 5
+  fc:	61 f4       	brne	.+24     	; 0x116 <__stack+0x37>
+  fe:	0a c0       	rjmp	.+20     	; 0x114 <__stack+0x35>
+		case 0:
+			PORTD  &= ~(_BV(PD5));
+ 100:	95 98       	cbi	0x12, 5	; 18
+ 102:	09 c0       	rjmp	.+18     	; 0x116 <__stack+0x37>
+			break;
+		case 1:
+			PORTD  &= ~(_BV(PD4));
+ 104:	94 98       	cbi	0x12, 4	; 18
+ 106:	07 c0       	rjmp	.+14     	; 0x116 <__stack+0x37>
+			break;
+		case 2:
+			PORTD  &= ~(_BV(PD3));
+ 108:	93 98       	cbi	0x12, 3	; 18
+ 10a:	05 c0       	rjmp	.+10     	; 0x116 <__stack+0x37>
+			break;
+		case 3:
+			PORTD  &= ~(_BV(PD2));
+ 10c:	92 98       	cbi	0x12, 2	; 18
+ 10e:	03 c0       	rjmp	.+6      	; 0x116 <__stack+0x37>
+			break;
+		case 4:
+			PORTA  &= ~(_BV(PA0));
+ 110:	d8 98       	cbi	0x1b, 0	; 27
+ 112:	01 c0       	rjmp	.+2      	; 0x116 <__stack+0x37>
+			break;
+		case 5:
+			PORTA  &= ~(_BV(PA1));
+ 114:	d9 98       	cbi	0x1b, 1	; 27
+		//	i=0;
+
+	
+		delay_ten_us(12000);
+		SetLED( R,C);
+		C++ ;
+ 116:	1f 5f       	subi	r17, 0xFF	; 255
+		R++ ; 
+ 118:	0f 5f       	subi	r16, 0xFF	; 255
+		if ( R==6) C++ ;
+ 11a:	06 30       	cpi	r16, 0x06	; 6
+ 11c:	11 f4       	brne	.+4      	; 0x122 <__stack+0x43>
+ 11e:	1f 5f       	subi	r17, 0xFF	; 255
+ 120:	02 c0       	rjmp	.+4      	; 0x126 <__stack+0x47>
+		if( R >= 6 ) R -= 6;
+ 122:	06 30       	cpi	r16, 0x06	; 6
+ 124:	08 f0       	brcs	.+2      	; 0x128 <__stack+0x49>
+ 126:	06 50       	subi	r16, 0x06	; 6
+		if( C >= 6 ) C -= 6;
+ 128:	16 30       	cpi	r17, 0x06	; 6
+ 12a:	08 f4       	brcc	.+2      	; 0x12e <__stack+0x4f>
+ 12c:	ad cf       	rjmp	.-166    	; 0x88 <main+0x14>
+ 12e:	16 50       	subi	r17, 0x06	; 6
+ 130:	ab cf       	rjmp	.-170    	; 0x88 <main+0x14>
+
+00000132 <_exit>:
+ 132:	f8 94       	cli
+
+00000134 <__stop_program>:
+ 134:	ff cf       	rjmp	.-2      	; 0x134 <__stop_program>
