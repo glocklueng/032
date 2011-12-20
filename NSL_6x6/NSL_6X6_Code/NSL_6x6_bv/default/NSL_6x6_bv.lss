@@ -147,9 +147,9 @@ int main(void)
 		//	i=0;
 
 	
-		delay_ten_us(12000);
-  88:	60 ee       	ldi	r22, 0xE0	; 224
-  8a:	7e e2       	ldi	r23, 0x2E	; 46
+		delay_ten_us(2000);
+  88:	60 ed       	ldi	r22, 0xD0	; 208
+  8a:	77 e0       	ldi	r23, 0x07	; 7
   8c:	80 e0       	ldi	r24, 0x00	; 0
   8e:	90 e0       	ldi	r25, 0x00	; 0
   90:	db df       	rcall	.-74     	; 0x48 <delay_ten_us>
@@ -271,7 +271,7 @@ static void SetLED( unsigned char row, unsigned char col )
 		//	i=0;
 
 	
-		delay_ten_us(12000);
+		delay_ten_us(2000);
 		SetLED( R,C);
 		C++ ;
  116:	1f 5f       	subi	r17, 0xFF	; 255
