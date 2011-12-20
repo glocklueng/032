@@ -56,52 +56,92 @@ void tape_knock( void )
 }
 
 
+
+ /*
+  * Picks up a part
+  *
+  * checks if head is down, 
+  *    if so fails out
+  * tape knock
+  * vacuum on
+  * head down
+  * head up
+  * check the vacuum is blocked
+  *    if not, try 4 times, delay more each time , after 4 fail out, vacuum off, return error code
+  *
+  */
+
+
 char pickup_part ( void ) 
 {
+	unsigned char failedCounter;
+
+	// wait til head stops
+	while( head_moving() );
+
+	// count number of pickup fails
+	failedCounter = 0 ;
+
 	if( is_head_down() ){
 		return GCSTATUS_FAILED_COMMAND;
 	}
 
-#if 0
-	 Sleep( 100 );
+	for(;;) {
 
-	 // This will stall the machine till it can knock
-	 WriteSerial("M21\r\n");
-	 Sleep( 100 );
+		// advance part, waits til head has done
+		tape_knock();
 
-	 _RPT0(_CRT_WARN,"Picking up part\n");
-	 // head down
-	 WriteSerial("M10\r\n");
-	 //wait
-	 Sleep( 500 );
-	 // vacuum on
-	 WriteSerial("M19\r\n");
-	 //wait
-	 Sleep( 500 );
-	 // head up
-	 WriteSerial("M11\r\n");
-	 //wait
-	 Sleep( 500 );
+		// vacuum on
+		vacuum ( 1 );
 
-#endif
+		// push head down
+		head_down( 1 );
 
-	// advance part, waits til head has done
-	tape_knock();
+		//settle (probably doesn't need this)
+		_delay_ms( 500 );
 
-	// vacuum on
-	vacuum ( 1 );
+		// head up
+		head_down ( 0 ) ;
 
-	// push head down
-	head_down( 1 );
+		// check vacuum line...
+		if( vacuum_state() == 0 ) {
 
-	_delay_ms( 500 );
+			// vacuum off
+			vacuum ( 0 );
 
-	// head up
-	head_down ( 0 ) ;
+			// failed to pickup a part
+			failedCounter ++ ;
+
+			if( failedCounter == 4 ) {
+
+				return GCSTATUS_FAILED_COMMAND;
+
+			}
+
+			// delay 500ms ( based on counter ? )  let the air compressor catch up, as that may be the problem
+			_delay_ms( 500 * failedCounter );
+
+		}else
+			break;
+
+	}
 
 	return GCSTATUS_OK;
 
 }
+ /*
+  * Places a part
+  *
+  * wait for head to stop
+  * check the vacuum is blocked
+  *    if not, fail out, vacuum off return error code
+  *
+  * head goes down
+  * vacuum goes off
+  * head goes up
+  *
+  *
+  */
 
 char putdown_part ( void )
 {
@@ -109,32 +149,30 @@ char putdown_part ( void )
 		return GCSTATUS_FAILED_COMMAND;
 	}
 
-#if 0
-
-	 // head down/air off/up
-	 _RPT0(_CRT_WARN,"dropping off part\n");
-	 // head down
-	 WriteSerial("M10\r\n");
-	 //wait
-	 Sleep( 800 );
-	 // vacuum off
-	 WriteSerial("M20\r\n");
-	 //wait
-	 Sleep( 500 );
-	 // head up
-	 WriteSerial("M11\r\n");
-
-
-#endif
-
 	// wait til head stops
 	while( head_moving() );
 
+	// settle time
 	_delay_ms( 100 );
+
+
+	// check vacuum here
+	if( vacuum_state() == 0 ) {
+		// dropped the part !
+		
+		// vacuum off
+		vacuum ( 0 );
+
+		// now we need the GCODE function to set the location of the feeder, so we can retry the pickup
+
+		return GCSTATUS_FAILED_COMMAND;	
+	}
+
 
 	// push head down
 	head_down( 1 );
 
+	// settle after head down ( probably doesn't need it  )
 	_delay_ms( 250 );
 
 	// vacuum off

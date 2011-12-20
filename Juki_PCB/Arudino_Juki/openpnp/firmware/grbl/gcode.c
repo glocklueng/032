@@ -124,6 +124,20 @@ static float to_millimeters(double value) {
   return(gc.inches_mode ? (value * MM_PER_INCH) : value);
 }
 
+static double feeder_x_pos = 0, feeder_y_pos =0;
+
+void set_feeder_x( double x )
+{
+	feeder_x_pos = x;
+}
+
+void set_feeder_y( double y )
+{
+	feeder_x_pos = y;
+}
+
+
+
 // Find the angle in radians of deviance from the positive y axis. negative angles to the left of y-axis, 
 // positive to the right.
 double theta(double x, double y)
@@ -371,6 +385,17 @@ uint8_t gc_execute_line(char *line) {
 		// move the head
 		gc.motion_mode = MOTION_MODE_HEAD;
 		break;
+		// set feeder position.
+	case 'N':
+		set_feeder_x( unit_converted_value );
+		next_action = NEXT_ACTION_DWELL;
+		break;
+	case 'M':
+		set_feeder_y( unit_converted_value );
+		next_action = NEXT_ACTION_DWELL;
+		break;
+
+
     }
   }
   
