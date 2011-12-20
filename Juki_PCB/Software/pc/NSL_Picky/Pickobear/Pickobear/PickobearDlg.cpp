@@ -83,6 +83,7 @@ CPickobearDlg::CPickobearDlg(CWnd* pParent /*=NULL*/)
 	, m_Threshold1(m_Thresh1)
 	, m_Threshold2(m_Thresh2)
 	, m_Head(0)
+	, m_Vacuum(0)
 	, m_GOX(0)
 	, m_GOY(0)
 	, m_FeedersModified(false)
@@ -119,6 +120,7 @@ void CPickobearDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_DOWN_CAMERA, m_DownCamera);
 	DDX_Control(pDX, IDC_STEPSIZE, m_StepSize);
 	DDX_CBIndex(pDX, IDC_COMBO3, m_Side);
+	DDX_Control(pDX, IDC_G_SPEED, m_SpeedSelect);
 }
 
 BEGIN_MESSAGE_MAP(CPickobearDlg, CDialog) 
@@ -174,6 +176,8 @@ BEGIN_MESSAGE_MAP(CPickobearDlg, CDialog)
 	ON_BN_CLICKED(IDC_DELETE_FEEDER, &CPickobearDlg::OnBnClickedDeleteFeeder)
 	ON_BN_CLICKED(IDC_PCB_FLIP, &CPickobearDlg::OnBnClickedPcbFlip)
 	ON_NOTIFY_EX_RANGE(TTN_NEEDTEXT, 0, 0xFFFF, OnToolTipNotify)
+	ON_BN_CLICKED(IDC_VACUUM_TOGGLE, &CPickobearDlg::OnBnClickedVacuumToggle)
+	ON_CBN_SELCHANGE(IDC_G_SPEED, &CPickobearDlg::OnCbnSelchangeGSpeed)
 END_MESSAGE_MAP()
 
 BEGIN_MESSAGE_MAP(CListCtrl_Components, CListCtrl)
@@ -211,9 +215,6 @@ void CListCtrl_FeederList::PreSubclassWindow()
 }
 
 // CPickobearDlg message handlers
-
-
-
 static const WCHAR *pszName = L"cameras";
 static const WCHAR *pszKey = L"PickoBear";
 
@@ -474,6 +475,7 @@ BOOL CPickobearDlg::OnInitDialog()
 		_RPT0(_CRT_WARN,"Error\n");
 	}
 
+	m_SpeedSelect.SetCurSel( (m_Speed/100)-1 );
 
 
 	return TRUE;  // return TRUE  unless you set the focus to a control
@@ -812,7 +814,7 @@ char CPickobearDlg::CheckX( void )
 
 	// wait for ack. needs a timeout
 
-	int counter = 100;
+	int counter = 500;
 
 	if( m_Simulate == true ) {
 		return true;
@@ -2743,31 +2745,40 @@ BOOL CPickobearDlg::OnToolTipNotify( UINT id,
 		case IDC_DOWN:
             pTTT->lpszText = _T("Move head to the Down by <steps>");
             break;
+			
+		case IDC_LEFTDOWN:
+            pTTT->lpszText = _T("Move head to the Left Down by <steps>");
+            break;
+			
 
 		case IDC_TOOL1:
             pTTT->lpszText = _T("Loads tool A");
             break;
 
 		case IDC_TOOL2:
-            pTTT->lpszText = _T("Loads tool A");
+            pTTT->lpszText = _T("Loads tool B");
             break;
 
 		case IDC_TOOL3:
-            pTTT->lpszText = _T("Loads tool A");
+            pTTT->lpszText = _T("Loads tool C");
             break;
 
 		case IDC_TOOL4:
-            pTTT->lpszText = _T("Loads tool A");
+            pTTT->lpszText = _T("Loads tool D");
             break;
 
 		case IDC_TOOL5:
-            pTTT->lpszText = _T("Loads tool A");
+            pTTT->lpszText = _T("Loads tool E");
             break;
 
 		case IDC_TOOL6:
-            pTTT->lpszText = _T("Loads tool A");
+            pTTT->lpszText = _T("Loads tool F");
             break;
-		
+
+		case IDC_ADD_LOWERRIGHT:
+            pTTT->lpszText = _T("Add lower right coordinates to currently selected feeder");
+            break;
+
 		case IDC_FEEDER_GRID_EDIT:
             pTTT->lpszText = _T("Pops up the feeder editing grid");
             break;
@@ -2847,4 +2858,31 @@ BOOL CPickobearDlg::OnToolTipNotify( UINT id,
 
     // Not handled.
     return FALSE;
+}
+
+
+void CPickobearDlg::OnBnClickedVacuumToggle()
+{
+	if( false == HomeTest( ) ) {
+		return ;
+	}
+
+	if( m_Vacuum ) {
+		// off
+		WriteSerial("M20\r\n");
+		m_Vacuum = 0;
+	} else { 
+		//down
+		WriteSerial("M19\r\n");
+		m_Vacuum = 1;
+	}
+}
+
+
+void CPickobearDlg::OnCbnSelchangeGSpeed()
+{
+	UpdateData(FALSE);
+
+	m_Speed = ((m_SpeedSelect.GetCurSel()+1) * 100);
+	_RPT1(_CRT_WARN,"m_Speed %d\n",m_Speed);
 }

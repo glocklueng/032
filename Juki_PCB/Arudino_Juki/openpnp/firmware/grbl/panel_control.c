@@ -143,8 +143,27 @@ unsigned char is_pteach( void )
 
 void process_panel(void ) 
 {
+	static	char bvac = 0;
+	static	char bhead = 0;
 
 	if( is_phome() ) mc_go_home();
+
+	if( is_pvac() ) {
+		bvac = 1;
+		vacuum(1);
+	} else if(bvac == 1 ) {
+		bvac = 0;
+		vacuum(0);
+	}	
+
+	if( is_phead() ) {
+		bhead = 1;
+		head_down(1);
+	} else if(bhead == 1 ) {
+		bhead = 0;
+		head_down(0);
+	}	
+
 
 }
 

@@ -33,7 +33,7 @@ void head_init()
 	HEADDT_PORT |= (_BV( D90 ));
 }
 
-// todo: don't allow head down while not homed?
+
 char head_down(int state)
 {
 
@@ -42,6 +42,8 @@ char head_down(int state)
 		return 0;
 	}
 
+	// wait til head stops
+	while( head_moving() );
 
 #ifdef VERBOSE_DEBUG
 	printPgmString(PSTR("dbg: head_down\n\r"));
