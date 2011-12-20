@@ -108,7 +108,10 @@ char pickup_part ( void )
 
 			// vacuum off
 			vacuum ( 0 );
-
+#ifdef VERBOSE_DEBUG
+			printPgmString(PSTR("pickup_part:  part wasn't picked up!\r\n"));
+#endif
+		
 			// failed to pickup a part
 			failedCounter ++ ;
 
@@ -159,6 +162,9 @@ char putdown_part ( void )
 	// check vacuum here
 	if( vacuum_state() == 0 ) {
 		// dropped the part !
+#ifdef VERBOSE_DEBUG
+			printPgmString(PSTR("putdown_part:  part was lost in transit!\r\n"));
+#endif
 		
 		// vacuum off
 		vacuum ( 0 );

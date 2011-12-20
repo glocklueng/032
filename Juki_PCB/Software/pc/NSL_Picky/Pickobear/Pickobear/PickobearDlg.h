@@ -517,6 +517,9 @@ private:
 	// head state
 	char m_Head;
 
+	// vacuum state
+	char m_Vacuum;
+
 	// machine has been homed
 	bool m_Homed;
 
@@ -701,4 +704,7 @@ public:
 	int m_Side;
 	afx_msg void OnBnClickedDeleteFeeder();
 	afx_msg void OnBnClickedPcbFlip();
+	afx_msg void OnBnClickedVacuumToggle();
+	afx_msg void OnCbnSelchangeGSpeed();
+	CComboBox m_SpeedSelect;
 };
