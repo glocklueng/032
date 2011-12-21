@@ -12,6 +12,7 @@
 
 #include <iostream>
 #include <fstream>
+#include "afxvslistbox.h"
 
 enum {
 	NT_REAL = 0,
@@ -536,6 +537,20 @@ private:
 
 	};
 
+	// this stores the offset of each PCB ( top and bottom )
+	typedef struct PCBEntry_tag  {
+
+		long x_top;
+		long y_top;
+		long x_bottom;
+		long y_bottom;
+
+	}PCBEntry;
+
+	// number of entries
+	unsigned int m_PCBCount;
+	std::vector<PCBEntry> m_PCBs;
+
 	// current state
 	eMachineState m_MachineState;
 
@@ -707,4 +722,10 @@ public:
 	afx_msg void OnBnClickedVacuumToggle();
 	afx_msg void OnCbnSelchangeGSpeed();
 	CComboBox m_SpeedSelect;
+	CListCtrl m_PCBList;
+	afx_msg void OnStnClickedSimulation();
+	afx_msg void OnBnClickedAddPcb();
+	// Current index of PCB we are placing if there are multiple PCB's
+	unsigned long m_PCBIndex;
+	afx_msg void OnBnClickedDeletePcb();
 };

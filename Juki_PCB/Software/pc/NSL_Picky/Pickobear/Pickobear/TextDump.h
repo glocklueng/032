@@ -24,6 +24,11 @@ public:
 		}
 	};
 
+	void PostNcDestroy( )
+	{
+		delete this;
+	}
+
 // Dialog Data
 	enum { IDD = IDD_TEXT_DIALOG };
 

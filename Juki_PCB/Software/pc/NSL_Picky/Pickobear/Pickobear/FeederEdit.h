@@ -13,6 +13,7 @@ public:
 
 	CListCtrl_FeederList::FeederDatabase entry;
 
+
 // Dialog Data
 	enum { IDD = IDD_FEEDER_EDIT };
 
