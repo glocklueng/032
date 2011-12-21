@@ -265,7 +265,7 @@ BOOL CPickobearDlg::OnInitDialog()
 	m_ComponentList.GetClientRect(&rect);
 	int nInterval =( rect.Width() /8);
 
-	m_ComponentList.InsertColumn(0, _T("Name"),LVCFMT_CENTER,(int)(nInterval/1.2));
+	m_ComponentList.InsertColumn(0, _T("Name"),LVCFMT_CENTER,(int)(nInterval / 1.32 ));
 	m_ComponentList.InsertColumn(1, _T("Value"),LVCFMT_CENTER,(int)(nInterval/1.5));
 	m_ComponentList.InsertColumn(2, _T("Type"),		LVCFMT_CENTER,nInterval);
 	m_ComponentList.InsertColumn(3, _T("X"),		LVCFMT_CENTER,nInterval);
@@ -2924,11 +2924,43 @@ BOOL CPickobearDlg::OnToolTipNotify( UINT id,
 		case IDC_HOME:
             pTTT->lpszText = _T("Home the machine (bug: fails on long travels sometimes, just reclick it)");
             break;
+
 		case IDC_PCB_LIST:
             pTTT->lpszText = _T("List of PCB XY's on table. Select component from component list. Do offset procedure. Click Add. Repeat for each board (always use same part!)");
             break;
 
+		case IDC_ESTOP:
+            pTTT->lpszText = _T("Stops the machine as quickly as possible");
+            break;
+
+		case IDC_ADD_PCB:
+            pTTT->lpszText = _T("Add PCB at current offset");
+            break;
+
+		case IDC_DELETE_PCB:
+            pTTT->lpszText = _T("Delete selected PCB");
+            break;
+
+		case IDC_VACUUM_TOGGLE:
+            pTTT->lpszText = _T("Toggle vacuum on and off");
+            break;
+
+		case IDC_FEEDER:
+            pTTT->lpszText = _T("Edit feeders in grid");
+            break;
+
+		case IDC_PARK:
+            pTTT->lpszText = _T("Edit feeders in grid");
+            break;
+
+		case IDC_SIDE:
+            pTTT->lpszText = _T("Pick the side/layer to place, this is not the same as flipping the PCB, its grouping of the components");
+            break;
+
 		default:
+			
+			_RPT1(_CRT_WARN, "Not yet documented %d\n", nID );
+
             pTTT->lpszText = _T("Not yet documented");
             break;
         }
