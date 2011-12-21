@@ -438,7 +438,7 @@ public:
 	{
 		ASSERT( name );
 
-		for( int i = 0 ; i < m_Count ; i++ ) {
+		for( unsigned int i = 0 ; i < m_Count ; i++ ) {
 			
 			if(strcmp(name, mFeederDatabase.at(i).label) == 0 ) {
 				return i;
@@ -473,7 +473,7 @@ public:
 	}
 
 	// fetch entry at index
-	FeederDatabase &at( int i ) {
+	FeederDatabase &at( unsigned int i ) {
 		if( i < m_Count ) 
 			return mFeederDatabase.at(i);
 		
@@ -523,7 +523,6 @@ private:
 
 	// machine has been homed
 	bool m_Homed;
-
 
 	//how long Sleep is in camera updates (ms)
 	unsigned int m_CameraUpdateRate;

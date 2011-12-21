@@ -106,7 +106,6 @@
 #define IDC_PCB_LIST                    1093
 #define IDC_ADD_PCB                     1094
 #define IDC_DELETE_PCB                  1095
-#define IDC_EDIT1                       1096
 #define IDC_PCB_INDEX                   1096
 
 // Next default values for new objects
