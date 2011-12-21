@@ -101,8 +101,13 @@
 #define IDC_FEEDER_NAME2                1088
 #define IDC_XPOS                        1089
 #define IDC_VACUUM_TOGGLE               1090
-#define IDC_COMBO1                      1091
-#define IDC_G_SPEED                     1091
+#define IDC_SIDE                        1091
+#define IDC_G_SPEED                     1092
+#define IDC_PCB_LIST                    1093
+#define IDC_ADD_PCB                     1094
+#define IDC_DELETE_PCB                  1095
+#define IDC_EDIT1                       1096
+#define IDC_PCB_INDEX                   1096
 
 // Next default values for new objects
 // 
@@ -110,7 +115,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        136
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1092
+#define _APS_NEXT_CONTROL_VALUE         1097
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

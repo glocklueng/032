@@ -1,4 +1,3 @@
-//
 // PickobearDlg.cpp : implementation file
 //
 // charliex - null space labs 032.la
@@ -12,8 +11,8 @@
 //   make busy status reflect in GUI
 //   add a status print somewhere in the GUI
 //   more error checking
-//   figure out the problem with CheckX / CheckAck and see if it can be handled better
-//   add last feeder XY to Grbl and add new GCODE parameter to set feeder
+//   figure out the problem with CheckX / CheckAck and see if it can be handled better (added longer delay on timeout)
+//   add last feeder XY to Grbl and add new GCODE parameter to set feeder (partially added, sets feeder )
 //   more help documentation
 //   document GCODE
 //   add 'Append' option to feeder load/import
@@ -26,6 +25,10 @@
 //   add localisation to strings?
 //   reflect limit switches in GUI
 //   handle flipped pcbs!! (Most important) (done)
+
+// Recently added :-
+//   Added multiple PCB offsets  (not tested!)
+
 
 #include "stdafx.h"
 #include "Pickobear.h"
@@ -99,9 +102,13 @@ CPickobearDlg::CPickobearDlg(CWnd* pParent /*=NULL*/)
 	, m_Side(0)
 	, bFlip(false)
 	, bBusy(false)
-	, m_Simulate(false)
+	, m_Simulate(true)
+	, m_PCBIndex(0)
+	, m_PCBCount(0)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+	
+	m_PCBs.clear();
 }
 
 void CPickobearDlg::DoDataExchange(CDataExchange* pDX)
@@ -119,8 +126,10 @@ void CPickobearDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_UP_CAMERA, m_UpCamera);
 	DDX_Control(pDX, IDC_DOWN_CAMERA, m_DownCamera);
 	DDX_Control(pDX, IDC_STEPSIZE, m_StepSize);
-	DDX_CBIndex(pDX, IDC_COMBO3, m_Side);
+	DDX_CBIndex(pDX, IDC_SIDE, m_Side);
 	DDX_Control(pDX, IDC_G_SPEED, m_SpeedSelect);
+	DDX_Control(pDX, IDC_PCB_LIST, m_PCBList);
+	DDX_Text(pDX, IDC_PCB_INDEX, m_PCBIndex);
 }
 
 BEGIN_MESSAGE_MAP(CPickobearDlg, CDialog) 
@@ -178,6 +187,9 @@ BEGIN_MESSAGE_MAP(CPickobearDlg, CDialog)
 	ON_NOTIFY_EX_RANGE(TTN_NEEDTEXT, 0, 0xFFFF, OnToolTipNotify)
 	ON_BN_CLICKED(IDC_VACUUM_TOGGLE, &CPickobearDlg::OnBnClickedVacuumToggle)
 	ON_CBN_SELCHANGE(IDC_G_SPEED, &CPickobearDlg::OnCbnSelchangeGSpeed)
+	ON_STN_CLICKED(IDC_SIMULATION, &CPickobearDlg::OnStnClickedSimulation)
+	ON_BN_CLICKED(IDC_ADD_PCB, &CPickobearDlg::OnBnClickedAddPcb)
+	ON_BN_CLICKED(IDC_DELETE_PCB, &CPickobearDlg::OnBnClickedDeletePcb)
 END_MESSAGE_MAP()
 
 BEGIN_MESSAGE_MAP(CListCtrl_Components, CListCtrl)
@@ -279,6 +291,12 @@ BOOL CPickobearDlg::OnInitDialog()
 	m_FeederList.InsertColumn(7, _T("CY"),LVCFMT_CENTER,nInterval);
 	m_FeederList.InsertColumn(8, _T("T"),LVCFMT_CENTER,(int)(nInterval/1.5));
 	m_FeederList.InsertColumn(9, _T("Index"),LVCFMT_CENTER,(int)(nInterval));
+
+	m_PCBList.GetClientRect(&rect);
+	nInterval =( rect.Width() / 2 );
+
+	m_PCBList.InsertColumn(0, _T("Top"),LVCFMT_CENTER,(int)nInterval);
+	m_PCBList.InsertColumn(1, _T("Bottom"),LVCFMT_CENTER,(int)nInterval);
 
 
 	m_UpCamera.ResetContent();
@@ -641,7 +659,7 @@ bool BuildGCodeMove( char *output, int length, int mode , long x, long y, long s
 	// limit the move
 	if( x > 364550 ) {
 
-		int ret = AfxMessageBox(L"X out of limits, press OK to change to stay within limits, or cancel to stop move",MB_OKCANCEL);
+		int ret = AfxMessageBox(L"X out of limits, press OK to change to stay within limits, or cancel to stop move",MB_OKCANCEL|MB_ICONHAND);
 		if( ret == IDCANCEL ) {
 			sprintf_s(output,length,"");
 			return false;
@@ -667,7 +685,7 @@ bool CPickobearDlg::HomeTest( void )
 {
 
 	if( m_Homed == false ) {
-		int ret = AfxMessageBox(L"Not Homed",MB_OK);
+		int ret = AfxMessageBox(L"Not Homed",MB_OK|MB_ICONEXCLAMATION);
 		if( ret == IDOK ) 
 			return false;
 	}
@@ -702,7 +720,7 @@ again:;
 	WriteSerial(buffer);
 
 	if( CheckX() == false ) {
-		int ret = AfxMessageBox(L"MoveHeadSlow: Move Failed",MB_RETRYCANCEL);
+		int ret = AfxMessageBox(L"MoveHeadSlow: Move Failed",MB_RETRYCANCEL|MB_ICONEXCLAMATION);
 		if(ret == IDRETRY ) 
 			goto again;
 		if( ret == IDCANCEL ) 
@@ -749,7 +767,7 @@ again:;
 
 
 	if( CheckX() == false ) {
-		int ret = AfxMessageBox(L"MoveHead: Move Failed",MB_RETRYCANCEL);
+		int ret = AfxMessageBox(L"MoveHead: Move Failed",MB_RETRYCANCEL|MB_ICONEXCLAMATION);
 		if(ret == IDRETRY ) 
 			goto again;
 		if( ret == IDCANCEL ) 
@@ -781,7 +799,7 @@ again:;
 	WriteSerial( buffer );
 
 	if( CheckX() == false ) {
-		int ret = AfxMessageBox(L"MoveHeadRel: Move Failed",MB_RETRYCANCEL);
+		int ret = AfxMessageBox(L"MoveHeadRel: Move Failed",MB_RETRYCANCEL|MB_ICONEXCLAMATION);
 		if(ret == IDRETRY ) 
 			goto again;
 		if( ret == IDCANCEL ) 
@@ -1308,7 +1326,7 @@ bool CPickobearDlg::PreRunCheck( bool all_parts=false )
 
 	// homed
 	if( m_Homed == false ){
-		AfxMessageBox(L"PreRunCheck: Machine isn't homed, clear table, check head is up, compressor etc and use HOME button",MB_OK ) ;
+		AfxMessageBox(L"PreRunCheck: Machine isn't homed, clear table, check head is up, compressor etc and use HOME button",MB_OK|MB_ICONEXCLAMATION ) ;
 		return false;
 	}
 
@@ -1339,7 +1357,7 @@ bool CPickobearDlg::PreRunCheck( bool all_parts=false )
 		int numberComponentsSelected = m_ComponentList.GetSelectedCount();
 
 		if( numberComponentsSelected == 0 ){
-			AfxMessageBox(L"PreRunCheck: Nothing will be place\n\nNo components are selected in the component list",MB_OK);
+			AfxMessageBox(L"PreRunCheck: Nothing will be place\n\nNo components are selected in the component list",MB_OK|MB_ICONEXCLAMATION);
 			return false;
 		}
 
@@ -1369,7 +1387,7 @@ bool CPickobearDlg::PreRunCheck( bool all_parts=false )
 
 	if( flag == false ){
 
-		AfxMessageBox(L"PreRunCheck: No parts will be placed as there are none on the Side you selected\n\nCheck that you have selected the correct parts/side", MB_OK);
+		AfxMessageBox(L"PreRunCheck: No parts will be placed as there are none on the Side you selected\n\nCheck that you have selected the correct parts/side", MB_OK|MB_ICONEXCLAMATION);
 		return false;
 	}
 
@@ -1377,7 +1395,7 @@ bool CPickobearDlg::PreRunCheck( bool all_parts=false )
 	// I can't see how this would fly, i suppose if a board is perfectly matched
 	if (m_ComponentList.m_OffsetX == 0 && m_ComponentList.m_OffsetY == 0  ) {
 
-		AfxMessageBox(L"PreRunCheck: Offsets not defined\n\nDouble click a valid component from the component list\nMove camera to correct centroid location of part on PCB\nPress OFFSET button to register correct offset\nCheck location of other components by double clicking in component list (OFFSET button can be reused to make changes)",MB_OK ) ;
+		AfxMessageBox(L"PreRunCheck: Offsets not defined\n\nDouble click a valid component from the component list\nMove camera to correct centroid location of part on PCB\nPress OFFSET button to register correct offset\nCheck location of other components by double clicking in component list (OFFSET button can be reused to make changes)",MB_OK|MB_ICONEXCLAMATION ) ;
 		return false;
 	}
 
@@ -1809,7 +1827,7 @@ void CListCtrl_FeederList::AddItem( const char *label,const long x,long y,short 
 	// rotation of the part
 	entry.rot = ( rot ) ;
 
-	// conver the sting from utf8
+	// conver the string from utf8
 	CString temp( label );
 
 	int Index = InsertItem(LVIF_TEXT, 0,temp, 0, 0, 0, NULL);
@@ -2109,7 +2127,7 @@ void CListCtrl_Components::RebuildList( void )
 			feederIndex = pDlg->m_FeederList.Search( entry->feeder );
 			if( feederIndex == -1 ) {
 
-				int ret = AfxMessageBox(L"Feeder not found ", MB_OK);
+				int ret = AfxMessageBox(L"Feeder not found ", MB_OK|MB_ICONEXCLAMATION);
 				return;
 			}
 
@@ -2151,7 +2169,7 @@ void CPickobearDlg::OnBnClickedGo2()
 	UpdateData();
 
 	if ( bBusy ) {
-		AfxMessageBox(L"Machine is already running a task",MB_OK);
+		AfxMessageBox(L"Machine is already running a task",MB_OK|MB_ICONEXCLAMATION);
 		return;
 	}
 
@@ -2258,7 +2276,7 @@ DWORD CPickobearDlg::goThread(void )
 	_RPT0(_CRT_WARN,"goThread\r\n");
 
 	if ( bBusy ) {
-		AfxMessageBox(L"Machine is already running a task",MB_OK);
+		AfxMessageBox(L"Machine is already running a task",MB_OK|MB_ICONEXCLAMATION);
 		return true;
 	}
 
@@ -2266,161 +2284,221 @@ DWORD CPickobearDlg::goThread(void )
 
 	EmptySerial();
 
-	for (i = 0 ; i < m_ComponentList.GetCount(); i ++ ) {
 
+	do {
 
-		int in = (m_ComponentList.GetCount()-1)-i;
-		m_ComponentList.SetItemState(in, LVIS_SELECTED, LVIS_SELECTED);
-		m_ComponentList.EnsureVisible( in ,TRUE );
+		// check fo more than one PCB (these should be equal!)
+		if (m_PCBs.size() ) {
 
-		entry = m_ComponentList.at(i);
+			_RPT2(_CRT_WARN,"Multiple PCBs placing board ( %d ) of ( %d )\n", m_PCBIndex , m_PCBCount);
 
-		if( entry.side !=  m_Side ) {
+			// multiple PCB's to place, is this more complicated becase of sides?
+			if( bFlip == false ) {
+				m_ComponentList.m_OffsetX = m_PCBs.at( m_PCBIndex ).x_top ;
+				m_ComponentList.m_OffsetY = m_PCBs.at( m_PCBIndex ).y_top ;
+			} else { 
+				m_ComponentList.m_OffsetX = m_PCBs.at( m_PCBIndex ).x_bottom ;
+				m_ComponentList.m_OffsetY = m_PCBs.at( m_PCBIndex ).y_bottom ;
+			}
 
-			_RPT1(_CRT_WARN,"skipping %s, wrong side selected\n",entry.label);
-			goto skip;
-		} else {
-			_RPT1(_CRT_WARN,"this side %s selected\n",entry.label);
+			// go to next entry
+			m_PCBIndex ++;
 		}
 
-		if ( strlen( entry.feeder ) == 0 ) {
 
-			int ret = AfxMessageBox(L"Feeder not defined", MB_OK);
+		for (i = 0 ; i < m_ComponentList.GetCount(); i ++ ) {
 
-			goto skip;
-		}
+			int in = (m_ComponentList.GetCount()-1)-i;
+			m_ComponentList.SetItemState(in, LVIS_SELECTED, LVIS_SELECTED);
+			m_ComponentList.EnsureVisible( in ,TRUE );
 
-		CListCtrl_FeederList::FeederDatabase feeder;
+			entry = m_ComponentList.at(i);
 
-		int feederEntry = m_FeederList.Search( entry.feeder  );
+			if( entry.side !=  m_Side ) {
 
-		int feederIndex ;
-		feederIndex = (m_FeederList.GetCount()-1) - feederEntry;
+				_RPT1(_CRT_WARN,"skipping %s, wrong side selected\n",entry.label);
+				goto skip_part;
+			} else {
+				_RPT1(_CRT_WARN,"this side %s selected\n",entry.label);
+			}
 
-		feeder = m_FeederList.at ( feederIndex );
-		// duplication as we change over to the new class
-		CurrentFeeder = m_FeederList.m_Feeders.at( feederIndex );
+			if ( strlen( entry.feeder ) == 0 ) {
 
-		if (feeder.tool < 1 || feeder.tool > 6 ) {
-			int ret = AfxMessageBox(L"Tool not defined", MB_OK);
+				int ret = AfxMessageBox(L"Feeder not defined", MB_OK|MB_ICONHAND);
 
-			goto skip;
-		}
+				// move back
+				if( m_PCBIndex > 0 ) 
+					m_PCBIndex--;
+				
+				bBusy = false;
+				return false;
 
-		_RPT1(_CRT_WARN,"Going to tool %d\n", feeder.tool );
+				goto skip_part;
+			}
 
-		// can't tool change at the moment...
+			CListCtrl_FeederList::FeederDatabase feeder;
+
+			int feederEntry = m_FeederList.Search( entry.feeder  );
+
+			int feederIndex ;
+			feederIndex = (m_FeederList.GetCount()-1) - feederEntry;
+
+			feeder = m_FeederList.at ( feederIndex );
+			// duplication as we change over to the new class
+			CurrentFeeder = m_FeederList.m_Feeders.at( feederIndex );
+
+			if (feeder.tool < 1 || feeder.tool > 6 ) {
+				int ret = AfxMessageBox(L"Tool not defined", MB_OK|MB_ICONHAND);
+				
+
+				goto skip_part;
+			}
+
+			_RPT1(_CRT_WARN,"Going to tool %d\n", feeder.tool );
+
+			// can't tool change at the moment...
 #if 0
-		switch ( feeder.tool ) {
-		case 1:
-			WriteSerial("M24\r\n");
-			break;
-		case 2:
-			WriteSerial("M24\r\n");
-			break;
-		case 3:
-			WriteSerial("M24\r\n");
-			break;
-		case 4:
-			WriteSerial("M24\r\n");
-			break;
-		case 5:
-			WriteSerial("M24\r\n");
-			break;
-		case 6:
-			WriteSerial("M24\r\n");
-			break;
-		}
+			switch ( feeder.tool ) {
+			case 1:
+				WriteSerial("M24\r\n");
+				break;
+			case 2:
+				WriteSerial("M24\r\n");
+				break;
+			case 3:
+				WriteSerial("M24\r\n");
+				break;
+			case 4:
+				WriteSerial("M24\r\n");
+				break;
+			case 5:
+				WriteSerial("M24\r\n");
+				break;
+			case 6:
+				WriteSerial("M24\r\n");
+				break;
+			}
 
-		return true;
+			return true;
 #endif
 
 
-		/// slow the camera down
-		m_CameraUpdateRate = CAMERA_SLOW_UPDATE_RATE_MS ;
+			/// slow the camera down
+			m_CameraUpdateRate = CAMERA_SLOW_UPDATE_RATE_MS ;
 
-		_RPT1(_CRT_WARN,"Going to feeder %s\n", feeder.label );
+			_RPT1(_CRT_WARN,"Going to feeder %s\n", feeder.label );
 
-		unsigned long feederX,feederY;
+			unsigned long feederX,feederY;
 
-		if( CurrentFeeder.GetNextPartPosition( feederX, feederY ) ) {
+			if( CurrentFeeder.GetNextPartPosition( feederX, feederY ) ) {
 
-			MoveHead(feederX , feederY - CAMERA_OFFSET );
+				MoveHead(feederX , feederY - CAMERA_OFFSET );
 
-			// next part
-			CurrentFeeder.AdvancePart();
+				// next part
+				if( CurrentFeeder.AdvancePart() == false ) {
 
-			// reflect quantities
-			m_FeederList.RebuildList();
+					CString Error ;			
+					Error = CurrentFeeder.ErrorMessage();
+					int ret = AfxMessageBox(Error ,MB_OK|MB_ICONEXCLAMATION );
 
-		} else {
+					bBusy = false;
 
-			CString Error ;			
-			Error = CurrentFeeder.ErrorMessage();
-			int ret = AfxMessageBox(Error ,MB_OK );
+					m_FeederList.RebuildList();
+
+				// move back
+				if( m_PCBIndex > 0 ) 
+					m_PCBIndex--;
+
+					return 0;
+				}
+				// reflect quantities
+				m_FeederList.RebuildList();
+
+
+			} else {
+
+				CString Error ;			
+				Error = CurrentFeeder.ErrorMessage();
+				int ret = AfxMessageBox(Error ,MB_OK|MB_ICONEXCLAMATION );
+
+				bBusy = false;
+
+				// move back
+				if( m_PCBIndex > 0 ) 
+					m_PCBIndex--;
+
+				return 0;
+			}
+
+			_RPT0(_CRT_WARN,"Picking up part\n");
+			WriteSerial("M26\r\n");
+
+			Sleep( 1000 );
+
+			_RPT1(_CRT_WARN,"Going to component %s\n", entry.label );
+
+			if( bFlip == false ) {
+				MoveHead(entry.x+m_ComponentList.m_OffsetX, entry.y+m_ComponentList.m_OffsetY - CAMERA_OFFSET);
+			} else {
+				MoveHead(entry.x+m_ComponentList.m_OffsetX, (0-entry.y)+m_ComponentList.m_OffsetY - CAMERA_OFFSET);
+			}
+
+			if( entry.rot ) {
+
+				_RPT1(_CRT_WARN,"Rotating part %d degrees \n", entry.rot );
+
+				double angle = entry.rot;
+
+				// calculate pulses
+				angle = ( 1000.0 / 360.0  ) * angle ;
+
+				char buffer[256];
+				int pulses;
+
+				// calculate pulses
+				pulses = ( int) ( angle );
+				sprintf_s(buffer,sizeof(buffer),"G0H%d\r\n", pulses );
+
+				_RPT1(_CRT_WARN,"Executing GCODE %s\r\n",buffer);
+
+				// do the rotate
+				WriteSerial( buffer );
+				Sleep( 500 );
+			}
+
+			_RPT0(_CRT_WARN,"dropping off part\n");
+
+			// head down/air off/up
+			// Put Part down
+			WriteSerial("M27\r\n");
+
+			//wait
+			Sleep( 100 );
+
+
+			// comes here if the part is skipped for some reason
+skip_part:;
+
+			if( m_MachineState == MS_STOP ) {
+
+				m_MachineState = MS_IDLE;
 			
-			bBusy = false;
+				// its an emergency stop, what else do you want
+				goto stop;
+			}
 
-			return 0;
+			UpdateWindow();
+
 		}
 
-		_RPT0(_CRT_WARN,"Picking up part\n");
-		WriteSerial("M26\r\n");
-
-		Sleep( 1000 );
-
-		_RPT1(_CRT_WARN,"Going to component %s\n", entry.label );
-
-		if( bFlip == false ) {
-			MoveHead(entry.x+m_ComponentList.m_OffsetX, entry.y+m_ComponentList.m_OffsetY - CAMERA_OFFSET);
-		} else {
-			MoveHead(entry.x+m_ComponentList.m_OffsetX, (0-entry.y)+m_ComponentList.m_OffsetY - CAMERA_OFFSET);
-		}
-
-		if( entry.rot ) {
-
-			_RPT1(_CRT_WARN,"Rotating part %d degrees \n", entry.rot );
-
-			double angle = entry.rot;
-
-			// calculate pulses
-			angle = ( 1000.0 / 360.0  ) * angle ;
-
-			char buffer[256];
-			int pulses;
-
-			// calculate pulses
-			pulses = ( int) ( angle );
-			sprintf_s(buffer,sizeof(buffer),"G0H%d\r\n", pulses );
-
-			_RPT1(_CRT_WARN,"Executing GCODE %s\r\n",buffer);
-
-			// do the rotate
-			WriteSerial( buffer );
-			Sleep( 500 );
-		}
-
-		_RPT0(_CRT_WARN,"dropping off part\n");
-
-		// head down/air off/up
-		// Put Part down
-		WriteSerial("M27\r\n");
-
-		//wait
-		Sleep( 100 );
-skip:;
-
-		if( m_MachineState == MS_STOP ) {
-			m_MachineState = MS_IDLE;
-			break;
-		}
-
-		UpdateWindow();
-
-	}
+	// looop for all PCB's
+	} while(m_PCBCount, m_PCBIndex < m_PCBCount ) ;
 
 	// Park machine
 	WriteSerial("G1X14Y15F200\r\n");
+
+
+stop:;
 
 	/// reset the camera speed 
 	m_CameraUpdateRate = CAMERA_DEFAULT_UPDATE_RATE_MS ;
@@ -2501,7 +2579,7 @@ DWORD CPickobearDlg::goSingleThread(void )
 		_RPT1(_CRT_WARN,"goSingleThread: Placing %s\r\n",entry.label);
 
 		if (strlen( entry.feeder) == 0) {
-			int ret = AfxMessageBox(L"Feeder not defined", MB_OK);
+			int ret = AfxMessageBox(L"Feeder not defined", MB_OK|MB_ICONEXCLAMATION);
 			
 			bBusy = false;
 			
@@ -2513,7 +2591,7 @@ DWORD CPickobearDlg::goSingleThread(void )
 		int feederEntry = m_FeederList.Search( entry.feeder  );
 		if( feederEntry == -1 ) {
 
-			int ret = AfxMessageBox(L"Feeder not found ", MB_OK);
+			int ret = AfxMessageBox(L"Feeder not found ", MB_OK | MB_ICONEXCLAMATION);
 
 			bBusy = false;
 
@@ -2530,7 +2608,7 @@ DWORD CPickobearDlg::goSingleThread(void )
 
 
 		if (feeder.tool < 1 || feeder.tool > 6 ) {
-			int ret = AfxMessageBox(L"Tool not defined", MB_OK);
+			int ret = AfxMessageBox(L"Tool not defined", MB_OK|MB_ICONHAND);
 		}
 
 		int in = (m_ComponentList.GetCount()-1)-i;
@@ -2586,7 +2664,7 @@ DWORD CPickobearDlg::goSingleThread(void )
 
 			CString Error ;			
 			Error = CurrentFeeder.ErrorMessage();
-			int ret = AfxMessageBox(Error ,MB_OK );
+			int ret = AfxMessageBox(Error ,MB_OK | MB_ICONHAND);
 
 			bBusy = false;
 
@@ -2724,13 +2802,13 @@ BOOL CPickobearDlg::OnToolTipNotify( UINT id,
         switch( nID )
         {
         case IDC_GO:
-                // Set the tooltip text.
-                pTTT->lpszText = _T("This starts the pick and place operation after everything has been setup, runs through one side");
+            // Set the tooltip text.
+            pTTT->lpszText = _T("This starts the pick and place operation after everything has been setup, runs through one side");
             break;
 
         case IDC_HEAD:
             // Set the tooltip text.
-            pTTT->lpszText = _T("Toggles head up and down, be careful with this one\nIt is useful for teaching location but typically better to use the camera");
+            pTTT->lpszText = _T("Toggles head up and down, be careful with this one. It is useful for teaching location but typically better to use the camera");
             break;
 
 		case IDC_LEFT:
@@ -2824,7 +2902,7 @@ BOOL CPickobearDlg::OnToolTipNotify( UINT id,
             break;
 
 		case IDC_PCB_FLIP:
-            pTTT->lpszText = _T("Set when the pcb is flipped to the back side\n\\nAlso toggles offets so you can have different offsets for each side of PCB");
+            pTTT->lpszText = _T("Set when the pcb is flipped to the back side.Also toggles offets so you can have different offsets for each side of PCB");
             break;
 
 		case IDC_XL1:
@@ -2844,11 +2922,13 @@ BOOL CPickobearDlg::OnToolTipNotify( UINT id,
             break;
 
 		case IDC_HOME:
-            pTTT->lpszText = _T("Home the machine (bug: fails on long travels homes, just reclick it)");
+            pTTT->lpszText = _T("Home the machine (bug: fails on long travels sometimes, just reclick it)");
+            break;
+		case IDC_PCB_LIST:
+            pTTT->lpszText = _T("List of PCB XY's on table. Select component from component list. Do offset procedure. Click Add. Repeat for each board (always use same part!)");
             break;
 
 		default:
-            // Set the tooltip text.
             pTTT->lpszText = _T("Not yet documented");
             break;
         }
@@ -2885,4 +2965,101 @@ void CPickobearDlg::OnCbnSelchangeGSpeed()
 
 	m_Speed = ((m_SpeedSelect.GetCurSel()+1) * 100);
 	_RPT1(_CRT_WARN,"m_Speed %d\n",m_Speed);
+}
+
+
+void CPickobearDlg::OnStnClickedSimulation()
+{
+}
+
+
+void CPickobearDlg::OnBnClickedAddPcb()
+{
+	CString temp;
+	PCBEntry entry;
+	PCBEntry check;
+	
+	if( m_ComponentList.m_OffsetX_top == 0  && m_ComponentList.m_OffsetY_top == 0  ) {
+		AfxMessageBox(L"Error:Can't add a PCB at (0,0)",MB_OK|MB_ICONHAND);
+		return;
+	}
+
+	// store both sides
+	entry.x_top = m_ComponentList.m_OffsetX_top;
+	entry.y_top = m_ComponentList.m_OffsetY_top;
+	entry.x_bottom = m_ComponentList.m_OffsetX_bottom;
+	entry.y_bottom = m_ComponentList.m_OffsetY_bottom;
+
+	// check if setup already exists
+	if (m_PCBCount, m_PCBs.size() ) { 
+		for( unsigned int i = 0 ; i < m_PCBs.size() ; i ++ ) {
+			check = m_PCBs.at( i );
+
+			if ( memcmp( &entry, &check,sizeof( PCBEntry ) )== 0  )  {
+				AfxMessageBox(L"Already exists!!",MB_OK|MB_ICONEXCLAMATION);
+				return;
+			}
+		}
+	}
+
+	temp.Format(L"(%d,%d)",m_ComponentList.m_OffsetX_top,m_ComponentList.m_OffsetY_top );
+	int Index = m_PCBList.InsertItem(LVIF_TEXT, 0,temp, 0, 0, 0, NULL);
+
+	temp.Format(L"(%d,%d)",m_ComponentList.m_OffsetX_bottom,m_ComponentList.m_OffsetY_bottom );
+	m_PCBList.SetItemText(Index,1,temp);
+
+	m_PCBs.push_back( entry );
+
+	m_PCBCount ++;
+}
+
+
+void CPickobearDlg::OnBnClickedDeletePcb()
+{
+
+	// are there are in the list ?
+	if( m_PCBCount )  {
+			
+		// -1 means find first
+		int pcbItem = -1;
+		
+		// find selected items
+		pcbItem	= m_PCBList.GetNextItem(pcbItem, LVNI_SELECTED);
+		
+		// any selected?
+		if( pcbItem != -1 ) {
+
+			pcbItem = m_PCBList.GetItemCount()-1 - pcbItem;
+			// erase from vector
+			m_PCBs.erase( m_PCBs.begin() + pcbItem );
+			
+			// one less PCB
+			m_PCBCount--;
+
+			// Remove all entries
+			m_PCBList.DeleteAllItems();
+			
+			// Rebuild list
+			for( unsigned int i = 0 ; i < m_PCBs.size() ; i ++ ) {
+
+				PCBEntry entry ;
+
+				// fetch entry
+				entry = m_PCBs.at( i );
+				CString temp;
+
+				// re-add
+				temp.Format(L"(%d,%d)", entry.x_top, entry.y_top );
+				int Index = m_PCBList.InsertItem(LVIF_TEXT, 0,temp, 0, 0, 0, NULL);
+
+				temp.Format(L"(%d,%d)", entry.x_bottom, entry.y_bottom );
+				m_PCBList.SetItemText(Index,1,temp);
+			} 
+
+		}
+		else {
+			// nothing selected!
+			AfxMessageBox(L"Nothing selected!",MB_OK|MB_ICONEXCLAMATION);
+		}
+	}
 }
