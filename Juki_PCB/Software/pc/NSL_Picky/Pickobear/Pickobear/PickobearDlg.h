@@ -610,6 +610,7 @@ public:
 
 	~CPickobearDlg(){
 		
+		//move these to the postncdestroy or earlier
 		if (m_ComponentsModified ) {
 			m_ComponentList.SaveDatabase();
 		}

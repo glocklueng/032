@@ -25,10 +25,12 @@
 //   add localisation to strings?
 //   reflect limit switches in GUI
 //   handle flipped pcbs!! (Most important) (done)
+//   move database saves to the postncdestroy or earlier
 
 // Recently added :-
-//   Added multiple PCB offsets  (not tested!)
-
+//   added multiple PCB offsets  (not tested!)
+//	 implemented delete function in feeder list
+//   temporarily turn off redraw in rebuild of feeder list
 
 #include "stdafx.h"
 #include "Pickobear.h"
@@ -1544,6 +1546,8 @@ void CListCtrl_FeederList::RebuildList ( void )
 	CPickobearDlg *pDlg = (CPickobearDlg*)AfxGetApp()->m_pMainWnd;
 	ASSERT( pDlg );
 
+	SetRedraw(FALSE);
+
 	// remove any and all items from List
 	DeleteAllItems();
 	m_Feeders.clear();
@@ -1591,6 +1595,10 @@ void CListCtrl_FeederList::RebuildList ( void )
 		SetItemText(Index,9,temp);
 
 	}
+
+	
+	SetRedraw( TRUE );
+
 }
 
 bool SetCurrentPosition( long x,long y)
@@ -2763,7 +2771,25 @@ skip:;
 
 void CPickobearDlg::OnBnClickedDeleteFeeder()
 {
+	int feederIndex = -1;
+
+	// find selected items
+	feederIndex	= m_FeederList.GetNextItem(feederIndex, LVNI_SELECTED);
+
+	// any selected?
+	if( feederIndex != -1 ) {
+
+		feederIndex = m_FeederList.GetItemCount()-1 - feederIndex;
+	
+		// erase from vector
+		m_FeederList.mFeederDatabase.erase( m_FeederList.mFeederDatabase.begin() + feederIndex );
+		m_FeederList.m_Count--;
+		m_FeedersModified = true;
+
+		m_FeederList.RebuildList();
+	}
 }
+
 
 
 
