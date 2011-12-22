@@ -86,7 +86,8 @@ char pickup_part ( void )
 		return GCSTATUS_FAILED_COMMAND;
 	}
 
-	for(;;) {
+	//for(;;)  (oops!)
+	{
 
 		// advance part, waits til head has done
 		tape_knock();
@@ -103,6 +104,8 @@ char pickup_part ( void )
 		// head up
 		head_down ( 0 ) ;
 
+// disable
+#if 0
 		// check vacuum line...
 		if( vacuum_state() == 0 ) {
 
@@ -126,6 +129,8 @@ char pickup_part ( void )
 
 		}else
 			break;
+
+#endif
 
 	}
 
@@ -158,6 +163,8 @@ char putdown_part ( void )
 	// settle time
 	_delay_ms( 100 );
 
+// disable while debugging air pressure
+#if 0
 
 	// check vacuum here
 	if( vacuum_state() == 0 ) {
@@ -174,6 +181,7 @@ char putdown_part ( void )
 		return GCSTATUS_FAILED_COMMAND;	
 	}
 
+#endif
 
 	// push head down
 	head_down( 1 );
