@@ -274,6 +274,7 @@ unsigned char goto_vacpad( void )
 
    _delay_ms( 1000 );
 
+
 	// check vacuum
 	if( vacuum_state() ) {
 

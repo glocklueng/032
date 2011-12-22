@@ -104,7 +104,7 @@ CPickobearDlg::CPickobearDlg(CWnd* pParent /*=NULL*/)
 	, m_Side(0)
 	, bFlip(false)
 	, bBusy(false)
-	, m_Simulate(true)
+	, m_Simulate(false)
 	, m_PCBIndex(0)
 	, m_PCBCount(0)
 {
