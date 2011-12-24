@@ -104,7 +104,7 @@ CPickobearDlg::CPickobearDlg(CWnd* pParent /*=NULL*/)
 	, m_Side(0)
 	, bFlip(false)
 	, bBusy(false)
-	, m_Simulate(false)
+	, m_Simulate(true)
 	, m_PCBIndex(0)
 	, m_PCBCount(0)
 {
@@ -1343,9 +1343,21 @@ bool CPickobearDlg::PreRunCheck( bool all_parts=false )
 	if ( all_parts ) {
 		for ( unsigned int i = 0 ; i < m_ComponentList.GetCount(); i ++ ) {
 
-			int in = (m_ComponentList.GetCount()-1) - i;
+			int componentItem = (m_ComponentList.GetCount()-1) - i;
+			
+			CStringA text ( m_ComponentList.GetItemText( componentItem, 0 )) ;
 
-			CompDatabase_Entry = m_ComponentList.at(i);
+			_RPT1(_CRT_WARN,"PreRunCheck part %s\n",text);
+
+			componentItem = m_ComponentList.Search( text.GetBuffer() ) ;
+			text.ReleaseBuffer();
+
+			if( i == -1 ) {
+				AfxMessageBox(L"PreRunCheck: Internal error part not found!",MB_OK|MB_ICONEXCLAMATION);
+				return false;
+			}
+
+			CompDatabase_Entry = m_ComponentList.at( componentItem );
 
 			if( CompDatabase_Entry.side ==  m_Side ) {
 				flag = true;
@@ -1375,7 +1387,17 @@ bool CPickobearDlg::PreRunCheck( bool all_parts=false )
 			if ( componentItem == -1 ) 
 				break;	
 
-			int i = (m_ComponentList.GetCount()-1) - componentItem;
+			CStringA text ( m_ComponentList.GetItemText( componentItem, 0 )) ;
+
+			_RPT1(_CRT_WARN,"PreRunCheck part %s\n",text);
+
+			int i = m_ComponentList.Search( text.GetBuffer() ) ;
+			text.ReleaseBuffer();
+
+			if( i == -1 ) {
+				AfxMessageBox(L"PreRunCheck: Internal error part not found!",MB_OK|MB_ICONEXCLAMATION);
+				return false;
+			}
 
 			CompDatabase_Entry = m_ComponentList.at( i );
 
@@ -1473,15 +1495,30 @@ void CListCtrl_Components::OnHdnItemdblclickList2(NMHDR *pNMHDR, LRESULT *pResul
 	}
 
 	// iItem is item number, list is backwards
-	int item = (GetCount()-1)-phdr->iItem;
+	int componentItem = (GetCount()-1)-phdr->iItem;
 
-	entry = &m_ComponentDatabase.at( item ) ;
+	CStringA text ( GetItemText( componentItem, 0 )) ;
+
+	_RPT1(_CRT_WARN,"OnHdnItemdblclickList2: part %s\n",text);
+
+	componentItem = Search( text.GetBuffer() ) ;
+
+	text.ReleaseBuffer();
+
+	if( componentItem == -1 ) {
+		AfxMessageBox(L"OnHdnItemdblclickList2: Internal error part not found!",MB_OK|MB_ICONEXCLAMATION);
+		return ;
+	}
+
+	entry = &m_ComponentDatabase.at( componentItem ) ;
+
 	// entry is item.
 	ASSERT( entry );
 
 	if( m_OffsetX == 0 && m_OffsetY == 0 ) {
 
 		pDlg->MoveHead(36240,222890);
+
 	}else {
 
 		// GotoXY in micrometers
