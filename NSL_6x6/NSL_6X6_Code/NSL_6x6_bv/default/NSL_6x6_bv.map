@@ -338,10 +338,10 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a
  *(.debug_frame)
  .debug_frame   0x00000000       0x30 NSL_6x6_bv.o
 
-.debug_str      0x00000000      0x102
+.debug_str      0x00000000      0x105
  *(.debug_str)
- .debug_str     0x00000000      0x102 NSL_6x6_bv.o
-                                0x136 (size before relaxing)
+ .debug_str     0x00000000      0x105 NSL_6x6_bv.o
+                                0x139 (size before relaxing)
 
 .debug_loc
  *(.debug_loc)

@@ -186,7 +186,7 @@ int main(void)
 		//	i=0;
 
 	
-		delay_ten_us(1000);
+		delay_ten_us(4500);
 		SetLED( R,C);
 		C++ ;
 		R++ ; 
