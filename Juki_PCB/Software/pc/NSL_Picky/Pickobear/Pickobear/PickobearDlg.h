@@ -129,6 +129,22 @@ public:
 		return m_ComponentDatabase.at(i);
 	}
  
+	// search for component by name
+	int Search( char * name) 
+	{
+
+		for( unsigned int i = 0 ; i < m_Count ; i++ ) {
+			
+			if(strcmp(name, m_ComponentDatabase.at(i).label) == 0 ) {
+				return i;
+			}
+		}
+
+		// nope
+		return -1;
+	}
+
+
 	void AddItem( const char *label,const char *type,const char *value,const char *x,const char *y,const char *rot,const char *side)
 	{
 		ASSERT( label ) ;
