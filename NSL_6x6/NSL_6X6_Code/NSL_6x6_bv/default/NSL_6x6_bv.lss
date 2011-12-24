@@ -19,7 +19,7 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
   7 .debug_frame  00000030  00000000  00000000  00000734  2**2
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_str    00000102  00000000  00000000  00000764  2**0
+  8 .debug_str    00000105  00000000  00000000  00000764  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -147,9 +147,9 @@ int main(void)
 		//	i=0;
 
 	
-		delay_ten_us(1000);
-  88:	68 ee       	ldi	r22, 0xE8	; 232
-  8a:	73 e0       	ldi	r23, 0x03	; 3
+		delay_ten_us(4500);
+  88:	64 e9       	ldi	r22, 0x94	; 148
+  8a:	71 e1       	ldi	r23, 0x11	; 17
   8c:	80 e0       	ldi	r24, 0x00	; 0
   8e:	90 e0       	ldi	r25, 0x00	; 0
   90:	db df       	rcall	.-74     	; 0x48 <delay_ten_us>
@@ -271,7 +271,7 @@ static void SetLED( unsigned char row, unsigned char col )
 		//	i=0;
 
 	
-		delay_ten_us(1000);
+		delay_ten_us(4500);
 		SetLED( R,C);
 		C++ ;
  116:	1f 5f       	subi	r17, 0xFF	; 255
