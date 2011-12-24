@@ -1822,9 +1822,10 @@ void CListCtrl_Components::OnNMRClickList2(NMHDR *pNMHDR, LRESULT *pResult)
 	int nItem = -1;
 
 	// get first item in feeder list ( only one can be selected
-	int feederItem = pDlg->m_FeederList.GetNextItem(-1, LVNI_SELECTED);
+	int feederItem = (pDlg->m_FeederList.GetCount()-1) - pDlg->m_FeederList.GetNextItem(-1, LVNI_SELECTED);
 
 	for( int i = 0 ; i < numberComponentsSelected ; i++ ) {
+
 		// nItem is component index selected, -1 first time
 		nItem = pDlg->m_ComponentList.GetNextItem(nItem, LVNI_SELECTED);
 		if( nItem == -1 ) {
@@ -1838,10 +1839,10 @@ void CListCtrl_Components::OnNMRClickList2(NMHDR *pNMHDR, LRESULT *pResult)
 
 		// component entry
 		entry = &m_ComponentDatabase.at( componentEntry ) ;
+			
+		_RPT2(_CRT_WARN,"OnNMRClickList2: assigning feeder %s to %s\r\n",pDlg->m_FeederList.mFeederDatabase.at( feederItem ).label, entry->label );
 
-		_RPT2(_CRT_WARN,"OnNMRClickList2: assigning feeder %s to %s\r\n",pDlg->m_FeederList.mFeederDatabase.at(feederItem).label, entry->label );
-
-		pDlg->m_ComponentList.AssignFeeder( (GetCount()-1)-nItem, pDlg->m_FeederList.mFeederDatabase.at(feederItem).label ) ;
+		pDlg->m_ComponentList.AssignFeeder( (GetCount()-1)-nItem, pDlg->m_FeederList.mFeederDatabase.at (feederItem ).label ) ;
 
 	}
 
@@ -2124,7 +2125,7 @@ void CListCtrl_Components::RebuildList( void )
 	CPickobearDlg *pDlg = (CPickobearDlg*)AfxGetApp()->m_pMainWnd;
 	ASSERT( pDlg );
 	CString temp;
-
+	
 	int selected;
 
 	selected = GetNextItem(-1, LVNI_SELECTED);
@@ -2162,6 +2163,7 @@ void CListCtrl_Components::RebuildList( void )
 			temp.Format(L"NA");
 
 		} else {
+
 			//todo: fix this, search on name of feeder, not the id in
 			//this will break as soon as feeders get reordered
 			//charlie: changed, and testing, tested working
@@ -2170,6 +2172,9 @@ void CListCtrl_Components::RebuildList( void )
 
 			int feederIndex ;
 			feederIndex = pDlg->m_FeederList.Search( entry->feeder );
+			
+			_RPT1(_CRT_WARN,"Looking for %s\n",entry->feeder);
+
 			if( feederIndex == -1 ) {
 
 				int ret = AfxMessageBox(L"Feeder not found ", MB_OK|MB_ICONEXCLAMATION);
@@ -2178,18 +2183,23 @@ void CListCtrl_Components::RebuildList( void )
 
 			int item = (pDlg->m_FeederList.GetCount()-1) - feederIndex;
 
-			CListCtrl_FeederList::FeederDatabase entry = pDlg->m_FeederList.at( item ) ;
+			CListCtrl_FeederList::FeederDatabase feederEntry = pDlg->m_FeederList.at( feederIndex ) ;
 
-			temp.Format(L"%s",CString(entry.label));
+			_RPT2(_CRT_WARN,"Found for %s at %d\n",feederEntry.label, feederIndex );
+
+			temp.Format(L"%s",CString( feederEntry.label ) );
 		}
 
 		SetItemText(Index,6,temp);
-
 	}
 
+	SetItemState(-1, 0, LVIS_SELECTED);
+
 	if (selected != -1 ) {
+
 		SetItemState(selected, LVIS_SELECTED, LVIS_SELECTED);
 		EnsureVisible( selected ,TRUE );
+
 	}
 }
 
@@ -2199,9 +2209,9 @@ void CPickobearDlg::OnBnClickedConsole()
 	static int nconsole = 0;
 
 	if( nconsole == 0 )
-		m_TextEdit->ShowWindow(SW_SHOW);
+		m_TextEdit->ShowWindow( SW_SHOW );
 	else
-		m_TextEdit->ShowWindow(SW_HIDE);
+		m_TextEdit->ShowWindow( SW_HIDE );
 
 	nconsole = 1 - nconsole;
 }
