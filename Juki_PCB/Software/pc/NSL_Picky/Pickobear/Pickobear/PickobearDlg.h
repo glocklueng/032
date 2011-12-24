@@ -126,6 +126,13 @@ public:
 	}
 
 	CompDatabase  at( int i ) {
+
+		if ( i < 0 || i > m_Count ) {
+
+			AfxMessageBox(L"Error:CompDatabase.at range error", MB_OK|MB_ICONSTOP );
+
+		}
+
 		return m_ComponentDatabase.at(i);
 	}
  
@@ -156,9 +163,9 @@ public:
 
 		CompDatabase entry;
 
-		strcpy_s( entry.label, label );
-		strcpy_s( entry.type, type);
-		strcpy_s( entry.value , value);
+		strcpy_s( entry.label , label );
+		strcpy_s( entry.type  , type  );
+		strcpy_s( entry.value , value );
 		
 		memset(entry.feeder,0,sizeof(entry.feeder));
 
@@ -198,6 +205,8 @@ public:
 		CString filename;
 				
 		if( m_ComponentDatabase.size() == 0 ) {
+			
+			
 			return;
 		}
 
@@ -456,7 +465,7 @@ public:
 
 		for( unsigned int i = 0 ; i < m_Count ; i++ ) {
 			
-			if(strcmp(name, mFeederDatabase.at(i).label) == 0 ) {
+			if(strcmp(name, mFeederDatabase.at( i ).label) == 0 ) {
 				return i;
 			}
 		}
@@ -490,9 +499,12 @@ public:
 
 	// fetch entry at index
 	FeederDatabase &at( unsigned int i ) {
-		if( i < m_Count ) 
-			return mFeederDatabase.at(i);
+
+		if(i < m_Count ) {
 		
+			return mFeederDatabase.at( i );
+		}
+
 		return *entry ;
 	}
  
