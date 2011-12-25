@@ -192,6 +192,7 @@ BEGIN_MESSAGE_MAP(CPickobearDlg, CDialog)
 	ON_STN_CLICKED(IDC_SIMULATION, &CPickobearDlg::OnStnClickedSimulation)
 	ON_BN_CLICKED(IDC_ADD_PCB, &CPickobearDlg::OnBnClickedAddPcb)
 	ON_BN_CLICKED(IDC_DELETE_PCB, &CPickobearDlg::OnBnClickedDeletePcb)
+	ON_BN_CLICKED(IDC_TEST_MODE, &CPickobearDlg::OnBnClickedTestMode)
 END_MESSAGE_MAP()
 
 BEGIN_MESSAGE_MAP(CListCtrl_Components, CListCtrl)
@@ -580,7 +581,7 @@ void CPickobearDlg::OnBnClickedHome()
 {	
 	bool pass = false;
 
-	EmptySerial();
+//	EmptySerial();
 
 	do { 
 		WriteSerial("G28\r\n");
@@ -670,13 +671,25 @@ bool BuildGCodeMove( char *output, int length, int mode , long x, long y, long s
 		x = 364550 ;
 	}
 
+	if( y > 517000 ) {
+
+		int ret = AfxMessageBox(L"Y out of limits, press OK to change to stay within limits, or cancel to stop move",MB_OKCANCEL|MB_ICONHAND);
+		if( ret == IDCANCEL ) {
+			sprintf_s(output,length,"");
+			return false;
+		}
+
+		y = 517000 ;
+	}
+
 	memset(output,0,length);
+
+	// clamp
+	if ( x < 0 ) x = 0;
+	if ( y < 0 ) y = 0;
 
 	tx = x * 0.0000393700787;
 	ty = y * 0.0000393700787;
-
-	if ( tx < 0 ) tx = 0;
-	if ( ty < 0 ) ty = 0;
 
 	sprintf_s(output, length,"G%dX%gY%gF%d\r\n",mode,tx,ty,speed);
 
@@ -685,7 +698,6 @@ bool BuildGCodeMove( char *output, int length, int mode , long x, long y, long s
 
 bool CPickobearDlg::HomeTest( void ) 
 {
-
 	if( m_Homed == false ) {
 		int ret = AfxMessageBox(L"Not Homed",MB_OK|MB_ICONEXCLAMATION);
 		if( ret == IDOK ) 
@@ -801,9 +813,11 @@ again:;
 	WriteSerial( buffer );
 
 	if( CheckX() == false ) {
+
 		int ret = AfxMessageBox(L"MoveHeadRel: Move Failed",MB_RETRYCANCEL|MB_ICONEXCLAMATION);
 		if(ret == IDRETRY ) 
 			goto again;
+
 		if( ret == IDCANCEL ) 
 			return false;
 	}
@@ -815,8 +829,6 @@ again:;
 void CPickobearDlg::EmptySerial ( void ) 
 {
 	char bufferx[100];
-
-	return ;
 	m_Serial.Purge();
 	{
 		DWORD length1;
@@ -947,7 +959,7 @@ void CPickobearDlg::GotoTestPad( void )
 
 unsigned char CPickobearDlg::VacuumTest( void )
 {	
-	EmptySerial();
+//	EmptySerial();
 
 	do { 
 
@@ -1767,6 +1779,49 @@ void CPickobearDlg::OnBnClickedAddFeeder()
 void CPickobearDlg::OnBnClickedUpdate()
 {
 	SetCurrentPosition(m_headXPos,m_headYPos);
+	EmptySerial();
+
+	WriteSerial("M29\r\n");
+
+	Sleep( 100 );
+	unsigned char limits;
+	DWORD length=0;
+	m_Serial.Read( &limits,1,&length,0,100);
+
+	if( length ) 
+	{
+
+		if( limits & (1 << 1 ) ) { 
+			((CButton*)GetDlgItem(IDC_XL1))->SetCheck(1);_RPT0(_CRT_WARN,"X1 Limit\r\n");} 
+		else 
+			((CButton*)GetDlgItem(IDC_XL1))->SetCheck(0);
+
+		if( limits & (1 << 2 ) ) {
+			((CButton*)GetDlgItem(IDC_XL2))->SetCheck(1);_RPT0(_CRT_WARN,"X2 Limit\r\n");} 
+		else 
+			((CButton*)GetDlgItem(IDC_XL2))->SetCheck(0);
+
+		if( limits & (1 << 3 ) ){
+			((CButton*)GetDlgItem(IDC_YL1))->SetCheck(1);_RPT0(_CRT_WARN,"Y1 Limit\r\n");} 
+		else 
+			((CButton*)GetDlgItem(IDC_YL1))->SetCheck(0);
+
+		if( limits & (1 << 4 ) ) {
+			((CButton*)GetDlgItem(IDC_YL2))->SetCheck(1);_RPT0(_CRT_WARN,"Y2 Limit\r\n");} 
+		else 
+			((CButton*)GetDlgItem(IDC_YL2))->SetCheck(0);
+
+		if( limits & (1 << 5 ) ) {
+			((CButton*)GetDlgItem(IDC_XHOME))->SetCheck(1);_RPT0(_CRT_WARN,"X Home\r\n");} 
+		else 
+			((CButton*)GetDlgItem(IDC_XHOME))->SetCheck(0);
+
+		if( limits & (1 << 6 ) ) {
+			((CButton*)GetDlgItem(IDC_YHOME))->SetCheck(1);_RPT0(_CRT_WARN,"Y Home\r\n");} 
+		else 
+			((CButton*)GetDlgItem(IDC_YHOME))->SetCheck(0);
+
+	}
 }
 
 enum {
@@ -1864,7 +1919,6 @@ void CListCtrl_FeederList::AddItem( const char *label,const long x,long y,short 
 	CPickobearDlg *pDlg = (CPickobearDlg*)AfxGetApp()->m_pMainWnd;
 	ASSERT( pDlg );
 
-
 	FeederDatabase entry;
 
 	// zero it
@@ -1873,9 +1927,8 @@ void CListCtrl_FeederList::AddItem( const char *label,const long x,long y,short 
 	// copy the label
 	strcpy_s(entry.label,label );
 
-	// convert to level of accuracy pnp can handle
-	entry.x = (( x )/40)*40 ;
-	entry.y = (( y )/40)*40 ;
+	entry.x = x;
+	entry.y = y;
 
 	// rotation of the part
 	entry.rot = ( rot ) ;
@@ -2344,7 +2397,7 @@ DWORD CPickobearDlg::goThread(void )
 
 	bBusy = true;
 
-	EmptySerial();
+//	EmptySerial();
 
 
 	do {
@@ -2352,7 +2405,7 @@ DWORD CPickobearDlg::goThread(void )
 		// check fo more than one PCB (these should be equal!)
 		if (m_PCBs.size() ) {
 
-			_RPT2(_CRT_WARN,"Multiple PCBs placing board ( %d ) of ( %d )\n", m_PCBIndex , m_PCBCount);
+			_RPT2(_CRT_WARN,"goThread: Multiple PCBs placing board ( %d ) of ( %d )\n", m_PCBIndex , m_PCBCount);
 
 			// multiple PCB's to place, is this more complicated becase of sides?
 			if( bFlip == false ) {
@@ -2371,6 +2424,7 @@ DWORD CPickobearDlg::goThread(void )
 		for (i = 0 ; i < m_ComponentList.GetCount(); i ++ ) {
 
 			int in = (m_ComponentList.GetCount()-1)-i;
+
 			m_ComponentList.SetItemState(in, LVIS_SELECTED, LVIS_SELECTED);
 			m_ComponentList.EnsureVisible( in ,TRUE );
 
@@ -2378,10 +2432,10 @@ DWORD CPickobearDlg::goThread(void )
 
 			if( entry.side !=  m_Side ) {
 
-				_RPT1(_CRT_WARN,"skipping %s, wrong side selected\n",entry.label);
+				_RPT1(_CRT_WARN,"goThread: skipping %s, wrong side selected\n",entry.label);
 				goto skip_part;
 			} else {
-				_RPT1(_CRT_WARN,"this side %s selected\n",entry.label);
+				_RPT1(_CRT_WARN,"goThread: this side %s selected\n",entry.label);
 			}
 
 			if ( strlen( entry.feeder ) == 0 ) {
@@ -2401,13 +2455,10 @@ DWORD CPickobearDlg::goThread(void )
 			CListCtrl_FeederList::FeederDatabase feeder;
 
 			int feederEntry = m_FeederList.Search( entry.feeder  );
+			feeder = m_FeederList.at ( feederEntry );
 
-			int feederIndex ;
-			feederIndex = (m_FeederList.GetCount()-1) - feederEntry;
-
-			feeder = m_FeederList.at ( feederIndex );
 			// duplication as we change over to the new class
-			CurrentFeeder = m_FeederList.m_Feeders.at( feederIndex );
+			CurrentFeeder = m_FeederList.m_Feeders.at( feederEntry );
 
 			if (feeder.tool < 1 || feeder.tool > 6 ) {
 				int ret = AfxMessageBox(L"Tool not defined", MB_OK|MB_ICONHAND);
@@ -2416,7 +2467,7 @@ DWORD CPickobearDlg::goThread(void )
 				goto skip_part;
 			}
 
-			_RPT1(_CRT_WARN,"Going to tool %d\n", feeder.tool );
+			_RPT1(_CRT_WARN,"goThread: Going to tool %d\n", feeder.tool );
 
 			// can't tool change at the moment...
 #if 0
@@ -2448,7 +2499,7 @@ DWORD CPickobearDlg::goThread(void )
 			/// slow the camera down
 			m_CameraUpdateRate = CAMERA_SLOW_UPDATE_RATE_MS ;
 
-			_RPT1(_CRT_WARN,"Going to feeder %s\n", feeder.label );
+			_RPT1(_CRT_WARN,"goThread: Going to feeder %s\n", feeder.label );
 
 			unsigned long feederX,feederY;
 
@@ -2492,12 +2543,12 @@ DWORD CPickobearDlg::goThread(void )
 				return 0;
 			}
 
-			_RPT0(_CRT_WARN,"Picking up part\n");
+			_RPT0(_CRT_WARN,"goThread: Picking up part\n");
 			WriteSerial("M26\r\n");
 
 			Sleep( 1000 );
 
-			_RPT1(_CRT_WARN,"Going to component %s\n", entry.label );
+			_RPT1(_CRT_WARN,"goThread: Going to component %s\n", entry.label );
 
 			if( bFlip == false ) {
 				MoveHead(entry.x+m_ComponentList.m_OffsetX, entry.y+m_ComponentList.m_OffsetY - CAMERA_OFFSET);
@@ -2505,11 +2556,13 @@ DWORD CPickobearDlg::goThread(void )
 				MoveHead(entry.x+m_ComponentList.m_OffsetX, (0-entry.y)+m_ComponentList.m_OffsetY - CAMERA_OFFSET);
 			}
 
-			if( entry.rot ) {
+			if( entry.rot  || feeder.rot) {
 
-				_RPT1(_CRT_WARN,"Rotating part %d degrees \n", entry.rot );
+				_RPT1(_CRT_WARN,"goThread: Rotating part %d degrees \n", entry.rot );
 
-				double angle = entry.rot;
+				double angle = ( entry.rot + feeder.rot );
+			
+				_RPT1(_CRT_WARN,"goThread: Adding feeder rotation %d degrees \n",feeder.rot );
 
 				// calculate pulses
 				angle = ( 1000.0 / 360.0  ) * angle ;
@@ -2528,7 +2581,7 @@ DWORD CPickobearDlg::goThread(void )
 				Sleep( 500 );
 			}
 
-			_RPT0(_CRT_WARN,"dropping off part\n");
+			_RPT0(_CRT_WARN,"goThread: dropping off part\n");
 
 			// head down/air off/up
 			// Put Part down
@@ -2596,9 +2649,7 @@ DWORD CPickobearDlg::goSingleThread(void )
 
 	unsigned int i ;
 	CListCtrl_Components::CompDatabase entry; 
-
-
-	EmptySerial();
+//	EmptySerial();
 
 	Sleep( 500 ) ;
 
@@ -2651,6 +2702,7 @@ DWORD CPickobearDlg::goSingleThread(void )
 		CListCtrl_FeederList::FeederDatabase feeder ;
 
 		int feederEntry = m_FeederList.Search( entry.feeder  );
+
 		if( feederEntry == -1 ) {
 
 			int ret = AfxMessageBox(L"Feeder not found ", MB_OK | MB_ICONEXCLAMATION);
@@ -2753,7 +2805,7 @@ DWORD CPickobearDlg::goSingleThread(void )
 
 			_RPT1(_CRT_WARN,"goSingleThread: Rotating part %d degrees \n", entry.rot );
 
-			double angle = entry.rot+feeder.rot;
+			double angle = ( entry.rot + feeder.rot );
 			
 			_RPT1(_CRT_WARN,"goSingleThread: Adding feeder rotation %d degrees \n",feeder.rot );
 
@@ -3177,4 +3229,31 @@ void CPickobearDlg::OnBnClickedDeletePcb()
 			AfxMessageBox(L"Nothing selected!",MB_OK|MB_ICONEXCLAMATION);
 		}
 	}
+}
+
+
+void CPickobearDlg::OnBnClickedTestMode()
+{
+	long x, y;
+
+	for( int i = 0 ; i < 200 ; i ++ ) {
+		
+		x = rand() * 10;
+		y = rand() * 10;
+
+		if(x>364550) x =100;
+		if(y>517000) y= 100;
+
+		MoveHead(x,y);
+
+		Sleep( 100 );
+
+	}
+	
+	MoveHead( 364000,517000 );
+			
+	Sleep( 2000 );
+
+	MoveHead(0,0);
+
 }

@@ -756,4 +756,5 @@ public:
 	// Current index of PCB we are placing if there are multiple PCB's
 	unsigned long m_PCBIndex;
 	afx_msg void OnBnClickedDeletePcb();
+	afx_msg void OnBnClickedTestMode();
 };
