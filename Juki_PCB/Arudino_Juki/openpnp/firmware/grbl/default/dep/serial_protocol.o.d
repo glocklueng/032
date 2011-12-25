@@ -15,7 +15,9 @@ serial_protocol.o: ../serial_protocol.c \
   d:\winavr-20100110\bin\../lib/gcc/avr/4.3.3/include/stddef.h \
   ../motion_control.h ../planner.h ../serial_protocol.h ../gcode.h \
   ../wiring_serial.h ../settings.h ../config.h ../nuts_bolts.h \
-  d:/winavr-20100110/lib/gcc/../../avr/include/string.h
+  d:/winavr-20100110/lib/gcc/../../avr/include/string.h \
+  ../vacuum_control.h ../head_control.h ../atc_control.h ../stepper.h \
+  d:/winavr-20100110/lib/gcc/../../avr/include/avr/sleep.h
 
 d:/winavr-20100110/lib/gcc/../../avr/include/avr/io.h:
 
@@ -62,3 +64,13 @@ d:\winavr-20100110\bin\../lib/gcc/avr/4.3.3/include/stddef.h:
 ../nuts_bolts.h:
 
 d:/winavr-20100110/lib/gcc/../../avr/include/string.h:
+
+../vacuum_control.h:
+
+../head_control.h:
+
+../atc_control.h:
+
+../stepper.h:
+
+d:/winavr-20100110/lib/gcc/../../avr/include/avr/sleep.h:

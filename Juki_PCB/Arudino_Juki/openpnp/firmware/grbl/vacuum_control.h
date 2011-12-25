@@ -36,5 +36,6 @@ unsigned char vacuum_state( void );
 void vacuum_test( void );
 unsigned char run_vacuum_test( void );
 unsigned char goto_vacpad( void ) ;
+unsigned char test_mode( void ) ;
 
 #endif

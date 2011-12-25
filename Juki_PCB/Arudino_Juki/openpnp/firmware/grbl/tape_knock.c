@@ -15,6 +15,7 @@
 #include "wiring_serial.h"
 #include "tape_knock.h"
 #include "head_control.h"
+#include "vacuum_control.h"
 #include "stepper.h"
 
 #include "config.h"

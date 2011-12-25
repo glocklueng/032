@@ -29,6 +29,13 @@
 #include "settings.h"
 #include "config.h"
 #include "nuts_bolts.h"
+#include "vacuum_control.h"
+#include "head_control.h"
+#include "atc_control.h"
+#include "stepper.h"
+
+
+
 
 #define LINE_BUFFER_SIZE ( 50 )
 

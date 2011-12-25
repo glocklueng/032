@@ -15,7 +15,7 @@
 #include "wiring_serial.h"
 #include "head_control.h"
 #include "config.h"
-#include "settings.h"
+#include "stepper.h"
 
 
 void head_init()
