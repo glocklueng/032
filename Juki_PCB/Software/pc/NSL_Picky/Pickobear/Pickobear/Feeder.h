@@ -265,8 +265,7 @@ public:
 	{
 		remaining = ( number_of_parts - current_part );
 		_RPT1(_CRT_WARN,"PartsLeft: remaining %d\n",remaining);
-		
-		ASSERT( remaining > 1 );
+
 
 		if (remaining < 1 ) 
 			return false;

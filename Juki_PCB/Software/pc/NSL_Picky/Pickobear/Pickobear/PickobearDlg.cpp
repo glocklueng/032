@@ -104,7 +104,7 @@ CPickobearDlg::CPickobearDlg(CWnd* pParent /*=NULL*/)
 	, m_Side(0)
 	, bFlip(false)
 	, bBusy(false)
-	, m_Simulate(true)
+	, m_Simulate( false )
 	, m_PCBIndex(0)
 	, m_PCBCount(0)
 {
@@ -895,20 +895,26 @@ char CPickobearDlg::CheckAck( char *ack1 )
 	}
 	index = 0;
 
-	int counter = 1000;
+	int counter = 200;
 
 	// wait for ack. needs a timeout
 	do { 
 		counter -- ;
+		
+		if ( counter == 0 ) 
+			break;
+
+
 		ret = m_Serial.Read( &ch, length );
 		if ( index < sizeof( buffer ) ) {
 
-			if( !( ch == 13 || ch == 10 ) ) 
+			if( !( ch == 13 || ch == 10 ) ) {
 				buffer[ index++ ] = ch;
-
+			}
 		}
+		Sleep( 100 );
 
-	} while(ch!='\n' && (counter != 0 ));
+	} while( ch!='\n');
 
 	if (counter == 0 ) {
 		_RPT1(_CRT_WARN,"Timed out\n", buffer);
@@ -1165,14 +1171,13 @@ void CPickobearDlg::OnBnClickedSave()
 
 void CPickobearDlg::OnBnClickedImport()
 {
-	CString m_LoadFile = ::GetLoadFile( 
+	CStringA m_LoadFile(::GetLoadFile( 
 		_T("Supported Files Types(*.csv)\0*.csv\0\0"),
 		_T("Pick board to load"),
 		NULL
-		);
+		));
 
 	m_ComponentList.DeleteAllItems();
-
 	m_ComponentList.m_ComponentDatabase.clear();
 
 	const char field_terminator = ',';
@@ -1183,10 +1188,10 @@ void CPickobearDlg::OnBnClickedImport()
 	/* Define how many records we're gonna skip. This could be used to skip the column definitions. */
 	file_parser.set_skip_lines(1);
 
-	/* Specify the file to parse */
-	file_parser.init( 
-		CStringA(m_LoadFile.GetString()) 
-		);
+	const char *buffer ;
+
+	buffer = m_LoadFile.GetString();
+	file_parser.init( buffer );
 
 	m_LoadFile.ReleaseBuffer();
 
@@ -1495,7 +1500,7 @@ void CListCtrl_Components::OnHdnItemdblclickList2(NMHDR *pNMHDR, LRESULT *pResul
 	}
 
 	// iItem is item number, list is backwards
-	int componentItem = (GetCount()-1)-phdr->iItem;
+	int componentItem = phdr->iItem;
 
 	CStringA text ( GetItemText( componentItem, 0 )) ;
 
@@ -1517,7 +1522,7 @@ void CListCtrl_Components::OnHdnItemdblclickList2(NMHDR *pNMHDR, LRESULT *pResul
 
 	if( m_OffsetX == 0 && m_OffsetY == 0 ) {
 
-		pDlg->MoveHead(36240,222890);
+		pDlg->MoveHead(35480,222890);
 
 	}else {
 
@@ -1558,6 +1563,8 @@ void CListCtrl_FeederList::OnHdnItemdblclickList2(NMHDR *pNMHDR, LRESULT *pResul
 
 	Feeder CurrentFeeder( m_Feeders.at( item ) );
 
+	_RPT2(_CRT_WARN,"Going to feeder %s, %s\n", entry->label,CurrentFeeder.entry->label);
+
 	if( GetKeyState ( VK_SHIFT ) & 0x80 ){
 		// GotoXY in micrometers
 		pDlg->MoveHead(entry->lx,entry->ly);
@@ -1570,8 +1577,8 @@ void CListCtrl_FeederList::OnHdnItemdblclickList2(NMHDR *pNMHDR, LRESULT *pResul
 			pDlg->MoveHead(feederX , feederY );
 		}
 
-
 	} else {
+
 		// GotoXY in micrometers
 		pDlg->MoveHead(entry->x,entry->y);
 	}
@@ -2654,7 +2661,7 @@ DWORD CPickobearDlg::goSingleThread(void )
 		}
 
 		int feederIndex ;
-		feederIndex = (m_FeederList.GetCount()-1) - feederEntry;
+		feederIndex = feederEntry;
 
 		feeder = m_FeederList.at ( feederIndex );
 
@@ -2742,11 +2749,14 @@ DWORD CPickobearDlg::goSingleThread(void )
 			MoveHead(entry.x+m_ComponentList.m_OffsetX, (0-entry.y)+m_ComponentList.m_OffsetY - CAMERA_OFFSET);
 		}
 
-		if( entry.rot ) {
+		if( entry.rot  || feeder.rot) {
 
 			_RPT1(_CRT_WARN,"goSingleThread: Rotating part %d degrees \n", entry.rot );
 
-			double angle = entry.rot;
+			double angle = entry.rot+feeder.rot;
+			
+			_RPT1(_CRT_WARN,"goSingleThread: Adding feeder rotation %d degrees \n",feeder.rot );
+
 
 			// calculate pulses
 			angle = ( 1000.0 / 360.0  ) * angle ;
