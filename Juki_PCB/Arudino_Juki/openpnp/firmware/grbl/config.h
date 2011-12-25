@@ -78,10 +78,10 @@
 #define C_STEP_BIT          5
 
 // Set INVERT to 0 for pulse high step or 1 for pulse low step
-#define X_STEP_INVERT       0
-#define Y_STEP_INVERT       0
-#define Z_STEP_INVERT       0
-#define C_STEP_INVERT       0
+#define X_STEP_INVERT       1
+#define Y_STEP_INVERT       1
+#define Z_STEP_INVERT       1
+#define C_STEP_INVERT       1
 
 //DIRECTION_DDR   = 10001111
 //DIRECTION_PORT  = 10001010

@@ -68,6 +68,9 @@ static void status_message(int status_code)
 		case GCSTATUS_NOT_HOMED:
 			printPgmString(PSTR("error: Not homed\n\r")); 
 			break;
+		case GCSTATUS_NO_ACK:
+			return;
+			break;
 		default:
 			printPgmString(PSTR("error: "));
 			printInteger(status_code);

@@ -327,6 +327,10 @@ uint8_t gc_execute_line(char *line) {
 		case 25: vacuum_test() ;next_action = NEXT_ACTION_DWELL ; break;
 		case 26:  gc.status_code = pickup_part() ;next_action = NEXT_ACTION_DWELL ; break;
 		case 27:  gc.status_code = putdown_part() ;next_action = NEXT_ACTION_DWELL ; break;
+		case 28:  gc.status_code = test_mode() ;next_action = NEXT_ACTION_DWELL ; break;
+
+		case 29:  gc.status_code = GCSTATUS_NO_ACK ;serialWrite( get_limit_bits() );next_action = NEXT_ACTION_DWELL ; break;
+
 
         default: FAIL(GCSTATUS_UNSUPPORTED_STATEMENT);
       }            

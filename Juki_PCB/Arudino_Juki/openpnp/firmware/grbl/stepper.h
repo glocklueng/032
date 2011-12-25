@@ -47,5 +47,6 @@ void set_busy(unsigned char state );
 
 unsigned char head_moving( void ) ;
 int get_busy( void ) ;
+unsigned char get_limit_bits( void );
 
 #endif

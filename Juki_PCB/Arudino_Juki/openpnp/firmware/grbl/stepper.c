@@ -708,3 +708,30 @@ void limits_init(void)
 	PORTK = 0xCF;
 	PORTL = 0xF0;
 }
+
+
+unsigned char get_limit_bits( void )
+{
+	unsigned char ret = 0;
+
+	if( bit_is_set( LIMIT_PIN, X1_LIMIT_BIT ) )
+      	ret |= _BV( 1 ) ;
+
+	if( bit_is_set( LIMIT_PIN, X2_LIMIT_BIT ) )
+      	ret |= _BV( 2 ) ;
+
+	if( bit_is_set( LIMIT_PIN, Y1_LIMIT_BIT ))
+      	ret |= _BV( 3 ) ;
+
+	if( bit_is_set( LIMIT_PIN, Y2_LIMIT_BIT ) )
+      	ret |= _BV( 4 ) ;
+
+	if( bit_is_set( XHM_PIN, X_HOME ) )
+      	ret |= _BV( 5 ) ;
+
+	if( bit_is_set( YHM_PIN, Y_HOME ) )
+      	ret |= _BV( 6) ;
+
+	return ret;
+
+}

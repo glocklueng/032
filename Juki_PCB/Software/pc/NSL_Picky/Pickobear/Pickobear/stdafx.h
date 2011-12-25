@@ -86,7 +86,11 @@
 extern 	videoInput VI;
 extern CStringA UTF16toUTF8(const CStringW& utf16);
 
-#define CAMERA_OFFSET ( 73900 )
+// last calibration was
+//was 228370
+//is  227830
+
+#define CAMERA_OFFSET ( 73900-540 )
 
 #ifdef _UNICODE
 #if defined _M_IX86

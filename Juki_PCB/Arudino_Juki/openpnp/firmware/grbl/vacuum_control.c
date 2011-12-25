@@ -101,6 +101,38 @@ unsigned char run_vacuum_test( void )
 
 }
 
+unsigned char test_mode(void)
+{
+	int i;
+	double x,y;
+
+	if( gHomed == FALSE ) {
+		return GCSTATUS_NOT_HOMED;
+	}
+#ifdef VERBOSE_DEBUG
+			printPgmString(PSTR("test_mode\r\n"));
+#endif
+
+	if( is_head_down() ) {
+		head_down( FALSE )  ;
+	}
+
+	
+	for( i = 0 ; i < 200 ; i++ ) {
+	
+		x = rand() %12;
+		y = rand() %14 ;
+
+		gotoxy( x,y ,-1,-1) ;
+
+		_delay_ms(500);
+
+	}
+
+	return GCSTATUS_OK;
+
+}
+
 unsigned char goto_vacpad( void ) 
 {
 	unsigned char hasTool = FALSE;

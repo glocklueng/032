@@ -63,8 +63,11 @@
 #define IDC_FEEDER_LIST                 1047
 #define IDC_ADD_FEEDER                  1048
 #define IDC_SEND                        1049
+#define IDC_XHOME                       1049
 #define IDC_LOAD_FEEDER                 1050
 #define IDC_SAVE_FEEDER                 1051
+#define IDC_YL3                         1052
+#define IDC_YHOME                       1052
 #define IDC_ADD_LOWERRIGHT              1054
 #define IDC_UP_CAMERA                   1056
 #define IDC_DOWN_CAMERA                 1057
@@ -107,6 +110,7 @@
 #define IDC_ADD_PCB                     1094
 #define IDC_DELETE_PCB                  1095
 #define IDC_PCB_INDEX                   1096
+#define IDC_TEST_MODE                   1097
 
 // Next default values for new objects
 // 
@@ -114,7 +118,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        136
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1097
+#define _APS_NEXT_CONTROL_VALUE         1098
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
