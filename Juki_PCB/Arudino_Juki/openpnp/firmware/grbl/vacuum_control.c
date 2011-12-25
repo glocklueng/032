@@ -17,7 +17,7 @@
 #include "atc_control.h"
 #include "head_control.h"
 #include "config.h"
-#include "settings.h"
+#include "stepper.h"
 
 void vacuum_init(void)
 {

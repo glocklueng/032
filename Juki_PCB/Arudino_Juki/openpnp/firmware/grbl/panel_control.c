@@ -16,6 +16,9 @@
 #include "panel_control.h"
 #include "config.h"
 #include "settings.h"
+#include "vacuum_control.h"
+#include "head_control.h"
+
 
 // Setup pin interrupts
 void panel_init()
