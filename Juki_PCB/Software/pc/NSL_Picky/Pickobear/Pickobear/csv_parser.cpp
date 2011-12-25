@@ -27,16 +27,18 @@ bool csv_parser::init(FILE * input_file_pointer)
 
 bool csv_parser::init(const char * input_file)
 {
-	const size_t filename_length = strlen(input_file);
+	CStringA input_file_cs(input_file);
+
+	const size_t filename_length = input_file_cs.GetLength();
 
 	if (!filename_length)
 	{
-		fprintf(stderr, "Fatal error : invalid input file %s\n", input_file);
+		fprintf(stderr, "Fatal error : invalid input file %s\n", input_file_cs);
 
 		return false;
 	}
 
-	input_filename = (char *) malloc(filename_length + 1);
+	input_filename = (char *) malloc(filename_length + 2);
 
 	if (input_filename == NULL)
 	{
@@ -45,9 +47,9 @@ bool csv_parser::init(const char * input_file)
 		return false;
 	}
 
-	memset(input_filename, 0, filename_length + 1);
+	memset(input_filename, 0, filename_length );
 
-	strcpy_s(input_filename, filename_length,  input_file);
+	strcpy_s(input_filename, filename_length+1,  input_file);
 
 	input_fp = fopen(input_file, "r");
 
