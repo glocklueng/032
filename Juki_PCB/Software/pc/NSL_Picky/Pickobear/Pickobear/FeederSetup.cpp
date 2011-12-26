@@ -284,8 +284,12 @@ void CFeederSetup::RebuildList ( void )
 	 }
 
 	 if( bAcceptChange ) {
-	//	 m_FeederGrid.AutoSize();
+	
+		 // redraw
 		 m_FeederGrid.Refresh();
+		 
+		 // mark as changed
+		 pDlg->m_FeedersModified = true;
 
 		 m_FeederList.RebuildList();
 

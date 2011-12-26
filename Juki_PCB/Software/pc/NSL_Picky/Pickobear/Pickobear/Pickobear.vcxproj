@@ -18,6 +18,7 @@
     <ProjectGuid>{9E708F89-8B20-4D9F-9D4C-1BAC46AEA505}</ProjectGuid>
     <RootNamespace>Pickobear</RootNamespace>
     <Keyword>MFCProj</Keyword>
+    <ProjectName>`Pickobear</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -183,7 +184,9 @@
     <Library Include="..\Debug\videoInput.lib">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </Library>
-    <Library Include="..\Release\videoInput.lib" />
+    <Library Include="..\Release\videoInput.lib">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </Library>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

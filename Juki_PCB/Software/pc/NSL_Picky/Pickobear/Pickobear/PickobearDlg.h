@@ -22,9 +22,14 @@ enum {
 	NT_BINARY = 4
 };
 
-#define MAX_X_TABLE		( 190000 )
-#define MAX_Y_TABLE		( 190000 )
+#define MAX_X_TABLE							( 364550 )
+#define MAX_Y_TABLE							( 517000 )
 
+// last calibration was
+//was 228370
+//is  227830
+
+#define CAMERA_OFFSET						( 73900-540 )
 #define CAMERA_DEFAULT_UPDATE_RATE_MS		( 30 )
 #define CAMERA_SLOW_UPDATE_RATE_MS			( 300 )
 
@@ -631,37 +636,48 @@ public:
 	// check to see if if gui thinks we are homed
 	bool HomeTest( void ); 
 
-
+	/// set to true if a database save is in order
 	bool m_FeedersModified;
 	bool m_ComponentsModified;
-
+		
+	void PostNcDestroy( )
+	{
+	}
 
 	~CPickobearDlg(){
-		
-		//move these to the postncdestroy or earlier
-		if (m_ComponentsModified ) {
-			m_ComponentList.SaveDatabase();
-		}
-
-		if (m_FeedersModified ) {
-			m_FeederList.SaveDatabase();
-		}
 
 		// tell thread to close
 		m_Quit = 1;
+
+		if (m_pFeederDlg ) {
+			delete m_pFeederDlg;
+		}
+
 		if( m_Serial.IsOpen() )
 			// close out serial
 			m_Serial.Close();
 	}
 
 	// send a command to the PNP
-	void SendCommand(const char *cmd)
+	bool SendCommand(const char *cmd, size_t length, DWORD *lengthWritten )
 	{
-		DWORD written;
+		ASSERT( cmd );
+		
+		// set to zero in case serial isn't open
+		*lengthWritten = 0;
 
-		m_Serial.Write(cmd,&written,0,INFINITE);
+		if (m_Serial.IsOpen() )  {
+		
+			// write data to serial port, time out is 1000 ms
+			m_Serial.Write( cmd,lengthWritten,0,1000);
+		
+		} else { 
+
+			return false;
+		}
+
+		return true;
 	};
-
 
 	bool m_Simulate;
 
@@ -757,4 +773,5 @@ public:
 	unsigned long m_PCBIndex;
 	afx_msg void OnBnClickedDeletePcb();
 	afx_msg void OnBnClickedTestMode();
+	afx_msg void OnClose();
 };
