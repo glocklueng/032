@@ -5,32 +5,34 @@
 // Todo list :-
 //   add items to todo list
 //   remove all the utf8 buffers, choose CString or std::string ?
-//   fully implement new feeder classes
+//   fully implement new feeder classes (mostly done)
 //   update component classes to make it simpler
-//   too much relies on the index in the CListCtrl's
+//   too much relies on the index in the CListCtrl's (most have been replaced)
 //   make busy status reflect in GUI
 //   add a status print somewhere in the GUI
 //   more error checking
-//   figure out the problem with CheckX / CheckAck and see if it can be handled better (added longer delay on timeout)
+//   figure out the problem with CheckX / CheckAck and see if it can be handled better (added longer delay on timeout, needs proper ACK)
 //   add last feeder XY to Grbl and add new GCODE parameter to set feeder (partially added, sets feeder )
 //   more help documentation
 //   document GCODE
 //   add 'Append' option to feeder load/import
 //   plain text for all load/save files ? XML i guess since everyones going with that.
 //   finish adding machine plot area to GUI (simulate)
-//   double check rotation
+//   double check rotation (build eagle test board)
 //   add picker for serial port, add registry key, add more error checking for serial port
 //   more camera controls, fine tune the slow/fast modes
 //   tidy up headers
 //   add localisation to strings?
-//   reflect limit switches in GUI
+//   reflect limit switches in GUI (partially working)
 //   handle flipped pcbs!! (Most important) (done)
 //   move database saves to the postncdestroy or earlier
+//   make sure feeder names are unique
 
 // Recently added :-
 //   added multiple PCB offsets  (not tested!)
 //	 implemented delete function in feeder list
 //   temporarily turn off redraw in rebuild of feeder list
+//   added component/feeder save to exit, add logic for changes (Added for edit dialogs)
 
 #include "stdafx.h"
 #include "Pickobear.h"
@@ -193,6 +195,7 @@ BEGIN_MESSAGE_MAP(CPickobearDlg, CDialog)
 	ON_BN_CLICKED(IDC_ADD_PCB, &CPickobearDlg::OnBnClickedAddPcb)
 	ON_BN_CLICKED(IDC_DELETE_PCB, &CPickobearDlg::OnBnClickedDeletePcb)
 	ON_BN_CLICKED(IDC_TEST_MODE, &CPickobearDlg::OnBnClickedTestMode)
+	ON_WM_CLOSE()
 END_MESSAGE_MAP()
 
 BEGIN_MESSAGE_MAP(CListCtrl_Components, CListCtrl)
@@ -385,8 +388,6 @@ BOOL CPickobearDlg::OnInitDialog()
 			m_ComponentList.LoadDatabase( filename );
 		}
 
-
-
 		// then close the registry key
 		regKey.Close();
 	}
@@ -497,7 +498,6 @@ BOOL CPickobearDlg::OnInitDialog()
 	}
 
 	m_SpeedSelect.SetCurSel( (m_Speed/100)-1 );
-
 
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
@@ -1767,12 +1767,13 @@ void CPickobearDlg::OnBnClickedAddFeeder()
 {
 	CTextEditDialog TextDialog;
 
-	TextDialog.DoModal();
+	int ret = TextDialog.DoModal();
+	if (ret == IDOK  ) {
+		CStringA userInput8( UTF16toUTF8( TextDialog.m_Text ) );
 
-	CStringA userInput8( UTF16toUTF8( TextDialog.m_Text ) );
-
-	m_FeederList.AddItem(userInput8.GetString(),m_GOX, m_GOY, 0);
-	userInput8.ReleaseBuffer();
+		m_FeederList.AddItem(userInput8.GetString(),m_GOX, m_GOY, 0);
+		userInput8.ReleaseBuffer();
+	}
 
 }
 
@@ -2071,7 +2072,6 @@ void CPickobearDlg::OnCbnSelchangeUpCamera()
 	m_UpCameraWindow.SetCamera( regEntry );
 }
 
-
 void CPickobearDlg::OnBnClickedAddLowerright()
 {
 	UpdateData();
@@ -2091,16 +2091,16 @@ void CPickobearDlg::OnBnClickedAddLowerright()
 
 	CCounts CountDialog;
 
-	CountDialog.DoModal();
+	int ret = CountDialog.DoModal();
+	if( ret == IDOK ) {
+		// set counts
+		// this updates the database, but not the list
+		m_FeederList.at( item ).countx = CountDialog.m_CountX;
+		m_FeederList.at( item ).county = CountDialog.m_CountY;
 
-	// set counts
-	// this updates the database, but not the list
-	m_FeederList.at( item ).countx = CountDialog.m_CountX;
-	m_FeederList.at( item ).county = CountDialog.m_CountY;
-
-	// rebuild the list
-	m_FeederList.RebuildList();
-
+		// rebuild the list
+		m_FeederList.RebuildList();
+	}
 }
 
 void CPickobearDlg::OnCbnSelchangeStepsize()
@@ -2147,18 +2147,28 @@ void CPickobearDlg::OnBnClickedEditfeeder()
 
 	FeederDialog.m_FeederName = FeederDialog.entry.label;
 
-	FeederDialog.DoModal();
+	int ret = FeederDialog.DoModal();
 
-	CStringA userInput8( UTF16toUTF8( FeederDialog.m_FeederName ) );
+	// if user didn't cancel dialog
+	if (ret == IDOK ) {
+		CStringA userInput8( UTF16toUTF8( FeederDialog.m_FeederName ) );
 
-	// Since CString doesn't like being in a vector for load/save then we're using a char array, which makes this bit ugly
-	strcpy_s( FeederDialog.entry.label, userInput8 );
-	userInput8.ReleaseBuffer();
+		// Since CString doesn't like being in a vector for load/save then we're using a char array, which makes this bit ugly
+		strcpy_s( FeederDialog.entry.label, userInput8 );
+		userInput8.ReleaseBuffer();
 
-	m_FeederList.mFeederDatabase.at( clist ) = FeederDialog.entry;
+		// any actual changes?
+		if( memcmp( &m_FeederList.mFeederDatabase.at( clist ), &FeederDialog.entry ,sizeof( FeederDialog.entry ) ) ) {
 
-	//ugly
-	m_FeederList.RebuildList();
+			m_FeederList.mFeederDatabase.at( clist ) = FeederDialog.entry;
+
+			// mark to save later
+			m_FeedersModified = true;
+
+			//ugly
+			m_FeederList.RebuildList();
+		}
+	}
 }
 
 
@@ -2351,31 +2361,41 @@ void CPickobearDlg::OnBnClickedEditComponent()
 	EditDialog.m_Type    = EditDialog.entry.type;
 	EditDialog.m_Feeder  = EditDialog.entry.feeder;
 
-	EditDialog.DoModal();
+	int ret	 = EditDialog.DoModal();
 
-	// grab them back
-	// Since CString doesn't like being in a vector for load/save then we're using a char array, which makes this bit ugly
-	CStringA userInput8( UTF16toUTF8( EditDialog.m_Name ) );
-	strcpy_s( EditDialog.entry.label, userInput8 );
-	userInput8.ReleaseBuffer();
+	if (ret == IDOK ) {
+		// grab them back
+		// Since CString doesn't like being in a vector for load/save then we're using a char array, which makes this bit ugly
+		CStringA userInput8( UTF16toUTF8( EditDialog.m_Name ) );
+		strcpy_s( EditDialog.entry.label, userInput8 );
+		userInput8.ReleaseBuffer();
 
-	userInput8 =  UTF16toUTF8( EditDialog.m_Value ) ;
-	strcpy_s( EditDialog.entry.value, userInput8 );
-	userInput8.ReleaseBuffer();
+		userInput8 =  UTF16toUTF8( EditDialog.m_Value ) ;
+		strcpy_s( EditDialog.entry.value, userInput8 );
+		userInput8.ReleaseBuffer();
 
-	userInput8 = UTF16toUTF8( EditDialog.m_Type );
-	strcpy_s( EditDialog.entry.type, userInput8 );
-	userInput8.ReleaseBuffer();
+		userInput8 = UTF16toUTF8( EditDialog.m_Type );
+		strcpy_s( EditDialog.entry.type, userInput8 );
+		userInput8.ReleaseBuffer();
 
-	userInput8 = UTF16toUTF8( EditDialog.m_Feeder );
-	strcpy_s( EditDialog.entry.feeder, userInput8 );
-	userInput8.ReleaseBuffer();
+		userInput8 = UTF16toUTF8( EditDialog.m_Feeder );
+		strcpy_s( EditDialog.entry.feeder, userInput8 );
+		userInput8.ReleaseBuffer();
 
 
-	m_ComponentList.m_ComponentDatabase.at( clist ) = EditDialog.entry;
+		//check if any changes were made
+		if( memcmp( &m_ComponentList.m_ComponentDatabase.at( clist ) , &EditDialog.entry,sizeof( EditDialog.entry ) ) ) {
 
-	//ugly
-	m_ComponentList.RebuildList();
+			_RPT0(_CRT_WARN,"Changes were made\r\n");
+
+			m_ComponentList.m_ComponentDatabase.at( clist ) = EditDialog.entry;
+
+			m_ComponentsModified = true;
+		};
+
+		//ugly
+		m_ComponentList.RebuildList();
+	}
 }
 
 
@@ -2893,15 +2913,14 @@ void CPickobearDlg::OnBnClickedDeleteFeeder()
 		// erase from vector
 		m_FeederList.mFeederDatabase.erase( m_FeederList.mFeederDatabase.begin() + feederIndex );
 		m_FeederList.m_Count--;
+
 		m_FeedersModified = true;
 
 		m_FeederList.RebuildList();
 	}
 }
 
-
-
-
+// toggle the pcb side
 void CPickobearDlg::OnBnClickedPcbFlip()
 {
 	if ( bFlip == true ) {
@@ -3107,7 +3126,7 @@ BOOL CPickobearDlg::OnToolTipNotify( UINT id,
     return FALSE;
 }
 
-
+// switch vacuum on and off, if homed
 void CPickobearDlg::OnBnClickedVacuumToggle()
 {
 	if( false == HomeTest( ) ) {
@@ -3126,6 +3145,7 @@ void CPickobearDlg::OnBnClickedVacuumToggle()
 }
 
 
+// update moving speed
 void CPickobearDlg::OnCbnSelchangeGSpeed()
 {
 	UpdateData(FALSE);
@@ -3147,7 +3167,7 @@ void CPickobearDlg::OnBnClickedAddPcb()
 	PCBEntry check;
 	
 	if( m_ComponentList.m_OffsetX_top == 0  && m_ComponentList.m_OffsetY_top == 0  ) {
-		AfxMessageBox(L"Error:Can't add a PCB at (0,0)",MB_OK|MB_ICONHAND);
+		AfxMessageBox(L"Error:Can't add PCB at ( 0, 0 )",MB_OK|MB_ICONHAND);
 		return;
 	}
 
@@ -3162,7 +3182,7 @@ void CPickobearDlg::OnBnClickedAddPcb()
 		for( unsigned int i = 0 ; i < m_PCBs.size() ; i ++ ) {
 			check = m_PCBs.at( i );
 
-			if ( memcmp( &entry, &check,sizeof( PCBEntry ) )== 0  )  {
+			if ( memcmp( &entry, &check,sizeof( PCBEntry ) ) == 0  )  {
 				AfxMessageBox(L"Already exists!!",MB_OK|MB_ICONEXCLAMATION);
 				return;
 			}
@@ -3231,29 +3251,65 @@ void CPickobearDlg::OnBnClickedDeletePcb()
 	}
 }
 
-
+// test movements
 void CPickobearDlg::OnBnClickedTestMode()
 {
-	long x, y;
+	unsigned long x, y;
+
+	MoveHead( 0, 0 );
+	
+	Sleep(2000);
+	// Read limit switches, if not XHOME,YHOME there is a fault
 
 	for( int i = 0 ; i < 200 ; i ++ ) {
 		
-		x = rand() * 10;
-		y = rand() * 10;
+		do {
+			
+			x = rand() * 10;
 
-		if(x>364550) x =100;
-		if(y>517000) y= 100;
+		} while( x > MAX_X_TABLE ) ;
+		
 
-		MoveHead(x,y);
+		do {
+			
+			y = rand() * 10;
 
+		} while( y > MAX_Y_TABLE ) ;
+
+		MoveHead( x, y );
+
+		// little delay (though we should really punch it for testing, the firmware ought to deal with it.
 		Sleep( 100 );
-
 	}
 	
-	MoveHead( 364000,517000 );
+	// Park
+	MoveHead( MAX_X_TABLE, MAX_Y_TABLE);
 			
 	Sleep( 2000 );
 
+	// Zero
 	MoveHead(0,0);
 
+	// Read limit switches, if not XHOME,YHOME there is a fault
+}
+
+void CPickobearDlg::OnClose()
+{
+	// save databases if they've been changed.
+	if ( m_ComponentsModified ) {
+		
+		int ret = AfxMessageBox(L"Component database has been modified, would you to save it? ",MB_YESNO|MB_ICONEXCLAMATION);
+		if( ret == IDYES ) 
+			m_ComponentList.SaveDatabase();
+	}
+
+	if ( m_FeedersModified ) {
+	
+		int ret = AfxMessageBox(L"Feeder database has been modified, would you like to save it? ",MB_YESNO|MB_ICONEXCLAMATION);
+		if( ret == IDYES ) 
+			m_FeederList.SaveDatabase();
+	}
+
+	// call base class
+	CDialog::OnClose();
 }
