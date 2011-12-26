@@ -565,16 +565,33 @@ HCURSOR CPickobearDlg::OnQueryDragIcon()
 }
 
 
-void CPickobearDlg::WriteSerial( const char *text)
+void CPickobearDlg::WriteSerial( const char *data)
 {
-	ASSERT( text );
-	CString out( text  );
+	ASSERT( data );
+	CString out( data  );
 	m_TextEdit->Print( out ) ;
 
-	//	m_Simulate = true;
+	EmptySerial();
 
-	if( m_Simulate == false ) 
-		m_Serial.Write( text );
+	if( m_Simulate == false ) {
+
+		// Send command to serial port
+		if (m_Serial.IsOpen() ) {
+			
+			m_Serial.Write( data );
+
+			// wait for machine to acknowledge receipt of data. This relies on no data being in the Serial buffer
+			
+			// wait for 'ok'
+			char buffer[256];
+			DWORD lengthRead = 0;
+			m_Serial.Read(buffer,sizeof(buffer),&lengthRead,0,4000 );		
+
+
+		} else {
+			_RPT0(_CRT_WARN,"WriteSerial: Port not open\r\n");
+		}
+	}
 }
 
 void CPickobearDlg::OnBnClickedHome()
@@ -828,16 +845,33 @@ again:;
 }
 void CPickobearDlg::EmptySerial ( void ) 
 {
-	char bufferx[100];
-	m_Serial.Purge();
+	char scratchBuffer[100];
+	
+	// not open
+	if( !m_Serial.IsOpen()) return;
+
+	// attempt to empty serial buffer
+	if( ERROR_SUCCESS != m_Serial.Purge() )  {
+		_RPT0(_CRT_WARN,"EmptySerial: Purge failed\r\n");
+		return;
+	}
+
+	// really empty serial data
 	{
-		DWORD length1;
+		DWORD lengthRead;
+		lengthRead = 0;
+		
 		do { 
-			length1 = 1;
-			m_Serial.Read( &bufferx,100,&length1,0,100);
-		} while( length1 ) ;
+			
+			m_Serial.Read( &scratchBuffer,100,&lengthRead,0,500);
+			
+			if( lengthRead == 0 ) {
+				Sleep(100);
+			}
+		} while( lengthRead ) ;
 	}
 }
+
 char CPickobearDlg::CheckX( void )
 {
 	DWORD length = 0;
