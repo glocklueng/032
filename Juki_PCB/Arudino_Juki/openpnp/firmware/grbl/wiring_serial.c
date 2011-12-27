@@ -28,6 +28,8 @@
 #include <avr/pgmspace.h>
 #include <avr/interrupt.h>
 
+#include "stepper.h"
+
 // Define constants and variables for buffering incoming serial data.  We're
 // using a ring buffer (I think), in which rx_buffer_head is the index of the
 // location to which to write the next incoming character and rx_buffer_tail

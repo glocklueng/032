@@ -307,13 +307,13 @@ uint8_t gc_execute_line(char *line) {
         case 11: head_down(0);next_action = NEXT_ACTION_DWELL ;break;
 
 		// atc
-		case 12: atc_change(0);break;
-		case 13: atc_change(1);break;
-		case 14: atc_change(2);break;
-		case 15: atc_change(3);break;
-		case 16: atc_change(4);break;
-		case 17: atc_change(5);break;
-		case 18: atc_change(6);break;
+		case 12: atc_change(0);next_action = NEXT_ACTION_DWELL ;break;
+		case 13: atc_change(1);next_action = NEXT_ACTION_DWELL ;break;
+		case 14: atc_change(2);next_action = NEXT_ACTION_DWELL ;break;
+		case 15: atc_change(3);next_action = NEXT_ACTION_DWELL ;break;
+		case 16: atc_change(4);next_action = NEXT_ACTION_DWELL ;break;
+		case 17: atc_change(5);next_action = NEXT_ACTION_DWELL ;break;
+		case 18: atc_change(6);next_action = NEXT_ACTION_DWELL ;break;
 
 		// vacuum
 		case 19: vacuum(1);next_action = NEXT_ACTION_DWELL ;break;
