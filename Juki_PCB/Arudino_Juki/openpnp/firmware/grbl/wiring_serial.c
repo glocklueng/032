@@ -38,6 +38,8 @@
 #define RX_BUFFER_SIZE 64
 #endif
 
+extern unsigned char gHomed ;
+
 static unsigned char rx_buffer[RX_BUFFER_SIZE];
 
 int rx_buffer_head = 0;
@@ -108,6 +110,14 @@ SIGNAL(USART0_RX_vect)
 	if (i != rx_buffer_tail) {
 		rx_buffer[rx_buffer_head] = c;
 		rx_buffer_head = i;
+	}
+
+	if( c == 0x0ff ) {
+		// shut off servo interrupt
+		cli();
+		st_disable();
+		// not homed
+		gHomed = 0 ;
 	}
 
 //	UDR0 = c; // Echo back the received byte back to the computer 
