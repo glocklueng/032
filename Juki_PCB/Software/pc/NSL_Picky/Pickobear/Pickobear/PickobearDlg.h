@@ -99,6 +99,8 @@ public:
 
 	int m_FeederId;
 
+	unsigned long m_Count ;
+
 public:
 	CListCtrl_Components() :
 	  m_OffsetX(0),
@@ -114,41 +116,50 @@ public:
 	
 	}
 
-	unsigned long m_Count ;
-
 	unsigned long GetCount( void )
 	{
 		return m_ComponentDatabase.size();
 	}
 
-
-	void AssignFeeder(int idd, const char *string ) {
+	void AssignFeeder(unsigned int idd, const char *string ) {
 
 		ASSERT( string );
+
+		if (string == NULL ) {
+			AfxMessageBox(L"Error:Assign feeder no data error", MB_OK|MB_ICONSTOP );
+			return ;
+		}
+
+		// assert ?
+		if ( idd > GetCount() ) {
+			AfxMessageBox(L"Error:AssignFeeder range error", MB_OK|MB_ICONSTOP );
+			return ;
+		}
 
 		strncpy_s( m_ComponentDatabase.at(idd).feeder,string, 256 );
 
 	}
 
-	CompDatabase  at( int i ) {
+	CompDatabase at( unsigned int i ) {
 
-		if ( i < 0 || i > m_Count ) {
+		if (  i > m_Count ) {
 
 			AfxMessageBox(L"Error:CompDatabase.at range error", MB_OK|MB_ICONSTOP );
-
 		}
 
 		return m_ComponentDatabase.at(i);
 	}
  
 	// search for component by name
-	int Search( char * name) 
+	int Search( const char * name) 
 	{
 
 		for( unsigned int i = 0 ; i < m_Count ; i++ ) {
 			
-			if(strcmp(name, m_ComponentDatabase.at(i).label) == 0 ) {
+			if( _strnicmp(name, m_ComponentDatabase.at(i).label, strlen( name ) ) == 0 ) {
+
 				return i;
+
 			}
 		}
 
@@ -644,19 +655,7 @@ public:
 	{
 	}
 
-	~CPickobearDlg(){
-
-		// tell thread to close
-		m_Quit = 1;
-
-		if (m_pFeederDlg ) {
-			delete m_pFeederDlg;
-		}
-
-		if( m_Serial.IsOpen() )
-			// close out serial
-			m_Serial.Close();
-	}
+	~CPickobearDlg();
 
 	// send a command to the PNP
 	bool SendCommand(const char *cmd, size_t length, DWORD *lengthWritten )

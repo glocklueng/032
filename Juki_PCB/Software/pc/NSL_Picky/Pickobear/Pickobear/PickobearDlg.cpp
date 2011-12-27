@@ -3,7 +3,6 @@
 // charliex - null space labs 032.la
 //
 // Todo list :-
-//   add items to todo list
 //   remove all the utf8 buffers, choose CString or std::string ?
 //   fully implement new feeder classes (mostly done)
 //   update component classes to make it simpler
@@ -33,6 +32,7 @@
 //	 implemented delete function in feeder list
 //   temporarily turn off redraw in rebuild of feeder list
 //   added component/feeder save to exit, add logic for changes (Added for edit dialogs)
+//   hopefully a better EmptySerial routine
 
 #include "stdafx.h"
 #include "Pickobear.h"
@@ -236,8 +236,42 @@ void CListCtrl_FeederList::PreSubclassWindow()
 static const WCHAR *pszName = L"cameras";
 static const WCHAR *pszKey = L"PickoBear";
 
+DWORD GetRegistryDWORD( CString name , DWORD defaultValue )
+{
+	CRegKey regKey;
+	DWORD regEntry;
+	long lResult;
+
+	if ((lResult = regKey.Open(HKEY_CURRENT_USER,  _T("Software\\NullSpaceLabs\\PickoBear\\Settings"))) != ERROR_SUCCESS)
+		lResult = regKey.Create(HKEY_CURRENT_USER, _T("Software\\NullSpaceLabs\\PickoBear\\Settings"));
+
+	if (ERROR_SUCCESS == lResult)
+	{
+		// Make 'regEntry' equal to zero
+		regEntry = 0;
+
+		// Read the value
+		if ((lResult = regKey.QueryDWORDValue(name, regEntry)) != ERROR_SUCCESS)
+		{
+			// Save a default value in the registry key
+			regKey.SetDWORDValue(name, defaultValue );
+
+			regEntry = defaultValue;
+		}
+
+		// then close the registry key
+		regKey.Close();
+	}
+
+	return regEntry;
+}
+
 BOOL CPickobearDlg::OnInitDialog()
 {
+	CRegKey regKey;
+	DWORD regEntry;
+	long lResult;
+
 	CDialog::OnInitDialog();
 
 	// Add "About..." menu item to system menu.
@@ -310,7 +344,6 @@ BOOL CPickobearDlg::OnInitDialog()
 
 	DWORD numDevices = VI.listDevices();
 
-
 	for( DWORD i = 0 ; i < numDevices ; i++ ) {
 
 		_RPT2(_CRT_WARN,"%d) Camera name is [%s]\n",i, VI.getDeviceName( i  ));
@@ -320,32 +353,11 @@ BOOL CPickobearDlg::OnInitDialog()
 
 	}
 
-	CRegKey regKey;
-	DWORD regEntry = 100;
-	long lResult;
+	// get saved entry, or set to default 0
+	regEntry = 0;
+	regEntry = GetRegistryDWORD(L"up",regEntry);
 
-	if ((lResult = regKey.Open(HKEY_CURRENT_USER,  _T("Software\\NullSpaceLabs\\PickoBear\\Settings"))) != ERROR_SUCCESS)
-		lResult = regKey.Create(HKEY_CURRENT_USER, _T("Software\\NullSpaceLabs\\PickoBear\\Settings"));
-
-	if (ERROR_SUCCESS == lResult)
-	{
-		// Make 'regEntry' equal to zero
-		regEntry = 0;
-
-		// read the value back again
-		if ((lResult = regKey.QueryDWORDValue(_T("up"), regEntry)) != ERROR_SUCCESS)
-		{
-			// Save a value in the registry key
-			regKey.SetDWORDValue(_T("up"), regEntry);
-
-		} else {
-
-		}
-
-		// then close the registry key
-		regKey.Close();
-	}
-
+	// clamp
 	if ( regEntry > numDevices-1 ) {
 		regEntry = 0;
 	}
@@ -354,23 +366,22 @@ BOOL CPickobearDlg::OnInitDialog()
 		_RPT0(_CRT_WARN,"Error\n");
 	}
 
+	regEntry = 0;
+	regEntry = GetRegistryDWORD(L"down",regEntry);
+
+	if ( regEntry > numDevices-1 ) regEntry = 0;
+
+	if( CB_ERR  == m_DownCamera.SetCurSel( regEntry ) ) {
+		_RPT0(_CRT_WARN,"Error\n");
+	}
+
+	// strings
+
 	if ((lResult = regKey.Open(HKEY_CURRENT_USER,  _T("Software\\NullSpaceLabs\\PickoBear\\Settings"))) != ERROR_SUCCESS)
 		lResult = regKey.Create(HKEY_CURRENT_USER, _T("Software\\NullSpaceLabs\\PickoBear\\Settings"));
 
 	if (ERROR_SUCCESS == lResult)
 	{
-		regEntry = 1;
-
-		// read the value back again
-		if ((lResult = regKey.QueryDWORDValue(_T("down"), regEntry)) != ERROR_SUCCESS)
-		{
-			// Save a value in the registry key
-			regKey.SetDWORDValue(_T("down"), regEntry);
-
-		} else {
-
-		}
-
 		// read the string
 		TCHAR filename[MAX_PATH];
 		ULONG length= sizeof(filename)/sizeof(TCHAR);
@@ -392,14 +403,7 @@ BOOL CPickobearDlg::OnInitDialog()
 		regKey.Close();
 	}
 
-
-	if ( regEntry > numDevices-1 ) regEntry = 0;
-
-	if( CB_ERR  == m_DownCamera.SetCurSel( regEntry ) ) {
-		_RPT0(_CRT_WARN,"Error\n");
-	}
 	UpdateData(FALSE);
-
 
 	// Get size and position of the template textfield we created before in the dialog editor
 	GetDlgItem(IDC_CAM1)->GetWindowRect(rect);
@@ -421,7 +425,6 @@ BOOL CPickobearDlg::OnInitDialog()
 	// Create OpenGL Control window	
 	m_DownCameraWindow.oglCreate( rect, rect1, this,m_DownCamera.GetCurSel() );
 
-
 	// convert to a picker
 	CString m_ComPort = _T("\\\\.\\COM14");
 	m_Serial.Open(m_ComPort, this );
@@ -429,6 +432,7 @@ BOOL CPickobearDlg::OnInitDialog()
 	m_Serial.Setup(CSerial::EBaud38400 );
 	EmptySerial();
 
+	// create console
 	m_TextEdit = new CTextDump();
 	m_TextEdit->Create(IDD_TEXT_DIALOG, this);
 	m_TextEdit->ShowWindow(SW_HIDE);
@@ -454,44 +458,27 @@ BOOL CPickobearDlg::OnInitDialog()
 		m_DownCameraWindow.m_unpTimer = m_DownCameraWindow.SetTimer(1, 300, 0);
 
 
+	// reset the step size drop down
 	m_StepSize.ResetContent();
-
 
 	for( int i = 0; i < 1010 ; i+=10 ) {
 
 		CString num;
 
 		num.Format(L"%d",i);
+		// no 0
 		if( i == 0 ) 
 			m_StepSize.AddString( L"1" );
 		else
 			m_StepSize.AddString( num );
 	}
 
-	if ((lResult = regKey.Open(HKEY_CURRENT_USER,  _T("Software\\NullSpaceLabs\\PickoBear\\Settings"))) != ERROR_SUCCESS)
-		lResult = regKey.Create(HKEY_CURRENT_USER, _T("Software\\NullSpaceLabs\\PickoBear\\Settings"));
+	regEntry = 0;
+	regEntry = GetRegistryDWORD(L"stepSize",regEntry);
 
-	if (ERROR_SUCCESS == lResult)
-	{
-		// Make 'regEntry' equal to zero
+	if ( regEntry > (DWORD)m_StepSize.GetCount()-1 ) {
 		regEntry = 0;
-
-		// read the value back again
-		if ((lResult = regKey.QueryDWORDValue(_T("stepSize"), regEntry)) != ERROR_SUCCESS)
-		{
-			// Save a value in the registry key
-			regKey.SetDWORDValue(_T("stepSize"), regEntry);
-
-		} else {
-
-		}
-
-		// then close the registry key
-		regKey.Close();
 	}
-
-	if ( regEntry > (DWORD)m_StepSize.GetCount()-1 ) 
-		regEntry = 0;
 
 	if( CB_ERR  == m_StepSize.SetCurSel( regEntry ) ) {
 		_RPT0(_CRT_WARN,"Error\n");
@@ -843,12 +830,14 @@ again:;
 
 	return true;
 }
+
 void CPickobearDlg::EmptySerial ( void ) 
 {
 	char scratchBuffer[100];
 	
 	// not open
-	if( !m_Serial.IsOpen()) return;
+	if( !m_Serial.IsOpen() ) 
+		return;
 
 	// attempt to empty serial buffer
 	if( ERROR_SUCCESS != m_Serial.Purge() )  {
@@ -923,7 +912,6 @@ char CPickobearDlg::CheckX( void )
 char CPickobearDlg::CheckAck( char *ack1 )
 {
 	unsigned int length = 1;
-
 	unsigned int index ;
 	unsigned char ch;
 	int ret;
@@ -950,7 +938,6 @@ char CPickobearDlg::CheckAck( char *ack1 )
 		if ( counter == 0 ) 
 			break;
 
-
 		ret = m_Serial.Read( &ch, length );
 		if ( index < sizeof( buffer ) ) {
 
@@ -976,7 +963,6 @@ char CPickobearDlg::CheckAck( char *ack1 )
 	}
 
 	return 'f';
-
 }
 
 
@@ -3329,6 +3315,9 @@ void CPickobearDlg::OnBnClickedTestMode()
 
 void CPickobearDlg::OnClose()
 {
+	// tell thread to close
+	m_Quit = 1;
+	
 	// save databases if they've been changed.
 	if ( m_ComponentsModified ) {
 		
@@ -3344,6 +3333,23 @@ void CPickobearDlg::OnClose()
 			m_FeederList.SaveDatabase();
 	}
 
+
+	Sleep( 100 );
+
 	// call base class
 	CDialog::OnClose();
 }
+
+CPickobearDlg::~CPickobearDlg()
+{
+	if (m_pFeederDlg ) {
+		delete m_pFeederDlg;
+	}
+
+	if( m_Serial.IsOpen() ) {
+		// close out serial
+		m_Serial.Close();
+	}
+}
+
+
