@@ -528,8 +528,6 @@ void st_go_home(void)
 	plan_init();
 	gc_init();
 
-
-
 	// if head down, set head up
 	if( is_head_down() ) {
 		head_down(0);
@@ -541,8 +539,10 @@ void st_go_home(void)
 		}
 
 	}
+
 	cli();
-	// tool changer off
+
+	// tool changer all down
 	atc_fire(0);	
 
 #ifdef VERBOSE_DEBUG
@@ -714,7 +714,8 @@ void limits_init(void)
 
 unsigned char get_limit_bits( void )
 {
-	unsigned char ret = 0;
+	// don't want it to return zero
+	unsigned char ret = _BV( 7 );
 
 	if( bit_is_set( LIMIT_PIN, X1_LIMIT_BIT ) )
       	ret |= _BV( 1 ) ;

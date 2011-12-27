@@ -64,7 +64,7 @@ int main(void)
   
   // Once everything is initialized, send the standard "ok" to let clients
   // know it's okay to go ahead
-  printPgmString(PSTR("ok\n\r"));
+  printPgmString(PSTR("ok\n"));
 
 // test inputs	
 	while(0){

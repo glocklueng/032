@@ -85,6 +85,10 @@ static uint8_t acceleration_manager_enabled;   // Acceleration management active
 
 #define ONE_MINUTE_OF_MICROSECONDS 60000000.0
 
+// stepper interrupt ack to host
+extern char ackHost;
+
+
 // Calculates the distance (not time) it takes to accelerate from initial_rate to target_rate using the 
 // given acceleration:
 inline double estimate_acceleration_distance(double initial_rate, double target_rate, double acceleration) {
@@ -400,8 +404,8 @@ void plan_buffer_line(double x, double y, double z, double c, double feed_rate, 
 	printPgmString(PSTR("didn't move"));
 #endif
 
-// needs for ACK
- 	serialWrite('X');
+// needs for GUI ACK
+ 	ackHost = 'X';
   	return; 
   };
   

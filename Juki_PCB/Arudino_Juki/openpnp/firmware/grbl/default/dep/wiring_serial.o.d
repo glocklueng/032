@@ -14,7 +14,8 @@ wiring_serial.o: ../wiring_serial.c \
   d:/winavr-20100110/lib/gcc/../../avr/include/avr/version.h \
   d:/winavr-20100110/lib/gcc/../../avr/include/avr/fuse.h \
   d:/winavr-20100110/lib/gcc/../../avr/include/avr/lock.h \
-  d:/winavr-20100110/lib/gcc/../../avr/include/avr/interrupt.h
+  d:/winavr-20100110/lib/gcc/../../avr/include/avr/interrupt.h \
+  ../stepper.h d:/winavr-20100110/lib/gcc/../../avr/include/avr/sleep.h
 
 d:/winavr-20100110/lib/gcc/../../avr/include/math.h:
 
@@ -47,3 +48,7 @@ d:/winavr-20100110/lib/gcc/../../avr/include/avr/fuse.h:
 d:/winavr-20100110/lib/gcc/../../avr/include/avr/lock.h:
 
 d:/winavr-20100110/lib/gcc/../../avr/include/avr/interrupt.h:
+
+../stepper.h:
+
+d:/winavr-20100110/lib/gcc/../../avr/include/avr/sleep.h:

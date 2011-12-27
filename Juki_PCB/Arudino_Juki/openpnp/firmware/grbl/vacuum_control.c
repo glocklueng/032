@@ -72,9 +72,9 @@ void vacuum_test( void )
 {
 	if( vacuum_state()  == 1 ) { 
 		
-		printPgmString(PSTR("yes\r\n"));
+		printPgmString(PSTR("yes\n"));
 	} else {
-		printPgmString(PSTR("no\r\n"));
+		printPgmString(PSTR("no\n"));
 	}
 }
 
