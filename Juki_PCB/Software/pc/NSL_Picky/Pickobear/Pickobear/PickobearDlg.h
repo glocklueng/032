@@ -571,6 +571,8 @@ private:
 	//how long Sleep is in camera updates (ms)
 	unsigned int m_CameraUpdateRate;
 
+	HANDLE threadHandleCamera;
+
 	// states the machine could be in
 	enum eMachineState {
 
@@ -656,6 +658,7 @@ public:
 	}
 
 	~CPickobearDlg();
+
 
 	// send a command to the PNP
 	bool SendCommand(const char *cmd, size_t length, DWORD *lengthWritten )
@@ -773,4 +776,5 @@ public:
 	afx_msg void OnBnClickedDeletePcb();
 	afx_msg void OnBnClickedTestMode();
 	afx_msg void OnClose();
+	afx_msg void OnBnClickedEstop();
 };
