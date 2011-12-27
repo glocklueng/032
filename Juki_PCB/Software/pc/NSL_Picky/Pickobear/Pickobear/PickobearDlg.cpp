@@ -33,6 +33,7 @@
 //   temporarily turn off redraw in rebuild of feeder list
 //   added component/feeder save to exit, add logic for changes (Added for edit dialogs)
 //   hopefully a better EmptySerial routine
+//   crash bug in quit routines (waits for thread exit)
 
 #include "stdafx.h"
 #include "Pickobear.h"
@@ -109,6 +110,7 @@ CPickobearDlg::CPickobearDlg(CWnd* pParent /*=NULL*/)
 	, m_Simulate( false )
 	, m_PCBIndex(0)
 	, m_PCBCount(0)
+	, threadHandleCamera(NULL)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 	
@@ -196,6 +198,7 @@ BEGIN_MESSAGE_MAP(CPickobearDlg, CDialog)
 	ON_BN_CLICKED(IDC_DELETE_PCB, &CPickobearDlg::OnBnClickedDeletePcb)
 	ON_BN_CLICKED(IDC_TEST_MODE, &CPickobearDlg::OnBnClickedTestMode)
 	ON_WM_CLOSE()
+	ON_BN_CLICKED(IDC_ESTOP, &CPickobearDlg::OnBnClickedEstop)
 END_MESSAGE_MAP()
 
 BEGIN_MESSAGE_MAP(CListCtrl_Components, CListCtrl)
@@ -439,7 +442,7 @@ BOOL CPickobearDlg::OnInitDialog()
 	m_TextEdit->pDlg = this;
 
 	// Start thread for 'goCamera'
-	HANDLE h = CreateThread(NULL, 0, &CPickobearDlg::goCamera, (LPVOID)this, 0, NULL);
+	threadHandleCamera = CreateThread(NULL, 0, &CPickobearDlg::goCamera, (LPVOID)this, 0, NULL);
 
 #if 0	
 	COGLThread* oglThread = new COGLThread() ;
@@ -3317,7 +3320,9 @@ void CPickobearDlg::OnClose()
 {
 	// tell thread to close
 	m_Quit = 1;
-	
+
+	while (WAIT_OBJECT_0 != WaitForSingleObject(threadHandleCamera, 200));
+
 	// save databases if they've been changed.
 	if ( m_ComponentsModified ) {
 		
@@ -3342,6 +3347,12 @@ void CPickobearDlg::OnClose()
 
 CPickobearDlg::~CPickobearDlg()
 {
+
+	// Wait for camera thread to shut down ( otherwise updates will crash )
+	// we can reduce the quit tests in the thread now.
+
+	while (WAIT_OBJECT_0 != WaitForSingleObject(threadHandleCamera, 200));
+
 	if (m_pFeederDlg ) {
 		delete m_pFeederDlg;
 	}
@@ -3352,4 +3363,14 @@ CPickobearDlg::~CPickobearDlg()
 	}
 }
 
+// If machines sees this , everything will quit
+void CPickobearDlg::OnBnClickedEstop()
+{
+	if( m_Serial.IsOpen() ) {
 
+		// shut it down
+		m_Serial.Write("\xFF");
+		m_Serial.Write("\xFF");
+		m_Serial.Write("\xFF");
+	}
+}
