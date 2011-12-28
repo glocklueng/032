@@ -135,6 +135,16 @@ void COpenGLControl::OnTimer(UINT nIDEvent)
 	CWnd::OnTimer(nIDEvent);
 }
 
+void COpenGLControl::SaveImage(CStringA fileName)
+{
+	if( img1 ) {
+		cvSaveImage(fileName.GetBuffer(),img1);
+		fileName.ReleaseBuffer();
+	}
+
+}
+
+
 void COpenGLControl::UpdateCamera( UINT nIDEvent ) 
 {
 	double delta;

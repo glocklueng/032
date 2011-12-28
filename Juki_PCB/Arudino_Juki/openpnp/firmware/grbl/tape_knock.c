@@ -135,6 +135,8 @@ char pickup_part ( void )
 
 	}
 
+	_delay_ms( 500 );
+
 	return GCSTATUS_OK;
 
 }
@@ -195,6 +197,8 @@ char putdown_part ( void )
 
 	// head up
 	head_down ( 0 ) ;
+
+	_delay_ms( 500 );
 
 	return GCSTATUS_OK;
 

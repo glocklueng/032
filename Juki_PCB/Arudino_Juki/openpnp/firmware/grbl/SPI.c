@@ -19,12 +19,6 @@
 	HEAD_PORT |= _BV( VACUUM );
 */
 
-#define SET_OUTPUT( ddr, bit ) ddr &= ~(  1<< bit ) 
-#define SET_INPUT( ddr, bit )  ddr |=  (  1<< bit ) 
-#define SET_HIGH( port, bit )  port|=  (  1<< bit ) 
-#define SET_LOW( port, bit )  port &= ~(  1<< bit )
-
-#define LSBFIRST 0 
 
 void SPI_begin() 
 {
@@ -35,6 +29,14 @@ void SPI_begin()
   // SPI operations).
 
   
+	SET_OUTPUT( DDRB, SCK  );
+	SET_OUTPUT( DDRB, MOSI );
+	SET_OUTPUT( DDRB, SS   );
+
+	SET_LOW( PORTB, SCK  );
+	SET_LOW( PORTB, MOSI );
+	SET_LOW( PORTB, SS   );
+
  // pinMode( SCK, OUTPUT);
  // pinMode(MOSI, OUTPUT);
  // pinMode(  SS, OUTPUT);

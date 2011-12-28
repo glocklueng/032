@@ -29,7 +29,7 @@ enum {
 //was 228370
 //is  227830
 
-#define CAMERA_OFFSET						( 73900-540 )
+#define CAMERA_OFFSET						( 73900-540+120 )
 #define CAMERA_DEFAULT_UPDATE_RATE_MS		( 30 )
 #define CAMERA_SLOW_UPDATE_RATE_MS			( 300 )
 
@@ -553,6 +553,9 @@ private:
 	CTextDump	*m_TextEdit;
 
 	bool bCameraHead;
+	bool bCommandWaiting;
+
+	char m_GCODECMDBuffer[256];
 
 	bool bSetWaitDone;
 
@@ -565,6 +568,10 @@ private:
 	// vacuum state
 	char m_Vacuum;
 
+	// limit states
+	unsigned char m_LimitState;
+
+
 	// machine has been homed
 	bool m_Homed;
 
@@ -576,9 +583,10 @@ private:
 	// states the machine could be in
 	enum eMachineState {
 
-		MS_IDLE,
-		MS_STOP,
-		MS_GO
+		MS_IDLE = 1 ,
+		MS_STOP = 2,
+		MS_GO = 3,
+		MS_ESTOP = 4
 
 	};
 
@@ -616,8 +624,14 @@ public:
 	CPickobearDlg(CWnd* pParent = NULL);	// standard constructor
 
 	CSerialMFC m_Serial;
+	
+	DWORD WINAPI ProcessGCODECommands(LPVOID pThis);
+	DWORD ProcessGCODECommandsThread(void );
 
-	void WriteSerial( const char *text);
+
+	void SetControls( boolean state );
+
+	void WriteSerial( const char *text,bool noConsole);
 
 	void EmptySerial ( void ) ;
 	int SendCommand( int command );
@@ -777,4 +791,5 @@ public:
 	afx_msg void OnBnClickedTestMode();
 	afx_msg void OnClose();
 	afx_msg void OnBnClickedEstop();
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 };

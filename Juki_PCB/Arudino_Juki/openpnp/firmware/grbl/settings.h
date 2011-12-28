@@ -55,15 +55,15 @@ void settings_store_setting(int parameter, double value);
 
 // Default settings (used when resetting eeprom-settings) // 25.4mm to X1
 #define MICROSTEPS 8
-#define DEFAULT_X_STEPS_PER_MM (127*MICROSTEPS)
-#define DEFAULT_Y_STEPS_PER_MM (127*MICROSTEPS)
-#define DEFAULT_Z_STEPS_PER_MM (94.488188976378*MICROSTEPS)
+#define DEFAULT_X_STEPS_PER_MM (5*MICROSTEPS)
+#define DEFAULT_Y_STEPS_PER_MM (5*MICROSTEPS)
+#define DEFAULT_Z_STEPS_PER_MM (5*MICROSTEPS)
 // G: For C_AXIS, equate 1mm == 1 degree of rotation (imaginary pulley circumference of 360mm)
-#define DEFAULT_C_STEPS_PER_MM (5.556*MICROSTEPS)
-#define DEFAULT_STEP_PULSE_MICROSECONDS (8)
+#define DEFAULT_C_STEPS_PER_MM (5*MICROSTEPS)
+#define DEFAULT_STEP_PULSE_MICROSECONDS ( 6 )
 #define DEFAULT_MM_PER_ARC_SEGMENT 0.1
 #define DEFAULT_RAPID_FEEDRATE 480.0 // in millimeters per minute
-#define DEFAULT_FEEDRATE 480.0
+#define DEFAULT_FEEDRATE 4800.0
 #define DEFAULT_ACCELERATION (DEFAULT_FEEDRATE/100.0)
 #define DEFAULT_MAX_JERK (50.0)
 

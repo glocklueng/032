@@ -44,7 +44,8 @@ class COpenGLControl : public CWnd
 		COpenGLControl(void);
 		virtual ~COpenGLControl(void);
 
-		void  SetCamera(int DeviceID);
+		void SetCamera(int DeviceID);
+		void SaveImage(CStringA fileName);
 
 		CString oglCreate(CRect rect, CRect rect1,CWnd *parent,int camera=0);
 		void oglInitialize(void);
