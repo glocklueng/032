@@ -18,11 +18,23 @@
 #define byte unsigned char 
 #endif
 
+#define SET_OUTPUT( ddr, bit ) ddr &= ~(  1<< bit ) 
+#define SET_INPUT( ddr, bit )  ddr |=  (  1<< bit ) 
+#define SET_HIGH( port, bit )  port|=  (  1<< bit ) 
+#define SET_LOW( port, bit )  port &= ~(  1<< bit )
+
+#define LSBFIRST 0 
+
 // Atmega 2560
-const static uint8_t SS   = 53;
-const static uint8_t MOSI = 51;
-const static uint8_t MISO = 50;
-const static uint8_t SCK  = 52;
+
+#define SS PB0
+//const static uint8_t SS   = 53;
+#define MOSI PB2
+//const static uint8_t MOSI = 51;
+#define MISO PB3
+//const static uint8_t MISO = 50;
+#define SCK PB1
+//const static uint8_t SCK  = 52;
 
 
 #define SPI_CLOCK_DIV4 0x00

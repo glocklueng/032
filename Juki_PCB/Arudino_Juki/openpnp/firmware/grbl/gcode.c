@@ -226,6 +226,12 @@ uint8_t gc_execute_line(char *line) {
 	      	printPgmString(PSTR("\r\n"));
 #endif
 
+
+
+	      	printPgmString(PSTR("to_millimeters(100) = "));
+			printInteger( to_millimeters(100) );
+	      	printPgmString(PSTR("\r\n"));
+
 	      	printPgmString(PSTR("head down = "));
 			printInteger( is_head_down() );
 	      	printPgmString(PSTR("\r\n"));
@@ -331,6 +337,8 @@ uint8_t gc_execute_line(char *line) {
 
 		case 29:  gc.status_code = GCSTATUS_NO_ACK ;serialWrite( get_limit_bits() );next_action = NEXT_ACTION_DWELL ; break;
 
+		case 31:	settings_reset();next_action = NEXT_ACTION_DWELL ;break;
+
 
         default: FAIL(GCSTATUS_UNSUPPORTED_STATEMENT);
       }            
@@ -360,7 +368,7 @@ uint8_t gc_execute_line(char *line) {
         if (gc.motion_mode == MOTION_MODE_SEEK) {
           gc.seek_rate = unit_converted_value/60;
         } else {
-          gc.feed_rate = unit_converted_value/60; // millimeters pr second
+          gc.feed_rate = unit_converted_value/60; // millimeters per second
         }
       }
       break;

@@ -20,7 +20,6 @@
 #include "usb.h"
 #include "ch9.h"
 #include "max3421e.h"
-//#include "HardwareSerial.h"
 
 
 static uint8_t usb_error = 0;
@@ -29,6 +28,7 @@ static usb_eventHandler * eventHandler = NULL;
 
 usb_device deviceTable[USB_NUMDEVICES + 1];
 
+// todo:
 unsigned long millis( void )
 {
 	static unsigned long counter = 0;

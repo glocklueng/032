@@ -120,7 +120,7 @@ ch = is_phome(  );
 
   for(;;){
     sleep_mode(); // Wait for it ...
-	
+
 	if( ackHost != 0 ) {
 		serialWrite( ackHost );
 		ackHost = 0;

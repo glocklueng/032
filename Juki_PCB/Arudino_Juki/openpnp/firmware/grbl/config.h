@@ -66,7 +66,6 @@
 
 #define HEAD_ROT				(6)
 
-
 // For performance reasons it is neccesary to have all of the
 // step outputs on one port. They cannot be split across
 // multiple ports.
@@ -100,8 +99,8 @@
 // Set INVERT to 0 for pulse high direction or 1 for pulse low direction
 #define X_DIRECTION_INVERT  1
 #define Y_DIRECTION_INVERT  1
-#define Z_DIRECTION_INVERT  0
-#define C_DIRECTION_INVERT  0
+#define Z_DIRECTION_INVERT  1
+#define C_DIRECTION_INVERT  1
 
 // For performance reasons it is neccesary to have all of the
 // limit inputs on one port. They cannot be split across
@@ -195,6 +194,7 @@
 #define SPARE5					( 3 ) // PK3
 #define SPARE6					( 6 ) // PK6
 #define SPARE8					( 5 ) // PK5
+
 
 // The temporal resolution of the acceleration management subsystem. Higher number
 // give smoother acceleration but may impact performance
