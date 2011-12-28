@@ -27,6 +27,9 @@
 //   handle flipped pcbs!! (Most important) (done)
 //   move database saves to the postncdestroy or earlier
 //   make sure feeder names are unique
+//   changing over GCODE command feeder to threaded with callbacks
+//   change camera offset to user settable
+//   add x,y update to feeder/components
 
 // Recently added :-
 //   added multiple PCB offsets  (not tested!)
@@ -35,18 +38,13 @@
 //   added component/feeder save to exit, add logic for changes (Added for edit dialogs)
 //   hopefully a better EmptySerial routine
 //   crash bug in quit routines (waits for thread exit)
+//   added new gCODE buffer, mostly, untested
+//   fixed that wierd bug on the redraw /resize sending commands, rotate was using a draw event to fire a change...
 
 #include "stdafx.h"
-#include "Pickobear.h"
-#include "PickobearDlg.h"
 
+// camera offset in X
 #define CAMERA_X_OFFSET ( -200 )
-
-#include <io.h>
-#include <objidl.h>
-#include <gdiplus.h>
-using namespace Gdiplus;
-#pragma comment (lib,"Gdiplus.lib")
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -103,18 +101,15 @@ CPickobearDlg::CPickobearDlg(CWnd* pParent /*=NULL*/)
 	, m_pFeederDlg( NULL )
 	, m_Quit(0)
 	, m_Speed(28000/2)
-	, m_CameraMode(1)
 	, m_Homed(false)
 	, m_CameraUpdateRate(CAMERA_DEFAULT_UPDATE_RATE_MS)
-	, bSetWaitDone(false)
 	, bCameraHead( false )
 	, m_Side(0)
 	, bFlip(false)
 	, bBusy(false)
-	, m_Simulate( false )
+	, m_Simulate( true )
 	, m_PCBIndex(0)
 	, m_PCBCount(0)
-	, bCommandWaiting(false)
 	, threadHandleCamera(NULL)
 	, m_MachineState( MS_IDLE )
 	, m_LimitState(0)
@@ -122,8 +117,8 @@ CPickobearDlg::CPickobearDlg(CWnd* pParent /*=NULL*/)
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 
 	// clear command buffer
-	memset(m_GCODECMDBuffer,0,sizeof(m_GCODECMDBuffer));
-
+	m_GCODECMDBuffer.erase();
+	
 	m_PCBs.clear();
 
 
@@ -170,7 +165,7 @@ BEGIN_MESSAGE_MAP(CPickobearDlg, CDialog)
 	ON_BN_CLICKED(IDC_DOWN, &CPickobearDlg::OnBnClickedDown)
 	ON_BN_CLICKED(IDC_LEFT, &CPickobearDlg::OnBnClickedLeft)
 	ON_BN_CLICKED(IDC_HEAD, &CPickobearDlg::OnBnClickedHead)
-	ON_NOTIFY(NM_CUSTOMDRAW, IDC_ROTATE, &CPickobearDlg::OnNMCustomdrawRotate)
+	ON_NOTIFY(TB_ENDTRACK , IDC_ROTATE, &CPickobearDlg::OnNMCustomdrawRotate)
 	ON_BN_CLICKED(IDC_UPLEFT, &CPickobearDlg::OnBnClickedUpleft)
 	ON_BN_CLICKED(IDC_UPRIGHT, &CPickobearDlg::OnBnClickedUpright)
 	ON_BN_CLICKED(IDC_LEFTDOWN, &CPickobearDlg::OnBnClickedLeftdown)
@@ -507,6 +502,8 @@ BOOL CPickobearDlg::OnInitDialog()
 	// updating routine
 	SetTimer( 1, 800 , NULL) ;
 
+	// Start thread that processes GCODE commands
+	threadProcessGCODE = CreateThread(NULL, 0, &CPickobearDlg::StartGCODEThread, (LPVOID)this, 0, NULL);
 
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
@@ -573,7 +570,7 @@ HCURSOR CPickobearDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
-void CPickobearDlg::WriteSerial( const char *data,bool noConsole=false)
+void CPickobearDlg::InternalWriteSerial( const char *data,bool noConsole=false)
 {
 	ASSERT( data );
 	CString out( data  );
@@ -644,32 +641,26 @@ void CPickobearDlg::SetControls( boolean state )
 	GetDlgItem( IDC_GOFF )->EnableWindow( state );
 
 	GetDlgItem( IDC_GO2 )->EnableWindow( state );
-			}
+}
+
+
 void CPickobearDlg::OnBnClickedHome()
 {	
-	bool pass = false;
+	AddGCODECommand("G28","Home Failed",Home_callback);
+}
 
-//	EmptySerial();
+// this is the home callback
 
-	do { 
-		WriteSerial("G28\n");
+bool CPickobearDlg::Home_callback( void *pThis, void *userdata ) 
+{
+	return ((CPickobearDlg*)pThis)->Home_cb2(userdata);
+}
 
-		Sleep( 500 );
+bool CPickobearDlg::Home_cb2(void *userdata ) 
+{
 
-		switch( CheckAck("ok") ) {
-		case 'f':
-
-			SetControls( FALSE ) ;
-			
-			m_headXPos = -1 ; m_headYPos = -1;
-
-			if( MessageBox(_T("Home failed!!"),_T("Error"),IDOK|IDRETRY) == IDRETRY)
-				pass = false;
-			else
-				pass = true;
-
-			break;
-		case 'p':
+	// passed
+	if( userdata == (void*)1 )  {
 
 			m_headXPos = 0 ; m_headYPos =0;
 			
@@ -678,15 +669,28 @@ void CPickobearDlg::OnBnClickedHome()
 
 			m_Homed = true ;
 
-			pass = true;
-			break;
-		default:
-			break;
-		}
-	} while( pass == false );
+	} else {
 
-	SetCurrentPosition(m_headXPos,m_headYPos);		
+		// switch controls off
+		SetControls( FALSE ) ;
+
+		// invalid head position
+		m_headXPos = -1 ; m_headYPos = -1;
+
+		// get user message
+		CString message( (const char *)userdata);
+
+		int ret = AfxMessageBox( message, MB_RETRYCANCEL );
+		if( ret == IDCANCEL ) {
+			return false;
+		}
+	}
+
+	SetCurrentPosition(m_headXPos,m_headYPos);	
+
+	return true;
 }
+
 
 bool BuildGCodeMove( char *output, int length, int mode , long x, long y, long speed )
 {
@@ -724,13 +728,14 @@ bool BuildGCodeMove( char *output, int length, int mode , long x, long y, long s
 	if ( y < 0 ) y = 0;
 
 	
-	// what is this in mm?
+	// tx,ty this is in mm, x y and microns
 	tx = (long double)x / 1000.0 ;
 	ty = (long double)y / 1000.0;
 
 	_RPT4(_CRT_WARN,"BuildGCodeMove: (%d, %d) - (%g,%g)\n",x,y,tx,ty);
 
-	sprintf_s(output, length,"G%dX%gY%gF%d\n",mode,tx,ty,speed);
+	sprintf_s(output, length,"G%dX%gY%gF%d",mode,tx,ty,speed);
+
 	_RPT1(_CRT_WARN,"BuildGCodeMove:  %s\n",output);
 
 
@@ -769,25 +774,14 @@ bool CPickobearDlg::MoveHeadSlow(  long x, long y )
 	if ( false == BuildGCodeMove(buffer,sizeof(buffer),1,x,y,2000) ) {
 		return false;
 	}
-again:;
 
 	//	_RPT5(_CRT_WARN,"current pos = %dum,%dum\nGoing to %dum,%dum\n%s\n",m_headXPos,m_headYPos,x,y,buffer);
-	WriteSerial(buffer);
-
-	if( CheckX() == false ) {
-
-		if( m_MachineState == MS_ESTOP ) 
-			return false;
-		
-
-		int ret = AfxMessageBox(L"MoveHeadSlow: Move Failed",MB_RETRYCANCEL|MB_ICONEXCLAMATION);
-		if(ret == IDRETRY ) 
-			goto again;
-		if( ret == IDCANCEL ) 
-			return false;
-	}
-
-	SetCurrentPosition(m_headXPos,m_headYPos);
+	
+	// working on simplification
+	AddGCODECommand(buffer,"MoveHeadSlow: Move Failed",UpdatePosition_callback);
+	
+	// wait for command to process
+	while( QueueEmpty() ) Sleep(100);
 
 	return true;
 }
@@ -806,44 +800,46 @@ bool CPickobearDlg::MoveHead(  long x, long y )
 	m_headXPos = x ; 
 	m_headYPos = y;
 
-#if 0
-	if( m_CameraMode == 1 ) {
-		m_headYPos += ( CAMERA_OFFSET );
-	} else {
-		m_headYPos -= ( CAMERA_OFFSET );
-	}
-#endif
+
 
 	if ( m_headXPos < 0 ) m_headXPos = 0;
 	if ( m_headXPos < 0 ) m_headYPos = 0;
 
-	if( false == BuildGCodeMove(buffer,sizeof(buffer),1,x,y,m_Speed) ) 
+	if( false == BuildGCodeMove(buffer,sizeof(buffer),1,x,y,m_Speed) ) {
 		return false;
-
-again:;
-
-	//	_RPT5(_CRT_WARN,"current pos = %dum,%dum\nGoing to %dum,%dum\n%s\n",m_headXPos,m_headYPos,x,y,buffer);
-	WriteSerial(buffer);
-
-
-	if( CheckX() == false ) {
-
-		if( m_MachineState == MS_ESTOP ) 
-			return false;
-		
-		int ret = AfxMessageBox(L"MoveHead: Move Failed",MB_RETRYCANCEL|MB_ICONEXCLAMATION);
-		
-		if(ret == IDRETRY ) 
-			goto again;
-		if( ret == IDCANCEL ) 
-			return false;
 	}
 
-	SetCurrentPosition(m_headXPos,m_headYPos);
+	//	_RPT5(_CRT_WARN,"current pos = %dum,%dum\nGoing to %dum,%dum\n%s\n",m_headXPos,m_headYPos,x,y,buffer)
 
-	// waiting for serial X
-	bSetWaitDone = true;
+	AddGCODECommand(buffer,"MoveHead failed",UpdatePosition_callback );
+	
+	// wait for command to process
+	while( QueueEmpty() ) Sleep(100);
 
+
+	return true;
+}
+
+// this is the default callback
+bool CPickobearDlg::UpdatePosition_callback( void *pThis, void *userdata ) 
+{
+	return ((CPickobearDlg*)pThis)->UpdatePosition_cb2(userdata);
+}
+
+bool CPickobearDlg::UpdatePosition_cb2(void *userdata ) 
+{
+	// passed
+	if( userdata == (void*)1 )  {
+		SetCurrentPosition( m_headXPos , m_headYPos);
+	} else {
+
+		CString message( (const char *)userdata);
+
+		int ret = AfxMessageBox( message, MB_RETRYCANCEL );
+		if( ret == IDCANCEL ) {
+			return false;
+		}
+	}
 	return true;
 }
 
@@ -859,23 +855,9 @@ bool CPickobearDlg::MoveHeadRel(  long x, long y )
 	if(false == BuildGCodeMove(buffer,sizeof(buffer),0,m_headXPos+x,m_headYPos+y,4000) ) 
 		return false;
 
-again:;
+	AddGCODECommand(buffer,"MoveHeadRel failed",UpdatePosition_callback );
 
-	WriteSerial( buffer );
-
-	if( CheckX() == false ) {
-		
-		if( m_MachineState == MS_ESTOP ) 
-			return false;
-		
-		int ret = AfxMessageBox(L"MoveHeadRel: Move Failed",MB_RETRYCANCEL|MB_ICONEXCLAMATION);
-		if(ret == IDRETRY ) 
-			goto again;
-
-		if( ret == IDCANCEL ) 
-			return false;
-	}
-
+	// what to do about this
 	SetCurrentPosition( m_headXPos + x, m_headYPos+y);
 
 	return true;
@@ -911,7 +893,7 @@ void CPickobearDlg::EmptySerial ( void )
 	}
 }
 
-char CPickobearDlg::CheckX( void )
+bool CPickobearDlg::CheckX( void )
 {
 	DWORD length = 0;
 	unsigned char ch;
@@ -1032,34 +1014,13 @@ void CPickobearDlg::GotoTestPad( void )
 	MoveHeadSlow(pulsestoum(12308),pulsestoum(5002));
 }
 
-unsigned char CPickobearDlg::VacuumTest( void )
-{	
-//	EmptySerial();
-
-	do { 
-
-		WriteSerial("M22\n");
-		
-		if( m_MachineState == MS_ESTOP ) 
-			return 0;
-		
-	}while( 'p' != CheckAck("ok"));
-
-	// wait for reply
-	if( CheckAck("n") == 'p'  ) {
-		return 0;
-	} 
-
-	return 1;
-}
-
 void CPickobearDlg::OnBnClickedTool1()
 {
 	if( false == HomeTest( ) ) {
 		return ;
 	}
 
-	WriteSerial("M24\n");
+	AddGCODECommand("M24","Tool 1 failed",UpdatePosition_callback);
 }
 
 
@@ -1068,7 +1029,7 @@ void CPickobearDlg::OnBnClickedTool2()
 	if( false == HomeTest( ) ) {
 		return ;
 	}
-	WriteSerial("M24\n");
+	AddGCODECommand("M24","Tool 2 failed",UpdatePosition_callback);
 }
 
 void CPickobearDlg::OnBnClickedTool3()
@@ -1076,7 +1037,7 @@ void CPickobearDlg::OnBnClickedTool3()
 	if( false == HomeTest( ) ) {
 		return ;
 	}
-	WriteSerial("M24\n");
+	AddGCODECommand("M24","Tool 3 failed",UpdatePosition_callback);
 }
 
 
@@ -1085,7 +1046,7 @@ void CPickobearDlg::OnBnClickedTool4()
 	if( false == HomeTest( ) ) {
 		return ;
 	}
-	WriteSerial("M24\n");
+	AddGCODECommand("M24","Tool 4 failed",UpdatePosition_callback);
 }
 
 
@@ -1094,7 +1055,7 @@ void CPickobearDlg::OnBnClickedTool5()
 	if( false == HomeTest( ) ) {
 		return ;
 	}
-	WriteSerial("M24\n");
+	AddGCODECommand("M24","Tool 5 failed",UpdatePosition_callback);
 }
 
 
@@ -1103,7 +1064,7 @@ void CPickobearDlg::OnBnClickedTool6()
 	if( false == HomeTest( ) ) {
 		return ;
 	}
-	WriteSerial("M24\n");
+	AddGCODECommand("M24","Tool 6 failed",UpdatePosition_callback);
 }
 
 void CPickobearDlg::OnBnClickedHead()
@@ -1114,11 +1075,11 @@ void CPickobearDlg::OnBnClickedHead()
 
 	if( m_Head ) {
 		// up
-		WriteSerial("M11\n");
+		AddGCODECommand("M11","Head up failed",UpdatePosition_callback);
 		m_Head = 0;
 	} else { 
 		//down
-		WriteSerial("M10\n");
+		AddGCODECommand("M10","Head down failed",UpdatePosition_callback);
 		m_Head = 1;
 	}
 }
@@ -1143,7 +1104,7 @@ void CPickobearDlg::OnNMCustomdrawRotate(NMHDR *pNMHDR, LRESULT *pResult)
 	static int rot = 0 ;
 
 	if( m_Serial.IsOpen() && m_Rotation.GetPos() > 0 ) {
-		WriteSerial("G0H10\n");
+		AddGCODECommand("G0H10","Rotate failed",UpdatePosition_callback);	
 	}
 
 	_RPT1(_CRT_WARN,"rotation = %d\n",m_Rotation.GetPos() ) ;
@@ -1412,6 +1373,7 @@ DWORD CPickobearDlg::cameraThread(void )
 
 DWORD WINAPI CPickobearDlg::goSetup(LPVOID pThis)
 {
+
 	return ((CPickobearDlg*)pThis)->goThread();
 }
 
@@ -1528,8 +1490,21 @@ void CPickobearDlg::OnBnClickedGo()
 
 	UpdateData();
 
+	// machine is doing something already
+	if (bBusy == true ) {
+
+		AfxMessageBox(L"Machine is busy",MB_OK|MB_ICONEXCLAMATION);
+
+		return;
+	}
+
+	// stop if we're already going ?
 	if ( m_MachineState == MS_GO  ) { 
+		
 		m_MachineState = MS_STOP;
+		
+		// hmm
+		bBusy = false ; 
 		return;
 	}
 
@@ -1539,11 +1514,7 @@ void CPickobearDlg::OnBnClickedGo()
 		return;
 	}
 
-
-	// switch state to GO
-	m_MachineState = MS_GO ;
-
-	// Start thread for 'GO'
+	// Start thread for 'GO', thread handles busy and go states
 	h = CreateThread(NULL, 0, &CPickobearDlg::goSetup, (LPVOID)this, 0, NULL);
 }
 
@@ -1855,64 +1826,94 @@ void CPickobearDlg::OnBnClickedAddFeeder()
 
 }
 
+// this function has the problem of having a race condition, if anything is added to the GCODE buffer while its working, it'll cause problems.
+// needs some sort of interlock.
+
 void CPickobearDlg::OnBnClickedUpdate()
-{	
+{
+	if( m_Simulate ) {
+		return;
+	}
+
+	// no serial, no nothing
+	if (m_Serial.IsOpen() == false )
+		return;
+
+	// not allowed to process while GCODE still exists in buffer
+	if ( !command_buffer.empty() )
+		return;
+
 	if ( bBusy || m_MachineState != MS_IDLE  ) {
 		
-		_RPT3(_CRT_WARN,"Machine is busy (%d, %d, %d)\n", (int)bBusy, (unsigned int)m_MachineState, (int)bSetWaitDone ) ;
+		_RPT2(_CRT_WARN,"Machine is busy (busy %d, state=%d)\n", (int)bBusy, (unsigned int)m_MachineState) ;
 
 		return;
 	}
 
+	// mark as busy
+	m_MachineState = MS_GO;
+
 	EmptySerial();
 
-	WriteSerial("M29\n",true);
+	// M29 is a special command, its called often to update the limit switch state, and it doesn't currently properly ACK, it only replies with the limit switches
+	// we can handle this in the gcode execution buffer
+	InternalWriteSerial("M29\n",true);
 
 	Sleep( 100 );
 	DWORD lengthRead=0;
 	m_Serial.Read( &m_LimitState,1,&lengthRead,0,100);
 	
-	if( !(m_LimitState & (1<< 7) ) ){
+	// machine can go back to IDLE ( should be previous mode ) ?
+	m_MachineState = MS_IDLE ;
+
+	// no reply
+	if (lengthRead == 0 ) {
+		return;
+	}
+
+	// bad response
+	if( !(m_LimitState & ( 1 << 7 ) ) ){
+
 		_RPT0(_CRT_WARN,"OnBnClickedUpdate: invalid response\n");
+		m_MachineState = MS_IDLE ;
+
 		return;
 	}
 
 	// mask off top bit
 	m_LimitState &= 0x7f;
 
-	if( lengthRead ) {
+	// update GUI
 
-		if( m_LimitState & (1 << 1 ) ) { 
-			((CButton*)GetDlgItem(IDC_XL1))->SetCheck(1);_RPT0(_CRT_WARN,"X1 Limit\n");} 
-		else 
-			((CButton*)GetDlgItem(IDC_XL1))->SetCheck(0);
+	if( m_LimitState & (1 << 1 ) ) { 
+		((CButton*)GetDlgItem(IDC_XL1))->SetCheck(1);_RPT0(_CRT_WARN,"X1 Limit\n");} 
+	else 
+		((CButton*)GetDlgItem(IDC_XL1))->SetCheck(0);
 
-		if( m_LimitState & (1 << 2 ) ) {
-			((CButton*)GetDlgItem(IDC_XL2))->SetCheck(1);_RPT0(_CRT_WARN,"X2 Limit\n");} 
-		else 
-			((CButton*)GetDlgItem(IDC_XL2))->SetCheck(0);
+	if( m_LimitState & (1 << 2 ) ) {
+		((CButton*)GetDlgItem(IDC_XL2))->SetCheck(1);_RPT0(_CRT_WARN,"X2 Limit\n");} 
+	else 
+		((CButton*)GetDlgItem(IDC_XL2))->SetCheck(0);
 
-		if( m_LimitState & (1 << 3 ) ) {
-			((CButton*)GetDlgItem(IDC_YL1))->SetCheck(1);_RPT0(_CRT_WARN,"Y1 Limit\n");} 
-		else 
-			((CButton*)GetDlgItem(IDC_YL1))->SetCheck(0);
+	if( m_LimitState & (1 << 3 ) ) {
+		((CButton*)GetDlgItem(IDC_YL1))->SetCheck(1);_RPT0(_CRT_WARN,"Y1 Limit\n");} 
+	else 
+		((CButton*)GetDlgItem(IDC_YL1))->SetCheck(0);
 
-		if( m_LimitState & (1 << 4 ) ) {
-			((CButton*)GetDlgItem(IDC_YL2))->SetCheck(1);_RPT0(_CRT_WARN,"Y2 Limit\n");} 
-		else 
-			((CButton*)GetDlgItem(IDC_YL2))->SetCheck(0);
+	if( m_LimitState & (1 << 4 ) ) {
+		((CButton*)GetDlgItem(IDC_YL2))->SetCheck(1);_RPT0(_CRT_WARN,"Y2 Limit\n");} 
+	else 
+		((CButton*)GetDlgItem(IDC_YL2))->SetCheck(0);
 
-		if( m_LimitState & (1 << 5 ) ) {
-			((CButton*)GetDlgItem(IDC_XHOME))->SetCheck(1);_RPT0(_CRT_WARN,"X Home\n");} 
-		else 
-			((CButton*)GetDlgItem(IDC_XHOME))->SetCheck(0);
+	if( m_LimitState & (1 << 5 ) ) {
+		((CButton*)GetDlgItem(IDC_XHOME))->SetCheck(1);_RPT0(_CRT_WARN,"X Home\n");} 
+	else 
+		((CButton*)GetDlgItem(IDC_XHOME))->SetCheck(0);
 
-		if( m_LimitState & (1 << 6 ) ) {
-			((CButton*)GetDlgItem(IDC_YHOME))->SetCheck(1);_RPT0(_CRT_WARN,"Y Home\n");} 
-		else 
-			((CButton*)GetDlgItem(IDC_YHOME))->SetCheck(0);
-
-	}
+	if( m_LimitState & (1 << 6 ) ) {
+		((CButton*)GetDlgItem(IDC_YHOME))->SetCheck(1);_RPT0(_CRT_WARN,"Y Home\n");} 
+	else 
+		((CButton*)GetDlgItem(IDC_YHOME))->SetCheck(0);
 }
 
 enum {
@@ -1934,24 +1935,6 @@ enum {
 	PNP_TOOL6,
 };
 
-int CPickobearDlg::SendCommand( int command ) 
-{
-	switch( command  ) {
-
-	case PNP_GOTO:
-		break;
-
-	case PNP_CURRENTPOS:
-
-		SetCurrentPosition(m_headXPos,m_headXPos);
-		break;
-
-	default:
-		break;
-	}
-
-	return 0;
-}
 
 void CListCtrl_Components::OnNMRClickList2(NMHDR *pNMHDR, LRESULT *pResult)
 {
@@ -2398,14 +2381,9 @@ void CPickobearDlg::OnBnClickedGo2()
 		return;
 	}
 
-	// switch state to GO
-	m_MachineState = MS_GO ;
-
-	bBusy = true;
-
 	UpdateData(FALSE);
 
-	// Start thread for 'GO'
+	// Start thread for 'GO', thread handles busy and states
 	h = CreateThread(NULL, 0, &CPickobearDlg::goSingleSetup, (LPVOID)this, 0, NULL);
 }
 
@@ -2425,8 +2403,6 @@ void CPickobearDlg::OnBnClickedSwapHeadCamera()
 		bCameraHead = false;
 	}
 }
-
-
 
 void CPickobearDlg::OnBnClickedEditComponent()
 {
@@ -2488,32 +2464,35 @@ void CPickobearDlg::OnBnClickedEditComponent()
 	}
 }
 
-
+// These are also problematic for the GCODE buffer
+// Since it is multiple GCODE commands.
 
 DWORD CPickobearDlg::goThread(void )
 {
 	Feeder CurrentFeeder;
 
+	while(!QueueEmpty()) Sleep(100);
+
 	unsigned int i ;
 
 	CListCtrl_Components::CompDatabase entry; 
 
-	_RPT0(_CRT_WARN,"goThread\n");
-
-	if ( bBusy ) {
+	if ( bBusy || 	m_MachineState != MS_IDLE ) {
 		AfxMessageBox(L"Machine is already running a task",MB_OK|MB_ICONEXCLAMATION);
 		return true;
 	}
 
+	_RPT0(_CRT_WARN,"goThread\n");
+
 	bBusy = true;
 
-//	EmptySerial();
-
+	// Change machine state to busy
+	m_MachineState = MS_GO;
 
 	do {
 
-		// check fo more than one PCB (these should be equal!)
-		if (m_PCBs.size() ) {
+		// check for more than one PCB
+		if ( !m_PCBs.empty() ) {
 
 			_RPT2(_CRT_WARN,"goThread: Multiple PCBs placing board ( %d ) of ( %d )\n", m_PCBIndex , m_PCBCount);
 
@@ -2548,6 +2527,7 @@ DWORD CPickobearDlg::goThread(void )
 				_RPT1(_CRT_WARN,"goThread: this side %s selected\n",entry.label);
 			}
 
+			// this should be in the precheck
 			if ( strlen( entry.feeder ) == 0 ) {
 
 				int ret = AfxMessageBox(L"Feeder not defined", MB_OK|MB_ICONHAND);
@@ -2556,10 +2536,14 @@ DWORD CPickobearDlg::goThread(void )
 				if( m_PCBIndex > 0 ) 
 					m_PCBIndex--;
 				
+				// thread not busy
 				bBusy = false;
-				return false;
 
-				goto skip_part;
+				// Machine is IDLE
+				m_MachineState = MS_IDLE;
+
+				// failed
+				return false;
 			}
 
 			CListCtrl_FeederList::FeederDatabase feeder;
@@ -2571,9 +2555,9 @@ DWORD CPickobearDlg::goThread(void )
 			CurrentFeeder = m_FeederList.m_Feeders.at( feederEntry );
 
 			if (feeder.tool < 1 || feeder.tool > 6 ) {
+
 				int ret = AfxMessageBox(L"Tool not defined", MB_OK|MB_ICONHAND);
 				
-
 				goto skip_part;
 			}
 
@@ -2617,44 +2601,54 @@ DWORD CPickobearDlg::goThread(void )
 
 				MoveHead(feederX + CAMERA_X_OFFSET , feederY - CAMERA_OFFSET );
 
-				// next part
+				// next part, fail if none available
 				if( CurrentFeeder.AdvancePart() == false ) {
 
 					CString Error ;			
 					Error = CurrentFeeder.ErrorMessage();
 					int ret = AfxMessageBox(Error ,MB_OK|MB_ICONEXCLAMATION );
 
-					bBusy = false;
-
 					m_FeederList.RebuildList();
 
-				// move back
-				if( m_PCBIndex > 0 ) 
-					m_PCBIndex--;
+					// move back
+					if( m_PCBIndex > 0 ) {
+						m_PCBIndex--;
+					}
+
+					// Machine is IDLE
+					m_MachineState = MS_IDLE;
+
+					// thread is no longer busy
+					bBusy = false;
 
 					return 0;
 				}
+
 				// reflect quantities
 				m_FeederList.RebuildList();
-
 
 			} else {
 
 				CString Error ;			
+
 				Error = CurrentFeeder.ErrorMessage();
 				int ret = AfxMessageBox(Error ,MB_OK|MB_ICONEXCLAMATION );
-
-				bBusy = false;
 
 				// move back
 				if( m_PCBIndex > 0 ) 
 					m_PCBIndex--;
+
+				// Machine is IDLE
+				m_MachineState = MS_IDLE;
+				
+				// thread is no longer busy
+				bBusy = false;
 
 				return 0;
 			}
 
 			_RPT0(_CRT_WARN,"goThread: Picking up part\n");
-			WriteSerial("M26\n");
+			InternalWriteSerial("M26\n");
 
 			Sleep( 1000 );
 
@@ -2687,7 +2681,7 @@ DWORD CPickobearDlg::goThread(void )
 				_RPT1(_CRT_WARN,"Executing GCODE %s\n",buffer);
 
 				// do the rotate
-				WriteSerial( buffer );
+				InternalWriteSerial( buffer );
 				Sleep( 500 );
 			}
 
@@ -2695,21 +2689,28 @@ DWORD CPickobearDlg::goThread(void )
 
 			// head down/air off/up
 			// Put Part down
-			WriteSerial("M27\n");
+			InternalWriteSerial("M27\n");
 
 			//wait
 			Sleep( 100 );
 
-
 			// comes here if the part is skipped for some reason
 skip_part:;
 
+			// GUI asked machine to stop?
 			if( m_MachineState == MS_STOP ) {
 
 				m_MachineState = MS_IDLE;
-			
-				// its an emergency stop, what else do you want
+
 				goto stop;
+			}
+
+			// Emergency stop
+			if( m_MachineState == MS_ESTOP ) {
+
+				m_CameraUpdateRate = CAMERA_DEFAULT_UPDATE_RATE_MS ;
+
+				return false;
 			}
 
 			UpdateWindow();
@@ -2720,8 +2721,7 @@ skip_part:;
 	} while(m_PCBCount, m_PCBIndex < m_PCBCount ) ;
 
 	// Park machine
-	WriteSerial("G1X14Y15F200\n");
-
+	InternalWriteSerial("G1X14Y15F200\n");
 
 stop:;
 
@@ -2736,32 +2736,14 @@ stop:;
 	return true;
 }
 
-/*
-
-
-// get first item in feeder list ( only one can be selected
-int feederItem = pDlg->m_FeederList.GetNextItem(-1, LVNI_SELECTED);
-
-for( int i = 0 ; i < numberComponentsSelected ; i++ ) {
-// nItem is component index selected, -1 first time
-nItem = pDlg->m_ComponentList.GetNextItem(nItem, LVNI_SELECTED);
-if( nItem == -1 ) {
-break;
-}
-
-
-*/
-
-
 DWORD CPickobearDlg::goSingleThread(void )
 {
 	Feeder CurrentFeeder;
+		
+	while(!QueueEmpty()) Sleep(100);
 
 	unsigned int i ;
 	CListCtrl_Components::CompDatabase entry; 
-//	EmptySerial();
-
-	Sleep( 500 ) ;
 
 	// find number of parts selected
 	int numberComponentsSelected = m_ComponentList.GetSelectedCount();
@@ -2771,6 +2753,8 @@ DWORD CPickobearDlg::goSingleThread(void )
 		
 		bBusy = false;
 		
+		m_MachineState = MS_IDLE;
+
 		return false;
 	}
 
@@ -2838,6 +2822,10 @@ DWORD CPickobearDlg::goSingleThread(void )
 		int in = (m_ComponentList.GetCount()-1)-i;
 		m_ComponentList.SetItemState(in, LVIS_SELECTED, LVIS_SELECTED);
 		m_ComponentList.EnsureVisible( in ,TRUE );
+				
+		
+		// Machine is moving
+		m_MachineState = MS_GO;
 
 		_RPT1(_CRT_WARN,"goSingleThread: Going to tool %d\n", feeder.tool );
 
@@ -2889,16 +2877,20 @@ DWORD CPickobearDlg::goSingleThread(void )
 			CString Error ;			
 			Error = CurrentFeeder.ErrorMessage();
 			int ret = AfxMessageBox(Error ,MB_OK | MB_ICONHAND);
+					
+			// Machine is idle
+			m_MachineState = MS_IDLE;
 
+			// thread isn't busy
 			bBusy = false;
 
 			return 0;
 		}
 
-		_RPT0(_CRT_WARN,"vPicking up part\n");
+		_RPT0(_CRT_WARN,"Picking up part\n");
 
 		// Pickup
-		WriteSerial("M26\n");
+		InternalWriteSerial("M26\n");
 
 		Sleep( 1000 );
 
@@ -2933,7 +2925,7 @@ DWORD CPickobearDlg::goSingleThread(void )
 			_RPT1(_CRT_WARN,"goSingleThread: Executing GCODE %s\n",buffer);
 
 			// do the rotate
-			WriteSerial( buffer );
+			InternalWriteSerial( buffer );
 			Sleep( 500 );
 
 
@@ -2942,7 +2934,7 @@ DWORD CPickobearDlg::goSingleThread(void )
 		_RPT0(_CRT_WARN,"goSingleThread: dropping off part\n");
 
 		// Put Part down
-		WriteSerial("M27\n");
+		InternalWriteSerial("M27\n");
 
 
 		//wait
@@ -3121,6 +3113,10 @@ BOOL CPickobearDlg::OnToolTipNotify( UINT id,
             pTTT->lpszText = _T("Up Camera");
             break;
 
+		case IDC_GOXY:
+            pTTT->lpszText = _T("Move head to XY position specified");
+            break;
+
 		case IDC_IMPORT:
             pTTT->lpszText = _T("Import CSV file into components grid");
             break;
@@ -3225,11 +3221,11 @@ void CPickobearDlg::OnBnClickedVacuumToggle()
 
 	if( m_Vacuum ) {
 		// off
-		WriteSerial("M20\n");
+		InternalWriteSerial("M20\n");
 		m_Vacuum = 0;
 	} else { 
 		//down
-		WriteSerial("M19\n");
+		InternalWriteSerial("M19\n");
 		m_Vacuum = 1;
 	}
 }
@@ -3540,42 +3536,162 @@ void CPickobearDlg::OnBnClickedEstop()
 
 
 // Making a thread for GCODE commands instead.
-DWORD WINAPI CPickobearDlg::ProcessGCODECommands(LPVOID pThis)
+DWORD WINAPI CPickobearDlg::StartGCODEThread(LPVOID pThis)
 {
 	return ((CPickobearDlg*)pThis)->ProcessGCODECommandsThread();
 }
 
 // Process queue of GCODE commands
-// This is tricky we don't want to stall the MFC message pump sicne we want to be able to process ESTOP and update graphics properly etc
+// This is tricky we don't want to stall the MFC message pump since we want to be able to process ESTOP and update graphics properly etc
 // But we aso don't want to have the user send commands when the machine is busy
 // The function that issued the command needs to know if it passed or failed before going to the next one, or reporting back to the user.
+//
+// flow
+//     (repeat for ever ) user/gui adds a command to the stack
+//
+// seperate thread
+//     (1) process loop is list not empty, wait ?
+//       list isn't empty. copy command from bottom of stack
+//       process command, 
+//          did it fail ? abort everything or retry
+//       passed? remove from bottom of stack
+//       go back to 1
 
+
+
+// this needs to add the GCODE command, a descriptive string and a callback with pass/fail/userdata
+bool CPickobearDlg::AddGCODECommand( std::string gcode ,std::string error_message,  gcode_callback func_ptr )
+{
+	gcode_command command;
+	
+	// copy in data
+	command.gcode = gcode;
+	command.error_message = error_message;
+	command.func_ptr = func_ptr;
+
+	// add to buffer
+	command_buffer.push_back( command );
+
+	return true;
+}
+
+// Should this be timer based ? timer will block the message pump, so it'd have to be a timer in the second thread
+// this should be the only function writing to the serial port.
 DWORD CPickobearDlg::ProcessGCODECommandsThread(void )
 {
 	// run while not quitting
 	while ( m_Quit == 0 ) {
 
-		// wastes cpu time, message?
-		if ( bCommandWaiting ) {
+		// pointer to gcode statement callback
+		gcode_callback func_ptr;
 
-			WriteSerial( m_GCODECMDBuffer ) ;
+		// wastes cpu time, message?
+		if ( !command_buffer.empty() ) {
+
+			_RPT0(_CRT_WARN,"ProcessGCODECommandsThread: command to process (");
+
+			// wait if machine isn't in suitable state.
+			while (m_MachineState != MS_IDLE ) 
+				Sleep( 500 );
+
+			// copy into buffer, std::vector front returns the oldest entry.
+			m_GCODECMDBuffer = command_buffer.front().gcode;
+			func_ptr = command_buffer.front().func_ptr;
+			_RPT1(_CRT_WARN,"%s)\n",m_GCODECMDBuffer.c_str());
+
+			// i know i know..
+retry:;
+
+			// wait if machine isn't in suitable state.
+			while (m_MachineState != MS_IDLE )  {
+				Sleep( 500 );
+			}
+
+			// update state
+			m_MachineState = MS_GO;
+
+			// send to machine
+			if( m_GCODECMDBuffer.find("\n") == string::npos ) {
+				m_GCODECMDBuffer.append("\n");
+			}
+			InternalWriteSerial( m_GCODECMDBuffer.c_str() ) ;
 			
-			Sleep(100);
+			// wait for ACK
+			Sleep( 100 );
+
+			// first process the ACK
+			// (limits command doesn't ACK, we should change it)
 
 			// wait for ok ( should be immediate )
-			CheckAck("ok");
-
-			// if its a move command we should also get an X
-			if ( m_GCODECMDBuffer[0] == 'G' ) {
-				
-				CheckX();
-
-			}
-			// clear command
-			memset(m_GCODECMDBuffer,0,sizeof(m_GCODECMDBuffer));
+			char passfail = CheckAck("ok");
 			
-			//allow GUI to add new command
-			bCommandWaiting = false; 
+			// command was not accepted.
+			if( passfail == 'f' ) {
+
+				if( func_ptr ) {
+
+					bool ret = func_ptr( this, (void*) command_buffer.front().error_message.c_str() ) ;
+
+				} else {
+
+						AfxMessageBox(L"Command failed, no callback defined",MB_OK);
+						m_MachineState = MS_ESTOP;
+
+						break; // break out of if
+						
+				}
+			} else {
+
+				if( func_ptr ) {
+
+					bool ret = func_ptr( this , (void*)1 ) ;
+				}
+			}
+
+			// if its a move command we should also get an X (needs a better way)
+			if ( m_GCODECMDBuffer.at(0) == 'G' ) {
+
+				bool ret = CheckX();
+
+				if( ret == false ) {
+
+					if( func_ptr ) {
+
+						// failed, callback with message
+						bool ret = func_ptr( this, (void*) command_buffer.front().error_message.c_str() ) ;
+
+						if(ret == true ) {
+							// retry
+							
+							// update state
+							m_MachineState = MS_IDLE;
+
+							goto retry;
+						}
+
+					} else {
+
+						AfxMessageBox(L"Command failed, no callback defined",MB_OK);
+						m_MachineState = MS_ESTOP;
+						break;// break out of if
+
+					}
+
+				} else if( func_ptr ) {
+
+					// passed, callback with 1
+					func_ptr( this,(void*)1 ) ;
+				}
+			}
+			
+			// clear command
+			m_GCODECMDBuffer.erase();
+			
+			// remove gcode command from front of list.
+			command_buffer.erase(command_buffer.begin());
+
+			// update state
+			m_MachineState = MS_IDLE;
 
 		} else {
 			Sleep( 100 );
@@ -3585,12 +3701,12 @@ DWORD CPickobearDlg::ProcessGCODECommandsThread(void )
 	return 0;
 }
 
-
 void CPickobearDlg::OnTimer(UINT_PTR nIDEvent)
 {	
 	// update status of limit switches and home etc
-	if( m_Serial.IsOpen() , m_Homed ) 
+	if( m_Serial.IsOpen() &&  m_Homed == true ) {
 		OnBnClickedUpdate();
+	}
 
 	CDialog::OnTimer(nIDEvent);
 }
