@@ -30,7 +30,7 @@ enum {
 //is  227830
 
 #define CAMERA_OFFSET						( 73900-540+120 )
-#define CAMERA_DEFAULT_UPDATE_RATE_MS		( 30 )
+#define CAMERA_DEFAULT_UPDATE_RATE_MS		( 300 )
 #define CAMERA_SLOW_UPDATE_RATE_MS			( 300 )
 
 #define pulsestoum(x) (x*25)
@@ -41,6 +41,9 @@ bool SetCurrentPosition ( long x,long y);
 bool BuildGCodeMove( char *output, int length, int mode , long x, long y, long speed );
 
 class Feeder;
+
+// callback after GCODE has run
+typedef bool (*gcode_callback)(void*pThis,void*userdata);
 
 
 // component class
@@ -541,23 +544,49 @@ class CFeederSetup;
 class CPickobearDlg : public CDialog
 {
 private:
-	// each of the camera windows
+	
+	// The camera windows
 	COpenGLControl m_UpCameraWindow;
 	COpenGLControl m_DownCameraWindow;
+
 	// camera update thread
 	COGLThread m_OGLThread;
 
 	// point to feeder dialogue
 	CFeederSetup *m_pFeederDlg ;
 
+	// Text edit control
 	CTextDump	*m_TextEdit;
 
+	// if true, camera and head are swapped
 	bool bCameraHead;
-	bool bCommandWaiting;
 
-	char m_GCODECMDBuffer[256];
+	std::string m_GCODECMDBuffer;
+	
+	HANDLE threadProcessGCODE;
 
-	bool bSetWaitDone;
+	bool AddGCODECommand( std::string gcode ,std::string error_message,  gcode_callback func_ptr );
+
+	typedef struct gcode_command_tag {
+		
+		// GCODE instruction
+		std::string gcode;
+		
+		// message to display after error
+		std::string error_message;
+		
+		// function to call after completion
+		gcode_callback func_ptr;
+
+	} gcode_command;
+
+	// buffer of commands
+	std::vector<gcode_command> command_buffer;
+
+	// is the buffer empty?
+	bool QueueEmpty(void){
+		return command_buffer.empty();
+	}
 
 	// machine is doing something
 	bool bBusy;
@@ -571,45 +600,55 @@ private:
 	// limit states
 	unsigned char m_LimitState;
 
-
 	// machine has been homed
 	bool m_Homed;
 
 	//how long Sleep is in camera updates (ms)
 	unsigned int m_CameraUpdateRate;
 
+	// thread handle for camera update routine
 	HANDLE threadHandleCamera;
 
 	// states the machine could be in
 	enum eMachineState {
 
+		// chillin'
 		MS_IDLE = 1 ,
+		// gui asked machine to stop
 		MS_STOP = 2,
+		// machine is doing something
 		MS_GO = 3,
+		// emergency stop
 		MS_ESTOP = 4
 
 	};
+	
+	// current state of machine
+	eMachineState m_MachineState;
+
+// multiple PCB spport
 
 	// this stores the offset of each PCB ( top and bottom )
 	typedef struct PCBEntry_tag  {
 
+		//top left
 		long x_top;
 		long y_top;
+
+		//bottom right
 		long x_bottom;
 		long y_bottom;
 
 	}PCBEntry;
 
-	// number of entries
+	// number of entries in list ( this seems pointless since vector has a list count)
 	unsigned int m_PCBCount;
 	std::vector<PCBEntry> m_PCBs;
 
-	// current state
-	eMachineState m_MachineState;
 
-	int m_Speed;
-	// camera goto (1) or head goto ( 0 )s
-	int m_CameraMode ;
+	// slew speed
+	unsigned int m_Speed;
+
 public:
 
 	// if board is flipped
@@ -625,16 +664,22 @@ public:
 
 	CSerialMFC m_Serial;
 	
-	DWORD WINAPI ProcessGCODECommands(LPVOID pThis);
+	static DWORD WINAPI StartGCODEThread(LPVOID pThis);
 	DWORD ProcessGCODECommandsThread(void );
 
+// Callbacks
+
+	// default callback
+	static bool UpdatePosition_callback(void *pThis, void *userdata );
+	// actual callback
+	bool UpdatePosition_cb2( void *userdata ) ;
+	
+	static bool Home_callback( void *pThis, void *userdata ) ;
+	bool Home_cb2(void *userdata ) ;
+
+// end callbacks
 
 	void SetControls( boolean state );
-
-	void WriteSerial( const char *text,bool noConsole);
-
-	void EmptySerial ( void ) ;
-	int SendCommand( int command );
 	
 	// checks all the parts and feeders etc are all defined correctly, pass true if all parts(on side) are being placed.
 
@@ -652,9 +697,8 @@ public:
 
 	// check acknowledgement fron pnp
 	char CheckAck(char *ack1);
-	char CheckX( void );
+	bool CheckX( void );
 
-	unsigned char VacuumTest( void );
 	// move head to x,y
 	bool MoveHead( long  x, long y );
 	bool MoveHeadRel(  long x, long y ); 
@@ -666,34 +710,8 @@ public:
 	/// set to true if a database save is in order
 	bool m_FeedersModified;
 	bool m_ComponentsModified;
-		
-	void PostNcDestroy( )
-	{
-	}
 
 	~CPickobearDlg();
-
-
-	// send a command to the PNP
-	bool SendCommand(const char *cmd, size_t length, DWORD *lengthWritten )
-	{
-		ASSERT( cmd );
-		
-		// set to zero in case serial isn't open
-		*lengthWritten = 0;
-
-		if (m_Serial.IsOpen() )  {
-		
-			// write data to serial port, time out is 1000 ms
-			m_Serial.Write( cmd,lengthWritten,0,1000);
-		
-		} else { 
-
-			return false;
-		}
-
-		return true;
-	};
 
 	bool m_Simulate;
 
@@ -702,7 +720,11 @@ public:
 
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV support
-	
+
+	// these are now only allowed to be run from the GCODE thread
+	void InternalWriteSerial( const char *text,bool noConsole);
+	void EmptySerial ( void ) ;
+
 
 // Implementation
 protected:

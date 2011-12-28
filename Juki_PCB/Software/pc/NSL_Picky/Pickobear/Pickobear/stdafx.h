@@ -37,6 +37,15 @@
 // C++ headers
 #include <vector>
 
+// for _access 
+#include <io.h>
+
+// for gdi
+#include <objidl.h>
+#include <gdiplus.h>
+using namespace Gdiplus;
+#pragma comment (lib,"Gdiplus.lib")
+
 #include <gl/gl.h>
 #include <gl/glu.h>
 
@@ -76,6 +85,7 @@
 
 #include "EditComponent.h"
 
+
 #pragma comment(lib,"glu32.lib")
 #pragma comment(lib,"opengl32.lib")
 #pragma comment(lib,"opencv_highgui231.lib")
@@ -83,6 +93,7 @@
 #pragma comment(lib,"opencv_core231.lib")
 //#pragma comment(lib,"videoInput\\videoInput.lib")
 
+// these shouldn't be here.
 extern 	videoInput VI;
 extern CStringA UTF16toUTF8(const CStringW& utf16);
 
