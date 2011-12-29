@@ -13,6 +13,7 @@
 #define IDD_FEEDER_EDIT                 133
 #define IDD_TEXT_DIALOG                 135
 #define IDD_COMPONENT_EDIT              136
+#define IDD_ALERT_BOX                   137
 #define IDC_TEXTOUT                     1000
 #define IDC_GO                          1001
 #define IDC_UP                          1002
@@ -111,14 +112,16 @@
 #define IDC_DELETE_PCB                  1095
 #define IDC_PCB_INDEX                   1096
 #define IDC_TEST_MODE                   1097
+#define IDC_EDIT1                       1098
+#define IDC_ALERT_TEXT                  1099
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        136
+#define _APS_NEXT_RESOURCE_VALUE        138
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1098
+#define _APS_NEXT_CONTROL_VALUE         1100
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

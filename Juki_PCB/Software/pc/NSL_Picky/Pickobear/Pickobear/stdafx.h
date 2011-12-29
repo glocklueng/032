@@ -69,6 +69,7 @@ using namespace Gdiplus;
 
 #include "OpenGLControl.h"
 #include "TextDump.h"
+#include "AlertBox.h"
 
 #include "SerialMFC.h"
 #include "FeederSetup.h"

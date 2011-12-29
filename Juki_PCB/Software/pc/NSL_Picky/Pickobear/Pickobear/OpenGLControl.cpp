@@ -59,7 +59,7 @@ void COpenGLControl::OnRButtonDown(UINT nFlags, CPoint point )
 
 	ASSERT( pDlg );
 
-	pDlg->MoveHeadRel(point.x,-point.y);
+	pDlg->MoveHeadRel(point.x,-point.y,false);
 
 }
 

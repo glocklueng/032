@@ -15,6 +15,7 @@ public:
 
 	void Print( CString text ) {
 
+		text += L"\n";
 		int in = m_TextOutput.AddString( text );
 		
 		int nCount = m_TextOutput.GetCount();
