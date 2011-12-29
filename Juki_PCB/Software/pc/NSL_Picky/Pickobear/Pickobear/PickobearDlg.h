@@ -9,6 +9,7 @@
 #include "afxcmn.h"
 #include "OpenGLControl.h"
 #include "TextDump.h"
+#include "AlertBox.h"
 
 #include <iostream>
 #include <fstream>
@@ -25,12 +26,22 @@ enum {
 #define MAX_X_TABLE							( 364550 )
 #define MAX_Y_TABLE							( 517000 )
 
+// PickoBear custom msgs
+#define PB_UPDATE_ALERT						(WM_APP + 1)
+#define PB_UPDATE_XY						(PB_UPDATE_ALERT + 1)
+#define PB_TEXT_OUT							(PB_UPDATE_XY + 1 )
+
+
+// for updating the alert box
+#define	WAITING_FOR_CMD_ACK					( 1 )
+#define WAITING_FOR_CMD_MOVE_ACK			( WAITING_FOR_CMD_ACK +1 )
+
 // last calibration was
 //was 228370
 //is  227830
 
 #define CAMERA_OFFSET						( 73900-540+120 )
-#define CAMERA_DEFAULT_UPDATE_RATE_MS		( 300 )
+#define CAMERA_DEFAULT_UPDATE_RATE_MS		( 10 )
 #define CAMERA_SLOW_UPDATE_RATE_MS			( 300 )
 
 #define pulsestoum(x) (x*25)
@@ -159,7 +170,7 @@ public:
 
 		for( unsigned int i = 0 ; i < m_Count ; i++ ) {
 			
-			if( _strnicmp(name, m_ComponentDatabase.at(i).label, strlen( name ) ) == 0 ) {
+			if( strcmp(name, m_ComponentDatabase.at(i).label ) == 0 ) {
 
 				return i;
 
@@ -565,7 +576,7 @@ private:
 	
 	HANDLE threadProcessGCODE;
 
-	bool AddGCODECommand( std::string gcode ,std::string error_message,  gcode_callback func_ptr );
+	bool AddGCODECommand( std::string gcode ,std::string error_message, gcode_callback func_ptr_completed  );
 
 	typedef struct gcode_command_tag {
 		
@@ -574,9 +585,9 @@ private:
 		
 		// message to display after error
 		std::string error_message;
-		
-		// function to call after completion
-		gcode_callback func_ptr;
+
+		// function to call after completed ( Typically this is only for moves )
+		gcode_callback func_ptr_completed;
 
 	} gcode_command;
 
@@ -654,8 +665,12 @@ public:
 	// if board is flipped
 	bool bFlip;
 
-		// tell thread to quit ( if true )
+	// tell thread to quit ( if true )
 	int m_Quit;
+
+	// used by the gui to pass text from threads to the console
+	CString m_TextOut;
+
 
 
 // Construction
@@ -664,6 +679,8 @@ public:
 
 	CSerialMFC m_Serial;
 	
+	CAlertBox *m_AlertBox;
+
 	static DWORD WINAPI StartGCODEThread(LPVOID pThis);
 	DWORD ProcessGCODECommandsThread(void );
 
@@ -674,8 +691,13 @@ public:
 	// actual callback
 	bool UpdatePosition_cb2( void *userdata ) ;
 	
+	// called after home is finished
 	static bool Home_callback( void *pThis, void *userdata ) ;
 	bool Home_cb2(void *userdata ) ;
+	
+	// called after GCODE commands has been submitted
+	bool GCODE_CommandAck_callback( void *pThis, void *userdata ); 
+	bool GCODE_CommandAck_cb2(void *userdata ) ;
 
 // end callbacks
 
@@ -700,9 +722,9 @@ public:
 	bool CheckX( void );
 
 	// move head to x,y
-	bool MoveHead( long  x, long y );
-	bool MoveHeadRel(  long x, long y ); 
-	bool MoveHeadSlow(  long x, long y );
+	bool MoveHead( long  x, long y ,bool wait);
+	bool MoveHeadRel(  long x, long y,bool wait ); 
+	bool MoveHeadSlow(  long x, long y,bool wait );
 
 	// check to see if if gui thinks we are homed
 	bool HomeTest( void ); 
@@ -735,6 +757,9 @@ protected:
 	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
+	afx_msg LRESULT UpdateAlertMessage (WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT UpdateXY (WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT UpdateTextOut (WPARAM wParam, LPARAM lParam);
 	DECLARE_MESSAGE_MAP()
 public:
 	CButton GO;

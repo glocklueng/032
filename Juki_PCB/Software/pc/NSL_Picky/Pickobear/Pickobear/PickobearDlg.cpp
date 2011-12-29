@@ -28,8 +28,9 @@
 //   move database saves to the postncdestroy or earlier
 //   make sure feeder names are unique
 //   changing over GCODE command feeder to threaded with callbacks
-//   change camera offset to user settable
+//   change camera offset to user setable
 //   add x,y update to feeder/components
+//   remove/fix all the MFC child thread updates
 
 // Recently added :-
 //   added multiple PCB offsets  (not tested!)
@@ -40,6 +41,10 @@
 //   crash bug in quit routines (waits for thread exit)
 //   added new gCODE buffer, mostly, untested
 //   fixed that wierd bug on the redraw /resize sending commands, rotate was using a draw event to fire a change...
+//   MFC isn't threadsafe outside classes so instead i'm switching to WM_APP PostMessages so all the GUI elements are updated in the main thread only. Added a WHOLE bunch of stuff for this
+
+// Recently fixed :-
+//   bug in component search, C2 would match C20
 
 #include "stdafx.h"
 
@@ -107,7 +112,7 @@ CPickobearDlg::CPickobearDlg(CWnd* pParent /*=NULL*/)
 	, m_Side(0)
 	, bFlip(false)
 	, bBusy(false)
-	, m_Simulate( true )
+	, m_Simulate( false )
 	, m_PCBIndex(0)
 	, m_PCBCount(0)
 	, threadHandleCamera(NULL)
@@ -208,6 +213,9 @@ BEGIN_MESSAGE_MAP(CPickobearDlg, CDialog)
 	ON_WM_CLOSE()
 	ON_BN_CLICKED(IDC_ESTOP, &CPickobearDlg::OnBnClickedEstop)
 	ON_WM_TIMER()
+	ON_MESSAGE (PB_UPDATE_ALERT, UpdateAlertMessage)
+	ON_MESSAGE (PB_UPDATE_XY, UpdateXY)
+	ON_MESSAGE (PB_TEXT_OUT, UpdateTextOut)
 END_MESSAGE_MAP()
 
 BEGIN_MESSAGE_MAP(CListCtrl_Components, CListCtrl)
@@ -450,6 +458,14 @@ BOOL CPickobearDlg::OnInitDialog()
 	m_TextEdit->ShowWindow(SW_HIDE);
 	m_TextEdit->pDlg = this;
 
+	m_AlertBox = new CAlertBox();
+	m_AlertBox->Create(IDD_ALERT_BOX, this);
+	m_AlertBox->CenterDialog();
+
+	m_AlertBox->m_AlertString.SetWindowText(L"This is a warning");
+	m_AlertBox->ShowWindow(SW_HIDE);
+	m_AlertBox->pDlg = this;
+
 	// Start thread for 'goCamera'
 	threadHandleCamera = CreateThread(NULL, 0, &CPickobearDlg::goCamera, (LPVOID)this, 0, NULL);
 
@@ -574,10 +590,14 @@ void CPickobearDlg::InternalWriteSerial( const char *data,bool noConsole=false)
 {
 	ASSERT( data );
 	CString out( data  );
-	
+
+
 	// automated commands don't go to console
-	if( noConsole == false ) 
-		m_TextEdit->Print( out ) ;
+	if( noConsole == false ) {
+		m_TextOut = out; 
+		PostMessage (PB_TEXT_OUT, 0 ,0 );
+		//m_TextEdit->Print( out ) ;
+	}
 
 	EmptySerial();
 
@@ -686,7 +706,7 @@ bool CPickobearDlg::Home_cb2(void *userdata )
 		}
 	}
 
-	SetCurrentPosition(m_headXPos,m_headYPos);	
+	PostMessage (PB_UPDATE_XY, m_headXPos ,m_headYPos );
 
 	return true;
 }
@@ -757,7 +777,7 @@ bool CPickobearDlg::HomeTest( void )
 }
 
 // move head can only go to (int)(x/40)*40,same for y
-bool CPickobearDlg::MoveHeadSlow(  long x, long y ) 
+bool CPickobearDlg::MoveHeadSlow(  long x, long y, bool wait=false ) 
 {
 	if( false == HomeTest( ) ) {
 		return false;
@@ -780,13 +800,18 @@ bool CPickobearDlg::MoveHeadSlow(  long x, long y )
 	// working on simplification
 	AddGCODECommand(buffer,"MoveHeadSlow: Move Failed",UpdatePosition_callback);
 	
-	// wait for command to process
-	while( QueueEmpty() ) Sleep(100);
+
+	
+	if( wait == true ) {
+		// wait for command to process, this locks the gui....
+		while( QueueEmpty() == false ) Sleep(10);
+	}
+
 
 	return true;
 }
 // move head can only go to (int)(x/40)*40,same for y
-bool CPickobearDlg::MoveHead(  long x, long y ) 
+bool CPickobearDlg::MoveHead(  long x, long y, bool wait=false ) 
 {
 	if( false == HomeTest( ) ) {
 		return false;
@@ -801,7 +826,6 @@ bool CPickobearDlg::MoveHead(  long x, long y )
 	m_headYPos = y;
 
 
-
 	if ( m_headXPos < 0 ) m_headXPos = 0;
 	if ( m_headXPos < 0 ) m_headYPos = 0;
 
@@ -812,13 +836,43 @@ bool CPickobearDlg::MoveHead(  long x, long y )
 	//	_RPT5(_CRT_WARN,"current pos = %dum,%dum\nGoing to %dum,%dum\n%s\n",m_headXPos,m_headYPos,x,y,buffer)
 
 	AddGCODECommand(buffer,"MoveHead failed",UpdatePosition_callback );
+
 	
-	// wait for command to process
-	while( QueueEmpty() ) Sleep(100);
+	if( wait == true ) {
+		// wait for command to process, this locks the gui....
+		while( QueueEmpty() == false ) Sleep(10);
+	}
+
 
 
 	return true;
 }
+// this is the GCODE callback
+bool CPickobearDlg::GCODE_CommandAck_callback( void *pThis, void *userdata ) 
+{
+	return ((CPickobearDlg*)pThis)->GCODE_CommandAck_cb2(userdata);
+}
+
+bool CPickobearDlg::GCODE_CommandAck_cb2(void *userdata ) 
+{
+	// passed, this means GCODE was accepted.
+	if( userdata == (void*)1 )  {
+
+		// do nothing so far, turn off ack msg
+		PostMessage (PB_UPDATE_ALERT, 0,0 );
+
+	} else {
+
+		CString message( (const char *)userdata);
+
+		int ret = AfxMessageBox( message, MB_RETRYCANCEL );
+		if( ret == IDCANCEL ) {
+			return false;
+		}
+	}
+	return true;
+}
+
 
 // this is the default callback
 bool CPickobearDlg::UpdatePosition_callback( void *pThis, void *userdata ) 
@@ -828,9 +882,9 @@ bool CPickobearDlg::UpdatePosition_callback( void *pThis, void *userdata )
 
 bool CPickobearDlg::UpdatePosition_cb2(void *userdata ) 
 {
-	// passed
+	// passed, this means GCODE was accepted.
 	if( userdata == (void*)1 )  {
-		SetCurrentPosition( m_headXPos , m_headYPos);
+		PostMessage (PB_UPDATE_XY, m_headXPos ,m_headYPos );
 	} else {
 
 		CString message( (const char *)userdata);
@@ -844,7 +898,7 @@ bool CPickobearDlg::UpdatePosition_cb2(void *userdata )
 }
 
 // move head can only go to (int)(x/40)*40,same for y
-bool CPickobearDlg::MoveHeadRel(  long x, long y ) 
+bool CPickobearDlg::MoveHeadRel(  long x, long y, bool wait=false ) 
 {
 	if( false == HomeTest( ) ) {
 		return false;
@@ -858,7 +912,15 @@ bool CPickobearDlg::MoveHeadRel(  long x, long y )
 	AddGCODECommand(buffer,"MoveHeadRel failed",UpdatePosition_callback );
 
 	// what to do about this
-	SetCurrentPosition( m_headXPos + x, m_headYPos+y);
+
+	PostMessage (PB_UPDATE_XY, m_headXPos +x,m_headYPos+y );
+	
+	
+	if( wait == true ) {
+		// wait for command to process, this locks the gui....
+		while( QueueEmpty() == false ) Sleep(10);
+	}
+
 
 	return true;
 }
@@ -906,19 +968,26 @@ bool CPickobearDlg::CheckX( void )
 	if( m_Simulate == true ) {
 		return true;
 	}
+	
+	PostMessage (PB_UPDATE_ALERT, WAITING_FOR_CMD_ACK ,1 );
 
 	do { 
 
-		if( m_MachineState == MS_ESTOP ) 
+		if( m_MachineState == MS_ESTOP ) {
+
+			PostMessage (PB_UPDATE_ALERT, 0,0 );
+		
 			return false;
+		}
+
 		
 		counter --;
 
 		ret = m_Serial.Read( &ch, 1, &length );
 
-		if( length == 0 ) 
+		if( length == 0 ) {
 			Sleep( 100 );
-
+		}
 		switch ( ret ) {
 
 		case ERROR_SUCCESS:
@@ -930,6 +999,10 @@ bool CPickobearDlg::CheckX( void )
 
 	} while( ch!='X' && (counter ) );
 
+
+
+	PostMessage (PB_UPDATE_ALERT, 0,0 );
+	
 	if( counter == 0 ) 
 		_RPT1(_CRT_WARN,"\nCheckX: Timed out\n", ch);
 	else
@@ -952,6 +1025,8 @@ char CPickobearDlg::CheckAck( char *ack1 )
 	int ret;
 	DWORD bytesRead = 0;
 
+	_RPT0(_CRT_WARN,"CheckACK()\n");
+
 	unsigned char buffer[ 10 ];
 
 	if( m_Simulate == true ) 
@@ -963,7 +1038,10 @@ char CPickobearDlg::CheckAck( char *ack1 )
 	if( ack1 == NULL ){
 		return 'p';
 	}
+
 	index = 0;
+
+	PostMessage (PB_UPDATE_ALERT, WAITING_FOR_CMD_ACK ,1 );
 
 	int counter = 200;
 
@@ -971,8 +1049,11 @@ char CPickobearDlg::CheckAck( char *ack1 )
 	do { 
 		counter -- ;
 		
-		if( m_MachineState == MS_ESTOP ) 
+		if( m_MachineState == MS_ESTOP ) {
+
+			PostMessage (PB_UPDATE_ALERT, 0,0 );
 			return 'f';
+		}
 				
 		if ( counter == 0 ) 
 			break;
@@ -984,9 +1065,14 @@ char CPickobearDlg::CheckAck( char *ack1 )
 				buffer[ index++ ] = ch;
 			}
 		}
-		Sleep( 100 );
+
+		if(bytesRead == 0 )
+			Sleep( 300 );
 
 	} while(!( ch == 13 || ch == 10 ));
+	
+
+	PostMessage (PB_UPDATE_ALERT, 0,0 );
 
 	if (counter == 0 ) {
 		_RPT1(_CRT_WARN,"Timed out\n", buffer);
@@ -1580,6 +1666,9 @@ void CListCtrl_Components::OnHdnItemdblclickList2(NMHDR *pNMHDR, LRESULT *pResul
 
 	// entry is item.
 	ASSERT( entry );
+	_RPT1(_CRT_WARN,"Part = %s\n",entry->label);
+	_RPT2(_CRT_WARN,"XY (%d,%d)\n",entry->x,entry->y);
+	_RPT2(_CRT_WARN,"O  (%d,%d)\n",pDlg->m_ComponentList.m_OffsetX,pDlg->m_ComponentList.m_OffsetY);
 
 	if( m_OffsetX == 0 && m_OffsetY == 0 ) {
 
@@ -1719,6 +1808,7 @@ bool SetCurrentPosition( long x,long y)
 		y = 0;
 
 	unsigned int linePtr = 0;
+
 	char xString[200];
 	char yString[200];
 
@@ -2471,7 +2561,7 @@ DWORD CPickobearDlg::goThread(void )
 {
 	Feeder CurrentFeeder;
 
-	while(!QueueEmpty()) Sleep(100);
+	while(QueueEmpty() == false )  Sleep(10);
 
 	unsigned int i ;
 
@@ -2600,6 +2690,7 @@ DWORD CPickobearDlg::goThread(void )
 			if( CurrentFeeder.GetNextPartPosition( feederX, feederY ) ) {
 
 				MoveHead(feederX + CAMERA_X_OFFSET , feederY - CAMERA_OFFSET );
+			
 
 				// next part, fail if none available
 				if( CurrentFeeder.AdvancePart() == false ) {
@@ -2740,7 +2831,8 @@ DWORD CPickobearDlg::goSingleThread(void )
 {
 	Feeder CurrentFeeder;
 		
-	while(!QueueEmpty()) Sleep(100);
+	while( QueueEmpty() == false ) 
+		Sleep(10);
 
 	unsigned int i ;
 	CListCtrl_Components::CompDatabase entry; 
@@ -2864,7 +2956,7 @@ DWORD CPickobearDlg::goSingleThread(void )
 
 		if( CurrentFeeder.GetNextPartPosition( feederX, feederY ) ) {
 
-			MoveHead(feederX + CAMERA_X_OFFSET , feederY - CAMERA_OFFSET );
+			MoveHead(feederX + CAMERA_X_OFFSET , feederY - CAMERA_OFFSET ,true);
 			
 			// next part
 			CurrentFeeder.AdvancePart();
@@ -2898,9 +2990,9 @@ DWORD CPickobearDlg::goSingleThread(void )
 
 	
 		if( bFlip == false ) {
-			MoveHead(entry.x+m_ComponentList.m_OffsetX + CAMERA_X_OFFSET , entry.y+m_ComponentList.m_OffsetY - CAMERA_OFFSET);
+			MoveHead(entry.x+m_ComponentList.m_OffsetX + CAMERA_X_OFFSET , entry.y+m_ComponentList.m_OffsetY - CAMERA_OFFSET,true);
 		} else {
-			MoveHead(entry.x+m_ComponentList.m_OffsetX + CAMERA_X_OFFSET , (0-entry.y)+m_ComponentList.m_OffsetY - CAMERA_OFFSET);
+			MoveHead(entry.x+m_ComponentList.m_OffsetX + CAMERA_X_OFFSET , (0-entry.y)+m_ComponentList.m_OffsetY - CAMERA_OFFSET,true);
 		}
 
 		if( entry.rot  || feeder.rot) {
@@ -2960,9 +3052,9 @@ skip:;
 
 		// Move Camera to part
 		if( bFlip == false ) {
-			MoveHead(entry.x+m_ComponentList.m_OffsetX, entry.y+m_ComponentList.m_OffsetY );
+			MoveHead(entry.x+m_ComponentList.m_OffsetX, entry.y+m_ComponentList.m_OffsetY,true );
 		} else {
-			MoveHead(entry.x+m_ComponentList.m_OffsetX, (0-entry.y)+m_ComponentList.m_OffsetY );
+			MoveHead(entry.x+m_ComponentList.m_OffsetX, (0-entry.y)+m_ComponentList.m_OffsetY,true );
 		}
 	}
 
@@ -3360,7 +3452,7 @@ void CPickobearDlg::OnBnClickedTestMode()
 
 		_RPT1(_CRT_WARN,"TestMode: Test run %d\n",testRun);
 
-		MoveHead( 0, 0 );
+		MoveHead( 0, 0 ,true );
 		Sleep( 100 );
 
 		// Read limit switches, if not XHOME,YHOME there is a fault
@@ -3392,14 +3484,14 @@ void CPickobearDlg::OnBnClickedTestMode()
 
 			} while( y > MAX_Y_TABLE ) ;
 
-			MoveHead( x, y );
+			MoveHead( x, y,true  );
 
 			// little delay (though we should really punch it for testing, the firmware ought to deal with it.
 			Sleep( 100 );
 		}
 
 		// Zero
-		MoveHead(0,0);
+		MoveHead(0,0,true );
 
 		// Read limit switches, if not XHOME,YHOME there is a fault
 
@@ -3428,7 +3520,7 @@ void CPickobearDlg::OnBnClickedTestMode()
 
 			_RPT2(_CRT_WARN,"Going to feeder %s, %s\n", m_FeederList.entry->label,CurrentFeeder.entry->label);
 
-			MoveHead(m_FeederList.entry->x,m_FeederList.entry->y);
+			MoveHead(m_FeederList.entry->x,m_FeederList.entry->y,true );
 
 			Sleep( 500 );
 
@@ -3446,10 +3538,11 @@ try_again:;
 
 			m_UpCameraWindow.SaveImage( filename );
 
+			Sleep( 500 );
 		}
 
 		// Zero
-		MoveHead(0,0);
+		MoveHead(0,0,true );
 
 		// Read limit switches, if not XHOME,YHOME there is a fault
 
@@ -3560,14 +3653,14 @@ DWORD WINAPI CPickobearDlg::StartGCODEThread(LPVOID pThis)
 
 
 // this needs to add the GCODE command, a descriptive string and a callback with pass/fail/userdata
-bool CPickobearDlg::AddGCODECommand( std::string gcode ,std::string error_message,  gcode_callback func_ptr )
+bool CPickobearDlg::AddGCODECommand( std::string gcode ,std::string error_message, gcode_callback func_ptr_completed  )
 {
 	gcode_command command;
 	
 	// copy in data
 	command.gcode = gcode;
 	command.error_message = error_message;
-	command.func_ptr = func_ptr;
+	command.func_ptr_completed = func_ptr_completed;
 
 	// add to buffer
 	command_buffer.push_back( command );
@@ -3590,21 +3683,19 @@ DWORD CPickobearDlg::ProcessGCODECommandsThread(void )
 
 			_RPT0(_CRT_WARN,"ProcessGCODECommandsThread: command to process (");
 
-			// wait if machine isn't in suitable state.
-			while (m_MachineState != MS_IDLE ) 
-				Sleep( 500 );
-
 			// copy into buffer, std::vector front returns the oldest entry.
 			m_GCODECMDBuffer = command_buffer.front().gcode;
-			func_ptr = command_buffer.front().func_ptr;
+			func_ptr = command_buffer.front().func_ptr_completed;
 			_RPT1(_CRT_WARN,"%s)\n",m_GCODECMDBuffer.c_str());
 
 			// i know i know..
 retry:;
 
+
 			// wait if machine isn't in suitable state.
-			while (m_MachineState != MS_IDLE )  {
-				Sleep( 500 );
+			while (m_MachineState == MS_STOP ||  m_MachineState == MS_ESTOP) {
+	
+				Sleep( 100 );
 			}
 
 			// update state
@@ -3614,42 +3705,47 @@ retry:;
 			if( m_GCODECMDBuffer.find("\n") == string::npos ) {
 				m_GCODECMDBuffer.append("\n");
 			}
-			InternalWriteSerial( m_GCODECMDBuffer.c_str() ) ;
+			// for some reason its locking up on AddString..
+			InternalWriteSerial( m_GCODECMDBuffer.c_str()) ;
 			
-			// wait for ACK
-			Sleep( 100 );
+			// wait for ACK, needs >500 ms?
+			Sleep( 1500 );
 
 			// first process the ACK
 			// (limits command doesn't ACK, we should change it)
 
 			// wait for ok ( should be immediate )
 			char passfail = CheckAck("ok");
-			
+			bool ret;
+	
 			// command was not accepted.
 			if( passfail == 'f' ) {
+				
+				if(m_GCODECMDBuffer.find("G28") == string::npos )
+					ret = GCODE_CommandAck_callback( this, (void*) command_buffer.front().error_message.c_str() ) ;
+				else
+					ret = func_ptr( this, (void*) command_buffer.front().error_message.c_str() ) ;
 
-				if( func_ptr ) {
+				if( ret == false ){
+					m_MachineState = MS_ESTOP;
+					// command is still in buffer
+					goto retry;
 
-					bool ret = func_ptr( this, (void*) command_buffer.front().error_message.c_str() ) ;
-
-				} else {
-
-						AfxMessageBox(L"Command failed, no callback defined",MB_OK);
-						m_MachineState = MS_ESTOP;
-
-						break; // break out of if
-						
 				}
+
 			} else {
 
-				if( func_ptr ) {
-
-					bool ret = func_ptr( this , (void*)1 ) ;
-				}
+				// command was accepted
+				if(m_GCODECMDBuffer.find("G28") == string::npos )
+					ret = GCODE_CommandAck_callback( this , (void*)1 ) ;
+				else
+					ret = func_ptr( this, (void*) 1 ) ;
+		
 			}
 
 			// if its a move command we should also get an X (needs a better way)
-			if ( m_GCODECMDBuffer.at(0) == 'G' ) {
+			// HOME(G28) doesn't do a X acknowledge
+			if ((m_GCODECMDBuffer.find("G28") == string::npos ) && m_GCODECMDBuffer.at(0) == 'G' ) {
 
 				bool ret = CheckX();
 
@@ -3694,7 +3790,7 @@ retry:;
 			m_MachineState = MS_IDLE;
 
 		} else {
-			Sleep( 100 );
+			Sleep( 10 );
 		}
 	}
 
@@ -3709,4 +3805,41 @@ void CPickobearDlg::OnTimer(UINT_PTR nIDEvent)
 	}
 
 	CDialog::OnTimer(nIDEvent);
+}
+
+afx_msg LRESULT CPickobearDlg::UpdateXY (WPARAM wParam, LPARAM lParam)
+{
+	SetCurrentPosition( wParam, lParam);
+
+	return true;
+}
+
+afx_msg LRESULT CPickobearDlg::UpdateAlertMessage (WPARAM wParam, LPARAM lParam)
+{
+	switch( wParam ) {
+		
+		case WAITING_FOR_CMD_ACK:
+			m_AlertBox->m_AlertString.SetWindowText(L"Waiting for GCODE cmd ACK");
+			break;
+		case WAITING_FOR_CMD_MOVE_ACK:
+			m_AlertBox->m_AlertString.SetWindowText(L"Waiting for ACK from move");
+			break;
+			
+	}
+
+	if(lParam)
+		m_AlertBox->ShowWindow(SW_SHOW);
+	else
+		m_AlertBox->ShowWindow(SW_HIDE);
+
+	return true;
+
+}
+
+afx_msg LRESULT CPickobearDlg::UpdateTextOut (WPARAM wParam, LPARAM lParam)
+{		
+	m_TextEdit->Print( m_TextOut ) ;
+	
+	return true;
+
 }
