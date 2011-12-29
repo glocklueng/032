@@ -708,7 +708,7 @@ public:
 	bool PreRunCheck( bool all_parts );
 
 	// set the camera threads
-	static DWORD WINAPI goCamera(LPVOID pThis);
+	void goCamera(LPVOID pThis);
 	static DWORD WINAPI goSetup(LPVOID pThis);
 
 	static DWORD WINAPI goSingleSetup(LPVOID pThis);

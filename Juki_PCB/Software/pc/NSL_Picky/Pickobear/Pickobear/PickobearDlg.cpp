@@ -41,7 +41,8 @@
 //   crash bug in quit routines (waits for thread exit)
 //   added new gCODE buffer, mostly, untested
 //   fixed that wierd bug on the redraw /resize sending commands, rotate was using a draw event to fire a change...
-//   MFC isn't threadsafe outside classes so instead i'm switching to WM_APP PostMessages so all the GUI elements are updated in the main thread only. Added a WHOLE bunch of stuff for this
+//   MFC isn't threadsafe outside classes so instead i'm switching to WM_APP PostMessages so all the GUI elements 
+//      are updated in the main thread only. Added a WHOLE bunch of stuff for this
 
 // Recently fixed :-
 //   bug in component search, C2 would match C20
@@ -54,7 +55,6 @@
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
-
 
 // CAboutDlg dialog used for App About
 
@@ -123,9 +123,8 @@ CPickobearDlg::CPickobearDlg(CWnd* pParent /*=NULL*/)
 
 	// clear command buffer
 	m_GCODECMDBuffer.erase();
-	
-	m_PCBs.clear();
 
+	m_PCBs.clear();
 
 
 }
@@ -358,7 +357,6 @@ BOOL CPickobearDlg::OnInitDialog()
 	m_PCBList.InsertColumn(0, _T("Top"),LVCFMT_CENTER,(int)nInterval);
 	m_PCBList.InsertColumn(1, _T("Bottom"),LVCFMT_CENTER,(int)nInterval);
 
-
 	m_UpCamera.ResetContent();
 	m_DownCamera.ResetContent();
 
@@ -467,7 +465,9 @@ BOOL CPickobearDlg::OnInitDialog()
 	m_AlertBox->pDlg = this;
 
 	// Start thread for 'goCamera'
-	threadHandleCamera = CreateThread(NULL, 0, &CPickobearDlg::goCamera, (LPVOID)this, 0, NULL);
+//	threadHandleCamera = CreateThread(NULL, 0, &CPickobearDlg::goCamera, (LPVOID)this, 0, NULL);
+
+	CPPCreateThread<void>(&CPickobearDlg::goCamera, this, NULL); 
 
 #if 0	
 	COGLThread* oglThread = new COGLThread() ;
@@ -484,7 +484,6 @@ BOOL CPickobearDlg::OnInitDialog()
 	//	m_oglWindow.m_unpTimer = m_oglWindow.SetTimer(1, 100, 0);
 	if( m_DownCameraWindow.m_camera != -1 )
 		m_DownCameraWindow.m_unpTimer = m_DownCameraWindow.SetTimer(1, 300, 0);
-
 
 	// reset the step size drop down
 	m_StepSize.ResetContent();
@@ -513,7 +512,6 @@ BOOL CPickobearDlg::OnInitDialog()
 	}
 
 	m_SpeedSelect.SetCurSel( ( m_Speed / 2154 )-1 );
-
 
 	// updating routine
 	SetTimer( 1, 800 , NULL) ;
@@ -799,9 +797,7 @@ bool CPickobearDlg::MoveHeadSlow(  long x, long y, bool wait=false )
 	
 	// working on simplification
 	AddGCODECommand(buffer,"MoveHeadSlow: Move Failed",UpdatePosition_callback);
-	
-
-	
+		
 	if( wait == true ) {
 		// wait for command to process, this locks the gui....
 		while( QueueEmpty() == false ) Sleep(10);
@@ -998,8 +994,6 @@ bool CPickobearDlg::CheckX( void )
 		}
 
 	} while( ch!='X' && (counter ) );
-
-
 
 	PostMessage (PB_UPDATE_ALERT, 0,0 );
 	
@@ -1438,23 +1432,16 @@ CString GetSaveFile( const TCHAR *ptypes, const TCHAR*caption, const TCHAR *pSta
 	return szFile;
 }
 
-DWORD WINAPI CPickobearDlg::goCamera(LPVOID pThis)
-{
-	return ((CPickobearDlg*)pThis)->cameraThread();
-}
-
-DWORD CPickobearDlg::cameraThread(void )
+void CPickobearDlg::goCamera(LPVOID pThis)
 {
 	while( m_Quit == 0 ) {
+
 		m_UpCameraWindow.UpdateCamera( 1 ) ;
 
 		Sleep( m_CameraUpdateRate );
-
-		//m_DownCameraWindow.UpdateCamera( 1 ) ;
-		//Sleep(1);
-
 	}
-	return true;
+
+	return;
 }
 
 DWORD WINAPI CPickobearDlg::goSetup(LPVOID pThis)
@@ -1609,6 +1596,7 @@ void CPickobearDlg::OnBnClickedFeeder()
 	static bool active = false;
 
 	if (active == false ) {
+
 		active = true; 
 		m_pFeederDlg = new CFeederSetup(this);
 
@@ -1666,6 +1654,7 @@ void CListCtrl_Components::OnHdnItemdblclickList2(NMHDR *pNMHDR, LRESULT *pResul
 
 	// entry is item.
 	ASSERT( entry );
+
 	_RPT1(_CRT_WARN,"Part = %s\n",entry->label);
 	_RPT2(_CRT_WARN,"XY (%d,%d)\n",entry->x,entry->y);
 	_RPT2(_CRT_WARN,"O  (%d,%d)\n",pDlg->m_ComponentList.m_OffsetX,pDlg->m_ComponentList.m_OffsetY);
@@ -1690,7 +1679,6 @@ void CListCtrl_Components::OnHdnItemdblclickList2(NMHDR *pNMHDR, LRESULT *pResul
 				(0-entry->y)+(pDlg->m_ComponentList.m_OffsetY)
 			);
 		}
-
 	}
 
 	pDlg->GetDlgItem( IDC_OFFSET )->EnableWindow( TRUE );
@@ -1787,12 +1775,9 @@ void CListCtrl_FeederList::RebuildList ( void )
 
 		temp.Format(L"%d",entry->componentIndex);
 		SetItemText(Index,9,temp);
+	}	
 
-	}
-
-	
 	SetRedraw( TRUE );
-
 }
 
 bool SetCurrentPosition( long x,long y)
@@ -1801,11 +1786,12 @@ bool SetCurrentPosition( long x,long y)
 
 	ASSERT( pDlg );
 
-	if ( x < 0 ) 
+	if ( x < 0 ) {
 		x = 0;
-
-	if ( y < 0 )
+	}
+	if ( y < 0 ) {
 		y = 0;
+	}
 
 	unsigned int linePtr = 0;
 
@@ -1830,7 +1816,6 @@ bool SetCurrentPosition( long x,long y)
 void CPickobearDlg::OnBnClickedZero()
 {
 	MoveHead(0,0);
-
 	return;
 }
 
@@ -1869,18 +1854,15 @@ void CPickobearDlg::OnBnClickedGoff()
 	MoveHead(m_ComponentList.m_OffsetX ,m_ComponentList.m_OffsetY );
 }
 
-
 void CPickobearDlg::OnBnClickedGoxy()
 {
 	MoveHead(m_GOX,m_GOY);
 }
 
-
 void CPickobearDlg::OnEnChangeGox()
 {
 	UpdateData(TRUE);
 }
-
 
 void CPickobearDlg::OnEnChangeGoy()
 {
@@ -1900,7 +1882,6 @@ CStringA UTF16toUTF8(const CStringW& utf16)
 
 	return utf8;
 }
-
 
 void CPickobearDlg::OnBnClickedAddFeeder()
 {
@@ -2024,7 +2005,6 @@ enum {
 	PNP_TOOL5,
 	PNP_TOOL6,
 };
-
 
 void CListCtrl_Components::OnNMRClickList2(NMHDR *pNMHDR, LRESULT *pResult)
 {
@@ -3557,9 +3537,7 @@ try_again:;
 		}
 	}
 
-
 	AfxMessageBox(L"Tests passed",MB_OK);
-
 }
 
 void CPickobearDlg::OnClose()
@@ -3567,7 +3545,7 @@ void CPickobearDlg::OnClose()
 	// tell thread to close
 	m_Quit = 1;
 
-	while (WAIT_OBJECT_0 != WaitForSingleObject(threadHandleCamera, 200));
+//	while (WAIT_OBJECT_0 != WaitForSingleObject(threadHandleCamera, 200));
 
 	// save databases if they've been changed.
 	if ( m_ComponentsModified ) {
@@ -3596,7 +3574,7 @@ CPickobearDlg::~CPickobearDlg()
 	// Wait for camera thread to shut down ( otherwise updates will crash )
 	// we can reduce the quit tests in the thread now.
 
-	while (WAIT_OBJECT_0 != WaitForSingleObject(threadHandleCamera, 200));
+//	while (WAIT_OBJECT_0 != WaitForSingleObject(threadHandleCamera, 200));
 
 	if (m_pFeederDlg ) {
 		delete m_pFeederDlg;
@@ -3650,8 +3628,6 @@ DWORD WINAPI CPickobearDlg::StartGCODEThread(LPVOID pThis)
 //       passed? remove from bottom of stack
 //       go back to 1
 
-
-
 // this needs to add the GCODE command, a descriptive string and a callback with pass/fail/userdata
 bool CPickobearDlg::AddGCODECommand( std::string gcode ,std::string error_message, gcode_callback func_ptr_completed  )
 {
@@ -3670,6 +3646,8 @@ bool CPickobearDlg::AddGCODECommand( std::string gcode ,std::string error_messag
 
 // Should this be timer based ? timer will block the message pump, so it'd have to be a timer in the second thread
 // this should be the only function writing to the serial port.
+// in practise it doesnt work though
+
 DWORD CPickobearDlg::ProcessGCODECommandsThread(void )
 {
 	// run while not quitting
