@@ -49,6 +49,8 @@ using namespace Gdiplus;
 #include <gl/gl.h>
 #include <gl/glu.h>
 
+#include "Thread.h"
+
 #define min(a, b)  (((a) < (b)) ? (a) : (b))
 #define max(a, b)  (((a) > (b)) ? (a) : (b))
 
