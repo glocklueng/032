@@ -11,7 +11,6 @@ spindle_control.o: ../spindle_control.c ../spindle_control.h \
   c:/winavr-20100110/lib/gcc/../../avr/include/avr/fuse.h \
   c:/winavr-20100110/lib/gcc/../../avr/include/avr/lock.h ../settings.h \
   c:/winavr-20100110/lib/gcc/../../avr/include/math.h ../config.h \
-  c:/winavr-20100110/lib/gcc/../../avr/include/avr/delay.h \
   c:/winavr-20100110/lib/gcc/../../avr/include/util/delay.h \
   c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h
 
@@ -44,8 +43,6 @@ c:/winavr-20100110/lib/gcc/../../avr/include/avr/lock.h:
 c:/winavr-20100110/lib/gcc/../../avr/include/math.h:
 
 ../config.h:
-
-c:/winavr-20100110/lib/gcc/../../avr/include/avr/delay.h:
 
 c:/winavr-20100110/lib/gcc/../../avr/include/util/delay.h:
 

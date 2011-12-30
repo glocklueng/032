@@ -23,7 +23,7 @@
 #include "config.h"
 
 #include <avr/io.h>
-#include <avr/delay.h>
+#include <util/delay.h>
 
 void spindle_init()
 {

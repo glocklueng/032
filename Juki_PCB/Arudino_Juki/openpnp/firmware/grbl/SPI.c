@@ -8,86 +8,70 @@
  * published by the Free Software Foundation.
  */
 
-#include "SPI.h"
+#include "spi.h"
+
+void spi_begin()
+{
+        // Set direction register for SCK and MOSI pin.
+        // MISO pin automatically overrides to INPUT.
+        // When the SS pin is set as OUTPUT, it can be used as
+        // a general purpose output port (it doesn't influence
+        // SPI operations).
+
+        SPI_PORT_DIR |= SPI_BIT_MOSI | SPI_BIT_SCK | SPI_BIT_SS;
+        SPI_PORT_DIR &= ~SPI_BIT_MISO;
+
+        SPI_PORT &= ~(SPI_BIT_MOSI | SPI_BIT_SCK);
+        SPI_PORT |= SPI_BIT_SS;
+
+        // Warning: if the SS pin ever becomes a LOW INPUT then SPI
+        // automatically switches to Slave, so the data direction of
+        // the SS pin MUST be kept as OUTPUT.
+        SPCR |= _BV(MSTR);
+        SPCR |= _BV(SPE);
+}
+
 /*
-	// setup vacuum sensor TAC
-	LIMIT_DDR &= ~(_BV( TACSENSE ) );
-	LIMIT_PORT |= (_BV( TACSENSE ) );
+void spi_end()
+{
+        SPCR &= ~_BV(SPE);
+}
 
-	// Vacuum on/off control
-	HEAD_DDR  |= _BV( VACUUM );
-	HEAD_PORT |= _BV( VACUUM );
+void spi_setBitOrder(uint8_t bitOrder)
+{
+        if(bitOrder == SPI_LSBFIRST) {
+                SPCR |= _BV(DORD);
+        } else {
+                SPCR &= ~(_BV(DORD));
+        }
+}
+
+void spi_setDataMode(uint8_t mode)
+{
+        SPCR = (SPCR & ~SPI_MODE_MASK) | mode;
+}
+
+void spi_setClockDivider(uint8_t rate)
+{
+        SPCR = (SPCR & ~SPI_CLOCK_MASK) | (rate & SPI_CLOCK_MASK);
+        SPSR = (SPSR & ~SPI_2XCLOCK_MASK) | ((rate >> 2) & SPI_2XCLOCK_MASK);
+}
+
+uint8_t spi_transfer(byte _data)
+{
+        SPDR = _data;
+        while (!(SPSR & _BV(SPIF)))
+                ;
+        return SPDR;
+}
+
+void spi_attachInterrupt()
+{
+        SPCR |= _BV(SPIE);
+}
+
+void spi_detachInterrupt()
+{
+        SPCR &= ~_BV(SPIE);
+}
 */
-
-
-void SPI_begin() 
-{
-  // Set direction register for SCK and MOSI pin.
-  // MISO pin automatically overrides to INPUT.
-  // When the SS pin is set as OUTPUT, it can be used as
-  // a general purpose output port (it doesn't influence
-  // SPI operations).
-
-  
-	SET_OUTPUT( DDRB, SCK  );
-	SET_OUTPUT( DDRB, MOSI );
-	SET_OUTPUT( DDRB, SS   );
-
-	SET_LOW( PORTB, SCK  );
-	SET_LOW( PORTB, MOSI );
-	SET_LOW( PORTB, SS   );
-
- // pinMode( SCK, OUTPUT);
- // pinMode(MOSI, OUTPUT);
- // pinMode(  SS, OUTPUT);
-  
- // digitalWrite(SCK, LOW);
- // digitalWrite(MOSI, LOW);
-  //digitalWrite(SS, HIGH);
-
-  // Warning: if the SS pin ever becomes a LOW INPUT then SPI 
-  // automatically switches to Slave, so the data direction of 
-  // the SS pin MUST be kept as OUTPUT.
-  SPCR |= _BV(MSTR);
-  SPCR |= _BV(SPE);
-}
-
-void SPI_end() {
-  SPCR &= ~_BV(SPE);
-
-byte SPIClass_transfer(byte _data) {
-  SPDR = _data;
-  while (!(SPSR & _BV(SPIF)))
-    ;
-  return SPDR;
-}
-
-void SPIClass_attachInterrupt() {
-  SPCR |= _BV(SPIE);
-}
-
-void SPIClass_detachInterrupt() {
-  SPCR &= ~_BV(SPIE);
-}
-}
-
-void SPI_setBitOrder(uint8_t bitOrder)
-{
-  if(bitOrder == LSBFIRST) {
-    SPCR |= _BV(DORD);
-  } else {
-    SPCR &= ~(_BV(DORD));
-  }
-}
-
-void SPI_setDataMode(uint8_t mode)
-{
-  SPCR = (SPCR & ~SPI_MODE_MASK) | mode;
-}
-
-void SPI_setClockDivider(uint8_t rate)
-{
-  SPCR = (SPCR & ~SPI_CLOCK_MASK) | (rate & SPI_CLOCK_MASK);
-  SPSR = (SPSR & ~SPI_2XCLOCK_MASK) | ((rate >> 2) & SPI_2XCLOCK_MASK);
-}
-

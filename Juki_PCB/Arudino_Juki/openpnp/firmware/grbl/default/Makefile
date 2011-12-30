@@ -15,7 +15,7 @@ COMMON = -mmcu=$(MCU)
 
 ## Compile options common for all C compilation units.
 CFLAGS = $(COMMON)
-CFLAGS += -Wall -gdwarf-2 -std=gnu99 -ffunction-sections                      -DF_CPU=16000000UL -O2 -funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums
+CFLAGS += -Wall -gdwarf-2 -std=gnu99 -ffunction-sections                        -DF_CPU=16000000UL -O2 -funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums
 CFLAGS += -MD -MP -MT $(*F).o -MF dep/$(@F).d 
 
 ## Assembly specific flags
@@ -43,13 +43,15 @@ LIBDIRS = -L"C:\WinAVR-20100110\avr\lib\avr6"
 LIBS = -lm 
 
 ## Objects that must be built in order to link
-OBJECTS = coolant_control.o eeprom.o gcode.o main.o motion_control.o planner.o serial_protocol.o settings.o spindle_control.o stepper.o wiring_serial.o atc_control.o head_control.o panel_control.o vacuum_control.o tape_knock.o usb.o max3421e.o SPI.o 
+OBJECTS = coolant_control.o eeprom.o gcode.o main.o motion_control.o planner.o serial_protocol.o settings.o spindle_control.o stepper.o wiring_serial.o atc_control.o head_control.o panel_control.o vacuum_control.o tape_knock.o usb.o max3421e.o SPI.o timers.o max3421e_usb.o 
 
 ## Objects explicitly added by the user
 LINKONLYOBJECTS = 
 
 ## Build
-all: $(TARGET) grbl.hex grbl.eep grbl.lss## Compile
+all: $(TARGET) grbl.hex grbl.eep grbl.lss size
+
+## Compile
 coolant_control.o: ../coolant_control.c
 	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
 
@@ -107,6 +109,12 @@ max3421e.o: ../max3421e.c
 SPI.o: ../SPI.c
 	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
 
+timers.o: ../timers.c
+	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
+
+max3421e_usb.o: ../max3421e_usb.c
+	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
+
 ##Link
 $(TARGET): $(OBJECTS)
 	 $(CC) $(LDFLAGS) $(OBJECTS) $(LINKONLYOBJECTS) $(LIBDIRS) $(LIBS) -o $(TARGET)
@@ -119,6 +127,10 @@ $(TARGET): $(OBJECTS)
 
 %.lss: $(TARGET)
 	avr-objdump -h -S $< > $@
+
+size: ${TARGET}
+	@echo
+	@avr-size -C --mcu=${MCU} ${TARGET}
 
 ## Clean target
 .PHONY: clean

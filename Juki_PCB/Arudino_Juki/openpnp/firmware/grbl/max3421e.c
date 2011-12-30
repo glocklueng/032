@@ -1,3 +1,4 @@
+
 /*
 Copyright 2011 Niels Brouwers
 
@@ -29,10 +30,11 @@ limitations under the License.#include <string.h>
  * http://www.circuitsathome.com/
  */
 
-#include "SPI.h"
 #include "max3421e.h"
-#include <util/delay.h>
+#include "spi.h"
 #include "wiring_serial.h"
+#include "timers.h"
+
 
 static uint8_t vbusState;
 
@@ -42,55 +44,62 @@ static uint8_t vbusState;
  */
 void max3421e_init()
 {
+        spi_begin();
 
-	SPI_begin();
-
-//	pinMode(PIN_MAX_SS, OUTPUT);
-
-/*
-	pinMode(PIN_MAX_INT, INPUT);
-	pinMode(PIN_MAX_GPX, INPUT);
-	pinMode(PIN_MAX_RESET, OUTPUT);
-*/
-
-
-	DDRE &= ~ 0x40;
-	DDRJ &= ~ 0x08;
-	DDRJ |= 0x04;
-
-
-
-/*
 #if defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)
 
-	// Set MAX_INT and MAX_GPX pins to input mode.
-	DDRH &= ~(0x40 | 0x20);
+        // Set MAX_INT and MAX_GPX pins to input mode.
+        DDRH &= ~(0x40 | 0x20);
 
-	// Set SPI !SS pint to output mode.
-	DDRB |= 0x10;
+        // Set SPI !SS pint to output mode.
+        DDRB |= 0x10;
 
-	// Set RESET pin to output
-	DDRH |= 0x10;
+        // Set RESET pin to output
+        DDRH |= 0x10;
 
 #elif defined(__AVR_ATmega168__) || defined(__AVR_ATmega328P__)
 
-	// Set MAX_INT and MAX_GPX pins to input mode.
-	DDRB &= ~0x3;
+        // Set MAX_INT and MAX_GPX pins to input mode.
+        DDRB &= ~0x3;
 
-	// Set RESET pin to output
-	DDRD |= 0x80;
+        // Set RESET pin to output
+        DDRD |= 0x80;
 
-	// Set SS pin to output
-	DDRB |= 0x4;
+        // Set SS pin to output
+        DDRB |= 0x4;
 
 #endif
-*/
 
-	// Pull SPI !SS high
-	MAX_SS(1);
+        // Sparkfun botched their first attempt at cloning Oleg's max3421e shield and reversed the GPX and RESET pins.
+        // This hack is in place to make MicroBridge work with those shields. (see http://www.sparkfun.com/products/9628)
+#ifdef SFHACK
 
-	// Reset
-	MAX_RESET(1);
+#if defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)
+
+        // Set MAX_GPX pin to input mode.
+        DDRH &= ~0x10;
+
+        // Set RESET pin to output
+        DDRH |= 0x20;
+
+#elif defined(__AVR_ATmega168__) || defined(__AVR_ATmega328P__)
+
+        // Set GPX pin to input
+        DDRD &= ~0x80;
+
+        // Set RESET pin to output
+        DDRB |= 0x1;
+
+#endif
+
+#endif
+
+
+        // Pull SPI !SS high
+        MAX_SS(1);
+
+        // Reset
+        MAX_RESET(1);
 }
 
 /**
@@ -99,27 +108,27 @@ void max3421e_init()
  */
 boolean max3421e_reset(void)
 {
-	uint8_t tmp = 0;
+        uint8_t tmp = 0;
 
-	// Chip reset. This stops the oscillator
-	max3421e_write(MAX_REG_USBCTL, bmCHIPRES);
+        // Chip reset. This stops the oscillator
+        max3421e_write(MAX_REG_USBCTL, bmCHIPRES);
 
-	// Remove the reset
-	max3421e_write(MAX_REG_USBCTL, 0x00);
+        // Remove the reset
+        max3421e_write(MAX_REG_USBCTL, 0x00);
 
-	_delay_ms(10);
+        avr_delay(10);
 
-	// Wait until the PLL is stable
-	while (!(max3421e_read(MAX_REG_USBIRQ) & bmOSCOKIRQ))
-	{
-		// Timeout after 256 attempts.
-		tmp++;
-		if (tmp == 0)
-			return (false);
-	}
+        // Wait until the PLL is stable
+        while (!(max3421e_read(MAX_REG_USBIRQ) & bmOSCOKIRQ))
+        {
+                // Timeout after 256 attempts.
+                tmp++;
+                if (tmp == 0)
+                        return (false);
+        }
 
-	// Success.
-	return (true);
+        // Success.
+        return (true);
 }
 
 /**
@@ -127,26 +136,26 @@ boolean max3421e_reset(void)
  */
 void max3421e_powerOn(void)
 {
-	// Configure full-duplex SPI, interrupt pulse.
-	max3421e_write(MAX_REG_PINCTL, (bmFDUPSPI + bmINTLEVEL + bmGPXB)); //Full-duplex SPI, level interrupt, GPX
+        // Configure full-duplex SPI, interrupt pulse.
+        max3421e_write(MAX_REG_PINCTL, (bmFDUPSPI + bmINTLEVEL + bmGPXB)); //Full-duplex SPI, level interrupt, GPX
 
-	// Stop/start the oscillator.
-	if (max3421e_reset() == false)
-		printPgmString(PSTR("Error: OSCOKIRQ failed to assert\n"));
+        // Stop/start the oscillator.
+        if (max3421e_reset() == false)
+		      	printPgmString(PSTR("Error: OSCOKIRQ failed to assert\n"));
 
-	// Configure host operation.
-	max3421e_write(MAX_REG_MODE, bmDPPULLDN | bmDMPULLDN | bmHOST | bmSEPIRQ ); // set pull-downs, Host, Separate GPIN IRQ on GPX
-	max3421e_write(MAX_REG_HIEN, bmCONDETIE | bmFRAMEIE ); //connection detection
+        // Configure host operation.
+        max3421e_write(MAX_REG_MODE, bmDPPULLDN | bmDMPULLDN | bmHOST | bmSEPIRQ ); // set pull-downs, Host, Separate GPIN IRQ on GPX
+        max3421e_write(MAX_REG_HIEN, bmCONDETIE | bmFRAMEIE ); //connection detection
 
-	// Check if device is connected.
-	max3421e_write(MAX_REG_HCTL, bmSAMPLEBUS ); // sample USB bus
-	while (!(max3421e_read(MAX_REG_HCTL) & bmSAMPLEBUS)); //wait for sample operation to finish
+        // Check if device is connected.
+        max3421e_write(MAX_REG_HCTL, bmSAMPLEBUS ); // sample USB bus
+        while (!(max3421e_read(MAX_REG_HCTL) & bmSAMPLEBUS)); //wait for sample operation to finish
 
-	max3421e_busprobe(); //check if anything is connected
-	max3421e_write(MAX_REG_HIRQ, bmCONDETIRQ ); //clear connection detect interrupt
+        max3421e_busprobe(); //check if anything is connected
+        max3421e_write(MAX_REG_HIRQ, bmCONDETIRQ ); //clear connection detect interrupt
 
-	// Enable interrupt pin.
-	max3421e_write(MAX_REG_CPUCTL, 0x01);
+        // Enable interrupt pin.
+        max3421e_write(MAX_REG_CPUCTL, 0x01);
 }
 
 /**
@@ -157,21 +166,21 @@ void max3421e_powerOn(void)
  */
 void max3421e_write(uint8_t reg, uint8_t value)
 {
-	// Pull slave select low to indicate start of transfer.
-	MAX_SS(0);
+        // Pull slave select low to indicate start of transfer.
+        MAX_SS(0);
 
-	// Transfer command byte, 0x02 indicates write.
-	SPDR = (reg | 0x02);
-	while (!(SPSR & (1 << SPIF)));
+        // Transfer command byte, 0x02 indicates write.
+        SPDR = (reg | 0x02);
+        while (!(SPSR & (1 << SPIF)));
 
-	// Transfer value byte.
-	SPDR = value;
-	while (!(SPSR & (1 << SPIF)));
+        // Transfer value byte.
+        SPDR = value;
+        while (!(SPSR & (1 << SPIF)));
 
-	// Pull slave select high to indicate end of transfer.
-	MAX_SS(1);
+        // Pull slave select high to indicate end of transfer.
+        MAX_SS(1);
 
-	return;
+        return;
 }
 
 /**
@@ -183,27 +192,27 @@ void max3421e_write(uint8_t reg, uint8_t value)
  */
 uint8_t * max3421e_writeMultiple(uint8_t reg, uint8_t count, uint8_t * values)
 {
-	// Pull slave select low to indicate start of transfer.
-	MAX_SS(0);
+        // Pull slave select low to indicate start of transfer.
+        MAX_SS(0);
 
-	// Transfer command byte, 0x02 indicates write.
-	SPDR = (reg | 0x02);
-	while (!(SPSR & (1 << SPIF)));
+        // Transfer command byte, 0x02 indicates write.
+        SPDR = (reg | 0x02);
+        while (!(SPSR & (1 << SPIF)));
 
-	// Transfer values.
-	while (count--)
-	{
-		// Send next value byte.
-		SPDR = (*values);
-		while (!(SPSR & (1 << SPIF)));
+        // Transfer values.
+        while (count--)
+        {
+                // Send next value byte.
+                SPDR = (*values);
+                while (!(SPSR & (1 << SPIF)));
 
-		values++;
-	}
+                values++;
+        }
 
-	// Pull slave select high to indicate end of transfer.
-	MAX_SS(1);
+        // Pull slave select high to indicate end of transfer.
+        MAX_SS(1);
 
-	return (values);
+        return (values);
 }
 
 /**
@@ -214,22 +223,22 @@ uint8_t * max3421e_writeMultiple(uint8_t reg, uint8_t count, uint8_t * values)
  */
 uint8_t max3421e_read(uint8_t reg)
 {
-	// Pull slave-select high to initiate transfer.
-	MAX_SS(0);
+        // Pull slave-select high to initiate transfer.
+        MAX_SS(0);
 
-	// Send a command byte containing the register number.
-	SPDR = reg;
-	while (!(SPSR & (1 << SPIF)));
+        // Send a command byte containing the register number.
+        SPDR = reg;
+        while (!(SPSR & (1 << SPIF)));
 
-	// Send an empty byte while reading.
-	SPDR = 0;
-	while (!(SPSR & (1 << SPIF)));
+        // Send an empty byte while reading.
+        SPDR = 0;
+        while (!(SPSR & (1 << SPIF)));
 
-	// Pull slave-select low to signal transfer complete.
-	MAX_SS(1);
+        // Pull slave-select low to signal transfer complete.
+        MAX_SS(1);
 
-	// Return result byte.
-	return (SPDR);
+        // Return result byte.
+        return (SPDR);
 }
 
 /**
@@ -242,29 +251,29 @@ uint8_t max3421e_read(uint8_t reg)
  */
 uint8_t * max3421e_readMultiple(uint8_t reg, uint8_t count, uint8_t * values)
 {
-	// Pull slave-select high to initiate transfer.
-	MAX_SS(0);
+        // Pull slave-select high to initiate transfer.
+        MAX_SS(0);
 
-	// Send a command byte containing the register number.
-	SPDR = reg;
-	while (!(SPSR & (1 << SPIF))); //wait
+        // Send a command byte containing the register number.
+        SPDR = reg;
+        while (!(SPSR & (1 << SPIF))); //wait
 
-	// Read [count] bytes.
-	while (count--)
-	{
-		// Send empty byte while reading.
-		SPDR = 0;
-		while (!(SPSR & (1 << SPIF)));
+        // Read [count] bytes.
+        while (count--)
+        {
+                // Send empty byte while reading.
+                SPDR = 0;
+                while (!(SPSR & (1 << SPIF)));
 
-		*values = SPDR;
-		values++;
-	}
+                *values = SPDR;
+                values++;
+        }
 
-	// Pull slave-select low to signal transfer complete.
-	MAX_SS(1);
+        // Pull slave-select low to signal transfer complete.
+        MAX_SS(1);
 
-	// Return the byte array + count.
-	return (values);
+        // Return the byte array + count.
+        return (values);
 }
 
 /**
@@ -272,7 +281,7 @@ uint8_t * max3421e_readMultiple(uint8_t reg, uint8_t count, uint8_t * values)
  */
 uint8_t max3421e_getVbusState()
 {
-	return vbusState;
+        return vbusState;
 }
 
 /**
@@ -280,42 +289,42 @@ uint8_t max3421e_getVbusState()
  */
 void max3421e_busprobe(void)
 {
-	uint8_t bus_sample;
-	bus_sample = max3421e_read(MAX_REG_HRSL); //Get J,K status
-	bus_sample &= (bmJSTATUS | bmKSTATUS); //zero the rest of the uint8_t
+        uint8_t bus_sample;
+        bus_sample = max3421e_read(MAX_REG_HRSL); //Get J,K status
+        bus_sample &= (bmJSTATUS | bmKSTATUS); //zero the rest of the uint8_t
 
-	switch (bus_sample)
-	{
-	//start full-speed or low-speed host
-	case (bmJSTATUS):
-		if ((max3421e_read(MAX_REG_MODE) & bmLOWSPEED) == 0)
-		{
-			max3421e_write(MAX_REG_MODE, MODE_FS_HOST ); //start full-speed host
-			vbusState = FSHOST;
-		} else
-		{
-			max3421e_write(MAX_REG_MODE, MODE_LS_HOST); //start low-speed host
-			vbusState = LSHOST;
-		}
-		break;
-	case (bmKSTATUS):
-		if ((max3421e_read(MAX_REG_MODE) & bmLOWSPEED) == 0)
-		{
-			max3421e_write(MAX_REG_MODE, MODE_LS_HOST ); //start low-speed host
-			vbusState = LSHOST;
-		} else
-		{
-			max3421e_write(MAX_REG_MODE, MODE_FS_HOST ); //start full-speed host
-			vbusState = FSHOST;
-		}
-		break;
-	case (bmSE1): //illegal state
-		vbusState = SE1;
-		break;
-	case (bmSE0): //disconnected state
-		vbusState = SE0;
-		break;
-	}
+        switch (bus_sample)
+        {
+        //start full-speed or low-speed host
+        case (bmJSTATUS):
+                if ((max3421e_read(MAX_REG_MODE) & bmLOWSPEED) == 0)
+                {
+                        max3421e_write(MAX_REG_MODE, MODE_FS_HOST ); //start full-speed host
+                        vbusState = FSHOST;
+                } else
+                {
+                        max3421e_write(MAX_REG_MODE, MODE_LS_HOST); //start low-speed host
+                        vbusState = LSHOST;
+                }
+                break;
+        case (bmKSTATUS):
+                if ((max3421e_read(MAX_REG_MODE) & bmLOWSPEED) == 0)
+                {
+                        max3421e_write(MAX_REG_MODE, MODE_LS_HOST ); //start low-speed host
+                        vbusState = LSHOST;
+                } else
+                {
+                        max3421e_write(MAX_REG_MODE, MODE_FS_HOST ); //start full-speed host
+                        vbusState = FSHOST;
+                }
+                break;
+        case (bmSE1): //illegal state
+                vbusState = SE1;
+                break;
+        case (bmSE0): //disconnected state
+                vbusState = SE0;
+                break;
+        }
 }
 
 /**
@@ -324,16 +333,16 @@ void max3421e_busprobe(void)
  */
 uint8_t max3421e_poll(void)
 {
-	uint8_t rcode = 0;
+        uint8_t rcode = 0;
 
-	// Check interrupt.
-	if (MAX_INT() == 0)
-		rcode = max3421e_interruptHandler();
+        // Check interrupt.
+        if (MAX_INT() == 0)
+                rcode = max3421e_interruptHandler();
 
-	if (MAX_GPX() == 0)
-		max3421e_gpxInterruptHandler();
+        if (MAX_GPX() == 0)
+                max3421e_gpxInterruptHandler();
 
-	return (rcode);
+        return (rcode);
 }
 
 /**
@@ -341,29 +350,29 @@ uint8_t max3421e_poll(void)
  */
 uint8_t max3421e_interruptHandler(void)
 {
-	uint8_t interruptStatus;
-	uint8_t HIRQ_sendback = 0x00;
+        uint8_t interruptStatus;
+        uint8_t HIRQ_sendback = 0x00;
 
-	// Determine interrupt source.
-	interruptStatus = max3421e_read(MAX_REG_HIRQ);
+        // Determine interrupt source.
+        interruptStatus = max3421e_read(MAX_REG_HIRQ);
 
-	if (interruptStatus & bmFRAMEIRQ)
-	{
-		//->1ms SOF interrupt handler
-		HIRQ_sendback |= bmFRAMEIRQ;
-	}
+        if (interruptStatus & bmFRAMEIRQ)
+        {
+                //->1ms SOF interrupt handler
+                HIRQ_sendback |= bmFRAMEIRQ;
+        }
 
-	if (interruptStatus & bmCONDETIRQ)
-	{
-		max3421e_busprobe();
+        if (interruptStatus & bmCONDETIRQ)
+        {
+                max3421e_busprobe();
 
-		HIRQ_sendback |= bmCONDETIRQ;
-	}
+                HIRQ_sendback |= bmCONDETIRQ;
+        }
 
-	// End HIRQ interrupts handling, clear serviced IRQs
-	max3421e_write(MAX_REG_HIRQ, HIRQ_sendback);
+        // End HIRQ interrupts handling, clear serviced IRQs
+        max3421e_write(MAX_REG_HIRQ, HIRQ_sendback);
 
-	return (HIRQ_sendback);
+        return (HIRQ_sendback);
 }
 
 /**
@@ -371,16 +380,15 @@ uint8_t max3421e_interruptHandler(void)
  */
 uint8_t max3421e_gpxInterruptHandler(void)
 {
-	//read GPIN IRQ register
-	uint8_t interruptStatus = max3421e_read(MAX_REG_GPINIRQ);
+        //read GPIN IRQ register
+        uint8_t interruptStatus = max3421e_read(MAX_REG_GPINIRQ);
 
-	//    if( GPINIRQ & bmGPINIRQ7 ) {            //vbus overload
-	//        vbusPwr( OFF );                     //attempt powercycle
-	//        delay( 1000 );
-	//        vbusPwr( ON );
-	//        regWr( rGPINIRQ, bmGPINIRQ7 );
-	//    }
+        //    if( GPINIRQ & bmGPINIRQ7 ) {            //vbus overload
+        //        vbusPwr( OFF );                     //attempt powercycle
+        //        delay( 1000 );
+        //        vbusPwr( ON );
+        //        regWr( rGPINIRQ, bmGPINIRQ7 );
+        //    }
 
-	return (interruptStatus);
+        return (interruptStatus);
 }
-

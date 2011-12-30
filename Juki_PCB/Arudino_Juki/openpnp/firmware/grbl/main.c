@@ -35,6 +35,11 @@
 #include "panel_control.h"
 #include "settings.h"
 #include "wiring_serial.h"
+#include "usb.h"
+
+#include "timers.h"
+
+#include "config.h"
 
 void limits_init(void);
 
@@ -42,17 +47,94 @@ void limits_init(void);
 // #  error "As of version 0.6 Grbl only supports atmega328p. If you want to run Grbl on an 168 check out 0.51 ('git co v0_51')"
 // #endif
 
-
 // stepper interrupt ack to host
-extern char ackHost;
+extern volatile char ackHost;
+
+/**
+ * Handles events from the USB layer.
+ * @param device USB device that generated the event.
+ * @param event USB event.
+ */
+static void pb_usbEventHandler(usb_device * device, usb_eventType event)
+{
+        //adb_usbConfiguration handle;
+
+        switch (event)
+        {
+        case USB_CONNECT:
+
+				serialWrite('U');
+				serialWrite('C');
+
+                // Check if the newly connected device is an ADB device, and initialise it if so.
+                //if (adb_isAdbDevice(device, 0, &handle))
+                //        adb_initUsb(device, &handle);
+
+                break;
+
+        case USB_DISCONNECT:
+
+				serialWrite('U');
+				serialWrite('D');
+
+                // Check if the device that was disconnected is the ADB device we've been using.
+                //if (device == adbDevice)
+                {
+                        // Close all open ADB connections.
+                        //adb_closeAll();
+
+                        // Signal that we're no longer connected by setting the global device handler to NULL;
+//                        adbDevice = NULL;
+  //                      connected = false;
+                }
+
+                break;
+
+        default:
+                // ignore
+                break;
+        }
+}
 
 int main(void)
 {
-  sp_init();        
+	setup_timer();
+
+	sp_init();        
+
+#ifdef VERBOSE_DEBUG
+  serialWrite('1');
+#endif
   settings_init();  
+
+#ifdef VERBOSE_DEBUG
+  serialWrite('2');
+#endif
   plan_init();      
-  st_init();        
+
+#ifdef VERBOSE_DEBUG
+  serialWrite('3');
+#endif
+  st_init();       
+
+
+#ifdef VERBOSE_DEBUG
+  serialWrite('4');
+#endif
+  // do limits init first because its dumb at the moment 
   limits_init();
+
+#ifdef VERBOSE_DEBUG
+  serialWrite('5');
+#endif
+	usb_init();
+
+	usb_setEventHandler(pb_usbEventHandler);
+
+#ifdef VERBOSE_DEBUG
+  serialWrite('6');
+#endif
+
   spindle_init();   
   coolant_init();
   atc_init();
@@ -61,7 +143,6 @@ int main(void)
   panel_init();
   gc_init();
  
-  
   // Once everything is initialized, send the standard "ok" to let clients
   // know it's okay to go ahead
   printPgmString(PSTR("ok\n"));
@@ -121,7 +202,11 @@ ch = is_phome(  );
   for(;;){
     sleep_mode(); // Wait for it ...
 
+	// sends the move ACK back to the host ( sleep mode isn't working on the mega )
 	if( ackHost != 0 ) {
+		// X = move finished ok
+		// L = hit a limit
+		// H = not homed
 		serialWrite( ackHost );
 		ackHost = 0;
 	}
@@ -129,6 +214,10 @@ ch = is_phome(  );
     sp_process(); // ... process the serial protocol
 
 	process_panel(); // check the panel
+
+	usb_poll();
+
   }
+
   return 0;   /* never reached */
 }

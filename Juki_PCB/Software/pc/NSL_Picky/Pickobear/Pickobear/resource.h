@@ -113,6 +113,7 @@
 #define IDC_PCB_INDEX                   1096
 #define IDC_TEST_MODE                   1097
 #define IDC_EDIT1                       1098
+#define IDC_STATUS_BAR                  1098
 #define IDC_ALERT_TEXT                  1099
 
 // Next default values for new objects

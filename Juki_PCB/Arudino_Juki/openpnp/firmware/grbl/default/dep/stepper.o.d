@@ -21,7 +21,7 @@ stepper.o: ../stepper.c \
   ../config.h ../settings.h ../nuts_bolts.h \
   c:/winavr-20100110/lib/gcc/../../avr/include/string.h ../planner.h \
   ../wiring_serial.h ../motion_control.h ../head_control.h \
-  ../atc_control.h ../gcode.h
+  ../atc_control.h ../vacuum_control.h ../gcode.h
 
 c:/winavr-20100110/lib/gcc/../../avr/include/math.h:
 
@@ -80,5 +80,7 @@ c:/winavr-20100110/lib/gcc/../../avr/include/string.h:
 ../head_control.h:
 
 ../atc_control.h:
+
+../vacuum_control.h:
 
 ../gcode.h:

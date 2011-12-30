@@ -42,6 +42,7 @@
 static char line[LINE_BUFFER_SIZE];
 static uint8_t char_counter;
 
+// this needs to be fixed so it can reply correctly
 static void status_message(int status_code)
 {
 	// Always override
@@ -51,7 +52,7 @@ static void status_message(int status_code)
 
 	switch(status_code) {          
 		case GCSTATUS_OK:
-			printPgmString(PSTR("ok\r")); 
+			printPgmString(PSTR("ok\n")); 
 			break;
 		case GCSTATUS_BAD_NUMBER_FORMAT:
 			printPgmString(PSTR("error: Bad number format\n")); 
