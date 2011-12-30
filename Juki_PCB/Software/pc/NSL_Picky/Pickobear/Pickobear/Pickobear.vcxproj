@@ -140,6 +140,7 @@
     <ClCompile Include="EditComponent.cpp" />
     <ClCompile Include="FeederEdit.cpp" />
     <ClCompile Include="FeederSetup.cpp" />
+    <ClCompile Include="GCODE_Processor.cpp" />
     <ClCompile Include="Grid\GridCell.cpp" />
     <ClCompile Include="Grid\GridCellBase.cpp" />
     <ClCompile Include="Grid\GridCellNumeric.cpp" />
@@ -170,6 +171,7 @@
     <ClInclude Include="Feeder.h" />
     <ClInclude Include="FeederEdit.h" />
     <ClInclude Include="FeederSetup.h" />
+    <ClInclude Include="GCODE_Processor.h" />
     <ClInclude Include="Grid\CellRange.h" />
     <ClInclude Include="Grid\GridCell.h" />
     <ClInclude Include="Grid\GridCellBase.h" />

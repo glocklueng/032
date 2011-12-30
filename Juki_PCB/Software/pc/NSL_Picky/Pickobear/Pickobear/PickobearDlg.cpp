@@ -3704,10 +3704,12 @@ void CPickobearDlg::OnClose()
 	if(threadHandleCamera) while (WAIT_OBJECT_0 != WaitForSingleObject(threadHandleCamera, 200));
 	if(updateThreadHandle) while (WAIT_OBJECT_0 != WaitForSingleObject(updateThreadHandle, 200));
 	if(threadProcessGCODE) while (WAIT_OBJECT_0 != WaitForSingleObject(threadProcessGCODE, 200));
+	if(GCODE_CPU_Thread) while (WAIT_OBJECT_0 != WaitForSingleObject(GCODE_CPU_Thread, 200));
 
 	threadProcessGCODE = 0;
-	updateThreadHandle =0;
-	threadHandleCamera=0;
+	updateThreadHandle = 0;
+	threadHandleCamera = 0;
+	GCODE_CPU_Thread = 0;
 
 	// save databases if they've been changed.
 	if ( m_ComponentsModified ) {
@@ -3817,7 +3819,7 @@ retry:;
 			if( m_GCODECMDBuffer.find("\n") == string::npos ) {
 				m_GCODECMDBuffer.append("\n");
 			}
-			// for some reason its locking up on AddString..
+
 			InternalWriteSerial( m_GCODECMDBuffer.c_str()) ;
 			
 			// wait for ACK, needs >500 ms?
