@@ -10,6 +10,7 @@
 #include "OpenGLControl.h"
 #include "TextDump.h"
 #include "AlertBox.h"
+#include "GCODE_Processor.h"
 
 #include <iostream>
 #include <fstream>
@@ -553,11 +554,17 @@ public:
 };
 
 class CFeederSetup;
+	 
 
 // CPickobearDlg dialog
 class CPickobearDlg : public CDialog
 {
+
+	friend class GCODE_Processor;
+
 private:
+
+	GCODE_Processor m_GCODE_CPU;
 	
 	// The camera windows
 	COpenGLControl m_UpCameraWindow;
@@ -629,6 +636,7 @@ private:
 
 	// thread handle for camera update routine
 	HANDLE threadHandleCamera;
+	HANDLE GCODE_CPU_Thread;
 
 	// states the machine could be in
 	enum eMachineState {
@@ -753,9 +761,9 @@ public:
 // Dialog Data
 	enum { IDD = IDD_PICKOBEAR_DIALOG };
 
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV support
 
+protected:
+	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV support
 	// these are now only allowed to be run from the GCODE thread
 	void InternalWriteSerial( const char *text,bool noConsole);
 	void EmptySerial ( void ) ;

@@ -73,6 +73,8 @@ using namespace Gdiplus;
 #include "TextDump.h"
 #include "AlertBox.h"
 
+#include "GCODE_Processor.h"
+
 #include "SerialMFC.h"
 #include "FeederSetup.h"
 #include "PickobearDlg.h"
