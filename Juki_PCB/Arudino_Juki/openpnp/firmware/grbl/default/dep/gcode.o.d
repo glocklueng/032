@@ -20,7 +20,11 @@ gcode.o: ../gcode.c c:/winavr-20100110/lib/gcc/../../avr/include/stdlib.h \
   ../coolant_control.h \
   c:/winavr-20100110/lib/gcc/../../avr/include/errno.h \
   ../serial_protocol.h ../wiring_serial.h ../head_control.h \
-  ../tape_knock.h ../vacuum_control.h ../atc_control.h ../config.h
+  ../tape_knock.h ../vacuum_control.h ../atc_control.h ../timers.h \
+  c:/winavr-20100110/lib/gcc/../../avr/include/util/delay.h \
+  c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h \
+  c:/winavr-20100110/lib/gcc/../../avr/include/avr/interrupt.h \
+  ../config.h
 
 c:/winavr-20100110/lib/gcc/../../avr/include/stdlib.h:
 
@@ -85,5 +89,13 @@ c:/winavr-20100110/lib/gcc/../../avr/include/errno.h:
 ../vacuum_control.h:
 
 ../atc_control.h:
+
+../timers.h:
+
+c:/winavr-20100110/lib/gcc/../../avr/include/util/delay.h:
+
+c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h:
+
+c:/winavr-20100110/lib/gcc/../../avr/include/avr/interrupt.h:
 
 ../config.h:

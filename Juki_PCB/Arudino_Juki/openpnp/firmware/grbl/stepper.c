@@ -36,6 +36,7 @@
 #include "motion_control.h"
 #include "head_control.h"
 #include "atc_control.h"
+#include "vacuum_control.h"
 #include "gcode.h"
 
 // Some useful constants
@@ -49,7 +50,7 @@
 #define TICKS_PER_MICROSECOND (F_CPU/1000000)
 #define CYCLES_PER_ACCELERATION_TICK ((TICKS_PER_MICROSECOND*1000000)/ACCELERATION_TICKS_PER_SECOND)
 
-#define MINIMUM_STEPS_PER_MINUTE 1200 // The stepper subsystem will never run slower than this, exept when sleeping
+#define MINIMUM_STEPS_PER_MINUTE 1200 									// The stepper subsystem will never run slower than this, exept when sleeping
 
 #define ENABLE_STEPPER_DRIVER_INTERRUPT()  TIMSK1 |= (1<<OCIE1A)
 #define DISABLE_STEPPER_DRIVER_INTERRUPT() TIMSK1 &= ~(1<<OCIE1A)
@@ -149,7 +150,7 @@ int get_busy( void )
 	return busy;
 }
 
-char ackHost = 0;
+volatile char ackHost = 0;
 
 
 // "The Stepper Driver Interrupt" - This timer interrupt is the workhorse of Grbl. It is  executed at the rate set with
@@ -166,23 +167,24 @@ SIGNAL(TIMER1_COMPA_vect)
 		return;
 	}
 
-// don't move if the head is down, this one is ok to let it keep running  
-  if( is_head_down() ) {
-  	return;
- }
+	// Check all limit switches
+	if( LIMIT_PIN & 0xf ) {
+		gHomed = FALSE ;
+		// set ack
+		ackHost = 'L';
+		DISABLE_STEPPER_DRIVER_INTERRUPT();
+		return;
+	}
+
+	// don't move if the head is down, this one is ok to let it keep running  
+	if( !bit_is_set( HEADDT_PIN, HEAD_DOWN_TEST ) ) {
+		return;
+	}
 
   if(busy){ 
   	return; 
   } // The busy-flag is used to avoid reentering this interrupt
 
-  // Check all limit switches
-  if( LIMIT_PIN & 0xf ) {
-	gHomed = FALSE ;
-		// set ack
-	  ackHost = 'L';
-	DISABLE_STEPPER_DRIVER_INTERRUPT();
-	return;
-  }
 
   // Set the direction pins a couple of nanoseconds before we step the steppers
   DIRECTION_PORT = (DIRECTION_PORT & ~DIRECTION_MASK) | (dir_bits & DIRECTION_MASK);
@@ -211,9 +213,10 @@ SIGNAL(TIMER1_COMPA_vect)
       counter_c = counter_x;
       step_events_completed = 0;
     } else {
+
       DISABLE_STEPPER_DRIVER_INTERRUPT();
 
-		// set ack
+		// set ack to host, move has finished
 	  ackHost = 'X';
 
     }    
@@ -442,8 +445,8 @@ unsigned char moveLeft( unsigned int distance )
   // Then pulse the stepping pins
   while(distance--) {
 
-	//  hit left limit ?
-  	if( bit_is_set( LIMIT_PIN, X1_LIMIT_BIT ) ) 
+	//  hit left limit or head down?
+  	if( bit_is_set( LIMIT_PIN, X1_LIMIT_BIT ) || !bit_is_set( HEADDT_PIN, HEAD_DOWN_TEST ) ) 
 		return 0;
 
      STEPPING_PORT = (STEPPING_PORT & ~STEP_MASK) | (1<<X_STEP_BIT);	
@@ -462,7 +465,9 @@ unsigned char moveRight( unsigned int distance )
   // Then pulse the stepping pins
   while(distance--) {
 
-  	if( bit_is_set( LIMIT_PIN, X2_LIMIT_BIT ) ) return 0;
+	//  hit left limit or head down?
+  	if( bit_is_set( LIMIT_PIN, X2_LIMIT_BIT )  || !bit_is_set( HEADDT_PIN, HEAD_DOWN_TEST ) ) 
+		return 0;
   	
 	STEPPING_PORT = (STEPPING_PORT & ~STEP_MASK) | (1<<X_STEP_BIT);	
 	 _delay_us( PULSE_LENGTH ) ;
@@ -481,8 +486,8 @@ unsigned char moveForward( unsigned int distance )
   // Then pulse the stepping pins
   while(distance--) {
 
-	//  hit limit ?
-  	if( bit_is_set( LIMIT_PIN, Y1_LIMIT_BIT ) ) 
+	//  hit left limit or head down?
+  	if( bit_is_set( LIMIT_PIN, Y1_LIMIT_BIT ) || !bit_is_set( HEADDT_PIN, HEAD_DOWN_TEST ) ) 
 		return 0;
 
 
@@ -501,7 +506,7 @@ unsigned char moveBack( unsigned int distance )
   // Then pulse the stepping pins
   while(distance--) {
 
-  	if( bit_is_set( LIMIT_PIN, Y2_LIMIT_BIT ) ) 
+  	if( bit_is_set( LIMIT_PIN, Y2_LIMIT_BIT ) || !bit_is_set( HEADDT_PIN, HEAD_DOWN_TEST ) ) 
 		return 0;
 
     STEPPING_PORT = (STEPPING_PORT & ~STEP_MASK) | (1<<Y_STEP_BIT);	
@@ -520,11 +525,10 @@ void st_go_home(void)
 
 	unsigned int counter = 0;
 
-
 	// not homed
 	gHomed = FALSE;
 
-// reset position machine thinks we are at.
+	// reset position machine thinks we are at.
 	plan_init();
 	gc_init();
 
@@ -540,10 +544,20 @@ void st_go_home(void)
 
 	}
 
+#ifdef SIMULATE
+	gHomed = TRUE ;
+	
+	// marks as no longer busy
+	set_busy(FALSE);
+	return ;
+
+#endif
+
 	cli();
 
 	// tool changer all down
 	atc_fire(0);	
+	vacuum(0);
 
 #ifdef VERBOSE_DEBUG
 	printPgmString(PSTR("homing\r\n"));
@@ -684,12 +698,11 @@ unsigned char head_moving( void )
 
 void limits_init(void)
 {
-
 	//pickobear specific
 	DDRA = 0x0;
 	DDRB = 0x2;
 	DDRC = 0x0;
-	DDRD = 0x0;
+	LIMIT_DDR = 0x0;
 	DDRE = 0x0;
 	DDRF = 0x8F;
 	DDRG = 0x0;
@@ -701,7 +714,11 @@ void limits_init(void)
 	PORTA = 0x9C;
 	PORTB = 0x22;
 	PORTC = 0x13;
-	PORTD = 0x8F;
+#ifdef SIMULATE
+	LIMIT_PORT = 0x00; //00000000
+#else
+	LIMIT_PORT = 0x8F; //10001111
+#endif
 	PORTE = 0x30;
 	PORTF = 0x8F;
 	PORTG = 0x23;

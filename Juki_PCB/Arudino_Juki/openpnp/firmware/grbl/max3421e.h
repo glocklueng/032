@@ -20,76 +20,111 @@ limitations under the License.#include <string.h>
  * This is a low-level interface that provides access to the internal registers and polls the
  * controller for state changes.
  *
- * This library is based on work done by Oleg Mazurov, but has been heavily restructured.
+ * This library is based on work done by Oleg Masurov, but has been ported to C and heavily
+ * restructured. Control over the GPIO pins has been stripped.
  *
- * Control over the GPIO pins has been stripped.
+ * Note that the current incarnation of this library only supports the Arduino Mega with a
+ * hardware mod to rewire the MISO, MOSI, and CLK SPI pins.
  *
  * http://www.circuitsathome.com/
  */
-#ifndef __max3421e_h__
-#define __max3421e_h__
+#ifndef _MAX3421E_H_
+#define _MAX3421E_H_
 
-#include <math.h>
-#include <stdlib.h>
-#include <avr/pgmspace.h>
+#include <stdint.h>
+#include <stdbool.h>
 
-#include <avr/interrupt.h>
+#include "spi.h"
 #include "max3421e_constants.h"
 
 /**
  * Max3421e registers in host mode.
  */
-typedef enum
+enum
 {
-	MAX_REG_RCVFIFO = 0x08,
-	MAX_REG_SNDFIFO = 0x10,
-	MAX_REG_SUDFIFO = 0x20,
-	MAX_REG_RCVBC = 0x30,
-	MAX_REG_SNDBC = 0x38,
-	MAX_REG_USBIRQ = 0x68,
-	MAX_REG_USBIEN = 0x70,
-	MAX_REG_CPUCTL = 0x80,
-	MAX_REG_USBCTL = 0x78,
-	MAX_REG_PINCTL = 0x88,
-	MAX_REG_REVISION = 0x90,
-	MAX_REG_FNADDR = 0x98,
-	MAX_REG_GPINIRQ = 0xb0,
-	MAX_REG_HIRQ = 0xc8,
-	MAX_REG_HIEN = 0xd0,
-	MAX_REG_MODE = 0xd8,
-	MAX_REG_PERADDR = 0xe0,
-	MAX_REG_HCTL = 0xe8,
-	MAX_REG_HXFR = 0xf0,
-	MAX_REG_HRSL = 0xf8
+        MAX_REG_RCVFIFO = 0x08,
+        MAX_REG_SNDFIFO = 0x10,
+        MAX_REG_SUDFIFO = 0x20,
+        MAX_REG_RCVBC = 0x30,
+        MAX_REG_SNDBC = 0x38,
+        MAX_REG_USBIRQ = 0x68,
+        MAX_REG_USBIEN = 0x70,
+        MAX_REG_CPUCTL = 0x80,
+        MAX_REG_USBCTL = 0x78,
+        MAX_REG_PINCTL = 0x88,
+        MAX_REG_REVISION = 0x90,
+        MAX_REG_FNADDR = 0x98,
+        MAX_REG_GPINIRQ = 0xb0,
+        MAX_REG_HIRQ = 0xc8,
+        MAX_REG_HIEN = 0xd0,
+        MAX_REG_MODE = 0xd8,
+        MAX_REG_PERADDR = 0xe0,
+        MAX_REG_HCTL = 0xe8,
+        MAX_REG_HXFR = 0xf0,
+        MAX_REG_HRSL = 0xf8
 } max_registers;
 
 /*
-#define PIN_MAX_SS 10
-#define PIN_MAX_INT 9
-#define PIN_MAX_GPX 8
-#define PIN_MAX_RESET 7
+// MISO/PB3/D50
+// MOSI/PB2/D51
+//  SCK/PB1/D52
+//   SS/PB0/D53
 
-#define MAX_SS(x) digitalWrite(SS, x)
-#define MAX_INT() digitalRead(PIN_MAX_INT)
-#define MAX_GPX() digitalRead(PIN_MAX_INT)
-#define MAX_RESET(x) digitalWrite(PIN_MAX_RESET, x)
+	1<<0,   1,  1
+	1<<1,   2,  2
+	1<<2,   4,  4
+	1<<3,   8,  8
+	1<<4,  16, 10
+	1<<5,  32, 20
+	1<<6,  64, 40
+	1<<7, 128, 80
+
 */
 
-#define ADK_REF_BOARD
+// PB4 SS 
+// PH6 INT
+// PH5 GPX
+// PH4 RESET
 
-// Completely untested guesswork for the ADK reference board
+#if defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)
 
+#define MAX_SS(x) { if (x) PORTB |= _BV(PB4); else PORTB &= ~_BV(PB4); }
+#define MAX_INT() ((PORTH & _BV(PH6)) >> 6)
+#define MAX_GPX() ((PORTH & _BV(PH5)) >> 5)
+#define MAX_RESET(x) { if (x) PORTH |= _BV(PH4); else PORTH &= ~_BV(PH4); }
 
-#define PIN_MAX_SS 53
-#define PIN_MAX_INT 9
-#define PIN_MAX_GPX 8
-#define PIN_MAX_RESET 7
+#elif defined(__AVR_ATmega168__) || defined(__AVR_ATmega328P__)
 
-#define MAX_SS(x) digitalWrite(SS, x)
-#define MAX_INT() ((PORTE & 0x40) >> 6)
-#define MAX_GPX() ((PORTJ & 0x08) >> 3)
-#define MAX_RESET(x) { if (x) PORTJ |= 0x04; else PORTJ &= ~0x04; }
+#define MAX_SS(x) SPI_SS(x)
+#define MAX_INT() ((PORTB & 2) >> 1)
+#define MAX_GPX() (PORTB & 1)
+#define MAX_RESET(x) { if (x) PORTD |= 0x80; else PORTD &= ~0x80; }
 
+#endif
+
+// Sparkfun botched their first attempt at cloning Oleg's max3421e shield and reversed the GPX and RESET pins.
+// This hack is in place to make MicroBridge work with those shields. (see http://www.sparkfun.com/products/9628)
+// note: I used #undef here to avoid a bunch of ugly nested #ifdefs above
+#ifdef SFHACK
+
+#undef MAX_GPX
+#undef MAX_RESET
+
+#if defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)
+
+// Untested!
+#define MAX_GPX() ((PORTH & 0x10) >> 4)
+#define MAX_RESET(x) { if (x) PORTH |= 0x20; else PORTH &= ~0x20; }
+
+#elif defined(__AVR_ATmega168__) || defined(__AVR_ATmega328P__)
+
+// Untested!
+#define MAX_GPX() ((PORTD & 0x80) >> 7)
+#define MAX_RESET(x) { if (x) PORTB |= 1; else PORTB &= ~1; }
+
+#endif
+
+#endif
 
 
 void max3421e_init();

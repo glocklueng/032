@@ -22,6 +22,7 @@
 #define config_h
 
 //#define VERBOSE_DEBUG (1)
+#define SIMULATE	(1) // no machine connected
 
 #define SET_BIT(p,m) ((p) |= (m)) 
 #define CLEAR_BIT(p,m) ((p) &= ~(m)) 
@@ -206,7 +207,6 @@
 // time for head to settle after a move
 #define HEAD_MOVE_SETTLE_TIME	( 100 )
 
-#endif
 
 // Pin-assignments from Grbl 0.5
 
@@ -236,4 +236,17 @@
 // #define SPINDLE_DIRECTION_DDR DDRD
 // #define SPINDLE_DIRECTION_PORT PORTD
 // #define SPINDLE_DIRECTION_BIT 7
+
+#ifndef cbi
+#define cbi(sfr, bit) (_SFR_BYTE(sfr) &= ~_BV(bit))
+#endif
+#ifndef sbi
+#define sbi(sfr, bit) (_SFR_BYTE(sfr) |= _BV(bit))
+#endif 
+
+void settings_reset();
+
+
+
+#endif
 

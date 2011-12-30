@@ -10,36 +10,16 @@
 
 #ifndef _SPI_H_INCLUDED
 #define _SPI_H_INCLUDED
-
-#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+#include <util/delay.h>
 #include <avr/pgmspace.h>
-
-#ifndef byte
-#define byte unsigned char 
-#endif
-
-#define SET_OUTPUT( ddr, bit ) ddr &= ~(  1<< bit ) 
-#define SET_INPUT( ddr, bit )  ddr |=  (  1<< bit ) 
-#define SET_HIGH( port, bit )  port|=  (  1<< bit ) 
-#define SET_LOW( port, bit )  port &= ~(  1<< bit )
-
-#define LSBFIRST 0 
-
-// Atmega 2560
-
-#define SS PB0
-//const static uint8_t SS   = 53;
-#define MOSI PB2
-//const static uint8_t MOSI = 51;
-#define MISO PB3
-//const static uint8_t MISO = 50;
-#define SCK PB1
-//const static uint8_t SCK  = 52;
-
+#include "config.h"
 
 #define SPI_CLOCK_DIV4 0x00
 #define SPI_CLOCK_DIV16 0x01
-//#define SPI_CLOCK_DIV64 0x02
+// #define SPI_CLOCK_DIV64 0x02
 #define SPI_CLOCK_DIV128 0x03
 #define SPI_CLOCK_DIV2 0x04
 #define SPI_CLOCK_DIV8 0x05
@@ -55,21 +35,45 @@
 #define SPI_CLOCK_MASK 0x03  // SPR1 = bit 1, SPR0 = bit 0 on SPCR
 #define SPI_2XCLOCK_MASK 0x01  // SPI2X = bit 0 on SPSR
 
-  inline byte transfer(byte _data);
+#define SPI_LSBFIRST 0
 
-  // SPI Configuration methods
+/*
 
-  inline static void attachInterrupt();
-  inline static void detachInterrupt(); // Default
+#define SS PB0
+//const static uint8_t SS   = 53;
+#define MOSI PB2
+//const static uint8_t MOSI = 51;
+#define MISO PB3
+//const static uint8_t MISO = 50;
+#define SCK PB1
+//const static uint8_t SCK  = 52;
+*/
 
-  static void begin(); // Default
-  static void end();
+#if defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)
 
-  static void setBitOrder(uint8_t);
-  static void setDataMode(uint8_t);
-  static void setClockDivider(uint8_t);
-  void SPI_begin();
+#define SPI_PORT PORTB
+#define SPI_PORT_DIR DDRB
+#define SPI_BIT_MISO 0x8
+#define SPI_BIT_MOSI 0x4
+#define SPI_BIT_SCK 0x2
+#define SPI_BIT_SS 0x1
 
+#elif defined(__AVR_ATmega168__) || defined(__AVR_ATmega328P__)
 
+#define SPI_PORT PORTB
+#define SPI_PORT_DIR DDRB
+#define SPI_BIT_SCK 0x20
+#define SPI_BIT_MISO 0x10
+#define SPI_BIT_MOSI 0x8
+#define SPI_BIT_SS 0x4
+
+#endif
+
+#define SPI_MISO ((SPI_PORT & SPI_BIT_MISO) >> 3)
+#define SPI_MOSI(x) { if (x) SPI_PORT |= SPI_BIT_MOSI; else SPI_PORT &= ~SPI_BIT_MOSI; }
+#define SPI_SCK(x) { if (x) SPI_PORT |= SPI_BIT_SCK; else SPI_PORT &= ~SPI_BIT_SCK; }
+#define SPI_SS(x) { if (x) SPI_PORT |= SPI_BIT_SS; else SPI_PORT &= ~SPI_BIT_SS; }
+
+void spi_begin();
 
 #endif

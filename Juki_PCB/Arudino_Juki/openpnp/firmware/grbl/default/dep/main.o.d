@@ -17,7 +17,10 @@ main.o: ../main.c c:/winavr-20100110/lib/gcc/../../avr/include/avr/io.h \
   ../planner.h ../stepper.h ../spindle_control.h ../coolant_control.h \
   ../motion_control.h ../gcode.h ../serial_protocol.h ../head_control.h \
   ../atc_control.h ../vacuum_control.h ../panel_control.h ../settings.h \
-  c:/winavr-20100110/lib/gcc/../../avr/include/math.h ../wiring_serial.h
+  c:/winavr-20100110/lib/gcc/../../avr/include/math.h ../wiring_serial.h \
+  ../usb.h ../timers.h \
+  c:/winavr-20100110/lib/gcc/../../avr/include/avr/interrupt.h \
+  ../config.h
 
 c:/winavr-20100110/lib/gcc/../../avr/include/avr/io.h:
 
@@ -78,3 +81,11 @@ c:\winavr-20100110\bin\../lib/gcc/avr/4.3.3/include/stddef.h:
 c:/winavr-20100110/lib/gcc/../../avr/include/math.h:
 
 ../wiring_serial.h:
+
+../usb.h:
+
+../timers.h:
+
+c:/winavr-20100110/lib/gcc/../../avr/include/avr/interrupt.h:
+
+../config.h:

@@ -86,7 +86,7 @@ static uint8_t acceleration_manager_enabled;   // Acceleration management active
 #define ONE_MINUTE_OF_MICROSECONDS 60000000.0
 
 // stepper interrupt ack to host
-extern char ackHost;
+extern volatile char ackHost;
 
 
 // Calculates the distance (not time) it takes to accelerate from initial_rate to target_rate using the 

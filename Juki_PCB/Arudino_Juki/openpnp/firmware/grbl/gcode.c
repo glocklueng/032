@@ -43,7 +43,7 @@
 #include "tape_knock.h"
 #include "vacuum_control.h"
 #include "atc_control.h"
-
+#include "timers.h"
 
 #include "config.h"
 
@@ -226,11 +226,20 @@ uint8_t gc_execute_line(char *line) {
 	      	printPgmString(PSTR("\r\n"));
 #endif
 
+#ifdef SIMULATE
 
+	      	printPgmString(PSTR("CAUTION:Simulate mode is on\n"));
+
+#endif
 
 	      	printPgmString(PSTR("to_millimeters(100) = "));
 			printInteger( to_millimeters(100) );
 	      	printPgmString(PSTR("\r\n"));
+
+	      	printPgmString(PSTR("avr_millis() = "));
+			printInteger( avr_millis() );
+	      	printPgmString(PSTR("\r\n"));
+
 
 	      	printPgmString(PSTR("head down = "));
 			printInteger( is_head_down() );

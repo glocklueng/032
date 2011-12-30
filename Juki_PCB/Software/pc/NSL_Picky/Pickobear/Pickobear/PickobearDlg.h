@@ -35,13 +35,16 @@ enum {
 // for updating the alert box
 #define	WAITING_FOR_CMD_ACK					( 1 )
 #define WAITING_FOR_CMD_MOVE_ACK			( WAITING_FOR_CMD_ACK +1 )
+#define MACHINE_IDLING						( WAITING_FOR_CMD_MOVE_ACK +1 )
+#define MACHINE_ESTOP						( MACHINE_IDLING +1 )
+#define COMMAND_FAILED						( MACHINE_ESTOP +1 )
 
 // last calibration was
 //was 228370
 //is  227830
 
 #define CAMERA_OFFSET						( 73900-540+120 )
-#define CAMERA_DEFAULT_UPDATE_RATE_MS		( 10 )
+#define CAMERA_DEFAULT_UPDATE_RATE_MS		( 1300 )
 #define CAMERA_SLOW_UPDATE_RATE_MS			( 300 )
 
 #define pulsestoum(x) (x*25)
@@ -568,6 +571,10 @@ private:
 
 	// Text edit control
 	CTextDump	*m_TextEdit;
+	
+	// handle for update limits thread
+	HANDLE updateThreadHandle;
+
 
 	// if true, camera and head are swapped
 	bool bCameraHead;
@@ -616,6 +623,9 @@ private:
 
 	//how long Sleep is in camera updates (ms)
 	unsigned int m_CameraUpdateRate;
+
+	// Number of steps to move in for GUI controls in microns
+	unsigned long m_StepSizeUM;
 
 	// thread handle for camera update routine
 	HANDLE threadHandleCamera;
@@ -681,8 +691,7 @@ public:
 	
 	CAlertBox *m_AlertBox;
 
-	static DWORD WINAPI StartGCODEThread(LPVOID pThis);
-	DWORD ProcessGCODECommandsThread(void );
+	void StartGCODEThread(LPVOID pThis);
 
 // Callbacks
 
@@ -709,7 +718,11 @@ public:
 
 	// set the camera threads
 	void goCamera(LPVOID pThis);
-	static DWORD WINAPI goSetup(LPVOID pThis);
+
+	// this gets called to update the XY from the PNP
+	void threadUpdateXY(LPVOID data);
+
+	void goSetup(LPVOID pThis);
 
 	static DWORD WINAPI goSingleSetup(LPVOID pThis);
 
@@ -764,8 +777,8 @@ protected:
 public:
 	CButton GO;
 	afx_msg void OnLbnSelchangeList1();
-	long m_headXPos;
-	long m_headYPos;
+	long m_headXPosUM;// current X head position in UM
+	long m_headYPosUM;// current Y head position in UM
 	double m_Threshold1;
 	double m_Threshold2;
 	afx_msg void OnBnClickedHome();
@@ -839,4 +852,5 @@ public:
 	afx_msg void OnClose();
 	afx_msg void OnBnClickedEstop();
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
+	CEdit m_StatusBar;
 };

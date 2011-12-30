@@ -34,6 +34,10 @@ void head_init()
 }
 
 
+#ifdef SIMULATE
+static unsigned char simulate_head_state = 0;
+#endif
+
 char head_down(int state)
 {
 
@@ -66,6 +70,10 @@ char head_down(int state)
 	//	 length of a delay for the head to move up and down
   _delay_ms( HEAD_SETTLE_TIME ) ;
 
+#ifdef SIMULATE
+	simulate_head_state = state;
+#endif
+
   if(is_head_down() != state ) {
 
 	  printPgmString(PSTR("Head down error\n\r"));
@@ -80,11 +88,15 @@ char head_down(int state)
 
 unsigned char is_head_down( void )
 {
-	unsigned char state ;
 
+#ifdef SIMULATE
+	return simulate_head_state;
+#else
+	unsigned char state ;
 	state  = bit_is_set( HEADDT_PIN, HEAD_DOWN_TEST )?1:0;
 
 	return state;
+#endif
 }
 
 unsigned char is_rotated( void )
