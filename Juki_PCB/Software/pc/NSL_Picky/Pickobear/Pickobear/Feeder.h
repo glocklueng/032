@@ -47,7 +47,7 @@ public:
 		SetRotation( e.rot );
 		SetXCount( e.countx );
 		SetYCount( e.county );
-		SetCount( e.countx * e.county );
+		SetCount( e.countx * (e.county?e.county:1) );
 		SetLabel( CString(e.label) );
 		SetPart( e.componentIndex );
 
@@ -242,7 +242,7 @@ public:
 	// Advance index to next part
 	bool AdvancePart( void )
 	{
-		_RPT2(_CRT_WARN,"AdvancePart: %d %d\n",current_part, number_of_parts);
+		_RPT3(_CRT_WARN,"AdvancePart: (%s) %d %d\n",CStringA(label),current_part, number_of_parts);
 
 		// if there are any parts left available
 		if (current_part < number_of_parts ) {
@@ -298,6 +298,9 @@ public:
 			
 			return true;
 		}
+		
+		ASSERT( number_parts_x );
+		ASSERT( number_parts_y );
 
 		// by here, there are parts left and it is a tray style feeder
 
@@ -316,9 +319,15 @@ public:
 		dx = abs( bottom_position_x - feeder_position_x );
 		dy = abs( feeder_position_y - bottom_position_y );
 
-		dx /= number_parts_x;
-		dy /= number_parts_y;
-		
+		if( number_parts_x)
+			dx /= number_parts_x;
+		else 
+			dx = 1;
+
+		if( number_parts_y)
+			dy /= number_parts_y;
+		else 
+			dy = 1;
 		_RPT2(_CRT_WARN,"dx = %d, dy = %d\n",dx,dy);
 
 		int ix,iy;

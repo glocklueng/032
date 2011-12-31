@@ -129,7 +129,7 @@ void DrawCircle(float cx, float cy, float r, int num_segments)
 	glFlush();
 }
 
-void COpenGLControl::OnTimer(UINT nIDEvent)
+void COpenGLControl::OnTimer(UINT_PTR nIDEvent)
 {  
 	UpdateCamera(nIDEvent);
 	CWnd::OnTimer(nIDEvent);

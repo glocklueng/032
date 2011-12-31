@@ -234,18 +234,21 @@ public:
 		m_Count ++;
 	}
 
-	void SaveDatabase ( void ) 
+	bool SaveDatabase ( void ) 
 	{
 		CString filename;
 				
 		if( m_ComponentDatabase.size() == 0 ) {
 			
-			
-			return;
+			return false;
 		}
 
 
 		filename = ::GetSaveFile( _T("Supported Files Types(*.pbr)\0*.pbr\0\0"),_T("Choose a filename to save components in"),_T("") );
+
+		if( filename.GetLength() == 0 ) {
+			return false;
+		}
 
 		if( filename.Find(L".pbr") == -1 ) {
 			filename.Append(L".pbr");
@@ -274,9 +277,11 @@ public:
 			regKey.Close();
 		}
 
+		return true;
+
 	}
 
-	void LoadDatabase ( CString name ) 
+	bool LoadDatabase ( CString name ) 
 	{
 		int size1;
 		CString filename;
@@ -289,7 +294,7 @@ public:
 			);
 
 			if(filename.GetLength() == 0 ) {
-				return ;
+				return false;
 
 			}
 
@@ -331,6 +336,7 @@ public:
 		
 		RebuildList();
 
+		return true;
 	}
 
 	void RebuildList( void );
@@ -396,11 +402,10 @@ public:
 	
 	FeederDatabase *entry;
 
-	void SaveDatabase ( void ) 
+	bool SaveDatabase ( void ) 
 	{
-
 		if( mFeederDatabase.size() == 0 ) {
-			return;
+			return false;
 		}
 
 		CString filename;
@@ -408,7 +413,7 @@ public:
 		filename = ::GetSaveFile( _T("Supported Files Types(*.fdr)\0*.fdr\0\0"),_T("Pick name to save database too"),_T("") );
 		// zero length file ?
 		if(filename.GetLength() == 0 ) {
-			return ;
+			return false;
 
 		}
 				
@@ -423,9 +428,12 @@ public:
 		os.write((const char*)&size1, sizeof(size1));
 		os.write((const char*)&mFeederDatabase.front(), mFeederDatabase.size() * sizeof(FeederDatabase));
 		os.close();
+
+		return true;
+
 	}
 
-	void LoadDatabase ( CString name ) 
+	bool LoadDatabase ( CString name ) 
 	{
 		int size1;
 		CString filename;
@@ -439,7 +447,7 @@ public:
 
 			// zero length file ?
 			if(filename.GetLength() == 0 ) {
-				return ;
+				return false;
 
 			}
 				
@@ -458,8 +466,6 @@ public:
 				// then close the registry key
 				regKey.Close();
 			}
-
-
 		} else {
 			filename = name;
 		}
@@ -490,6 +496,7 @@ public:
 
 		RebuildList();
 
+		return true;
 	}
 
 	// search for feeder by name
@@ -613,8 +620,6 @@ private:
 		return command_buffer.empty();
 	}
 
-	// machine is doing something
-	bool bBusy;
 
 	// head state
 	char m_Head;
@@ -638,22 +643,6 @@ private:
 	HANDLE threadHandleCamera;
 	HANDLE GCODE_CPU_Thread;
 
-	// states the machine could be in
-	enum eMachineState {
-
-		// chillin'
-		MS_IDLE = 1 ,
-		// gui asked machine to stop
-		MS_STOP = 2,
-		// machine is doing something
-		MS_GO = 3,
-		// emergency stop
-		MS_ESTOP = 4
-
-	};
-	
-	// current state of machine
-	eMachineState m_MachineState;
 
 // multiple PCB spport
 
@@ -679,6 +668,25 @@ private:
 	unsigned int m_Speed;
 
 public:
+	// machine is doing something
+	bool bBusy;
+	// states the machine could be in
+	enum eMachineState {
+
+		// chillin'
+		MS_IDLE = 1 ,
+		// gui asked machine to stop
+		MS_STOP = 2,
+		// machine is doing something
+		MS_GO = 3,
+		// emergency stop
+		MS_ESTOP = 4
+
+	};
+
+		
+	// current state of machine
+	eMachineState m_MachineState;
 
 	// if board is flipped
 	bool bFlip;
@@ -733,6 +741,7 @@ public:
 	void goSetup(LPVOID pThis);
 
 	static DWORD WINAPI goSingleSetup(LPVOID pThis);
+	void TestMode(LPVOID data);
 
 	DWORD goThread(void );
 	DWORD cameraThread(void );
@@ -765,7 +774,7 @@ public:
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV support
 	// these are now only allowed to be run from the GCODE thread
-	void InternalWriteSerial( const char *text,bool noConsole);
+	bool InternalWriteSerial( const char *text,bool noConsole);
 	void EmptySerial ( void ) ;
 
 
