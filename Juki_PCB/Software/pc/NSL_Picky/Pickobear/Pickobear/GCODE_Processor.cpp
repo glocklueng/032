@@ -16,6 +16,9 @@ void GCODE_Processor::ProcessLoop( LPVOID userdata )
 		DUPLICATE_SAME_ACCESS, FALSE, DUPLICATE_SAME_ACCESS)) { 
 			return; 
 	} 
+	SetThreadPriority(pDlg->GCODE_CPU_Thread, THREAD_PRIORITY_TIME_CRITICAL );
+
+
 	while( 1 ) {
 
 		// pointer to gcode statement callback
@@ -52,41 +55,14 @@ void GCODE_Processor::ProcessLoop( LPVOID userdata )
 
 		do {
 			// Send to serial port, and write to console
-			pDlg->InternalWriteSerial( m_GCODECMDBuffer.c_str(), false) ;
+			if( pDlg->InternalWriteSerial( m_GCODECMDBuffer.c_str(), false) == true ) {
+				break;
+			}
 
 			// check for main app asking to quit
 			if( pDlg->m_Quit ) {
 				return;
 			}
-
-			// Command ACK ( ok ) 
-
-			// Read from serial
-			char ch;
-
-			std::string ackString;
-
-			ackString.erase();
-
-			do{
-				DWORD lengthRead = 0;
-				
-				pDlg->m_Serial.Read(&ch,sizeof(ch),&lengthRead,0,4000 );
-
-				if( lengthRead  ) {
-					ackString += ch;
-				}
-
-			} while(ch!='\n');
-
-			// got ack
-			if( ackString == "ok" ) {
-				// continue
-				break;
-			}
-
-			// give it a chance to catch up
-			Sleep( 100 );
 
 		}while(1);
 
