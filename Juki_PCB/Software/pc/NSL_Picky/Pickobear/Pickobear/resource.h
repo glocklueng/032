@@ -90,6 +90,8 @@
 #define IDC_SIMULATION                  1073
 #define IDC_DELETE_FEEDER               1074
 #define IDC_COUNT_EDIT                  1075
+#define IDC_DELETE_FEEDER2              1075
+#define IDC_TRANSFER_XY                 1075
 #define IDC_MACHINE_BUSY                1076
 #define IDC_PCB_FLIP                    1077
 #define IDC_EDIT_COMPONENT              1078

@@ -571,7 +571,8 @@ class CPickobearDlg : public CDialog
 
 private:
 
-	GCODE_Processor m_GCODE_CPU;
+	//Not using this yet, this automatically spawns a thread
+	//GCODE_Processor m_GCODE_CPU;
 	
 	// The camera windows
 	COpenGLControl m_UpCameraWindow;
@@ -697,6 +698,8 @@ public:
 	// used by the gui to pass text from threads to the console
 	CString m_TextOut;
 
+	long m_TargetXum;
+	long m_TargetYum;
 
 
 // Construction
@@ -870,4 +873,5 @@ public:
 	afx_msg void OnBnClickedEstop();
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	CEdit m_StatusBar;
+	afx_msg void OnBnClickedTransferXy();
 };

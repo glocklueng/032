@@ -31,8 +31,8 @@
 //   change camera offset to user definable
 //   add x,y update to feeder/components
 //   remove/fix all the MFC child thread updates (lots of changes) (seems to be ok)
-//   Feeder SetCount isn't properly updated in some cases.
-//   Cache m_Side since user can change it during a GO process
+//   Feeder SetCount isn't properly updated in some cases. (fixed)
+//   Cache m_Side since user can change it during a GO process (done)
 
 // Recently added :-
 //   added multiple PCB offsets  (not tested!)
@@ -56,6 +56,7 @@
 //   EmptySerial wasn't flushing the buffer correctly
 
 #include "stdafx.h"
+#include "PickobearDlg.h"
 
 // camera offset in X
 #define CAMERA_X_OFFSET ( -200 )
@@ -129,6 +130,10 @@ CPickobearDlg::CPickobearDlg(CWnd* pParent /*=NULL*/)
 	, updateThreadHandle(0)
 	, m_StepSizeUM(1)
 	, threadProcessGCODE(0)
+	, GCODE_CPU_Thread(0)
+	, m_TargetXum(0)
+	, m_TargetYum(0)
+
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 
@@ -136,8 +141,6 @@ CPickobearDlg::CPickobearDlg(CWnd* pParent /*=NULL*/)
 	m_GCODECMDBuffer.erase();
 
 	m_PCBs.clear();
-
-
 }
 
 void CPickobearDlg::DoDataExchange(CDataExchange* pDX)
@@ -227,6 +230,7 @@ BEGIN_MESSAGE_MAP(CPickobearDlg, CDialog)
 	ON_MESSAGE (PB_UPDATE_ALERT, UpdateAlertMessage)
 	ON_MESSAGE (PB_UPDATE_XY, UpdateXY)
 	ON_MESSAGE (PB_TEXT_OUT, UpdateTextOut)
+	ON_BN_CLICKED(IDC_TRANSFER_XY, &CPickobearDlg::OnBnClickedTransferXy)
 END_MESSAGE_MAP()
 
 BEGIN_MESSAGE_MAP(CListCtrl_Components, CListCtrl)
@@ -240,7 +244,7 @@ BEGIN_MESSAGE_MAP(CListCtrl_FeederList, CListCtrl)
 END_MESSAGE_MAP()
 
 /**
- * 
+ * PreSubclassWindow - set extended style to use full row select
  *
  * @param none used
  * @return 
@@ -259,7 +263,7 @@ void CListCtrl_Components::PreSubclassWindow()
 }
 
 /**
- * 
+ * PreSubclassWindow - set extended style to use full row select
  *
  * @param none used
  * @return 
@@ -278,14 +282,15 @@ void CListCtrl_FeederList::PreSubclassWindow()
 }
 
 // CPickobearDlg message handlers
+// registry names
 static const WCHAR *pszName = L"cameras";
 static const WCHAR *pszKey = L"PickoBear";
 
 /**
- * 
+ * GetRegistryDWORD - Get a DWORD from the registry
  *
- * @param none used
- * @return 
+ * @param name , item to fetch, defaultValue, default in case not found
+ * @return DWORD value of item or defaultValue if not found
  *        
  */
 DWORD GetRegistryDWORD( CString name , DWORD defaultValue )
@@ -319,11 +324,11 @@ DWORD GetRegistryDWORD( CString name , DWORD defaultValue )
 }
 
 /**
- * 
+ * OnInitDialog - Does presetup of GUI etc, initialise cameras, serial ports etc.
  *
  * @param none used
  * @return 
- *        
+ * @todo serial picker
  */
 BOOL CPickobearDlg::OnInitDialog()
 {
@@ -805,7 +810,7 @@ void CPickobearDlg::OnBnClickedHome()
 // this is the home callback
 
 /**
- * 
+ * Home_callback - called after home operation (suitable for using in thread)
  *
  * @param none used
  * @return 
@@ -817,7 +822,7 @@ bool CPickobearDlg::Home_callback( void *pThis, void *userdata )
 }
 
 /**
- * 
+ * Home_cb2 - actual home callback
  *
  * @param none used
  * @return 
@@ -861,9 +866,9 @@ bool CPickobearDlg::Home_cb2(void *userdata )
 
 
 /**
- * 
+ * BuildGCodeMove - make the actual GCODE G command from coords and speed
  *
- * @param none used
+ * @param output buffer to put in, length of buffer, mode 0/1 , xy position, F speed
  * @return 
  *        
  */
@@ -872,8 +877,11 @@ bool BuildGCodeMove( char *output, int length, int mode , long x, long y, long s
 	long double tx,ty;
 
 	ASSERT( output) ;
+	
+	if( output == NULL ) 
+		return false;
 
-	// limit the move
+	// limit the move (move to config )
 	if( x > 364550 ) {
 
 		int ret = AfxMessageBox(L"X out of limits, press OK to change to stay within limits, or cancel to stop move",MB_OKCANCEL|MB_ICONHAND);
@@ -898,14 +906,13 @@ bool BuildGCodeMove( char *output, int length, int mode , long x, long y, long s
 
 	memset(output,0,length);
 
-	// clamp
+	// clamp (we shouldn't do this, it should be an error thats reported to the user)
 	if ( x < 0 ) x = 0;
 	if ( y < 0 ) y = 0;
 
-	
 	// tx,ty this is in mm, x y and microns
-	tx = (long double)x / 1000.0 ;
-	ty = (long double)y / 1000.0;
+	tx = (long double) x / 1000.0 ;
+	ty = (long double) y / 1000.0;
 
 	_RPT4(_CRT_WARN,"BuildGCodeMove: (%d, %d) - (%g,%g)\n",x,y,tx,ty);
 
@@ -913,12 +920,11 @@ bool BuildGCodeMove( char *output, int length, int mode , long x, long y, long s
 
 	_RPT1(_CRT_WARN,"BuildGCodeMove:  %s\n",output);
 
-
 	return true;
 }
 
 /**
- * 
+ * HomeTest -are we at home position? ( upedate/limit function does this already )
  *
  * @param none used
  * @return 
@@ -940,9 +946,9 @@ bool CPickobearDlg::HomeTest( void )
 
 // move head can only go to (int)(x/40)*40,same for y
 /**
- * 
+ * MoveHeadSlow - request to move the head at a fixed lower speed
  *
- * @param none used
+ * @param XY coords, wait is blocked/non blocked move
  * @return 
  *        
  */
@@ -957,8 +963,6 @@ bool CPickobearDlg::MoveHeadSlow(  long x, long y, bool wait=false )
 	if ( x < 0 ) x = 0;
 	if ( y < 0 ) x = 0;
 
-	m_headXPosUM = x ; 
-	m_headYPosUM = y ;
 
 	if ( false == BuildGCodeMove(buffer,sizeof(buffer),1,x,y,2000) ) {
 		return false;
@@ -967,6 +971,10 @@ bool CPickobearDlg::MoveHeadSlow(  long x, long y, bool wait=false )
 	//	_RPT5(_CRT_WARN,"current pos = %dum,%dum\nGoing to %dum,%dum\n%s\n",m_headXPosUM,m_headYPosUM,x,y,buffer);
 	
 	// working on simplification
+	
+	m_TargetXum = x;
+	m_TargetYum = y;
+
 	AddGCODECommand(buffer,"MoveHeadSlow: Move Failed",UpdatePosition_callback);
 		
 	if( wait == true ) {
@@ -981,9 +989,9 @@ bool CPickobearDlg::MoveHeadSlow(  long x, long y, bool wait=false )
 }
 // move head can only go to (int)(x/40)*40,same for y
 /**
- * 
+ * MoveHead - request to move the head
  *
- * @param none used
+ * @param XY coords, wait is blocked/non blocked move
  * @return 
  *        
  */
@@ -1006,16 +1014,17 @@ bool CPickobearDlg::MoveHead(  long x, long y, bool wait=false )
 	if ( x < 0 ) x = 0;
 	if ( y < 0 ) x = 0;
 
-	// also bad
-	m_headXPosUM = x ; 
-	m_headYPosUM = y;
-
 	if( false == BuildGCodeMove(buffer,sizeof(buffer),1,x,y,m_Speed) ) {
 		_RPT0(_CRT_WARN,"BuildGCodeMove: failed\n");
 		return false;
 	}
 
 	//	_RPT5(_CRT_WARN,"current pos = %dum,%dum\nGoing to %dum,%dum\n%s\n",m_headXPosUM,m_headYPosUM,x,y,buffer)
+	
+	// where we want to go
+	m_TargetXum = x;
+	m_TargetYum = y;
+
 
 	AddGCODECommand(buffer,"MoveHead failed",UpdatePosition_callback );
 
@@ -1031,7 +1040,7 @@ bool CPickobearDlg::MoveHead(  long x, long y, bool wait=false )
 }
 // this is the GCODE callback
 /**
- * 
+ * GCODE_CommandAck_callback - called after GCODE command executes
  *
  * @param none used
  * @return 
@@ -1045,7 +1054,7 @@ bool CPickobearDlg::GCODE_CommandAck_callback( void *pThis, void *userdata )
 }
 
 /**
- * 
+ * GCODE_CommandAck_cb2 - actual GCODE done callback
  *
  * @param none used
  * @return 
@@ -1077,7 +1086,7 @@ bool CPickobearDlg::GCODE_CommandAck_cb2(void *userdata )
 
 // this is the default callback
 /**
- * 
+ * UpdatePosition_callback - called after gcode execution that needs to update the head position
  *
  * @param none used
  * @return 
@@ -1091,7 +1100,7 @@ bool CPickobearDlg::UpdatePosition_callback( void *pThis, void *userdata )
 }
 
 /**
- * 
+ * UpdatePosition_cb2 - actual update xy callback
  *
  * @param none used
  * @return 
@@ -1101,7 +1110,10 @@ bool CPickobearDlg::UpdatePosition_cb2(void *userdata )
 {
 	// passed, this means GCODE was accepted.
 	if( userdata == (void*)1 )  {
-		PostMessage (PB_UPDATE_XY, m_headXPosUM ,m_headYPosUM );
+
+		// update the gloval position
+		PostMessage (PB_UPDATE_XY, m_TargetXum,m_TargetYum);
+
 	} else {
 
 		CString message( (const char *)userdata);
@@ -1116,9 +1128,9 @@ bool CPickobearDlg::UpdatePosition_cb2(void *userdata )
 
 // move head can only go to (int)(x/40)*40,same for y
 /**
- * 
+ * MoveHeadRel - request move head using relative instead of absolute coordinates
  *
- * @param none used
+ * @param XY position, wait block or non blocking
  * @return 
  *        
  */
@@ -1130,19 +1142,24 @@ bool CPickobearDlg::MoveHeadRel(  long x, long y, bool wait=false )
 
 	char buffer[ 256 ];
 
-	if(false == BuildGCodeMove(buffer,sizeof(buffer),0,m_headXPosUM+x,m_headYPosUM+y,4000) ) 
+	if(false == BuildGCodeMove(buffer,sizeof(buffer),0,m_headXPosUM+x,m_headYPosUM+y,m_Speed) ) 
 		return false;
+	
+	// Target x/y
+	m_TargetXum = x;
+	m_TargetYum = y;
+
 
 	AddGCODECommand(buffer,"MoveHeadRel failed",UpdatePosition_callback );
 
-	// what to do about this
-
 	PostMessage (PB_UPDATE_XY, m_headXPosUM +x,m_headYPosUM+y );
-	
-	
+		
 	if( wait == true ) {
+		
 		// wait for command to process, this locks the gui....
-		while( QueueEmpty() == false ) Sleep(10);
+		while( QueueEmpty() == false ) {
+			Sleep( 30 );
+		}
 	}
 
 
@@ -1357,7 +1374,7 @@ char CPickobearDlg::CheckAck( char *ack1 )
 
 
 /**
- * 
+ * OnBnClickedPark - park head
  *
  * @param none used
  * @return 
@@ -1370,7 +1387,7 @@ void CPickobearDlg::OnBnClickedPark()
 
 
 /**
- * 
+ * GotoTestPad - moves head to vacuum test pad
  *
  * @param none used
  * @return 
@@ -1382,7 +1399,7 @@ void CPickobearDlg::GotoTestPad( void )
 }
 
 /**
- * 
+ * OnBnClickedTool1 - change to tool 1
  *
  * @param none used
  * @return 
@@ -1399,7 +1416,7 @@ void CPickobearDlg::OnBnClickedTool1()
 
 
 /**
- * 
+ * OnBnClickedTool2 - change to tool 2
  *
  * @param none used
  * @return 
@@ -1477,7 +1494,7 @@ void CPickobearDlg::OnBnClickedTool6()
 }
 
 /**
- * 
+ * OnBnClickedHead - toggle head up and down
  *
  * @param none used
  * @return 
@@ -1502,7 +1519,7 @@ void CPickobearDlg::OnBnClickedHead()
 
 
 /**
- * 
+ * OnNMCustomdrawRotate - sends out a rotate to the head (pretty useless except testing)
  *
  * @param none used
  * @return 
@@ -1536,7 +1553,7 @@ void CPickobearDlg::OnNMCustomdrawRotate(NMHDR *pNMHDR, LRESULT *pResult)
 }
 
 /**
- * 
+ * OnBnClickedUp move head up by step size
  *
  * @param none used
  * @return 
@@ -1547,13 +1564,11 @@ void CPickobearDlg::OnBnClickedUp()
 	_RPT1(_CRT_WARN,"StepSize %d\n",m_StepSizeUM);
 	if( m_StepSizeUM == 0 ) m_StepSizeUM = 1;
 
-	m_headYPosUM += m_StepSizeUM;
-
-	MoveHead( m_headXPosUM, m_headYPosUM) ;
+	MoveHead( m_headXPosUM, m_headYPosUM + m_StepSizeUM) ;
 }
 
 /**
- * 
+ *  OnBnClickedDown move head down  by step size
  *
  * @param none used
  * @return 
@@ -1566,13 +1581,11 @@ void CPickobearDlg::OnBnClickedDown()
 	if( m_StepSizeUM == 0 ) 
 		m_StepSizeUM = 1;
 
-	m_headYPosUM -= m_StepSizeUM;
-
-	MoveHead( m_headXPosUM, m_headYPosUM) ;
+	MoveHead( m_headXPosUM, m_headYPosUM - m_StepSizeUM) ;
 }
 
 /**
- * 
+ * OnBnClickedLeft move head left by step size
  *
  * @param none used
  * @return 
@@ -1583,13 +1596,11 @@ void CPickobearDlg::OnBnClickedLeft()
 	_RPT1(_CRT_WARN,"StepSize %d\n",m_StepSizeUM);
 	if( m_StepSizeUM == 0 ) m_StepSizeUM = 1;
 
-	m_headXPosUM -= m_StepSizeUM;
-
-	MoveHead( m_headXPosUM, m_headYPosUM) ;
+	MoveHead( m_headXPosUM - m_StepSizeUM, m_headYPosUM) ;
 }
 
 /**
- * 
+ * OnBnClickedRight move head right by stepsize
  *
  * @param none used
  * @return 
@@ -1601,13 +1612,11 @@ void CPickobearDlg::OnBnClickedRight()
 	_RPT1(_CRT_WARN,"StepSize %d\n",m_StepSizeUM);
 	if( m_StepSizeUM == 0 ) m_StepSizeUM = 1;
 
-	m_headXPosUM += m_StepSizeUM;
-
-	MoveHead( m_headXPosUM, m_headYPosUM) ;
+	MoveHead( m_headXPosUM + m_StepSizeUM, m_headYPosUM) ;
 }
 
 /**
- * 
+ * OnBnClickedUpleft move head left by step size
  *
  * @param none used
  * @return 
@@ -1617,16 +1626,14 @@ void CPickobearDlg::OnBnClickedUpleft()
 {
 	long stepsize = (m_StepSize.GetCurSel() * 2);
 	_RPT1(_CRT_WARN,"StepSize %d\n",m_StepSizeUM);
-	if( stepsize == 0 ) m_StepSizeUM = 1;
+	if( stepsize == 0 )
+		m_StepSizeUM = 1;
 
-	m_headXPosUM -= m_StepSizeUM;
-	m_headYPosUM += m_StepSizeUM;
-
-	MoveHead( m_headXPosUM, m_headYPosUM) ;
+	MoveHead( m_headXPosUM -= m_StepSizeUM, m_headYPosUM += m_StepSizeUM) ;
 }
 
 /**
- * 
+ * OnBnClickedUpright move head up and right by stepsize
  *
  * @param none used
  * @return 
@@ -1639,14 +1646,11 @@ void CPickobearDlg::OnBnClickedUpright()
 	if( m_StepSizeUM == 0 ) 
 		m_StepSizeUM = 1;
 
-	m_headXPosUM += m_StepSizeUM;
-	m_headYPosUM += m_StepSizeUM;
-
-	MoveHead( m_headXPosUM, m_headYPosUM) ;
+	MoveHead( m_headXPosUM + m_StepSizeUM, m_headYPosUM + m_StepSizeUM) ;
 }
 
 /**
- * 
+ *  OnBnClickedLeftdown move head left and down by stepsize
  *
  * @param none used
  * @return 
@@ -1655,18 +1659,16 @@ void CPickobearDlg::OnBnClickedUpright()
 void CPickobearDlg::OnBnClickedLeftdown()
 {
 	_RPT1(_CRT_WARN,"StepSize %d\n",m_StepSizeUM);
+
 	if( m_StepSizeUM == 0 ) 
 		m_StepSizeUM = 1;
 
 
-	m_headXPosUM -= m_StepSizeUM;
-	m_headYPosUM += m_StepSizeUM;
-
-	MoveHead( m_headXPosUM, m_headYPosUM) ;
+	MoveHead( m_headXPosUM - m_StepSizeUM, m_headYPosUM + m_StepSizeUM) ;
 }
 
 /**
- * 
+ * OnBnClickedBottomleft - move head towards bottom left by step size
  *
  * @param none used
  * @return 
@@ -1679,14 +1681,11 @@ void CPickobearDlg::OnBnClickedBottomleft()
 	if( m_StepSizeUM == 0 ) 
 		m_StepSizeUM = 1;
 
-	m_headXPosUM -= m_StepSizeUM;
-	m_headYPosUM -= m_StepSizeUM;
-
-	MoveHead( m_headXPosUM, m_headYPosUM) ;
+	MoveHead( m_headXPosUM -= m_StepSizeUM, m_headYPosUM -= m_StepSizeUM) ;
 }
 
 /**
- * 
+ * OnBnClickedLoad - load component database
  *
  * @param none used
  * @return 
@@ -1700,7 +1699,7 @@ void CPickobearDlg::OnBnClickedLoad()
 }
 
 /**
- * 
+ * OnBnClickedSave - save component database
  *
  * @param none used
  * @return 
@@ -1714,7 +1713,7 @@ void CPickobearDlg::OnBnClickedSave()
 }
 
 /**
- * 
+ * OnBnClickedImport - import CSV into component database
  *
  * @param none used
  * @return 
@@ -1774,7 +1773,7 @@ void CPickobearDlg::OnBnClickedImport()
 }
 
 /**
- * 
+ * GetLoadFile - pops up a requestor for a filename for loading
  *
  * @param none used
  * @return 
@@ -1825,7 +1824,7 @@ CString GetLoadFile( const TCHAR *ptypes, const TCHAR*caption, const TCHAR *pSta
 }
 
 /**
- * 
+ * GetSaveFile get a suitable save file name
  *
  * @param none used
  * @return 
@@ -1867,7 +1866,7 @@ CString GetSaveFile( const TCHAR *ptypes, const TCHAR*caption, const TCHAR *pSta
 }
 
 /**
- * 
+ * goCamera camera thread
  *
  * @param none used
  * @return 
@@ -1897,14 +1896,19 @@ void CPickobearDlg::goCamera(LPVOID pThis)
 
 // Thread for PNP full run
 /**
- * 
+ * goSetup doa full PNP 
  *
  * @param none used
  * @return 
- *        
+ * @todo move stuff into pre run check
  */
 void CPickobearDlg::goSetup(LPVOID pThis)
 {
+	unsigned int local_side;
+
+	// user can change side during pick, so cache it.
+	local_side = m_Side;
+
 	// These are also problematic for the GCODE buffer
 	// Since it is multiple GCODE commands.
 
@@ -1963,7 +1967,7 @@ void CPickobearDlg::goSetup(LPVOID pThis)
 
 			entry = m_ComponentList.at(i);
 
-			if( entry.side !=  m_Side ) {
+			if( entry.side !=  local_side ) {
 
 				_RPT1(_CRT_WARN,"goThread: skipping %s, wrong side selected\n",entry.label);
 				goto skip_part;
@@ -2178,7 +2182,7 @@ skip_part:;
 	} while(m_PCBCount, m_PCBIndex < m_PCBCount ) ;
 
 	// Park machine
-	InternalWriteSerial("G1X14Y15F200\n");
+	OnBnClickedPark();
 
 stop:;
 	
@@ -2200,7 +2204,7 @@ stop:;
 
 
 /**
- * 
+ * PreRunCheck - make sure all the data makes sense
  *
  * @param none used
  * @return 
@@ -2403,7 +2407,6 @@ void CPickobearDlg::OnBnClickedFeeder()
  */
 void CListCtrl_Components::OnHdnItemdblclickList2(NMHDR *pNMHDR, LRESULT *pResult)
 {
-
 	CPickobearDlg *pDlg = (CPickobearDlg*)AfxGetApp()->m_pMainWnd;
 	ASSERT( pDlg );
 
@@ -2415,8 +2418,10 @@ void CListCtrl_Components::OnHdnItemdblclickList2(NMHDR *pNMHDR, LRESULT *pResul
 		return;
 	}
 
-
 	LPNMHEADER phdr = reinterpret_cast<LPNMHEADER>(pNMHDR);
+
+	if( phdr->iItem == -1 ) 
+		return;
 
 	*pResult = 0;
 
@@ -2484,6 +2489,8 @@ void CListCtrl_Components::OnHdnItemdblclickList2(NMHDR *pNMHDR, LRESULT *pResul
 void CListCtrl_FeederList::OnHdnItemdblclickList2(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	LPNMHEADER phdr = reinterpret_cast<LPNMHEADER>(pNMHDR);
+	if( phdr->iItem == -1 ) 
+		return;
 
 	CPickobearDlg *pDlg = (CPickobearDlg*)AfxGetApp()->m_pMainWnd;
 	ASSERT( pDlg );
@@ -2495,7 +2502,6 @@ void CListCtrl_FeederList::OnHdnItemdblclickList2(NMHDR *pNMHDR, LRESULT *pResul
 
 		return;
 	}
-
 
 	// iItem is item number, list is backwards,.. @todo , is this supposed to use GetCount ?
 	int item = (GetCount()-1) - phdr->iItem;
@@ -2635,7 +2641,7 @@ bool SetCurrentPosition( long x,long y)
 }
 
 /**
- * 
+ * OnBnClickedZero - goto to 0,0
  *
  * @param none used
  * @return 
@@ -2648,12 +2654,13 @@ void CPickobearDlg::OnBnClickedZero()
 }
 
 /**
- * 
+ * OnBnClickedOffset set the offset. Tells the PNP where the selected component is) 
  *
  * @param none used
- * @return 
+ * @return none
  *        
  */
+
 //  81775
 // 236275
 
@@ -2661,13 +2668,16 @@ void CPickobearDlg::OnBnClickedOffset()
 {
 	ASSERT( m_ComponentList.entry );
 
-	SetCurrentPosition(m_headXPosUM,m_headYPosUM);
+	if( m_ComponentList.entry  == NULL ) {
+		return;
+	}
 
 	// set the offset.
 	m_ComponentList.m_OffsetX = m_headXPosUM - m_ComponentList.entry->x; 
 
 	// board is natural side up (top)
 	if( bFlip == false ) {
+
 		m_ComponentList.m_OffsetY = m_headYPosUM - (m_ComponentList.entry->y);
 
 		m_ComponentList.m_OffsetX_top = m_ComponentList.m_OffsetX;
@@ -2681,11 +2691,13 @@ void CPickobearDlg::OnBnClickedOffset()
 		m_ComponentList.m_OffsetX_bottom = m_ComponentList.m_OffsetX;
 		m_ComponentList.m_OffsetY_bottom = m_ComponentList.m_OffsetY;
 	}
+
+	// turn it off
 	GetDlgItem( IDC_OFFSET )->EnableWindow( FALSE );
 }
 
 /**
- * 
+ * OnBnClickedGoff - goto wherever offset is, pointless command
  *
  * @param none used
  * @return 
@@ -2697,10 +2709,10 @@ void CPickobearDlg::OnBnClickedGoff()
 }
 
 /**
- * 
+ * OnBnClickedGoxy - Go to positions specifed in XY boxes
  *
  * @param none used
- * @return 
+ * @return  none
  *        
  */
 void CPickobearDlg::OnBnClickedGoxy()
@@ -2709,7 +2721,7 @@ void CPickobearDlg::OnBnClickedGoxy()
 }
 
 /**
- * 
+ * OnEnChangeGox - internal gui stuff, get rid of
  *
  * @param none used
  * @return 
@@ -2721,7 +2733,7 @@ void CPickobearDlg::OnEnChangeGox()
 }
 
 /**
- * 
+ * OnEnChangeGoy- internal gui stuff, get rid of
  *
  * @param none used
  * @return 
@@ -2733,7 +2745,7 @@ void CPickobearDlg::OnEnChangeGoy()
 }
 
 /**
- * 
+ * UTF16toUTF8 convert UTF16 to UTF8
  *
  * @param none used
  * @return 
@@ -2754,7 +2766,7 @@ CStringA UTF16toUTF8(const CStringW& utf16)
 }
 
 /**
- * 
+ * OnBnClickedAddFeeder - Add feeder at current XY
  *
  * @param none used
  * @return 
@@ -2771,11 +2783,10 @@ void CPickobearDlg::OnBnClickedAddFeeder()
 		m_FeederList.AddItem(userInput8.GetString(),m_GOX, m_GOY, 0);
 		userInput8.ReleaseBuffer();
 	}
-
 }
 
 /**
- * 
+ * threadUpdateXY This updates the XY position in the GUI
  *
  * @param none used
  * @return 
@@ -2784,17 +2795,17 @@ void CPickobearDlg::OnBnClickedAddFeeder()
 void CPickobearDlg::threadUpdateXY(LPVOID data)
 {
 	// thread will have some serious issue if this fails.
-
 	// grab a duplicate handle for the thread so we can suspend resume it when needed.
 	if (!DuplicateHandle(GetCurrentProcess(), GetCurrentThread(), GetCurrentProcess(), &updateThreadHandle,
 		DUPLICATE_SAME_ACCESS, FALSE, DUPLICATE_SAME_ACCESS)) { 
 			return; 
 	} 
 	
+	// low priority thread
 	SetThreadPriority( updateThreadHandle, THREAD_PRIORITY_BELOW_NORMAL);
 
-	while( m_Quit == 0  )
-	{
+	// run until main thread shuts down
+	while( m_Quit == 0  ) {
 
 		// not allowed to process while GCODE still exists in buffer, machine isn't idle or is otherwise busy
 		if ( !command_buffer.empty() || bBusy || m_MachineState != MS_IDLE  ) {
@@ -2804,26 +2815,32 @@ void CPickobearDlg::threadUpdateXY(LPVOID data)
 			goto suspend;
 		}
 
-		_RPT0(_CRT_WARN,"threadUpdateXY\n");
+
+		// too noisy
+		//_RPT0(_CRT_WARN,"threadUpdateXY\n");
 
 		// mark as busy
 		m_MachineState = MS_GO;
 
+		// this will generate a delay
 		EmptySerial();
 
 		// M29 is a special command, its called often to update the limit switch state, and it doesn't currently properly ACK, it only replies with the limit switches
 		// we can handle this in the gcode execution buffer
 		InternalWriteSerial("M29\n",true);
 
+		// should be enough time for a reply	
 		Sleep( 100 );
 
 		DWORD lengthRead=0;
-		m_Serial.Read( &m_LimitState,1,&lengthRead,0,100);
+
+		// read 1 char
+		m_Serial.Read( &m_LimitState,sizeof( m_LimitState ) ,&lengthRead,0,100);
 
 		// machine can go back to IDLE ( should be previous mode ) ?
 		m_MachineState = MS_IDLE ;
 
-		// no reply
+		// no reply, skip til next time
 		if (lengthRead == 0 ) {
 			goto suspend;
 		}
@@ -2832,7 +2849,6 @@ void CPickobearDlg::threadUpdateXY(LPVOID data)
 		if( !(m_LimitState & ( 1 << 7 ) ) ){
 
 			_RPT0(_CRT_WARN,"OnBnClickedUpdate: invalid response\n");
-			m_MachineState = MS_IDLE ;
 
 			goto suspend;
 		}
@@ -2843,33 +2859,43 @@ void CPickobearDlg::threadUpdateXY(LPVOID data)
 		// update GUI (should this move back into OnTimer ) ?
 
 		if( m_LimitState & (1 << 1 ) ) { 
-			((CButton*)GetDlgItem(IDC_XL1))->SetCheck(1);_RPT0(_CRT_WARN,"X1 Limit\n");} 
-		else 
+			((CButton*)GetDlgItem(IDC_XL1))->SetCheck(1);
+			m_MachineState = MS_ESTOP;
+			_RPT0(_CRT_WARN,"X1 Limit\n");
+		} else 
 			((CButton*)GetDlgItem(IDC_XL1))->SetCheck(0);
 
 		if( m_LimitState & (1 << 2 ) ) {
-			((CButton*)GetDlgItem(IDC_XL2))->SetCheck(1);_RPT0(_CRT_WARN,"X2 Limit\n");} 
-		else 
+			((CButton*)GetDlgItem(IDC_XL2))->SetCheck(1);
+			m_MachineState = MS_ESTOP;
+			_RPT0(_CRT_WARN,"X2 Limit\n");
+		} else 
 			((CButton*)GetDlgItem(IDC_XL2))->SetCheck(0);
 
 		if( m_LimitState & (1 << 3 ) ) {
-			((CButton*)GetDlgItem(IDC_YL1))->SetCheck(1);_RPT0(_CRT_WARN,"Y1 Limit\n");} 
-		else 
+			((CButton*)GetDlgItem(IDC_YL1))->SetCheck(1);
+			m_MachineState = MS_ESTOP;
+			_RPT0(_CRT_WARN,"Y1 Limit\n");
+		} else 
 			((CButton*)GetDlgItem(IDC_YL1))->SetCheck(0);
 
 		if( m_LimitState & (1 << 4 ) ) {
-			((CButton*)GetDlgItem(IDC_YL2))->SetCheck(1);_RPT0(_CRT_WARN,"Y2 Limit\n");} 
-		else 
+			((CButton*)GetDlgItem(IDC_YL2))->SetCheck(1);
+			m_MachineState = MS_ESTOP;
+			_RPT0(_CRT_WARN,"Y2 Limit\n");
+		} else 
 			((CButton*)GetDlgItem(IDC_YL2))->SetCheck(0);
 
 		if( m_LimitState & (1 << 5 ) ) {
-			((CButton*)GetDlgItem(IDC_XHOME))->SetCheck(1);_RPT0(_CRT_WARN,"X Home\n");} 
-		else 
+			((CButton*)GetDlgItem(IDC_XHOME))->SetCheck(1);
+			//_RPT0(_CRT_WARN,"X Home\n");
+		} else 
 			((CButton*)GetDlgItem(IDC_XHOME))->SetCheck(0);
 
 		if( m_LimitState & (1 << 6 ) ) {
-			((CButton*)GetDlgItem(IDC_YHOME))->SetCheck(1);_RPT0(_CRT_WARN,"Y Home\n");} 
-		else 
+			((CButton*)GetDlgItem(IDC_YHOME))->SetCheck(1);
+			//_RPT0(_CRT_WARN,"Y Home\n");
+		} else 
 			((CButton*)GetDlgItem(IDC_YHOME))->SetCheck(0);
 
 suspend:;
@@ -2884,7 +2910,7 @@ suspend:;
 // needs some sort of interlock.
 
 /**
- * 
+ * OnBnClickedUpdate - user clicked update button
  *
  * @param none used
  * @return 
@@ -2997,7 +3023,7 @@ enum {
 };
 
 /**
- * OnNMRClickList2  - Assign feeder
+ * OnNMRClickList2  - Assign feeder to component
  *
  * @param none used
  * @return 
@@ -3054,7 +3080,7 @@ void CListCtrl_Components::OnNMRClickList2(NMHDR *pNMHDR, LRESULT *pResult)
 }
 
 /**
- * 
+ * AddItem - ADd entry to feeder database
  *
  * @param none used
  * @return 
@@ -3101,7 +3127,7 @@ void CListCtrl_FeederList::AddItem( const char *label,const long x,long y,short 
 }
 
 /**
- * 
+ * OnBnClickedLoadFeeder - Load feeder database from disk
  *
  * @param none used
  * @return 
@@ -3116,7 +3142,7 @@ void CPickobearDlg::OnBnClickedLoadFeeder()
 }
 
 /**
- * 
+ * OnBnClickedSaveFeeder - Save feeder database to disk
  *
  * @param none used
  * @return 
@@ -3130,7 +3156,7 @@ void CPickobearDlg::OnBnClickedSaveFeeder()
 }
 
 /**
- * 
+ * OnContextMenu - not used.
  *
  * @param none used
  * @return 
@@ -3170,7 +3196,7 @@ void CListCtrl_FeederList::OnContextMenu(CWnd*, CPoint point)
 // this seems flakey
 
 /**
- * 
+ * OnSerialMsg - event driven serial, doesn't work
  *
  * @param none used
  * @return 
@@ -3197,7 +3223,7 @@ afx_msg LRESULT CPickobearDlg::OnSerialMsg (WPARAM wParam, LPARAM lParam)
 //bottom camera
 
 /**
- * 
+ * OnCbnSelchangeDownCamera - change camera, this needs a lot more logic
  *
  * @param none used
  * @return 
@@ -3232,7 +3258,7 @@ void CPickobearDlg::OnCbnSelchangeDownCamera()
 //top camera
 
 /**
- * 
+ * OnCbnSelchangeUpCamera - change camera, this needs a lot more logic
  *
  * @param none used
  * @return 
@@ -3267,7 +3293,7 @@ void CPickobearDlg::OnCbnSelchangeUpCamera()
 }
 
 /**
- * 
+ * OnBnClickedAddLowerright - assign lower right position to feeder
  *
  * @param none used
  * @return 
@@ -3305,7 +3331,7 @@ void CPickobearDlg::OnBnClickedAddLowerright()
 }
 
 /**
- * 
+ * OnCbnSelchangeStepsize - change step size for moving around with cursors
  *
  * @param none used
  * @return 
@@ -3347,7 +3373,7 @@ void CPickobearDlg::OnCbnSelchangeStepsize()
 
 
 /**
- * 
+ * OnBnClickedEditfeeder - pop up feeder edit dialog
  *
  * @param none used
  * @return 
@@ -3398,11 +3424,12 @@ void CPickobearDlg::OnBnClickedEditfeeder()
 
 
 /**
- * 
+ * OnBnClickedAssignfeeder - assign a feeder to a component, not finished
  *
  * @param none used
  * @return 
- *        
+ * @todo implement
+ *
  */
 void CPickobearDlg::OnBnClickedAssignfeeder()
 {
@@ -3423,7 +3450,7 @@ void CPickobearDlg::OnBnClickedAssignfeeder()
 }
 
 /**
- * 
+ * RebuildList - rebuild the list in the gui of the feeders.
  *
  * @param none used
  * @return 
@@ -3514,7 +3541,7 @@ void CListCtrl_Components::RebuildList( void )
 
 
 /**
- * 
+ * OnBnClickedConsole - hide or show the GCODE console
  *
  * @param none used
  * @return 
@@ -3534,7 +3561,7 @@ void CPickobearDlg::OnBnClickedConsole()
 
 
 /**
- * 
+ * OnBnClickedGo2 - place one part
  *
  * @param none used
  * @return 
@@ -3568,7 +3595,7 @@ void CPickobearDlg::OnBnClickedGo2()
 }
 
 /**
- * 
+ * goSingleSetup - single place thread
  *
  * @param none used
  * @return 
@@ -3581,7 +3608,7 @@ DWORD WINAPI CPickobearDlg::goSingleSetup(LPVOID pThis)
 
 
 /**
- * 
+ * OnBnClickedSwapHeadCamera - swap position of camera and head
  *
  * @param none used
  * @return 
@@ -3599,7 +3626,7 @@ void CPickobearDlg::OnBnClickedSwapHeadCamera()
 }
 
 /**
- * 
+ * OnBnClickedEditComponent - edit component in popup dialog
  *
  * @param none used
  * @return 
@@ -3667,7 +3694,7 @@ void CPickobearDlg::OnBnClickedEditComponent()
 
 
 /**
- * 
+ * goSingleThread -  place one part
  *
  * @param none used
  * @return 
@@ -3933,10 +3960,10 @@ skip:;
 
 
 /**
- * 
+ * OnBnClickedDeleteFeeder -  Delete a feeder
  *
  * @param none used
- * @return 
+ * @return none
  *        
  */
 void CPickobearDlg::OnBnClickedDeleteFeeder()
@@ -3961,9 +3988,8 @@ void CPickobearDlg::OnBnClickedDeleteFeeder()
 	}
 }
 
-// toggle the pcb side
 /**
- * 
+ * flip the pcb, this is not layer but front/back, it mirrors the coordinates
  *
  * @param none used
  * @return 
@@ -3983,10 +4009,10 @@ void CPickobearDlg::OnBnClickedPcbFlip()
 }
 
 /**
- * 
+ * OnToolTipNotify - Show a tool tip for a ID
  *
- * @param none used
- * @return 
+ * @param id - id of dialog ite,. pNMHDR controls id handle pResult set to 0 if tooltip provided
+ * @return  passed in via pResult param, return FALSE if no tooltip set
  *        
  */
 BOOL CPickobearDlg::OnToolTipNotify( UINT id,
@@ -4036,7 +4062,6 @@ BOOL CPickobearDlg::OnToolTipNotify( UINT id,
             pTTT->lpszText = _T("Move head to the Left Down by <steps>");
             break;
 			
-
 		case IDC_TOOL1:
             pTTT->lpszText = _T("Loads tool A");
             break;
@@ -4214,7 +4239,7 @@ void CPickobearDlg::OnBnClickedVacuumToggle()
 
 
 /**
- *  update machine moving speed  F parameter in GCODE
+ * OnCbnSelchangeGSpeed - update machine moving speed  F parameter in GCODE
  *
  * @param none used
  * @return none
@@ -4231,7 +4256,7 @@ void CPickobearDlg::OnCbnSelchangeGSpeed()
 
 
 /**
- * OnStnClickedSimulation - not yet implemented
+ * OnStnClickedSimulation - not yet implemented, supposed to visualise position
  *
  * @param none used
  * @return 
@@ -4240,8 +4265,6 @@ void CPickobearDlg::OnCbnSelchangeGSpeed()
 void CPickobearDlg::OnStnClickedSimulation()
 {
 }
-
-
 
 /**
  * OnBnClickedAddPcb - Add PCB offset at current XY head poisition
@@ -4560,21 +4583,49 @@ void CPickobearDlg::OnClose()
 		while(ResumeThread(threadProcessGCODE)>0);
 	}
 
-	if(threadHandleCamera) while (WAIT_OBJECT_0 != WaitForSingleObject(threadHandleCamera, 200)) {
-		_RPT0(_CRT_WARN,"waiting on camera thread\n");
-	}
-	if(updateThreadHandle) while (WAIT_OBJECT_0 != WaitForSingleObject(updateThreadHandle, 200)){
-		_RPT0(_CRT_WARN,"waiting on update thread\n");
-	}
-	if(threadProcessGCODE) while (WAIT_OBJECT_0 != WaitForSingleObject(threadProcessGCODE, 200)){
-		_RPT0(_CRT_WARN,"waiting on gcode thread\n");
-	}
-	if(GCODE_CPU_Thread) while (WAIT_OBJECT_0 != WaitForSingleObject(GCODE_CPU_Thread, 200)){
-		_RPT0(_CRT_WARN,"waiting on gcode cpu thread\n");
-	}
-	threadProcessGCODE = 0;
-	updateThreadHandle = 0;
+	int timeout;
+	
+
+	// wait for all the threads to shutdown
+	timeout = 100;
+
+	if(threadHandleCamera)
+		while (WAIT_OBJECT_0 != WaitForSingleObject(threadHandleCamera, 200)) {
+			_RPT0(_CRT_WARN,"waiting on camera thread\n");
+			timeout--;
+			if( timeout == 0) break;
+		}
 	threadHandleCamera = 0;
+
+	timeout = 100;
+
+	if(updateThreadHandle) 
+		while (WAIT_OBJECT_0 != WaitForSingleObject(updateThreadHandle, 200)){
+			_RPT0(_CRT_WARN,"waiting on update thread\n");
+			timeout--;
+			if( timeout == 0) break;
+		}
+	updateThreadHandle = 0;
+
+	timeout = 100;
+
+	if(threadProcessGCODE) 
+		while (WAIT_OBJECT_0 != WaitForSingleObject(threadProcessGCODE, 200)){
+			_RPT0(_CRT_WARN,"waiting on gcode thread\n");
+			timeout--;
+			if( timeout == 0) break;
+		}
+	threadProcessGCODE = 0;
+
+	timeout = 100;
+
+	if(GCODE_CPU_Thread) 
+		while (WAIT_OBJECT_0 != WaitForSingleObject(GCODE_CPU_Thread, 200)){
+			_RPT0(_CRT_WARN,"waiting on gcode cpu thread\n");
+			timeout--;
+			if( timeout == 0) break;
+		}
+
 	GCODE_CPU_Thread = 0;
 
 	// save databases if they've been changed.
@@ -4626,7 +4677,7 @@ CPickobearDlg::~CPickobearDlg()
 
 
 /**
- *  If machines sees this , everything will quit
+ *  If machine sees this , everything will stop and unhome
  *
  * @param none used
  * @return 
@@ -4650,14 +4701,12 @@ void CPickobearDlg::OnBnClickedEstop()
 
 }
 
-
-// Making a thread for GCODE commands instead.
-
 // Should this be timer based ? timer will block the message pump, so it'd have to be a timer in the second thread
 // this should be the only function writing to the serial port.
-// in practise it doesnt work though
+// in practise it doesnt work well though, most of the bugs are ironed out now
+
 /**
- * 
+ * StartGCODEThread - Process the GCODE 
  *
  * @param none used
  * @return 
@@ -4815,8 +4864,9 @@ retry:;
 
 // this needs to add the GCODE command, a descriptive string and a callback with pass/fail/userdata
 // only this command should add to the GCODE buffer
+
 /**
- * 
+ * AddGCODECommand - ADD GCODE command to buffer
  *
  * @param none used
  * @return 
@@ -4844,7 +4894,7 @@ bool CPickobearDlg::AddGCODECommand( std::string gcode ,std::string error_messag
 }
 
 /**
- * 
+ * OnTimer - handles the estop and the gui XY position
  *
  * @param none used
  * @return 
@@ -4874,7 +4924,7 @@ void CPickobearDlg::OnTimer(UINT_PTR nIDEvent)
 			if ( command_buffer.empty() == true && bBusy == false && m_MachineState == MS_IDLE  ) {
 			
 				if( updateThreadHandle) {
-					_RPT0(_CRT_WARN,"Resuming update thread\n");
+					//_RPT0(_CRT_WARN,"Resuming update thread\n");
 					if( ResumeThread(updateThreadHandle) == -1 ){
 						_RPT0(_CRT_WARN,"error resuming thread updateThreadHandle\n");
 					}
@@ -4895,7 +4945,7 @@ void CPickobearDlg::OnTimer(UINT_PTR nIDEvent)
 }
 
 /**
- * 
+ * UpdateXY - set new position
  *
  * @param none used
  * @return 
@@ -4952,12 +5002,10 @@ afx_msg LRESULT CPickobearDlg::UpdateAlertMessage (WPARAM wParam, LPARAM lParam)
 	}
 
 
-	if( lParam) 
+	if(lParam) {
 		_RPT1(_CRT_WARN,"%s\n",CStringA(message));
-
-	if(lParam)
 		m_StatusBar.SetWindowText(message);
-	else
+	} else
 		m_StatusBar.SetWindowText(message);
 
 	return true;
@@ -4981,4 +5029,30 @@ afx_msg LRESULT CPickobearDlg::UpdateTextOut (WPARAM wParam, LPARAM lParam)
 	
 	return true;
 
+}
+
+/**
+ * Clicking this updates the currently selected feeders base XY (upper left)
+ *
+ * @param none used
+ * @return none
+ *        
+ */
+void CPickobearDlg::OnBnClickedTransferXy()
+{
+	if( m_FeederList.GetSelectedCount() == 0 ) {
+		AfxMessageBox(L"Select a feeder first");
+		return;
+	}
+
+	// get first item in feeder list ( only one can be selected
+	int feederItem = (m_FeederList.GetCount()-1) - m_FeederList.GetNextItem(-1, LVNI_SELECTED);
+
+	if (feederItem >= 0 && ((unsigned int)feederItem  < m_FeederList.GetCount() ) ){
+		m_FeederList.mFeederDatabase.at( feederItem ).x = m_headXPosUM;
+		m_FeederList.mFeederDatabase.at( feederItem ).y = m_headYPosUM;
+		
+		// force redraw of list
+		m_FeederList.RebuildList();
+	} 
 }
