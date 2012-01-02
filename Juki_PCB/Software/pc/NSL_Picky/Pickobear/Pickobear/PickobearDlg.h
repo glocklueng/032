@@ -698,9 +698,13 @@ public:
 	// used by the gui to pass text from threads to the console
 	CString m_TextOut;
 
+	// target or current position
 	long m_TargetXum;
 	long m_TargetYum;
-
+	
+	// last position
+	long m_LastXum;
+	long m_LastYum;
 
 // Construction
 public:

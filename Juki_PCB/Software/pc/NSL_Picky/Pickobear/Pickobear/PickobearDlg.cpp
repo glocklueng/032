@@ -35,6 +35,7 @@
 //   Cache m_Side since user can change it during a GO process (done)
 //   Move commands should check Target XY coordinates, not current
 
+
 // Recently added :-
 //   added multiple PCB offsets  (not tested!)
 //	 implemented delete function in feeder list
@@ -50,6 +51,9 @@
 //   More error checking information adding to feeder out dialog
 //   New GCODE CPU uses different model to existing (not tested) old gcode does work properly now in GUI thread, testing in its own Multi:: with new priorities
 //   Aded more controls to disable/enable state, GUI switches off buttons when machine is busy etc
+//   Move slow and rel check current position
+//   Added gfx head move to gui
+//   Added more agressive error fail out conditions, bad serial writes will abort run and unhome machine
 
 // Recently fixed :-
 //   bug in component search, C2 would match C20
@@ -134,6 +138,8 @@ CPickobearDlg::CPickobearDlg(CWnd* pParent /*=NULL*/)
 	, GCODE_CPU_Thread(0)
 	, m_TargetXum(0)
 	, m_TargetYum(0)
+	, m_LastXum(0)
+	, m_LastYum(0)
 
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
@@ -620,7 +626,7 @@ void CPickobearDlg::OnPaint()
 	}
 	else
 	{
-		//CDialog::OnPaint();
+		CDialog::OnPaint();
 #if 1
 		CRect rect;
 
@@ -628,26 +634,46 @@ void CPickobearDlg::OnPaint()
 		CWnd *pWnd = (CWnd*)GetDlgItem(IDC_SIMULATION_DRAW);
 		ASSERT( pWnd );
 		myDC = pWnd->GetDC();
-		ASSERT( myDC);
-		pWnd->GetClientRect(rect);
 
+		if( myDC ) { 
 
-		myDC->Rectangle(rect.left,rect.top,rect.right,rect.bottom);
+			pWnd->GetClientRect(rect);
 
-		
-		myDC->LineTo( m_headXPosUM, m_headYPosUM);
+			// limits 364000,517000
+
+			long x,y,lx=0,ly=0;
+			double dx,dy;
+
+			dx =  rect.right / 364000.0 ;
+			dy =  rect.bottom / 517000.0 ;
+
+			x = (long)(m_TargetXum * dx);
+			y = (long)(m_TargetYum * dy);
+			
+			lx = (long)(m_LastXum * dx);
+			ly = (long)(m_LastYum * dy);
+			
+			CPen pen( PS_SOLID, 0, RGB( 255, 0, 0 ) );
+			CPen* pOldPen = myDC->SelectObject( &pen );
+
+			myDC->MoveTo( lx, ly);
+			myDC->LineTo( x, y);
+			
+			myDC->SelectObject( &pOldPen );
+			
+
+		}
 #endif
 
 	}
 }
 
-// The system calls this function to obtain the cursor to display while the user drags
-//  the minimized window.
 /**
- * 
+ * The system calls this function to obtain the cursor to display while the user drags
+ * the minimized window.
  *
  * @param none used
- * @return 
+ * @return  HCURSOR
  *        
  */
 HCURSOR CPickobearDlg::OnQueryDragIcon()
@@ -666,7 +692,7 @@ bool CPickobearDlg::InternalWriteSerial( const char *data,bool noConsole=false)
 {
 	ASSERT( data );
 	CString out( data  );
-	char buffer[256];
+	unsigned char buffer[256];
 	unsigned long timeout = 100 ;
 	DWORD lengthRead = 0;
 
@@ -682,7 +708,6 @@ bool CPickobearDlg::InternalWriteSerial( const char *data,bool noConsole=false)
 
 	if( m_Simulate == false ) {
 
-
 		// Send command to serial port
 		if (m_Serial.IsOpen() ) {
 			
@@ -690,6 +715,7 @@ bool CPickobearDlg::InternalWriteSerial( const char *data,bool noConsole=false)
 			if( strncmp(data,"M29",3) == 0  )  {
 				m_Serial.Write( data );
 			} else {
+
 				do { 
 					m_Serial.Write( data );
 
@@ -697,37 +723,18 @@ bool CPickobearDlg::InternalWriteSerial( const char *data,bool noConsole=false)
 			
 					memset(buffer,0,sizeof( buffer ) );
 
-					do {
-					
-						lengthRead = 0;
-
-						// wait for 'ok'
-						// reading blocks at  time does run the risk of replies being split between buffers. while(read!=ch\'n') or such is better, serial events aren't reliable in practise
-						m_Serial.Read(buffer,sizeof(buffer),&lengthRead,0,4000 );		
-
-						// if we didn't read anything, delay a little to let the serial catch up, 50ms should be enough
-						if (lengthRead == 0 ) {
-							Sleep( 50 );
-						}
-
-						//Timeout
-						timeout--;
-
-						// abort on stop
-						if( m_MachineState == MS_ESTOP  || m_MachineState == MS_STOP )
-						{
+					if(ReadSerial(&buffer[0],sizeof(buffer),lengthRead ) == false ){ 
+						
+						CString Error(L"Error in Serial.Read %d",m_Serial.GetLastError() );
+						
+						int ret = AfxMessageBox( Error ,MB_RETRYCANCEL);
+						
+						if( ret == IDCANCEL ) {
 							return false;
 						}
 
-				
-						if( timeout == 0 ) {
-							_RPT1(_CRT_WARN,"InternalWriteSerial: Timed out on ACK\n",data);
-							return false;
-						}
-
-					} while( lengthRead == 0 );
-
-				} while( strncmp(buffer,"ok",2) != 0 );
+					}
+				} while( strncmp((char*)buffer,"ok",2) != 0 );
 			}
 		} else {
 			_RPT0(_CRT_WARN,"InternalWriteSerial: Port not open\n");
@@ -809,6 +816,8 @@ void CPickobearDlg::OnBnClickedHome()
 {	
 	// do we want to do this?
 	command_buffer.clear();
+	
+	m_MachineState = MS_IDLE;
 
 	// if not this will be at the bottom of the list.
 	// should we adjust it so its always at the top of the list?
@@ -971,6 +980,12 @@ bool CPickobearDlg::MoveHeadSlow(  long x, long y, bool wait=false )
 	if ( x < 0 ) x = 0;
 	if ( y < 0 ) x = 0;
 
+	// already at position
+	if( m_headXPosUM == x && m_headYPosUM == y ) {
+		_RPT0(_CRT_WARN,"MoveHeadSlow: ignoring move request, as already at location\n");
+		return false;
+	}
+
 
 	if ( false == BuildGCodeMove(buffer,sizeof(buffer),1,x,y,2000) ) {
 		return false;
@@ -980,6 +995,9 @@ bool CPickobearDlg::MoveHeadSlow(  long x, long y, bool wait=false )
 	
 	// working on simplification
 	
+	m_LastXum = m_headXPosUM;
+	m_LastYum = m_headYPosUM;
+
 	m_TargetXum = x;
 	m_TargetYum = y;
 
@@ -1029,6 +1047,9 @@ bool CPickobearDlg::MoveHead(  long x, long y, bool wait=false )
 
 	//	_RPT5(_CRT_WARN,"current pos = %dum,%dum\nGoing to %dum,%dum\n%s\n",m_headXPosUM,m_headYPosUM,x,y,buffer)
 	
+	m_LastXum = m_headXPosUM;
+	m_LastYum = m_headYPosUM;
+
 	// where we want to go
 	m_TargetXum = x;
 	m_TargetYum = y;
@@ -1070,6 +1091,11 @@ bool CPickobearDlg::GCODE_CommandAck_callback( void *pThis, void *userdata )
  */
 bool CPickobearDlg::GCODE_CommandAck_cb2(void *userdata ) 
 {
+	
+	if( m_MachineState == MS_ESTOP  ){
+		return false ;
+	}
+
 	// passed, this means GCODE was accepted.
 	if( userdata == (void*)1 )  {
 
@@ -1116,11 +1142,19 @@ bool CPickobearDlg::UpdatePosition_callback( void *pThis, void *userdata )
  */
 bool CPickobearDlg::UpdatePosition_cb2(void *userdata ) 
 {
+	if( m_MachineState == MS_ESTOP  ){
+		return false ;
+	}
+
 	// passed, this means GCODE was accepted.
 	if( userdata == (void*)1 )  {
 
-		// update the gloval position
+		// update the global position
 		PostMessage (PB_UPDATE_XY, m_TargetXum,m_TargetYum);
+
+		((CWnd*)GetDlgItem(IDC_SIMULATION_DRAW))->Invalidate();
+		
+		Invalidate();
 
 	} else {
 
@@ -1148,11 +1182,22 @@ bool CPickobearDlg::MoveHeadRel(  long x, long y, bool wait=false )
 		return false;
 	}
 
+		// already at position
+	if( m_headXPosUM == x && m_headYPosUM == y ) {
+		_RPT0(_CRT_WARN,"MoveHeadSlow: ignoring move request, as already at location\n");
+		return false;
+	}
+
+
+
 	char buffer[ 256 ];
 
 	if(false == BuildGCodeMove(buffer,sizeof(buffer),0,m_headXPosUM+x,m_headYPosUM+y,m_Speed) ) 
 		return false;
 	
+	m_LastXum = m_headXPosUM;
+	m_LastYum = m_headYPosUM;
+
 	// Target x/y
 	m_TargetXum = x;
 	m_TargetYum = y;
@@ -1208,7 +1253,6 @@ void CPickobearDlg::EmptySerial ( void )
 				return ;
 			}
 
-
 			m_Serial.Read( &scratchBuffer,sizeof( scratchBuffer) ,&lengthRead,0,500);
 			
 			if( lengthRead == 0 ) {
@@ -1251,7 +1295,7 @@ bool CPickobearDlg::CheckX( void )
 
 		if( m_MachineState == MS_ESTOP ) {
 
-			PostMessage (PB_UPDATE_ALERT, 0,0 );
+			PostMessage (PB_UPDATE_ALERT, MACHINE_ESTOP,0 );
 		
 			return false;
 		}
@@ -1352,7 +1396,7 @@ bool CPickobearDlg::ReadSerial( unsigned char *buffer, size_t output_buffer_leng
 		// stop if machine fails or user requests
 		if( m_MachineState == MS_ESTOP || m_MachineState == MS_STOP ) {
 
-			PostMessage (PB_UPDATE_ALERT, 0,0 );
+			PostMessage (PB_UPDATE_ALERT, MACHINE_ESTOP,0 );
 			return false;
 		}
 		
@@ -1619,12 +1663,6 @@ void CPickobearDlg::OnBnClickedHead()
  */
 void CPickobearDlg::OnNMCustomdrawRotate(NMHDR *pNMHDR, LRESULT *pResult)
 {
-	static int firstTime = 1;
-
-	if (firstTime == 1 ) {
-		firstTime = 0 ;
-		return;
-	}
 
 	if( false == HomeTest( ) ) {
 		return ;
@@ -1986,9 +2024,8 @@ void CPickobearDlg::goCamera(LPVOID pThis)
 	return;
 }
 
-// Thread for PNP full run
 /**
- * goSetup doa full PNP 
+ * goSetup do a full PNP  run
  *
  * @param none used
  * @return 
@@ -2197,7 +2234,22 @@ void CPickobearDlg::goSetup(LPVOID pThis)
 			}
 
 			_RPT0(_CRT_WARN,"goThread: Picking up part\n");
-			InternalWriteSerial("M26\n");
+			bool  ret = InternalWriteSerial("M26\n"); 
+			if (ret == false ) {
+				// something failed
+
+				// Machine is IDLE
+				m_MachineState = MS_ESTOP;
+				
+				// thread is no longer busy
+				bBusy = false;
+
+				SetControls( FALSE );
+
+				return;
+
+			}
+
 			
 			Sleep( 1000 );
 
@@ -2231,7 +2283,22 @@ void CPickobearDlg::goSetup(LPVOID pThis)
 				_RPT1(_CRT_WARN,"Executing GCODE %s\n",buffer);
 
 				// do the rotate
-				InternalWriteSerial( buffer );
+				bool ret = InternalWriteSerial( buffer );
+				if (ret == false ) {
+					// something failed
+
+					// Machine is IDLE
+					m_MachineState = MS_ESTOP;
+				
+					// thread is no longer busy
+					bBusy = false;
+
+					SetControls( FALSE );
+
+					return;
+
+				}
+
 				Sleep( 500 );
 			}
 
@@ -2239,8 +2306,20 @@ void CPickobearDlg::goSetup(LPVOID pThis)
 
 			// head down/air off/up
 			// Put Part down
-			InternalWriteSerial("M27\n");
-			
+			if (InternalWriteSerial("M27\n") == false ) {
+				// something failed
+
+				// Machine is IDLE
+				m_MachineState = MS_ESTOP;
+				
+				// thread is no longer busy
+				bBusy = false;
+
+				SetControls( FALSE );
+
+				return;
+
+			}	
 			//wait
 			Sleep( 100 );
 
@@ -2259,6 +2338,8 @@ skip_part:;
 			if( m_MachineState == MS_ESTOP ) {
 
 				m_CameraUpdateRate = CAMERA_DEFAULT_UPDATE_RATE_MS ;
+
+				PostMessage (PB_UPDATE_ALERT, MACHINE_ESTOP,0 );
 
 				// ESTOP so all off
 				SetControls( FALSE );
@@ -2921,8 +3002,17 @@ void CPickobearDlg::threadUpdateXY(LPVOID data)
 
 		// M29 is a special command, its called often to update the limit switch state, and it doesn't currently properly ACK, it only replies with the limit switches
 		// we can handle this in the gcode execution buffer
-		InternalWriteSerial("M29\n",true);
+		if (InternalWriteSerial("M29\n") == false ) {
+			// something failed
 
+			// Machine is IDLE
+			m_MachineState = MS_ESTOP;
+
+			SetControls( FALSE );
+
+			return;
+
+		}	
 		// should be enough time for a reply	
 		Sleep( 100 );
 
@@ -2993,6 +3083,12 @@ void CPickobearDlg::threadUpdateXY(LPVOID data)
 			((CButton*)GetDlgItem(IDC_YHOME))->SetCheck(0);
 
 suspend:;
+		if( m_MachineState == MS_ESTOP ) {
+
+			PostMessage (PB_UPDATE_ALERT, MACHINE_ESTOP,0 );
+
+		}
+
 		// suspend this thread
 		SuspendThread( updateThreadHandle );
 	}
@@ -3038,7 +3134,17 @@ void CPickobearDlg::OnBnClickedUpdate()
 
 	// M29 is a special command, its called often to update the limit switch state, and it doesn't currently properly ACK, it only replies with the limit switches
 	// we can handle this in the gcode execution buffer
-	InternalWriteSerial("M29\n",true);
+	if (InternalWriteSerial("M29\n") == false ) {
+		// something failed
+
+		// Machine is IDLE
+		m_MachineState = MS_ESTOP;
+				
+		SetControls( FALSE );
+
+		return;
+
+	}	
 	
 	Sleep( 100 );
 	DWORD lengthRead=0;
@@ -3961,8 +4067,20 @@ DWORD CPickobearDlg::goSingleThread(void )
 		_RPT0(_CRT_WARN,"Picking up part\n");
 
 		// Pickup
-		InternalWriteSerial("M26\n");
+		if (InternalWriteSerial("M26\n") == false ) {
+			// something failed
 
+			// Machine is IDLE
+			m_MachineState = MS_ESTOP;
+				
+			// thread is no longer busy
+			bBusy = false;
+
+			SetControls( FALSE );
+
+			return false;
+
+		}	
 		Sleep( 1000 );
 
 		_RPT1(_CRT_WARN,"goSingleThread: Going to component %s\n", entry.label );
@@ -3995,16 +4113,42 @@ DWORD CPickobearDlg::goSingleThread(void )
 			_RPT1(_CRT_WARN,"goSingleThread: Executing GCODE %s\n",pulses_gcode);
 
 			// do the rotate
-			InternalWriteSerial( pulses_gcode );
+			if (InternalWriteSerial(pulses_gcode) == false ) {
+				// something failed
+
+				// Machine is IDLE
+				m_MachineState = MS_ESTOP;
+				
+				// thread is no longer busy
+				bBusy = false;
+
+				SetControls( FALSE );
+
+				return false;
+
+			}
+
 			Sleep( 500 );
-
-
 		}
+
 		// head down/air off/up
 		_RPT0(_CRT_WARN,"goSingleThread: dropping off part\n");
 
 		// Put Part down
-		InternalWriteSerial("M27\n");
+		if( InternalWriteSerial("M27\n") == false ) {
+				// something failed
+
+				// Machine is IDLE
+				m_MachineState = MS_ESTOP;
+				
+				// thread is no longer busy
+				bBusy = false;
+
+				SetControls( FALSE );
+
+				return false;
+
+		}
 
 		//wait
 		Sleep( 100 );
@@ -4291,6 +4435,10 @@ BOOL CPickobearDlg::OnToolTipNotify( UINT id,
             pTTT->lpszText = _T("Run the test mode");
             break;
 
+		case IDC_SWAP_HEAD_CAMERA:
+            pTTT->lpszText = _T("Swap head and camera position");
+            break;
+			
 		default:
 			
 			_RPT1(_CRT_WARN, "Not yet documented %d\n", nID );
@@ -4321,11 +4469,32 @@ void CPickobearDlg::OnBnClickedVacuumToggle()
 
 	if( m_Vacuum ) {
 		// off
-		InternalWriteSerial("M20\n");
+		if( InternalWriteSerial("M20\n") == false ) {
+			// something failed
+
+			// Machine is IDLE
+			m_MachineState = MS_ESTOP;
+
+			SetControls( FALSE );
+
+			return ;
+
+		}
 		m_Vacuum = 0;
 	} else { 
 		//down
-		InternalWriteSerial("M19\n");
+		if( InternalWriteSerial("M19\n")  == false ) {
+			// something failed
+
+			// Machine is IDLE
+			m_MachineState = MS_ESTOP;
+
+			SetControls( FALSE );
+
+			return ;
+
+		}
+
 		m_Vacuum = 1;
 	}
 }
@@ -4903,7 +5072,7 @@ retry:;
 
 						AfxMessageBox(L"Command failed, no callback defined",MB_OK);
 						m_MachineState = MS_ESTOP;
-						break;// break out of if
+						break;// break out of if	
 
 					}
 
@@ -4917,11 +5086,13 @@ retry:;
 			// clear command
 			m_GCODECMDBuffer.erase();
 			
-			// remove gcode command from front of list.
-			command_buffer.erase(command_buffer.begin());
+			if (m_MachineState != MS_ESTOP ) {
+				// remove gcode command from front of list.
+				command_buffer.erase(command_buffer.begin());
 
-			// update state
-			m_MachineState = MS_IDLE;
+				// update state
+				m_MachineState = MS_IDLE;
+			}
 
 		} else {
 			
@@ -5087,6 +5258,8 @@ afx_msg LRESULT CPickobearDlg::UpdateAlertMessage (WPARAM wParam, LPARAM lParam)
 			break;
 
 		case MACHINE_ESTOP:
+			
+			m_Homed = false ;
 
 			message = L"Emergency Stop : rerun Home procedure";
 			break;
