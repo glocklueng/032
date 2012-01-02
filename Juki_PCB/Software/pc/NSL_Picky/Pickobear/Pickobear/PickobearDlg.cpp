@@ -33,6 +33,7 @@
 //   remove/fix all the MFC child thread updates (lots of changes) (seems to be ok)
 //   Feeder SetCount isn't properly updated in some cases. (fixed)
 //   Cache m_Side since user can change it during a GO process (done)
+//   Move commands should check Target XY coordinates, not current
 
 // Recently added :-
 //   added multiple PCB offsets  (not tested!)
@@ -452,6 +453,7 @@ BOOL CPickobearDlg::OnInitDialog()
 		if ((lResult = regKey.QueryStringValue(_T("feederDatabase"), filename,&length)) == ERROR_SUCCESS)
 		{
 			m_FeederList.LoadDatabase( filename );
+			m_FeedersModified = false;
 		}
 		// read the string
 
@@ -460,6 +462,7 @@ BOOL CPickobearDlg::OnInitDialog()
 		if ((lResult = regKey.QueryStringValue(_T("componentDatabase"), filename,&length)) == ERROR_SUCCESS)
 		{
 			m_ComponentList.LoadDatabase( filename );
+			m_ComponentsModified = false;
 		}
 
 		// then close the registry key
@@ -617,20 +620,24 @@ void CPickobearDlg::OnPaint()
 	}
 	else
 	{
-		CDialog::OnPaint();
-#if 0
+		//CDialog::OnPaint();
+#if 1
 		CRect rect;
 
-		CWnd *wnd = GetDlgItem(IDC_SIMULATION);
-		wnd->GetClientRect( rect) ;
+		CDC *myDC ;
+		CWnd *pWnd = (CWnd*)GetDlgItem(IDC_SIMULATION_DRAW);
+		ASSERT( pWnd );
+		myDC = pWnd->GetDC();
+		ASSERT( myDC);
+		pWnd->GetClientRect(rect);
 
 
-		CPaintDC dc(this); // device context for painting
-		Graphics graphics(dc);
+		myDC->Rectangle(rect.left,rect.top,rect.right,rect.bottom);
 
-		Pen      pen(Color(255, 0, 0, 255));
-		graphics.DrawLine(&pen, rect.top,rect.left,rect.bottom,rect.right);
+		
+		myDC->LineTo( m_headXPosUM, m_headYPosUM);
 #endif
+
 	}
 }
 
@@ -660,7 +667,7 @@ bool CPickobearDlg::InternalWriteSerial( const char *data,bool noConsole=false)
 	ASSERT( data );
 	CString out( data  );
 	char buffer[256];
-	unsigned long countdown = 100 ;
+	unsigned long timeout = 100 ;
 	DWORD lengthRead = 0;
 
 	// automated commands don't go to console
@@ -695,15 +702,16 @@ bool CPickobearDlg::InternalWriteSerial( const char *data,bool noConsole=false)
 						lengthRead = 0;
 
 						// wait for 'ok'
+						// reading blocks at  time does run the risk of replies being split between buffers. while(read!=ch\'n') or such is better, serial events aren't reliable in practise
 						m_Serial.Read(buffer,sizeof(buffer),&lengthRead,0,4000 );		
 
-						// if we didn't read anything, delay a little 50ms should be enough
+						// if we didn't read anything, delay a little to let the serial catch up, 50ms should be enough
 						if (lengthRead == 0 ) {
 							Sleep( 50 );
 						}
 
 						//Timeout
-						countdown--;
+						timeout--;
 
 						// abort on stop
 						if( m_MachineState == MS_ESTOP  || m_MachineState == MS_STOP )
@@ -712,7 +720,7 @@ bool CPickobearDlg::InternalWriteSerial( const char *data,bool noConsole=false)
 						}
 
 				
-						if( countdown == 0 ) {
+						if( timeout == 0 ) {
 							_RPT1(_CRT_WARN,"InternalWriteSerial: Timed out on ACK\n",data);
 							return false;
 						}
@@ -1295,21 +1303,127 @@ bool CPickobearDlg::CheckX( void )
 }
 
 /**
- * 
+ * ReadSerial - Reads one line of input from serial port, with timeout and check for stop/estop
  *
- * @param none used
+ * @param buffer - point to buffer to receive data
+ * @param output_buffer_length -  length of target buffer
+ * @param bytes_read - optional , length of data read
+ * @return true/false pass or fail, timeout or machine stopped
+ *        
+ */
+bool CPickobearDlg::ReadSerial( unsigned char *buffer, size_t output_buffer_length, DWORD &bytes_read )
+{
+	DWORD bytesRead;
+	int ret;
+	size_t index;
+	int timeout = 200;
+	char ch;
+
+	// not good
+	ASSERT( buffer) ;
+	ASSERT( output_buffer_length ) ;
+
+	// no buffer
+	if (buffer == NULL )
+		return false;
+
+	// no length
+	if (output_buffer_length == 0 )
+		return false;
+
+	// serial port is closed
+	if( m_Serial.IsOpen() == false) {
+		return false;
+	}
+
+	// start of buffer
+	index = 0;
+
+	// reset read length
+	if (bytes_read)
+		bytes_read = 0;
+
+	// read line from serial, with timeout and check for machine state
+	do { 
+
+		// count down
+		timeout -- ;
+		
+		// stop if machine fails or user requests
+		if( m_MachineState == MS_ESTOP || m_MachineState == MS_STOP ) {
+
+			PostMessage (PB_UPDATE_ALERT, 0,0 );
+			return false;
+		}
+		
+		// ran out of time
+		if ( timeout == 0 ) {
+			break;
+		}
+
+		// set to NUL
+		ch = 0;
+
+		// read one byte from serial port
+		ret = m_Serial.Read( &ch, sizeof(ch) ,&bytesRead );
+		if( ret != ERROR_SUCCESS ) {
+			
+			CString Error(L"Error in Serial.Read %d",m_Serial.GetLastError() );
+
+			AfxMessageBox( Error  );
+			return false;
+		}
+
+		// did serial command execute ok, and did we read anything? 
+		if( bytesRead ) {
+
+			//we're not at the end of the buffer?
+			if (index < sizeof( buffer ) ) {
+
+				// pass back length to calling func
+				if( bytes_read ) {
+					bytes_read += bytesRead;
+				}
+
+				// don't add end of line to buffer
+				if( !( ch == 13 || ch == 10 ) ) {
+					buffer[ index++ ] = ch;
+				}
+			}else {
+				_RPT0(_CRT_WARN,"ReadSerial: Data overflow\n");
+				
+				// since data is valid, even though there is more available
+				return true;
+			}
+		}else {
+			// pause if nothing read.
+			Sleep( 10 );
+		}
+
+	// wait to end of line 9, \0 terminate?
+	} while(!( ch == 13 || ch == 10 ));
+
+
+	return true;
+}
+
+
+/**
+ * CheckAck - Waits for machine to ack our GCODE command
+ *
+ * @param ack1 - string expecting to reply with
  * @return 
  *        
  */
-char CPickobearDlg::CheckAck( char *ack1 )
+char CPickobearDlg::CheckAck(const char *ack1 )
 {
 	unsigned int lengthReqested = 1;
 	unsigned int index ;
-	unsigned char ch;
-	int ret;
 	DWORD bytesRead = 0;
 
-	_RPT0(_CRT_WARN,"CheckACK()\n");
+	ASSERT( ack1 );
+
+	_RPT0(_CRT_WARN,"CheckACK:\n");
 
 	unsigned char buffer[ 256 ];
 
@@ -1318,7 +1432,6 @@ char CPickobearDlg::CheckAck( char *ack1 )
 
 	memset(buffer,0,sizeof(buffer));
 
-	ASSERT( ack1 );
 	if( ack1 == NULL ){
 		return 'p';
 	}
@@ -1327,43 +1440,22 @@ char CPickobearDlg::CheckAck( char *ack1 )
 
 	PostMessage (PB_UPDATE_ALERT, WAITING_FOR_CMD_ACK ,1 );
 
-	int counter = 200;
-
-	// wait for ack. 
-	do { 
-		counter -- ;
+	// Read one line from serial port
+	if( ReadSerial( &buffer[0],sizeof(buffer),bytesRead ) == false ){
 		
-		if( m_MachineState == MS_ESTOP ) {
+		// timed out, or machine stopped
+		return 'f';
+	}
 
-			PostMessage (PB_UPDATE_ALERT, 0,0 );
-			return 'f';
-		}
-				
-		if ( counter == 0 ) 
-			break;
-
-		ret = m_Serial.Read( &ch, lengthReqested ,&bytesRead );
-		if ( bytesRead, index < sizeof( buffer ) ) {
-
-			if( !( ch == 13 || ch == 10 ) ) {
-				buffer[ index++ ] = ch;
-			}
-		}
-
-		if(bytesRead == 0 )
-			Sleep( 10 );
-
-	} while(!( ch == 13 || ch == 10 ));
-	
-
+	// reflect status in UI
 	PostMessage (PB_UPDATE_ALERT, 0,0 );
 
-	if (counter == 0 ) {
-		_RPT1(_CRT_WARN,"Timed out\n", buffer);
-		return 'f';
-	}else
+	// this should never be zero
+	if(bytesRead) {
 		_RPT1(_CRT_WARN,"CheckAck(%s)\n", buffer);
-
+	}
+	
+	// check to see if its the same ACK string
 	if(0==_strnicmp((const char *)ack1,(const char *)&buffer[0], strlen( ack1 )   )  ) {
 
 		return 'p';
@@ -2613,20 +2705,22 @@ bool SetCurrentPosition( long x,long y)
 
 	ASSERT( pDlg );
 
+	// these should be reported as errors.
 	if ( x < 0 ) {
 		x = 0;
 	}
+
 	if ( y < 0 ) {
 		y = 0;
 	}
 
 	unsigned int linePtr = 0;
 
-	char xString[200];
-	char yString[200];
+	CString xstring;
+	CString ystring;
 
-	sprintf_s(xString,sizeof(xString),"%d",x);
-	sprintf_s(yString,sizeof(xString),"%d",y);
+	xstring.Format(L"%d",x);
+	ystring.Format(L"%d",y);
 
 	pDlg->m_GOX = x;
 	pDlg->m_GOY = y;
@@ -2634,8 +2728,8 @@ bool SetCurrentPosition( long x,long y)
 	pDlg->m_headXPosUM = x;
 	pDlg->m_headYPosUM = y;
 
-	( ( CWnd* ) pDlg->GetDlgItem( IDC_X_POS ) )->SetWindowText( CString(xString) ) ;
-	( ( CWnd* ) pDlg->GetDlgItem( IDC_Y_POS ) )->SetWindowText( CString(yString) ) ;
+	( ( CWnd* ) pDlg->GetDlgItem( IDC_X_POS ) )->SetWindowText( xstring ) ;
+	( ( CWnd* ) pDlg->GetDlgItem( IDC_Y_POS ) )->SetWindowText( ystring ) ;
 
 	return true;
 }
@@ -3892,17 +3986,16 @@ DWORD CPickobearDlg::goSingleThread(void )
 			// calculate pulses
 			angle = ( 1000.0 / 360.0  ) * angle ;
 
-			char buffer[256];
 			int pulses;
 
 			// calculate pulses
 			pulses = ( int) ( angle );
-			sprintf_s(buffer,sizeof(buffer),"G0H%d\n", pulses );
+			CStringA pulses_gcode(L"G0H%d\n", pulses );
 
-			_RPT1(_CRT_WARN,"goSingleThread: Executing GCODE %s\n",buffer);
+			_RPT1(_CRT_WARN,"goSingleThread: Executing GCODE %s\n",pulses_gcode);
 
 			// do the rotate
-			InternalWriteSerial( buffer );
+			InternalWriteSerial( pulses_gcode );
 			Sleep( 500 );
 
 
@@ -4906,8 +4999,14 @@ void CPickobearDlg::OnTimer(UINT_PTR nIDEvent)
 	void *Param=0;
 	
 	if ( m_MachineState == MS_ESTOP ){
+		
 		SetControls( FALSE ) ;
+
 		PostMessage (PB_UPDATE_ALERT, MACHINE_ESTOP ,1 );
+		
+		command_buffer.clear();
+
+		return;
 
 	}
 

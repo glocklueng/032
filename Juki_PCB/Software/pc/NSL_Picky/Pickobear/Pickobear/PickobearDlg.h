@@ -722,7 +722,8 @@ public:
 	// called after home is finished
 	static bool Home_callback( void *pThis, void *userdata ) ;
 	bool Home_cb2(void *userdata ) ;
-	
+	bool ReadSerial(unsigned char *buffer, size_t output_buffer_length, DWORD &bytes_read );
+
 	// called after GCODE commands has been submitted
 	bool GCODE_CommandAck_callback( void *pThis, void *userdata ); 
 	bool GCODE_CommandAck_cb2(void *userdata ) ;
@@ -751,7 +752,7 @@ public:
 	DWORD goSingleThread(void );
 
 	// check acknowledgement fron pnp
-	char CheckAck(char *ack1);
+	char CheckAck(const char *ack1);
 	bool CheckX( void );
 
 	// move head to x,y

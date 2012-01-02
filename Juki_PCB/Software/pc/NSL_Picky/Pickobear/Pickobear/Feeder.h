@@ -298,9 +298,6 @@ public:
 			
 			return true;
 		}
-		
-		ASSERT( number_parts_x );
-		ASSERT( number_parts_y );
 
 		// by here, there are parts left and it is a tray style feeder
 
@@ -328,6 +325,7 @@ public:
 			dy /= number_parts_y;
 		else 
 			dy = 1;
+
 		_RPT2(_CRT_WARN,"dx = %d, dy = %d\n",dx,dy);
 
 		int ix,iy;
