@@ -90,7 +90,6 @@
 #define IDC_SIMULATION                  1073
 #define IDC_DELETE_FEEDER               1074
 #define IDC_COUNT_EDIT                  1075
-#define IDC_DELETE_FEEDER2              1075
 #define IDC_TRANSFER_XY                 1075
 #define IDC_MACHINE_BUSY                1076
 #define IDC_PCB_FLIP                    1077
@@ -117,6 +116,7 @@
 #define IDC_EDIT1                       1098
 #define IDC_STATUS_BAR                  1098
 #define IDC_ALERT_TEXT                  1099
+#define IDC_SIMULATION_DRAW             1100
 
 // Next default values for new objects
 // 
@@ -124,7 +124,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        138
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1100
+#define _APS_NEXT_CONTROL_VALUE         1101
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
