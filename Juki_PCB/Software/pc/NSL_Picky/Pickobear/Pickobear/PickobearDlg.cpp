@@ -775,7 +775,15 @@ bool CPickobearDlg::InternalWriteSerial( const char *data,bool noConsole=false)
 				m_Serial.Write( data );
 			} else {
 
-				do { 
+				do {
+					// if not homed
+					if( m_Homed == false ) {
+						if( strncmp(data,GCODE_HOME,3) != 0  ) {
+							// not homed, not home command
+							return false;
+						}
+					}
+
 					m_Serial.Write( data );
 
 					// wait for machine to acknowledge receipt of data. This relies on no data being in the Serial buffer
@@ -784,7 +792,8 @@ bool CPickobearDlg::InternalWriteSerial( const char *data,bool noConsole=false)
 
 					if(ReadSerial(&buffer[0],sizeof(buffer),lengthRead ) == false ){ 
 						
-						CString Error(L"Error in Serial.Read %d",m_Serial.GetLastError() );
+						CString Error;
+						Error.Format(L"Error in Serial.Read %d",m_Serial.GetLastError() );
 						
 						int ret = AfxMessageBox( Error ,MB_RETRYCANCEL);
 						
@@ -1482,7 +1491,8 @@ bool CPickobearDlg::ReadSerial( unsigned char *buffer, size_t output_buffer_leng
 		ret = m_Serial.Read( &ch, sizeof(ch) ,&bytesRead );
 		if( ret != ERROR_SUCCESS ) {
 			
-			CString Error(L"Error in Serial.Read %d",m_Serial.GetLastError() );
+			CString Error;
+			Error.Format(L"Error in Serial.Read %d",m_Serial.GetLastError() );
 
 			AfxMessageBox( Error  );
 			return false;
@@ -2361,28 +2371,37 @@ void CPickobearDlg::goSetup(LPVOID pThis)
 
 				// calculate pulses
 				pulses = ( int) ( angle );
-				sprintf_s(buffer,sizeof(buffer),"G0H%d\n", pulses );
-
-				_RPT1(_CRT_WARN,"Executing GCODE %s\n",buffer);
-
-				// do the rotate
-				bool ret = InternalWriteSerial( buffer );
-				if (ret == false ) {
-					// something failed
-
-					// Machine is IDLE
-					m_MachineState = MS_ESTOP;
 				
-					// thread is no longer busy
-					bBusy = false;
-
-					SetControls( FALSE );
-
-					return;
-
+				if( pulses > 1000 ) {
+					pulses -= 1000;
 				}
-				// @todo : tune this
-				Sleep( 500 );
+
+				/// 1000 is 360 degrees
+				if( pulses != 1000 ) {
+					sprintf_s(buffer,sizeof(buffer),"G0H%d\n", pulses );
+
+
+					_RPT1(_CRT_WARN,"Executing GCODE %s\n",buffer);
+
+					// do the rotate
+					bool ret = InternalWriteSerial( buffer );
+					if (ret == false ) {
+						// something failed
+
+						// Machine is IDLE
+						m_MachineState = MS_ESTOP;
+
+						// thread is no longer busy
+						bBusy = false;
+
+						SetControls( FALSE );
+
+						return;
+
+					}
+					// @todo : tune this
+					Sleep( 500 );
+				}
 			}
 
 			_RPT0(_CRT_WARN,"goThread: dropping off part\n");
@@ -4202,27 +4221,34 @@ DWORD CPickobearDlg::goSingleThread(void )
 
 			// calculate pulses
 			pulses = ( int) ( angle );
-			CStringA pulses_gcode(L"G0H%d\n", pulses );
-
-			_RPT1(_CRT_WARN,"goSingleThread: Executing GCODE %s\n",pulses_gcode);
-
-			// do the rotate
-			if (InternalWriteSerial(pulses_gcode) == false ) {
-				// something failed
-
-				// Machine is IDLE
-				m_MachineState = MS_ESTOP;
 				
-				// thread is no longer busy
-				bBusy = false;
-
-				SetControls( FALSE );
-
-				return false;
-
+			if( pulses > 1000 ) {
+				pulses -= 1000;
 			}
 
-			Sleep( GCODE_WAIT_HEAD_ROTATE_MS );
+			if ( pulses != 1000 ) {
+				CStringA pulses_gcode(L"G0H%d\n", pulses );
+
+				_RPT1(_CRT_WARN,"goSingleThread: Executing GCODE %s\n",pulses_gcode);
+
+				// do the rotate
+				if (InternalWriteSerial(pulses_gcode) == false ) {
+					// something failed
+
+					// Machine is IDLE
+					m_MachineState = MS_ESTOP;
+				
+					// thread is no longer busy
+					bBusy = false;
+
+					SetControls( FALSE );
+
+					return false;
+
+				}
+
+				Sleep( GCODE_WAIT_HEAD_ROTATE_MS );
+			}
 		}
 
 		// head down/air off/up
@@ -5104,7 +5130,6 @@ void CPickobearDlg::StartGCODEThread(LPVOID pThis)
 
 			// i know i know..
 retry:;
-
 
 			// wait if machine isn't in suitable state.
 			while (m_MachineState == MS_STOP ||  m_MachineState == MS_ESTOP) {
