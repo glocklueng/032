@@ -24,6 +24,7 @@ enum {
 	NT_BINARY = 4
 };
 
+//Table boundaries
 #define MAX_X_TABLE							( 364550 )
 #define MAX_Y_TABLE							( 517000 )
 
@@ -44,7 +45,7 @@ enum {
 //was 228370
 //is  227830
 
-#define CAMERA_OFFSET						( 73900-540+120 )
+
 #define CAMERA_DEFAULT_UPDATE_RATE_MS		( 1300 )
 #define CAMERA_SLOW_UPDATE_RATE_MS			( 300 )
 
