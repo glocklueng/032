@@ -31,10 +31,10 @@
 //   change camera offset to user definable
 //   add x,y update to feeder/components (d0ne)
 //   remove/fix all the MFC child thread updates (lots of changes) (seems to be ok)
-//   Feeder SetCount isn't properly updated in some cases. (fixed)
-//   Cache m_Side since user can change it during a GO process (done)
-//   Move commands should check Target XY coordinates, not current
-//   Why is head up/down using AddGCODE ?
+//   feeder SetCount isn't properly updated in some cases. (fixed)
+//   cache m_Side since user can change it during a GO process (done)
+//   move commands should check Target XY coordinates, not current
+//   why is head up/down using AddGCODE ?
 
 // Recently added :-
 //   added multiple PCB offsets  (not tested!)
@@ -47,20 +47,24 @@
 //   fixed that wierd bug on the redraw /resize sending commands, rotate was using a draw event to fire a change...
 //   MFC isn't threadsafe outside classes so instead i'm switching to WM_APP PostMessages so all the GUI elements 
 //      are updated in the main thread only. Added a WHOLE bunch of stuff for this
-//   Thread priorities changed
-//   More error checking information adding to feeder out dialog
-//   New GCODE CPU uses different model to existing (not tested) old gcode does work properly now in GUI thread, testing in its own Multi:: with new priorities
-//   Aded more controls to disable/enable state, GUI switches off buttons when machine is busy etc
-//   Move slow and rel check current position
-//   Added gfx head move to gui
-//   Added more agressive error fail out conditions, bad serial writes will abort run and unhome machine
-//   Added more defines for GCODE and MS delays
+//   thread priorities changed
+//   more error checking information adding to feeder out dialog
+//   new GCODE CPU uses different model to existing (not tested) old gcode does work properly now in GUI thread, testing in its own Multi:: with new priorities
+//   added more controls to disable/enable state, GUI switches off buttons when machine is busy etc
+//   move slow and rel check current position
+//   added gfx head move to gui
+//   added more agressive error fail out conditions, bad serial writes will abort run and unhome machine
+//   added more defines for GCODE and MS delays
+//   emergency stop works better
+//   error in CString error creation
+//   doesn't rotate on a 360 rotate
+//   if rotate is >360 then subtract 360 
 
 // Recently fixed :-
 //   bug in component search, C2 would match C20
 //   bug that InternalWriteSerial was reading data back, CheckAck is now inside InternalWriteSerial
 //   EmptySerial wasn't flushing the buffer correctly
-//	 Some of the cursor functions were incorrectly calculating m_stepSize
+//	 some of the cursor functions were incorrectly calculating m_stepSize
 
 #include "stdafx.h"
 #include "PickobearDlg.h"
@@ -88,7 +92,6 @@
 
 //  how long to wait after a part is place in the GO thread
 #define SLEEP_AFTER_PART_PLACE_MS	( 100 )
-
 
 // starting to document GCODE, if there is a trailing \n it is an InternalSerialWrite, if not it is AddGCODE*
 // home function, controlled by AddGCODE
@@ -121,7 +124,6 @@
 
 // drop off at PCB
 #define GCODE_PUT_DOWN		("M27\n")
-
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -792,6 +794,11 @@ bool CPickobearDlg::InternalWriteSerial( const char *data,bool noConsole=false)
 
 					if(ReadSerial(&buffer[0],sizeof(buffer),lengthRead ) == false ){ 
 						
+						// dont show an error
+						if (m_MachineState == MS_ESTOP && m_Homed == false ){
+							return false;
+						}
+
 						CString Error;
 						Error.Format(L"Error in Serial.Read %d",m_Serial.GetLastError() );
 						
@@ -830,6 +837,9 @@ void CPickobearDlg::SetControls( boolean state )
 	// have to disable these elsewhere
 //	GetDlgItem( 12644620 )->EnableWindow( state );
 //	GetDlgItem( 12644844 )->EnableWindow( state );
+
+	if( state == FALSE )
+		GetDlgItem( IDC_OFFSET )->EnableWindow( state );
 	
 	// test mode
 	GetDlgItem( IDC_TEST_MODE )->EnableWindow( state );
@@ -1492,6 +1502,12 @@ bool CPickobearDlg::ReadSerial( unsigned char *buffer, size_t output_buffer_leng
 		if( ret != ERROR_SUCCESS ) {
 			
 			CString Error;
+					
+			// dont show an error
+			if (m_MachineState == MS_ESTOP && m_Homed == false ){
+				return false;
+			}
+
 			Error.Format(L"Error in Serial.Read %d",m_Serial.GetLastError() );
 
 			AfxMessageBox( Error  );
@@ -2184,7 +2200,7 @@ void CPickobearDlg::goSetup(LPVOID pThis)
 
 			int in = (m_ComponentList.GetCount()-1)-i;
 
-			m_ComponentList.SetItemState(in, LVIS_SELECTED, LVIS_SELECTED);
+			//m_ComponentList.SetItemState(in, LVIS_SELECTED, LVIS_SELECTED);
 			m_ComponentList.EnsureVisible( in ,TRUE );
 
 			entry = m_ComponentList.at(i);
@@ -3144,6 +3160,9 @@ void CPickobearDlg::threadUpdateXY(LPVOID data)
 		// mask off top bit
 		m_LimitState &= 0x7f;
 
+		if( m_Quit  ) {
+			return;
+		}
 		// update GUI (should this move back into OnTimer ) ?
 
 		if( m_LimitState & (1 << 1 ) ) { 
@@ -3495,6 +3514,8 @@ void CListCtrl_FeederList::OnContextMenu(CWnd*, CPoint point)
 		NULL);
 
 	//cMenu->DestroyMenu();
+
+	delete cMenu;
 }
 
 // this seems flakey
@@ -4668,7 +4689,7 @@ void CPickobearDlg::OnBnClickedAddPcb()
 	PCBEntry check;
 	
 	if( m_ComponentList.m_OffsetX_top == 0  && m_ComponentList.m_OffsetY_top == 0  ) {
-		AfxMessageBox(L"Error:Can't add PCB at ( 0, 0 )",MB_OK|MB_ICONHAND);
+		AfxMessageBox(L"Error:Define offsets first",MB_OK|MB_ICONHAND);
 		return;
 	}
 
