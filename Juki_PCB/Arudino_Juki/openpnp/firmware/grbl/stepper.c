@@ -716,6 +716,7 @@ void limits_init(void)
 	PORTC = 0x13;
 #ifdef SIMULATE
 	LIMIT_PORT = 0x00; //00000000
+	LIMIT_PIN = 0x0;
 #else
 	LIMIT_PORT = 0x8F; //10001111
 #endif

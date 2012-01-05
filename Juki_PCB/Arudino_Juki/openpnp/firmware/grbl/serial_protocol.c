@@ -36,6 +36,7 @@
 
 
 
+extern volatile char ackHost;
 
 #define LINE_BUFFER_SIZE ( 50 )
 
@@ -47,42 +48,67 @@ static void status_message(int status_code)
 {
 	// Always override
 	if( gHomed == FALSE ) {
+#ifdef VERBOSE_DEBUG
+			printPgmString(PSTR("Not homed\n")); 
+#endif
 		status_code = GCSTATUS_NOT_HOMED;
 	}
 
+	// what if ackHost is already set to something ?
+	// ack ERR
+	ackHost = 'E';
+
 	switch(status_code) {          
 		case GCSTATUS_OK:
-			printPgmString(PSTR("ok\n")); 
+#ifdef VERBOSE_DEBUG
+			printPgmString(PSTR("\nGCSTATUS_OK\n")); 
+#endif
+			// ack OK
+			ackHost = 'O';
 			break;
 		case GCSTATUS_BAD_NUMBER_FORMAT:
+#ifdef VERBOSE_DEBUG
 			printPgmString(PSTR("error: Bad number format\n")); 
+#endif
 			// typos are ok
 			return;
 		case GCSTATUS_EXPECTED_COMMAND_LETTER:
+#ifdef VERBOSE_DEBUG
 			printPgmString(PSTR("error: Expected command letter\n")); 
+#endif
 			// typos are ok
 			return;
 		case GCSTATUS_UNSUPPORTED_STATEMENT:
+#ifdef VERBOSE_DEBUG
 			printPgmString(PSTR("error: Unsupported statement\n")); 
+#endif
 			// typos are ok
 			return;
 
 		case GCSTATUS_FLOATING_POINT_ERROR:
+#ifdef VERBOSE_DEBUG
 			printPgmString(PSTR("error: Floating point error\n")); 
+#endif
 			break;
 		case GCSTATUS_FAILED_COMMAND:
+#ifdef VERBOSE_DEBUG
 			printPgmString(PSTR("error: Command Failed\n")); 
+#endif
 			break;
 		case GCSTATUS_NOT_HOMED:
+#ifdef VERBOSE_DEBUG
 			printPgmString(PSTR("error: Not homed\n")); 
+#endif
 			break;
 		case GCSTATUS_NO_ACK:
 			return;
 			break;
 		default:
+#ifdef VERBOSE_DEBUG
 			printPgmString(PSTR("error: "));
 			printInteger(status_code);
 			printPgmString(PSTR("\n"));
+#endif
 			break;
 	}
 

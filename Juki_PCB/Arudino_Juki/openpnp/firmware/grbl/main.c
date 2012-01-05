@@ -159,39 +159,39 @@ int main(void)
 			printInteger( is_rotated() );
 	      	printPgmString(PSTR(" "));
 
-ch = is_pleft(  );
-	      	printPgmString(PSTR("is_pleft = "));
+			ch = is_pleft(  );
+			printPgmString(PSTR("is_pleft = "));
+			printInteger( ch );
+			printPgmString(PSTR("\t"));
+			ch = is_pright(  );
+			printPgmString(PSTR("is_pright = "));
+			printInteger( ch );
+			printPgmString(PSTR("\t"));
+			ch = is_pback(  );
+			printPgmString(PSTR("is_pback = "));
+			printInteger( ch );
+			printPgmString(PSTR("\t"));
+			ch = is_pforward(  );
+			printPgmString(PSTR("is_pforward = "));
+			printInteger( ch );
+			printPgmString(PSTR("\t"));
+			ch = is_phead(  );
+			printPgmString(PSTR("is_phead = "));
 			printInteger( ch );
 	      	printPgmString(PSTR("\t"));
-ch = is_pright(  );
-	      	printPgmString(PSTR("is_pright = "));
-			printInteger( ch );
-	      	printPgmString(PSTR("\t"));
-ch = is_pback(  );
-	      	printPgmString(PSTR("is_pback = "));
-			printInteger( ch );
-	      	printPgmString(PSTR("\t"));
-ch = is_pforward(  );
-	      	printPgmString(PSTR("is_pforward = "));
-			printInteger( ch );
-	      	printPgmString(PSTR("\t"));
-ch = is_phead(  );
-	      	printPgmString(PSTR("is_phead = "));
-			printInteger( ch );
-	      	printPgmString(PSTR("\t"));
-ch = is_pvac(  );
+			ch = is_pvac(  );
 	      	printPgmString(PSTR("is_pvac = "));
 			printInteger( ch );
 	      	printPgmString(PSTR("\t"));
-ch = is_pfast(  );
+			ch = is_pfast(  );
 	      	printPgmString(PSTR("is_pfast = "));
 			printInteger( ch );
 	      	printPgmString(PSTR("\t"));
-ch = is_pteach(  );
+			ch = is_pteach(  );
 	      	printPgmString(PSTR("is_pteach = "));
 			printInteger( ch );
 	      	printPgmString(PSTR("\t"));
-ch = is_phome(  );
+			ch = is_phome(  );
 	      	printPgmString(PSTR("is_phome = "));
 			printInteger( ch );
 	      	printPgmString(PSTR("\r\n"));
@@ -202,14 +202,32 @@ ch = is_phome(  );
   for(;;){
     sleep_mode(); // Wait for it ...
 
+
+#ifdef VERBOSE_DEBUG
+	if(ackHost){
+		serialWrite(ackHost);
+	}
+#endif
 	// sends the move ACK back to the host ( sleep mode isn't working on the mega )
-	if( ackHost != 0 ) {
+	switch( ackHost ) {
 		// X = move finished ok
 		// L = hit a limit
 		// H = not homed
-		serialWrite( ackHost );
-		ackHost = 0;
+		case 'L':
+		case 'H':
+			serialWrite( ackHost );
+			break;
+		case 'O':
+		case 'X':
+			if( head_moving() == 0 ) 
+				printPgmString( PSTR("ok\n"));
+			break;
+		case 'E':
+			printPgmString( PSTR("err\n"));
+			break;
 	}
+
+	ackHost = 0;
 
     sp_process(); // ... process the serial protocol
 
