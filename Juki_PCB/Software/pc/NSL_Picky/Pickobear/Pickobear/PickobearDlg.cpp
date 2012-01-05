@@ -557,7 +557,7 @@ BOOL CPickobearDlg::OnInitDialog()
 	m_DownCameraWindow.oglCreate( rect, rect1, this,m_DownCamera.GetCurSel() );
 
 	// convert to a picker
-	CString m_ComPort = _T("\\\\.\\COM17");
+	CString m_ComPort = _T("\\\\.\\COM14");
 	m_Serial.Open(m_ComPort, this );
 
 	m_Serial.Setup(CSerial::EBaud38400 );
@@ -787,6 +787,9 @@ bool CPickobearDlg::InternalWriteSerial( const char *data,bool noConsole=false)
 					}
 
 					m_Serial.Write( data );
+					if(strstr(data,"\n") == 0 ) {
+						m_Serial.Write( "\n" );
+					}
 
 					// wait for machine to acknowledge receipt of data. This relies on no data being in the Serial buffer
 			
@@ -809,7 +812,7 @@ bool CPickobearDlg::InternalWriteSerial( const char *data,bool noConsole=false)
 						}
 
 					}
-				} while( strncmp((char*)buffer,"ok",2) != 0 );
+				} while( strstr((char*)buffer,"ok") == NULL );
 			}
 		} else {
 			_RPT0(_CRT_WARN,"InternalWriteSerial: Port not open\n");
@@ -1230,9 +1233,8 @@ bool CPickobearDlg::UpdatePosition_cb2(void *userdata )
 		// update the global position
 		PostMessage (PB_UPDATE_XY, m_TargetXum,m_TargetYum);
 
-		((CWnd*)GetDlgItem(IDC_SIMULATION_DRAW))->Invalidate();
-		
-		Invalidate();
+//		((CWnd*)GetDlgItem(IDC_SIMULATION_DRAW))->Invalidate();	
+//		Invalidate();
 
 	} else {
 
@@ -1261,8 +1263,8 @@ bool CPickobearDlg::MoveHeadRel(  long x, long y, bool wait=false )
 	}
 
 		// already at position
-	if( m_headXPosUM == x && m_headYPosUM == y ) {
-		_RPT0(_CRT_WARN,"MoveHeadSlow: ignoring move request, as already at location\n");
+	if( m_headXPosUM == m_headXPosUM+x && m_headYPosUM == m_headYPosUM+y ) {
+		_RPT0(_CRT_WARN,"MoveHeadRel: ignoring move request, as already at location\n");
 		return false;
 	}
 
@@ -1277,14 +1279,25 @@ bool CPickobearDlg::MoveHeadRel(  long x, long y, bool wait=false )
 	m_LastYum = m_headYPosUM;
 
 	// Target x/y position
-	m_TargetXum = x;
-	m_TargetYum = y;
+	m_TargetXum = m_headXPosUM + x;
+	m_TargetYum = m_headYPosUM + y;
 
 	// Add to queue
-	AddGCODECommand(buffer,"MoveHeadRel failed",UpdatePosition_callback );
-
-	PostMessage (PB_UPDATE_XY, m_headXPosUM +x,m_headYPosUM+y );
+	if( QueueEmpty() == true && wait == true ) {
 		
+		if( InternalWriteSerial( buffer ) == true ) {
+
+			UpdatePosition_callback(this,(void*)1);
+		}
+
+
+	} else { 
+		AddGCODECommand(buffer,"MoveHeadRel failed",UpdatePosition_callback );
+	
+		PostMessage (PB_UPDATE_XY, m_headXPosUM +x,m_headYPosUM+y );
+	}
+
+	// this can't work, since the main thread is blocked, the other threads won't run
 	// wait to complete if finish
 	if( wait == true ) {
 		
@@ -1473,8 +1486,8 @@ bool CPickobearDlg::ReadSerial( unsigned char *buffer, size_t output_buffer_leng
 	index = 0;
 
 	// reset read length
-	if (bytes_read)
-		bytes_read = 0;
+
+	bytes_read = 0;
 
 	// read line from serial, with timeout and check for machine state
 	do { 
@@ -1515,13 +1528,15 @@ bool CPickobearDlg::ReadSerial( unsigned char *buffer, size_t output_buffer_leng
 		}
 
 		// did serial command execute ok, and did we read anything? 
-		if( bytesRead ) {
+		if( bytesRead )
+		{
 
 			//we're not at the end of the buffer?
 			if (index < sizeof( buffer ) ) {
 
 				// pass back length to calling func
-				if( bytes_read ) {
+				//if( bytes_read ) 
+				{
 					bytes_read += bytesRead;
 				}
 
@@ -2119,7 +2134,7 @@ void CPickobearDlg::goCamera(LPVOID pThis)
 			return; 
 	} 
 		
-	SetThreadPriority( threadProcessGCODE, THREAD_PRIORITY_BELOW_NORMAL );
+	SetThreadPriority( threadProcessGCODE, THREAD_PRIORITY_NORMAL );
 
 
 	while( m_Quit == 0 ) {
@@ -4248,7 +4263,8 @@ DWORD CPickobearDlg::goSingleThread(void )
 			}
 
 			if ( pulses != 1000 ) {
-				CStringA pulses_gcode(L"G0H%d\n", pulses );
+				CStringA pulses_gcode;
+				pulses_gcode.Format("G0H%d\n", pulses );
 
 				_RPT1(_CRT_WARN,"goSingleThread: Executing GCODE %s\n",pulses_gcode);
 
