@@ -46,7 +46,7 @@ enum {
 //is  227830
 
 
-#define CAMERA_DEFAULT_UPDATE_RATE_MS		( 1300 )
+#define CAMERA_DEFAULT_UPDATE_RATE_MS		( 10 )
 #define CAMERA_SLOW_UPDATE_RATE_MS			( 300 )
 
 #define pulsestoum(x) (x*25)
