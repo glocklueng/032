@@ -40,6 +40,7 @@ enum {
 #define MACHINE_IDLING						( WAITING_FOR_CMD_MOVE_ACK +1 )
 #define MACHINE_ESTOP						( MACHINE_IDLING +1 )
 #define COMMAND_FAILED						( MACHINE_ESTOP +1 )
+#define MACHINE_BUSY						( COMMAND_FAILED +1 )
 
 // last calibration was
 //was 228370
@@ -574,6 +575,8 @@ class CPickobearDlg : public CDialog
 private:
 
 	HANDLE processGCODE;
+	HANDLE updateThreadXYHandle;
+	HANDLE updateCameraHandle;
 
 	//Not using this yet, this automatically spawns a thread
 	//GCODE_Processor m_GCODE_CPU;
