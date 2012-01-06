@@ -34,7 +34,7 @@ void vacuum_init(void)
 // switches vacuum on and off
 void vacuum(int state)
 {
-	if( gHomed == FALSE ) return;
+	if( state == 1 && gHomed == FALSE ) return;
 
 
 #ifdef VERBOSE_DEBUG

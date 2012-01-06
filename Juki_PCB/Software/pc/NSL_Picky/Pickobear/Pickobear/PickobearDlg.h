@@ -47,6 +47,7 @@ enum {
 
 
 #define CAMERA_DEFAULT_UPDATE_RATE_MS		( 10 )
+#define UP_CAMERA_DEFAULT_UPDATE_RATE_MS		( 500 )
 #define CAMERA_SLOW_UPDATE_RATE_MS			( 300 )
 
 #define pulsestoum(x) (x*25)
@@ -716,6 +717,7 @@ public:
 	CSerialMFC m_Serial;
 	
 	CAlertBox *m_AlertBox;
+	void UpdateLimitSwitch(void);
 
 	void StartGCODEThread(LPVOID pThis);
 

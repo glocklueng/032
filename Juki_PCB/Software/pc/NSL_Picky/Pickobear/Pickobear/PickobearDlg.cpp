@@ -33,9 +33,11 @@
 //   remove/fix all the MFC child thread updates (lots of changes) (seems to be ok)
 //   feeder SetCount isn't properly updated in some cases. (fixed)
 //   cache m_Side since user can change it during a GO process (done)
-//   move commands should check Target XY coordinates, not current
+//   move commands should check Target XY coordinates, not current (done)
 //   why is head up/down using AddGCODE ?
 //   MASSIVE problem that you can change the selection DURING the PNP operation, this is a huge no-no!!
+//   InternalSerialWrite will repeat GCODE command if failed. This isn't really what we want ( Add user abort/retry/ignore )
+
 
 // Recently added :-
 //   added multiple PCB offsets  (not tested!)
@@ -68,13 +70,16 @@
 //	 some of the cursor functions were incorrectly calculating m_stepSize
 //   Removed CheckX machine shouldn't reply until after a move with ok\n
 //   Stopped user from clicking on camera window if machine is busy
+//   Serial buffer for data overflow check was using sizeof instead of passed in buffer length
+//   grbl, vacuum will only switch off if not homed
+//   Camera offset XY was reversed... for placing parts
 
 #include "stdafx.h"
 #include "PickobearDlg.h"
 
 // camera offset in X, move to registry
-#define CAMERA_X_OFFSET				( 73900-540+120 )
-#define CAMERA_Y_OFFSET				( 0 )
+#define CAMERA_X_OFFSET				( 0 )
+#define CAMERA_Y_OFFSET				( 73900-540+120 )
 
 // interval in ms for GUI update of limit switches ( and some other bits )
 #define LIMIT_SWITCHES_UPDATE_MS	( 2000 )
@@ -561,7 +566,7 @@ BOOL CPickobearDlg::OnInitDialog()
 	m_DownCameraWindow.oglCreate( rect, rect1, this,m_DownCamera.GetCurSel() );
 
 	// convert to a picker
-	CString m_ComPort = _T("\\\\.\\COM17");
+	CString m_ComPort = _T("\\\\.\\COM14");
 	m_Serial.Open(m_ComPort, this );
 
 	m_Serial.Setup(CSerial::EBaud38400 );
@@ -598,7 +603,7 @@ BOOL CPickobearDlg::OnInitDialog()
 	// threaded
 	//	m_oglWindow.m_unpTimer = m_oglWindow.SetTimer(1, 100, 0);
 	if( m_DownCameraWindow.m_camera != -1 ){
-		m_DownCameraWindow.m_unpTimer = m_DownCameraWindow.SetTimer(1, CAMERA_DEFAULT_UPDATE_RATE_MS, 0);
+		m_DownCameraWindow.m_unpTimer = m_DownCameraWindow.SetTimer(1, UP_CAMERA_DEFAULT_UPDATE_RATE_MS, 0);
 	}
 	// reset the step size drop down
 	m_StepSize.ResetContent();
@@ -802,6 +807,8 @@ bool CPickobearDlg::InternalWriteSerial( const char *data,bool noConsole=false)
 
 					// wait for machine to acknowledge receipt of data. This relies on no data being in the Serial buffer
 			
+					Sleep ( 100 );
+
 					memset(buffer,0,sizeof( buffer ) );
 
 					if(ReadSerial(&buffer[0],sizeof(buffer),lengthRead ) == false ){ 
@@ -821,6 +828,15 @@ bool CPickobearDlg::InternalWriteSerial( const char *data,bool noConsole=false)
 						}
 
 					}
+					// check for error
+					if( strstr((char*)buffer,"err") ) {
+						OnBnClickedEstop();
+						_RPT0(_CRT_WARN,"InternalWriteSerial: Machine returned error\n");
+						m_Homed = false;
+
+						return false;
+					}
+
 				} while( strstr((char*)buffer,"ok") == NULL );
 			}
 		} else {
@@ -1131,8 +1147,10 @@ bool CPickobearDlg::MoveHead(  long x, long y, bool wait=false )
 	char buffer[ 256 ];
 
 	// this shouldn't really be here, its a failure condition
-	if ( x < 0 ) x = 0;
-	if ( y < 0 ) x = 0;
+	if ( x < 0 ) 
+		x = 0;
+	if ( y < 0 ) 
+		y = 0;
 
 	if( false == BuildGCodeMove(buffer,sizeof(buffer),1,x,y,m_Speed) ) {
 		_RPT0(_CRT_WARN,"BuildGCodeMove: failed\n");
@@ -1161,6 +1179,11 @@ bool CPickobearDlg::MoveHead(  long x, long y, bool wait=false )
 		while( QueueEmpty() == false ) {
 			Sleep( GCODE_WAIT_MS );
 		}
+
+		// Settle time
+		Sleep( 300 ) ;
+
+
 	}
 	return true;
 }
@@ -1449,7 +1472,7 @@ bool CPickobearDlg::CheckX_deprecated( void )
 
 		AfxMessageBox( L"Machine hit a limit switch, going to emergency stop");
 		
-		m_MachineState = MS_ESTOP;
+		OnBnClickedEstop();
 		
 		PostMessage (PB_UPDATE_ALERT, MACHINE_ESTOP,0 );
 
@@ -1548,7 +1571,7 @@ bool CPickobearDlg::ReadSerial( unsigned char *buffer, size_t output_buffer_leng
 		{
 
 			//we're not at the end of the buffer?
-			if (index < sizeof( buffer ) ) {
+			if (index < output_buffer_length ) {
 
 				// pass back length to calling func
 				//if( bytes_read ) 
@@ -2150,7 +2173,7 @@ void CPickobearDlg::goCamera(LPVOID pThis)
 			return; 
 	} 
 		
-	SetThreadPriority( threadProcessGCODE, THREAD_PRIORITY_NORMAL );
+	SetThreadPriority( threadHandleCamera, THREAD_PRIORITY_NORMAL );
 
 
 	while( m_Quit == 0 ) {
@@ -2379,7 +2402,7 @@ void CPickobearDlg::goSetup(LPVOID pThis)
 				// something failed
 
 				// Machine is IDLE
-				m_MachineState = MS_ESTOP;
+				OnBnClickedEstop();
 				
 				// thread is no longer busy
 				bBusy = false;
@@ -2436,7 +2459,7 @@ void CPickobearDlg::goSetup(LPVOID pThis)
 						// something failed
 
 						// Machine is IDLE
-						m_MachineState = MS_ESTOP;
+						OnBnClickedEstop();
 
 						// thread is no longer busy
 						bBusy = false;
@@ -2459,8 +2482,8 @@ void CPickobearDlg::goSetup(LPVOID pThis)
 				// something failed
 
 				// Machine is IDLE
-				m_MachineState = MS_ESTOP;
-				
+				OnBnClickedEstop();
+
 				// thread is no longer busy
 				bBusy = false;
 
@@ -2471,7 +2494,7 @@ void CPickobearDlg::goSetup(LPVOID pThis)
 			}	
 			
 			//@todo : tune this ( why isn't it using the delay?
-			Sleep( 100 );
+			Sleep( 300 );
 
 			// comes here if the part is skipped for some reason
 skip_part:;
@@ -3157,7 +3180,7 @@ void CPickobearDlg::threadUpdateXY(LPVOID data)
 			// something failed
 
 			// Machine is IDLE
-			m_MachineState = MS_ESTOP;
+			OnBnClickedEstop();
 
 			SetControls( FALSE );
 
@@ -3183,7 +3206,7 @@ void CPickobearDlg::threadUpdateXY(LPVOID data)
 		// bad response
 		if( !(m_LimitState & ( 1 << 7 ) ) ){
 
-			_RPT0(_CRT_WARN,"OnBnClickedUpdate: invalid response\n");
+			_RPT0(_CRT_WARN,"threadUpdateXY: invalid response\n");
 
 			goto suspend;
 		}
@@ -3238,6 +3261,8 @@ void CPickobearDlg::threadUpdateXY(LPVOID data)
 
 suspend:;
 		if( m_MachineState == MS_ESTOP ) {
+			
+			OnBnClickedEstop();
 
 			PostMessage (PB_UPDATE_ALERT, MACHINE_ESTOP,0 );
 
@@ -3263,22 +3288,42 @@ suspend:;
 void CPickobearDlg::OnBnClickedUpdate()
 {
 	if( m_Simulate ) {
+		_RPT0(_CRT_WARN,"OnBnClickedUpdate: m_Simulate == true  \n");
 		return;
 	}
 
 	// no serial, no nothing
-	if (m_Serial.IsOpen() == false )
+	if (m_Serial.IsOpen() == false ) {
+
+		_RPT0(_CRT_WARN,"OnBnClickedUpdate: m_Serial.IsOpen() == false \n");
+
 		return;
+	}
 
 	// not allowed to process while GCODE still exists in buffer
-	if ( !command_buffer.empty() )
+	if ( !command_buffer.empty() ) {
+
+		_RPT0(_CRT_WARN,"OnBnClickedUpdate: !command_bufferempty()\n");
+
 		return;
+	}
 
 	if ( bBusy || m_MachineState != MS_IDLE  ) {
 		
 		_RPT2(_CRT_WARN,"Machine is busy (busy %d, state=%d)\n", (int)bBusy, (unsigned int)m_MachineState) ;
 
 		return;
+	}
+
+	UpdateLimitSwitch();
+
+
+}
+
+void CPickobearDlg::UpdateLimitSwitch(void)
+{
+	while( QueueEmpty() == false ) {
+		Sleep( GCODE_WAIT_MS );
 	}
 
 	// mark as busy
@@ -3291,10 +3336,10 @@ void CPickobearDlg::OnBnClickedUpdate()
 	if (InternalWriteSerial( GCODE_LIMIT_QUERY, true ) == false ) {
 		// something failed
 
+		_RPT0(_CRT_WARN,"UpdateLimitSwitch: InternalWriteSerial == false\n");
+
 		// Machine is IDLE
-		m_MachineState = MS_ESTOP;
-				
-		SetControls( FALSE );
+		OnBnClickedEstop();
 
 		return;
 
@@ -3309,13 +3354,19 @@ void CPickobearDlg::OnBnClickedUpdate()
 
 	// no reply
 	if (lengthRead == 0 ) {
+
+		_RPT0(_CRT_WARN,"UpdateLimitSwitch: lengthRead == 0 \n");
+
+		m_MachineState = MS_IDLE ;
+
 		return;
 	}
 
 	// bad response
 	if( !(m_LimitState & ( 1 << 7 ) ) ){
 
-		_RPT0(_CRT_WARN,"OnBnClickedUpdate: invalid response\n");
+		_RPT0(_CRT_WARN,"UpdateLimitSwitch: invalid response\n");
+
 		m_MachineState = MS_IDLE ;
 
 		return;
@@ -3327,34 +3378,43 @@ void CPickobearDlg::OnBnClickedUpdate()
 	// update GUI
 
 	if( m_LimitState & (1 << 1 ) ) { 
-		((CButton*)GetDlgItem(IDC_XL1))->SetCheck(1);_RPT0(_CRT_WARN,"X1 Limit\n");} 
+		((CButton*)GetDlgItem(IDC_XL1))->SetCheck(1);
+		_RPT0(_CRT_WARN,"X1 Limit\n");} 
 	else 
 		((CButton*)GetDlgItem(IDC_XL1))->SetCheck(0);
 
 	if( m_LimitState & (1 << 2 ) ) {
-		((CButton*)GetDlgItem(IDC_XL2))->SetCheck(1);_RPT0(_CRT_WARN,"X2 Limit\n");} 
+		((CButton*)GetDlgItem(IDC_XL2))->SetCheck(1);
+		_RPT0(_CRT_WARN,"X2 Limit\n");} 
 	else 
 		((CButton*)GetDlgItem(IDC_XL2))->SetCheck(0);
 
 	if( m_LimitState & (1 << 3 ) ) {
-		((CButton*)GetDlgItem(IDC_YL1))->SetCheck(1);_RPT0(_CRT_WARN,"Y1 Limit\n");} 
+		((CButton*)GetDlgItem(IDC_YL1))->SetCheck(1);
+		_RPT0(_CRT_WARN,"Y1 Limit\n");} 
 	else 
 		((CButton*)GetDlgItem(IDC_YL1))->SetCheck(0);
 
 	if( m_LimitState & (1 << 4 ) ) {
-		((CButton*)GetDlgItem(IDC_YL2))->SetCheck(1);_RPT0(_CRT_WARN,"Y2 Limit\n");} 
+		((CButton*)GetDlgItem(IDC_YL2))->SetCheck(1);
+		_RPT0(_CRT_WARN,"Y2 Limit\n");} 
 	else 
 		((CButton*)GetDlgItem(IDC_YL2))->SetCheck(0);
 
 	if( m_LimitState & (1 << 5 ) ) {
-		((CButton*)GetDlgItem(IDC_XHOME))->SetCheck(1);_RPT0(_CRT_WARN,"X Home\n");} 
+		((CButton*)GetDlgItem(IDC_XHOME))->SetCheck(1);
+		_RPT0(_CRT_WARN,"X Home\n");} 
 	else 
 		((CButton*)GetDlgItem(IDC_XHOME))->SetCheck(0);
 
 	if( m_LimitState & (1 << 6 ) ) {
-		((CButton*)GetDlgItem(IDC_YHOME))->SetCheck(1);_RPT0(_CRT_WARN,"Y Home\n");} 
+		((CButton*)GetDlgItem(IDC_YHOME))->SetCheck(1);
+		_RPT0(_CRT_WARN,"Y Home\n");} 
 	else 
 		((CButton*)GetDlgItem(IDC_YHOME))->SetCheck(0);
+
+	m_MachineState = MS_IDLE ;
+
 }
 
 enum {
@@ -3945,6 +4005,8 @@ void CPickobearDlg::OnBnClickedGo2()
 	}
 
 	UpdateData(FALSE);
+	
+
 
 	// Start thread for 'GO', thread handles busy and states
 	h = CreateThread(NULL, 0, &CPickobearDlg::goSingleSetup, (LPVOID)this, 0, NULL);
@@ -4069,6 +4131,11 @@ DWORD CPickobearDlg::goSingleThread(void )
 	while( QueueEmpty() == false ) {
 		Sleep( GCODE_WAIT_MS );
 	}
+
+				
+	bBusy = true;
+	m_MachineState = MS_GO;
+
 
 	unsigned int i ;
 	CListCtrl_Components::CompDatabase entry; 
@@ -4234,12 +4301,10 @@ DWORD CPickobearDlg::goSingleThread(void )
 			// something failed
 
 			// Machine is IDLE
-			m_MachineState = MS_ESTOP;
+			OnBnClickedEstop();
 				
 			// thread is no longer busy
 			bBusy = false;
-
-			SetControls( FALSE );
 
 			return false;
 
@@ -4289,12 +4354,11 @@ DWORD CPickobearDlg::goSingleThread(void )
 					// something failed
 
 					// Machine is IDLE
-					m_MachineState = MS_ESTOP;
+					OnBnClickedEstop();
+
 				
 					// thread is no longer busy
 					bBusy = false;
-
-					SetControls( FALSE );
 
 					return false;
 
@@ -4312,13 +4376,12 @@ DWORD CPickobearDlg::goSingleThread(void )
 				// something failed
 
 				// Machine is IDLE
-				m_MachineState = MS_ESTOP;
-				
+				OnBnClickedEstop();
+	
 				// thread is no longer busy
 				bBusy = false;
 
-				SetControls( FALSE );
-
+				
 				return false;
 
 		}
@@ -4652,9 +4715,7 @@ void CPickobearDlg::OnBnClickedVacuumToggle()
 			// something failed
 
 			// Machine is IDLE
-			m_MachineState = MS_ESTOP;
-
-			SetControls( FALSE );
+			OnBnClickedEstop();
 
 			return ;
 
@@ -4664,11 +4725,9 @@ void CPickobearDlg::OnBnClickedVacuumToggle()
 		//on
 		if( InternalWriteSerial( GCODE_VACUUM_ON )  == false ) {
 			// something failed
-
+	
 			// Machine is IDLE
-			m_MachineState = MS_ESTOP;
-
-			SetControls( FALSE );
+			OnBnClickedEstop();
 
 			return ;
 
@@ -4824,10 +4883,11 @@ static bool testMode = false;
  */
 void CPickobearDlg::OnBnClickedTestMode()
 {
-	if (testMode == true )
+	if (testMode == true ) {
 		return;
+	}
 
-	if( false == HomeTest( ) ) {
+	if( false == HomeTest() ) {
 
 		int ret = AfxMessageBox(L"Machine must be homed first",MB_OK|MB_ICONEXCLAMATION);
 		
@@ -4874,38 +4934,17 @@ void CPickobearDlg::TestMode(LPVOID data)
 
 	SetControls( FALSE );
 
-	for( int testRun = 0 ; testRun < 50 ; testRun ++ ) {
+	for( int testRun = 0 ; testRun < 5 ; testRun ++ ) {
 
 		_RPT1(_CRT_WARN,"TestMode: Test run %d\n",testRun);
 
-		MoveHead( 0, 0 ,true );
-		
-		// Read limit switches, if not XHOME,YHOME there is a fault
-
-		OnBnClickedUpdate();
-
-		if( !(m_LimitState & (1 << 5 ) ) ) {
-			AfxMessageBox(L"X is not homed!",MB_OK|MB_ICONEXCLAMATION);
-			testMode = false;
-			SetControls( TRUE );
-			return;
-		}
-
-		if( !(m_LimitState & (1 << 6 ) ) ) {
-			AfxMessageBox(L"Y is not homed!",MB_OK|MB_ICONEXCLAMATION);
-			testMode = false;
-			SetControls( TRUE );
-			return;
-		}
-
-		for( unsigned int i = 0 ; i < 10 ; i ++ ) {
+		for( unsigned int i = 0 ; i < 4 ; i ++ ) {
 
 			do {
 
 				x = rand() * 10;
 
 			} while( x > MAX_X_TABLE ) ;
-
 
 			do {
 
@@ -4916,29 +4955,11 @@ void CPickobearDlg::TestMode(LPVOID data)
 			MoveHead( x, y,true  );
 
 			/// little delay (though we should really punch it for testing, the firmware ought to deal with it.
-			//Sleep( 100 );
+			Sleep( 100 );
 		}
 
 		// Zero
 		MoveHead(0,0,true );
-
-		// Read limit switches, if not XHOME,YHOME there is a fault
-
-		if( !(m_LimitState & (1 << 5 ) ) ) {
-			AfxMessageBox(L"X is not homed, test failed!",MB_OK|MB_ICONEXCLAMATION);
-			testMode = false;
-			SetControls( TRUE );
-			return;
-		}
-
-		if( !(m_LimitState & (1 << 6 ) ) ) {
-			AfxMessageBox(L"Y is not homed, test failed!",MB_OK|MB_ICONEXCLAMATION);
-			testMode = false;
-			SetControls( TRUE );
-			return;
-		}
-
-		//Sleep(100);
 
 		// stage ii test, run to all defined feeders
 
@@ -4955,7 +4976,7 @@ void CPickobearDlg::TestMode(LPVOID data)
 
 			MoveHead(m_FeederList.entry->x,m_FeederList.entry->y,true );
 
-			//Sleep( 500 );
+			Sleep( 400 );
 
 			// take a picture
 			CStringA filename;
@@ -4963,39 +4984,24 @@ void CPickobearDlg::TestMode(LPVOID data)
 try_again:;
 			filename.Format("grab\\%s_%d.jpg",m_FeederList.entry->label,offset+testRun);
 
-			if (_access (filename, 0) == 0) {			
+			if ( _access (filename, 0) == 0 ) {			
 				offset++;
 				goto try_again;
 
 			}
 
 			m_UpCameraWindow.SaveImage( filename );
-
 		}
 
 		// Zero
 		MoveHead(0,0,true );
-
-		// Read limit switches, if not XHOME,YHOME there is a fault
-
-		if( !(m_LimitState & (1 << 5 ) ) ) {
-			AfxMessageBox(L"X is not homed, test pass failed!",MB_OK|MB_ICONEXCLAMATION);
-			testMode = false;
-			SetControls( TRUE );
-			return;
-		}
-
-		if( !(m_LimitState & (1 << 6 ) ) ) {
-			AfxMessageBox(L"Y is not homed, test failed!",MB_OK|MB_ICONEXCLAMATION);
-			testMode = false;
-			SetControls( TRUE );
-			return;
-		}
 	}
 
-	AfxMessageBox(L"Tests passed",MB_OK);
+	AfxMessageBox(L"Tests ended, zero and check XY HOME",MB_OK);
 
 	testMode = false;
+	
+	m_MachineState = MS_IDLE;
 
 	SetControls( TRUE );
 
@@ -5204,13 +5210,18 @@ retry:;
 
 			if( InternalWriteSerial( m_GCODECMDBuffer.c_str())  == false ){
 
-				if(m_GCODECMDBuffer.find(GCODE_HOME) == string::npos )
-					ret = GCODE_CommandAck_callback( this, (void*) command_buffer.front().error_message.c_str() ) ;
-				else
-					ret = func_ptr( this, (void*) command_buffer.front().error_message.c_str() ) ;
+				// estop can clear the gcode
+				if(!command_buffer.empty() ){
+					if(m_GCODECMDBuffer.find(GCODE_HOME) == string::npos )
+						ret = GCODE_CommandAck_callback( this, (void*) command_buffer.front().error_message.c_str() ) ;
+					else
+						ret = func_ptr( this, (void*) command_buffer.front().error_message.c_str() ) ;
+				}
 
 				if( ret == false ){
-					m_MachineState = MS_ESTOP;
+					
+					OnBnClickedEstop();
+
 					// command is still in buffer
 					goto retry;
 
@@ -5219,9 +5230,10 @@ retry:;
 			} else {
 
 				// command was accepted
-				if(m_GCODECMDBuffer.find(GCODE_HOME) == string::npos )
+				if(m_GCODECMDBuffer.find(GCODE_HOME) == string::npos ){
 					ret = GCODE_CommandAck_callback( this , (void*)1 ) ;
-				else
+					ret = func_ptr( this,(void*) 1 ) ;
+				} else
 					ret = func_ptr( this, (void*) 1 ) ;
 		
 			}
@@ -5231,7 +5243,8 @@ retry:;
 
 			// if its a move command we should also get an X (needs a better way)
 			// HOME(G28) doesn't do a X acknowledge
-			if ((m_GCODECMDBuffer.find(GCODE_HOME) == string::npos ) && m_GCODECMDBuffer.at(0) == 'G' ) {
+			if ((m_GCODECMDBuffer.find(GCODE_HOME) == string::npos ) && m_GCODECMDBuffer.at(0) == 'G' ) 
+			{
 
 				bool ret = CheckX();
 
@@ -5255,7 +5268,7 @@ retry:;
 					} else {
 
 						AfxMessageBox(L"Command failed, no callback defined",MB_OK);
-						m_MachineState = MS_ESTOP;
+						OnBnClickedEstop();
 						break;// break out of if	
 
 					}
@@ -5289,6 +5302,8 @@ retry:;
 			if( threadProcessGCODE != 0 )  {
 
 				while(WaitForSingleObject( processGCODE, INFINITE ) == WAIT_IO_COMPLETION);
+
+				ResetEvent( processGCODE );
 			}
 			else  
 				Sleep(10);

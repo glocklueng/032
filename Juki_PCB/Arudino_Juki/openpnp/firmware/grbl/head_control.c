@@ -92,10 +92,13 @@ unsigned char is_head_down( void )
 #ifdef SIMULATE
 	return simulate_head_state;
 #else
+
 	unsigned char state ;
+
 	state  = bit_is_set( HEADDT_PIN, HEAD_DOWN_TEST )?1:0;
 
 	return state;
+
 #endif
 }
 

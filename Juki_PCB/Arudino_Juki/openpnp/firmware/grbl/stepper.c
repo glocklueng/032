@@ -177,7 +177,7 @@ SIGNAL(TIMER1_COMPA_vect)
 	}
 
 	// don't move if the head is down, this one is ok to let it keep running  
-	if( !bit_is_set( HEADDT_PIN, HEAD_DOWN_TEST ) ) {
+	if( is_head_down() ) {
 		return;
 	}
 
@@ -381,7 +381,7 @@ void set_step_events_per_minute(uint32_t steps_per_minute) {
 // global home flag ( machine should only do home move if this is FALSE)
 unsigned char gHomed = FALSE;
 
-static unsigned char xLimit1( void ) 
+unsigned char xLimit1( void ) 
 {
 	unsigned char limit = bit_is_set( LIMIT_PIN, X1_LIMIT_BIT );
 	
@@ -394,45 +394,80 @@ static unsigned char xLimit1( void )
 	return limit;
 }
 
-static unsigned char xLimit2( void ) 
+unsigned char xLimit2( void ) 
 {
 	unsigned char limit = bit_is_set( LIMIT_PIN, X2_LIMIT_BIT );
 	
 	if( limit ) {
 		// no longer homed
 		gHomed = FALSE;
-		printPgmString(PSTR("xLimit2\r\n"));
+		printPgmString(PSTR("xLimit2: is in limit\r\n"));
 	}
 
 	return limit;
 }
-static unsigned char yLimit1( void ) 
+
+unsigned char yLimit1( void ) 
 {
 	unsigned char limit = bit_is_set( LIMIT_PIN, Y1_LIMIT_BIT );
 	
 	if( limit ) {
 		// no longer homed
 		gHomed = FALSE;
-		printPgmString(PSTR("yLimit1\r\n"));
+		printPgmString(PSTR("yLimit1: is in limit\r\n"));
 	}
 
 	return limit;
 }
-static unsigned char yLimit2( void ) 
+
+unsigned char yLimit2( void ) 
 {
 	unsigned char limit = bit_is_set( LIMIT_PIN, Y2_LIMIT_BIT );
 	
 	if( limit ) {
 		// no longer homed
 		gHomed = FALSE;
-		printPgmString(PSTR("yLimit2\r\n"));
+		printPgmString(PSTR("yLimit2: is in limit\r\n"));
 	}
 
 	return limit;
 }
 
+
+unsigned char xHome( void ) 
+{
+	unsigned char homex = bit_is_set( XHM_PIN, X_HOME );
+	
+	if( homex ) {
+
+
+#ifdef VERBOSE_DEBUG
+		printPgmString(PSTR("xHome: homed\r\n"));
+#endif
+	}
+
+	return homex;
+}
+
+unsigned char yHome( void ) 
+{
+	unsigned char homey = bit_is_set( YHM_PIN, Y_HOME );
+	
+	if( homey ) {
+#ifdef VERBOSE_DEBUG
+		printPgmString(PSTR("yHome: homed\r\n"));
+#endif
+	}
+
+	return homey;
+}
+
+
+
 enum {
-	STOP,LEFT,RIGHT,FORWARD,BACK
+	STOP,
+	LEFT,RIGHT,
+	FORWARD,BACK
 };
 
 #define PULSE_LENGTH			(  10 )
@@ -446,8 +481,32 @@ unsigned char moveLeft( unsigned int distance )
   while(distance--) {
 
 	//  hit left limit or head down?
-  	if( bit_is_set( LIMIT_PIN, X1_LIMIT_BIT ) || !bit_is_set( HEADDT_PIN, HEAD_DOWN_TEST ) ) 
+  	if( xLimit1() || is_head_down() ) {
+
+#ifdef VERBOSE_DEBUG
+
+		printPgmString(PSTR("\r\nmoveLeft "));
+
+	      	printPgmString(PSTR("head down = "));
+			printInteger( is_head_down() );
+	      	printPgmString(PSTR(" "));
+
+		if( xLimit1() ){
+			printPgmString(PSTR("X1_LIMIT_BIT "));	
+		}
+
+		if( is_head_down() )
+			printPgmString(PSTR("HEAD_DOWN_TEST"));
+
+
+		printPgmString(PSTR("\r\n"));
+
+
+
+#endif
+
 		return 0;
+	}
 
      STEPPING_PORT = (STEPPING_PORT & ~STEP_MASK) | (1<<X_STEP_BIT);	
 	 _delay_us( PULSE_LENGTH ) ;
@@ -466,9 +525,13 @@ unsigned char moveRight( unsigned int distance )
   while(distance--) {
 
 	//  hit left limit or head down?
-  	if( bit_is_set( LIMIT_PIN, X2_LIMIT_BIT )  || !bit_is_set( HEADDT_PIN, HEAD_DOWN_TEST ) ) 
-		return 0;
-  	
+  	if( xLimit2()  || is_head_down()  ) {
+#ifdef VERBOSE_DEBUG
+		printPgmString(PSTR("\r\nmoveLeft HEAD_DOWN_TEST or X2 LIMIT \r\n"));
+#endif
+		return 0;  	
+	}
+
 	STEPPING_PORT = (STEPPING_PORT & ~STEP_MASK) | (1<<X_STEP_BIT);	
 	 _delay_us( PULSE_LENGTH ) ;
   	STEPPING_PORT = (STEPPING_PORT & ~STEP_MASK);
@@ -487,9 +550,26 @@ unsigned char moveForward( unsigned int distance )
   while(distance--) {
 
 	//  hit left limit or head down?
-  	if( bit_is_set( LIMIT_PIN, Y1_LIMIT_BIT ) || !bit_is_set( HEADDT_PIN, HEAD_DOWN_TEST ) ) 
-		return 0;
+  	if( yLimit1() || is_head_down()  ) {
+#ifdef VERBOSE_DEBUG
 
+		printPgmString(PSTR("\r\nmoveLeft "));
+
+	      	printPgmString(PSTR("head down = "));
+			printInteger( is_head_down() );
+	      	printPgmString(PSTR(" "));
+
+		if( yLimit1() )
+			printPgmString(PSTR("Y1_LIMIT_BIT "));
+
+		if( is_head_down() )
+			printPgmString(PSTR("HEAD_DOWN_TEST"));
+
+
+		printPgmString(PSTR("\r\n"));
+
+#endif
+	}
 
     STEPPING_PORT = (STEPPING_PORT & ~STEP_MASK) | (1<<Y_STEP_BIT);	
 	 _delay_us( PULSE_LENGTH ) ;
@@ -506,7 +586,7 @@ unsigned char moveBack( unsigned int distance )
   // Then pulse the stepping pins
   while(distance--) {
 
-  	if( bit_is_set( LIMIT_PIN, Y2_LIMIT_BIT ) || !bit_is_set( HEADDT_PIN, HEAD_DOWN_TEST ) ) 
+  	if( yLimit2() || is_head_down()  ) 
 		return 0;
 
     STEPPING_PORT = (STEPPING_PORT & ~STEP_MASK) | (1<<Y_STEP_BIT);	
@@ -534,6 +614,12 @@ void st_go_home(void)
 
 	// if head down, set head up
 	if( is_head_down() ) {
+
+#ifdef VERBOSE_DEBUG
+
+		printPgmString(PSTR("home is_head_down()=1\r\n"));
+#endif
+
 		head_down(0);
 		
 		//check again
@@ -546,7 +632,6 @@ void st_go_home(void)
 
 #ifdef SIMULATE
 	gHomed = TRUE ;
-	
 	// marks as no longer busy
 	set_busy(FALSE);
 	return ;
@@ -560,7 +645,7 @@ void st_go_home(void)
 	vacuum(0);
 
 #ifdef VERBOSE_DEBUG
-	printPgmString(PSTR("homing\r\n"));
+	printPgmString(PSTR("\r\nX limit1 check\r\n"));
 #endif
 
 	// If in left most limit, move to right > more than size of home and limit area
@@ -578,6 +663,9 @@ void st_go_home(void)
 		_delay_ms(200);
 
 	}
+#ifdef VERBOSE_DEBUG
+	printPgmString(PSTR("\r\nY limit1 check\r\n"));
+#endif
 
 	// If in front most limit, move to right > more than size of home and limit area
 	if( yLimit1() ) {
@@ -608,18 +696,26 @@ void st_go_home(void)
 		printPgmString(PSTR("."));
 #endif
 		// are we homed ?	
-		if( bit_is_set( XHM_PIN, X_HOME ) ) {
+		if( xHome() ) {
+
+#ifdef VERBOSE_DEBUG
+		printPgmString(PSTR("home xHome() ==1"));
+#endif
 			xDir = STOP;
 			
 		}
 
 		// no, crawl to home
 		if ( xDir == LEFT) {
-			if( moveLeft(1) == 0 ) 
+			if( moveLeft(1) == 0 )  {
+#ifdef VERBOSE_DEBUG
+				printPgmString(PSTR("home moveLeft(1) failed"));
+#endif
 				goto error;
-		}
+			}
 
 			counter ++;
+		}
 
 	}while( xDir != STOP );
 
@@ -645,13 +741,19 @@ void st_go_home(void)
 #ifdef VERBOSE_DEBUG
 		printPgmString(PSTR("."));
 #endif
-		if( bit_is_set( YHM_PIN, Y_HOME ) ) {
+		if( yHome() ) {
+#ifdef VERBOSE_DEBUG
+		printPgmString(PSTR("home yHome() ==1"));
+#endif
 			yDir = STOP;
 			
 		}
 
 		if ( yDir == FORWARD ) {
 			if( moveForward(1) ==  0 ) {
+#ifdef VERBOSE_DEBUG
+				printPgmString(PSTR("home moveForward(1) failed"));
+#endif
 				goto error;
 			}
 			counter ++;
@@ -666,7 +768,7 @@ void st_go_home(void)
 	printPgmString(PSTR("\r\n"));
 #endif
 
-error:;
+
 
 	sei();
 
@@ -682,7 +784,8 @@ error:;
 #endif
 		return;
 	}
-
+error:;
+	sei();
 
 #ifdef VERBOSE_DEBUG
 	printPgmString(PSTR("\r\npickobear is not homed\r\n"));
