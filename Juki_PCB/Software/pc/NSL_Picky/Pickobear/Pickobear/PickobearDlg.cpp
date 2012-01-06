@@ -1,45 +1,49 @@
 // PickobearDlg.cpp : implementation file
 //
+//
 // charliex - null space labs 032.la
 //
 // Todo list :-
-//   add head down check to home!!! (done, grbl)
-//   remove all the utf8 buffers, choose CString or std::string ? (nearly all done)
-//   fully implement new feeder classes (mostly done)
-//   update component classes to make it simpler
-//   too much relies on the index in the CListCtrl's (all have been replaced)
-//   make busy status reflect in GUI (done)
+//
+//   why is head up/down using AddGCODE ?
+//   MASSIVE problem that you can change the selection DURING the PNP operation, this is a huge no-no!!
+//   InternalSerialWrite will repeat GCODE command if failed. This isn't really what we want ( Add user abort/retry/ignore )
+//   Status bar is broken
 //   add a status print somewhere in the GUI (added)
-//   more error checking (a lot more added)
-//   figure out the problem with CheckX / CheckAck and see if it can be handled better (added longer delay on timeout, needs proper ACK) (seems to be ok now)
-//   add last feeder XY to Grbl and add new GCODE parameter to set feeder (partially added, sets feeder )
-//   more help documentation
-//   document GCODE (done)
 //   add 'Append' option to feeder load/import
 //   plain text for all load/save files ? XML i guess since everyones going with that.
 //   finish adding machine plot area to GUI (simulate)
-//   double check rotation (build eagle test board)
+//   double check rotation (build eagle test board) (seems to be ok, but still might be turing too far)
 //   add picker for serial port, add registry key, add more error checking for serial port
 //   more camera controls, fine tune the slow/fast modes
 //   tidy up headers
 //   add localisation to strings?
-//   reflect limit switches in GUI (partially working)
+//   fully implement new feeder classes (mostly done)
+//   add last feeder XY to Grbl and add new GCODE parameter to set feeder (partially added, sets feeder )
+//   more help documentation
+//   make sure feeder names are unique
+//   changing over GCODE command feeder to threaded with callbacks (lots of work) (seems to work) (offline tests are good) (done, though testing SetEvent change)
+//   change camera offset to user definable
+//   remove/fix all the MFC child thread updates (lots of changes) (seems to be ok) (changed again)
+//   update component classes to make it simpler
+//
+//   add head down check to home!!! (done, grbl)
+//   remove all the utf8 buffers, choose CString or std::string ? (nearly all done) (all bu thtose that are ok as utf8's)
+//   too much relies on the index in the CListCtrl's (all have been replaced)
+//   make busy status reflect in GUI (done)
+//   more error checking (a lot more added) (even more added)
+//   figure out the problem with CheckX / CheckAck and see if it can be handled better (added longer delay on timeout, needs proper ACK) (seems to be ok now) (removed and improved in grbl, only one ack now)
+//   document GCODE (done)
+//   reflect limit switches in GUI (done)
 //   handle flipped pcbs!! (Most important) (done)
 //   move database saves to the postncdestroy or earlier (done)
-//   make sure feeder names are unique
-//   changing over GCODE command feeder to threaded with callbacks (lots of work) (seems to work) (offline tests are good)
-//   change camera offset to user definable
-//   add x,y update to feeder/components (d0ne)
-//   remove/fix all the MFC child thread updates (lots of changes) (seems to be ok)
-//   feeder SetCount isn't properly updated in some cases. (fixed)
+//   add x,y update to feeder/components (done)
+//   feeder SetCount isn't properly updated in some cases. (done)
 //   cache m_Side since user can change it during a GO process (done)
 //   move commands should check Target XY coordinates, not current (done)
-//   why is head up/down using AddGCODE ?
-//   MASSIVE problem that you can change the selection DURING the PNP operation, this is a huge no-no!!
-//   InternalSerialWrite will repeat GCODE command if failed. This isn't really what we want ( Add user abort/retry/ignore )
-
 
 // Recently added :-
+//
 //   added multiple PCB offsets  (not tested!)
 //	 implemented delete function in feeder list
 //   temporarily turn off redraw in rebuild of feeder list
@@ -59,11 +63,12 @@
 //   added more agressive error fail out conditions, bad serial writes will abort run and unhome machine
 //   added more defines for GCODE and MS delays
 //   emergency stop works better
-//   error in CString error creation
 //   doesn't rotate on a 360 rotate
 //   if rotate is >360 then subtract 360 
+//   changed update to use events instead of resume/suspend thread.
 
 // Recently fixed :-
+//
 //   bug in component search, C2 would match C20
 //   bug that InternalWriteSerial was reading data back, CheckAck is now inside InternalWriteSerial
 //   EmptySerial wasn't flushing the buffer correctly
@@ -73,6 +78,7 @@
 //   Serial buffer for data overflow check was using sizeof instead of passed in buffer length
 //   grbl, vacuum will only switch off if not homed
 //   Camera offset XY was reversed... for placing parts
+//   error in CString error creation
 
 #include "stdafx.h"
 #include "PickobearDlg.h"
@@ -208,6 +214,8 @@ CPickobearDlg::CPickobearDlg(CWnd* pParent /*=NULL*/)
 	, m_LastXum(0)
 	, m_LastYum(0)
 	, processGCODE(0)
+	, updateThreadXYHandle(0)
+	, updateCameraHandle(0)
 
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
@@ -566,7 +574,7 @@ BOOL CPickobearDlg::OnInitDialog()
 	m_DownCameraWindow.oglCreate( rect, rect1, this,m_DownCamera.GetCurSel() );
 
 	// convert to a picker
-	CString m_ComPort = _T("\\\\.\\COM14");
+	CString m_ComPort = _T("\\\\.\\COM17");
 	m_Serial.Open(m_ComPort, this );
 
 	m_Serial.Setup(CSerial::EBaud38400 );
@@ -649,7 +657,22 @@ BOOL CPickobearDlg::OnInitDialog()
                                    TRUE,  // Initial state is signaled
                                    TEXT("processGCODE"));
                                           // Object name
+
+	updateThreadXYHandle  = CreateEvent (NULL,  // No security attributes
+                                   TRUE,  // Manual-reset event
+                                   TRUE,  // Initial state is signaled
+                                   TEXT("updateThreadXYHandle"));
+                                          // Object name
+	
+	updateCameraHandle  = CreateEvent (NULL,  // No security attributes
+                                   TRUE,  // Manual-reset event
+                                   TRUE,  // Initial state is signaled
+                                   TEXT("updateCameraHandle"));
+                                          // Object name
+	
+	
 	SetControls( FALSE );
+	
 
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
@@ -3268,8 +3291,11 @@ suspend:;
 
 		}
 
+
 		// suspend this thread
-		SuspendThread( updateThreadHandle );
+			while(WaitForSingleObject( updateThreadXYHandle, INFINITE ) == WAIT_IO_COMPLETION);
+
+			ResetEvent( updateThreadXYHandle );
 	}
 }
 
@@ -5021,12 +5047,14 @@ void CPickobearDlg::OnClose()
 	SetControls( FALSE );
 
 	// Wake threads up
+
 	
-	if( updateThreadHandle) {
-		while( ResumeThread(updateThreadHandle)>0);
-	}
 	if( threadProcessGCODE){
 		SetEvent(processGCODE);
+	}
+
+	if( updateThreadHandle){
+		SetEvent(updateThreadXYHandle);
 	}
 
 	int timeout;
@@ -5351,7 +5379,9 @@ bool CPickobearDlg::AddGCODECommand( std::string gcode ,std::string error_messag
 	
 	// add to buffer
 	command_buffer.push_back( command );
-	
+		
+	PostMessage (PB_UPDATE_ALERT, WAITING_FOR_CMD_MOVE_ACK ,1 );
+
 	// Wake thread up
 	if( threadProcessGCODE){
 		SetEvent ( processGCODE );
@@ -5400,9 +5430,9 @@ void CPickobearDlg::OnTimer(UINT_PTR nIDEvent)
 			// update status of limit switches and home etc, but only if the machine is in the right state
 			if ( command_buffer.empty() == true && bBusy == false && m_MachineState == MS_IDLE  ) {
 			
-				if( updateThreadHandle) {
+				if( updateThreadXYHandle) {
 					//_RPT0(_CRT_WARN,"Resuming update thread\n");
-					if( ResumeThread(updateThreadHandle) == -1 ){
+					if( SetEvent(updateThreadXYHandle) == -1 ){
 						_RPT0(_CRT_WARN,"error resuming thread updateThreadHandle\n");
 					}
 				}
@@ -5462,6 +5492,11 @@ afx_msg LRESULT CPickobearDlg::UpdateAlertMessage (WPARAM wParam, LPARAM lParam)
 
 		case COMMAND_FAILED:
 			message = L"Command failed";
+			break;
+
+		case MACHINE_BUSY:
+
+			message = L"Machine is busy doing something, try again when its done";
 			break;
 
 		case MACHINE_ESTOP:

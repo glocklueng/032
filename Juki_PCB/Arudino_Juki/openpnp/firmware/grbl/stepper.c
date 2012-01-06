@@ -624,7 +624,10 @@ void st_go_home(void)
 		
 		//check again
 		if(is_head_down() ){
-			printPgmString(PSTR("home failed\r\n"));
+#ifdef VERBOSE_DEBUG
+			printPgmString(PSTR("home failed, head down\r\n"));
+#endif
+			ackHost = 'E';
 			return;
 		}
 
