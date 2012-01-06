@@ -77,15 +77,24 @@ char pickup_part ( void )
 {
 	unsigned char failedCounter;
 
+
+
 	// wait til head stops
 	while( head_moving() );
+
+	// maybe?
+	while( get_busy() );
+
 
 	// count number of pickup fails
 	failedCounter = 0 ;
 
+
 	if( is_head_down() ){
 		return GCSTATUS_FAILED_COMMAND;
 	}
+
+	set_busy( TRUE ) ;
 
 	//for(;;)  (oops!)
 	{
@@ -121,6 +130,9 @@ char pickup_part ( void )
 
 			if( failedCounter == 4 ) {
 
+
+				set_busy( FALSE ) ;
+
 				return GCSTATUS_FAILED_COMMAND;
 
 			}
@@ -136,6 +148,8 @@ char pickup_part ( void )
 	}
 
 	_delay_ms( 500 );
+
+	set_busy( FALSE ) ;
 
 	return GCSTATUS_OK;
 
@@ -163,6 +177,11 @@ char putdown_part ( void )
 	// wait til head stops
 	while( head_moving() );
 
+	// maybe?
+	while( get_busy() );
+
+	set_busy( TRUE ) ;
+
 	// settle time
 	_delay_ms( 100 );
 
@@ -180,6 +199,8 @@ char putdown_part ( void )
 		vacuum ( 0 );
 
 		// now we need the GCODE function to set the location of the feeder, so we can retry the pickup
+
+		set_busy( FALSE) ;
 
 		return GCSTATUS_FAILED_COMMAND;	
 	}
@@ -199,6 +220,8 @@ char putdown_part ( void )
 	head_down ( 0 ) ;
 
 	_delay_ms( 500 );
+
+	set_busy( FALSE) ;
 
 	return GCSTATUS_OK;
 
