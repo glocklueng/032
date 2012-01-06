@@ -67,6 +67,7 @@
 //   EmptySerial wasn't flushing the buffer correctly
 //	 some of the cursor functions were incorrectly calculating m_stepSize
 //   Removed CheckX machine shouldn't reply until after a move with ok\n
+//   Stopped user from clicking on camera window if machine is busy
 
 #include "stdafx.h"
 #include "PickobearDlg.h"
@@ -1097,6 +1098,10 @@ bool CPickobearDlg::MoveHeadSlow(  long x, long y, bool wait=false )
 		while( QueueEmpty() == false ) {
 			Sleep( GCODE_WAIT_MS );
 		}
+
+		// Position can update now
+		m_headXPosUM = m_TargetXum ;
+		m_headYPosUM = m_TargetYum ;
 	}
 
 
@@ -1148,6 +1153,9 @@ bool CPickobearDlg::MoveHead(  long x, long y, bool wait=false )
 
 	// if gui asked for a move that waits on the head to finish moving
 	if( wait == true ) {
+		
+		Sleep(100);
+
 		_RPT0(_CRT_WARN,"MoveHead: Waiting\n");
 		// wait for command to process, this locks most of the gui....
 		while( QueueEmpty() == false ) {
@@ -1239,7 +1247,7 @@ bool CPickobearDlg::UpdatePosition_cb2(void *userdata )
 	if( userdata == (void*)1 )  {
 
 		// update the global position
-		PostMessage (PB_UPDATE_XY, m_TargetXum,m_TargetYum);
+ 		PostMessage (PB_UPDATE_XY, m_TargetXum,m_TargetYum);
 
 //		((CWnd*)GetDlgItem(IDC_SIMULATION_DRAW))->Invalidate();	
 //		Invalidate();

@@ -48,6 +48,13 @@ void COpenGLControl::OnPaint()
 
 void COpenGLControl::OnRButtonDown(UINT nFlags, CPoint point )
 {
+
+	if ( pDlg->bBusy || pDlg->m_MachineState != CPickobearDlg::MS_IDLE ) {
+		AfxMessageBox(L"Machine is already running a task",MB_OK|MB_ICONEXCLAMATION);
+		return ;
+	}
+
+
 	int w = m_size.Width()/2;
 	int h = m_size.Height()/2;
 	
