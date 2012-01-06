@@ -35,6 +35,7 @@
 //   cache m_Side since user can change it during a GO process (done)
 //   move commands should check Target XY coordinates, not current
 //   why is head up/down using AddGCODE ?
+//   MASSIVE problem that you can change the selection DURING the PNP operation, this is a huge no-no!!
 
 // Recently added :-
 //   added multiple PCB offsets  (not tested!)
@@ -65,6 +66,7 @@
 //   bug that InternalWriteSerial was reading data back, CheckAck is now inside InternalWriteSerial
 //   EmptySerial wasn't flushing the buffer correctly
 //	 some of the cursor functions were incorrectly calculating m_stepSize
+//   Removed CheckX machine shouldn't reply until after a move with ok\n
 
 #include "stdafx.h"
 #include "PickobearDlg.h"
@@ -199,6 +201,7 @@ CPickobearDlg::CPickobearDlg(CWnd* pParent /*=NULL*/)
 	, m_TargetYum(0)
 	, m_LastXum(0)
 	, m_LastYum(0)
+	, processGCODE(0)
 
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
@@ -557,7 +560,7 @@ BOOL CPickobearDlg::OnInitDialog()
 	m_DownCameraWindow.oglCreate( rect, rect1, this,m_DownCamera.GetCurSel() );
 
 	// convert to a picker
-	CString m_ComPort = _T("\\\\.\\COM14");
+	CString m_ComPort = _T("\\\\.\\COM17");
 	m_Serial.Open(m_ComPort, this );
 
 	m_Serial.Setup(CSerial::EBaud38400 );
@@ -635,6 +638,11 @@ BOOL CPickobearDlg::OnInitDialog()
 	// Start thread that processes GCODE commands
 	Multi::Thread::Create<void>(&CPickobearDlg::StartGCODEThread, this, NULL); 
 
+	processGCODE  = CreateEvent (NULL,  // No security attributes
+                                   TRUE,  // Manual-reset event
+                                   TRUE,  // Initial state is signaled
+                                   TEXT("processGCODE"));
+                                          // Object name
 	SetControls( FALSE );
 
 	return TRUE;  // return TRUE  unless you set the focus to a control
@@ -1360,7 +1368,7 @@ void CPickobearDlg::EmptySerial ( void )
 
 //this is banannas
 /**
- *  CheckX - Waits for the movement ACK
+ *  CheckX_deprecated - Waits for the movement ACK
  *
  * X - move went ok
  * L - hit a limit switch
@@ -1370,7 +1378,7 @@ void CPickobearDlg::EmptySerial ( void )
  * @return returns true if acked ok, false if hit limit or other problem
  *        
  */
-bool CPickobearDlg::CheckX( void )
+bool CPickobearDlg::CheckX_deprecated( void )
 {
 	DWORD lengthRead = 0;
 	unsigned char ch;
@@ -5004,7 +5012,7 @@ void CPickobearDlg::OnClose()
 		while( ResumeThread(updateThreadHandle)>0);
 	}
 	if( threadProcessGCODE){
-		while(ResumeThread(threadProcessGCODE)>0);
+		SetEvent(processGCODE);
 	}
 
 	int timeout;
@@ -5037,7 +5045,9 @@ void CPickobearDlg::OnClose()
 		while (WAIT_OBJECT_0 != WaitForSingleObject(threadProcessGCODE, 200)){
 			_RPT0(_CRT_WARN,"waiting on gcode thread\n");
 			timeout--;
-			if( timeout == 0) break;
+			SetEvent(processGCODE);
+			if( timeout == 0) 
+				break;
 		}
 	threadProcessGCODE = 0;
 
@@ -5208,6 +5218,9 @@ retry:;
 		
 			}
 
+#if 0
+			// doesn't do a X anymore only ok
+
 			// if its a move command we should also get an X (needs a better way)
 			// HOME(G28) doesn't do a X acknowledge
 			if ((m_GCODECMDBuffer.find(GCODE_HOME) == string::npos ) && m_GCODECMDBuffer.at(0) == 'G' ) {
@@ -5245,7 +5258,7 @@ retry:;
 					func_ptr( this,(void*)1 ) ;
 				}
 			}
-			
+#endif
 			// clear command
 			m_GCODECMDBuffer.erase();
 			
@@ -5258,13 +5271,17 @@ retry:;
 				m_MachineState = MS_IDLE;
 			}
 
+			// reset event
+			ResetEvent( processGCODE );
+
+
 		} else {
 			
 			// uses less CPU time, if can't suspend then Sleep
-			if( threadProcessGCODE != 0 )
-				if( SuspendThread(threadProcessGCODE) == -1 ) {
-					Sleep(10);
-				}
+			if( threadProcessGCODE != 0 )  {
+
+				while(WaitForSingleObject( processGCODE, INFINITE ) == WAIT_IO_COMPLETION);
+			}
 			else  
 				Sleep(10);
 			
@@ -5314,9 +5331,12 @@ bool CPickobearDlg::AddGCODECommand( std::string gcode ,std::string error_messag
 	
 	// Wake thread up
 	if( threadProcessGCODE){
+		SetEvent ( processGCODE );
+#if 0
 		if( ResumeThread(threadProcessGCODE) == -1 ){
 			_RPT0(_CRT_WARN,"error resuming thread threadProcessGCODE\n");
 		}
+#endif
 	}
 	return true;
 }
