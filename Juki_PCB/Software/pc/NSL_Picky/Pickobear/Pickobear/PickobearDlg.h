@@ -572,6 +572,8 @@ class CPickobearDlg : public CDialog
 
 private:
 
+	HANDLE processGCODE;
+
 	//Not using this yet, this automatically spawns a thread
 	//GCODE_Processor m_GCODE_CPU;
 	
@@ -758,7 +760,7 @@ public:
 
 	// check acknowledgement fron pnp
 	char CheckAck(const char *ack1);
-	bool CheckX( void );
+	bool CheckX_deprecated( void );
 
 	// move head to x,y
 	bool MoveHead( long  x, long y ,bool wait);

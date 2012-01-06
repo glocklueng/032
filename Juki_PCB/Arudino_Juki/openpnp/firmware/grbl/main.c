@@ -214,8 +214,10 @@ int main(void)
 		// L = hit a limit
 		// H = not homed
 		case 'L':
+				printPgmString( PSTR("lim\n"));
+				break;
 		case 'H':
-			serialWrite( ackHost );
+				printPgmString( PSTR("nho\n"));
 			break;
 		case 'O':
 		case 'X':
