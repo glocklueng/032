@@ -261,20 +261,23 @@ uint8_t gc_execute_line(char *line) {
 	      	printPgmString(PSTR("\r\n"));
 
 
-			if( bit_is_set( LIMIT_PIN, X1_LIMIT_BIT ) )
+			if( xLimit1() )
 		      	printPgmString(PSTR("XL1\r\n"));
-			if( bit_is_set( LIMIT_PIN, X2_LIMIT_BIT ) )
-		      	printPgmString(PSTR("XL2\r\n"));
 
-			if( bit_is_set( LIMIT_PIN, Y1_LIMIT_BIT ))
+			if( xLimit2() ){
+		      	printPgmString(PSTR("XL2\r\n"));
+			}
+
+			if( yLimit1())
 		      	printPgmString(PSTR("YL1\r\n"));
-			if( bit_is_set( LIMIT_PIN, Y2_LIMIT_BIT ) )
+			
+			if( yLimit2() )
 		      	printPgmString(PSTR("YL2\r\n"));
 
-			if( bit_is_set( XHM_PIN, X_HOME ) )
+			if( xHome() )
 		      	printPgmString(PSTR("X_HOME\r\n"));
 
-			if( bit_is_set( YHM_PIN, Y_HOME ) )
+			if( yHome() )
 		      	printPgmString(PSTR("Y_HOME\r\n"));
 			}
 			return(gc.status_code);

@@ -101,6 +101,10 @@ static void status_message(int status_code)
 #endif
 			break;
 		case GCSTATUS_NO_ACK:
+
+			// no ACK
+			ackHost = 0;
+
 			return;
 			break;
 		default:

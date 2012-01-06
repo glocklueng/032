@@ -50,4 +50,13 @@ int get_busy( void ) ;
 unsigned char get_limit_bits( void );
 unsigned char head_moving( void );
 
+unsigned char yLimit2( void ); 
+unsigned char yLimit1( void ); 
+unsigned char xLimit2( void ); 
+unsigned char xLimit1( void ); 
+
+unsigned char xHome( void ); 
+unsigned char yHome( void ); 
+
+
 #endif

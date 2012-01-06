@@ -22,7 +22,7 @@
 #define config_h
 
 //#define VERBOSE_DEBUG (1)
-#define SIMULATE	(1) // no machine connected
+//#define SIMULATE	(1) // no machine connected
 
 #define SET_BIT(p,m) ((p) |= (m)) 
 #define CLEAR_BIT(p,m) ((p) &= ~(m)) 
