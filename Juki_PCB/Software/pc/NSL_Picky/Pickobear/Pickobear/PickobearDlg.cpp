@@ -68,6 +68,7 @@
 //   doesn't rotate on a 360 rotate
 //   if rotate is >360 then subtract 360 
 //   changed update to use events instead of resume/suspend thread.
+//   testing update of limit switches after a move
 
 // Recently fixed :-
 //
@@ -196,7 +197,7 @@ CPickobearDlg::CPickobearDlg(CWnd* pParent /*=NULL*/)
 	, m_ComponentsModified(false)
 	, m_pFeederDlg( NULL )
 	, m_Quit(0)
-	, m_Speed(28000/2)
+	, m_Speed(28000)
 	, m_Homed(false)
 	, m_CameraUpdateRate(CAMERA_DEFAULT_UPDATE_RATE_MS)
 	, bCameraHead( false )
@@ -426,6 +427,24 @@ BOOL CPickobearDlg::OnInitDialog()
 
 	CDialog::OnInitDialog();
 
+		// splash screen
+
+	TCHAR szAppPath[MAX_PATH] = _T("");
+	CString strAppDirectory;
+
+	::GetModuleFileName(NULL, szAppPath, MAX_PATH);
+
+	// Extract directory
+	strAppDirectory = szAppPath;
+	strAppDirectory = strAppDirectory.Left(strAppDirectory.ReverseFind('P'));
+	strAppDirectory += _T("Splash.bmp"); //file must be called this, but will ignore if it doesn't find it
+	
+	CSplashScreenEx *pSplash=new CSplashScreenEx();
+	pSplash->Create(this,NULL,2000,CSS_FADE | CSS_CENTERSCREEN | CSS_SHADOW | CSS_HIDEONCLICK);
+	pSplash->SetBitmap(strAppDirectory,-1,-1,-1);
+	pSplash->Show();
+
+
 	// Add "About..." menu item to system menu.
 	EnableToolTips();
 
@@ -639,9 +658,13 @@ BOOL CPickobearDlg::OnInitDialog()
 
 		num.Format(L"%g",i);
 		// no 0
-		if( i == 0 ) 
+		if( i == 0 ) {
 			m_StepSize.AddString( L".01" );
-		else
+			m_StepSize.AddString( L".02" );
+			m_StepSize.AddString( L".03" );
+			m_StepSize.AddString( L".04" );
+			m_StepSize.AddString( L".05" );
+		} else
 			m_StepSize.AddString( num );
 	}
 
@@ -655,13 +678,22 @@ BOOL CPickobearDlg::OnInitDialog()
 	num.Format(L"%g",value);
 
 	int i = m_StepSize.FindStringExact(-1,  num );
-
+	if( i == -1 ) i = 0;
 	m_StepSize.SetCurSel( i );
 
 	// convert mm to um
 	m_StepSizeUM = atol( CStringA( num ) ) * 1000 ;
 
-	m_SpeedSelect.SetCurSel( ( m_Speed / 2154 )-1 );
+	// setup speed
+		
+	m_Speed = GetRegistryDWORD(L"speed",regEntry);
+	num.Format(L"%d",m_Speed);
+
+	i = m_SpeedSelect.FindStringExact(-1,  num );
+	if( i == -1 ) 
+		i = 0;
+
+	m_SpeedSelect.SetCurSel( i );
 
 	// updating limit switches thread.
 	SetTimer( 1, LIMIT_SWITCHES_UPDATE_MS , NULL) ;
@@ -1311,6 +1343,8 @@ bool CPickobearDlg::UpdatePosition_cb2(void *userdata )
 
 		// update the global position
  		PostMessage (PB_UPDATE_XY, m_TargetXum,m_TargetYum);
+		
+		UpdateLimitSwitch();
 
 //		((CWnd*)GetDlgItem(IDC_SIMULATION_DRAW))->Invalidate();	
 //		Invalidate();
@@ -3365,9 +3399,11 @@ void CPickobearDlg::OnBnClickedUpdate()
 
 void CPickobearDlg::UpdateLimitSwitch(void)
 {
+#if 0
 	while( QueueEmpty() == false ) {
 		Sleep( GCODE_WAIT_MS );
 	}
+#endif
 
 	// mark as busy
 	SetMachineState( MS_GO );
@@ -4793,11 +4829,37 @@ void CPickobearDlg::OnBnClickedVacuumToggle()
  */
 void CPickobearDlg::OnCbnSelchangeGSpeed()
 {
-	UpdateData(FALSE);
+	CRegKey regKey;
+	DWORD regEntry = 100;
+	long lResult;
 
-	m_Speed = ((m_SpeedSelect.GetCurSel()+1) * 2154 );
-	_RPT1(_CRT_WARN,"m_Speed %d\n",m_Speed);
+	CString strText;
+
+	int i = m_SpeedSelect.GetCurSel();
+
+	// GetWindowsText hasn't updated by now
+	m_SpeedSelect.GetLBText(i,strText);
+
+	CStringA c(strText);
+	_RPT1(_CRT_WARN,"Selected %s speed\n",c);
+
+	long value = atol(c);
+
+	m_Speed = ( value );
+
+	if ((lResult = regKey.Open(HKEY_CURRENT_USER,  _T("Software\\NullSpaceLabs\\PickoBear\\Settings"))) != ERROR_SUCCESS)
+		lResult = regKey.Create(HKEY_CURRENT_USER, _T("Software\\NullSpaceLabs\\PickoBear\\Settings"));
+
+	if (ERROR_SUCCESS == lResult)
+	{
+		// Save a value in the registry key
+		regKey.SetDWORDValue(_T("speed"), m_StepSizeUM);
+
+		// then close the registry key
+		regKey.Close();
+	}
 }
+
 
 
 /**
@@ -5443,7 +5505,7 @@ void CPickobearDlg::OnTimer(UINT_PTR nIDEvent)
 		if (firstRun ) {
 
 			_RPT0(_CRT_WARN,"first run, creating update limit switches in GUI thread\n");
-			Multi::Thread::Create<void>(&CPickobearDlg::threadUpdateXY, this, NULL);
+			//Multi::Thread::Create<void>(&CPickobearDlg::threadUpdateXY, this, NULL);
 			firstRun = false;
 
 		} else {

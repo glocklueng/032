@@ -59,6 +59,8 @@ BOOL CPickobearApp::InitInstance()
 	// TODO: You should modify this string to be something appropriate
 	// such as the name of your company or organization
 	SetRegistryKey(_T("PickoBear"));
+	
+
 
 	CPickobearDlg dlg;
 	m_pMainWnd = &dlg;
