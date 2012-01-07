@@ -685,13 +685,20 @@ BOOL CPickobearDlg::OnInitDialog()
 	m_StepSizeUM = atol( CStringA( num ) ) * 1000 ;
 
 	// setup speed
-		
+
+	regEntry = m_Speed;
 	m_Speed = GetRegistryDWORD(L"speed",regEntry);
+	if( m_Speed == 0 ) {
+		m_Speed = 1000 ;
+	}
+
 	num.Format(L"%d",m_Speed);
 
 	i = m_SpeedSelect.FindStringExact(-1,  num );
-	if( i == -1 ) 
+	if( i == -1 ) {
 		i = 0;
+		m_Speed = 1000;
+	}
 
 	m_SpeedSelect.SetCurSel( i );
 
@@ -1025,6 +1032,10 @@ bool CPickobearDlg::Home_callback( void *pThis, void *userdata )
  */
 bool CPickobearDlg::Home_cb2(void *userdata ) 
 {
+	
+	// call this here
+	UpdateLimitSwitch();
+
 
 	// passed
 	if( userdata == (void*)1 )  {
@@ -1110,6 +1121,8 @@ bool BuildGCodeMove( char *output, int length, int mode , long x, long y, long s
 	ty = (long double) y / 1000.0;
 
 	_RPT4(_CRT_WARN,"BuildGCodeMove: (%d, %d) - (%g,%g)\n",x,y,tx,ty);
+
+	ASSERT ( speed );
 
 	sprintf_s(output, length,"G%dX%gY%gF%d",mode,tx,ty,speed);
 
@@ -1205,6 +1218,8 @@ bool CPickobearDlg::MoveHeadSlow(  long x, long y, bool wait=false )
  */
 bool CPickobearDlg::MoveHead(  long x, long y, bool wait=false ) 
 {
+	ASSERT( m_Speed );
+
 	if( false == HomeTest( ) ) {
 		_RPT0(_CRT_WARN,"MoveHead: Not homed\n");
 		return false;
@@ -1288,6 +1303,9 @@ bool CPickobearDlg::GCODE_CommandAck_cb2(void *userdata )
 		return false ;
 	}
 
+	// call this here
+	UpdateLimitSwitch();
+
 	// passed, this means GCODE was accepted.
 	if( userdata == (void*)1 )  {
 
@@ -1337,14 +1355,16 @@ bool CPickobearDlg::UpdatePosition_cb2(void *userdata )
 	if( m_MachineState == MS_ESTOP  ){
 		return false ;
 	}
+			
+	// call this here
+	UpdateLimitSwitch();
+
 
 	// passed, this means GCODE was accepted.
 	if( userdata == (void*)1 )  {
 
 		// update the global position
- 		PostMessage (PB_UPDATE_XY, m_TargetXum,m_TargetYum);
-		
-		UpdateLimitSwitch();
+ 		PostMessage (PB_UPDATE_XY, m_TargetXum,m_TargetYum);		
 
 //		((CWnd*)GetDlgItem(IDC_SIMULATION_DRAW))->Invalidate();	
 //		Invalidate();
@@ -4853,7 +4873,7 @@ void CPickobearDlg::OnCbnSelchangeGSpeed()
 	if (ERROR_SUCCESS == lResult)
 	{
 		// Save a value in the registry key
-		regKey.SetDWORDValue(_T("speed"), m_StepSizeUM);
+		regKey.SetDWORDValue(_T("speed"), m_Speed);
 
 		// then close the registry key
 		regKey.Close();
