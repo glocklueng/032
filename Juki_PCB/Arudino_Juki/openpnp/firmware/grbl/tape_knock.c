@@ -29,6 +29,7 @@ void tape_init(void)
 }
 
 // tape 
+// some of the feeders are really slow
 void tape_knock( void )
 {
 
@@ -51,6 +52,8 @@ void tape_knock( void )
 
 	TAPE_PORT |= _BV( TAPE_KNOCK );
 
+	_delay_ms( TAPE_KNOCK_SETTLE );
+	_delay_ms( TAPE_KNOCK_SETTLE );
 	_delay_ms( TAPE_KNOCK_SETTLE );
 
 	 set_busy( FALSE );
@@ -109,7 +112,7 @@ char pickup_part ( void )
 		head_down( 1 );
 
 		//settle (probably doesn't need this)
-		_delay_ms( 500 );
+		_delay_ms( 150 );
 
 		// head up
 		head_down ( 0 ) ;
@@ -147,7 +150,7 @@ char pickup_part ( void )
 
 	}
 
-	_delay_ms( 500 );
+	_delay_ms( 100 );
 
 	set_busy( FALSE ) ;
 
@@ -211,7 +214,7 @@ char putdown_part ( void )
 	head_down( 1 );
 
 	// settle after head down ( probably doesn't need it  )
-	_delay_ms( 250 );
+	_delay_ms( 50 );
 
 	// vacuum off
 	vacuum ( 0 );
@@ -219,7 +222,7 @@ char putdown_part ( void )
 	// head up
 	head_down ( 0 ) ;
 
-	_delay_ms( 500 );
+	_delay_ms( 100 );
 
 	set_busy( FALSE) ;
 

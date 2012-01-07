@@ -193,14 +193,7 @@ void COpenGLControl::UpdateCamera( UINT nIDEvent )
 				//cvAddWeighted( img1->imageData, 1.0/100., resultImg, 1, 0.0, resultImg );
 
 				iCounter ++ ;
-			}
-
-			if ( iCounter  < 10 ) {
-			//	return;
-			}
-
-			iCounter = 0;
-
+		
 			wglMakeCurrent(hdc, hrc);
 
 			//Squares( img1 , m_Thresh1, m_Thresh2, VI.getDeviceName( m_camera ) ) ;
@@ -291,7 +284,8 @@ void COpenGLControl::UpdateCamera( UINT nIDEvent )
 			DrawCircle(x,y,50,20);
 #endif
 			SwapBuffers(hdc);
-	
+			}
+
 			break;
 		}
 
