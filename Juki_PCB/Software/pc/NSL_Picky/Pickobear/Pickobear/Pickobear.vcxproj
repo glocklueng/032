@@ -147,6 +147,7 @@
     <ClCompile Include="Counts.cpp" />
     <ClCompile Include="csv_parser.cpp" />
     <ClCompile Include="EditComponent.cpp" />
+    <ClCompile Include="enumser.cpp" />
     <ClCompile Include="FeederEdit.cpp" />
     <ClCompile Include="FeederSetup.cpp" />
     <ClCompile Include="GCODE_Processor.cpp" />
@@ -163,6 +164,7 @@
     <ClCompile Include="PickobearDlg.cpp" />
     <ClCompile Include="Serial.cpp" />
     <ClCompile Include="SerialEx.cpp" />
+    <ClCompile Include="SerialPicker.cpp" />
     <ClCompile Include="SerialWnd.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -177,6 +179,7 @@
     <ClInclude Include="Counts.h" />
     <ClInclude Include="csv_parser.h" />
     <ClInclude Include="EditComponent.h" />
+    <ClInclude Include="enumser.h" />
     <ClInclude Include="Feeder.h" />
     <ClInclude Include="FeederEdit.h" />
     <ClInclude Include="FeederSetup.h" />
@@ -198,6 +201,7 @@
     <ClInclude Include="Serial.h" />
     <ClInclude Include="SerialEx.h" />
     <ClInclude Include="SerialMFC.h" />
+    <ClInclude Include="SerialPicker.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TextDump.h" />

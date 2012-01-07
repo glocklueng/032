@@ -14,7 +14,6 @@
 //   plain text for all load/save files ? XML i guess since everyones going with that.
 //   finish adding machine plot area to GUI (simulate)
 //   double check rotation (build eagle test board) (seems to be ok, but still might be turing too far)
-//   add picker for serial port, add registry key, add more error checking for serial port
 //   more camera controls, fine tune the slow/fast modes
 //   tidy up headers
 //   add localisation to strings?
@@ -27,6 +26,7 @@
 //   remove/fix all the MFC child thread updates (lots of changes) (seems to be ok) (changed again)
 //   update component classes to make it simpler
 //
+//   add picker for serial port, add registry key, add more error checking for serial port (done)
 //   add head down check to home!!! (done, grbl)
 //   remove all the utf8 buffers, choose CString or std::string ? (nearly all done) (all bu thtose that are ok as utf8's)
 //   too much relies on the index in the CListCtrl's (all have been replaced)
@@ -216,6 +216,7 @@ CPickobearDlg::CPickobearDlg(CWnd* pParent /*=NULL*/)
 	, processGCODE(0)
 	, updateThreadXYHandle(0)
 	, updateCameraHandle(0)
+	, m_AlertBox(0)
 
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
@@ -515,7 +516,8 @@ BOOL CPickobearDlg::OnInitDialog()
 	regEntry = 0;
 	regEntry = GetRegistryDWORD(L"down",regEntry);
 
-	if ( regEntry > numDevices-1 ) regEntry = 0;
+	if ( regEntry > numDevices-1 ) 
+		regEntry = 0;
 
 	if( CB_ERR  == m_DownCamera.SetCurSel( regEntry ) ) {
 		_RPT0(_CRT_WARN,"Error\n");
@@ -573,9 +575,20 @@ BOOL CPickobearDlg::OnInitDialog()
 	// Create OpenGL Control window	
 	m_DownCameraWindow.oglCreate( rect, rect1, this,m_DownCamera.GetCurSel() );
 
-	// convert to a picker
-	CString m_ComPort = _T("\\\\.\\COM17");
-	m_Serial.Open(m_ComPort, this );
+	CString m_ComPort;
+	
+	do {
+		int ret = m_SerialPicker.DoModal();
+		if (ret == IDCANCEL) {
+
+			PostQuitMessage(0);
+
+			return true;
+		}
+
+		m_ComPort.Format(_T("\\\\.\\%s"),m_SerialPicker.m_Port);
+
+	} while( m_Serial.Open(m_ComPort, this ) != ERROR_SUCCESS );
 
 	m_Serial.Setup(CSerial::EBaud38400 );
 	EmptySerial();
