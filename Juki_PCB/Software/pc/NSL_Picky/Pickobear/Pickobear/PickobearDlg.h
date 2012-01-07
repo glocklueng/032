@@ -11,6 +11,7 @@
 #include "TextDump.h"
 #include "AlertBox.h"
 #include "GCODE_Processor.h"
+#include "SerialPicker.h"
 
 #include <iostream>
 #include <fstream>
@@ -573,6 +574,8 @@ class CPickobearDlg : public CDialog
 	friend class GCODE_Processor;
 
 private:
+
+	CSerialPicker m_SerialPicker;
 
 	HANDLE processGCODE;
 	HANDLE updateThreadXYHandle;

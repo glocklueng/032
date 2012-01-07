@@ -60,6 +60,8 @@ using namespace Gdiplus;
 #include "Feeder.h"
 #include "csv_parser.h"
 
+#include "SerialPicker.h"
+
 // http://muonics.net/school/spring05/videoInput/
 #include "VideoInput/include/videoInput.h"
 #include "opencv2/imgproc/imgproc.hpp"
