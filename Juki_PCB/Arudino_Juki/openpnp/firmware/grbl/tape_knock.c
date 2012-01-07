@@ -53,13 +53,9 @@ void tape_knock( void )
 	TAPE_PORT |= _BV( TAPE_KNOCK );
 
 	_delay_ms( TAPE_KNOCK_SETTLE );
-	_delay_ms( TAPE_KNOCK_SETTLE );
-	_delay_ms( TAPE_KNOCK_SETTLE );
 
 	 set_busy( FALSE );
 }
-
-
 
  /*
   * Picks up a part
@@ -81,7 +77,6 @@ char pickup_part ( void )
 	unsigned char failedCounter;
 
 
-
 	// wait til head stops
 	while( head_moving() );
 
@@ -101,9 +96,8 @@ char pickup_part ( void )
 
 	//for(;;)  (oops!)
 	{
-
-		// advance part, waits til head has done
-		tape_knock();
+// advance part, waits til head has done
+// trying tape_knock after pickup		tape_knock();
 
 		// vacuum on
 		vacuum ( 1 );
@@ -116,6 +110,9 @@ char pickup_part ( void )
 
 		// head up
 		head_down ( 0 ) ;
+
+// advance part, waits til head has done
+ 		tape_knock();
 
 // disable
 #if 0

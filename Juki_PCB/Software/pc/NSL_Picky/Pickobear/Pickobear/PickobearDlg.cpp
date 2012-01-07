@@ -5,6 +5,10 @@
 //
 // charliex - null space labs 032.la
 //
+// Notes:
+// Threads shouldn't interact with the GUI, the code can do this, but if the main GUI is blocked the thread will stall too
+// PostMessage doesn't get processed if the GUI is blocked. Use Events instead
+//
 // Todo list :-
 //
 //   why is head up/down using AddGCODE ?
@@ -92,8 +96,8 @@
 static int CAMERA_X_OFFSET				= 0;//(-(500-90) );
 static int CAMERA_Y_OFFSET				=( 73900-540+120 +100);
 
-// interval in ms for GUI update of limit switches ( and some other bits )
-#define LIMIT_SWITCHES_UPDATE_MS	( 5000 )
+// interval in ms for GUI update of limit switches 
+#define LIMIT_SWITCHES_UPDATE_MS	( 50 )
 
 // How long to delay waiting for gcode to execute
 #define GCODE_WAIT_MS				( 50 )
@@ -197,7 +201,7 @@ CPickobearDlg::CPickobearDlg(CWnd* pParent /*=NULL*/)
 	, m_ComponentsModified(false)
 	, m_pFeederDlg( NULL )
 	, m_Quit(0)
-	, m_Speed(28000)
+	, m_Speed(22000)
 	, m_Homed(false)
 	, m_CameraUpdateRate(CAMERA_DEFAULT_UPDATE_RATE_MS)
 	, bCameraHead( false )
@@ -667,6 +671,17 @@ BOOL CPickobearDlg::OnInitDialog()
 		} else
 			m_StepSize.AddString( num );
 	}
+		
+	m_SpeedSelect.ResetContent();
+
+	for(unsigned long i = 1000; i <= 20000 ; i+= 500 ) {
+
+		CString num;
+
+		num.Format(L"%d",i);
+		m_SpeedSelect.AddString( num );
+	}
+
 
 	regEntry = 0;
 	regEntry = GetRegistryDWORD(L"stepSize",regEntry);
@@ -1065,7 +1080,9 @@ bool CPickobearDlg::Home_cb2(void *userdata )
 		}
 	}
 
-	PostMessage (PB_UPDATE_XY, m_headXPosUM ,m_headYPosUM );
+//	PostMessage (PB_UPDATE_XY, m_headXPosUM ,m_headYPosUM );
+	// ?
+	UpdateXY( m_headXPosUM, m_headXPosUM );
 
 	return true;
 }
@@ -1364,8 +1381,10 @@ bool CPickobearDlg::UpdatePosition_cb2(void *userdata )
 	if( userdata == (void*)1 )  {
 
 		// update the global position
- 		PostMessage (PB_UPDATE_XY, m_TargetXum,m_TargetYum);		
+// 		PostMessage (PB_UPDATE_XY, m_TargetXum,m_TargetYum);		
+		UpdateXY( m_TargetXum, m_TargetYum );
 
+		// dont do this in threads
 //		((CWnd*)GetDlgItem(IDC_SIMULATION_DRAW))->Invalidate();	
 //		Invalidate();
 
@@ -1427,7 +1446,8 @@ bool CPickobearDlg::MoveHeadRel(  long x, long y, bool wait=false )
 	} else { 
 		AddGCODECommand(buffer,"MoveHeadRel failed",UpdatePosition_callback );
 	
-		PostMessage (PB_UPDATE_XY, m_headXPosUM +x,m_headYPosUM+y );
+//		PostMessage (PB_UPDATE_XY, m_headXPosUM +x,m_headYPosUM+y );
+		UpdateXY( m_TargetXum, m_TargetYum );
 	}
 
 	// this can't work, since the main thread is blocked, the other threads won't run
@@ -1574,8 +1594,9 @@ bool CPickobearDlg::CheckX_deprecated( void )
 	}
 
 	// should do something
-	if( timeOut )
+	if( timeOut ){
 		PostMessage (PB_UPDATE_ALERT, MACHINE_ESTOP,0 );
+	}
 
 	// this is either a bad read, or not homed or serial timed out
 	return false;
@@ -1759,8 +1780,10 @@ char CPickobearDlg::CheckAck(const char *ack_string )
  */
 void CPickobearDlg::OnBnClickedPark()
 {
+
 #ifndef GCODE_PARK
-	MoveHead( MAX_X_TABLE-40 , MAX_Y_TABLE-40 );
+	if( WaitForCompletion() == true ) 
+		MoveHead( MAX_X_TABLE-40 , MAX_Y_TABLE-40 );
 #else
 	AddGCODECommand(GCODE_PARK,"Park Failed",UpdatePosition_callback);
 #endif
@@ -1837,9 +1860,12 @@ void CPickobearDlg::OnBnClickedTool3()
  */
 void CPickobearDlg::OnBnClickedTool4()
 {
+
 	if( false == HomeTest( ) ) {
 		return ;
 	}
+
+
 	AddGCODECommand("M24","Tool 4 failed",UpdatePosition_callback);
 }
 
@@ -1876,7 +1902,7 @@ void CPickobearDlg::OnBnClickedTool6()
 }
 
 /**
- * OnBnClickedHead - toggle head up and down
+ * OnBnClickedHead - toggle head up and down. this routine is different in that i dont want it to queue commands
  *
  * @param none used
  * @return m_Head stores state
@@ -1888,10 +1914,9 @@ void CPickobearDlg::OnBnClickedHead()
 		return ;
 	}	
 
-	// wait for command to process, this locks the gui....
-	while( QueueEmpty() == false ) {
-		Sleep( GCODE_WAIT_MS );
-	}
+	// dont wait, just exit
+	while( QueueEmpty() == false ) 
+		return;
 
 	// @todo : this isn't right at all..
 	if( m_Head ) {
@@ -2796,7 +2821,6 @@ void CPickobearDlg::OnBnClickedGo()
 	}
 
 	// Start thread for 'GO', thread handles busy and go states
-//	h = CreateThread(NULL, 0, &CPickobearDlg::goSetup, (LPVOID)this, 0, NULL);
 
 	Multi::Thread::Create<void>(&CPickobearDlg::goSetup, this, NULL);
 
@@ -2850,6 +2874,9 @@ void CListCtrl_Components::OnHdnItemdblclickList2(NMHDR *pNMHDR, LRESULT *pResul
 {
 	CPickobearDlg *pDlg = (CPickobearDlg*)AfxGetApp()->m_pMainWnd;
 	ASSERT( pDlg );
+		
+	if( pDlg->WaitForCompletion() == false )
+		return;
 
 	// Wont move if machine is doing something
 	if ( pDlg->bBusy || pDlg->m_MachineState != CPickobearDlg::MS_IDLE  ) {
@@ -2935,6 +2962,10 @@ void CListCtrl_FeederList::OnHdnItemdblclickList2(NMHDR *pNMHDR, LRESULT *pResul
 
 	CPickobearDlg *pDlg = (CPickobearDlg*)AfxGetApp()->m_pMainWnd;
 	ASSERT( pDlg );
+		
+	if( pDlg->WaitForCompletion() == false )
+		return;
+
 
 	// Wont move if machine is doing something
 	if ( pDlg->bBusy || pDlg->m_MachineState != CPickobearDlg::MS_IDLE  ) {
@@ -3065,20 +3096,10 @@ bool SetCurrentPosition( long x,long y)
 
 	unsigned int linePtr = 0;
 
-	CString xstring;
-	CString ystring;
-
-	xstring.Format(L"%d",x);
-	ystring.Format(L"%d",y);
-
-	pDlg->m_GOX = x;
-	pDlg->m_GOY = y;
 
 	pDlg->m_headXPosUM = x;
 	pDlg->m_headYPosUM = y;
 
-	( ( CWnd* ) pDlg->GetDlgItem( IDC_X_POS ) )->SetWindowText( xstring ) ;
-	( ( CWnd* ) pDlg->GetDlgItem( IDC_Y_POS ) )->SetWindowText( ystring ) ;
 
 	return true;
 }
@@ -3091,10 +3112,85 @@ bool SetCurrentPosition( long x,long y)
  *        
  */
 void CPickobearDlg::OnBnClickedZero()
-{
-	MoveHead(0,0);
+{	
+	if( WaitForCompletion() == true ) 
+		MoveHead(0,0);
+
 	return;
 }
+/**
+ * WaitForCompletion - Waits for machine to be in a state to move around with GUI
+ * GUI is blocked here, so won't process messages while waiting...
+ *
+ * @param none used
+ * @return true ready to move, false timed out
+ *        
+ */
+bool CPickobearDlg::WaitForCompletion(void)
+{
+	unsigned long timeout ;
+	timeout = 1000;
+	
+	
+	if ( m_MachineState == MS_ESTOP ) 
+		return false;
+
+
+	while( QueueEmpty() == false ) {
+
+		timeout--;
+
+		if ( m_MachineState == MS_ESTOP ) 
+			return false;
+
+		if( timeout == 0 ) {
+			_RPT0(_CRT_WARN,"WaitForCompletion:timed out on waiting for gcode to finish\n");
+			return false;
+		}
+
+		Sleep( GCODE_WAIT_MS );
+	}
+
+
+	// Won't move if machine is doing something
+	while( bBusy || m_MachineState != CPickobearDlg::MS_IDLE  ) {
+		
+
+		if ( m_MachineState == MS_ESTOP ) 
+			return false;
+
+		timeout--;
+		if( timeout == 0 ) {
+			_RPT0(_CRT_WARN,"WaitForCompletion:timed out on waiting for state to change\n");
+			return false;
+		}
+
+		Sleep( 10 );
+	}
+
+	timeout = 1000;
+
+	// wait til target updates
+	while( m_TargetXum != m_headXPosUM ||  m_TargetYum != m_headYPosUM ) {
+	
+
+		if ( m_MachineState == MS_ESTOP ) 
+			return false;
+
+		timeout--;
+		
+		if( timeout == 0 ) {
+			_RPT0(_CRT_WARN,"WaitForCompletion timed out on target\n");
+			return false;
+		}
+
+		Sleep(10);
+	}
+
+	return true;
+
+}
+
 
 /**
  * OnBnClickedOffset set the offset. Tells the PNP where the selected component is) 
@@ -3148,7 +3244,8 @@ void CPickobearDlg::OnBnClickedOffset()
  */
 void CPickobearDlg::OnBnClickedGoff()
 {
-	MoveHead(m_ComponentList.m_OffsetX ,m_ComponentList.m_OffsetY );
+	if( WaitForCompletion() == true ) 
+		MoveHead(m_ComponentList.m_OffsetX ,m_ComponentList.m_OffsetY );
 }
 
 /**
@@ -3160,7 +3257,8 @@ void CPickobearDlg::OnBnClickedGoff()
  */
 void CPickobearDlg::OnBnClickedGoxy()
 {
-	MoveHead(m_GOX,m_GOY);
+	if( WaitForCompletion() == true ) 
+		MoveHead(m_GOX,m_GOY);
 }
 
 /**
@@ -3218,12 +3316,15 @@ CStringA UTF16toUTF8(const CStringW& utf16)
 void CPickobearDlg::OnBnClickedAddFeeder()
 {
 	CTextEditDialog TextDialog;
+		
+	if( WaitForCompletion() == false )
+		return;
 
 	int ret = TextDialog.DoModal();
 	if (ret == IDOK  ) {
 		CStringA userInput8( UTF16toUTF8( TextDialog.m_Text ) );
 
-		m_FeederList.AddItem(userInput8.GetString(),m_GOX, m_GOY, 0);
+		m_FeederList.AddItem(userInput8.GetString(),m_headXPosUM, m_headYPosUM, 0);
 		userInput8.ReleaseBuffer();
 	}
 }
@@ -3311,47 +3412,6 @@ void CPickobearDlg::threadUpdateXY(LPVOID data)
 		if( m_Quit  ) {
 			return;
 		}
-		// update GUI (should this move back into OnTimer ) ?
-
-		if( m_LimitState & (1 << 1 ) ) { 
-			((CButton*)GetDlgItem(IDC_XL1))->SetCheck(1);
-			SetMachineState( MS_ESTOP );
-			_RPT0(_CRT_WARN,"X1 Limit\n");
-		} else 
-			((CButton*)GetDlgItem(IDC_XL1))->SetCheck(0);
-
-		if( m_LimitState & (1 << 2 ) ) {
-			((CButton*)GetDlgItem(IDC_XL2))->SetCheck(1);
-			SetMachineState( MS_ESTOP );
-			_RPT0(_CRT_WARN,"X2 Limit\n");
-		} else 
-			((CButton*)GetDlgItem(IDC_XL2))->SetCheck(0);
-
-		if( m_LimitState & (1 << 3 ) ) {
-			((CButton*)GetDlgItem(IDC_YL1))->SetCheck(1);
-			SetMachineState( MS_ESTOP );
-			_RPT0(_CRT_WARN,"Y1 Limit\n");
-		} else 
-			((CButton*)GetDlgItem(IDC_YL1))->SetCheck(0);
-
-		if( m_LimitState & (1 << 4 ) ) {
-			((CButton*)GetDlgItem(IDC_YL2))->SetCheck(1);
-			SetMachineState( MS_ESTOP );
-			_RPT0(_CRT_WARN,"Y2 Limit\n");
-		} else 
-			((CButton*)GetDlgItem(IDC_YL2))->SetCheck(0);
-
-		if( m_LimitState & (1 << 5 ) ) {
-			((CButton*)GetDlgItem(IDC_XHOME))->SetCheck(1);
-			//_RPT0(_CRT_WARN,"X Home\n");
-		} else 
-			((CButton*)GetDlgItem(IDC_XHOME))->SetCheck(0);
-
-		if( m_LimitState & (1 << 6 ) ) {
-			((CButton*)GetDlgItem(IDC_YHOME))->SetCheck(1);
-			//_RPT0(_CRT_WARN,"Y Home\n");
-		} else 
-			((CButton*)GetDlgItem(IDC_YHOME))->SetCheck(0);
 
 suspend:;
 		if( m_MachineState == MS_ESTOP ) {
@@ -3397,22 +3457,8 @@ void CPickobearDlg::OnBnClickedUpdate()
 		return;
 	}
 
-	// not allowed to process while GCODE still exists in buffer
-	if ( !command_buffer.empty() ) {
-
-		_RPT0(_CRT_WARN,"OnBnClickedUpdate: !command_bufferempty()\n");
-
-		return;
-	}
-
-	if ( bBusy || m_MachineState != MS_IDLE  ) {
-		
-		_RPT2(_CRT_WARN,"Machine is busy (busy %d, state=%d)\n", (int)bBusy, (unsigned int)m_MachineState) ;
-
-		return;
-	}
-
-	UpdateLimitSwitch();
+	if( WaitForCompletion() == true )
+		UpdateLimitSwitch();
 
 
 }
@@ -3473,44 +3519,6 @@ void CPickobearDlg::UpdateLimitSwitch(void)
 
 	// mask off top bit
 	m_LimitState &= 0x7f;
-
-	// update GUI
-
-	if( m_LimitState & (1 << 1 ) ) { 
-		((CButton*)GetDlgItem(IDC_XL1))->SetCheck(1);
-		_RPT0(_CRT_WARN,"X1 Limit\n");} 
-	else 
-		((CButton*)GetDlgItem(IDC_XL1))->SetCheck(0);
-
-	if( m_LimitState & (1 << 2 ) ) {
-		((CButton*)GetDlgItem(IDC_XL2))->SetCheck(1);
-		_RPT0(_CRT_WARN,"X2 Limit\n");} 
-	else 
-		((CButton*)GetDlgItem(IDC_XL2))->SetCheck(0);
-
-	if( m_LimitState & (1 << 3 ) ) {
-		((CButton*)GetDlgItem(IDC_YL1))->SetCheck(1);
-		_RPT0(_CRT_WARN,"Y1 Limit\n");} 
-	else 
-		((CButton*)GetDlgItem(IDC_YL1))->SetCheck(0);
-
-	if( m_LimitState & (1 << 4 ) ) {
-		((CButton*)GetDlgItem(IDC_YL2))->SetCheck(1);
-		_RPT0(_CRT_WARN,"Y2 Limit\n");} 
-	else 
-		((CButton*)GetDlgItem(IDC_YL2))->SetCheck(0);
-
-	if( m_LimitState & (1 << 5 ) ) {
-		((CButton*)GetDlgItem(IDC_XHOME))->SetCheck(1);
-		_RPT0(_CRT_WARN,"X Home\n");} 
-	else 
-		((CButton*)GetDlgItem(IDC_XHOME))->SetCheck(0);
-
-	if( m_LimitState & (1 << 6 ) ) {
-		((CButton*)GetDlgItem(IDC_YHOME))->SetCheck(1);
-		_RPT0(_CRT_WARN,"Y Home\n");} 
-	else 
-		((CButton*)GetDlgItem(IDC_YHOME))->SetCheck(0);
 
 	SetMachineState( MS_IDLE );
 
@@ -3816,6 +3824,10 @@ void CPickobearDlg::OnCbnSelchangeUpCamera()
  */
 void CPickobearDlg::OnBnClickedAddLowerright()
 {
+		
+	if( WaitForCompletion() == false )
+		return;
+
 	UpdateData();
 	CString str;
 	int item = m_FeederList.GetSelectedCount();
@@ -3898,6 +3910,9 @@ void CPickobearDlg::OnBnClickedEditfeeder()
 {
 	FeederEdit FeederDialog;
 
+	if( WaitForCompletion() == false )
+		return;
+
 	int item = m_FeederList.GetSelectedCount();
 
 	if( item == 0 ) {
@@ -3948,6 +3963,10 @@ void CPickobearDlg::OnBnClickedEditfeeder()
  */
 void CPickobearDlg::OnBnClickedAssignfeeder()
 {
+	if( WaitForCompletion() == false )
+		return;
+
+
 	int componentItem = m_ComponentList.GetSelectedCount();
 	if( componentItem == 0 ) {
 		return ;
@@ -3973,6 +3992,7 @@ void CPickobearDlg::OnBnClickedAssignfeeder()
  */
 void CListCtrl_Components::RebuildList( void )
 {
+
 	CPickobearDlg *pDlg = (CPickobearDlg*)AfxGetApp()->m_pMainWnd;
 	ASSERT( pDlg );
 	CString temp;
@@ -4086,6 +4106,9 @@ void CPickobearDlg::OnBnClickedGo2()
 {
 	static HANDLE h=0;
 
+	if( WaitForCompletion() == false )
+		return;
+
 	UpdateData();
 
 	if ( bBusy ) {
@@ -4132,7 +4155,10 @@ DWORD WINAPI CPickobearDlg::goSingleSetup(LPVOID pThis)
  *        
  */
 void CPickobearDlg::OnBnClickedSwapHeadCamera()
-{
+{	
+	if( WaitForCompletion() == false )
+		return;
+
 	if( bCameraHead == false ) {
 		if( true == MoveHeadRel( CAMERA_X_OFFSET, -CAMERA_Y_OFFSET, true)  )
 			bCameraHead = true;
@@ -4152,6 +4178,9 @@ void CPickobearDlg::OnBnClickedSwapHeadCamera()
 void CPickobearDlg::OnBnClickedEditComponent()
 {
 	EditComponent EditDialog;
+
+	if( WaitForCompletion() == false )
+		return;
 
 	int item = m_ComponentList.GetSelectedCount();
 
@@ -4543,6 +4572,10 @@ skip:;
 void CPickobearDlg::OnBnClickedDeleteFeeder()
 {
 	int feederIndex = -1;
+		
+	if( WaitForCompletion() == false )
+		return;
+
 
 	// find selected items
 	feederIndex	= m_FeederList.GetNextItem(feederIndex, LVNI_SELECTED);
@@ -4571,6 +4604,10 @@ void CPickobearDlg::OnBnClickedDeleteFeeder()
  */
 void CPickobearDlg::OnBnClickedPcbFlip()
 {
+	if( WaitForCompletion() == false )
+		return;
+
+
 	if ( bFlip == true ) {
 		bFlip = false;
 		m_ComponentList.m_OffsetX = m_ComponentList.m_OffsetX_top;
@@ -4905,7 +4942,10 @@ void CPickobearDlg::OnBnClickedAddPcb()
 	CString temp;
 	PCBEntry entry;
 	PCBEntry check;
-	
+
+	if( WaitForCompletion() == false )
+		return;
+
 	if( m_ComponentList.m_OffsetX_top == 0  && m_ComponentList.m_OffsetY_top == 0  ) {
 		AfxMessageBox(L"Error:Define offsets first",MB_OK|MB_ICONHAND);
 		return;
@@ -4950,6 +4990,8 @@ void CPickobearDlg::OnBnClickedAddPcb()
  */
 void CPickobearDlg::OnBnClickedDeletePcb()
 {
+	if( WaitForCompletion() == false )
+		return;
 
 	// are there are in the list ?
 	if( m_PCBCount )  {
@@ -5010,9 +5052,11 @@ static bool testMode = false;
  */
 void CPickobearDlg::OnBnClickedTestMode()
 {
+
 	if (testMode == true ) {
 		return;
 	}
+		
 
 	if( false == HomeTest() ) {
 
@@ -5020,6 +5064,9 @@ void CPickobearDlg::OnBnClickedTestMode()
 		
 		return ;
 	}
+
+	if( WaitForCompletion() == false )
+		return;
 
 	int ret = AfxMessageBox(L"Test Mode can take a long time (10+ minutes)\n\nAre you sure you want to run it ?",MB_YESNO|MB_ICONQUESTION);
 	if( ret == IDNO )
@@ -5143,6 +5190,27 @@ try_again:;
 
 void CPickobearDlg::OnClose()
 {
+
+	if ( m_Head ) {
+
+		AddGCODECommand(GCODE_HEAD_UP,"Head up failed",UpdatePosition_callback);
+	
+		Sleep(1000);
+	}
+
+	if (m_Vacuum ) { 
+
+		AddGCODECommand(GCODE_VACUUM_OFF,"Vacuum off failed",UpdatePosition_callback);
+
+		Sleep(1000);
+	}
+
+	if( m_Vacuum || m_Head ) {
+
+		m_Head = 0;
+		m_Vacuum = 0;
+	}
+
 	// tell thread to close
 	m_Quit = 1;
 	SetControls( FALSE );
@@ -5508,7 +5576,60 @@ void CPickobearDlg::OnTimer(UINT_PTR nIDEvent)
 {	
 	static bool firstRun = true;
 	void *Param=0;
-	
+	// update GUI
+
+	// update GUI (should this move back into OnTimer ) ?
+
+	if( m_LimitState & (1 << 1 ) ) { 
+		((CButton*)GetDlgItem(IDC_XL1))->SetCheck(1);
+		SetMachineState( MS_ESTOP );
+		_RPT0(_CRT_WARN,"X1 Limit\n");
+	} else 
+		((CButton*)GetDlgItem(IDC_XL1))->SetCheck(0);
+
+	if( m_LimitState & (1 << 2 ) ) {
+		((CButton*)GetDlgItem(IDC_XL2))->SetCheck(1);
+		SetMachineState( MS_ESTOP );
+		_RPT0(_CRT_WARN,"X2 Limit\n");
+	} else 
+		((CButton*)GetDlgItem(IDC_XL2))->SetCheck(0);
+
+	if( m_LimitState & (1 << 3 ) ) {
+		((CButton*)GetDlgItem(IDC_YL1))->SetCheck(1);
+		SetMachineState( MS_ESTOP );
+		_RPT0(_CRT_WARN,"Y1 Limit\n");
+	} else 
+		((CButton*)GetDlgItem(IDC_YL1))->SetCheck(0);
+
+	if( m_LimitState & (1 << 4 ) ) {
+		((CButton*)GetDlgItem(IDC_YL2))->SetCheck(1);
+		SetMachineState( MS_ESTOP );
+		_RPT0(_CRT_WARN,"Y2 Limit\n");
+	} else 
+		((CButton*)GetDlgItem(IDC_YL2))->SetCheck(0);
+
+	if( m_LimitState & (1 << 5 ) ) {
+		((CButton*)GetDlgItem(IDC_XHOME))->SetCheck(1);
+		//_RPT0(_CRT_WARN,"X Home\n");
+	} else 
+		((CButton*)GetDlgItem(IDC_XHOME))->SetCheck(0);
+
+	if( m_LimitState & (1 << 6 ) ) {
+		((CButton*)GetDlgItem(IDC_YHOME))->SetCheck(1);
+		//_RPT0(_CRT_WARN,"Y Home\n");
+	} else 
+		((CButton*)GetDlgItem(IDC_YHOME))->SetCheck(0);
+
+// should only happen in main thread!
+	CString xstring;
+	CString ystring;
+
+	xstring.Format(L"%d",m_headXPosUM);
+	ystring.Format(L"%d",m_headYPosUM);
+	( ( CWnd* ) GetDlgItem( IDC_X_POS ) )->SetWindowText( xstring ) ;
+	( ( CWnd* ) GetDlgItem( IDC_Y_POS ) )->SetWindowText( ystring ) ;
+
+
 	if ( m_MachineState == MS_ESTOP ){
 		
 		SetControls( FALSE ) ;
@@ -5563,6 +5684,8 @@ void CPickobearDlg::OnTimer(UINT_PTR nIDEvent)
  */
 afx_msg LRESULT CPickobearDlg::UpdateXY (WPARAM wParam, LPARAM lParam)
 {
+	_RPT2(_CRT_WARN,"UpdateXY: (%d,%d)\n",wParam,lParam);
+
 	SetCurrentPosition( wParam, lParam);
 
 	return true;
@@ -5657,6 +5780,10 @@ afx_msg LRESULT CPickobearDlg::UpdateTextOut (WPARAM wParam, LPARAM lParam)
  */
 void CPickobearDlg::OnBnClickedTransferXy()
 {
+	
+	if( WaitForCompletion() == false )
+		return;
+
 	if( m_FeederList.GetSelectedCount() == 0 ) {
 		AfxMessageBox(L"Select a feeder first");
 		return;
