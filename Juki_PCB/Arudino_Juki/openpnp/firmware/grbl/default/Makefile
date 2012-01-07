@@ -49,9 +49,7 @@ OBJECTS = coolant_control.o eeprom.o gcode.o main.o motion_control.o planner.o s
 LINKONLYOBJECTS = 
 
 ## Build
-all: $(TARGET) grbl.hex grbl.eep grbl.lss size
-
-## Compile
+all: $(TARGET) grbl.hex grbl.eep grbl.lss## Compile
 coolant_control.o: ../coolant_control.c
 	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
 
@@ -127,10 +125,6 @@ $(TARGET): $(OBJECTS)
 
 %.lss: $(TARGET)
 	avr-objdump -h -S $< > $@
-
-size: ${TARGET}
-	@echo
-	@avr-size -C --mcu=${MCU} ${TARGET}
 
 ## Clean target
 .PHONY: clean

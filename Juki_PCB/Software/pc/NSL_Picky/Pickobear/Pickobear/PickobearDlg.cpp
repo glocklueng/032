@@ -1,5 +1,7 @@
 // PickobearDlg.cpp : implementation file
 //
+//  notes on setting up grbl ( slightly different with this grbl since extra axis)
+// http://cncsnap.com/book/export/html/121
 //
 // charliex - null space labs 032.la
 //
@@ -79,16 +81,18 @@
 //   grbl, vacuum will only switch off if not homed
 //   Camera offset XY was reversed... for placing parts
 //   error in CString error creation
+//   some of the feeders are really slow, so 600 ms delay in tapeknock
+//   900 speed was losing steps!!!
 
 #include "stdafx.h"
 #include "PickobearDlg.h"
 
 // camera offset in X, move to registry
-#define CAMERA_X_OFFSET				( 0 )
-#define CAMERA_Y_OFFSET				( 73900-540+120 )
+static int CAMERA_X_OFFSET				= 0;//(-(500-90) );
+static int CAMERA_Y_OFFSET				=( 73900-540+120 +100);
 
 // interval in ms for GUI update of limit switches ( and some other bits )
-#define LIMIT_SWITCHES_UPDATE_MS	( 2000 )
+#define LIMIT_SWITCHES_UPDATE_MS	( 5000 )
 
 // How long to delay waiting for gcode to execute
 #define GCODE_WAIT_MS				( 50 )
@@ -959,7 +963,7 @@ void CPickobearDlg::OnBnClickedHome()
 	// do we want to do this?
 	command_buffer.clear();
 	
-	m_MachineState = MS_IDLE;
+	SetMachineState( MS_IDLE );
 
 	// if not this will be at the bottom of the list.
 	// should we adjust it so its always at the top of the list?
@@ -2261,7 +2265,7 @@ void CPickobearDlg::goSetup(LPVOID pThis)
 	bBusy = true;
 
 	// Change machine state to busy
-	m_MachineState = MS_GO;
+	SetMachineState( MS_GO );
 
 	SetControls( FALSE );
 
@@ -2316,7 +2320,7 @@ void CPickobearDlg::goSetup(LPVOID pThis)
 				bBusy = false;
 
 				// Machine is IDLE
-				m_MachineState = MS_IDLE;
+				SetMachineState( MS_IDLE );
 
 				SetControls( TRUE );
 
@@ -2397,7 +2401,7 @@ void CPickobearDlg::goSetup(LPVOID pThis)
 					}
 
 					// Machine is IDLE
-					m_MachineState = MS_IDLE;
+					SetMachineState( MS_IDLE ) ;
 
 					// thread is no longer busy
 					bBusy = false;
@@ -2422,7 +2426,7 @@ void CPickobearDlg::goSetup(LPVOID pThis)
 					m_PCBIndex--;
 
 				// Machine is IDLE
-				m_MachineState = MS_IDLE;
+				SetMachineState( MS_IDLE );
 				
 				// thread is no longer busy
 				bBusy = false;
@@ -2450,7 +2454,7 @@ void CPickobearDlg::goSetup(LPVOID pThis)
 			}
 
 			// @todo : tune this
-			Sleep( 1000 );
+			Sleep( 100 );
 
 			_RPT1(_CRT_WARN,"goThread: Going to component %s\n", entry.label );
 
@@ -2506,7 +2510,7 @@ void CPickobearDlg::goSetup(LPVOID pThis)
 
 					}
 					// @todo : tune this
-					Sleep( 500 );
+					Sleep( 100 );
 				}
 			}
 
@@ -2530,7 +2534,7 @@ void CPickobearDlg::goSetup(LPVOID pThis)
 			}	
 			
 			//@todo : tune this ( why isn't it using the delay?
-			Sleep( 300 );
+			Sleep( 10 );
 
 			// comes here if the part is skipped for some reason
 skip_part:;
@@ -2538,7 +2542,7 @@ skip_part:;
 			// GUI asked machine to stop?
 			if( m_MachineState == MS_STOP ) {
 
-				m_MachineState = MS_IDLE;
+				SetMachineState( MS_IDLE );
 
 				goto stop;
 			}
@@ -2576,7 +2580,7 @@ stop:;
 	m_CameraUpdateRate = CAMERA_DEFAULT_UPDATE_RATE_MS ;
 
 	// switch state to idle
-	m_MachineState = MS_IDLE ;
+	SetMachineState( MS_IDLE );
 	
 	bBusy = false;
 
@@ -2724,7 +2728,7 @@ void CPickobearDlg::OnBnClickedGo()
 	// stop if we're already going ?
 	if ( m_MachineState == MS_GO  ) { 
 		
-		m_MachineState = MS_STOP;
+		SetMachineState( MS_STOP );
 		
 		// hmm
 		bBusy = false ; 
@@ -3205,7 +3209,7 @@ void CPickobearDlg::threadUpdateXY(LPVOID data)
 		//_RPT0(_CRT_WARN,"threadUpdateXY\n");
 
 		// mark as busy
-		m_MachineState = MS_GO;
+		SetMachineState( MS_GO );
 
 		// this will generate a delay
 		EmptySerial();
@@ -3232,7 +3236,7 @@ void CPickobearDlg::threadUpdateXY(LPVOID data)
 		m_Serial.Read( &m_LimitState,sizeof( m_LimitState ) ,&lengthRead,0,100);
 
 		// machine can go back to IDLE ( should be previous mode ) ?
-		m_MachineState = MS_IDLE ;
+		SetMachineState( MS_IDLE );
 
 		// no reply, skip til next time
 		if (lengthRead == 0 ) {
@@ -3257,28 +3261,28 @@ void CPickobearDlg::threadUpdateXY(LPVOID data)
 
 		if( m_LimitState & (1 << 1 ) ) { 
 			((CButton*)GetDlgItem(IDC_XL1))->SetCheck(1);
-			m_MachineState = MS_ESTOP;
+			SetMachineState( MS_ESTOP );
 			_RPT0(_CRT_WARN,"X1 Limit\n");
 		} else 
 			((CButton*)GetDlgItem(IDC_XL1))->SetCheck(0);
 
 		if( m_LimitState & (1 << 2 ) ) {
 			((CButton*)GetDlgItem(IDC_XL2))->SetCheck(1);
-			m_MachineState = MS_ESTOP;
+			SetMachineState( MS_ESTOP );
 			_RPT0(_CRT_WARN,"X2 Limit\n");
 		} else 
 			((CButton*)GetDlgItem(IDC_XL2))->SetCheck(0);
 
 		if( m_LimitState & (1 << 3 ) ) {
 			((CButton*)GetDlgItem(IDC_YL1))->SetCheck(1);
-			m_MachineState = MS_ESTOP;
+			SetMachineState( MS_ESTOP );
 			_RPT0(_CRT_WARN,"Y1 Limit\n");
 		} else 
 			((CButton*)GetDlgItem(IDC_YL1))->SetCheck(0);
 
 		if( m_LimitState & (1 << 4 ) ) {
 			((CButton*)GetDlgItem(IDC_YL2))->SetCheck(1);
-			m_MachineState = MS_ESTOP;
+			SetMachineState( MS_ESTOP );
 			_RPT0(_CRT_WARN,"Y2 Limit\n");
 		} else 
 			((CButton*)GetDlgItem(IDC_YL2))->SetCheck(0);
@@ -3366,7 +3370,7 @@ void CPickobearDlg::UpdateLimitSwitch(void)
 	}
 
 	// mark as busy
-	m_MachineState = MS_GO;
+	SetMachineState( MS_GO );
 
 	EmptySerial();
 
@@ -3389,14 +3393,14 @@ void CPickobearDlg::UpdateLimitSwitch(void)
 	m_Serial.Read( &m_LimitState,1,&lengthRead,0,100);
 	
 	// machine can go back to IDLE ( should be previous mode ) ?
-	m_MachineState = MS_IDLE ;
+	SetMachineState( MS_IDLE );
 
 	// no reply
 	if (lengthRead == 0 ) {
 
 		_RPT0(_CRT_WARN,"UpdateLimitSwitch: lengthRead == 0 \n");
 
-		m_MachineState = MS_IDLE ;
+		SetMachineState( MS_IDLE );
 
 		return;
 	}
@@ -3406,7 +3410,7 @@ void CPickobearDlg::UpdateLimitSwitch(void)
 
 		_RPT0(_CRT_WARN,"UpdateLimitSwitch: invalid response\n");
 
-		m_MachineState = MS_IDLE ;
+		SetMachineState( MS_IDLE );
 
 		return;
 	}
@@ -3452,7 +3456,7 @@ void CPickobearDlg::UpdateLimitSwitch(void)
 	else 
 		((CButton*)GetDlgItem(IDC_YHOME))->SetCheck(0);
 
-	m_MachineState = MS_IDLE ;
+	SetMachineState( MS_IDLE );
 
 }
 
@@ -4035,7 +4039,7 @@ void CPickobearDlg::OnBnClickedGo2()
 
 
 	if ( m_MachineState == MS_GO  ) { 
-		m_MachineState = MS_STOP;
+		SetMachineState( MS_STOP );
 		return;
 	}
 
@@ -4173,7 +4177,7 @@ DWORD CPickobearDlg::goSingleThread(void )
 
 				
 	bBusy = true;
-	m_MachineState = MS_GO;
+	SetMachineState( MS_GO );
 
 
 	unsigned int i ;
@@ -4187,7 +4191,7 @@ DWORD CPickobearDlg::goSingleThread(void )
 		
 		bBusy = false;
 		
-		m_MachineState = MS_IDLE;
+		SetMachineState( MS_IDLE );
 
 		return false;
 	}
@@ -4269,7 +4273,7 @@ DWORD CPickobearDlg::goSingleThread(void )
 				
 		
 		// Machine is moving
-		m_MachineState = MS_GO;
+		SetMachineState( MS_GO );
 
 		_RPT1(_CRT_WARN,"goSingleThread: Going to tool %d\n", feeder.tool );
 
@@ -4301,12 +4305,14 @@ DWORD CPickobearDlg::goSingleThread(void )
 		/// slow the camera down
 		m_CameraUpdateRate = CAMERA_SLOW_UPDATE_RATE_MS ;
 
-		_RPT1(_CRT_WARN,"goSingleThread: Going to feeder %s\n", feeder.label );
 
 		unsigned long feederX,feederY;
 
 		if( CurrentFeeder.GetNextPartPosition( feederX, feederY ) ) {
 
+
+			_RPT3(_CRT_WARN,"goSingleThread: Going to feeder %s (%d,%d)\n", feeder.label , feederX, feederY);
+			
 			MoveHead(feederX + CAMERA_X_OFFSET , feederY - CAMERA_Y_OFFSET ,true);
 			
 			// next part
@@ -4323,7 +4329,7 @@ DWORD CPickobearDlg::goSingleThread(void )
 			int ret = AfxMessageBox(Error ,MB_OK|MB_ICONEXCLAMATION );
 					
 			// Machine is idle
-			m_MachineState = MS_IDLE;
+			SetMachineState( MS_IDLE );
 
 			// thread isn't busy
 			bBusy = false;
@@ -4432,7 +4438,7 @@ skip:;
 
 		if( m_MachineState == MS_STOP ) {
 
-			m_MachineState = MS_IDLE;
+			SetMachineState( MS_IDLE );
 
 			/// reset the camera update rate
 			m_CameraUpdateRate = CAMERA_DEFAULT_UPDATE_RATE_MS ;
@@ -4457,7 +4463,7 @@ skip:;
 	}
 
 	// switch state to idle
-	m_MachineState = MS_IDLE ;
+	SetMachineState( MS_IDLE );
 
 	// no longer busy
 	bBusy  =  false;
@@ -5040,7 +5046,7 @@ try_again:;
 
 	testMode = false;
 	
-	m_MachineState = MS_IDLE;
+	SetMachineState( MS_IDLE );
 
 	SetControls( TRUE );
 
@@ -5183,7 +5189,7 @@ void CPickobearDlg::OnBnClickedEstop()
 	}
 
 	// turn off
-	m_MachineState = MS_ESTOP;
+	SetMachineState( MS_ESTOP );
 	m_Homed= 0;
 
 	SetControls(FALSE);
@@ -5240,7 +5246,7 @@ retry:;
 			}
 
 			// update state
-			m_MachineState = MS_GO;
+			SetMachineState( MS_GO );
 
 			// send to machine
 			if( m_GCODECMDBuffer.find("\n") == string::npos ) {
@@ -5301,7 +5307,7 @@ retry:;
 							// retry
 							
 							// update state
-							m_MachineState = MS_IDLE;
+							SetMachineState( MS_IDLE;
 
 							goto retry;
 						}
@@ -5330,7 +5336,7 @@ retry:;
 				command_buffer.erase(command_buffer.begin());
 
 				// update state
-				m_MachineState = MS_IDLE;
+				SetMachineState( MS_IDLE );
 			}
 
 			// reset event
@@ -5343,6 +5349,8 @@ retry:;
 			if( threadProcessGCODE != 0 )  {
 
 				while(WaitForSingleObject( processGCODE, INFINITE ) == WAIT_IO_COMPLETION);
+				
+				_RPT0(_CRT_WARN,"GCODE thread go!\n");
 
 				ResetEvent( processGCODE );
 			}

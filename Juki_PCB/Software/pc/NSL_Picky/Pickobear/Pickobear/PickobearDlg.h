@@ -695,6 +695,12 @@ public:
 
 	};
 
+	void SetMachineState( eMachineState state ) {
+		_RPT1(_CRT_WARN,"SetMachineState (%d)\n",state);
+
+		m_MachineState = state ;
+	}
+
 		
 	// current state of machine
 	eMachineState m_MachineState;
