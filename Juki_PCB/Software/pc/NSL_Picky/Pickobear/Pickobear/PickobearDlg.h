@@ -732,7 +732,7 @@ public:
 	void UpdateLimitSwitch(void);
 
 	void StartGCODEThread(LPVOID pThis);
-
+	bool WaitForCompletion(void);
 // Callbacks
 
 	// default callback
