@@ -204,16 +204,34 @@ void COpenGLControl::UpdateCamera( UINT nIDEvent )
 			float x,y;
 			x = img1->width/2.0f;
 			y = img1->height/2.0f;	
+			
 			cx.x = (int)x ; cx.y = 0;
 			cy.x = (int)x ; cy.y = (int)img1->height;
-			cvLine(img1,  cx, cy, CV_RGB(0,0,200),2);
+			cvLine(img1,  cx, cy, CV_RGB(0,0,150),2);
+			
 			cx.x = 0 ; cx.y = (int)y;
 			cy.x = (int)img1->width ; cy.y = (int)y;
-			cvLine(img1,  cx, cy, CV_RGB(0,0,200),2);
+			cvLine(img1,  cx, cy, CV_RGB(0,0,150),2);
+
+			for(int stepy = -80 ; stepy <= 80 ; stepy += 20 ) {
+				cx.x = x-30; cx.y = (int)y-stepy;
+				cy.x = x+30; cy.y = (int)y-stepy;
+				cvLine(img1,  cx, cy, CV_RGB(200,0,0),1);
+
+			}
+
+			for(int stepy = -80 ; stepy <= 80 ; stepy += 20 ) {
+				cx.x = x-stepy; cx.y = (int)y-30;
+				cy.x = x-stepy; cy.y = (int)y+30;
+				cvLine(img1,  cx, cy, CV_RGB(200,200,0),1);
+
+			}
+
+
 			cx.x=(int)x;cx.y=(int)y;
-			cvCircle(img1,cx,100,CV_RGB(0,0,200),2);
-			cvCircle(img1,cx,150,CV_RGB(0,0,200),2);
-			cvCircle(img1,cx,200,CV_RGB(0,0,200),2);
+			cvCircle(img1,cx,100,CV_RGB(0,0,150),2);
+			cvCircle(img1,cx,150,CV_RGB(0,0,150),2);
+			cvCircle(img1,cx,200,CV_RGB(0,0,150),2);
 
 //			cvSaveImage("c:\\test.jpg", img1);
 

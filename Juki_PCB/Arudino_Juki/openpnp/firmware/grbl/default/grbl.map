@@ -1150,7 +1150,7 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a
                 0x00800206                _edata = .
                 0x00800206                PROVIDE (__data_end, .)
 
-.bss            0x00800206      0x4fa
+.bss            0x00800206      0x7d4
                 0x00800206                PROVIDE (__bss_start, .)
  *(.bss)
  .bss           0x00800206        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
@@ -1159,98 +1159,98 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a
  .bss           0x00800206       0x2c gcode.o
  .bss           0x00800232        0x0 main.o
  .bss           0x00800232        0x0 motion_control.o
- .bss           0x00800232      0x2ef planner.o
- .bss           0x00800521       0x33 serial_protocol.o
- .bss           0x00800554        0x0 settings.o
- .bss           0x00800554        0x0 spindle_control.o
- .bss           0x00800554       0x27 stepper.o
-                0x00800554                ackHost
-                0x00800555                gHomed
- .bss           0x0080057b      0x104 wiring_serial.o
-                0x0080057b                rx_buffer_head
-                0x0080057d                rx_buffer_tail
- .bss           0x0080067f        0x0 atc_control.o
- .bss           0x0080067f        0x0 head_control.o
- .bss           0x0080067f        0x2 panel_control.o
- .bss           0x00800681        0x0 vacuum_control.o
- .bss           0x00800681        0x0 tape_knock.o
- .bss           0x00800681        0x2 usb.o
- .bss           0x00800683        0x1 max3421e.o
- .bss           0x00800684        0x0 SPI.o
- .bss           0x00800684        0xb timers.o
-                0x00800684                timer0_overflow_count
-                0x00800688                timer0_millis
-                0x0080068c                timer1_overflow_count
- .bss           0x0080068f        0x5 max3421e_usb.o
- .bss           0x00800694        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(addsf3.o)
- .bss           0x00800694        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(addsf3x.o)
- .bss           0x00800694        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(atan.o)
- .bss           0x00800694        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(ceil.o)
- .bss           0x00800694        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(cmpsf2.o)
- .bss           0x00800694        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(divsf3.o)
- .bss           0x00800694        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(divsf3x.o)
- .bss           0x00800694        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(fixsfsi.o)
- .bss           0x00800694        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(fixunssfsi.o)
- .bss           0x00800694        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(floatsisf.o)
- .bss           0x00800694        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(floor.o)
- .bss           0x00800694        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(fp_cmp.o)
- .bss           0x00800694        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(fp_inf.o)
- .bss           0x00800694        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(fp_mintl.o)
- .bss           0x00800694        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(fp_mpack.o)
- .bss           0x00800694        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(fp_nan.o)
- .bss           0x00800694        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(fp_powser.o)
- .bss           0x00800694        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(fp_pscA.o)
- .bss           0x00800694        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(fp_pscB.o)
- .bss           0x00800694        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(fp_round.o)
- .bss           0x00800694        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(fp_split3.o)
- .bss           0x00800694        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(fp_trunc.o)
- .bss           0x00800694        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(fp_zero.o)
- .bss           0x00800694        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(gesf2.o)
- .bss           0x00800694        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(inverse.o)
- .bss           0x00800694        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(lround.o)
- .bss           0x00800694        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(modf.o)
- .bss           0x00800694        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(mulsf3.o)
- .bss           0x00800694        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(mulsf3x.o)
- .bss           0x00800694        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(round.o)
- .bss           0x00800694        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(sqrt.o)
- .bss           0x00800694        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(square.o)
- .bss           0x00800694        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(trunc.o)
- .bss           0x00800694        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(fp_norm2.o)
- .bss           0x00800694        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_mulsi3.o)
- .bss           0x00800694        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_divmodhi4.o)
- .bss           0x00800694        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_udivmodsi4.o)
- .bss           0x00800694        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_divmodsi4.o)
- .bss           0x00800694        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_exit.o)
- .bss           0x00800694        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_clear_bss.o)
- .bss           0x00800694        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_udivmodhi4.o)
- .bss           0x00800694        0x0 C:\WinAVR-20100110\avr\lib\avr6\libc.a(rand.o)
- .bss           0x00800694        0x0 C:\WinAVR-20100110\avr\lib\avr6\libc.a(strtod.o)
- .bss           0x00800694        0x0 C:\WinAVR-20100110\avr\lib\avr6\libc.a(isspace.o)
- .bss           0x00800694        0x0 C:\WinAVR-20100110\avr\lib\avr6\libc.a(strncasecmp_P.o)
- .bss           0x00800694        0x0 C:\WinAVR-20100110\avr\lib\avr6\libc.a(errno.o)
- .bss           0x00800694        0x0 C:\WinAVR-20100110\avr\lib\avr6\libc.a(cty_isfalse.o)
+ .bss           0x00800232      0x5c9 planner.o
+ .bss           0x008007fb       0x33 serial_protocol.o
+ .bss           0x0080082e        0x0 settings.o
+ .bss           0x0080082e        0x0 spindle_control.o
+ .bss           0x0080082e       0x27 stepper.o
+                0x0080082e                ackHost
+                0x0080082f                gHomed
+ .bss           0x00800855      0x104 wiring_serial.o
+                0x00800855                rx_buffer_head
+                0x00800857                rx_buffer_tail
+ .bss           0x00800959        0x0 atc_control.o
+ .bss           0x00800959        0x0 head_control.o
+ .bss           0x00800959        0x2 panel_control.o
+ .bss           0x0080095b        0x0 vacuum_control.o
+ .bss           0x0080095b        0x0 tape_knock.o
+ .bss           0x0080095b        0x2 usb.o
+ .bss           0x0080095d        0x1 max3421e.o
+ .bss           0x0080095e        0x0 SPI.o
+ .bss           0x0080095e        0xb timers.o
+                0x0080095e                timer0_overflow_count
+                0x00800962                timer0_millis
+                0x00800966                timer1_overflow_count
+ .bss           0x00800969        0x5 max3421e_usb.o
+ .bss           0x0080096e        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(addsf3.o)
+ .bss           0x0080096e        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(addsf3x.o)
+ .bss           0x0080096e        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(atan.o)
+ .bss           0x0080096e        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(ceil.o)
+ .bss           0x0080096e        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(cmpsf2.o)
+ .bss           0x0080096e        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(divsf3.o)
+ .bss           0x0080096e        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(divsf3x.o)
+ .bss           0x0080096e        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(fixsfsi.o)
+ .bss           0x0080096e        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(fixunssfsi.o)
+ .bss           0x0080096e        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(floatsisf.o)
+ .bss           0x0080096e        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(floor.o)
+ .bss           0x0080096e        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(fp_cmp.o)
+ .bss           0x0080096e        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(fp_inf.o)
+ .bss           0x0080096e        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(fp_mintl.o)
+ .bss           0x0080096e        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(fp_mpack.o)
+ .bss           0x0080096e        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(fp_nan.o)
+ .bss           0x0080096e        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(fp_powser.o)
+ .bss           0x0080096e        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(fp_pscA.o)
+ .bss           0x0080096e        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(fp_pscB.o)
+ .bss           0x0080096e        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(fp_round.o)
+ .bss           0x0080096e        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(fp_split3.o)
+ .bss           0x0080096e        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(fp_trunc.o)
+ .bss           0x0080096e        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(fp_zero.o)
+ .bss           0x0080096e        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(gesf2.o)
+ .bss           0x0080096e        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(inverse.o)
+ .bss           0x0080096e        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(lround.o)
+ .bss           0x0080096e        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(modf.o)
+ .bss           0x0080096e        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(mulsf3.o)
+ .bss           0x0080096e        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(mulsf3x.o)
+ .bss           0x0080096e        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(round.o)
+ .bss           0x0080096e        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(sqrt.o)
+ .bss           0x0080096e        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(square.o)
+ .bss           0x0080096e        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(trunc.o)
+ .bss           0x0080096e        0x0 C:\WinAVR-20100110\avr\lib\avr6\libm.a(fp_norm2.o)
+ .bss           0x0080096e        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_mulsi3.o)
+ .bss           0x0080096e        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_divmodhi4.o)
+ .bss           0x0080096e        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_udivmodsi4.o)
+ .bss           0x0080096e        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_divmodsi4.o)
+ .bss           0x0080096e        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_exit.o)
+ .bss           0x0080096e        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_clear_bss.o)
+ .bss           0x0080096e        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_udivmodhi4.o)
+ .bss           0x0080096e        0x0 C:\WinAVR-20100110\avr\lib\avr6\libc.a(rand.o)
+ .bss           0x0080096e        0x0 C:\WinAVR-20100110\avr\lib\avr6\libc.a(strtod.o)
+ .bss           0x0080096e        0x0 C:\WinAVR-20100110\avr\lib\avr6\libc.a(isspace.o)
+ .bss           0x0080096e        0x0 C:\WinAVR-20100110\avr\lib\avr6\libc.a(strncasecmp_P.o)
+ .bss           0x0080096e        0x0 C:\WinAVR-20100110\avr\lib\avr6\libc.a(errno.o)
+ .bss           0x0080096e        0x0 C:\WinAVR-20100110\avr\lib\avr6\libc.a(cty_isfalse.o)
  *(.bss*)
  *(COMMON)
- COMMON         0x00800694       0x26 settings.o
-                0x00800694                settings
- COMMON         0x008006ba        0x1 stepper.o
-                0x008006ba                dir_bits
- COMMON         0x008006bb        0x1 usb.o
-                0x008006bb                max_registers
- COMMON         0x008006bc       0x42 max3421e_usb.o
-                0x008006bc                deviceTable
- COMMON         0x008006fe        0x2 C:\WinAVR-20100110\avr\lib\avr6\libc.a(errno.o)
-                0x008006fe                errno
-                0x00800700                PROVIDE (__bss_end, .)
+ COMMON         0x0080096e       0x26 settings.o
+                0x0080096e                settings
+ COMMON         0x00800994        0x1 stepper.o
+                0x00800994                dir_bits
+ COMMON         0x00800995        0x1 usb.o
+                0x00800995                max_registers
+ COMMON         0x00800996       0x42 max3421e_usb.o
+                0x00800996                deviceTable
+ COMMON         0x008009d8        0x2 C:\WinAVR-20100110\avr\lib\avr6\libc.a(errno.o)
+                0x008009d8                errno
+                0x008009da                PROVIDE (__bss_end, .)
                 0x00006428                __data_load_start = LOADADDR (.data)
                 0x0000642e                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x00800700        0x0
-                0x00800700                PROVIDE (__noinit_start, .)
+.noinit         0x008009da        0x0
+                0x008009da                PROVIDE (__noinit_start, .)
  *(.noinit*)
-                0x00800700                PROVIDE (__noinit_end, .)
-                0x00800700                _end = .
-                0x00800700                PROVIDE (__heap_start, .)
+                0x008009da                PROVIDE (__noinit_end, .)
+                0x008009da                _end = .
+                0x008009da                PROVIDE (__heap_start, .)
 
 .eeprom         0x00810000        0x0
  *(.eeprom*)

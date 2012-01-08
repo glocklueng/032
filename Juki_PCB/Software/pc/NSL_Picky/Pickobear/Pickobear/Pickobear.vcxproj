@@ -144,6 +144,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AlertBox.cpp" />
+    <ClCompile Include="CameraView.cpp" />
     <ClCompile Include="Counts.cpp" />
     <ClCompile Include="csv_parser.cpp" />
     <ClCompile Include="EditComponent.cpp" />
@@ -177,6 +178,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AlertBox.h" />
+    <ClInclude Include="CameraView.h" />
     <ClInclude Include="Counts.h" />
     <ClInclude Include="csv_parser.h" />
     <ClInclude Include="EditComponent.h" />

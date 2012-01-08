@@ -324,6 +324,7 @@ BEGIN_MESSAGE_MAP(CPickobearDlg, CDialog)
 	ON_MESSAGE (PB_UPDATE_XY, UpdateXY)
 	ON_MESSAGE (PB_TEXT_OUT, UpdateTextOut)
 	ON_BN_CLICKED(IDC_TRANSFER_XY, &CPickobearDlg::OnBnClickedTransferXy)
+	ON_BN_CLICKED(IDC_BIG_VIEW, &CPickobearDlg::OnBnClickedBigView)
 END_MESSAGE_MAP()
 
 BEGIN_MESSAGE_MAP(CListCtrl_Components, CListCtrl)
@@ -582,6 +583,7 @@ BOOL CPickobearDlg::OnInitDialog()
 
 	UpdateData(FALSE);
 
+
 	// Get size and position of the template textfield we created before in the dialog editor
 	GetDlgItem(IDC_CAM1)->GetWindowRect(rect);
 	GetDlgItem(IDC_CAM1)->GetWindowRect(rect1);
@@ -741,7 +743,7 @@ BOOL CPickobearDlg::OnInitDialog()
                                    TEXT("updateCameraHandle"));
                                           // Object name
 	
-	
+
 	SetControls( FALSE );
 	
 
@@ -1046,16 +1048,16 @@ bool CPickobearDlg::Home_callback( void *pThis, void *userdata )
  *        
  */
 bool CPickobearDlg::Home_cb2(void *userdata ) 
-{
-	
+{	
 	// call this here
 	UpdateLimitSwitch();
-
 
 	// passed
 	if( userdata == (void*)1 )  {
 
 			m_headXPosUM = 0 ; m_headYPosUM =0;
+
+			m_TargetXum = m_headXPosUM ; m_TargetYum = m_headYPosUM;
 			
 			SetControls( TRUE ) ;
 
@@ -1070,7 +1072,7 @@ bool CPickobearDlg::Home_cb2(void *userdata )
 
 		// invalid head position
 		m_headXPosUM = -1 ; m_headYPosUM = -1;
-
+		m_TargetXum = m_headXPosUM ; m_TargetYum = m_headYPosUM;
 		// get user message
 		CString message( (const char *)userdata);
 
@@ -1081,7 +1083,7 @@ bool CPickobearDlg::Home_cb2(void *userdata )
 	}
 
 //	PostMessage (PB_UPDATE_XY, m_headXPosUM ,m_headYPosUM );
-	// ?
+// ?
 	UpdateXY( m_headXPosUM, m_headXPosUM );
 
 	return true;
@@ -1972,7 +1974,7 @@ void CPickobearDlg::OnBnClickedUp()
 	if( m_StepSizeUM == 0 ) 
 		m_StepSizeUM = 1;
 
-	MoveHead( m_headXPosUM, m_headYPosUM + m_StepSizeUM) ;
+	MoveHead( m_headXPosUM, m_headYPosUM + m_StepSizeUM,true) ;
 }
 
 /**
@@ -1989,7 +1991,7 @@ void CPickobearDlg::OnBnClickedDown()
 	if( m_StepSizeUM == 0 ) 
 		m_StepSizeUM = 1;
 
-	MoveHead( m_headXPosUM, m_headYPosUM - m_StepSizeUM) ;
+	MoveHead( m_headXPosUM, m_headYPosUM - m_StepSizeUM,true) ;
 }
 
 /**
@@ -2006,7 +2008,7 @@ void CPickobearDlg::OnBnClickedLeft()
 	if( m_StepSizeUM == 0 ) 
 		m_StepSizeUM = 1;
 
-	MoveHead( m_headXPosUM - m_StepSizeUM, m_headYPosUM) ;
+	MoveHead( m_headXPosUM - m_StepSizeUM, m_headYPosUM,true) ;
 }
 
 /**
@@ -2024,7 +2026,7 @@ void CPickobearDlg::OnBnClickedRight()
 		m_StepSizeUM = 1;
 
 
-	MoveHead( m_headXPosUM + m_StepSizeUM, m_headYPosUM) ;
+	MoveHead( m_headXPosUM + m_StepSizeUM, m_headYPosUM,true) ;
 }
 
 /**
@@ -3131,7 +3133,10 @@ bool CPickobearDlg::WaitForCompletion(void)
 	unsigned long timeout ;
 	timeout = 1000;
 	
-	
+	// just bail if not homed
+	if ( m_Homed == false ) 
+		return false;
+
 	if ( m_MachineState == MS_ESTOP ) 
 		return false;
 
@@ -3140,7 +3145,7 @@ bool CPickobearDlg::WaitForCompletion(void)
 
 		timeout--;
 
-		if ( m_MachineState == MS_ESTOP ) 
+		if ( m_MachineState == MS_ESTOP || m_Homed == false  ) 
 			return false;
 
 		if( timeout == 0 ) {
@@ -3156,7 +3161,7 @@ bool CPickobearDlg::WaitForCompletion(void)
 	while( bBusy || m_MachineState != CPickobearDlg::MS_IDLE  ) {
 		
 
-		if ( m_MachineState == MS_ESTOP ) 
+		if ( m_MachineState == MS_ESTOP ||  m_Homed == false ) 
 			return false;
 
 		timeout--;
@@ -3174,7 +3179,7 @@ bool CPickobearDlg::WaitForCompletion(void)
 	while( m_TargetXum != m_headXPosUM ||  m_TargetYum != m_headYPosUM ) {
 	
 
-		if ( m_MachineState == MS_ESTOP ) 
+		if ( m_MachineState == MS_ESTOP ||  m_Homed == false ) 
 			return false;
 
 		timeout--;
@@ -4315,6 +4320,8 @@ DWORD CPickobearDlg::goSingleThread(void )
 			bBusy = false;
 
 			SetControls( TRUE );
+			SetMachineState( MS_IDLE );
+
 			
 			return 0;
 		}
@@ -4328,7 +4335,7 @@ DWORD CPickobearDlg::goSingleThread(void )
 			int ret = AfxMessageBox(L"Feeder not found ", MB_OK | MB_ICONEXCLAMATION);
 
 			bBusy = false;
-
+			SetMachineState( MS_IDLE );
 			SetControls( TRUE );
 
 			return 0;
@@ -4348,7 +4355,7 @@ DWORD CPickobearDlg::goSingleThread(void )
 
 			SetControls( TRUE );
 			bBusy = false;
-
+			SetMachineState( MS_IDLE );
 			return 0;
 		}
 
@@ -5799,4 +5806,10 @@ void CPickobearDlg::OnBnClickedTransferXy()
 		// force redraw of list
 		m_FeederList.RebuildList();
 	} 
+}
+
+
+void CPickobearDlg::OnBnClickedBigView()
+{
+	m_BigView.DoModal();
 }
