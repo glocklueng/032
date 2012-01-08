@@ -1,93 +1,104 @@
-================================================================================
-    MICROSOFT FOUNDATION CLASS LIBRARY : Pickobear Project Overview
-===============================================================================
 
-The application wizard has created this Pickobear application for
-you.  This application not only demonstrates the basics of using the Microsoft
-Foundation Classes but is also a starting point for writing your application.
+PickoBear current working settings :-
 
-This file contains a summary of what you will find in each of the files that
-make up your Pickobear application.
+$VERSION = 0.76PB
+$0 = 40.0 (steps/mm x)
+$1 = 40.0 (steps/mm y)
+$2 = 40.0 (steps/mm z)
+$3 = 40.0 (steps/deg. c)
+$4 = 8 (microseconds step pulse)
+$5 = 4800.0 (mm/min default feed rate)
+$6 = 480.0 (mm/min default seek rate)
+$7 = 0.100 (mm/arc segment)
+$8 = 600.0 (acceleration in mm/sec^2)
+$9 = 1000.0 (max instant cornering speed change in delta mm/min)
+$1000 = 0 (steppers: 0 = disabled, 1 = enabled)
+'$x=value' to set parameter or just '$' to dump current settings
 
-Pickobear.vcproj
-    This is the main project file for VC++ projects generated using an application wizard.
-    It contains information about the version of Visual C++ that generated the file, and
-    information about the platforms, configurations, and project features selected with the
-    application wizard.
-
-Pickobear.h
-    This is the main header file for the application.  It includes other
-    project specific headers (including Resource.h) and declares the
-    CPickobearApp application class.
-
-Pickobear.cpp
-    This is the main application source file that contains the application
-    class CPickobearApp.
-
-Pickobear.rc
-    This is a listing of all of the Microsoft Windows resources that the
-    program uses.  It includes the icons, bitmaps, and cursors that are stored
-    in the RES subdirectory.  This file can be directly edited in Microsoft
-    Visual C++. Your project resources are in 1033.
-
-res\Pickobear.ico
-    This is an icon file, which is used as the application's icon.  This
-    icon is included by the main resource file Pickobear.rc.
-
-res\Pickobear.rc2
-    This file contains resources that are not edited by Microsoft
-    Visual C++. You should place all resources not editable by
-    the resource editor in this file.
+F18000 top speed 
+$8 might be able to go a bit more
 
 
-/////////////////////////////////////////////////////////////////////////////
-
-The application wizard creates one dialog class:
-
-PickobearDlg.h, PickobearDlg.cpp - the dialog
-    These files contain your CPickobearDlg class.  This class defines
-    the behavior of your application's main dialog.  The dialog's template is
-    in Pickobear.rc, which can be edited in Microsoft Visual C++.
+Test mode pattern 
+Feed this in one block at a time to the serial port, use D0 afterwards to test the X_HOME Y_HOME
 
 
-/////////////////////////////////////////////////////////////////////////////
+G28
 
-Other Features:
 
-ActiveX Controls
-    The application includes support to use ActiveX controls.
+G1X300f18000
+G1X0f18000
+G1X300f18000
+G1X0f18000
+G1X300f18000
+G1X0f18000
+G1X300f18000
+G1X0f18000
+G1X300f18000
+G1X0f18000
+G1X300f18000
+G1X0f18000
+G1X300f18000
+G1X0f18000
+G1X300f18000
+G1X0f18000
+G1X300f18000
+G1X0f18000
 
-/////////////////////////////////////////////////////////////////////////////
+G1Y300f18000
+G1Y0f18000
+G1Y300f18000
+G1Y0f18000
+G1Y300f18000
+G1Y0f18000
+G1Y300f18000
+G1Y0f18000
+G1Y300f18000
+G1Y0f18000
+G1Y300f18000
+G1Y0f18000
+G1Y300f18000
+G1Y0f18000
+G1Y300f18000
+G1Y0f18000
+G1Y300f18000
+G1Y0f18000
+	
+G1X300Y300f18000
+G1X0Y0f18000
+G1X300Y300f18000
+G1X0Y0f18000
+G1X300Y300f18000
+G1X0Y0f18000
+G1X300Y300f18000
+G1X0Y0f18000
+G1X300Y300f18000
+G1X0Y0f18000
+G1X300Y300f18000
+G1X0Y0f18000
+G1X300Y300f18000
+G1X0Y0f18000
+G1X300Y300f18000
+G1X0Y0f18000
+G1X300Y300f18000
+G1X0Y0f18000
 
-Other standard files:
+G1X300Y300f18000
+G1X0Y0f18000
+G1X300Y300f18000
+G1X0Y0f18000
+G1X300Y300f18000
+G1X0Y0f18000
+G1X300Y300f18000
+G1X0Y0f18000
+G1X300Y300f18000
+G1X0Y0f18000
+G1X300Y300f18000
+G1X0Y0f18000
+G1X300Y300f18000
+G1X0Y0f18000
+G1X300Y300f18000
+G1X0Y0f18000
+G1X300Y300f18000
+G1X0Y0f18000
 
-StdAfx.h, StdAfx.cpp
-    These files are used to build a precompiled header (PCH) file
-    named Pickobear.pch and a precompiled types file named StdAfx.obj.
-
-Resource.h
-    This is the standard header file, which defines new resource IDs.
-    Microsoft Visual C++ reads and updates this file.
-
-Pickobear.manifest
-	Application manifest files are used by Windows XP to describe an applications
-	dependency on specific versions of Side-by-Side assemblies. The loader uses this
-	information to load the appropriate assembly from the assembly cache or private
-	from the application. The Application manifest  maybe included for redistribution
-	as an external .manifest file that is installed in the same folder as the application
-	executable or it may be included in the executable in the form of a resource.
-/////////////////////////////////////////////////////////////////////////////
-
-Other notes:
-
-The application wizard uses "TODO:" to indicate parts of the source code you
-should add to or customize.
-
-If your application uses MFC in a shared DLL, you will need
-to redistribute the MFC DLLs. If your application is in a language
-other than the operating system's locale, you will also have to
-redistribute the corresponding localized resources MFC90XXX.DLL.
-For more information on both of these topics, please see the section on
-redistributing Visual C++ applications in MSDN documentation.
-
-/////////////////////////////////////////////////////////////////////////////

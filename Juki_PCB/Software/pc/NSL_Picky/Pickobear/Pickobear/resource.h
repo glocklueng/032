@@ -15,6 +15,7 @@
 #define IDD_COMPONENT_EDIT              136
 #define IDD_ALERT_BOX                   137
 #define IDD_SERIAL_PICKER               138
+#define IDD_POPUP_CAMERA                139
 #define IDC_TEXTOUT                     1000
 #define IDC_GO                          1001
 #define IDC_UP                          1002
@@ -120,14 +121,17 @@
 #define IDC_SIMULATION_DRAW             1100
 #define IDC_COMBO1                      1101
 #define IDC_SERIAL_LIST                 1101
+#define IDC_CAMERA                      1102
+#define IDC_BUTTON1                     1103
+#define IDC_BIG_VIEW                    1103
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        139
+#define _APS_NEXT_RESOURCE_VALUE        140
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1102
+#define _APS_NEXT_CONTROL_VALUE         1104
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

@@ -69,7 +69,7 @@
 #if defined  (__AVR_ATmega328P__ ) 
 #define BLOCK_BUFFER_SIZE 5
 #elif defined( __AVR_ATmega2560__ )    
-#define BLOCK_BUFFER_SIZE (10)
+#define BLOCK_BUFFER_SIZE (20)
 #else
 #define BLOCK_BUFFER_SIZE 5
 #endif

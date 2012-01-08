@@ -12,6 +12,7 @@
 #include "AlertBox.h"
 #include "GCODE_Processor.h"
 #include "SerialPicker.h"
+#include "CameraView.h"
 
 #include <iostream>
 #include <fstream>
@@ -587,6 +588,10 @@ private:
 	// The camera windows
 	COpenGLControl m_UpCameraWindow;
 	COpenGLControl m_DownCameraWindow;
+	
+	
+	CCameraView m_BigView;
+
 
 	// camera update thread
 	COGLThread m_OGLThread;
@@ -896,4 +901,5 @@ public:
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	CEdit m_StatusBar;
 	afx_msg void OnBnClickedTransferXy();
+	afx_msg void OnBnClickedBigView();
 };
