@@ -50,7 +50,7 @@ enum {
 
 
 #define CAMERA_DEFAULT_UPDATE_RATE_MS		( 10 )
-#define UP_CAMERA_DEFAULT_UPDATE_RATE_MS		( 500 )
+#define UP_CAMERA_DEFAULT_UPDATE_RATE_MS	( 500 )
 #define CAMERA_SLOW_UPDATE_RATE_MS			( 300 )
 
 #define pulsestoum(x) (x*25)
@@ -59,6 +59,7 @@ CString GetSaveFile( const TCHAR *ptypes, const TCHAR*caption, const TCHAR *pSta
 CString GetLoadFile( const TCHAR *ptypes, const TCHAR*caption, const TCHAR *pStartDir);
 bool SetCurrentPosition ( long x,long y);
 bool BuildGCodeMove( char *output, int length, int mode , long x, long y, long speed );
+void FixXY( long &x,long &y);
 
 class Feeder;
 

@@ -79,4 +79,7 @@ void plan_set_acceleration_manager_enabled(int enabled);
 // Is acceleration-management currently enabled?
 int plan_is_acceleration_manager_enabled();
 
+
+void printCurrentPosition( void ) ;
+
 #endif

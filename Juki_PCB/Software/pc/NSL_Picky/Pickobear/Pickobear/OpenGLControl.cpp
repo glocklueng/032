@@ -11,6 +11,12 @@ COpenGLControl::COpenGLControl(void) :
 	pDlg(NULL),
 	m_camera( -1 )
 {
+	hScale=1.0;
+	vScale=1.0;
+	lineWidth=1;
+	cvInitFont(&font,CV_FONT_HERSHEY_SIMPLEX, hScale,vScale,0,lineWidth);
+
+
 }
 
 COpenGLControl::~COpenGLControl(void)
@@ -214,24 +220,34 @@ void COpenGLControl::UpdateCamera( UINT nIDEvent )
 			cvLine(img1,  cx, cy, CV_RGB(0,0,150),2);
 
 			for(int stepy = -80 ; stepy <= 80 ; stepy += 20 ) {
-				cx.x = x-30; cx.y = (int)y-stepy;
-				cy.x = x+30; cy.y = (int)y-stepy;
-				cvLine(img1,  cx, cy, CV_RGB(200,0,0),1);
-
+				if( stepy != 0 ) {
+					cx.x = x-20; cx.y = (int)y-stepy;
+					cy.x = x+20; cy.y = (int)y-stepy;
+					cvLine(img1,  cx, cy, CV_RGB(200,0,0),1);
+				}
 			}
 
 			for(int stepy = -80 ; stepy <= 80 ; stepy += 20 ) {
-				cx.x = x-stepy; cx.y = (int)y-30;
-				cy.x = x-stepy; cy.y = (int)y+30;
-				cvLine(img1,  cx, cy, CV_RGB(200,200,0),1);
-
+				if( stepy != 0 ) {
+					cx.x = x-stepy; cx.y = (int)y-20;
+					cy.x = x-stepy; cy.y = (int)y+20;
+					cvLine(img1,  cx, cy, CV_RGB(200,200,0),1);
+				}
 			}
-
 
 			cx.x=(int)x;cx.y=(int)y;
 			cvCircle(img1,cx,100,CV_RGB(0,0,150),2);
 			cvCircle(img1,cx,150,CV_RGB(0,0,150),2);
 			cvCircle(img1,cx,200,CV_RGB(0,0,150),2);
+	
+			cvPutText (img1,"PickoBear",cvPoint(10,40), &font, cvScalar(0,0,255));
+			CStringA temp;
+
+			temp.Format("X %d um",pDlg->m_headXPosUM );
+			cvPutText (img1,temp,cvPoint(10,70), &font, cvScalar(255,0,0));
+			temp.Format("Y %d um",pDlg->m_headYPosUM );
+			cvPutText (img1,temp,cvPoint(10,100), &font, cvScalar(255,0,0));
+
 
 //			cvSaveImage("c:\\test.jpg", img1);
 
@@ -320,6 +336,9 @@ void  COpenGLControl::SetCamera( int DeviceID)
 		VI.stopDevice( m_camera) ;
 		_RPT2(_CRT_WARN,"Stopping Camera %d, name is [%s]\n",m_camera,VI.getDeviceName(m_camera));
 	}
+	
+	if( DeviceID == -1 ) 
+		return;
 
 	int numDevices = VI.listDevices();
 	m_camera = DeviceID;

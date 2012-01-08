@@ -1,4 +1,8 @@
 
+40 steps per mm/x(y)
+1000 per 1 mm
+1000 / 40 = 25, 25um is smallest possible step
+
 PickoBear current working settings :-
 
 $VERSION = 0.76PB
