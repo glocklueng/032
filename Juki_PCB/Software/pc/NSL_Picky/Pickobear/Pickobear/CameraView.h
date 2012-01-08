@@ -15,7 +15,17 @@ public:
 
 // Dialog Data
 	enum { IDD = IDD_POPUP_CAMERA };
-
+#if 0
+	void PostNcDestroy() 
+	{	
+		CDialog::PostNcDestroy();
+		delete this;
+	}
+	void OnCancel() 
+	{
+	    DestroyWindow();
+	}
+#endif
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	virtual BOOL OnInitDialog();

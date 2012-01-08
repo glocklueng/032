@@ -73,6 +73,7 @@
 //   if rotate is >360 then subtract 360 
 //   changed update to use events instead of resume/suspend thread.
 //   testing update of limit switches after a move
+//   Started adding a popout camera viewer
 
 // Recently fixed :-
 //
@@ -148,6 +149,9 @@ static int CAMERA_Y_OFFSET				=( 73900-540+120 +100);
 // drop off at PCB
 #define GCODE_PUT_DOWN		("M27\n")
 
+// Grabs current XY
+#define GCODE_QUERY_POS		("P0\n")
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -201,7 +205,7 @@ CPickobearDlg::CPickobearDlg(CWnd* pParent /*=NULL*/)
 	, m_ComponentsModified(false)
 	, m_pFeederDlg( NULL )
 	, m_Quit(0)
-	, m_Speed(22000)
+	, m_Speed(18000)
 	, m_Homed(false)
 	, m_CameraUpdateRate(CAMERA_DEFAULT_UPDATE_RATE_MS)
 	, bCameraHead( false )
@@ -215,7 +219,7 @@ CPickobearDlg::CPickobearDlg(CWnd* pParent /*=NULL*/)
 	, m_MachineState( MS_IDLE )
 	, m_LimitState(0)
 	, updateThreadHandle(0)
-	, m_StepSizeUM(1)
+	, m_StepSizeUM(25)
 	, threadProcessGCODE(0)
 	, GCODE_CPU_Thread(0)
 	, m_TargetXum(0)
@@ -676,7 +680,7 @@ BOOL CPickobearDlg::OnInitDialog()
 		
 	m_SpeedSelect.ResetContent();
 
-	for(unsigned long i = 1000; i <= 20000 ; i+= 500 ) {
+	for(unsigned long i = 1000; i <= 18000 ; i+= 250 ) {
 
 		CString num;
 
@@ -706,7 +710,7 @@ BOOL CPickobearDlg::OnInitDialog()
 	regEntry = m_Speed;
 	m_Speed = GetRegistryDWORD(L"speed",regEntry);
 	if( m_Speed == 0 ) {
-		m_Speed = 1000 ;
+		m_Speed = 5000 ;
 	}
 
 	num.Format(L"%d",m_Speed);
@@ -714,7 +718,7 @@ BOOL CPickobearDlg::OnInitDialog()
 	i = m_SpeedSelect.FindStringExact(-1,  num );
 	if( i == -1 ) {
 		i = 0;
-		m_Speed = 1000;
+		m_Speed = 5000;
 	}
 
 	m_SpeedSelect.SetCurSel( i );
@@ -883,7 +887,7 @@ bool CPickobearDlg::InternalWriteSerial( const char *data,bool noConsole=false)
 		if (m_Serial.IsOpen() ) {
 			
 			// M29 doesn't ACK
-			if( strncmp(data,GCODE_LIMIT_QUERY,3) == 0  )  {
+			if( strncmp(data,GCODE_LIMIT_QUERY,3) == 0  || strncmp(data,GCODE_QUERY_POS,3) == 0 )  {
 				m_Serial.Write( data );
 			} else {
 
@@ -1089,6 +1093,38 @@ bool CPickobearDlg::Home_cb2(void *userdata )
 	return true;
 }
 
+/*
+
+	40 steps per mm/x(y)
+	1000 per 1 mm
+	1000 / 40 = 25, 25um is smallest possible step
+
+	This takes any X,Y and fixes it so its a perfect step
+	*/
+
+void FixXY( long &x,long &y)
+{
+	double tempx,tempy;
+	
+	tempx = x;
+	tempy = y;
+
+	tempx /= 25;
+	tempy /= 25;
+
+	// round up
+	tempx += .5;
+	tempy += .5;
+
+	tempx = (long)tempx;
+	tempy = (long)tempy;
+
+	x =  (long)(tempx) * 25;
+	y =  (long)(tempy) * 25;
+
+	_RPT2(_CRT_WARN,"Corrected position is (%d,%d)\n",x,y);
+	
+}
 
 /**
  * BuildGCodeMove - make the actual GCODE G command from coords and speed
@@ -1102,7 +1138,14 @@ bool BuildGCodeMove( char *output, int length, int mode , long x, long y, long s
 	long double tx,ty;
 
 	ASSERT( output) ;
-	
+	tx = x;
+	ty = y;
+
+	FixXY( x, y );
+
+	ASSERT( tx == x);
+	ASSERT( ty == y);
+
 	if( output == NULL ) 
 		return false;
 
@@ -1196,8 +1239,9 @@ bool CPickobearDlg::MoveHeadSlow(  long x, long y, bool wait=false )
 		return false;
 	}
 
+	FixXY(x,y);
 
-	if ( false == BuildGCodeMove(buffer,sizeof(buffer),1,x,y,2000) ) {
+	if ( false == BuildGCodeMove(buffer,sizeof(buffer),1,x,y,5000) ) {
 		return false;
 	}
 
@@ -1257,6 +1301,8 @@ bool CPickobearDlg::MoveHead(  long x, long y, bool wait=false )
 		x = 0;
 	if ( y < 0 ) 
 		y = 0;
+
+	FixXY(x,y);
 
 	if( false == BuildGCodeMove(buffer,sizeof(buffer),1,x,y,m_Speed) ) {
 		_RPT0(_CRT_WARN,"BuildGCodeMove: failed\n");
@@ -1424,7 +1470,12 @@ bool CPickobearDlg::MoveHeadRel(  long x, long y, bool wait=false )
 
 	char buffer[ 256 ];
 
-	if(false == BuildGCodeMove(buffer,sizeof(buffer),0,m_headXPosUM+x,m_headYPosUM+y,m_Speed) ) {
+	x = m_headXPosUM + x;
+	y = m_headYPosUM + y;
+	
+	FixXY(x,y);
+
+	if(false == BuildGCodeMove(buffer,sizeof(buffer),0,x,y,m_Speed) ) {
 		return false;
 	}
 
@@ -1433,8 +1484,8 @@ bool CPickobearDlg::MoveHeadRel(  long x, long y, bool wait=false )
 	m_LastYum = m_headYPosUM;
 
 	// Target x/y position
-	m_TargetXum = m_headXPosUM + x;
-	m_TargetYum = m_headYPosUM + y;
+	m_TargetXum = x;
+	m_TargetYum = y;
 
 	// Add to queue
 	if( QueueEmpty() == true && wait == true ) {
@@ -2299,10 +2350,14 @@ void CPickobearDlg::goCamera(LPVOID pThis)
 
 	while( m_Quit == 0 ) {
 
+		if( m_CameraUpdateRate ) {
 		m_UpCameraWindow.UpdateCamera( 1 ) ;
 
 		// wastes CPU time
 		Sleep( m_CameraUpdateRate );
+		} else {
+			Sleep(100);
+		}
 	}
 
 	return;
@@ -3462,10 +3517,46 @@ void CPickobearDlg::OnBnClickedUpdate()
 		return;
 	}
 
-	if( WaitForCompletion() == true )
+	// GCODE_QUERY_POS is a special command, it's called to query the machine for what it thinks the XY currently is.
+	if (InternalWriteSerial( GCODE_QUERY_POS, true ) == false ) {
+		// something failed
+
+		_RPT0(_CRT_WARN,"OnBnClickedUpdate: InternalWriteSerial(GCODE_QUERY_POS) == false\n");
+
+		// Machine is IDLE
+		OnBnClickedEstop();
+
+		return;
+
+	}	
+
+	Sleep( SERIAL_WAIT_MS );
+	
+	DWORD lengthRead=0;
+	char buffer[32];
+
+	m_Serial.Read( &buffer,sizeof(buffer),&lengthRead,0,100);
+	// should have data
+	int px,py;
+	if (lengthRead ) {
+		if(strstr(buffer,"ok") ) {
+			if(strstr(buffer,",") ) {
+				// Valid Replied
+	
+				_RPT1(_CRT_WARN,"OnBnClickedUpdate: %s\n",buffer);
+				sscanf(buffer, "%d,%d", &px, &py);
+				_RPT2(_CRT_WARN,"OnBnClickedUpdate: Machine thinks its at (%d,%d)\n",px*25,py*25);
+
+			}
+		}
+	}
+
+	// machine can go back to IDLE ( should be previous mode ) ?
+	SetMachineState( MS_IDLE );
+
+	if( WaitForCompletion() == true ) {
 		UpdateLimitSwitch();
-
-
+	}
 }
 
 void CPickobearDlg::UpdateLimitSwitch(void)
@@ -4616,13 +4707,19 @@ void CPickobearDlg::OnBnClickedPcbFlip()
 
 
 	if ( bFlip == true ) {
+
 		bFlip = false;
+
 		m_ComponentList.m_OffsetX = m_ComponentList.m_OffsetX_top;
 		m_ComponentList.m_OffsetY = m_ComponentList.m_OffsetY_top;
+
 	} else {
+
 		bFlip = true;
+
 		m_ComponentList.m_OffsetX = m_ComponentList.m_OffsetX_bottom;
 		m_ComponentList.m_OffsetY = m_ComponentList.m_OffsetY_bottom;
+
 	}
 }
 
@@ -5420,15 +5517,15 @@ retry:;
 						ret = GCODE_CommandAck_callback( this, (void*) command_buffer.front().error_message.c_str() ) ;
 					else
 						ret = func_ptr( this, (void*) command_buffer.front().error_message.c_str() ) ;
-				}
-
-				if( ret == false ){
+		
+					if( ret == false ){
 					
-					OnBnClickedEstop();
+						OnBnClickedEstop();
 
-					// command is still in buffer
-					goto retry;
+						// command is still in buffer
+						goto retry;
 
+					}
 				}
 
 			} else {
@@ -5439,7 +5536,6 @@ retry:;
 					ret = func_ptr( this,(void*) 1 ) ;
 				} else
 					ret = func_ptr( this, (void*) 1 ) ;
-		
 			}
 
 #if 0
@@ -5488,7 +5584,7 @@ retry:;
 			m_GCODECMDBuffer.erase();
 			
 			// If ESTOP then clear out buffer
-			if (m_MachineState != MS_ESTOP ) {
+			if (!command_buffer.empty()  && m_MachineState != MS_ESTOP ) {
 				// remove gcode command from front of list.
 				command_buffer.erase(command_buffer.begin());
 
@@ -5811,5 +5907,22 @@ void CPickobearDlg::OnBnClickedTransferXy()
 
 void CPickobearDlg::OnBnClickedBigView()
 {
+	long rate ;
+
+	rate = m_CameraUpdateRate;
+
+	// stops the main thread camera updating
+	m_CameraUpdateRate = 0;
+	
+	Sleep(10);
+
+	// detatch it
+	m_UpCameraWindow.SetCamera( -1 );
+	
+	// start our camera
 	m_BigView.DoModal();
+
+	m_UpCameraWindow.SetCamera( m_UpCamera.GetCurSel() );
+	m_CameraUpdateRate = rate;
+
 }

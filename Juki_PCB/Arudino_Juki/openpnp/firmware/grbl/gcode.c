@@ -202,6 +202,12 @@ uint8_t gc_execute_line(char *line) {
     int_value = trunc(value);
 
     switch(letter) {
+		 case 'P':
+			printCurrentPosition();
+			return(gc.status_code);
+
+	       break;
+
 	  case 'D':
 		{	
 #if 1

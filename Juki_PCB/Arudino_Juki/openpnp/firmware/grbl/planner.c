@@ -89,6 +89,14 @@ static uint8_t acceleration_manager_enabled;   // Acceleration management active
 extern volatile char ackHost;
 
 
+void printCurrentPosition( void ) 
+{
+	printInteger(position[0]);
+	serialWrite(',');
+	printInteger(position[1]);
+	serialWrite('\n');
+}
+
 // Calculates the distance (not time) it takes to accelerate from initial_rate to target_rate using the 
 // given acceleration:
 inline double estimate_acceleration_distance(double initial_rate, double target_rate, double acceleration) {

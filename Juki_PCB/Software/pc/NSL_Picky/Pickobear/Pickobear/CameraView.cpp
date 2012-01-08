@@ -53,7 +53,7 @@ BOOL CCameraView::OnInitDialog()
 	// Create OpenGL Control window
 	m_CameraWindow.oglCreate( rect, recta, this, 1);
 
-	m_CameraWindow.SetTimer(1, UP_CAMERA_DEFAULT_UPDATE_RATE_MS, 0);
+	m_CameraWindow.SetTimer(1, CAMERA_DEFAULT_UPDATE_RATE_MS, 0);
 
 	return true;
 }

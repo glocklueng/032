@@ -39,6 +39,10 @@ class COpenGLControl : public CWnd
 		CRect m_oldWindow;
 		CRect m_originalRect;
 		CRect m_size;
+		CvFont font;
+		double hScale;
+		double vScale;
+		int    lineWidth;
 
 	public:
 		COpenGLControl(void);
