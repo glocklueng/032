@@ -1495,11 +1495,10 @@ bool CPickobearDlg::MoveHeadRel(  long x, long y, bool wait=false )
 			UpdatePosition_callback(this,(void*)1);
 		}
 
-
 	} else { 
+
 		AddGCODECommand(buffer,"MoveHeadRel failed",UpdatePosition_callback );
 	
-//		PostMessage (PB_UPDATE_XY, m_headXPosUM +x,m_headYPosUM+y );
 		UpdateXY( m_TargetXum, m_TargetYum );
 	}
 
