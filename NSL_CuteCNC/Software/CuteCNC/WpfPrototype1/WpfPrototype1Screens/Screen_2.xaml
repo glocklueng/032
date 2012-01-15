@@ -40,7 +40,7 @@
             <ColumnDefinition Width="9"/>
         </Grid.ColumnDefinitions>
         <Grid.Background>
-            <ImageBrush ImageSource="Images/fractal.jpg" Stretch="None" TileMode="None" />
+            <ImageBrush ImageSource="pack://siteoforigin:,,,/water1.jpg" Stretch="None" TileMode="None" />
         </Grid.Background>
         <VisualStateManager.CustomVisualStateManager>
 			<ei:ExtendedVisualStateManager/>
@@ -74,8 +74,8 @@
         <TextBox Height="32" Margin="13.433,0,65.567,81.75" x:Name="xPos" VerticalAlignment="Bottom" Background="#C8FFFFFF" TextAlignment="Center" FontFamily="/WpfPrototype1.Screens;component/Fonts/#Nina" Text="X90.8mm" AcceptsReturn="True" FontSize="16" Foreground="#B0003A2B" Grid.Column="10" Opacity="0.8" ToolTip="X Axis current position" />
         <TextBox Background="#C8FFFFFF" FontFamily="/WpfPrototype1.Screens;component/Fonts/#Nina" Height="32" Margin="13.433,0,65.567,43.75" x:Name="yPos" TextAlignment="Center" VerticalAlignment="Bottom" Text="Y5.5mm" FontSize="16" Foreground="#B0003A2B" Grid.Column="10" Opacity="0.8" ToolTip="Y axis current position" />
         <TextBox FontFamily="/WpfPrototype1.Screens;component/Fonts/#Nina" Height="32" Margin="13.433,0,65.567,7.75" x:Name="zPos" TextAlignment="Center" VerticalAlignment="Bottom" Text="Z4.8mm" FontSize="16" Foreground="#B0003A2B" Grid.Column="10" Opacity="0.8" ToolTip="Z axis current position" />
-        <Slider Height="21" Margin="0,0,59,91" x:Name="SpindleSpeed" VerticalAlignment="Bottom" Foreground="#FFB47600" Grid.Column="2" Opacity="0.64" ToolTip="Set the speed of the spindle" />
-        <Slider Height="21" Margin="-51,0,10.99,90.986" x:Name="FeedSpeed" VerticalAlignment="Bottom" OpacityMask="Yellow" Foreground="Black" Grid.Column="3" Opacity="0.64" ToolTip="Set the feed rate ( how fast tehe machine moves whilst cutting" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="3" >
+        <Slider Height="21" Margin="0,0,59,91" x:Name="SpindleSpeed" VerticalAlignment="Bottom" Foreground="#FFB47600" Grid.Column="2" Opacity="0.835" ToolTip="Set the speed of the spindle" />
+        <Slider Height="21" Margin="-51,0,10.99,90.986" x:Name="FeedSpeed" VerticalAlignment="Bottom" OpacityMask="Yellow" Foreground="Black" Grid.Column="3" Opacity="0.84" ToolTip="Set the feed rate ( how fast tehe machine moves whilst cutting" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="3" >
         	<Slider.RenderTransform>
         		<TransformGroup>
         			<ScaleTransform/>
@@ -194,8 +194,8 @@
         		</LinearGradientBrush>
         	</Button.Background>
         </Button>
-        <Label Content="Spindle Speed" Grid.Column="2" Height="28" Margin="0,0,65.098,116" x:Name="SpindleSpeedLabel" VerticalAlignment="Bottom" Background="#580E00B8" Foreground="#FF00FFD8" OpacityMask="Black" BorderBrush="#FF007D00" Opacity="0.8" />
-        <Label Background="#580E00B8" Content="Feed Rate" Foreground="#FF3BFFD8" Height="28" Margin="-51,0,16,116" x:Name="FeedRateLabel" VerticalAlignment="Bottom" Grid.Column="3" Opacity="0.8" Grid.ColumnSpan="3" />
+        <Label Content="Spindle Speed" Grid.Column="2" Height="28" Margin="0,0,65.098,116" x:Name="SpindleSpeedLabel" VerticalAlignment="Bottom" Background="#580E00B8" Foreground="#FF00FFD8" OpacityMask="Black" BorderBrush="#FF007D00" />
+        <Label Background="#580E00B8" Content="Feed Rate" Foreground="#FF3BFFD8" Height="28" Margin="-51,0,16,116" x:Name="FeedRateLabel" VerticalAlignment="Bottom" Grid.Column="3" Grid.ColumnSpan="3" />
         <Button BorderBrush="Blue" Content="TOOL CHANGE" HorizontalAlignment="Left" Margin="-14.567,198,0,223" x:Name="Tool_Change" ToolTip="Starts the tool change procedure" Width="122" Grid.Column="10" FontSize="16">
         	<Button.Background>
         		<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
