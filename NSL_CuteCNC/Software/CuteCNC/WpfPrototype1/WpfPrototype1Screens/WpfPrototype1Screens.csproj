@@ -86,6 +86,9 @@
     <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
     <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Icon1.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <!--Reference Include="PresentationFramework.Aero" /-->
     <Reference Include="System.Windows.Interactivity" />
@@ -157,6 +160,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\fractal.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Icon1.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon1.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath32)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Expression\Blend\.NETFramework\v4.0\Microsoft.Expression.Blend.WPF.targets" />
