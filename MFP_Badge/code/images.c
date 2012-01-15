@@ -4,11 +4,11 @@ image_t PROGMEM image_328 = {
     {"adaboot_atmega328.hex"},
     {"atmega328"},
     0x950F,				/* Signature bytes for 328P */
-    {0x3F, 0xFF, 0xDA, 0x05},            // pre program fuses (prot/lock, low, high, ext)
-    {0x0F, 0x0, 0x0, 0x0},            // post program fuses
-    {0x3F, 0xFF, 0xFF, 0x07},           // fuse mask
-    32768,     // size of chip flash in bytes
-    128,   // size in bytes of flash page
+    {0x3F, 0xFF, 0xDA, 0x05},            	// pre program fuses (prot/lock, low, high, ext)
+    {0x0F, 0x0, 0x0, 0x0},            		// post program fuses
+    {0x3F, 0xFF, 0xFF, 0x07},           	// fuse mask
+    32768,     								// size of chip flash in bytes
+    128,   									// size in bytes of flash page
     {
     ":207800000C94343C0C94513C0C94513C0C94513C0C94513C0C94513C0C94513C0C94513C1D\n"
 	":207820000C94513C0C94513C0C94513C0C94513C0C94513C0C94513C0C94513C0C94513CE0\n"
