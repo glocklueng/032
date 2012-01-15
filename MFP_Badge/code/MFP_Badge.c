@@ -33,11 +33,12 @@ void tone( unsigned int pin, uint16_t hz, uint16_t len)
 
 }
 
-void error(const char *string) { 
-  digitalWrite(LED_ERR, HIGH);  
-  while(1) {
-    tone(PIEZOPIN, 4000, 500);
-  }
+void error(const char *string) 
+{ 
+	digitalWrite(LED_ERR, HIGH);  
+	while(1) {
+    	tone(PIEZOPIN, 4000, 500);
+ 	}
 }
 
 int main(void)
@@ -73,9 +74,6 @@ int main(void)
 // Variables
 static int pmode=0;
 static byte pageBuffer[128];		       /* One page of flash */
-
-
-
 
 void setup (void)
 {
@@ -204,7 +202,7 @@ void start_pmode (void)
 
 void end_pmode (void)
 {
-  SPCR = 0;				/* reset SPI */
+  SPCR = 0;						/* reset SPI */
   digitalWrite(MISO, 0);		/* Make sure pullups are off too */
   pinMode(MISO, INPUT);
   digitalWrite(MOSI, 0);
