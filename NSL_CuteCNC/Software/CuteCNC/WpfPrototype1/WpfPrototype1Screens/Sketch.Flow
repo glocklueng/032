@@ -6,7 +6,7 @@
     <Screen>
       <Type>Navigation</Type>
       <ClassName>WpfPrototype1Screens.Screen_2</ClassName>
-      <DisplayName>Screen 2</DisplayName>
+      <DisplayName>Main Menu</DisplayName>
       <FileName>Screen_2.xaml</FileName>
       <Annotations />
       <Position>
@@ -15,8 +15,28 @@
       </Position>
       <VisualTag>0</VisualTag>
     </Screen>
+    <Screen>
+      <Type>Navigation</Type>
+      <ClassName>WpfPrototype1Screens.Screen_3</ClassName>
+      <DisplayName>Touchoff</DisplayName>
+      <FileName>Screen_3.xaml</FileName>
+      <Annotations />
+      <Position>
+        <X>48</X>
+        <Y>108</Y>
+      </Position>
+      <VisualTag>0</VisualTag>
+    </Screen>
   </Screens>
-  <Connections />
+  <Connections>
+    <Connection>
+      <Source>WpfPrototype1Screens.Screen_2</Source>
+      <Target>WpfPrototype1Screens.Screen_3</Target>
+      <Type>Navigation</Type>
+      <TransitionType>Fade</TransitionType>
+      <VisualTag>0</VisualTag>
+    </Connection>
+  </Connections>
   <PrototypeRevision>0</PrototypeRevision>
   <BrandingText>[NullSpaceLabs]</BrandingText>
   <RuntimeOptions>
