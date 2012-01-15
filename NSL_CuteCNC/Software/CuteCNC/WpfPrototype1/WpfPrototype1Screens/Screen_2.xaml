@@ -1,4 +1,4 @@
-﻿<UserControl
+﻿	<UserControl
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -27,28 +27,29 @@
 		</VisualStateManager.VisualStateGroups>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="11.902" />
-            <ColumnDefinition Width="20.098" />
-            <ColumnDefinition Width="43.811"/>
-            <ColumnDefinition Width="92.189" />
-            <ColumnDefinition Width="104"/>
+            <ColumnDefinition Width="0" />
+            <ColumnDefinition Width="180.098"/>
+            <ColumnDefinition />
+            <ColumnDefinition Width="16"/>
+            <ColumnDefinition Width="64"/>
             <ColumnDefinition Width="16"/>
             <ColumnDefinition Width="87.811"/>
             <ColumnDefinition Width="52"/>
             <ColumnDefinition Width="68.189"/>
-            <ColumnDefinition Width="80"/>
-            <ColumnDefinition Width="73"/>
+            <ColumnDefinition Width="144"/>
+            <ColumnDefinition Width="9"/>
         </Grid.ColumnDefinitions>
         <Grid.Background>
-            <ImageBrush ImageSource="Images/fractal.jpg" Stretch="None" />
+            <ImageBrush ImageSource="Images/fractal.jpg" Stretch="None" TileMode="None" />
         </Grid.Background>
         <VisualStateManager.CustomVisualStateManager>
 			<ei:ExtendedVisualStateManager/>
 		</VisualStateManager.CustomVisualStateManager>
-        <Button x:Name="GO" Content="GO" Height="59" Margin="16.811,0,14.189,144" VerticalAlignment="Bottom" BorderBrush="Blue" ToolTip="Select this to start the machine" Grid.Column="9" FontSize="24" Grid.ColumnSpan="2">
+        <Button x:Name="GO" Content="GO" Height="59" Margin="-14.567,0,36.567,140.5" VerticalAlignment="Bottom" BorderBrush="#FF17171B" ToolTip="Select this to start the machine" Grid.Column="10" FontSize="24" FontFamily="Corbel" Cursor="AppStarting">
             <Button.OpacityMask>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="Black" Offset="0" />
-                    <GradientStop Color="#FFFF19FF" Offset="1" />
+                    <GradientStop Color="#FF44B0B8" Offset="1" />
                 </LinearGradientBrush>
             </Button.OpacityMask>
             <Button.Background>
@@ -59,22 +60,22 @@
             	</LinearGradientBrush>
             </Button.Background>
         </Button>
-        <Button BorderBrush="#00690000" Content="STOP" Height="64.25" Margin="-9.917,0,18.819,8" x:Name="EmergencyStop" VerticalAlignment="Bottom" Foreground="White" AllowDrop="False" BorderThickness="4" ToolTip="Stop the machine as quickly as properly" FontWeight="Bold" FontSize="32" Grid.Column="2" Opacity="0.9" Grid.ColumnSpan="6">
+        <Button BorderBrush="#00690000" Content="STOP" Height="64.25" Margin="-3.902,0,-19.098,11.5" x:Name="EmergencyStop" Foreground="White" AllowDrop="False" BorderThickness="0,4,4,4" ToolTip="Stop the machine as quickly as properly" FontSize="32" Grid.Column="1" Grid.ColumnSpan="7" FontFamily="Gisha" Opacity="0.91" VerticalAlignment="Bottom" Cursor="Hand">
             <Button.Background>
-            	<LinearGradientBrush EndPoint="0.739,0.215" MappingMode="RelativeToBoundingBox" StartPoint="-0.019,1.001">
+            	<LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
             		<GradientStop Color="#7D590000"/>
-            		<GradientStop Color="#81340000"/>
-            		<GradientStop Color="Red" Offset="0.966"/>
             		<GradientStop Color="Black"/>
-            		<GradientStop Color="Black"/>
+            		<GradientStop Color="Red" Offset="0.478"/>
+            		<GradientStop Color="Black" Offset="0.664"/>
+            		<GradientStop Color="#FF621515" Offset="0.397"/>
             	</LinearGradientBrush>
             </Button.Background>
         </Button>
-        <TextBox Height="32" Margin="0,0,-30.811,96.25" x:Name="xPos" VerticalAlignment="Bottom" Background="#C8FFFFFF" TextAlignment="Center" FontFamily="/WpfPrototype1.Screens;component/Fonts/#Nina" Text="X90.8mm" AcceptsReturn="True" FontSize="16" Foreground="#B0003A2B" Grid.Column="9" Opacity="0.8" HorizontalAlignment="Right" Width="65" ToolTip="X Axis current position" />
-        <TextBox Background="#C8FFFFFF" FontFamily="/WpfPrototype1.Screens;component/Fonts/#Nina" Height="32" Margin="0,0,-30.811,58.25" x:Name="yPos" TextAlignment="Center" VerticalAlignment="Bottom" Text="Y5.5mm" FontSize="16" Foreground="#B0003A2B" Grid.Column="9" Opacity="0.8" HorizontalAlignment="Right" Width="65" ToolTip="Y axis current position" />
-        <TextBox FontFamily="/WpfPrototype1.Screens;component/Fonts/#Nina" Height="32" Margin="0,0,-30.811,22.25" x:Name="zPos" TextAlignment="Center" VerticalAlignment="Bottom" Text="Z4.8mm" FontSize="16" Foreground="#B0003A2B" Grid.Column="9" Opacity="0.8" HorizontalAlignment="Right" Width="65" Background="{x:Null}" ToolTip="Z axis current position" />
-        <Slider Height="21" Margin="-9.098,118.123,24,0" x:Name="SpindleSpeed" VerticalAlignment="Top" Foreground="#FFB47600" Grid.Column="2" Opacity="0.795" Grid.ColumnSpan="2" ToolTip="Set the speed of the spindle" />
-        <Slider Height="21" Margin="-16,118.137,-0.01,0" x:Name="FeedSpeed" VerticalAlignment="Top" OpacityMask="Yellow" Foreground="Black" Grid.Column="4" Opacity="0.8" ToolTip="Set the feed rate ( how fast tehe machine moves whilst cutting" RenderTransformOrigin="0.5,0.5" >
+        <TextBox Height="32" Margin="13.433,0,65.567,81.75" x:Name="xPos" VerticalAlignment="Bottom" Background="#C8FFFFFF" TextAlignment="Center" FontFamily="/WpfPrototype1.Screens;component/Fonts/#Nina" Text="X90.8mm" AcceptsReturn="True" FontSize="16" Foreground="#B0003A2B" Grid.Column="10" Opacity="0.8" ToolTip="X Axis current position" />
+        <TextBox Background="#C8FFFFFF" FontFamily="/WpfPrototype1.Screens;component/Fonts/#Nina" Height="32" Margin="13.433,0,65.567,43.75" x:Name="yPos" TextAlignment="Center" VerticalAlignment="Bottom" Text="Y5.5mm" FontSize="16" Foreground="#B0003A2B" Grid.Column="10" Opacity="0.8" ToolTip="Y axis current position" />
+        <TextBox FontFamily="/WpfPrototype1.Screens;component/Fonts/#Nina" Height="32" Margin="13.433,0,65.567,7.75" x:Name="zPos" TextAlignment="Center" VerticalAlignment="Bottom" Text="Z4.8mm" FontSize="16" Foreground="#B0003A2B" Grid.Column="10" Opacity="0.8" ToolTip="Z axis current position" />
+        <Slider Height="21" Margin="0,0,59,91" x:Name="SpindleSpeed" VerticalAlignment="Bottom" Foreground="#FFB47600" Grid.Column="2" Opacity="0.64" ToolTip="Set the speed of the spindle" />
+        <Slider Height="21" Margin="-51,0,10.99,90.986" x:Name="FeedSpeed" VerticalAlignment="Bottom" OpacityMask="Yellow" Foreground="Black" Grid.Column="3" Opacity="0.64" ToolTip="Set the feed rate ( how fast tehe machine moves whilst cutting" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="3" >
         	<Slider.RenderTransform>
         		<TransformGroup>
         			<ScaleTransform/>
@@ -84,10 +85,10 @@
         		</TransformGroup>
         	</Slider.RenderTransform>
         </Slider>
-        <Image Height="233" HorizontalAlignment="Left" Margin="-9.917,148.75,0,0" x:Name="Gerber" Stretch="None" VerticalAlignment="Top" Width="386.909" Source="/WpfPrototype1.Screens;component/Images/gtl.png" Grid.ColumnSpan="6" Grid.Column="2" Cursor="Cross" Opacity="0.945" ToolTip="Gerber / GCODE view" />
-        <Slider Height="235" Margin="0,146.75,4,0" x:Name="VerticalSlider" VerticalAlignment="Top" Orientation="Vertical" Grid.ColumnSpan="2" />
-        <Slider Height="18" HorizontalAlignment="Left" Margin="-9.917,385.75,0,0" x:Name="HorizontalSlider" VerticalAlignment="Top" Width="386.909" Grid.ColumnSpan="6" Grid.Column="2" />
-        <Button BorderBrush="Blue" Content="HOME XY" HorizontalAlignment="Left" Margin="16.811,5.5,0,0" x:Name="HomeXY" ToolTip="Pressing this will Home the XY axis of the machine" Width="122" Grid.Column="9" Height="59" VerticalAlignment="Top" BorderThickness="1" Grid.ColumnSpan="2" FontSize="14.667">
+        <Image Height="233" HorizontalAlignment="Left" x:Name="Gerber" Stretch="None" VerticalAlignment="Top" Width="386.909" Source="/WpfPrototype1.Screens;component/Images/gtl.png" Grid.ColumnSpan="8" Cursor="Cross" Opacity="0.945" ToolTip="Gerber / GCODE view" d:LayoutOverrides="VerticalAlignment" />
+        <Slider Height="235" x:Name="VerticalSlider" VerticalAlignment="Top" Orientation="Vertical" Grid.Column="8" d:LayoutOverrides="VerticalAlignment" HorizontalAlignment="Left" Width="20" Opacity="0.635" ToolTip="Move GCODE image up and down" />
+        <Slider Height="24" HorizontalAlignment="Left" Margin="0,233,0,0" x:Name="HorizontalSlider" VerticalAlignment="Top" Width="386.909" Grid.ColumnSpan="8" Opacity="0.64" />
+        <Button BorderBrush="Blue" Content="HOME XY" HorizontalAlignment="Left" Margin="-14.567,9,0,0" x:Name="HomeXY" ToolTip="Pressing this will Home the XY axis of the machine" Width="122" Grid.Column="10" Height="59" VerticalAlignment="Top" BorderThickness="1" FontSize="18.667">
             <Button.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#AA00C8FF" Offset="0" />
@@ -103,7 +104,7 @@
                 </LinearGradientBrush>
             </Button.OpacityMask>
         </Button>
-        <Button BorderBrush="Blue" Content="HOME Z" HorizontalAlignment="Left" Margin="16.811,68.5,0,0" x:Name="HomeZ" ToolTip="Pressing this will Home the Z axis" Width="122" Grid.Column="9" Height="59" VerticalAlignment="Top" Grid.ColumnSpan="2" FontSize="14.667">
+        <Button BorderBrush="Blue" Content="HOME Z" HorizontalAlignment="Left" Margin="-14.567,72,0,0" x:Name="HomeZ" ToolTip="Pressing this will Home the Z axis" Width="122" Grid.Column="10" Height="59" VerticalAlignment="Top" FontSize="18.667">
             <Button.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#AA00C8FF" Offset="0" />
@@ -119,7 +120,7 @@
                 </LinearGradientBrush>
             </Button.OpacityMask>
         </Button>
-        <Button BorderBrush="Blue" Content="PARK" Height="59" HorizontalAlignment="Left" Margin="16.811,131.5,0,0" x:Name="Park" ToolTip="Use this to move the head to a far corner" VerticalAlignment="Top" Width="122" Grid.Column="9" Grid.ColumnSpan="2" FontSize="14.667">
+        <Button BorderBrush="Blue" Content="PARK" Height="59" HorizontalAlignment="Left" Margin="-14.567,135,0,0" x:Name="Park" ToolTip="Use this to move the head to a far corner" VerticalAlignment="Top" Width="122" Grid.Column="10" FontSize="18.667">
             <Button.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#AA00C8FF" Offset="0" />
@@ -135,7 +136,7 @@
                 </LinearGradientBrush>
             </Button.OpacityMask>
         </Button>
-        <Button Content="-" Grid.Column="9" Height="30" Margin="17.811,0,38.189,98.25" x:Name="xMinus" VerticalAlignment="Bottom" FontSize="20" FontWeight="Bold" Opacity="0.8" BorderThickness="5,1" ToolTip="Step X axis left" >
+        <Button Content="-" Grid.Column="9" Height="30" Margin="0,0,-9.433,83.75" x:Name="xMinus" VerticalAlignment="Bottom" FontSize="20" FontWeight="Bold" Opacity="0.8" BorderThickness="5,1" ToolTip="Step X axis left" HorizontalAlignment="Right" Width="24" >
         	<Button.Background>
         		<LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
         			<GradientStop Color="#FFF3F3F3" Offset="0"/>
@@ -145,7 +146,7 @@
         		</LinearGradientBrush>
         	</Button.Background>
         </Button>
-        <Button Content="-" Height="30" Margin="17.811,0,38.189,60.25" x:Name="yMinus" VerticalAlignment="Bottom" Grid.Column="9" FontSize="20" FontWeight="Bold" Opacity="0.8" ToolTip="Step Y Axis forward" >
+        <Button Content="-" Height="30" Margin="0,0,-9.433,45.75" x:Name="yMinus" VerticalAlignment="Bottom" Grid.Column="9" FontSize="20" FontWeight="Bold" Opacity="0.8" ToolTip="Step Y Axis forward" HorizontalAlignment="Right" Width="24" >
         	<Button.Background>
         		<LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
         			<GradientStop Color="#FFF3F3F3" Offset="0"/>
@@ -155,7 +156,7 @@
         		</LinearGradientBrush>
         	</Button.Background>
         </Button>
-        <Button Content="-" Height="30" Margin="17.622,0,38.378,23" x:Name="zMinus" VerticalAlignment="Bottom" Grid.Column="9" FontSize="20" FontWeight="Bold" Opacity="0.8" ToolTip="Step Z axis up" >
+        <Button Content="-" Height="30" Margin="0,0,-9.244,8.5" x:Name="zMinus" VerticalAlignment="Bottom" Grid.Column="9" FontSize="20" FontWeight="Bold" Opacity="0.8" ToolTip="Step Z axis up" HorizontalAlignment="Right" Width="24" >
         	<Button.Background>
         		<LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
         			<GradientStop Color="#FFF3F3F3" Offset="0"/>
@@ -165,7 +166,7 @@
         		</LinearGradientBrush>
         	</Button.Background>
         </Button>
-        <Button Content="+" Margin="34.811,0,14.189,98.25" x:Name="xPlus" Grid.Column="10" FontSize="20" Height="30" VerticalAlignment="Bottom" FontWeight="Bold" Opacity="0.8" ToolTip="Step X axis right" >
+        <Button Content="+" Margin="0,0,37.567,83.75" x:Name="xPlus" Grid.Column="10" FontSize="20" Height="30" VerticalAlignment="Bottom" FontWeight="Bold" Opacity="0.8" ToolTip="Step X axis right" HorizontalAlignment="Right" Width="24" >
         	<Button.Background>
         		<LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
         			<GradientStop Color="#FFF3F3F3" Offset="1"/>
@@ -174,7 +175,7 @@
         		</LinearGradientBrush>
         	</Button.Background>
         </Button>
-        <Button Content="+" Height="30" Margin="34.811,0,14.189,60.25" x:Name="yPlus" VerticalAlignment="Bottom" Grid.Column="10" FontSize="20" FontWeight="Bold" Opacity="0.8" ToolTip="Step Y axis back" >
+        <Button Content="+" Height="30" Margin="0,0,37.567,45.75" x:Name="yPlus" VerticalAlignment="Bottom" Grid.Column="10" FontSize="20" FontWeight="Bold" Opacity="0.8" ToolTip="Step Y axis back" HorizontalAlignment="Right" Width="24" >
         	<Button.Background>
         		<LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
         			<GradientStop Color="#FFDDDDDD" Offset="1"/>
@@ -184,7 +185,7 @@
         		</LinearGradientBrush>
         	</Button.Background>
         </Button>
-        <Button Content="+" Height="30" HorizontalAlignment="Right" Margin="0,0,14.189,23.5" x:Name="zPlus" VerticalAlignment="Bottom" Width="24" Grid.Column="10" FontSize="20" FontWeight="Bold" Opacity="0.8" ToolTip="Step Z axis down" >
+        <Button Content="+" Height="30" HorizontalAlignment="Right" Margin="0,0,37.567,9" x:Name="zPlus" VerticalAlignment="Bottom" Width="24" Grid.Column="10" FontSize="20" FontWeight="Bold" Opacity="0.8" ToolTip="Step Z axis down" d:LayoutOverrides="HorizontalAlignment" >
         	<Button.Background>
         		<LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
         			<GradientStop Color="#FFF3F3F3" Offset="1"/>
@@ -193,9 +194,9 @@
         		</LinearGradientBrush>
         	</Button.Background>
         </Button>
-        <Label Content="Spindle Speed" Grid.Column="2" Height="28" Margin="-9.098,86.123,30.098,0" x:Name="SpindleSpeedLabel" VerticalAlignment="Top" Background="#580E00B8" Foreground="#FF00FFD8" OpacityMask="Black" BorderBrush="#FF007D00" Opacity="0.8" Grid.ColumnSpan="2" />
-        <Label Background="#580E00B8" Content="Feed Rate" Foreground="#FF3BFFD8" Height="28" Margin="-16,86.123,5,0" x:Name="FeedRateLabel" VerticalAlignment="Top" Grid.Column="4" Opacity="0.8" />
-        <Button BorderBrush="Blue" Content="TOOL CHANGE" HorizontalAlignment="Left" Margin="16.811,194.5,0,226.5" x:Name="Tool_Change" ToolTip="Starts the tool change procedure" Width="122" Grid.Column="9" Grid.ColumnSpan="2" FontSize="14.667">
+        <Label Content="Spindle Speed" Grid.Column="2" Height="28" Margin="0,0,65.098,116" x:Name="SpindleSpeedLabel" VerticalAlignment="Bottom" Background="#580E00B8" Foreground="#FF00FFD8" OpacityMask="Black" BorderBrush="#FF007D00" Opacity="0.8" />
+        <Label Background="#580E00B8" Content="Feed Rate" Foreground="#FF3BFFD8" Height="28" Margin="-51,0,16,116" x:Name="FeedRateLabel" VerticalAlignment="Bottom" Grid.Column="3" Opacity="0.8" Grid.ColumnSpan="3" />
+        <Button BorderBrush="Blue" Content="TOOL CHANGE" HorizontalAlignment="Left" Margin="-14.567,198,0,223" x:Name="Tool_Change" ToolTip="Starts the tool change procedure" Width="122" Grid.Column="10" FontSize="16">
         	<Button.Background>
         		<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
         			<GradientStop Color="#AA00C8FF" Offset="0" />
@@ -211,14 +212,95 @@
         		</LinearGradientBrush>
         	</Button.OpacityMask>
         </Button>
-		<ed:BlockArrow Grid.Column="9" HorizontalAlignment="Left" Height="30" Margin="-8,0,0,60.25" Orientation="Left" Stroke="Black" VerticalAlignment="Bottom" Width="21.811" RenderTransformOrigin="0,2.142">
+		<ed:BlockArrow Grid.Column="9" Height="30" Margin="27.811,0,18.378,43.75" Orientation="Left" Stroke="Black" VerticalAlignment="Bottom" RenderTransformOrigin="0,2.142">
 			<ed:BlockArrow.Fill>
 				<LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
 					<GradientStop Color="Black" Offset="0"/>
 					<GradientStop Color="White" Offset="1"/>
-					<GradientStop Color="#FFBE0000" Offset="0.401"/>
+					<GradientStop Color="#FFBE0000" Offset="0.207"/>
 				</LinearGradientBrush>
 			</ed:BlockArrow.Fill>
 		</ed:BlockArrow>
+		<ed:BlockArrow Grid.Column="11" Height="30" Margin="-8,0,-5,42" Orientation="Left" Stroke="Black" VerticalAlignment="Bottom" RenderTransformOrigin="0,2.142">
+			<ed:BlockArrow.RenderTransform>
+				<TransformGroup>
+					<ScaleTransform ScaleX="-1"/>
+					<SkewTransform/>
+					<RotateTransform/>
+					<TranslateTransform/>
+				</TransformGroup>
+			</ed:BlockArrow.RenderTransform>
+			<ed:BlockArrow.Fill>
+				<LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+					<GradientStop Color="Black" Offset="1"/>
+					<GradientStop Color="White"/>
+					<GradientStop Color="#FF003EFF" Offset="0.866"/>
+				</LinearGradientBrush>
+			</ed:BlockArrow.Fill>
+		</ed:BlockArrow>
+		<Button BorderBrush="#FF8B7A7A" Content="TOP" HorizontalAlignment="Left" Margin="0,0,0,184" x:Name="HomeXY_Copy" ToolTip="Load or Select Top layer" Width="44" Height="35" VerticalAlignment="Bottom" BorderThickness="1" FontSize="14.667" Grid.Column="2" d:LayoutOverrides="HorizontalAlignment" Cursor="None">
+			<Button.Background>
+				<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+					<GradientStop Color="#AAA53352" Offset="1" />
+					<GradientStop Color="#ABFFFFFF" Offset="0.444" />
+					<GradientStop Color="#FF3AAECD" />
+					<GradientStop Color="#5BFFFFFF" />
+				</LinearGradientBrush>
+			</Button.Background>
+			<Button.OpacityMask>
+				<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+					<GradientStop Color="Black" Offset="0" />
+					<GradientStop Color="#FF503150" Offset="1" />
+				</LinearGradientBrush>
+			</Button.OpacityMask>
+		</Button>
+		<Button BorderBrush="#FF8B7A7A" Content="BOT" HorizontalAlignment="Left" Margin="48.098,0,0,184" x:Name="HomeXY_Copy1" ToolTip="Load or Select Bottom layer" Width="44" Height="35" VerticalAlignment="Bottom" BorderThickness="1" FontSize="14.667" Grid.Column="2">
+			<Button.Background>
+				<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+					<GradientStop Color="#AAA53352" Offset="1" />
+					<GradientStop Color="#ABFFFFFF" Offset="0.444" />
+					<GradientStop Color="#FF3AAECD" />
+					<GradientStop Color="#5BDDDDDD" />
+				</LinearGradientBrush>
+			</Button.Background>
+			<Button.OpacityMask>
+				<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+					<GradientStop Color="Black" Offset="0" />
+					<GradientStop Color="#FF503150" Offset="1" />
+				</LinearGradientBrush>
+			</Button.OpacityMask>
+		</Button>
+		<Button BorderBrush="#FF8B7A7A" Content="MILL" HorizontalAlignment="Left" Margin="96.098,0,0,184" x:Name="HomeXY_Copy2" ToolTip="Load or Select Milling Layer" Width="44" Height="35" VerticalAlignment="Bottom" BorderThickness="1" FontSize="14.667" Grid.Column="2">
+			<Button.Background>
+				<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+					<GradientStop Color="#AAA53352" Offset="1" />
+					<GradientStop Color="#ABFFFFFF" Offset="0.444" />
+					<GradientStop Color="#FF3AAECD" />
+					<GradientStop Color="#5BDDDDDD" />
+				</LinearGradientBrush>
+			</Button.Background>
+			<Button.OpacityMask>
+				<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+					<GradientStop Color="Black" Offset="0" />
+					<GradientStop Color="#FF503150" Offset="1" />
+				</LinearGradientBrush>
+			</Button.OpacityMask>
+		</Button>
+		<Button BorderBrush="#FF8B7A7A" Content="DRILL" HorizontalAlignment="Left" Margin="-36,0,0,184" x:Name="HomeXY_Copy3" ToolTip="Load or select Drill Layer" Width="44" Height="35" VerticalAlignment="Bottom" BorderThickness="1" FontSize="14.667" Grid.Column="3" RenderTransformOrigin="1.727,0.543" Grid.ColumnSpan="2" d:LayoutOverrides="HorizontalAlignment">
+			<Button.Background>
+				<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+					<GradientStop Color="#AAA53352" Offset="1" />
+					<GradientStop Color="#ABFFFFFF" Offset="0.444" />
+					<GradientStop Color="#FF3AAECD" />
+					<GradientStop Color="#5BDDDDDD" />
+				</LinearGradientBrush>
+			</Button.Background>
+			<Button.OpacityMask>
+				<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+					<GradientStop Color="Black" Offset="0" />
+					<GradientStop Color="#FF503150" Offset="1" />
+				</LinearGradientBrush>
+			</Button.OpacityMask>
+		</Button>
     </Grid>
 </UserControl>
