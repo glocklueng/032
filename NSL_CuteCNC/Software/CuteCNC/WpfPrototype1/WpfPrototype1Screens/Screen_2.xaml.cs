@@ -29,5 +29,10 @@ namespace WpfPrototype1Screens
         private void button_MouseLeave(object sender, MouseEventArgs e)
         {
        }
+
+        private void Gerber_DragOver(object sender, System.Windows.DragEventArgs e)
+        {
+        	// TODO: Add event handler implementation here.
+        }
 	}
 }
