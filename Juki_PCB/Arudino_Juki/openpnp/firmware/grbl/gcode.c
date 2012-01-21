@@ -559,6 +559,8 @@ void gotoxy( double x,double y, double z,double c )
    gc.position[X_AXIS] = x;
    gc.position[Y_AXIS] = y;
    gc.position[Z_AXIS] = z;
-   gc.position[C_AXIS] = c;
+
+   // C axis is always 0
+   gc.position[C_AXIS] = 0;
 
 }
