@@ -244,6 +244,12 @@ SIGNAL(TIMER1_COMPA_vect)
     if (counter_c > 0) {
       out_bits |= (1<<C_STEP_BIT);
       counter_c -= current_block->step_event_count;
+
+	//pulse C axis (head)
+		STEPPERS_ENABLE_PORT |= _BV( HEAD_ROT  );
+
+
+
     }    
     // If current block is finished, reset pointer 
     step_events_completed += 1;
@@ -275,6 +281,11 @@ SIGNAL(TIMER2_OVF_vect)
 {
   // reset stepping pins (leave the direction pins)
   STEPPING_PORT = (STEPPING_PORT & ~STEP_MASK) | (STEP_INVERT_MASK & STEP_MASK); 
+
+// turn off C axis
+	STEPPERS_ENABLE_PORT &= ~_BV(HEAD_ROT);
+
+
 }
 
 // Initialize and start the stepper motor subsystem

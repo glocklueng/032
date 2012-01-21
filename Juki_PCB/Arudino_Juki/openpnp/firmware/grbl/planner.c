@@ -357,7 +357,9 @@ void plan_set_current(double x, double y, double z, double c) {
     position[X_AXIS] = lround(x*settings.steps_per_mm[X_AXIS]);
     position[Y_AXIS] = lround(y*settings.steps_per_mm[Y_AXIS]);
     position[Z_AXIS] = lround(z*settings.steps_per_mm[Z_AXIS]);     
-    position[C_AXIS] = lround(c*settings.steps_per_mm[C_AXIS]);     
+
+	// C AXIS is always 0
+    position[C_AXIS] = 0;//lround(c*settings.steps_per_mm[C_AXIS]);     
 }
 
 
@@ -379,11 +381,19 @@ void plan_buffer_line(double x, double y, double z, double c, double feed_rate, 
 	printPgmString(PSTR("z = "));
 	printFloat( z );
 	printPgmString(PSTR("\r\n"));
+
+	printPgmString(PSTR("c = "));
+	printFloat( c );
+	printPgmString(PSTR("\r\n"));
+
 #endif
   
   if( gHomed == FALSE ) 
   	return;
-	  
+	
+	// always 0  
+	position[C_AXIS] = 0;
+
   // The target position of the tool in absolute steps
   
   // Calculate target position in absolute steps
@@ -477,7 +487,10 @@ void plan_buffer_line(double x, double y, double z, double c, double feed_rate, 
   block_buffer_head = next_buffer_head;     
   // Update position 
   memcpy(position, target, sizeof(target)); // position[] = target[]
-  
+
+	// blah
+  position[C_AXIS] = 0;
+
   if (acceleration_manager_enabled) { planner_recalculate(); }  
   st_wake_up();
 }
