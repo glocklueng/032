@@ -58,7 +58,7 @@ enum {
 CString GetSaveFile( const TCHAR *ptypes, const TCHAR*caption, const TCHAR *pStartDir);
 CString GetLoadFile( const TCHAR *ptypes, const TCHAR*caption, const TCHAR *pStartDir);
 bool SetCurrentPosition ( long x,long y);
-bool BuildGCodeMove( char *output, int length, int mode , long x, long y, long speed );
+bool BuildGCodeMove( char *output, int length, int mode , long x, long y, double angle, long speed );
 void FixXY( long &x,long &y);
 
 class Feeder;
@@ -783,7 +783,7 @@ public:
 	bool CheckX_deprecated( void );
 
 	// move head to x,y
-	bool MoveHead( long  x, long y ,bool wait);
+	bool MoveHead( long  x, long y ,double angle, bool wait);
 	bool MoveHeadRel(  long x, long y,bool wait ); 
 	bool MoveHeadSlow(  long x, long y,bool wait );
 

@@ -68,7 +68,7 @@
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
     <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(VCInstallDir)atlmfc\include;$(VCInstallDir)include;$(FrameworkSDKDir)\include;$(WindowsSdkDir)include</IncludePath>
     <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(VCInstallDir)atlmfc\include;$(VCInstallDir)include;$(FrameworkSDKDir)\include;$(WindowsSdkDir)include</IncludePath>
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VCInstallDir)atlmfc\include;$(VCInstallDir)include;$(FrameworkSDKDir)\include;$(WindowsSdkDir)include</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VCInstallDir)atlmfc\include;$(VCInstallDir)include;$(FrameworkSDKDir)\include;$(WindowsSdkDir)include;..</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Midl>
