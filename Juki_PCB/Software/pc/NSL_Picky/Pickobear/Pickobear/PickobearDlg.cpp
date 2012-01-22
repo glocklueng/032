@@ -47,6 +47,7 @@
 //   feeder SetCount isn't properly updated in some cases. (done)
 //   cache m_Side since user can change it during a GO process (done)
 //   move commands should check Target XY coordinates, not current (done)
+//   seems like there is astill a bug around first run where coords get messed up
 
 // Recently added :-
 //
@@ -74,6 +75,7 @@
 //   changed update to use events instead of resume/suspend thread.
 //   testing update of limit switches after a move
 //   Started adding a popout camera viewer
+//   Changed rotate to combined move and rotate (gui and grbl)
 
 // Recently fixed :-
 //
@@ -89,6 +91,7 @@
 //   error in CString error creation
 //   some of the feeders are really slow, so 600 ms delay in tapeknock
 //   900 speed was losing steps!!!
+//   Angles weren't calculating correctly >360
 
 #include "stdafx.h"
 #include "PickobearDlg.h"
@@ -1133,7 +1136,7 @@ void FixXY( long &x,long &y)
  * @return 
  *        
  */
-bool BuildGCodeMove( char *output, int length, int mode , long x, long y, long speed )
+bool BuildGCodeMove( char *output, int length, int mode , long x, long y, double angle, long speed )
 {
 	long double tx,ty;
 
@@ -1186,7 +1189,23 @@ bool BuildGCodeMove( char *output, int length, int mode , long x, long y, long s
 
 	ASSERT ( speed );
 
-	sprintf_s(output, length,"G%dX%gY%gF%d",mode,tx,ty,speed);
+	if (angle < 0.0 ) {
+		_RPT0(_CRT_WARN,"Negative angle\n");
+		angle = 0 ;
+	}
+	
+	if (angle >= 360.0 ) {
+		angle -= 360 ;
+	}
+
+	if ( angle == 0.0 ) {
+
+		sprintf_s(output, length,"G%dX%gY%gF%d",mode,tx,ty,speed);
+	
+	} else { 
+	
+		sprintf_s(output, length,"G%dX%gY%gC%gF%d",mode,tx,ty,angle,speed);
+	}
 
 	_RPT1(_CRT_WARN,"BuildGCodeMove:  %s\n",output);
 
@@ -1241,7 +1260,7 @@ bool CPickobearDlg::MoveHeadSlow(  long x, long y, bool wait=false )
 
 	FixXY(x,y);
 
-	if ( false == BuildGCodeMove(buffer,sizeof(buffer),1,x,y,5000) ) {
+	if ( false == BuildGCodeMove(buffer,sizeof(buffer),1,x,y,0.0,5000) ) {
 		return false;
 	}
 
@@ -1279,9 +1298,11 @@ bool CPickobearDlg::MoveHeadSlow(  long x, long y, bool wait=false )
  * @return 
  *        
  */
-bool CPickobearDlg::MoveHead(  long x, long y, bool wait=false ) 
+bool CPickobearDlg::MoveHead(  long x, long y, double c, bool wait=false ) 
 {
 	ASSERT( m_Speed );
+
+	ASSERT( c!=1);
 
 	if( false == HomeTest( ) ) {
 		_RPT0(_CRT_WARN,"MoveHead: Not homed\n");
@@ -1304,7 +1325,7 @@ bool CPickobearDlg::MoveHead(  long x, long y, bool wait=false )
 
 	FixXY(x,y);
 
-	if( false == BuildGCodeMove(buffer,sizeof(buffer),1,x,y,m_Speed) ) {
+	if( false == BuildGCodeMove(buffer,sizeof(buffer),1,x,y,c,m_Speed) ) {
 		_RPT0(_CRT_WARN,"BuildGCodeMove: failed\n");
 		return false;
 	}
@@ -1324,7 +1345,7 @@ bool CPickobearDlg::MoveHead(  long x, long y, bool wait=false )
 	// if gui asked for a move that waits on the head to finish moving
 	if( wait == true ) {
 		
-		Sleep(100);
+		Sleep(10);
 
 		_RPT0(_CRT_WARN,"MoveHead: Waiting\n");
 		// wait for command to process, this locks most of the gui....
@@ -1333,7 +1354,7 @@ bool CPickobearDlg::MoveHead(  long x, long y, bool wait=false )
 		}
 
 		// Settle time
-		Sleep( 300 ) ;
+		Sleep( 50 ) ;
 
 
 	}
@@ -1475,7 +1496,7 @@ bool CPickobearDlg::MoveHeadRel(  long x, long y, bool wait=false )
 	
 	FixXY(x,y);
 
-	if(false == BuildGCodeMove(buffer,sizeof(buffer),0,x,y,m_Speed) ) {
+	if(false == BuildGCodeMove(buffer,sizeof(buffer),0,x,y,0.0,m_Speed) ) {
 		return false;
 	}
 
@@ -1835,7 +1856,7 @@ void CPickobearDlg::OnBnClickedPark()
 
 #ifndef GCODE_PARK
 	if( WaitForCompletion() == true ) 
-		MoveHead( MAX_X_TABLE-40 , MAX_Y_TABLE-40 );
+		MoveHead( MAX_X_TABLE-40 , MAX_Y_TABLE-40,0 );
 #else
 	AddGCODECommand(GCODE_PARK,"Park Failed",UpdatePosition_callback);
 #endif
@@ -2024,7 +2045,7 @@ void CPickobearDlg::OnBnClickedUp()
 	if( m_StepSizeUM == 0 ) 
 		m_StepSizeUM = 1;
 
-	MoveHead( m_headXPosUM, m_headYPosUM + m_StepSizeUM,true) ;
+	MoveHead( m_headXPosUM, m_headYPosUM + m_StepSizeUM,0,true) ;
 }
 
 /**
@@ -2041,7 +2062,7 @@ void CPickobearDlg::OnBnClickedDown()
 	if( m_StepSizeUM == 0 ) 
 		m_StepSizeUM = 1;
 
-	MoveHead( m_headXPosUM, m_headYPosUM - m_StepSizeUM,true) ;
+	MoveHead( m_headXPosUM, m_headYPosUM - m_StepSizeUM,0,true) ;
 }
 
 /**
@@ -2058,7 +2079,7 @@ void CPickobearDlg::OnBnClickedLeft()
 	if( m_StepSizeUM == 0 ) 
 		m_StepSizeUM = 1;
 
-	MoveHead( m_headXPosUM - m_StepSizeUM, m_headYPosUM,true) ;
+	MoveHead( m_headXPosUM - m_StepSizeUM, m_headYPosUM,0,true) ;
 }
 
 /**
@@ -2076,7 +2097,7 @@ void CPickobearDlg::OnBnClickedRight()
 		m_StepSizeUM = 1;
 
 
-	MoveHead( m_headXPosUM + m_StepSizeUM, m_headYPosUM,true) ;
+	MoveHead( m_headXPosUM + m_StepSizeUM, m_headYPosUM,0,true) ;
 }
 
 /**
@@ -2093,7 +2114,7 @@ void CPickobearDlg::OnBnClickedUpleft()
 	if( m_StepSizeUM == 0 ) 
 		m_StepSizeUM = 1;
 
-	MoveHead( m_headXPosUM -= m_StepSizeUM, m_headYPosUM += m_StepSizeUM) ;
+	MoveHead( m_headXPosUM -= m_StepSizeUM, m_headYPosUM += m_StepSizeUM,0) ;
 }
 
 /**
@@ -2110,7 +2131,7 @@ void CPickobearDlg::OnBnClickedUpright()
 	if( m_StepSizeUM == 0 ) 
 		m_StepSizeUM = 1;
 
-	MoveHead( m_headXPosUM + m_StepSizeUM, m_headYPosUM + m_StepSizeUM) ;
+	MoveHead( m_headXPosUM + m_StepSizeUM, m_headYPosUM + m_StepSizeUM,0) ;
 }
 
 /**
@@ -2128,7 +2149,7 @@ void CPickobearDlg::OnBnClickedLeftdown()
 		m_StepSizeUM = 1;
 
 
-	MoveHead( m_headXPosUM - m_StepSizeUM, m_headYPosUM + m_StepSizeUM) ;
+	MoveHead( m_headXPosUM - m_StepSizeUM, m_headYPosUM + m_StepSizeUM,0) ;
 }
 
 /**
@@ -2145,7 +2166,7 @@ void CPickobearDlg::OnBnClickedBottomleft()
 	if( m_StepSizeUM == 0 ) 
 		m_StepSizeUM = 1;
 
-	MoveHead( m_headXPosUM -= m_StepSizeUM, m_headYPosUM -= m_StepSizeUM) ;
+	MoveHead( m_headXPosUM -= m_StepSizeUM, m_headYPosUM -= m_StepSizeUM,0) ;
 }
 
 /**
@@ -2515,7 +2536,7 @@ void CPickobearDlg::goSetup(LPVOID pThis)
 			if( CurrentFeeder.GetNextPartPosition( feederX, feederY ) ) {
 
 				/// wait for move
-				MoveHead(feederX + CAMERA_X_OFFSET , feederY - CAMERA_Y_OFFSET ,true);
+				MoveHead(feederX + CAMERA_X_OFFSET , feederY - CAMERA_Y_OFFSET, 0, true);
 			
 
 				// next part, fail if none available
@@ -2588,65 +2609,27 @@ void CPickobearDlg::goSetup(LPVOID pThis)
 
 			}
 
-			// @todo : tune this
-			Sleep( 100 );
 
-			_RPT1(_CRT_WARN,"goThread: Going to component %s\n", entry.label );
-
-			// wait for move
-			if( bFlip == false ) {
-				MoveHead(entry.x+m_ComponentList.m_OffsetX + CAMERA_X_OFFSET, entry.y+m_ComponentList.m_OffsetY - CAMERA_Y_OFFSET,true);
-			} else {
-				MoveHead(entry.x+m_ComponentList.m_OffsetX + CAMERA_X_OFFSET , (0-entry.y)+m_ComponentList.m_OffsetY - CAMERA_Y_OFFSET,true);
-			}
+			double angle;
 
 			if( entry.rot  || feeder.rot) {
 
 				_RPT1(_CRT_WARN,"goThread: Rotating part %d degrees \n", entry.rot );
 
-				double angle = ( entry.rot + feeder.rot );
+				angle = ( entry.rot + feeder.rot );
 			
 				_RPT1(_CRT_WARN,"goThread: Adding feeder rotation %d degrees \n",feeder.rot );
 
-				// calculate pulses
-				angle = ( 1000.0 / 360.0  ) * angle ;
 
-				char buffer[256];
-				int pulses;
+			}
+						
+			_RPT1(_CRT_WARN,"goThread: Going to component %s\n", entry.label );
 
-				// calculate pulses
-				pulses = ( int) ( angle );
-				
-				if( pulses > 1000 ) {
-					pulses -= 1000;
-				}
-
-				/// 1000 is 360 degrees
-				if( pulses != 1000 ) {
-					sprintf_s(buffer,sizeof(buffer),"G0H%d\n", pulses );
-
-
-					_RPT1(_CRT_WARN,"Executing GCODE %s\n",buffer);
-
-					// do the rotate
-					bool ret = InternalWriteSerial( buffer );
-					if (ret == false ) {
-						// something failed
-
-						// Machine is IDLE
-						OnBnClickedEstop();
-
-						// thread is no longer busy
-						bBusy = false;
-
-						SetControls( FALSE );
-
-						return;
-
-					}
-					// @todo : tune this
-					Sleep( 100 );
-				}
+			// wait for move
+			if( bFlip == false ) {
+				MoveHead(entry.x+m_ComponentList.m_OffsetX + CAMERA_X_OFFSET, entry.y+m_ComponentList.m_OffsetY - CAMERA_Y_OFFSET,angle, true);
+			} else {
+				MoveHead(entry.x+m_ComponentList.m_OffsetX + CAMERA_X_OFFSET , (0-entry.y)+m_ComponentList.m_OffsetY - CAMERA_Y_OFFSET,angle, true);
 			}
 
 			_RPT0(_CRT_WARN,"goThread: dropping off part\n");
@@ -2980,7 +2963,7 @@ void CListCtrl_Components::OnHdnItemdblclickList2(NMHDR *pNMHDR, LRESULT *pResul
 
 	if( m_OffsetX == 0 && m_OffsetY == 0 ) {
 
-		pDlg->MoveHead(35480,222890);
+		pDlg->MoveHead(35480,222890,0);
 
 	}else {
 
@@ -2990,12 +2973,14 @@ void CListCtrl_Components::OnHdnItemdblclickList2(NMHDR *pNMHDR, LRESULT *pResul
 		if( pDlg->bFlip == false ) {
 			pDlg->MoveHead(
 				(entry->x+pDlg->m_ComponentList.m_OffsetX),
-				(entry->y)+(pDlg->m_ComponentList.m_OffsetY)
+				(entry->y)+(pDlg->m_ComponentList.m_OffsetY),
+				0
 			);
 		} else { 
 			pDlg->MoveHead(
 				(entry->x+pDlg->m_ComponentList.m_OffsetX),
-				(0-entry->y)+(pDlg->m_ComponentList.m_OffsetY)
+				(0-entry->y)+(pDlg->m_ComponentList.m_OffsetY),
+				0
 			);
 		}
 	}
@@ -3044,20 +3029,20 @@ void CListCtrl_FeederList::OnHdnItemdblclickList2(NMHDR *pNMHDR, LRESULT *pResul
 
 	if( GetKeyState ( VK_SHIFT ) & 0x80 ){
 		// GotoXY in micrometers
-		pDlg->MoveHead(entry->lx,entry->ly);
+		pDlg->MoveHead(entry->lx,entry->ly,0);
 
 	} else if( GetKeyState ( VK_CONTROL ) & 0x80 ){
 
 		unsigned long feederX,feederY;
 
 		if( CurrentFeeder.GetNextPartPosition( feederX, feederY ) ) {
-			pDlg->MoveHead(feederX , feederY );
+			pDlg->MoveHead(feederX , feederY ,0);
 		}
 
 	} else {
 
 		// GotoXY in micrometers
-		pDlg->MoveHead(entry->x,entry->y);
+		pDlg->MoveHead(entry->x,entry->y,0);
 	}
 
 	*pResult = 0;
@@ -3170,7 +3155,7 @@ bool SetCurrentPosition( long x,long y)
 void CPickobearDlg::OnBnClickedZero()
 {	
 	if( WaitForCompletion() == true ) 
-		MoveHead(0,0);
+		MoveHead(0,0,0);
 
 	return;
 }
@@ -3303,8 +3288,11 @@ void CPickobearDlg::OnBnClickedOffset()
  */
 void CPickobearDlg::OnBnClickedGoff()
 {
-	if( WaitForCompletion() == true ) 
-		MoveHead(m_ComponentList.m_OffsetX ,m_ComponentList.m_OffsetY );
+	if( WaitForCompletion() == true ) {
+		//MoveHead(m_ComponentList.m_OffsetX ,m_ComponentList.m_OffsetY ,0);
+		_RPT2(_CRT_WARN,"ox = %d, oy = %d\n",m_ComponentList.m_OffsetX ,m_ComponentList.m_OffsetY);
+
+	}
 }
 
 /**
@@ -3317,7 +3305,7 @@ void CPickobearDlg::OnBnClickedGoff()
 void CPickobearDlg::OnBnClickedGoxy()
 {
 	if( WaitForCompletion() == true ) 
-		MoveHead(m_GOX,m_GOY);
+		MoveHead(m_GOX,m_GOY,0);
 }
 
 /**
@@ -4484,6 +4472,7 @@ DWORD CPickobearDlg::goSingleThread(void )
 
 #endif
 
+
 		/// slow the camera down
 		m_CameraUpdateRate = CAMERA_SLOW_UPDATE_RATE_MS ;
 
@@ -4495,7 +4484,7 @@ DWORD CPickobearDlg::goSingleThread(void )
 
 			_RPT3(_CRT_WARN,"goSingleThread: Going to feeder %s (%d,%d)\n", feeder.label , feederX, feederY);
 			
-			MoveHead(feederX + CAMERA_X_OFFSET , feederY - CAMERA_Y_OFFSET ,true);
+			MoveHead(feederX + CAMERA_X_OFFSET , feederY - CAMERA_Y_OFFSET ,0,true);
 			
 			// next part
 			CurrentFeeder.AdvancePart();
@@ -4541,59 +4530,34 @@ DWORD CPickobearDlg::goSingleThread(void )
 		Sleep( GCODE_PICKUP_WAIT_MS );
 
 		_RPT1(_CRT_WARN,"goSingleThread: Going to component %s\n", entry.label );
-
-	
-		if( bFlip == false ) {
-			MoveHead(entry.x+m_ComponentList.m_OffsetX + CAMERA_X_OFFSET , entry.y+m_ComponentList.m_OffsetY - CAMERA_Y_OFFSET,true);
-		} else {
-			MoveHead(entry.x+m_ComponentList.m_OffsetX + CAMERA_X_OFFSET , (0-entry.y)+m_ComponentList.m_OffsetY - CAMERA_Y_OFFSET,true);
-		}
+		double angle = 0.0 ;
 
 		if( entry.rot  || feeder.rot) {
 
 			_RPT1(_CRT_WARN,"goSingleThread: Rotating part %d degrees \n", entry.rot );
 
-			double angle = ( entry.rot + feeder.rot );
+			angle = ( entry.rot + feeder.rot );
 			
 			_RPT1(_CRT_WARN,"goSingleThread: Adding feeder rotation %d degrees \n",feeder.rot );
 
-
-			// calculate pulses
-			angle = ( 1000.0 / 360.0  ) * angle ;
-
-			int pulses;
-
-			// calculate pulses
-			pulses = ( int) ( angle );
-				
-			if( pulses > 1000 ) {
-				pulses -= 1000;
-			}
-
-			if ( pulses != 1000 ) {
-				CStringA pulses_gcode;
-				pulses_gcode.Format("G0H%d\n", pulses );
-
-				_RPT1(_CRT_WARN,"goSingleThread: Executing GCODE %s\n",pulses_gcode);
-
-				// do the rotate
-				if (InternalWriteSerial(pulses_gcode) == false ) {
-					// something failed
-
-					// Machine is IDLE
-					OnBnClickedEstop();
-
-				
-					// thread is no longer busy
-					bBusy = false;
-
-					return false;
-
-				}
-
-				Sleep( GCODE_WAIT_HEAD_ROTATE_MS );
-			}
 		}
+			
+		if (angle < 0.0 ) {
+		_RPT0(_CRT_WARN,"Negative angle\n");
+		angle = 0 ;
+		}
+	
+		if (angle >= 360.0 ) {
+			angle -= 360 ;
+		}
+
+	
+		if( bFlip == false ) {
+			MoveHead(entry.x+m_ComponentList.m_OffsetX + CAMERA_X_OFFSET , entry.y+m_ComponentList.m_OffsetY - CAMERA_Y_OFFSET,angle,true);
+		} else {
+			MoveHead(entry.x+m_ComponentList.m_OffsetX + CAMERA_X_OFFSET , (0-entry.y)+m_ComponentList.m_OffsetY - CAMERA_Y_OFFSET,angle,true);
+		}
+
 
 		// head down/air off/up
 		_RPT0(_CRT_WARN,"goSingleThread: dropping off part\n");
@@ -4638,9 +4602,9 @@ skip:;
 
 		// Move Camera to part
 		if( bFlip == false ) {
-			MoveHead(entry.x+m_ComponentList.m_OffsetX, entry.y+m_ComponentList.m_OffsetY,true );
+			MoveHead(entry.x+m_ComponentList.m_OffsetX, entry.y+m_ComponentList.m_OffsetY,0,true );
 		} else {
-			MoveHead(entry.x+m_ComponentList.m_OffsetX, (0-entry.y)+m_ComponentList.m_OffsetY,true );
+			MoveHead(entry.x+m_ComponentList.m_OffsetX, (0-entry.y)+m_ComponentList.m_OffsetY,0,true );
 		}
 	}
 
@@ -5229,14 +5193,14 @@ void CPickobearDlg::TestMode(LPVOID data)
 
 			} while( y > MAX_Y_TABLE ) ;
 
-			MoveHead( x, y,true  );
+			MoveHead( x, y,0,true  );
 
 			/// little delay (though we should really punch it for testing, the firmware ought to deal with it.
 			Sleep( 100 );
 		}
 
 		// Zero
-		MoveHead(0,0,true );
+		MoveHead(0,0,0,true );
 
 		// stage ii test, run to all defined feeders
 
@@ -5251,7 +5215,7 @@ void CPickobearDlg::TestMode(LPVOID data)
 
 			_RPT2(_CRT_WARN,"Going to feeder %s, %s\n", m_FeederList.entry->label,CurrentFeeder.entry->label);
 
-			MoveHead(m_FeederList.entry->x,m_FeederList.entry->y,true );
+			MoveHead(m_FeederList.entry->x,m_FeederList.entry->y,0,true );
 
 			Sleep( 400 );
 
@@ -5271,7 +5235,7 @@ try_again:;
 		}
 
 		// Zero
-		MoveHead(0,0,true );
+		MoveHead(0,0,0,true );
 	}
 
 	AfxMessageBox(L"Tests ended, zero and check XY HOME",MB_OK);
@@ -5601,8 +5565,10 @@ retry:;
 			if( threadProcessGCODE != 0 )  {
 
 				while(WaitForSingleObject( processGCODE, INFINITE ) == WAIT_IO_COMPLETION);
+				//Sleep(10);
 				
 				_RPT0(_CRT_WARN,"GCODE thread go!\n");
+
 
 				ResetEvent( processGCODE );
 			}
@@ -5913,6 +5879,7 @@ void CPickobearDlg::OnBnClickedBigView()
 	// stops the main thread camera updating
 	m_CameraUpdateRate = 0;
 	
+	// Allow thread to realise
 	Sleep(10);
 
 	// detatch it

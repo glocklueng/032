@@ -404,9 +404,9 @@ uint8_t gc_execute_line(char *line) {
       break;
       case 'C':
       if (gc.absolute_mode || absolute_override) {
-		target[C_AXIS] = unit_converted_value;
+		target[C_AXIS] = gc.position[C_AXIS] + unit_converted_value;
       } else {
-        target[C_AXIS] += unit_converted_value;
+        target[C_AXIS] += ( gc.position[C_AXIS] +  unit_converted_value );
       }
 	  break;
 	  case 'H':
@@ -561,6 +561,6 @@ void gotoxy( double x,double y, double z,double c )
    gc.position[Z_AXIS] = z;
 
    // C axis is always 0
-   gc.position[C_AXIS] = 0;
+   gc.position[C_AXIS] = c;
 
 }
