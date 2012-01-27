@@ -19,10 +19,10 @@ uchar	AMODE;					// Set to: 0=RX
 // counter for reading config data from RFDA
 uchar cfgcnt;					
 
-static const uchar rangeTestStr[] = "\x02TRC104 Range Test Demo\x03";	// Range Test String
-static const uchar AckStr[]  = "ACK";		// Acknowledge String
-static const uchar nAckStr[] = "NACK";	// Error String
-							//	 	   2=SLEE
+static const uchar rangeTestStr[] = "\x02TRC104 Range Test Demo\x03";		// Range Test String
+static const uchar AckStr[]  = "ACK";										// Acknowledge String
+static const uchar nAckStr[] = "NACK";										// Error String
+																			// 2=SLEE
 
 // temporary 
 uchar SPITX = 0;
@@ -162,7 +162,7 @@ void WriteSPI ( unsigned char data )
 	{
 		SCLK(1);
 
-		if(data&&(1<<7) )
+		if(data&&(1<<i) )
 			bit_set(PORTC,PC4); 
 		else  
 			bit_clr(PORTC,PC4);
@@ -294,7 +294,7 @@ int main(void)
 
 		}
 		
-		for (offset = 0; offset < 360; offset += 0.5f) {
+		for (offset = 0; offset < 360; offset += 1 ) {
 
 			LEDscan(r,g,b, offset);
 
@@ -302,11 +302,11 @@ int main(void)
 
 		// change this to mix
 
-		if( r  ) { b = 4096 ;r=0;}
+		if( r  ) { b = 4096 ;r-=2;}
 		else
-		if( b  ) { g = 4096 ;b=0;}
+		if( b  ) { g = 4096 ;b-=2;}
 		else
-		if( g  ) { r = 4096 ;g=0;}
+		if( g  ) { r = 4096 ;g-=2;}
 
 	}
 
@@ -511,7 +511,7 @@ void Range_TX(void)
 	uchar tmp_buf;
 	uchar len;
 
-	pMem = rangeTestStr;	// Assign addr of string location
+	pMem = (uchar*)rangeTestStr;	// Assign addr of string location
 //	len = (strlen((char*)rangeTestStr) + addr_len) - 1;	// calc data packet length
 
 	len = strlen((char*)rangeTestStr);	// calc data packet length
