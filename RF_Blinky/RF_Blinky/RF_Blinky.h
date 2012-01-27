@@ -1,8 +1,6 @@
 #ifndef _RF_BLINKY_H_
 #define _RF_BLINKY_H_ ( 1 )
 
-
-
 // includes
 
 #include <avr/io.h>
@@ -46,13 +44,18 @@ struct{
 #define fWaitforAck status.fWaitforAck	// Wait for Ack/nAck flag - this flag keeps from Ack'ing an Ack
 #define fRTMD		status.fRTMD		// Range Test Mode Active flag
 
-
 #define bit_set(reg, bit) reg |= 1 << bit 
 #define bit_clr(reg, bit) reg &= ~(1 << bit) 
 
+#define SWSPI_PORT PORTD
+#define SWSPI_DIR  DDRD
+#define SWSPI_IN   PIND
 
 
-
+#define SWSPI_SS   (1<<1) // (CSn of the SPI can also be connected to GND permanently.) 
+#define SWSPI_SCK  (1<<2)  // CLK  SCL/SPC clock signal 
+#define SWSPI_MOSI (1<<4)  // mosi sda/sdi/sdo master out,slave in PD2 
+#define SWSPI_MISO (1<<4)  // miso SDO
 
 // rf blink
 
@@ -93,7 +96,19 @@ struct{
 
 // prototypes
 
+
+// TLC
+void WriteLEDArray();
+void LEDscan(int red, int green, int blue, float degreeoffset);
 void LED_Init(void);
+
+//sw spi
+void SWSPI_init();
+void SWSPI_write( uint8_t address, uint8_t value );
+uint8_t SWSPI_read( uint8_t address );
+
+
+
 void Config_Start(void);
 void Config_TX(void);
 void Config_RX(void);
@@ -135,6 +150,16 @@ void StoreRegs();
 void SHUTDOWN(void);
 void pUART(char *pStr);
 void Hop(void);
+
+
+extern uchar	hop_channel;
+extern uchar	current_reg;
+extern uchar	chan_num;		// TX/RX Channel
+extern uchar	addr_len;		// TX/RX Address length (1 byte to 5 bytes) according to reg 0x08
+extern uchar	*pBuf;			// 8-bit pointer to access buffer memory (must be static to retain addr between calls)
+extern uchar 	Buffer[128];	// Allocate Buffer memory
+extern uchar 	Reg_Buf[25];	// Buffer to hold Reg settings
+
 
 
 #endif
