@@ -51,18 +51,44 @@ struct{
 #define bit_clr(reg, bit) reg &= ~(1 << bit) 
 
 
+
+
+
+// rf blink
+
+#if 1
+
 #define DATPORT PORTD
-#define CLKPORT PORTD
+#define CLKPORT PORTD //pc1
 #define LATPORT PORTD
+#define DATDDR DDRD
 
 #define DATPIN PD1	//	SIN
 #define CLKPIN PD2
 #define LATPIN PD4
 
-#define SIN_PIN		_BV( DATPIN )
-#define SCLK_PIN	_BV( CLKPIN )
-#define BLANK_PIN	_BV( PD3 )
-#define XLAT_PIN	_BV( LATPIN )
+#define SIN_PIN		_BV( DATPIN ) /// PC0
+#define SCLK_PIN	_BV( CLKPIN ) /// PC1
+#define BLANK_PIN	_BV( PD3 )    /// PC2
+#define XLAT_PIN	_BV( LATPIN ) /// PC3
+
+#else
+
+#define DATPORT PORTC
+#define CLKPORT PORTC //pc1
+#define LATPORT PORTC
+#define DATDDR DDRC
+
+#define DATPIN PC0	//	SIN
+#define CLKPIN PC1
+#define LATPIN PC3
+
+#define SIN_PIN		_BV( PC0 ) /// PC0
+#define SCLK_PIN	_BV( PC1 ) /// PC1
+#define BLANK_PIN	_BV( PC2 )    /// PC2
+#define XLAT_PIN	_BV( PC3 ) /// PC3
+#endif
+
 
 
 // prototypes

@@ -61,7 +61,9 @@ static const uchar freq_hop[25] = {			// Hop table for 25 channels
 // Variables for sample function
 float offset = 0;
 
-uint16_t LEDChannels[8][3];
+#define NUM_TLC5947 (1)
+
+uint16_t LEDChannels[NUM_TLC5947*8][3];
 
 //------------------------------------------------------------------------------------------
 // Read INT state, data transaction
@@ -178,7 +180,7 @@ void WriteLEDArray() {
 
   unsigned int tempOne = 0;
 
-  for (int i = 0; i < (1 * 24); i++) {
+  for (unsigned int i = 0; i < (NUM_TLC5947  * 24); i++) {
 
     tempOne = *(&LEDChannels[0][0] + i);
 
@@ -206,9 +208,9 @@ void LEDscan(int red, int green, int blue, float degreeoffset)
 
   float brightnessfactor = 0.0f;
   
-  float scanindex = (1.0f + sinf(degreeoffset*3.14159f/180.0f)) * 4;
+  float scanindex = (1.0f + sinf(degreeoffset*3.14159f/180.0f)) * ((float)(NUM_TLC5947 * 8 ) / 2.0);
   
-    for(int LEDindex = 0; LEDindex < (1 * 8); LEDindex++) {
+    for(unsigned int LEDindex = 0; LEDindex < (NUM_TLC5947  * 8); LEDindex++) {
       
 
       brightnessfactor = expf(0.0f - fabs(scanindex - ((float)LEDindex + 0.5f)) * 1.3f);
@@ -229,11 +231,11 @@ void LED_Init(void)
 {
 
  // Setup TLC5947 pins
-	DDRD	|= ( SIN_PIN |SCLK_PIN|BLANK_PIN | XLAT_PIN );
-	PORTD	|= ( SIN_PIN |SCLK_PIN|BLANK_PIN | XLAT_PIN );
+	DATDDR	|= ( SIN_PIN |SCLK_PIN|BLANK_PIN | XLAT_PIN );
+	DATPORT	|= ( SIN_PIN |SCLK_PIN|BLANK_PIN | XLAT_PIN );
 	
-	PORTD |= (LATPIN);
-	PORTD &= ~(BLANK_PIN);
+	DATPORT |= (LATPIN);
+	DATPORT &= ~(BLANK_PIN);
 
 }
 
@@ -248,11 +250,11 @@ int main(void)
 	unsigned short tr,tg,tb;
 
 	//outputs
-	DDRC &= ~(_BV( PC2 ) | _BV( PC5 ) | _BV( PC4 ) );
-	PORTC |= (_BV( PC2 ) | _BV( PC5 ) | _BV( PC4 ) );
+	DATDDR &= ~(_BV( PC2 ) | _BV( PC5 ) | _BV( PC4 ) );
+	DATPORT |= (_BV( PC2 ) | _BV( PC5 ) | _BV( PC4 ) );
 
-	DDRD &= ~(_BV( PD0 ) );
-	PORTD |= (_BV( PD0 ) );
+	DDRD &= ~(_BV( PD0 ) | _BV( PD2 ) );
+	PORTD |= (_BV( PD0 ) | _BV( PD2 ));
 	
 	// inputs
 	// SPI interrupt
@@ -272,17 +274,27 @@ int main(void)
 //	SPI_CFG(0x09,0xCA);				// DEST ADDR 0
 //	SPI_CFG(0x0E,0xCA);				// SRC ADDR 0
 	SPI_CFG(0x02,0x20);				// CONT MODE,1Mbps,no CRC EN,
- 	
+
 	LED_Init();						// Sequence/Flash LEDs on startup
 	_delay_ms( 250 );
 	
-	Config_RX();					// Configure device for RX mode on startup
+	Config_TX();					// Configure device for RX mode on startup
 	
 	M_ACTIVE();						// Enable Active Mode
 
-	r = 0;
-	g = 0;
-	b = 0;
+
+	while( 0 ) {
+
+		PMODE( 1 );
+		_delay_ms( 1 ) ;
+
+		PMODE( 0 );
+		_delay_ms( 1 ) ;
+	}
+
+	r = 4096;
+	g = 4096;
+	b = 4096;
 	
 	tr = 4096;
 	tg = 0;
@@ -299,11 +311,14 @@ int main(void)
 			Range_Config();		// Do Configuration once
 
 		}
-		
+
+
+
 		for (offset = 0; offset < 360; offset += 1 ) {
 
-			LEDscan(r,g,b, offset);
+		Range_TX();
 
+			LEDscan(r,g,b, offset);
 
 
 			if (tr != r ) {if( r < tr ) r+=(abs(tr-r)/8); else r-=(abs(tr-r)/8);}
@@ -311,13 +326,18 @@ int main(void)
 			if (tb != b ) {if( b < tb ) b+=(abs(tb-b)/8); else b-=(abs(tb-b)/8);}
 	
 		}
+
 	
 		// new colour target
-		if((rand() % 10) > 5  ){
+		if((rand() % 10) > 5  )
+		{
 		 tr = rand()%4096;
 		 tg = rand()%4096;
 		 tb = rand()%4096;
 		}
+
+
+
 	}
 
 	return 0;
@@ -330,7 +350,7 @@ int main(void)
 //------------------------------------------------------------------------------------------
 void Do_TX(uchar *pMem)
 {
-	uchar len = 0x17;
+	uchar len = 17;
 	
 	cli();						// Temporarily disable interrupts	
 	mTX();						// TX LEDs
