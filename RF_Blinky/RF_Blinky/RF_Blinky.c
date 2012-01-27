@@ -25,7 +25,6 @@ static const uchar nAckStr[] = "NACK";										// Error String
 																			// 2=SLEE
 
 // temporary 
-uchar SPITX = 0;
 uchar SPIRX = 0;
 
 static const uchar freq_hop[25] = {			// Hop table for 25 channels
@@ -277,7 +276,7 @@ int main(void)
 	LED_Init();						// Sequence/Flash LEDs on startup
 	_delay_ms( 250 );
 	
-	Config_TX();					// Configure device for RX mode on startup
+	Config_RX();					// Configure device for RX mode on startup
 	
 	M_ACTIVE();						// Enable Active Mode
 
@@ -304,6 +303,8 @@ int main(void)
 		for (offset = 0; offset < 360; offset += 1 ) {
 
 			LEDscan(r,g,b, offset);
+
+
 
 			if (tr != r ) {if( r < tr ) r+=(abs(tr-r)/8); else r-=(abs(tr-r)/8);}
 			if (tg != g ) {if( g < tg ) g+=(abs(tg-g)/8); else g-=(abs(tg-g)/8);}
@@ -357,7 +358,7 @@ void Do_TX(uchar *pMem)
 //---  Write actual data payload  -----------------------------------------
 	while(len)				// while not null character
 	{
-		SPITX = *pMem;			// Write data back-to-back to TX FIFO
+		WriteSPI( *pMem );			// Write data back-to-back to TX FIFO
 		Wait_for_SPI_TXF();
 		pMem++;					// Increment pointer to get next byte
 		len--;
@@ -584,7 +585,7 @@ uchar Read_Reg(uchar addr)
 	M_SPI();					// SPI MODE
 	SPI_WR();					// SET SPI FOR TX
 	_delay_us(14);				// Delay ~20usec (1.6usec/tick)
-	SPITX = addr;				// Write config Addr
+	WriteSPI(addr);				// Write config Addr
 	Wait_for_SPI_TXF();			// Wait for SPI to finish
 	SPI_RD();					// SET SPI FOR RX
 	_delay_us(14);				// Delay ~20usec (1.6usec/tick)
@@ -657,9 +658,9 @@ void SetforTx(void)
 {
 	uchar tmp_buf;
 
-//	tmp_buf = Read_Reg(0x00);			// Read contents of register in TRC104
-	tmp_buf = 0x80 + freq_hop[hop_channel]; 			// Set up for TX mode,keep channel setting
-	SPI_CFG(0x00,tmp_buf);				// write SPI
+//	tmp_buf = Read_Reg(0x00);						// Read contents of register in TRC104
+	tmp_buf = 0x80 + freq_hop[hop_channel]; 		// Set up for TX mode,keep channel setting
+	SPI_CFG(0x00,tmp_buf);							// write SPI
 }
 
 //------------------------------------------------------------------------------------
@@ -734,13 +735,12 @@ void M_ACTIVE(void)
 //-----------------------------------------------------------------------------
 void SPI_WR(void)
 {
-/*todo
-	SSU.SSER.BYTE = 0x00;			// 
-	IO.PCR9 = 0xF;					
-	SSU.SSCRH.BYTE = 0xC4;		
+/*todo */
+//	SSU.SSER.BYTE = 0x00;			// 
+//	IO.PCR9 = 0xF;					
+//	SSU.SSCRH.BYTE = 0xC4;		
 	SDAT(0);
-	SSU.SSER.BYTE = 0xA0;			
-*/
+//	SSU.SSER.BYTE = 0xA0;			
 }
 
 //-----------------------------------------------------------------------------
@@ -748,13 +748,13 @@ void SPI_WR(void)
 //-----------------------------------------------------------------------------
 void SPI_RD(void)
 {
-/*todo
-	SSU.SSER.BYTE = 0x00;			// 
-	IO.PCR9 = 0xB;					
-	SSU.SSCRH.BYTE = 0xC4;
+/*todo */
+//	SSU.SSER.BYTE = 0x00;			// 
+//	IO.PCR9 = 0xB;					
+//	SSU.SSCRH.BYTE = 0xC4;
 	SDAT(0);
-	SSU.SSER.BYTE = 0x60;		
-*/
+//	SSU.SSER.BYTE = 0x60;		
+
 }
 
 //-----------------------------------------------------------------------------
@@ -766,8 +766,8 @@ void SPI_RST(void)
 	SSU.SSER.BYTE = 0x20;			// 
 	IO.PCR9 = 0x9;					// Set 90,93 as output
 	SSU.SSCRH.BYTE = 0xC0;			// 
-	SDAT(0);
 */
+	SDAT(0);
 }
 
 //-------------------------------------------------------------------
@@ -779,7 +779,7 @@ void StoreRegs(void)
 		uchar tmp;
 
 		pBuf = Reg_Buf;
-		while(i<24)
+		while( i < 24 )
 		{
 			tmp = Read_Reg(i);
 			*pBuf = tmp;
