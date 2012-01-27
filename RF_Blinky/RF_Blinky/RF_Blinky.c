@@ -281,6 +281,8 @@ int main(void)
 	M_ACTIVE();						// Enable Active Mode
 
 	r = 4096;
+	g = 0;
+	b = 0;
 	
 	while(1)					// Loop Here
 	{
