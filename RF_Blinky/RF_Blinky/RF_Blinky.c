@@ -246,6 +246,7 @@ int main(void)
 {
 	// Setup chip
 	unsigned short r,g,b;
+	unsigned short tr,tg,tb;
 
 	//outputs
 	DDRC &= ~(_BV( PC2 ) | _BV( PC5 ) | _BV( PC4 ) );
@@ -276,14 +277,20 @@ int main(void)
 	LED_Init();						// Sequence/Flash LEDs on startup
 	_delay_ms( 250 );
 	
-	Config_RX();					// Configure device for RX mode on startup
+	Config_TX();					// Configure device for RX mode on startup
 	
 	M_ACTIVE();						// Enable Active Mode
 
-	r = 4096;
+	r = 0;
 	g = 0;
 	b = 0;
 	
+	tr = 4096;
+	tg = 0;
+	tb = 0;
+	
+#define SUB	( 2 )
+
 	while(1)					// Loop Here
 	{
 		sei();					// Enable all interrupts
@@ -298,16 +305,18 @@ int main(void)
 
 			LEDscan(r,g,b, offset);
 
+			if (tr != r ) {if( r < tr ) r+=(abs(tr-r)/8); else r-=(abs(tr-r)/8);}
+			if (tg != g ) {if( g < tg ) g+=(abs(tg-g)/8); else g-=(abs(tg-g)/8);}
+			if (tb != b ) {if( b < tb ) b+=(abs(tb-b)/8); else b-=(abs(tb-b)/8);}
+	
 		}
-
-		// change this to mix
-
-		if( r  ) { b = 4096 ;r-=2;}
-		else
-		if( b  ) { g = 4096 ;b-=2;}
-		else
-		if( g  ) { r = 4096 ;g-=2;}
-
+	
+		// new colour target
+		if((rand() % 10) > 5  ){
+		 tr = rand()%4096;
+		 tg = rand()%4096;
+		 tb = rand()%4096;
+		}
 	}
 
 	return 0;
@@ -797,9 +806,9 @@ void SPI_CFG(uchar addr,uchar dat)
 	M_SPI();
 	SPI_WR();				// SET SPI FOR TX
 	_delay_us(15);			// Delay ~20usec (1.6usec/tick)
-	SPITX = addr | 0x80;	// Write config Addr
+	WriteSPI( addr | 0x80);	// Write config Addr
 	Wait_for_SPI_TXF();
-	SPITX = dat;			// Write config DATA to SPI
+	WriteSPI(dat);			// Write config DATA to SPI
 	Wait_for_SPI_TXF();		// Wait for SPI to finish
 	M_STBY();
 	SPI_RST();				// RESET SPI
