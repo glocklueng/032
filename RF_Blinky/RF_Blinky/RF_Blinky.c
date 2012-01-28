@@ -3,7 +3,7 @@
 
 #include "RF_Blinky.h"
 
-
+#define MAX(a, b)  (((a) > (b)) ? (a) : (b))
 
 //------------------------------------------------------------------------------------------
 // entry point
@@ -26,10 +26,7 @@ int main(void)
 	DDRC	|= ( _BV( PC1 ) | SIN_PIN |SCLK_PIN|BLANK_PIN | XLAT_PIN );
 	PORTC	|= ( _BV( PC1 ) | SIN_PIN |SCLK_PIN|BLANK_PIN | XLAT_PIN );
 
-
 	// end chip setup
-
-
 
 	chan_num = 80;					// Was 100
 	addr_len = 3;  					// ADDRESS LENGTH (# bytes)
@@ -46,7 +43,6 @@ int main(void)
 	
 	M_ACTIVE();						// Enable Active Mode
 
-
 	while( 0 ) {
 
 		PMODE( 1 );
@@ -56,9 +52,9 @@ int main(void)
 		_delay_ms( 1 ) ;
 	}
 
-	r = 4096;
-	g = 4096;
-	b = 4096;
+	r = 0;
+	g = 0;
+	b = 0;
 	
 	tr = 4096;
 	tg = 0;
@@ -66,8 +62,9 @@ int main(void)
 	
 #define SUB	( 2 )
 
-	while(1)					// Loop Here
+	while( 1 )					// Loop Here
 	{
+	int d;
 		sei();					// Enable all interrupts
 
 		if(fRTESTx)				// Test if Range test ON?
@@ -76,30 +73,41 @@ int main(void)
 
 		}
 
+		for (float offset = 0; offset < 180; offset += 1 ) {
 
-
-		for (float offset = 0; offset < 360; offset += 1 ) {
-
-		Range_TX();
 
 			LEDscan(r,g,b, offset);
+                     
+					 
+			if (tr != r ) {d = ( r-tr)/(MAX(abs(tr-r),16)) ; r+=d;}
+            if (tg != g ) {d = ( g-tg)/(MAX(abs(tg-g),16)) ; g+=d;}
+            if (tb != b ) {d = ( b-tb)/(MAX(abs(tb-b),16)) ; b+=d;}
+ 
+
+	}		// new colour target
+		if( abs(r - tr) < 8 ) {tr = rand()%4096 ; }
+		if( abs(g - tg) < 8 ) {tg = rand()%4096 ; }
+		if( abs(b - tb) < 8 ) {tb = rand()%4096 ; }
+
+		for (float offset =180; offset < 360; offset += 1 ) {
 
 
-			if (tr != r ) {if( r < tr ) r+=(abs(tr-r)/8); else r-=(abs(tr-r)/8);}
-			if (tg != g ) {if( g < tg ) g+=(abs(tg-g)/8); else g-=(abs(tg-g)/8);}
-			if (tb != b ) {if( b < tb ) b+=(abs(tb-b)/8); else b-=(abs(tb-b)/8);}
-	
-		}
 
-	
+			LEDscan(r,g,b, offset);
+                     
+					 
+			if (tr != r ) {d = ( r-tr)/(MAX(abs(tr-r),16)) ; r+=d;}
+            if (tg != g ) {d = ( g-tg)/(MAX(abs(tg-g),16)) ; g+=d;}
+            if (tb != b ) {d = ( b-tb)/(MAX(abs(tb-b),16)) ; b+=d;}
+ 
+
+	}
+
+
 		// new colour target
-		if((rand() % 10) > 5  )
-		{
-		 tr = rand()%4096;
-		 tg = rand()%4096;
-		 tb = rand()%4096;
-		}
-
+		if( abs(r - tr) < 8 ) {tr = rand()%4096 ; }
+		if( abs(g - tg) < 8 ) {tg = rand()%4096 ; }
+		if( abs(b - tb) < 8 ) {tb = rand()%4096 ; }
 
 
 	}
