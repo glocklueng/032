@@ -150,6 +150,9 @@ void StoreRegs();
 void SHUTDOWN(void);
 void pUART(char *pStr);
 void Hop(void);
+void SCLK( unsigned char mode ) ;
+void SDAT( unsigned char mode );
+void MODE( unsigned char mode ) ;
 
 
 extern uchar	hop_channel;

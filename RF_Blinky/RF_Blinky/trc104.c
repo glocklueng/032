@@ -74,7 +74,7 @@ inline unsigned char INT(void)
 // Burst Transmit             1 0 (1->0)
 //
 //------------------------------------------------------------------------------------------
-inline void MODE( unsigned char mode ) 
+void MODE( unsigned char mode ) 
 {
 	if( mode ) 
 		bit_set(PORTC,PC2) ; 
@@ -86,7 +86,7 @@ inline void MODE( unsigned char mode )
 // Set SDAT state
 // Serial data input/output for SPI mode and TX/RX active mode Pin 3 (IO)
 //------------------------------------------------------------------------------------------
-inline void SDAT( unsigned char mode ) 
+void SDAT( unsigned char mode ) 
 { 
 	if( mode ) 
 		bit_set(PORTC,PC4) ; 
@@ -99,12 +99,12 @@ inline void SDAT( unsigned char mode )
 //Serial clock input for burst mode, serial data output for continuous mode, and
 // SPI/FIFO clock signal Pin 2 (IO)
 //------------------------------------------------------------------------------------------
-inline void SCLK( unsigned char mode ) 
+void SCLK( unsigned char mode ) 
 { 
 	if( mode ) 
-		bit_set(PORTD,PD2) ; 
+		bit_set(PORTC,PC3) ; 
 	else  
-		bit_clr(PORTD,PD2);
+		bit_clr(PORTC,PC3);
 }
 
 //------------------------------------------------------------------------------------------
@@ -136,7 +136,6 @@ inline void CS( unsigned char mode )
 //------------------------------------------------------------------------------------------
 void WriteSPI ( unsigned char data )
 {
-
 #ifdef LSB
 	for(unsigned char i = 0 ; i < 7 ; i++ ) 
 #else
@@ -144,13 +143,15 @@ void WriteSPI ( unsigned char data )
 	for(unsigned char i = 7 ; i> 0 ; i-- ) 
 #endif
 	{
-		SCLK(1);
 
-		if(data&&(1<<i) )
+
+		if(data&(1<<i) )
 			bit_set(PORTC,PC4); 
 		else  
 			bit_clr(PORTC,PC4);
-		 
+		
+		SCLK(1);
+		asm("nop");
 		SCLK(0);
 	}
 
@@ -572,7 +573,7 @@ void SPI_WR(void)
 //	SSU.SSER.BYTE = 0x00;			// 
 //	IO.PCR9 = 0xF;					
 //	SSU.SSCRH.BYTE = 0xC4;		
-	SDAT(0);
+//	SDAT(0);
 //	SSU.SSER.BYTE = 0xA0;			
 }
 
@@ -585,7 +586,7 @@ void SPI_RD(void)
 //	SSU.SSER.BYTE = 0x00;			// 
 //	IO.PCR9 = 0xB;					
 //	SSU.SSCRH.BYTE = 0xC4;
-	SDAT(0);
+//	SDAT(0);
 //	SSU.SSER.BYTE = 0x60;		
 
 }
