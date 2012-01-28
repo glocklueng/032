@@ -15,8 +15,8 @@ int main(void)
 	unsigned short tr,tg,tb;
 
 	//outputs
-	DATDDR &= ~(_BV( PC2 ) | _BV( PC5 ) | _BV( PC4 ) );
-	DATPORT |= (_BV( PC2 ) | _BV( PC5 ) | _BV( PC4 ) );
+	DDRC &= ~(_BV( PC2 ) | _BV( PC5 ) | _BV( PC4 ) | _BV( PC3 ) );
+	PORTC |= (_BV( PC2 ) | _BV( PC5 ) | _BV( PC4 )  | _BV( PC3 ) );
 
 	DDRD &= ~(_BV( PD0 ) | _BV( PD2 ) );
 	PORTD |= (_BV( PD0 ) | _BV( PD2 ));
@@ -43,15 +43,29 @@ int main(void)
 	
 	M_ACTIVE();						// Enable Active Mode
 
+	Range_Config();
+
 	while( 0 ) {
 
-		PMODE( 1 );
-		_delay_ms( 1 ) ;
+	MODE(0);
+	MODE(1);
+	_delay_us(10);
+	SDAT(0);
+	SDAT(1);
+	_delay_us(10);
+	SCLK(0);
+	SCLK(1);
+	_delay_us(10);
 
-		PMODE( 0 );
-		_delay_ms( 1 ) ;
 	}
 
+	M_ACTIVE();
+
+	while(1) {
+		MODE(1);
+		Range_TX();
+		MODE(0);
+	}
 	r = 0;
 	g = 0;
 	b = 0;
@@ -76,6 +90,8 @@ int main(void)
 		for (float offset = 0; offset < 180; offset += 1 ) {
 
 
+			Range_TX();
+
 			LEDscan(r,g,b, offset);
                      
 					 
@@ -92,6 +108,7 @@ int main(void)
 		for (float offset =180; offset < 360; offset += 1 ) {
 
 
+			Range_TX();
 
 			LEDscan(r,g,b, offset);
                      
