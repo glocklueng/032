@@ -53,7 +53,8 @@ while(*StringPtr != 0x00){
 
 }
 
-
+static int brite = 1;
+static int britedir = 10;
 static unsigned char pushLeds = 0;
 static unsigned short indexLed = 0;
 
@@ -124,6 +125,10 @@ void fade(void)
 	}
 }
 
+unsigned char mode_switch( void )
+{
+	return ( PINC  & _BV(PC5) );
+}
 
 int main(void)
 {
@@ -161,6 +166,32 @@ int main(void)
 	while( 0 ) {
     	USART_send('X');_delay_ms(250);
 	}
+
+	while(0){
+
+		Clear( 4095/16 );
+
+			WriteLEDArray(NUM_TLC5947);
+	}
+
+
+	while(1){
+
+		if( PINC  & _BV(PC4) ) {
+
+			Clear( r+=10);
+
+			if( r>4095) 
+				r=0;
+		}  else {
+			r = 0;
+			Clear( 0);
+		}
+
+		WriteLEDArray(NUM_TLC5947);
+	}
+
+
 	while(0){
 		if( pushLeds == 1 ) {
 
@@ -184,12 +215,9 @@ int main(void)
 	{
 		int d;
 
-		USART_send( gMode+'a');
-		USART_send( 13);
-		USART_send( 10);
-			
-
-		gMode = 1;
+		//USART_send( gMode+'a');
+		//USART_send( 13);
+		//USART_send( 10);
 
 		switch( gMode) {
 
@@ -200,7 +228,7 @@ int main(void)
 				float mil;
 
 				{
-				for(float i =1 ; i < 30 ;i+=.08){
+					for(float i =1 ; i < 30 ;i+=.08){
 					
 						offset = (int)( (1.0f+sinf(i)) *60.0f);
 
@@ -320,11 +348,14 @@ int main(void)
 			case 8:
 			{
 
+
+				
 				for(unsigned int i =1 ; i < 6 ;i++){
+
 					for (unsigned int offset = 0; offset < 360; offset += 16) {
 
 						LEDscan2(4096/i,offset,1);
-						for(int k =1 ; k < 16 ;k++)
+						for(int k =1 ; k <= 16 ;k++)
 					  	  WriteLEDArray(1);  
 
  					}
@@ -364,16 +395,56 @@ int main(void)
 	
 				for(unsigned int j =0 ; j < 50 ;j++) {
 					for(unsigned int i =0 ; i < NUM_TLC5947*24 ;i++){
-						LEDChannels[i]=4095;//rand()%2047;
+						LEDChannels[i]=rand()%2047;
 					}
 				
 				
 			  	WriteLEDArray(NUM_TLC5947);  
 				}
 
-			 gMode=0;
+			 gMode=11;
 		//	fade();
 			 }
+			 brite =1;britedir=10;
+			break;
+
+
+			case 11:
+				for(int i=0;i<80;i+=4) {
+					//Clear(i);
+					brite+=britedir;
+					if (brite>6050) britedir=-30;
+					if (brite<40) britedir=30;
+
+					LEDscan2(brite,i,1);
+					LEDscan2Add(brite,i-80,1);
+					for(int t = 0 ; t < NUM_TLC5947 ; t++ ) 
+						WriteLEDArray(1);
+					//_delay_us(100);
+				}
+				
+				if( (rand() % 20 ) == 5 )  {
+					gMode=12;
+				}
+				break;
+	
+			case 12:
+			{
+
+
+				
+				for(unsigned int i =1 ; i < 6 ;i++){
+				LEDscan(0,0,1);
+					for (unsigned int offset = 0; offset < 360; offset += 16) {
+
+						LEDscan2Add(4096/i,offset,1);
+						for(int k =1 ; k <= 16 ;k++)
+					  	  WriteLEDArray(1);  
+
+ 					}
+				}
+			 gMode=0;
+			}
 			break;
 		}
 	}

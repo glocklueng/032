@@ -89,6 +89,7 @@ void LEDscan(int red, float degreeoffset,unsigned int count);
 void LEDscan2(int red, float degreeoffset,unsigned int count);
 void LEDscan3(int red, float degreeoffset,unsigned int count);
 void LED_Init(void);
+void LEDscan2Add(int red, float degreeoffset,unsigned int count);
 
 //sw spi
 void SWSPI_init();
