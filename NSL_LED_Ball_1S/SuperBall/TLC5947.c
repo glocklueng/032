@@ -88,9 +88,26 @@ void LEDscan2(int red, float degreeoffset,unsigned int count)
 
       LEDChannels[LEDindex] = red * brightnessfactor;
     }
-    
-
 }
+
+void LEDscan2Add(int red, float degreeoffset,unsigned int count) 
+{
+
+  float brightnessfactor = 0.0f;
+  
+  float scanindex = (1.0f + sinf(degreeoffset*3.14159f/180.0f)) * ((float)(count * 24 ) / 2.0);
+  
+    for(unsigned int LEDindex = 0; LEDindex < (count  * 24); LEDindex++) {
+      
+
+      brightnessfactor = expf(0.0f - fabs(scanindex - ((float)LEDindex + 0.5f)) * 1.3f);
+
+      LEDChannels[LEDindex] += red * brightnessfactor;
+
+	  if( LEDChannels[LEDindex] > 4095 )  LEDChannels[LEDindex] = 4095;
+    }
+}
+
 
 void LEDscan3(int red, float degreeoffset,unsigned int count) 
 {
@@ -105,10 +122,9 @@ void LEDscan3(int red, float degreeoffset,unsigned int count)
       brightnessfactor = expf(0.0f - fabs(scanindex - ((float)LEDindex + 0.5f)) * 1.3f);
 
       LEDChannels[LEDindex] = 4096-(red * brightnessfactor);
-    }
-    
-
+    }    
 }
+
 //------------------------------------------------------------------------------------------
 // Sets up TLC5947 and TRC104
 //------------------------------------------------------------------------------------------
@@ -121,6 +137,11 @@ void LED_Init(void)
 	
 	DATPORT &= ~(LATPIN);
 	DATPORT &= ~(BLANK_PIN);
+
+	DDRC &=~(_BV(PC4)| _BV(PC5));
+	PORTC &=~(_BV(PC4));
+	PORTC |= _BV(PC5);
+
 
 	memset(LEDChannels,0,sizeof(LEDChannels)*sizeof(uint16_t));
 
