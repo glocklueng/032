@@ -175,7 +175,7 @@ int main(void)
 	}
 
 
-	while(1){
+	while(0){
 
 		if( PINC  & _BV(PC4) ) {
 
