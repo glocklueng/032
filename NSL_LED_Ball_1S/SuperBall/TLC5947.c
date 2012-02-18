@@ -24,6 +24,9 @@ void Clear(unsigned short val)
     }
 }
 
+unsigned char brightnessShift= 0;
+
+
 //------------------------------------------------------------------------------------------
 // Read all bits in the LEDChannels array and send them on the selected pins
 //------------------------------------------------------------------------------------------
@@ -33,7 +36,12 @@ void WriteLEDArray(unsigned int count) {
 
   for (unsigned int i = 0; i < (count  * 24); i++) {
 
-    tempOne = LEDChannels[i];
+    tempOne = LEDChannels[i]>>brightnessShift;
+	
+	// this limits the current draw during charging
+	if( !(PINC  & _BV(PC4) )){
+		tempOne >>= 8;
+	}
 
     for (int j = 0; j < 12; j++) {
       if ((tempOne >> (11 - j)) & 1) {
@@ -126,7 +134,7 @@ void LEDscan3(int red, float degreeoffset,unsigned int count)
 }
 
 //------------------------------------------------------------------------------------------
-// Sets up TLC5947 and TRC104
+// Sets up TLC5947 and MMA7455
 //------------------------------------------------------------------------------------------
 void LED_Init(void)
 {
@@ -138,12 +146,46 @@ void LED_Init(void)
 	DATPORT &= ~(LATPIN);
 	DATPORT &= ~(BLANK_PIN);
 
+	// setup button and charging indicator
 	DDRC &=~(_BV(PC4)| _BV(PC5));
-	PORTC &=~(_BV(PC4));
+	PORTC |= _BV(PC4);
 	PORTC |= _BV(PC5);
 
-
+	// turn off ADC
+	ADCSRA = 0;  
+	
+	// clear the array
 	memset(LEDChannels,0,sizeof(LEDChannels)*sizeof(uint16_t));
+
+	// push off empty, do this before the sleep setup
+	WriteLEDArray(NUM_TLC5947);
+
+#if 0
+	set_sleep_mode (SLEEP_MODE_PWR_DOWN);  
+	sleep_enable();
+
+	// turn off brown-out enable in software
+	MCUCR = _BV (BODS) | _BV (BODSE);
+	MCUCR = _BV (BODS); 
+	sleep_cpu ();  
+
+	// cancel sleep as a precaution
+	sleep_disable();
+#endif
+}
+
+// from
+// http://www.gammon.com.au/forum/?id=11497
+
+void sleep_down( void )
+{
+	set_sleep_mode (SLEEP_MODE_PWR_DOWN);  
+	sleep_enable();
+
+	// turn off brown-out enable in software
+	MCUCR = _BV (BODS) | _BV (BODSE);
+	MCUCR = _BV (BODS); 
+	sleep_cpu ();  
 
 }
 

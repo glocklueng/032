@@ -70,7 +70,7 @@ typedef unsigned int uint;
 
 
 extern uint16_t LEDChannels[(NUM_TLC5947*24)];
-
+extern unsigned char brightnessShift;
 extern int gCount;
 
 // prototypes
@@ -82,6 +82,7 @@ void USART_putstring(char* StringPtr);
 void SetPoint( unsigned short x, unsigned short y,unsigned short val);
 void Clear(unsigned short val);
 void Line( int x,int y,int x1,int y1);
+void sleep_down( void );
 
 // TLC
 void WriteLEDArray(unsigned int count);
