@@ -173,7 +173,7 @@ void Text8x6(short x,short y,const unsigned char *string)
 				if(cur&(0x80>>j)) {
 					if (( x+j+l) >= 0 && (x+j+l) < (SUPERBALL_WIDTH))
 						if( (y+i) >= 0 && (y+i) < SUPERBALL_HEIGHT-1 )
-							SetPoint(x+j+l,y+i, 4095);
+							SetPoint(x+j+l,y+i, 4095>>1);
 				}
 			}
 		}
@@ -223,7 +223,7 @@ void Text6x6(short x,short y,const unsigned char *string)
 					if(cur&(0x80>>j)) {
 					if (( x+j+l) >= 0 && (x+j+l) < (SUPERBALL_WIDTH))
 						if( (y+i) >= 0 && (y+i) < SUPERBALL_HEIGHT-1 )
-							SetPoint(x+j+l,y+i , 4095);
+							SetPoint(x+j+l,y+i , 4095>>1);
 
 					}
 				}

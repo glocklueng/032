@@ -1,5 +1,6 @@
 // todo:
 // convert the spi to software bitbang.
+// write comments, tidy up code :)
 
 #include "SuperBall.h"
 
@@ -127,7 +128,7 @@ void fade(void)
 
 unsigned char mode_switch( void )
 {
-	return ( PINC  & _BV(PC5) );
+	return !( PINC & _BV(PC5) );
 }
 
 int main(void)
@@ -218,7 +219,18 @@ int main(void)
 		//USART_send( gMode+'a');
 		//USART_send( 13);
 		//USART_send( 10);
+		
+		if( mode_switch( ) ){ 
+			brightnessShift++;
+			brightnessShift%=6;
+			_delay_ms( 1000 );
+		}
 
+		if( PINC  & _BV(PC4) ) {
+			USART_send( '1' );
+		} else {
+			USART_send( '0' );
+		}
 		switch( gMode) {
 
 			case 0:
@@ -239,7 +251,11 @@ int main(void)
 				}
 				}
 			}
-			 gMode=1;
+			if( PINC  & _BV(PC4) )
+				 gMode = 1;
+			else 
+				gMode = 2;
+
 			 l = 0;
 			 ld = 40;
 			 //fadeup();
@@ -386,7 +402,10 @@ int main(void)
 				}
 
 			}
-			gMode=10;
+			if( PINC  & _BV(PC4) )
+				 gMode = 10;
+			else 
+				gMode = 11;
 			fade();
 			break;
 
@@ -424,7 +443,10 @@ int main(void)
 				}
 				
 				if( (rand() % 20 ) == 5 )  {
-					gMode=12;
+					if( PINC  & _BV(PC4) )
+						 gMode = 12;
+					else 
+						gMode = 0;
 				}
 				break;
 	
