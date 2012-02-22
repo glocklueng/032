@@ -27,6 +27,8 @@ void Clear(unsigned short val)
 unsigned char brightnessShift= 0;
 
 
+extern unsigned char chargeMode ;
+
 //------------------------------------------------------------------------------------------
 // Read all bits in the LEDChannels array and send them on the selected pins
 //------------------------------------------------------------------------------------------
@@ -39,8 +41,8 @@ void WriteLEDArray(unsigned int count) {
     tempOne = LEDChannels[i]>>brightnessShift;
 	
 	// this limits the current draw during charging
-	if( !(PINC  & _BV(PC4) )){
-		tempOne >>= 8;
+	if( chargeMode ){
+		tempOne >>= 3;
 	}
 
     for (int j = 0; j < 12; j++) {
@@ -153,7 +155,10 @@ void LED_Init(void)
 
 	// turn off ADC
 	ADCSRA = 0;  
-	
+
+	// full bright	
+	brightnessShift = 0;
+
 	// clear the array
 	memset(LEDChannels,0,sizeof(LEDChannels)*sizeof(uint16_t));
 

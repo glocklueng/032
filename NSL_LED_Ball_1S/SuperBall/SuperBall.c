@@ -65,8 +65,8 @@ Function: UART Receive Complete interrupt
 Purpose:  called when the UART has received a character
 **************************************************************************/
 {
-   unsigned short data ;
-    unsigned char usr;
+	unsigned short data ;
+	unsigned char usr;
 
  
     /* read UART status register and UART data register */ 
@@ -88,20 +88,21 @@ Purpose:  called when the UART has received a character
 
 void fadeup(void)
 {
-return;
+
+	return;
 
 	int quit = 0;
+
 	while(quit == 0 ){
 		
 		quit = 1;
 
 		for(unsigned int i = 0 ; i < (NUM_TLC5947*24); i++) {
+
 			if( LEDChannels[ i ] < 4095 ) { 
-				LEDChannels[i]*=2;
+				LEDChannels[ i ]*=2;
 				quit = 0;
 			}
-			if(LEDChannels[ i ] >4095) 
-				LEDChannels[ i ] = 4095 ;
 		}
 		
 		WriteLEDArray(NUM_TLC5947);
@@ -129,6 +130,72 @@ void fade(void)
 unsigned char mode_switch( void )
 {
 	return !( PINC & _BV(PC5) );
+}
+
+void WriteArrayOffset(unsigned int count, unsigned int offset) {
+  //LATPORT |= (1 << BLANKPIN);
+  LATPORT &= ~(1 << LATPIN);
+  _delay_us(30);
+  unsigned short tempOne = 0;
+  unsigned int 	 tempOffset = 0;
+
+  for (unsigned int i = 0; i < (count  * 24); i++) {
+	if (i+offset>=count*24) tempOffset = offset-(count*24);
+		else tempOffset = offset;
+	tempOne = LEDChannels[i+tempOffset];
+
+    for (int j = 0; j < 12; j++) {
+      if ((tempOne >> (11 - j)) & 1) {
+        DATPORT |= (1 << DATPIN);
+      } 
+      else {
+        DATPORT &= ~(1 << DATPIN);
+      }
+
+      CLKPORT |= (1 << CLKPIN);
+      CLKPORT &= ~(1 << CLKPIN); 
+
+    } 
+  }
+
+	LATPORT |= (1 << LATPIN);
+	_delay_us(30);
+  	//LATPORT &= ~(1 << BLANKPIN);
+}
+
+
+unsigned char chargeMode = 0;
+
+//Overflow ISR
+ISR(TIMER1_OVF_vect)
+{
+	// read chargeMode
+	chargeMode  =  !(PINC  & _BV(PC4));
+
+	if( chargeMode ) {
+		USART_send( '1' );
+	} else {
+		USART_send( '0' );
+	}
+
+}
+
+void init_timer(void)
+{
+
+	TIMSK1	=	0x01; 	// enabled global and timer overflow interrupt;
+	TCCR1A	=	0x00; 	// normal operation page 148 (mode0);
+	TCNT1	=	0x0000; // 16bit counter register
+	TCCR1B	=	0x04; 	// start timer/ set clock
+}
+
+void start_timer(void)
+{
+	//Start timer without prescaller
+	TCCR1B	|=	(1<<CS10);
+	
+	//Enable global interrutps
+	sei();
 }
 
 int main(void)
@@ -160,9 +227,11 @@ int main(void)
 	ld = 40;
 	gMode = 0;
 
-#define SUB	( 2 )
-	sei();
+	init_timer();
 
+#define SUB	( 2 )
+	
+	start_timer();
 
 	while( 0 ) {
     	USART_send('X');_delay_ms(250);
@@ -219,18 +288,12 @@ int main(void)
 		//USART_send( gMode+'a');
 		//USART_send( 13);
 		//USART_send( 10);
-		
 		if( mode_switch( ) ){ 
 			brightnessShift++;
 			brightnessShift%=6;
 			_delay_ms( 1000 );
 		}
 
-		if( PINC  & _BV(PC4) ) {
-			USART_send( '1' );
-		} else {
-			USART_send( '0' );
-		}
 		switch( gMode) {
 
 			case 0:
@@ -251,7 +314,7 @@ int main(void)
 				}
 				}
 			}
-			if( PINC  & _BV(PC4) )
+			if( chargeMode == 0  )
 				 gMode = 1;
 			else 
 				gMode = 2;
@@ -281,12 +344,14 @@ int main(void)
 			
 			
 			case 2:
-			fadeup();
+				
+				fadeup();
+				
 				for(int i =0 ; i < 2 ;i++)
-				for (int offset = 240; offset < 310; offset += 1) {
+					for (int offset = 240; offset < 310; offset += 1) {
 
-					LEDscan(4096, offset,1);
- 				}
+						LEDscan(4096, offset,1);
+	 				}
 		
 				gMode++;
 	
@@ -327,25 +392,25 @@ int main(void)
 
 			case 5:
 				for(int i =0 ; i < 5 ;i++)
-				for (int offset = 0; offset < 360; offset += 1) {
+					for (int offset = 0; offset < 360; offset += 1) {
 
-					LEDscan2(4096, offset,1);    WriteLEDArray(1);  
- 				}
-			 gMode=6;
+						LEDscan2(4096, offset,1);    WriteLEDArray(1);  
+	 				}
+				gMode=6;
 	
 			break;
 
 			case 6:
 				for(int i =0 ; i < 5 ;i++)
-				for (int offset = 0; offset < 360; offset += 1) {
+					for (int offset = 0; offset < 360; offset += 1) {
 
-					LEDscan2(4096, offset,i/2);
+						LEDscan2(4096, offset,i/2);
 
-				    WriteLEDArray(i/2);  
- 				}
-			 gMode=7;
+					    WriteLEDArray(i/2);  
+ 					}
+				 gMode=7;
 	
-			break;
+				break;
 			case 7:
 			{
 
@@ -402,7 +467,7 @@ int main(void)
 				}
 
 			}
-			if( PINC  & _BV(PC4) )
+			if( chargeMode == 0 )
 				 gMode = 10;
 			else 
 				gMode = 11;
@@ -443,7 +508,7 @@ int main(void)
 				}
 				
 				if( (rand() % 20 ) == 5 )  {
-					if( PINC  & _BV(PC4) )
+					if( chargeMode == 0 )
 						 gMode = 12;
 					else 
 						gMode = 0;
@@ -468,6 +533,24 @@ int main(void)
 			 gMode=0;
 			}
 			break;
+
+		case 13:
+			for (int r=0;r<NUM_TLC5947*24;r+=24){
+				for (int x=r;x<r+24;x+=1) {
+					LEDChannels[x]=rand()/1024;
+					if (LEDChannels[x]>30) LEDChannels[x]=4095;
+						else if (LEDChannels[x]<10) LEDChannels[x]=0;
+					}
+					for(int i=0;i<NUM_TLC5947*24;i+=24){
+						WriteArrayOffset(NUM_TLC5947,i);
+						_delay_ms(10);
+					}
+				}
+
+			gMode = 0;
+
+			break;
+
 		}
 	}
 
