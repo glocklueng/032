@@ -15,7 +15,7 @@ void loop_scroll(void);
 #define BAILOUT 			( 16 )
 #define MAX_ITERATIONS		( 16 ) 
 
-#define BAUDRATE (57600)
+#define BAUDRATE (250000)//(76800)
 #define BAUD_PRESCALLER (((F_CPU / (BAUDRATE * 16UL))) - 1)
 
 
@@ -234,14 +234,14 @@ int main(void)
 	start_timer();
 
 	while( 0 ) {
-    	USART_send('X');_delay_ms(250);
+    	USART_send('X');_delay_ms(50);
 	}
 
 	while(0){
 
 		Clear( 4095/16 );
 
-			WriteLEDArray(NUM_TLC5947);
+		WriteLEDArray(NUM_TLC5947);
 	}
 
 
@@ -277,7 +277,7 @@ int main(void)
 			WriteLEDArray(NUM_TLC5947);
 			pushLeds =0;
 		} else {
-			_delay_us(10);
+			_delay_us(1);
 		}
 	}
 
@@ -293,6 +293,8 @@ int main(void)
 			brightnessShift%=6;
 			_delay_ms( 1000 );
 		}
+
+		gMode = 14;
 
 		switch( gMode) {
 
@@ -364,7 +366,7 @@ int main(void)
 
 				WriteLEDArray(NUM_TLC5947);
 				_delay_ms(40);
-				if( (rand() % 150 ) == 5 )  {
+				if( (rand() % 150) == 5 )  {
 					fade();
 					gMode++;
 				}
@@ -547,10 +549,50 @@ int main(void)
 					}
 				}
 
+			gMode = 14;
+
+		break;
+
+		case 14:
+			#define NUM_DOTS (6)
+			{
+			signed char  DotX[NUM_DOTS];
+			signed char  DotY[NUM_DOTS];
+			signed char  DotDirX[NUM_DOTS];
+			signed char  DotDirY[NUM_DOTS];
+			
+			int		ran;
+			
+			for (unsigned char x=0;x<NUM_DOTS;x++) {DotX[x]=0;DotY[x]=12; DotDirX[x]=1;DotDirY[x]=0;}
+			
+			for (unsigned char y=0;y<250;y++) 
+			{
+				for (int x=0;x<NUM_TLC5947*24;x++) LEDChannels[x]*=.75;
+				for (int x=0;x<NUM_DOTS;x++) {
+					LEDChannels[((DotX[x]*24)+(DotY[x]))] = 2000;
+					//DotX[x]+=-1;
+					DotX[x]+=DotDirX[x];
+					DotY[x]+=DotDirY[x];
+					if (DotX[x]>15) DotX[x]-=16;
+					if (DotX[x]<0) DotX[x]+=16;
+					if (DotY[x]>23) DotY[x]-=24;
+					if (DotY[x]<0) DotY[x]+=24;
+					ran=rand();
+					if ((ran>31744)&&DotDirX[x]!=0) {DotDirX[x]=0;DotDirY[x]=1;}
+						else if ((ran>31744)&&DotDirY[x]!=0) {DotDirY[x]=0;DotDirX[x]=1;}
+						else if ((ran>30720)&&DotDirX[x]!=0) {DotDirX[x]=0;DotDirY[x]=-1;}
+						else if ((ran>30720)&&DotDirY[x]!=0) {DotDirY[x]=0;DotDirX[x]=-1;}
+					}
+				WriteArrayOffset(NUM_TLC5947,0);
+				_delay_ms(rand()%100);
+				}
+			}
+
+
+/// next mode
 			gMode = 0;
 
 			break;
-
 		}
 	}
 
