@@ -1,0 +1,9 @@
+v1.0 boards:
+
+* six pin header to Arduino in lower left corner is .05" too far to the left
+* Y driver's power and motor pins are .100" too far to the left
+* can we add .100" of space between the driver boards?
+* A's step and direction pins are not connected.
+* Check spacing of digital 8-15 from 0-7 - too close by a tiny ammount.
+
+All of the above are fixed in the v1.1 design. (06/17/2011)
