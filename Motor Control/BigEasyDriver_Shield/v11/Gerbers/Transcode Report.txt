@@ -1,0 +1,70 @@
+
+
+   ---- Transcoding 'D:\Projects\EasyDriver\EE\BEDBackpack\v11\Gerbers\BEDBackpack_v11.bottomlayer.ger' ----   Fri Jun 17 09:13:40 2011
+
+D10   --> D100
+D11   --> D101
+-----------------------------------------------------------------
+
+
+   ---- Transcoding 'D:\Projects\EasyDriver\EE\BEDBackpack\v11\Gerbers\BEDBackpack_v11.bottomsilkscreen.ger' ----   Fri Jun 17 09:13:42 2011
+
+D12   --> D102
+D13   --> D103
+D14   --> D104
+D15   --> D105
+-----------------------------------------------------------------
+
+
+   ---- Transcoding 'D:\Projects\EasyDriver\EE\BEDBackpack\v11\Gerbers\BEDBackpack_v11.bottomsoldermask.ger' ----   Fri Jun 17 09:13:44 2011
+
+D10   --> D106
+D11   --> D107
+D12   --> D108
+D13   --> D109
+D14   --> D110
+D15   --> D111
+D16   --> D112
+D17   --> D113
+D18   --> D114
+D19   --> D115
+D20   --> D116
+D21   --> D117
+D22   --> D118
+-----------------------------------------------------------------
+
+
+   ---- Transcoding 'D:\Projects\EasyDriver\EE\BEDBackpack\v11\Gerbers\BEDBackpack_v11.toplayer.ger' ----   Fri Jun 17 09:13:45 2011
+
+D10   --> D119
+D11   --> D120
+D18   --> D121
+D19   --> D122
+D20   --> D123
+-----------------------------------------------------------------
+
+
+   ---- Transcoding 'D:\Projects\EasyDriver\EE\BEDBackpack\v11\Gerbers\BEDBackpack_v11.topsilkscreen.ger' ----   Fri Jun 17 09:13:45 2011
+
+D11   --> D124
+D12   --> D125
+D13   --> D126
+D14   --> D127
+D15   --> D128
+D16   --> D129
+D17   --> D130
+-----------------------------------------------------------------
+
+
+   ---- Transcoding 'D:\Projects\EasyDriver\EE\BEDBackpack\v11\Gerbers\BEDBackpack_v11.topsoldermask.ger' ----   Fri Jun 17 09:13:45 2011
+
+D10   --> D131
+D11   --> D132
+D12   --> D133
+D13   --> D134
+D14   --> D135
+D15   --> D136
+D16   --> D137
+D17   --> D138
+D18   --> D139
+-----------------------------------------------------------------
