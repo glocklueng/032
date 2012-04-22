@@ -182,6 +182,7 @@ const char song[][512] = {
 #include "apps.h"
 #include "legicrf.h"
 #include "msd.h"
+
 #ifdef WITH_LCD
 #include "gui_layout.h"
 #include "glcd.h"
@@ -1465,39 +1466,40 @@ int testmain(void)
                         
 #ifdef WITH_LCD
  
-	LED_A_ON();
-	
-        lcd_init();
-        
-      lcd_setcolor(GUI_CLR_BG, GUI_CLR_TXT);
-      lcd_clear();
-
-        // test text on different colored backgrounds
-        lcd_setcolor(GUI_CLR_BG, GREEN);
-       lcd_gotoxy(POS(0),LINE(1));
-	lcd_puts("* Record HID tag     ");
+    LED_A_ON();
+    
+    lcd_init();
+    
+    lcd_setcolor(GUI_CLR_BG, GUI_CLR_TXT);
+    lcd_clear();
+    
+    // test text on different colored backgrounds
+    lcd_setcolor(GUI_CLR_BG, GREEN);
+    lcd_gotoxy(POS(0),LINE(1));
+    lcd_puts("* Record HID tag     ");
     lcd_setcolor(GUI_CLR_BG, RED);
     lcd_gotoxy(POS(0),LINE(2));
-	lcd_puts("  Replay HID tag     ");
+    lcd_puts("  Replay HID tag     ");
     lcd_setcolor(GUI_CLR_BG, YELLOW);
     lcd_gotoxy(POS(0),LINE(3));
-	lcd_puts("  Record raw tag     ");
+    lcd_puts("  Record raw tag     ");
     lcd_setcolor(GUI_CLR_BG, BLUE);
     lcd_gotoxy(POS(0),LINE(4));
-	lcd_puts("  Replay raw tag     ");
+    lcd_puts("  Replay raw tag     ");
     lcd_gotoxy(POS(0),LINE(5));
-	lcd_puts("  Music Playback     ");
+    lcd_puts("  Music Playback     ");
     lcd_gotoxy(POS(0),LINE(6));
-	lcd_puts("  Tune HF Antenna    ");
+    lcd_puts("  Tune HF Antenna    ");
     lcd_gotoxy(POS(0),LINE(7));
-	lcd_puts("  Tune LF Antenna    ");
+    lcd_puts("  Tune LF Antenna    ");
 
 #endif
 
-        int i;
+
            
 #if 0
-		volatile int j ;
+	        int i;
+                volatile int j ;
 
 		for(i=0;i<100;i++)  {
 			j += ReadAdc(ADC_CHAN_LF);
@@ -1513,7 +1515,7 @@ int testmain(void)
 		
 #endif
 
-		play(song[63],0);
+		//play(song[63],0);
 		
 	for(;;) {
                 
@@ -1689,7 +1691,8 @@ void play(const char p[],int printName)
 
 	  // play the note
 	  PWMC_BeepN(1,(notes[(scale - 4) * 12 + note])*10);
-//	  __delay( duration );
+	  //SpinDelay( duration/20 );
+          
 	  for(volatile unsigned int j=0 ; j < 1300*duration ; j++) j = j;
 	  PWMC_DisableChannel(1);
     
@@ -1697,16 +1700,16 @@ void play(const char p[],int printName)
 	
 	  //delay only
 	  for(volatile unsigned int j=0 ; j < 1300*duration ; j++) j = j;
-//	  __delay( duration );
+	 // SpinDelay( duration/20 );
 	  
     }
   }
 	
 	lcd_gotoxy(POS(0),LINE(10));
-  lcd_puts("                             ");
+        lcd_puts("                             ");
 	lcd_gotoxy(POS(0),LINE(11));
 
 	lcd_puts("                             ");
 
-  PWMC_DisableChannel(1);
+        PWMC_DisableChannel(1);
 }

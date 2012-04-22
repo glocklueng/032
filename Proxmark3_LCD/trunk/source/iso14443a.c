@@ -1607,35 +1607,42 @@ void ReaderIso14443a(DWORD parameter)
   BYTE* receivedAnswer = (((BYTE *)BigBuf) + 3560);	// was 3560 - tied to other size changes
   traceLen = 0;
 
+    DbpString("ReaderIso14443a");
+    
 	// Setup SSC
 	FpgaSetupSsc();
 
 	// Start from off (no field generated)
-  // Signal field is off with the appropriate LED
-  LED_D_OFF();
-  FpgaWriteConfWord(FPGA_MAJOR_MODE_OFF);
-  SpinDelay(200);
-
-  SetAdcMuxFor(GPIO_MUXSEL_HIPKD);
-  FpgaSetupSsc();
+        // Signal field is off with the appropriate LED
+        LED_D_OFF();
+        FpgaWriteConfWord(FPGA_MAJOR_MODE_OFF);
+        SpinDelay(200);
+        
+        SetAdcMuxFor(GPIO_MUXSEL_HIPKD);
+        FpgaSetupSsc();
 
 	// Now give it time to spin up.
-  // Signal field is on with the appropriate LED
-  LED_D_ON();
-  FpgaWriteConfWord(FPGA_MAJOR_MODE_HF_ISO14443A | FPGA_HF_ISO14443A_READER_MOD);
-	SpinDelay(200);
+        // Signal field is on with the appropriate LED
+        LED_D_ON();
+        FpgaWriteConfWord(FPGA_MAJOR_MODE_HF_ISO14443A | FPGA_HF_ISO14443A_READER_MOD);
+        SpinDelay(200);
 
 	LED_A_ON();
 	LED_B_OFF();
 	LED_C_OFF();
 
-	while(traceLen < TRACE_LENGTH)
+ 
+      while(traceLen < TRACE_LENGTH)
   {
+
+    DbpString("ReaderIso14443a while");
+    
     // Broadcast for a card, WUPA (0x52) will force response from all cards in the field
     ReaderTransmitShort(wupa);
     
     // Test if the action was cancelled
     if(BUTTON_PRESS()) {
+      DbpString("reader aborted by button");
       break;
     }
     
@@ -1646,19 +1653,21 @@ void ReaderIso14443a(DWORD parameter)
     ReaderTransmit(sel_all,sizeof(sel_all));
 
     // Receive the UID
-    if (!ReaderReceive(receivedAnswer)) continue;
+    if (!ReaderReceive(receivedAnswer)) 
+      continue;
+     // Construct SELECT UID command
+    // First copy the 5 bytes (Mifare Classic) after the 93 70
+    memcpy(sel_uid+2,receivedAnswer,5);
+    // Secondly compute the two CRC bytes at the end
     
-		// Construct SELECT UID command
-		// First copy the 5 bytes (Mifare Classic) after the 93 70
-		memcpy(sel_uid+2,receivedAnswer,5);
-		// Secondly compute the two CRC bytes at the end
     AppendCrc14443a(sel_uid,7);
 
     // Transmit SELECT_UID
     ReaderTransmit(sel_uid,sizeof(sel_uid));
     
     // Receive the SAK
-    if (!ReaderReceive(receivedAnswer)) continue;
+    if (!ReaderReceive(receivedAnswer)) 
+      continue;
 
     // OK we have selected at least at cascade 1, lets see if first byte of UID was 0x88 in
     // which case we need to make a cascade 2 request and select - this is a long UID
