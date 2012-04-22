@@ -2,10 +2,17 @@
 
 <project>
   <fileVersion>2</fileVersion>
+<<<<<<< .mine
+  <fileChecksum>1482815344</fileChecksum>
+=======
   <fileChecksum>1552462008</fileChecksum>
+>>>>>>> .r1291
   <configuration>
     <name>Debug</name>
     <outputs>
+<<<<<<< .mine
+      <file>$PROJ_DIR$\bootrom\bootrom.c</file>
+=======
       <file>$PROJ_DIR$\lfops.c</file>
       <file>$PROJ_DIR$\common\legic_prng.c</file>
       <file>$PROJ_DIR$\legicrf.c</file>
@@ -59,9 +66,34 @@
       <file>$PROJ_DIR$\common\crc.c</file>
       <file>$PROJ_DIR$\diskio.c</file>
       <file>$PROJ_DIR$\diskio.h</file>
+>>>>>>> .r1291
+<<<<<<< .mine
+=======
       <file>$PROJ_DIR$\ff.c</file>
       <file>$PROJ_DIR$\ff.h</file>
       <file>$PROJ_DIR$\flash.icf</file>
+>>>>>>> .r1291
+<<<<<<< .mine
+      <file>$PROJ_DIR$\bootrom\fromflash.c</file>
+      <file>$PROJ_DIR$\Debug\Obj\bootrom.o</file>
+      <file>$PROJ_DIR$\apps.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\proxmark3lcd.pbd</file>
+      <file>$PROJ_DIR$\Debug\Obj\util.o</file>
+      <file>$TOOLKIT_DIR$\inc\DLib_Config_Normal.h</file>
+      <file>$TOOLKIT_DIR$\inc\DLib_Defaults.h</file>
+      <file>$TOOLKIT_DIR$\inc\stdarg.h</file>
+      <file>$PROJ_DIR$\include\proxmark3.h</file>
+      <file>$PROJ_DIR$\include\fpga.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\iso14443.o</file>
+      <file>$PROJ_DIR$\..\at91lib\boards\at91sam7s-ek\at91sam7s512\AT91SAM7S512.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\spi.pbi</file>
+      <file>$TOOLKIT_DIR$\inc\stddef.h</file>
+      <file>$TOOLKIT_DIR$\inc\stdlib.h</file>
+      <file>$PROJ_DIR$\Debug\Exe\proxmark3lcd.out</file>
+      <file>$PROJ_DIR$\include\config_gpio.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\iso14443a.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\usb.pbi</file>
+=======
       <file>$PROJ_DIR$\fonts.c</file>
       <file>$PROJ_DIR$\fonts.h</file>
       <file>$PROJ_DIR$\fpgaloader.c</file>
@@ -72,21 +104,45 @@
       <file>$PROJ_DIR$\hitag2.h</file>
       <file>$PROJ_DIR$\iso14443.c</file>
       <file>$PROJ_DIR$\iso14443a.c</file>
+>>>>>>> .r1291
+<<<<<<< .mine
+      <file>$PROJ_DIR$\Debug\Obj\printf.o</file>
+      <file>$PROJ_DIR$\..\common\crc.c</file>
+      <file>$PROJ_DIR$\include\crc.h</file>
+=======
       <file>$PROJ_DIR$\iso15693.c</file>
       <file>$PROJ_DIR$\Makefile</file>
       <file>$PROJ_DIR$\msd.c</file>
       <file>$PROJ_DIR$\msd.h</file>
       <file>$PROJ_DIR$\printf.c</file>
       <file>$PROJ_DIR$\proxmark3lcd.ewp</file>
+>>>>>>> .r1291
+<<<<<<< .mine
+=======
       <file>$PROJ_DIR$\pwm.c</file>
       <file>$PROJ_DIR$\spi.c</file>
+>>>>>>> .r1291
+<<<<<<< .mine
+      <file>$PROJ_DIR$\common\legic_prng.h</file>
+      <file>$TOOLKIT_DIR$\inc\DLib_Product.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\start.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\version.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\legicrf.o</file>
+=======
       <file>$PROJ_DIR$\start.c</file>
-      <file>$PROJ_DIR$\common\usb.c</file>
+>>>>>>> .r1291
+<<<<<<< .mine
+      <file>$PROJ_DIR$\Debug\Obj\fpgaloader.pbi</file>
+=======
       <file>$PROJ_DIR$\util.c</file>
       <file>$PROJ_DIR$\version.c</file>
       <file>$TOOLKIT_DIR$\lib\shs_l.a</file>
       <file>$TOOLKIT_DIR$\lib\rt4t_al.a</file>
+>>>>>>> .r1291
       <file>$PROJ_DIR$\Debug\Obj\hitag2.o</file>
+<<<<<<< .mine
+      <file>$PROJ_DIR$\..\at91lib\boards\at91sam7s-ek\board.h</file>
+=======
       <file>$PROJ_DIR$\Debug\Obj\version.o</file>
       <file>$PROJ_DIR$\common\legic_prng.h</file>
       <file>$PROJ_DIR$\Debug\Obj\lfops.pbi</file>
@@ -116,10 +172,95 @@
       <file>$TOOLKIT_DIR$\inc\c\ysizet.h</file>
       <file>$TOOLKIT_DIR$\inc\c\stdlib.h</file>
       <file>$PROJ_DIR$\..\at91lib\boards\at91sam7s-ek\board.h</file>
+>>>>>>> .r1291
       <file>$PROJ_DIR$\Debug\List\proxmark3lcd.map</file>
+<<<<<<< .mine
+      <file>$PROJ_DIR$\legic_prng.h</file>
+=======
+>>>>>>> .r1291
       <file>$PROJ_DIR$\Debug\Obj\appmain.pbi</file>
+<<<<<<< .mine
+      <file>$PROJ_DIR$\Debug\Exe\proxmark3lcd.s19</file>
+      <file>$TOOLKIT_DIR$\lib\rt4t_al.a</file>
+      <file>$PROJ_DIR$\Debug\Obj\fpgaloader.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\lfops.pbi</file>
+=======
+>>>>>>> .r1291
       <file>$PROJ_DIR$\Debug\Obj\start.pbi</file>
       <file>$PROJ_DIR$\Debug\Obj\bootrom.pbi</file>
+<<<<<<< .mine
+      <file>$PROJ_DIR$\Debug\Obj\fonts.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\board_cstartup_iar.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\fromflash.o</file>
+      <file>$TOOLKIT_DIR$\lib\shs_l.a</file>
+      <file>$PROJ_DIR$\Debug\Obj\iso15693.o</file>
+      <file>$PROJ_DIR$\fonts\Default.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\msd.o</file>
+      <file>$PROJ_DIR$\include\at91sam7s512.h</file>
+      <file>$TOOLKIT_DIR$\lib\dl4t_al_in.a</file>
+      <file>$PROJ_DIR$\..\at91lib\boards\at91sam7s-ek\board_cstartup_iar.s</file>
+      <file>$PROJ_DIR$\common\crc.c</file>
+      <file>$PROJ_DIR$\diskio.c</file>
+      <file>$PROJ_DIR$\diskio.h</file>
+      <file>$PROJ_DIR$\ff.c</file>
+      <file>$PROJ_DIR$\ff.h</file>
+      <file>$PROJ_DIR$\flash.icf</file>
+      <file>$PROJ_DIR$\fonts.c</file>
+      <file>$PROJ_DIR$\fpgaloader.c</file>
+      <file>$PROJ_DIR$\glcd.c</file>
+      <file>$PROJ_DIR$\glcd.h</file>
+      <file>$PROJ_DIR$\gui_layout.h</file>
+      <file>$PROJ_DIR$\hitag2.c</file>
+      <file>$PROJ_DIR$\hitag2.h</file>
+      <file>$PROJ_DIR$\iso14443.c</file>
+      <file>$PROJ_DIR$\iso14443a.c</file>
+      <file>$PROJ_DIR$\iso15693.c</file>
+      <file>$PROJ_DIR$\common\legic_prng.c</file>
+      <file>$PROJ_DIR$\legicrf.c</file>
+      <file>$PROJ_DIR$\legicrf.h</file>
+      <file>$PROJ_DIR$\lfops.c</file>
+      <file>$PROJ_DIR$\msd.c</file>
+      <file>$PROJ_DIR$\msd.h</file>
+      <file>$PROJ_DIR$\printf.c</file>
+      <file>$PROJ_DIR$\pwm.c</file>
+      <file>$PROJ_DIR$\spi.c</file>
+      <file>$PROJ_DIR$\start.c</file>
+      <file>$PROJ_DIR$\common\usb.c</file>
+      <file>$PROJ_DIR$\util.c</file>
+      <file>$PROJ_DIR$\version.c</file>
+      <file>$TOOLKIT_DIR$\inc\yvals.h</file>
+      <file>$TOOLKIT_DIR$\inc\stdbool.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\iso14443.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\diskio.o</file>
+      <file>$TOOLKIT_DIR$\inc\ysizet.h</file>
+      <file>$TOOLKIT_DIR$\inc\stdio.h</file>
+      <file>$PROJ_DIR$\..\at91lib\boards\at91sam7s-ek\at91sam7s512\chip.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\glcd.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\iso15693.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\util.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\printf.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\pwm.pbi</file>
+      <file>$PROJ_DIR$\include\usb_cmd.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\appmain.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\diskio.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\crc.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\ff.pbi</file>
+      <file>$TOOLKIT_DIR$\inc\inttypes.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\usb.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\msd.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\spi.o</file>
+      <file>$TOOLKIT_DIR$\inc\DLib_Threads.h</file>
+      <file>$TOOLKIT_DIR$\inc\ycheck.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\legicrf.pbi</file>
+      <file>$TOOLKIT_DIR$\inc\xencoding_limits.h</file>
+      <file>$PROJ_DIR$\..\common\usb.c</file>
+      <file>$PROJ_DIR$\Debug\Obj\ff.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\hitag2.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\fromflash.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\crc.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\pwm.o</file>
+=======
+>>>>>>> .r1291
       <file>$PROJ_DIR$\fonts\Tiny_Time.h</file>
       <file>$PROJ_DIR$\Debug\Obj\lfops.o</file>
       <file>$PROJ_DIR$\include\integer.h</file>
@@ -137,19 +278,38 @@
       <file>$PROJ_DIR$\Debug\Obj\legic_prng.o</file>
       <file>$PROJ_DIR$\Debug\Obj\spi.o</file>
       <file>$PROJ_DIR$\common\iso14443_crc.c</file>
+<<<<<<< .mine
+      <file>$PROJ_DIR$\Debug\Obj\legic_prng.pbi</file>
+=======
+>>>>>>> .r1291
+      <file>$PROJ_DIR$\Debug\Obj\iso14443a.pbi</file>
     </outputs>
     <file>
+<<<<<<< .mine
+      <name>$PROJ_DIR$\bootrom\bootrom.c</name>
+=======
       <name>$PROJ_DIR$\lfops.c</name>
+>>>>>>> .r1291
       <outputs>
         <tool>
           <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 41</file>
+=======
           <file> 83</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 3</file>
+=======
           <file> 115</file>
+>>>>>>> .r1291
         </tool>
       </outputs>
+<<<<<<< .mine
+=======
       <inputs>
         <tool>
           <name>BICOMP</name>
@@ -173,14 +333,23 @@
           <file> 128</file>
         </tool>
       </outputs>
+>>>>>>> .r1291
       <inputs>
         <tool>
           <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 10 49 18 116 98 103 40 81 8 25 105 102 93 82</file>
+=======
           <file> 82 17 122 14 126 33 20 32</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 10 49 18 116 98 103 40 81 8 7 25 105 102 93 82</file>
+=======
           <file> 82 17 122 14 126 7 33 20 32</file>
+>>>>>>> .r1291
         </tool>
       </inputs>
     </file>
@@ -189,192 +358,395 @@
       <outputs>
         <tool>
           <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 34</file>
+=======
           <file> 10</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 94</file>
+=======
           <file> 89</file>
+>>>>>>> .r1291
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 10 49 18 116 98 103 40 81 8 25 105 102 93 82 16 85 4 15 70 73 62 61 9</file>
+=======
           <file> 36 18 103 116 125 122 17 14 126 33 20 32 28 38 41 105 107 101 6 4 40 93</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 10 49 18 116 98 103 40 81 8 7 25 105 102 93 82 16 85 4 15 70 73 62 61 9</file>
+=======
           <file> 36 18 103 116 125 122 17 14 126 7 33 20 32 28 38 41 105 107 101 6 4 40 93</file>
+>>>>>>> .r1291
         </tool>
       </inputs>
     </file>
     <file>
+<<<<<<< .mine
+      <name>$PROJ_DIR$\bootrom\fromflash.c</name>
+=======
       <name>[ROOT_NODE]</name>
+>>>>>>> .r1291
       <outputs>
         <tool>
+<<<<<<< .mine
+          <name>BICOMP</name>
+          <file> 109</file>
+=======
           <name>ILINK</name>
           <file> 102 110</file>
+>>>>>>> .r1291
         </tool>
+<<<<<<< .mine
+        <tool>
+          <name>ICCARM</name>
+          <file> 44</file>
+        </tool>
+=======
+>>>>>>> .r1291
       </outputs>
     </file>
     <file>
       <name>$PROJ_DIR$\Debug\Obj\proxmark3lcd.pbd</name>
       <inputs>
         <tool>
+<<<<<<< .mine
+          <name>BICOMP</name>
+          <file> 10 49 18 116 98 103 40 81 8 25 105 102 93 82</file>
+=======
           <name>BILINK</name>
           <file> 111 113 8 16 13 87 85 118 123 117 106 19 23 15 10 83 127 29 24 30 112 91 25 120</file>
+>>>>>>> .r1291
         </tool>
+<<<<<<< .mine
+        <tool>
+          <name>ICCARM</name>
+          <file> 10 49 18 116 98 103 40 81 8 7 25 105 102 93 82</file>
+        </tool>
+=======
+>>>>>>> .r1291
       </inputs>
     </file>
     <file>
+<<<<<<< .mine
+      <name>[ROOT_NODE]</name>
+=======
       <name>$PROJ_DIR$\bootrom\fromflash.c</name>
+>>>>>>> .r1291
       <outputs>
         <tool>
+<<<<<<< .mine
+          <name>ILINK</name>
+          <file> 32 17</file>
+=======
           <name>BICOMP</name>
           <file> 118</file>
+>>>>>>> .r1291
         </tool>
+<<<<<<< .mine
+=======
         <tool>
           <name>ICCARM</name>
           <file> 97</file>
         </tool>
+>>>>>>> .r1291
       </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Debug\Obj\proxmark3lcd.pbd</name>
       <inputs>
         <tool>
+<<<<<<< .mine
+          <name>BILINK</name>
+          <file> 34 41 110 95 97 42 29 109 119 108 83 122 89 121 104 38 100 91 92 14 39 20 90 114</file>
+=======
           <name>BICOMP</name>
           <file> 36 18 103 116 125 122 17 14 126 33 20 32 28 38</file>
+>>>>>>> .r1291
         </tool>
+<<<<<<< .mine
+=======
         <tool>
           <name>ICCARM</name>
           <file> 36 18 103 116 125 122 17 14 126 7 33 20 32 28 38</file>
         </tool>
+>>>>>>> .r1291
       </inputs>
     </file>
     <file>
+<<<<<<< .mine
+      <name>$PROJ_DIR$\Debug\Exe\proxmark3lcd.out</name>
+=======
       <name>$PROJ_DIR$\appmain.c</name>
+>>>>>>> .r1291
       <outputs>
         <tool>
+<<<<<<< .mine
+          <name>ILINK</name>
+          <file> 32</file>
+=======
           <name>BICOMP</name>
           <file> 111</file>
+>>>>>>> .r1291
         </tool>
         <tool>
+<<<<<<< .mine
+          <name>OBJCOPY</name>
+          <file> 35</file>
+=======
           <name>ICCARM</name>
           <file> 34</file>
+>>>>>>> .r1291
         </tool>
       </outputs>
       <inputs>
         <tool>
+<<<<<<< .mine
+          <name>ILINK</name>
+          <file> 57 94 43 3 96 84 107 117 37 44 88 30 12 19 46 118 28 113 48 21 111 101 26 99 6 27 45 36 50</file>
+=======
           <name>BICOMP</name>
           <file> 36 18 103 116 125 122 17 14 126 33 20 32 28 38 108 107 41 105 4 69 61 60 104</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 36 18 103 116 125 122 17 14 126 7 33 20 32 28 38 108 107 41 105 4 69 61 60 104</file>
+>>>>>>> .r1291
         </tool>
       </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\common\crc.c</name>
+      <outputs>
+        <tool>
+<<<<<<< .mine
+          <name>BICOMP</name>
+          <file> 110</file>
+=======
+          <name>ICCARM</name>
+          <file> 36 18 103 116 125 122 17 14 126 7 33 20 32 28 38 108 107 41 105 4 69 61 60 104</file>
+>>>>>>> .r1291
+        </tool>
+      </outputs>
     </file>
     <file>
       <name>$PROJ_DIR$\..\at91lib\boards\at91sam7s-ek\board_cstartup_iar.s</name>
       <outputs>
         <tool>
           <name>AARM</name>
+<<<<<<< .mine
+          <file> 43</file>
+=======
           <file> 88</file>
+>>>>>>> .r1291
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>AARM</name>
+<<<<<<< .mine
+          <file> 31 87 13</file>
+=======
           <file> 109 21 31</file>
+>>>>>>> .r1291
         </tool>
       </inputs>
     </file>
     <file>
+<<<<<<< .mine
+      <name>$PROJ_DIR$\common\crc.c</name>
+=======
       <name>$PROJ_DIR$\bootrom\bootrom.c</name>
+>>>>>>> .r1291
       <outputs>
         <tool>
+<<<<<<< .mine
+          <name>BICOMP</name>
+          <file> 110</file>
+=======
           <name>BICOMP</name>
           <file> 113</file>
+>>>>>>> .r1291
         </tool>
         <tool>
+<<<<<<< .mine
+          <name>ICCARM</name>
+          <file> 96</file>
+=======
           <name>ICCARM</name>
           <file> 99</file>
+>>>>>>> .r1291
         </tool>
       </outputs>
       <inputs>
         <tool>
+<<<<<<< .mine
+          <name>BICOMP</name>
+          <file> 23 40 103 81 8 25 105 102</file>
+=======
           <name>BICOMP</name>
           <file> 36 18 103 116 125 122 17 14 126 33 20 32 28 38</file>
+>>>>>>> .r1291
         </tool>
+<<<<<<< .mine
+        <tool>
+          <name>ICCARM</name>
+          <file> 23 40 103 81 8 7 25 105 102</file>
+        </tool>
+=======
         <tool>
           <name>ICCARM</name>
           <file> 36 18 103 116 125 122 17 14 126 7 33 20 32 28 38</file>
         </tool>
+>>>>>>> .r1291
       </inputs>
     </file>
     <file>
-      <name>$PROJ_DIR$\common\crc.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 8</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 124</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 93 17 122 14 126 33 20 32</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 93 17 122 14 126 7 33 20 32</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
+<<<<<<< .mine
       <name>$PROJ_DIR$\diskio.c</name>
+=======
+      <name>$PROJ_DIR$\common\crc.c</name>
+>>>>>>> .r1291
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 16</file>
+<<<<<<< .mine
+          <file> 95</file>
+=======
+          <file> 8</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 22</file>
+<<<<<<< .mine
+          <file> 84</file>
+=======
+          <file> 124</file>
+>>>>>>> .r1291
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 52 116 125 122 17 14 126 33 20 32</file>
+<<<<<<< .mine
+          <file> 54 116 98 103 40 81 8 25 105 102</file>
+=======
+          <file> 93 17 122 14 126 33 20 32</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 52 116 125 122 17 14 126 7 33 20 32</file>
+<<<<<<< .mine
+          <file> 54 116 98 103 40 81 8 7 25 105 102</file>
+=======
+          <file> 93 17 122 14 126 7 33 20 32</file>
+>>>>>>> .r1291
         </tool>
       </inputs>
     </file>
     <file>
+<<<<<<< .mine
       <name>$PROJ_DIR$\ff.c</name>
+=======
+      <name>$PROJ_DIR$\diskio.c</name>
+>>>>>>> .r1291
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 13</file>
+<<<<<<< .mine
+          <file> 97</file>
+=======
+          <file> 16</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 9</file>
+<<<<<<< .mine
+          <file> 107</file>
+=======
+          <file> 22</file>
+>>>>>>> .r1291
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 54 116 125 122 17 14 126 33 20 32 52</file>
+<<<<<<< .mine
+          <file> 56 116 98 103 40 81 8 25 105 102 54</file>
+=======
+          <file> 52 116 125 122 17 14 126 33 20 32</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 56 116 98 103 40 81 8 7 25 105 102 54</file>
+=======
+          <file> 52 116 125 122 17 14 126 7 33 20 32</file>
+>>>>>>> .r1291
+        </tool>
+      </inputs>
+    </file>
+    <file>
+<<<<<<< .mine
+      <name>$PROJ_DIR$\fonts.c</name>
+=======
+      <name>$PROJ_DIR$\ff.c</name>
+>>>>>>> .r1291
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 42</file>
+=======
+          <file> 13</file>
+>>>>>>> .r1291
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 117</file>
+=======
+          <file> 9</file>
+>>>>>>> .r1291
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\fpgaloader.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 29</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 37</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 10 49 18 116 98 103 40 81 8 25 105 102 93 82 4 15 85 11</file>
+=======
+          <file> 54 116 125 122 17 14 126 33 20 32 52</file>
+>>>>>>> .r1291
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 10 49 18 116 98 103 40 81 8 7 25 105 102 93 82 4 15 85 11</file>
+=======
           <file> 54 116 125 122 17 14 126 7 33 20 32 52</file>
+>>>>>>> .r1291
         </tool>
       </inputs>
     </file>
@@ -387,99 +759,225 @@
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 88</file>
+=======
           <file> 121</file>
+>>>>>>> .r1291
         </tool>
       </outputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\fpgaloader.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 85</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 86</file>
-        </tool>
-      </outputs>
+<<<<<<< .mine
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 36 18 103 116 125 122 17 14 126 33 20 32 28 38 41 105 107 27</file>
+          <file> 116 98 103 40 81 8 25 105 102 61 10 49 18 93 82 4 15 85 47 112</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 36 18 103 116 125 122 17 14 126 7 33 20 32 28 38 41 105 107 27</file>
+          <file> 116 98 103 40 81 8 7 25 105 102 61 10 49 18 93 82 4 15 85 47 112</file>
         </tool>
       </inputs>
+=======
+>>>>>>> .r1291
     </file>
     <file>
-      <name>$PROJ_DIR$\glcd.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 123</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 39</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 116 125 122 17 14 126 33 20 32 60 36 18 103 28 38 41 105 107 84 114</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 116 125 122 17 14 126 7 33 20 32 60 36 18 103 28 38 41 105 107 84 114</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
+<<<<<<< .mine
       <name>$PROJ_DIR$\hitag2.c</name>
+=======
+      <name>$PROJ_DIR$\fpgaloader.c</name>
+>>>>>>> .r1291
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 117</file>
+<<<<<<< .mine
+          <file> 108</file>
+=======
+          <file> 85</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 80</file>
+<<<<<<< .mine
+          <file> 30</file>
+=======
+          <file> 86</file>
+>>>>>>> .r1291
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 36 18 103 116 125 122 17 14 126 33 20 32 28 38 41 105 107 63</file>
+<<<<<<< .mine
+          <file> 10 49 18 116 98 103 40 81 8 25 105 102 93 82 4 15 85 64</file>
+=======
+          <file> 36 18 103 116 125 122 17 14 126 33 20 32 28 38 41 105 107 27</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 36 18 103 116 125 122 17 14 126 7 33 20 32 28 38 41 105 107 63</file>
+<<<<<<< .mine
+          <file> 10 49 18 116 98 103 40 81 8 7 25 105 102 93 82 4 15 85 64</file>
+=======
+          <file> 36 18 103 116 125 122 17 14 126 7 33 20 32 28 38 41 105 107 27</file>
+>>>>>>> .r1291
         </tool>
       </inputs>
     </file>
     <file>
+<<<<<<< .mine
       <name>$PROJ_DIR$\iso14443.c</name>
+=======
+      <name>$PROJ_DIR$\glcd.c</name>
+>>>>>>> .r1291
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 106</file>
+<<<<<<< .mine
+          <file> 83</file>
+=======
+          <file> 123</file>
+>>>>>>> .r1291
         </tool>
+<<<<<<< .mine
         <tool>
           <name>ICCARM</name>
-          <file> 35</file>
+          <file> 12</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 36 18 103 116 125 122 17 14 126 33 20 32 28 38 41 105 107 130</file>
+          <file> 10 49 18 116 98 103 40 81 8 25 105 102 93 82 4 15 85 120</file>
         </tool>
         <tool>
           <name>ICCARM</name>
+          <file> 10 49 18 116 98 103 40 81 8 7 25 105 102 93 82 4 15 85 120</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\iso14443a.c</name>
+      <outputs>
+=======
+>>>>>>> .r1291
+        <tool>
+<<<<<<< .mine
+          <name>BICOMP</name>
+          <file> 122</file>
+        </tool>
+        <tool>
+=======
+>>>>>>> .r1291
+          <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 19</file>
+=======
+          <file> 39</file>
+>>>>>>> .r1291
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 10 49 18 116 98 103 40 81 8 25 105 102 93 82 4 15 85 120</file>
+=======
+          <file> 116 125 122 17 14 126 33 20 32 60 36 18 103 28 38 41 105 107 84 114</file>
+>>>>>>> .r1291
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 10 49 18 116 98 103 40 81 8 7 25 105 102 93 82 4 15 85 120</file>
+=======
+          <file> 116 125 122 17 14 126 7 33 20 32 60 36 18 103 28 38 41 105 107 84 114</file>
+>>>>>>> .r1291
+        </tool>
+      </inputs>
+    </file>
+    <file>
+<<<<<<< .mine
+      <name>$PROJ_DIR$\iso15693.c</name>
+=======
+      <name>$PROJ_DIR$\hitag2.c</name>
+>>>>>>> .r1291
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 89</file>
+=======
+          <file> 117</file>
+>>>>>>> .r1291
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 46</file>
+=======
+          <file> 80</file>
+>>>>>>> .r1291
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 10 49 18 116 98 103 40 81 8 25 105 102 93 82 4 15 85 86 16</file>
+=======
+          <file> 36 18 103 116 125 122 17 14 126 33 20 32 28 38 41 105 107 63</file>
+>>>>>>> .r1291
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 10 49 18 116 98 103 40 81 8 7 25 105 102 93 82 4 15 85 86 16</file>
+=======
+          <file> 36 18 103 116 125 122 17 14 126 7 33 20 32 28 38 41 105 107 63</file>
+>>>>>>> .r1291
+        </tool>
+      </inputs>
+    </file>
+    <file>
+<<<<<<< .mine
+      <name>$PROJ_DIR$\common\legic_prng.c</name>
+=======
+      <name>$PROJ_DIR$\iso14443.c</name>
+>>>>>>> .r1291
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 121</file>
+=======
+          <file> 106</file>
+>>>>>>> .r1291
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 118</file>
+=======
+          <file> 35</file>
+>>>>>>> .r1291
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 24 40 103 81 8 25 105 102</file>
+=======
+          <file> 36 18 103 116 125 122 17 14 126 33 20 32 28 38 41 105 107 130</file>
+>>>>>>> .r1291
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 24 40 103 81 8 7 25 105 102</file>
+=======
           <file> 36 18 103 116 125 122 17 14 126 7 33 20 32 28 38 41 105 107 130</file>
+>>>>>>> .r1291
         </tool>
       </inputs>
     </file>
@@ -492,40 +990,72 @@
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 28</file>
+=======
           <file> 37</file>
+>>>>>>> .r1291
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 10 49 18 116 98 103 40 81 8 25 105 102 93 82 4 15 85 86 70 33 23</file>
+=======
           <file> 36 18 103 116 125 122 17 14 126 33 20 32 28 38 41 105 107 130</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 10 49 18 116 98 103 40 81 8 7 25 105 102 93 82 4 15 85 86 70 33 23</file>
+=======
           <file> 36 18 103 116 125 122 17 14 126 7 33 20 32 28 38 41 105 107 130</file>
+>>>>>>> .r1291
         </tool>
       </inputs>
     </file>
     <file>
+<<<<<<< .mine
+      <name>$PROJ_DIR$\lfops.c</name>
+=======
       <name>$PROJ_DIR$\iso15693.c</name>
+>>>>>>> .r1291
       <outputs>
         <tool>
           <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 38</file>
+=======
           <file> 23</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 113</file>
+=======
           <file> 94</file>
+>>>>>>> .r1291
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 10 49 18 116 98 103 40 81 8 25 105 102 93 82 4 15 85 64 115</file>
+=======
           <file> 36 18 103 116 125 122 17 14 126 33 20 32 28 38 41 105 107 101 6 108</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 10 49 18 116 98 103 40 81 8 7 25 105 102 93 82 4 15 85 64 115</file>
+=======
           <file> 36 18 103 116 125 122 17 14 126 7 33 20 32 28 38 41 105 107 101 6 108</file>
+>>>>>>> .r1291
         </tool>
       </inputs>
     </file>
@@ -534,21 +1064,37 @@
       <outputs>
         <tool>
           <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 100</file>
+=======
           <file> 127</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 48</file>
+=======
           <file> 90</file>
+>>>>>>> .r1291
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 10 49 18 116 98 103 40 81 8 25 105 102 93 82 4 15 85 73</file>
+=======
           <file> 36 18 103 116 125 122 17 14 126 33 20 32 28 38 41 105 107 69</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 10 49 18 116 98 103 40 81 8 7 25 105 102 93 82 4 15 85 73</file>
+=======
           <file> 36 18 103 116 125 122 17 14 126 7 33 20 32 28 38 41 105 107 69</file>
+>>>>>>> .r1291
         </tool>
       </inputs>
     </file>
@@ -557,21 +1103,37 @@
       <outputs>
         <tool>
           <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 91</file>
+=======
           <file> 29</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 21</file>
+=======
           <file> 96</file>
+>>>>>>> .r1291
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 9 103 81 8 25 105 102</file>
+=======
           <file> 104 122 14 126 33 20 32</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 9 103 81 8 7 25 105 102</file>
+=======
           <file> 104 122 14 126 7 33 20 32</file>
+>>>>>>> .r1291
         </tool>
       </inputs>
     </file>
@@ -580,21 +1142,37 @@
       <outputs>
         <tool>
           <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 92</file>
+=======
           <file> 24</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 111</file>
+=======
           <file> 11</file>
+>>>>>>> .r1291
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 10 49 18 116 98 103 40 81 8 25 105 102 93 82 4 15 85</file>
+=======
           <file> 36 18 103 116 125 122 17 14 126 33 20 32 28 38 41 105 107</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 10 49 18 116 98 103 40 81 8 7 25 105 102 93 82 4 15 85</file>
+=======
           <file> 36 18 103 116 125 122 17 14 126 7 33 20 32 28 38 41 105 107</file>
+>>>>>>> .r1291
         </tool>
       </inputs>
     </file>
@@ -603,21 +1181,37 @@
       <outputs>
         <tool>
           <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 14</file>
+=======
           <file> 30</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 101</file>
+=======
           <file> 129</file>
+>>>>>>> .r1291
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 10 49 18 116 98 103 40 81 8 25 105 102 93 82 4 15 85</file>
+=======
           <file> 36 18 103 116 125 122 17 14 126 33 20 32 28 38 41 105 107</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 10 49 18 116 98 103 40 81 8 7 25 105 102 93 82 4 15 85</file>
+=======
           <file> 36 18 103 116 125 122 17 14 126 7 33 20 32 28 38 41 105 107</file>
+>>>>>>> .r1291
         </tool>
       </inputs>
     </file>
@@ -626,21 +1220,37 @@
       <outputs>
         <tool>
           <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 39</file>
+=======
           <file> 112</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 26</file>
+=======
           <file> 98</file>
+>>>>>>> .r1291
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 10 49 18 116 98 103 40 81 8 25 105 102 93 82 4 15 85</file>
+=======
           <file> 36 18 103 116 125 122 17 14 126 33 20 32 28 38 41 105 107</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 10 49 18 116 98 103 40 81 8 7 25 105 102 93 82 4 15 85</file>
+=======
           <file> 36 18 103 116 125 122 17 14 126 7 33 20 32 28 38 41 105 107</file>
+>>>>>>> .r1291
         </tool>
       </inputs>
     </file>
@@ -649,21 +1259,37 @@
       <outputs>
         <tool>
           <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 20</file>
+=======
           <file> 91</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 99</file>
+=======
           <file> 12</file>
+>>>>>>> .r1291
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 10 49 18 116 98 103 40 81 8 25 105 102 93 82</file>
+=======
           <file> 36 18 103 116 125 122 17 14 126 33 20 32 28 38</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 10 49 18 116 98 103 40 81 8 7 25 105 102 93 82</file>
+=======
           <file> 36 18 103 116 125 122 17 14 126 7 33 20 32 28 38</file>
+>>>>>>> .r1291
         </tool>
       </inputs>
     </file>
@@ -672,21 +1298,37 @@
       <outputs>
         <tool>
           <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 90</file>
+=======
           <file> 25</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 6</file>
+=======
           <file> 92</file>
+>>>>>>> .r1291
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 10 49 18 116 98 103 40 81 8 25 105 102 93 82 4 15 85</file>
+=======
           <file> 36 18 103 116 125 122 17 14 126 33 20 32 28 38 41 105 107</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 10 49 18 116 98 103 40 81 8 7 25 105 102 93 82 4 15 85</file>
+=======
           <file> 36 18 103 116 125 122 17 14 126 7 33 20 32 28 38 41 105 107</file>
+>>>>>>> .r1291
         </tool>
       </inputs>
     </file>
@@ -695,32 +1337,60 @@
       <outputs>
         <tool>
           <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 114</file>
+=======
           <file> 120</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 27</file>
+=======
           <file> 81</file>
+>>>>>>> .r1291
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 10 49 18 116 98 103 40 81 8 25 105 102 93 82</file>
+=======
           <file> 36 18 103 116 125 122 17 14 126 33 20 32 28 38</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 10 49 18 116 98 103 40 81 8 7 25 105 102 93 82</file>
+=======
           <file> 36 18 103 116 125 122 17 14 126 7 33 20 32 28 38</file>
+>>>>>>> .r1291
         </tool>
       </inputs>
     </file>
     <file>
+<<<<<<< .mine
+      <name>$PROJ_DIR$\..\common\usb.c</name>
+=======
       <name>$PROJ_DIR$\Debug\Exe\proxmark3lcd.out</name>
+>>>>>>> .r1291
       <outputs>
         <tool>
+<<<<<<< .mine
+          <name>BICOMP</name>
+          <file> 20</file>
+=======
           <name>ILINK</name>
           <file> 110</file>
+>>>>>>> .r1291
         </tool>
       </outputs>
+<<<<<<< .mine
+    </file>
+=======
       <inputs>
         <tool>
           <name>ILINK</name>
@@ -728,10 +1398,15 @@
         </tool>
       </inputs>
     </file>
+>>>>>>> .r1291
   </configuration>
   <configuration>
     <name>Release</name>
     <outputs>
+<<<<<<< .mine
+      <file>$PROJ_DIR$\bootrom\bootrom.c</file>
+      <file>$PROJ_DIR$\appmain.c</file>
+=======
       <file>$PROJ_DIR$\lfops.c</file>
       <file>$PROJ_DIR$\common\legic_prng.c</file>
       <file>$PROJ_DIR$\legicrf.c</file>
@@ -755,7 +1430,20 @@
       <file>$PROJ_DIR$\legic_prng.h</file>
       <file>$PROJ_DIR$\apps.h</file>
       <file>$PROJ_DIR$\bootrom\fromflash.c</file>
+>>>>>>> .r1291
+<<<<<<< .mine
+      <file>$PROJ_DIR$\..\resources\iar\at91sam7s-ek-flash.mac</file>
+      <file>$PROJ_DIR$\bootrom\fromflash.c</file>
+      <file>$PROJ_DIR$\apps.h</file>
+      <file>$PROJ_DIR$\include\proxmark3.h</file>
+      <file>$PROJ_DIR$\include\fpga.h</file>
+=======
       <file>$PROJ_DIR$\appmain.c</file>
+>>>>>>> .r1291
+<<<<<<< .mine
+      <file>$PROJ_DIR$\..\at91lib\boards\at91sam7s-ek\at91sam7s512\AT91SAM7S512.h</file>
+      <file>$PROJ_DIR$\include\config_gpio.h</file>
+=======
       <file>$PROJ_DIR$\..\at91lib\boards\at91sam7s-ek\board_cstartup_iar.s</file>
       <file>$PROJ_DIR$\AT91SAM7S512.h</file>
       <file>$PROJ_DIR$\..\resources\iar\at91sam7s-ek-flash.mac</file>
@@ -778,11 +1466,55 @@
       <file>$PROJ_DIR$\hitag2.h</file>
       <file>$PROJ_DIR$\iso14443.c</file>
       <file>$PROJ_DIR$\iso14443a.c</file>
+>>>>>>> .r1291
+<<<<<<< .mine
+      <file>$PROJ_DIR$\include\crc.h</file>
+      <file>$PROJ_DIR$\common\legic_prng.h</file>
+      <file>$PROJ_DIR$\..\at91lib\boards\at91sam7s-ek\board.h</file>
+      <file>$PROJ_DIR$\legic_prng.h</file>
+      <file>$PROJ_DIR$\fonts\Default.h</file>
+      <file>$PROJ_DIR$\include\at91sam7s512.h</file>
+      <file>$PROJ_DIR$\AT91SAM7S512.h</file>
+      <file>$PROJ_DIR$\..\resources\iar\at91sam7s-ek-sram.mac</file>
+      <file>$PROJ_DIR$\..\at91lib\boards\at91sam7s-ek\board_cstartup_iar.s</file>
+      <file>$PROJ_DIR$\common\crc.c</file>
+      <file>$PROJ_DIR$\chip.h</file>
+      <file>$PROJ_DIR$\diskio.c</file>
+      <file>$PROJ_DIR$\diskio.h</file>
+      <file>$PROJ_DIR$\ff.c</file>
+      <file>$PROJ_DIR$\ff.h</file>
+      <file>$PROJ_DIR$\flash.icf</file>
+      <file>$PROJ_DIR$\fonts.c</file>
+      <file>$PROJ_DIR$\fonts.h</file>
+      <file>$PROJ_DIR$\fpgaloader.c</file>
+=======
       <file>$PROJ_DIR$\iso15693.c</file>
       <file>$PROJ_DIR$\Makefile</file>
       <file>$PROJ_DIR$\msd.c</file>
       <file>$PROJ_DIR$\msd.h</file>
+>>>>>>> .r1291
+<<<<<<< .mine
+      <file>$PROJ_DIR$\glcd.c</file>
+      <file>$PROJ_DIR$\glcd.h</file>
+      <file>$PROJ_DIR$\gui_layout.h</file>
+      <file>$PROJ_DIR$\hitag2.c</file>
+      <file>$PROJ_DIR$\hitag2.h</file>
+      <file>$PROJ_DIR$\iso14443.c</file>
+      <file>$PROJ_DIR$\iso14443a.c</file>
+      <file>$PROJ_DIR$\iso15693.c</file>
+      <file>$PROJ_DIR$\LCD.h</file>
+      <file>$PROJ_DIR$\ldscript</file>
+      <file>$PROJ_DIR$\common\legic_prng.c</file>
+      <file>$PROJ_DIR$\legicrf.c</file>
+      <file>$PROJ_DIR$\legicrf.h</file>
+      <file>$PROJ_DIR$\lfops.c</file>
+      <file>$PROJ_DIR$\Makefile</file>
+      <file>$PROJ_DIR$\msd.c</file>
+      <file>$PROJ_DIR$\msd.h</file>
       <file>$PROJ_DIR$\printf.c</file>
+=======
+      <file>$PROJ_DIR$\printf.c</file>
+>>>>>>> .r1291
       <file>$PROJ_DIR$\proxmark3lcd.ewp</file>
       <file>$PROJ_DIR$\pwm.c</file>
       <file>$PROJ_DIR$\spi.c</file>
@@ -790,6 +1522,10 @@
       <file>$PROJ_DIR$\common\usb.c</file>
       <file>$PROJ_DIR$\util.c</file>
       <file>$PROJ_DIR$\version.c</file>
+<<<<<<< .mine
+      <file>$PROJ_DIR$\..\at91lib\boards\at91sam7s-ek\at91sam7s512\chip.h</file>
+      <file>$PROJ_DIR$\include\usb_cmd.h</file>
+=======
       <file>$TOOLKIT_DIR$\lib\shs_l.a</file>
       <file>$TOOLKIT_DIR$\lib\rt4t_al.a</file>
       <file>$PROJ_DIR$\common\legic_prng.h</file>
@@ -804,14 +1540,33 @@
       <file>$TOOLKIT_DIR$\inc\c\ysizet.h</file>
       <file>$TOOLKIT_DIR$\inc\c\stdlib.h</file>
       <file>$PROJ_DIR$\..\at91lib\boards\at91sam7s-ek\board.h</file>
+>>>>>>> .r1291
       <file>$PROJ_DIR$\fonts\Tiny_Time.h</file>
       <file>$PROJ_DIR$\include\integer.h</file>
+<<<<<<< .mine
+=======
       <file>$PROJ_DIR$\common\crc16.c</file>
       <file>$TOOLKIT_DIR$\inc\c\ycheck.h</file>
       <file>$TOOLKIT_DIR$\inc\c\inttypes.h</file>
       <file>$TOOLKIT_DIR$\inc\c\DLib_Defaults.h</file>
+>>>>>>> .r1291
       <file>$PROJ_DIR$\common\iso14443_crc.c</file>
+<<<<<<< .mine
+      <file>$TOOLKIT_DIR$\inc\c\ycheck.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\yvals.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\inttypes.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Defaults.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\stdint.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\xencoding_limits.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Product.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Threads.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\stdbool.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\stdlib.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\ysizet.h</file>
+      <file>$PROJ_DIR$\Release\Obj\iso14443.pbi</file>
+=======
       <file>$PROJ_DIR$\Release\Exe\proxmark3lcd.mot</file>
+>>>>>>> .r1291
       <file>$PROJ_DIR$\Release\Exe\proxmark3lcd.out</file>
       <file>$PROJ_DIR$\Release\Obj\iso14443.pbi</file>
       <file>$PROJ_DIR$\Release\Obj\spi.o</file>
@@ -819,6 +1574,8 @@
       <file>$PROJ_DIR$\Release\Obj\spi.pbi</file>
       <file>$PROJ_DIR$\Release\Obj\crc.o</file>
       <file>$PROJ_DIR$\Release\Obj\fpgaloader.pbi</file>
+<<<<<<< .mine
+=======
       <file>$PROJ_DIR$\Release\Obj\legic_prng.pbi</file>
       <file>$PROJ_DIR$\Release\Obj\legicrf.o</file>
       <file>$PROJ_DIR$\Release\Obj\pwm.o</file>
@@ -830,27 +1587,88 @@
       <file>$PROJ_DIR$\Release\Obj\ff.o</file>
       <file>$PROJ_DIR$\Release\Obj\fromflash.pbi</file>
       <file>$PROJ_DIR$\Release\Obj\msd.o</file>
+>>>>>>> .r1291
       <file>$PROJ_DIR$\Release\Obj\fonts.pbi</file>
+<<<<<<< .mine
+      <file>$PROJ_DIR$\Release\Obj\appmain.o</file>
+=======
+>>>>>>> .r1291
+      <file>$PROJ_DIR$\Release\Obj\version.pbi</file>
       <file>$PROJ_DIR$\Release\Obj\printf.pbi</file>
+<<<<<<< .mine
+      <file>$PROJ_DIR$\Release\Obj\iso14443a.pbi</file>
+      <file>$PROJ_DIR$\Release\Obj\diskio.pbi</file>
+      <file>$PROJ_DIR$\Release\Obj\start.pbi</file>
+      <file>$PROJ_DIR$\Release\Obj\bootrom.o</file>
+      <file>$TOOLKIT_DIR$\inc\c\stddef.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\stdarg.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\stdio.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\ystdio.h</file>
+      <file>$PROJ_DIR$\Release\Obj\lfops.pbi</file>
+      <file>$PROJ_DIR$\Release\Obj\spi.o</file>
+      <file>$PROJ_DIR$\Release\Obj\fpgaloader.o</file>
+      <file>$PROJ_DIR$\Release\Exe\proxmark3lcd.mot</file>
+      <file>$PROJ_DIR$\Release\Obj\crc.pbi</file>
+      <file>$PROJ_DIR$\Release\Obj\crc.o</file>
+=======
+>>>>>>> .r1291
+<<<<<<< .mine
+      <file>$PROJ_DIR$\Release\Obj\hitag2.pbi</file>
+      <file>$PROJ_DIR$\Release\Obj\glcd.o</file>
       <file>$PROJ_DIR$\Release\Obj\iso14443.o</file>
       <file>$PROJ_DIR$\Release\Obj\legic_prng.o</file>
+      <file>$PROJ_DIR$\Release\Obj\fromflash.pbi</file>
+=======
       <file>$PROJ_DIR$\Release\Obj\version.pbi</file>
       <file>$PROJ_DIR$\Release\Obj\diskio.pbi</file>
+>>>>>>> .r1291
       <file>$PROJ_DIR$\Release\Obj\start.o</file>
       <file>$PROJ_DIR$\Release\Obj\appmain.o</file>
       <file>$PROJ_DIR$\Release\Obj\iso14443a.pbi</file>
       <file>$PROJ_DIR$\Release\Obj\bootrom.o</file>
       <file>$PROJ_DIR$\Release\Obj\start.pbi</file>
       <file>$PROJ_DIR$\Release\Obj\bootrom.pbi</file>
+<<<<<<< .mine
+      <file>$PROJ_DIR$\Release\Obj\board_cstartup_iar.o</file>
+      <file>$PROJ_DIR$\Release\Obj\ff.pbi</file>
+      <file>$PROJ_DIR$\Release\Obj\proxmark3lcd.pbd</file>
+      <file>$PROJ_DIR$\Release\Obj\iso14443a.o</file>
+      <file>$PROJ_DIR$\Release\Obj\diskio.o</file>
+=======
       <file>$PROJ_DIR$\Release\Obj\proxmark3lcd.pbd</file>
       <file>$PROJ_DIR$\Release\Obj\usb.o</file>
       <file>$PROJ_DIR$\Release\Obj\usb.pbi</file>
+>>>>>>> .r1291
       <file>$PROJ_DIR$\Release\Obj\appmain.pbi</file>
-      <file>$PROJ_DIR$\Release\Obj\iso15693.pbi</file>
-      <file>$PROJ_DIR$\Release\Obj\board_cstartup_iar.o</file>
-      <file>$PROJ_DIR$\Release\Obj\pwm.pbi</file>
+<<<<<<< .mine
+      <file>$PROJ_DIR$\Release\Obj\util.o</file>
+      <file>$PROJ_DIR$\Release\Obj\legicrf.pbi</file>
+      <file>$PROJ_DIR$\Release\Obj\fromflash.o</file>
+      <file>$PROJ_DIR$\Release\Obj\bootrom.pbi</file>
       <file>$PROJ_DIR$\Release\Obj\version.o</file>
+=======
+>>>>>>> .r1291
+<<<<<<< .mine
+      <file>$PROJ_DIR$\Release\Obj\msd.o</file>
+      <file>$PROJ_DIR$\Release\Obj\pwm.o</file>
+      <file>$PROJ_DIR$\Release\Obj\iso15693.pbi</file>
+      <file>$PROJ_DIR$\Release\Obj\printf.o</file>
+=======
+      <file>$PROJ_DIR$\Release\Obj\board_cstartup_iar.o</file>
+>>>>>>> .r1291
+      <file>$PROJ_DIR$\Release\Obj\pwm.pbi</file>
+<<<<<<< .mine
+      <file>$PROJ_DIR$\Release\Obj\usb.pbi</file>
+      <file>$PROJ_DIR$\Release\Obj\legicrf.o</file>
+=======
+      <file>$PROJ_DIR$\Release\Obj\version.o</file>
+>>>>>>> .r1291
       <file>$PROJ_DIR$\Release\Obj\glcd.pbi</file>
+<<<<<<< .mine
+      <file>$PROJ_DIR$\Release\Obj\iso15693.o</file>
+      <file>$PROJ_DIR$\Release\Obj\legic_prng.pbi</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Config_Normal.h</file>
+=======
       <file>$PROJ_DIR$\Release\Obj\util.o</file>
       <file>$PROJ_DIR$\Release\Obj\ff.pbi</file>
       <file>$PROJ_DIR$\Release\Obj\printf.o</file>
@@ -863,74 +1681,160 @@
       <file>$PROJ_DIR$\Release\Obj\iso14443a.o</file>
       <file>$PROJ_DIR$\Release\Obj\diskio.o</file>
       <file>$PROJ_DIR$\Release\Obj\fromflash.o</file>
+>>>>>>> .r1291
     </outputs>
     <file>
+<<<<<<< .mine
+      <name>$PROJ_DIR$\bootrom\bootrom.c</name>
+=======
       <name>$PROJ_DIR$\lfops.c</name>
+>>>>>>> .r1291
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 92</file>
+          <file> 114</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 126</file>
+<<<<<<< .mine
+          <file> 82</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
+          <file> 5 14 8 57 61 59 63 60 62 65 64 66 54 67</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 5 14 8 57 61 59 63 60 62 126 65 64 66 54 67</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\appmain.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 110</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+=======
+>>>>>>> .r1291
+          <file> 76</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 5 14 8 57 61 59 63 60 62 65 64 66 54 67 68 69 4 83 40 44 30 29 84</file>
+=======
           <file> 18 10 66 73 76 75 9 8 77 17 11 16 14 19 21 68 69 43 74</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 5 14 8 57 61 59 63 60 62 126 65 64 66 54 67 68 69 4 83 40 44 30 29 84</file>
+=======
           <file> 18 10 66 73 76 75 9 8 77 7 17 11 16 14 19 21 68 69 43 74</file>
+>>>>>>> .r1291
         </tool>
       </inputs>
     </file>
     <file>
+<<<<<<< .mine
+      <name>$PROJ_DIR$\bootrom\fromflash.c</name>
+=======
       <name>$PROJ_DIR$\common\legic_prng.c</name>
+>>>>>>> .r1291
       <outputs>
         <tool>
           <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 97</file>
+=======
           <file> 87</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 113</file>
+=======
           <file> 101</file>
+>>>>>>> .r1291
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 5 14 8 57 61 59 63 60 62 65 64 66 54 67</file>
+=======
           <file> 60 9 75 8 77 17 11 16</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 5 14 8 57 61 59 63 60 62 126 65 64 66 54 67</file>
+=======
           <file> 60 9 75 8 77 7 17 11 16</file>
+>>>>>>> .r1291
         </tool>
       </inputs>
     </file>
     <file>
+<<<<<<< .mine
+      <name>[ROOT_NODE]</name>
+=======
       <name>$PROJ_DIR$\legicrf.c</name>
+>>>>>>> .r1291
       <outputs>
         <tool>
+<<<<<<< .mine
+          <name>ILINK</name>
+          <file> 71</file>
+=======
           <name>BICOMP</name>
           <file> 125</file>
+>>>>>>> .r1291
         </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\at91lib\boards\at91sam7s-ek\board_cstartup_iar.s</name>
+      <outputs>
         <tool>
+<<<<<<< .mine
+          <name>AARM</name>
+          <file> 105</file>
+=======
           <name>ICCARM</name>
           <file> 88</file>
+>>>>>>> .r1291
         </tool>
       </outputs>
       <inputs>
         <tool>
+<<<<<<< .mine
+          <name>AARM</name>
+          <file> 11 53 7</file>
+=======
           <name>BICOMP</name>
           <file> 18 10 66 73 76 75 9 8 77 17 11 16 14 19 21 68 69 65 6 4 20 62</file>
+>>>>>>> .r1291
         </tool>
+<<<<<<< .mine
+=======
         <tool>
           <name>ICCARM</name>
           <file> 18 10 66 73 76 75 9 8 77 7 17 11 16 14 19 21 68 69 65 6 4 20 62</file>
         </tool>
+>>>>>>> .r1291
       </inputs>
     </file>
     <file>
@@ -947,128 +1851,76 @@
       <outputs>
         <tool>
           <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 91</file>
+=======
           <file> 96</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 92</file>
+=======
           <file> 130</file>
+>>>>>>> .r1291
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 9 63 59 60 62 65 64 66</file>
+=======
           <file> 18 10 66 73 76 75 9 8 77 17 11 16 14 19</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 9 63 59 60 62 126 65 64 66</file>
+=======
           <file> 18 10 66 73 76 75 9 8 77 7 17 11 16 14 19</file>
+>>>>>>> .r1291
         </tool>
       </inputs>
     </file>
     <file>
-      <name>$PROJ_DIR$\appmain.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 113</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 105</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 18 10 66 73 76 75 9 8 77 17 11 16 14 19 70 69 21 68 4 49 41 40 67</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 18 10 66 73 76 75 9 8 77 7 17 11 16 14 19 70 69 21 68 4 49 41 40 67</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\at91lib\boards\at91sam7s-ek\board_cstartup_iar.s</name>
-      <outputs>
-        <tool>
-          <name>AARM</name>
-          <file> 115</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>AARM</name>
-          <file> 71 12 15</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\bootrom\bootrom.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 109</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 107</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 18 10 66 73 76 75 9 8 77 17 11 16 14 19</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 18 10 66 73 76 75 9 8 77 7 17 11 16 14 19</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\common\crc.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 90</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 85</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 62 9 75 8 77 17 11 16</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 62 9 75 8 77 7 17 11 16</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
+<<<<<<< .mine
       <name>$PROJ_DIR$\diskio.c</name>
+=======
+      <name>$PROJ_DIR$\appmain.c</name>
+>>>>>>> .r1291
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 103</file>
+          <file> 80</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 129</file>
+<<<<<<< .mine
+          <file> 109</file>
+=======
+          <file> 105</file>
+>>>>>>> .r1291
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 32 73 76 75 9 8 77 17 11 16</file>
+<<<<<<< .mine
+          <file> 21 57 61 59 63 60 62 65 64 66</file>
+=======
+          <file> 18 10 66 73 76 75 9 8 77 17 11 16 14 19 70 69 21 68 4 49 41 40 67</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 32 73 76 75 9 8 77 7 17 11 16</file>
+<<<<<<< .mine
+          <file> 21 57 61 59 63 60 62 126 65 64 66</file>
+=======
+          <file> 18 10 66 73 76 75 9 8 77 7 17 11 16 14 19 70 69 21 68 4 49 41 40 67</file>
+>>>>>>> .r1291
         </tool>
       </inputs>
     </file>
@@ -1076,22 +1928,32 @@
       <name>$PROJ_DIR$\ff.c</name>
       <outputs>
         <tool>
+<<<<<<< .mine
           <name>BICOMP</name>
-          <file> 120</file>
+          <file> 106</file>
+=======
+          <name>AARM</name>
+          <file> 115</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 95</file>
+          <file> 99</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
+<<<<<<< .mine
           <name>BICOMP</name>
-          <file> 34 73 76 75 9 8 77 17 11 16 32</file>
+          <file> 23 57 61 59 63 60 62 65 64 66 21</file>
+=======
+          <name>AARM</name>
+          <file> 71 12 15</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 34 73 76 75 9 8 77 7 17 11 16 32</file>
+          <file> 23 57 61 59 63 60 62 126 65 64 66 21</file>
         </tool>
       </inputs>
     </file>
@@ -1100,11 +1962,186 @@
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 98</file>
+<<<<<<< .mine
+          <file> 75</file>
+=======
+          <file> 109</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 102</file>
+=======
+          <file> 107</file>
+>>>>>>> .r1291
+        </tool>
+      </outputs>
+<<<<<<< .mine
+=======
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 18 10 66 73 76 75 9 8 77 17 11 16 14 19</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 18 10 66 73 76 75 9 8 77 7 17 11 16 14 19</file>
+        </tool>
+      </inputs>
+>>>>>>> .r1291
+    </file>
+    <file>
+<<<<<<< .mine
+      <name>$PROJ_DIR$\fpgaloader.c</name>
+=======
+      <name>$PROJ_DIR$\common\crc.c</name>
+>>>>>>> .r1291
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 74</file>
+=======
+          <file> 90</file>
+>>>>>>> .r1291
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 89</file>
+=======
+          <file> 85</file>
+>>>>>>> .r1291
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 5 14 8 57 61 59 63 60 62 65 64 66 54 67 4 83 69 6</file>
+=======
+          <file> 62 9 75 8 77 17 11 16</file>
+>>>>>>> .r1291
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 5 14 8 57 61 59 63 60 62 126 65 64 66 54 67 4 83 69 6</file>
+=======
+          <file> 62 9 75 8 77 7 17 11 16</file>
+>>>>>>> .r1291
+        </tool>
+      </inputs>
+    </file>
+    <file>
+<<<<<<< .mine
+      <name>$PROJ_DIR$\glcd.c</name>
+=======
+      <name>$PROJ_DIR$\diskio.c</name>
+>>>>>>> .r1291
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 123</file>
+=======
+          <file> 103</file>
+>>>>>>> .r1291
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 94</file>
+=======
+          <file> 129</file>
+>>>>>>> .r1291
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 57 61 59 63 60 62 65 64 66 29 5 14 8 54 67 4 83 69 13 55</file>
+=======
+          <file> 32 73 76 75 9 8 77 17 11 16</file>
+>>>>>>> .r1291
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 57 61 59 63 60 62 126 65 64 66 29 5 14 8 54 67 4 83 69 13 55</file>
+=======
+          <file> 32 73 76 75 9 8 77 7 17 11 16</file>
+>>>>>>> .r1291
+        </tool>
+      </inputs>
+    </file>
+    <file>
+<<<<<<< .mine
+      <name>$PROJ_DIR$\hitag2.c</name>
+=======
+      <name>$PROJ_DIR$\ff.c</name>
+>>>>>>> .r1291
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 93</file>
+=======
+          <file> 120</file>
+>>>>>>> .r1291
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 100</file>
+=======
+          <file> 95</file>
+>>>>>>> .r1291
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 5 14 8 57 61 59 63 60 62 65 64 66 54 67 4 83 69 32</file>
+=======
+          <file> 34 73 76 75 9 8 77 17 11 16 32</file>
+>>>>>>> .r1291
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 5 14 8 57 61 59 63 60 62 126 65 64 66 54 67 4 83 69 32</file>
+=======
+          <file> 34 73 76 75 9 8 77 7 17 11 16 32</file>
+>>>>>>> .r1291
+        </tool>
+      </inputs>
+    </file>
+    <file>
+<<<<<<< .mine
+      <name>$PROJ_DIR$\iso14443.c</name>
+=======
+      <name>$PROJ_DIR$\fonts.c</name>
+>>>>>>> .r1291
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 70</file>
+=======
+          <file> 98</file>
+>>>>>>> .r1291
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 95</file>
+=======
           <file> 127</file>
+>>>>>>> .r1291
         </tool>
       </outputs>
     </file>
@@ -1123,43 +2160,79 @@
       <inputs>
         <tool>
           <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 5 14 8 57 61 59 63 60 62 65 64 66 54 67 4 83 69 58</file>
+=======
           <file> 18 10 66 73 76 75 9 8 77 17 11 16 14 19 21 68 69 13</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 5 14 8 57 61 59 63 60 62 126 65 64 66 54 67 4 83 69 58</file>
+=======
           <file> 18 10 66 73 76 75 9 8 77 7 17 11 16 14 19 21 68 69 13</file>
+>>>>>>> .r1291
         </tool>
       </inputs>
     </file>
     <file>
+<<<<<<< .mine
+      <name>$PROJ_DIR$\iso14443a.c</name>
+=======
       <name>$PROJ_DIR$\glcd.c</name>
+>>>>>>> .r1291
       <outputs>
         <tool>
           <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 79</file>
+=======
           <file> 118</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 108</file>
+=======
           <file> 91</file>
+>>>>>>> .r1291
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 5 14 8 57 61 59 63 60 62 65 64 66 54 67 4 83 69 58</file>
+=======
           <file> 73 76 75 9 8 77 17 11 16 40 18 10 66 14 19 21 68 69 61 72</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 5 14 8 57 61 59 63 60 62 126 65 64 66 54 67 4 83 69 58</file>
+=======
           <file> 73 76 75 9 8 77 7 17 11 16 40 18 10 66 14 19 21 68 69 61 72</file>
+>>>>>>> .r1291
         </tool>
       </inputs>
     </file>
     <file>
+<<<<<<< .mine
+      <name>$PROJ_DIR$\iso15693.c</name>
+=======
       <name>$PROJ_DIR$\hitag2.c</name>
+>>>>>>> .r1291
       <outputs>
         <tool>
           <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 118</file>
+=======
           <file> 94</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
@@ -1169,34 +2242,62 @@
       <inputs>
         <tool>
           <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 5 14 8 57 61 59 63 60 62 65 64 66 54 67 4 83 69 85 86 68</file>
+=======
           <file> 18 10 66 73 76 75 9 8 77 17 11 16 14 19 21 68 69 43</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 5 14 8 57 61 59 63 60 62 126 65 64 66 54 67 4 83 69 85 86 68</file>
+=======
           <file> 18 10 66 73 76 75 9 8 77 7 17 11 16 14 19 21 68 69 43</file>
+>>>>>>> .r1291
         </tool>
       </inputs>
     </file>
     <file>
+<<<<<<< .mine
+      <name>$PROJ_DIR$\common\legic_prng.c</name>
+=======
       <name>$PROJ_DIR$\iso14443.c</name>
+>>>>>>> .r1291
       <outputs>
         <tool>
           <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 125</file>
+=======
           <file> 81</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 96</file>
+=======
           <file> 100</file>
+>>>>>>> .r1291
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 10 63 59 60 62 65 64 66</file>
+=======
           <file> 18 10 66 73 76 75 9 8 77 17 11 16 14 19 21 68 69 78</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 10 63 59 60 62 126 65 64 66</file>
+=======
           <file> 18 10 66 73 76 75 9 8 77 7 17 11 16 14 19 21 68 69 78</file>
+>>>>>>> .r1291
         </tool>
       </inputs>
     </file>
@@ -1205,44 +2306,80 @@
       <outputs>
         <tool>
           <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 112</file>
+=======
           <file> 106</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 122</file>
+=======
           <file> 128</file>
+>>>>>>> .r1291
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 5 14 8 57 61 59 63 60 62 65 64 66 54 67 4 83 69 85 86 40 12 9</file>
+=======
           <file> 18 10 66 73 76 75 9 8 77 17 11 16 14 19 21 68 69 78</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 5 14 8 57 61 59 63 60 62 126 65 64 66 54 67 4 83 69 85 86 40 12 9</file>
+=======
           <file> 18 10 66 73 76 75 9 8 77 7 17 11 16 14 19 21 68 69 78</file>
+>>>>>>> .r1291
         </tool>
       </inputs>
     </file>
     <file>
+<<<<<<< .mine
+      <name>$PROJ_DIR$\lfops.c</name>
+=======
       <name>$PROJ_DIR$\iso15693.c</name>
+>>>>>>> .r1291
       <outputs>
         <tool>
           <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 87</file>
+=======
           <file> 114</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 101</file>
+=======
           <file> 123</file>
+>>>>>>> .r1291
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 5 14 8 57 61 59 63 60 62 65 64 66 54 67 4 83 69 32 56</file>
+=======
           <file> 18 10 66 73 76 75 9 8 77 17 11 16 14 19 21 68 69 65 6 70</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 5 14 8 57 61 59 63 60 62 126 65 64 66 54 67 4 83 69 32 56</file>
+=======
           <file> 18 10 66 73 76 75 9 8 77 7 17 11 16 14 19 21 68 69 65 6 70</file>
+>>>>>>> .r1291
         </tool>
       </inputs>
     </file>
@@ -1251,21 +2388,37 @@
       <outputs>
         <tool>
           <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 73</file>
+=======
           <file> 83</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 116</file>
+=======
           <file> 97</file>
+>>>>>>> .r1291
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 5 14 8 57 61 59 63 60 62 65 64 66 54 67 4 83 69 44</file>
+=======
           <file> 18 10 66 73 76 75 9 8 77 17 11 16 14 19 21 68 69 49</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 5 14 8 57 61 59 63 60 62 126 65 64 66 54 67 4 83 69 44</file>
+=======
           <file> 18 10 66 73 76 75 9 8 77 7 17 11 16 14 19 21 68 69 49</file>
+>>>>>>> .r1291
         </tool>
       </inputs>
     </file>
@@ -1274,21 +2427,37 @@
       <outputs>
         <tool>
           <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 78</file>
+=======
           <file> 99</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 119</file>
+=======
           <file> 121</file>
+>>>>>>> .r1291
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 84 59 60 62 65 64 66</file>
+=======
           <file> 67 75 8 77 17 11 16</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 84 59 60 62 126 65 64 66</file>
+=======
           <file> 67 75 8 77 7 17 11 16</file>
+>>>>>>> .r1291
         </tool>
       </inputs>
     </file>
@@ -1297,21 +2466,37 @@
       <outputs>
         <tool>
           <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 120</file>
+=======
           <file> 116</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 117</file>
+=======
           <file> 89</file>
+>>>>>>> .r1291
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 5 14 8 57 61 59 63 60 62 65 64 66 54 67 4 83 69</file>
+=======
           <file> 18 10 66 73 76 75 9 8 77 17 11 16 14 19 21 68 69</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 5 14 8 57 61 59 63 60 62 126 65 64 66 54 67 4 83 69</file>
+=======
           <file> 18 10 66 73 76 75 9 8 77 7 17 11 16 14 19 21 68 69</file>
+>>>>>>> .r1291
         </tool>
       </inputs>
     </file>
@@ -1320,21 +2505,37 @@
       <outputs>
         <tool>
           <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 72</file>
+=======
           <file> 84</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 88</file>
+=======
           <file> 82</file>
+>>>>>>> .r1291
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 5 14 8 57 61 59 63 60 62 65 64 66 54 67 4 83 69</file>
+=======
           <file> 18 10 66 73 76 75 9 8 77 17 11 16 14 19 21 68 69</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 5 14 8 57 61 59 63 60 62 126 65 64 66 54 67 4 83 69</file>
+=======
           <file> 18 10 66 73 76 75 9 8 77 7 17 11 16 14 19 21 68 69</file>
+>>>>>>> .r1291
         </tool>
       </inputs>
     </file>
@@ -1343,21 +2544,37 @@
       <outputs>
         <tool>
           <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 81</file>
+=======
           <file> 108</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 98</file>
+=======
           <file> 104</file>
+>>>>>>> .r1291
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 5 14 8 57 61 59 63 60 62 65 64 66 54 67 4 83 69</file>
+=======
           <file> 18 10 66 73 76 75 9 8 77 17 11 16 14 19 21 68 69</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 5 14 8 57 61 59 63 60 62 126 65 64 66 54 67 4 83 69</file>
+=======
           <file> 18 10 66 73 76 75 9 8 77 7 17 11 16 14 19 21 68 69</file>
+>>>>>>> .r1291
         </tool>
       </inputs>
     </file>
@@ -1366,21 +2583,37 @@
       <outputs>
         <tool>
           <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 121</file>
+=======
           <file> 112</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 103</file>
+=======
           <file> 111</file>
+>>>>>>> .r1291
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 5 14 8 57 61 59 63 60 62 65 64 66 54 67</file>
+=======
           <file> 18 10 66 73 76 75 9 8 77 17 11 16 14 19</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 5 14 8 57 61 59 63 60 62 126 65 64 66 54 67</file>
+=======
           <file> 18 10 66 73 76 75 9 8 77 7 17 11 16 14 19</file>
+>>>>>>> .r1291
         </tool>
       </inputs>
     </file>
@@ -1389,21 +2622,37 @@
       <outputs>
         <tool>
           <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 104</file>
+=======
           <file> 122</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 111</file>
+=======
           <file> 119</file>
+>>>>>>> .r1291
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 5 14 8 57 61 59 63 60 62 65 64 66 54 67 4 83 69</file>
+=======
           <file> 18 10 66 73 76 75 9 8 77 17 11 16 14 19 21 68 69</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 5 14 8 57 61 59 63 60 62 126 65 64 66 54 67 4 83 69</file>
+=======
           <file> 18 10 66 73 76 75 9 8 77 7 17 11 16 14 19 21 68 69</file>
+>>>>>>> .r1291
         </tool>
       </inputs>
     </file>
@@ -1412,21 +2661,37 @@
       <outputs>
         <tool>
           <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 77</file>
+=======
           <file> 102</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 115</file>
+=======
           <file> 117</file>
+>>>>>>> .r1291
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
+<<<<<<< .mine
+          <file> 5 14 8 57 61 59 63 60 62 65 64 66 54 67</file>
+=======
           <file> 18 10 66 73 76 75 9 8 77 17 11 16 14 19</file>
+>>>>>>> .r1291
         </tool>
         <tool>
           <name>ICCARM</name>
+<<<<<<< .mine
+          <file> 5 14 8 57 61 59 63 60 62 126 65 64 66 54 67</file>
+=======
           <file> 18 10 66 73 76 75 9 8 77 7 17 11 16 14 19</file>
+>>>>>>> .r1291
         </tool>
       </inputs>
     </file>
@@ -1435,13 +2700,21 @@
       <outputs>
         <tool>
           <name>OBJCOPY</name>
+<<<<<<< .mine
+          <file> 90</file>
+=======
           <file> 79</file>
+>>>>>>> .r1291
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>ILINK</name>
+<<<<<<< .mine
+          <file> 24 76 105 82 92 109 99 102 89 113 94 100 95 108 124 96 122 101 116 119 117 88 98 103 111 115</file>
+=======
           <file> 35 105 115 107 85 129 95 127 93 130 91 124 100 128 123 101 88 126 97 121 89 82 104 111 119 117 58 59 64 63</file>
+>>>>>>> .r1291
         </tool>
       </inputs>
     </file>
@@ -1450,7 +2723,11 @@
       <inputs>
         <tool>
           <name>BILINK</name>
+<<<<<<< .mine
+          <file> 110 114 91 80 106 75 74 97 123 93 70 79 118 125 112 87 73 78 120 72 81 121 104 77</file>
+=======
           <file> 113 109 90 103 120 98 86 96 118 94 81 106 114 87 125 92 83 99 116 84 108 112 122 102</file>
+>>>>>>> .r1291
         </tool>
       </inputs>
     </file>
