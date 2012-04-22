@@ -10,6 +10,10 @@
 @REM 
 
 
+<<<<<<< .mine
+"E:\iar\arm\common\bin\cspybat" "E:\iar\arm\arm\bin\armproc.dll" "E:\iar\arm\arm\bin\armjlink.dll"  %1 --plugin "E:\iar\arm\arm\bin\armbat.dll" --backend -B "--endian=little" "--cpu=ARM7TDMI" "--fpu=None" "-p" "E:\iar\arm\arm\CONFIG\debugger\Atmel\ioAT91SAM7S512.ddf" "--semihosting=none" "--device=AT91SAM7S512" "--drv_communication=USB0" "--jlink_speed=auto" "--jlink_initial_speed=32" 
+=======
 "E:\iar\arm\common\bin\cspybat" "E:\iar\arm\arm\bin\armproc.dll" "E:\iar\arm\arm\bin\armjlink.dll"  %1 --plugin "E:\iar\arm\arm\bin\armbat.dll" --backend -B "--endian=little" "--cpu=ARM7TDMI" "--fpu=None" "-p" "E:\iar\arm\arm\CONFIG\debugger\Atmel\ioAT91SAM7S512.ddf" "--semihosting" "--device=AT91SAM7S512" "--drv_communication=USB0" "--jlink_speed=auto" "--jlink_initial_speed=32" "--drv_restore_breakpoints=_call_main" 
+>>>>>>> .r1291
 
 
