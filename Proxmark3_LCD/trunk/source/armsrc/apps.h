@@ -9,13 +9,14 @@
 
 #include "stdint.h"
 #include "stddef.h"
+
 typedef unsigned char byte_t;
 
-#define BIG_BUFFER	(15000)
+#define BIG_BUFFER	(8000)
 
 // The large multi-purpose buffer, typically used to hold A/D samples,
 // maybe processed in some way.
-extern DWORD BigBuf[BIG_BUFFER];
+extern uint32_t BigBuf[BIG_BUFFER];
 
 /// appmain.h
 void TurnOff(void);
@@ -25,23 +26,25 @@ void SamyRun(void);
 //void DbpIntegers(int a, int b, int c);
 void DbpString(char *str);
 void Dbprintf(const char *fmt, ...);
+void Dbhexdump(int len, uint8_t *d);
 
+int AvgAdc(int ch);
 void ToSendStuffBit(int b);
 void ToSendReset(void);
 void ListenReaderField(int limit);
 void AcquireRawAdcSamples125k(int at134khz);
 void DoAcquisition125k(void);
 extern int ToSendMax;
-extern BYTE ToSend[];
+extern uint8_t ToSend[];
 
 /// fpga.h
-void FpgaSendCommand(WORD cmd, WORD v);
-void FpgaWriteConfWord(BYTE v);
+void FpgaSendCommand(uint16_t cmd, uint16_t v);
+void FpgaWriteConfWord(uint8_t v);
 void FpgaDownloadAndGo(void);
 void FpgaGatherVersion(char *dst, int len);
 void FpgaSetupSsc(void);
-void FpgaSetupSscDma(BYTE *buf, int len);
-void SetAdcMuxFor(DWORD whichGpio);
+void FpgaSetupSscDma(uint8_t *buf, int len);
+void SetAdcMuxFor(uint32_t whichGpio);
 
 /// spi.h
 unsigned int spi_com(unsigned int channel, unsigned int dout, unsigned char last);
@@ -78,7 +81,7 @@ void SetupSpi(int mode);
 
 /// lfops.h
 void AcquireRawAdcSamples125k(int at134khz);
-void ModThenAcquireRawAdcSamples125k(int delay_off,int period_0,int period_1,BYTE *command);
+void ModThenAcquireRawAdcSamples125k(int delay_off,int period_0,int period_1,uint8_t *command);
 void ReadTItag(void);
 void WriteTItag(uint32_t idhi, uint32_t idlo, uint16_t crc);
 void AcquireTiType(void);
@@ -88,6 +91,8 @@ void SimulateTagLowFrequency(int period, int gap, int ledcontrol);
 void CmdHIDsimTAG(int hi, int lo, int ledcontrol);
 void CmdHIDdemodFSK(int findone, int *high, int *low, int ledcontrol);
 void SimulateTagLowFrequencyBidir(int divisor, int max_bitlen);
+void CopyHIDtoT5567(int hi, int lo); // Clone an HID card to T5557/T5567
+void WriteEM410x(uint32_t card, uint32_t id_hi, uint32_t id_lo);
 
 /// iso14443.h
 void SimulateIso14443Tag(void);
@@ -95,18 +100,38 @@ void AcquireRawAdcSamplesIso14443(uint32_t parameter);
 void ReadSRI512Iso14443(uint32_t parameter);
 void ReadSRIX4KIso14443(uint32_t parameter);
 void ReadSTMemoryIso14443(uint32_t parameter,uint32_t dwLast);
-void SnoopIso14443(void);
+void  SnoopIso14443(void);
 
 /// iso14443a.h
 void SnoopIso14443a(void);
 void SimulateIso14443aTag(int tagType, int TagUid);	// ## simulate iso14443a tag
-void ReaderIso14443a(DWORD parameter);
-void ReaderMifare(DWORD parameter);
+void ReaderIso14443a(UsbCommand * c, UsbCommand * ack);
+void ReaderMifare(uint32_t parameter);
+void MifareReadBlock(uint8_t arg0, uint8_t arg1, uint8_t arg2, uint8_t *data);
+void MifareReadSector(uint8_t arg0, uint8_t arg1, uint8_t arg2, uint8_t *datain);
+void MifareWriteBlock(uint8_t arg0, uint8_t arg1, uint8_t arg2, uint8_t *datain);
+void MifareNested(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint8_t *datain);
+void MifareChkKeys(uint8_t arg0, uint8_t arg1, uint8_t arg2, uint8_t *datain);
+void Mifare1ksim(uint8_t arg0, uint8_t arg1, uint8_t arg2, uint8_t *datain);
+void MifareSetDbgLvl(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint8_t *datain);
+void MifareEMemClr(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint8_t *datain);
+void MifareEMemSet(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint8_t *datain);
+void MifareEMemGet(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint8_t *datain);
+void MifareECardLoad(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint8_t *datain);
 
 /// iso15693.h
+void RecordRawAdcSamplesIso15693(void);
 void AcquireRawAdcSamplesIso15693(void);
 void ReaderIso15693(uint32_t parameter);	// Simulate an ISO15693 reader - greg
 void SimTagIso15693(uint32_t parameter);	// simulate an ISO15693 tag - greg
+void BruteforceIso15693Afi(uint32_t speed); // find an AFI of a tag - atrox
+void DirectTag15693Command(uint32_t datalen,uint32_t speed, uint32_t recv, uint8_t data[]); // send arbitrary commands from CLI - atrox 
+void SetDebugIso15693(uint32_t flag);
+
+
+/// iclass.h
+void SnoopIClass(void);
+
 
 /// util.h
 #define LED_RED 1
@@ -118,7 +143,7 @@ void SimTagIso15693(uint32_t parameter);	// simulate an ISO15693 tag - greg
 #define BUTTON_SINGLE_CLICK -1
 #define BUTTON_DOUBLE_CLICK -2
 #define BUTTON_ERROR -99
-int strlen(char *str);
+int strlen(const char *str);
 void *memcpy(void *dest, const void *src, int len);
 void *memset(void *dest, int c, int len);
 int memcmp(const void *av, const void *bv, int len);

@@ -17,12 +17,12 @@
 //-----------------------------------------------------------------------------
 // ISO 14443A
 //-----------------------------------------------------------------------------
-typedef struct {
+typedef __packed struct {
 	uint8_t atqa[2];
 	uint8_t  sak;
 	uint8_t  ats_len;
 	uint8_t  ats[20]; //FIXME: size?
-} __attribute__((__packed__)) iso14a_card_select_t;
+}  iso14a_card_select_t;
 
 typedef enum ISO14A_COMMAND {
 	ISO14A_CONNECT = 1,

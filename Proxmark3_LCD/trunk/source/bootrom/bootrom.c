@@ -433,7 +433,9 @@ void LowLevelInit(void)
   
       if(!common_area_present){
               /* Common area not ok, initialize it */
-              int i; for(i=0; i<sizeof(common_area); i++) { /* Makeshift memset, no need to drag util.c into this */
+              int i; 
+              
+              for(i=0; i<sizeof(common_area); i++) { /* Makeshift memset, no need to drag util.c into this */
                       ((char*)&common_area)[i] = 0;
               }
               common_area.magic = COMMON_AREA_MAGIC;

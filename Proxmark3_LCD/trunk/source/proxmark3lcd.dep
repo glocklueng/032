@@ -2,29 +2,23 @@
 
 <project>
   <fileVersion>2</fileVersion>
-  <fileChecksum>2565179751</fileChecksum>
+  <fileChecksum>2952951006</fileChecksum>
   <configuration>
     <name>Debug</name>
     <outputs>
-      <file>$PROJ_DIR$\common\legic_prng.c</file>
-      <file>$PROJ_DIR$\LCD.h</file>
-      <file>$PROJ_DIR$\legicrf.h</file>
-      <file>$PROJ_DIR$\ldscript</file>
-      <file>$TOOLKIT_DIR$\inc\c\ycheck.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\inttypes.h</file>
-      <file>$PROJ_DIR$\Debug\Exe\proxmark3lcd.out</file>
-      <file>$TOOLKIT_DIR$\inc\c\stdint.h</file>
+      <file>$PROJ_DIR$\armsrc\ff.c</file>
+      <file>$PROJ_DIR$\armsrc\appmain.c</file>
+      <file>$PROJ_DIR$\armsrc\diskio.c</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Defaults.h</file>
       <file>$PROJ_DIR$\Debug\Obj\proxmark3lcd.pbd</file>
+      <file>$TOOLKIT_DIR$\inc\c\yvals.h</file>
       <file>$PROJ_DIR$\include\proxmark3.h</file>
       <file>$PROJ_DIR$\include\at91sam7s512.h</file>
       <file>$PROJ_DIR$\include\config_gpio.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\yvals.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\DLib_Defaults.h</file>
       <file>$TOOLKIT_DIR$\inc\c\DLib_Product.h</file>
       <file>$PROJ_DIR$\..\at91lib\boards\at91sam7s-ek\board.h</file>
-      <file>$TOOLKIT_DIR$\lib\shs_l.a</file>
-      <file>$PROJ_DIR$\..\at91lib\boards\at91sam7s-ek\at91sam7s512\chip.h</file>
       <file>$TOOLKIT_DIR$\inc\c\DLib_Config_Normal.h</file>
+      <file>$PROJ_DIR$\..\at91lib\boards\at91sam7s-ek\at91sam7s512\chip.h</file>
       <file>$PROJ_DIR$\..\at91lib\boards\at91sam7s-ek\at91sam7s512\AT91SAM7S512.h</file>
       <file>$PROJ_DIR$\include\usb_cmd.h</file>
       <file>$TOOLKIT_DIR$\inc\c\stdbool.h</file>
@@ -38,26 +32,7 @@
       <file>$PROJ_DIR$\fonts\Default.h</file>
       <file>$TOOLKIT_DIR$\inc\c\ystdio.h</file>
       <file>$TOOLKIT_DIR$\inc\c\stdio.h</file>
-      <file>$PROJ_DIR$\common\iso14443_crc.c</file>
       <file>$PROJ_DIR$\common\legic_prng.h</file>
-      <file>$PROJ_DIR$\apps.h</file>
-      <file>$PROJ_DIR$\bootrom\fromflash.c</file>
-      <file>$PROJ_DIR$\..\at91lib\boards\at91sam7s-ek\board_cstartup_iar.s</file>
-      <file>$PROJ_DIR$\AT91SAM7S512.h</file>
-      <file>$PROJ_DIR$\..\resources\iar\at91sam7s-ek-flash.mac</file>
-      <file>$PROJ_DIR$\..\resources\iar\at91sam7s-ek-sram.mac</file>
-      <file>$PROJ_DIR$\bootrom\bootrom.c</file>
-      <file>$PROJ_DIR$\chip.h</file>
-      <file>$PROJ_DIR$\common\crc.c</file>
-      <file>$PROJ_DIR$\diskio.c</file>
-      <file>$PROJ_DIR$\diskio.h</file>
-      <file>$PROJ_DIR$\ff.c</file>
-      <file>$PROJ_DIR$\ff.h</file>
-      <file>$PROJ_DIR$\flash.icf</file>
-      <file>$PROJ_DIR$\fonts.h</file>
-      <file>$PROJ_DIR$\glcd.h</file>
-      <file>$PROJ_DIR$\gui_layout.h</file>
-      <file>$PROJ_DIR$\hitag2.h</file>
       <file>$PROJ_DIR$\Debug\Obj\glcd.pbi</file>
       <file>$PROJ_DIR$\Debug\Obj\bootrom.pbi</file>
       <file>$PROJ_DIR$\Debug\Obj\fromflash.pbi</file>
@@ -66,9 +41,9 @@
       <file>$PROJ_DIR$\Debug\Obj\fpgaloader.pbi</file>
       <file>$PROJ_DIR$\Debug\Obj\fonts.pbi</file>
       <file>$TOOLKIT_DIR$\inc\c\DLib_Threads.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\lfops.pbi</file>
       <file>$TOOLKIT_DIR$\inc\c\xencoding_limits.h</file>
       <file>$PROJ_DIR$\Debug\Obj\iso14443.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\lfops.pbi</file>
       <file>$PROJ_DIR$\Debug\Obj\iso14443.pbi</file>
       <file>$PROJ_DIR$\Debug\Obj\hitag2.pbi</file>
       <file>$PROJ_DIR$\Debug\Obj\iso14443a.pbi</file>
@@ -84,14 +59,6 @@
       <file>$PROJ_DIR$\Debug\Obj\util.pbi</file>
       <file>$PROJ_DIR$\Debug\Obj\version.pbi</file>
       <file>$PROJ_DIR$\include\integer.h</file>
-      <file>$PROJ_DIR$\Makefile</file>
-      <file>$PROJ_DIR$\msd.c</file>
-      <file>$PROJ_DIR$\msd.h</file>
-      <file>$PROJ_DIR$\proxmark3lcd.ewp</file>
-      <file>$PROJ_DIR$\pwm.c</file>
-      <file>$PROJ_DIR$\spi.c</file>
-      <file>$PROJ_DIR$\common\usb.c</file>
-      <file>$PROJ_DIR$\version.c</file>
       <file>$TOOLKIT_DIR$\lib\dl4t_aln.a</file>
       <file>$PROJ_DIR$\Debug\Obj\crc.o</file>
       <file>$PROJ_DIR$\Debug\Obj\diskio.o</file>
@@ -104,52 +71,142 @@
       <file>$TOOLKIT_DIR$\lib\m4t_al.a</file>
       <file>$PROJ_DIR$\Debug\Obj\iso14443a.o</file>
       <file>$PROJ_DIR$\Debug\Obj\lfops.o</file>
+      <file>$PROJ_DIR$\armsrc\fonts.c</file>
+      <file>$PROJ_DIR$\armsrc\hitag2.c</file>
+      <file>$PROJ_DIR$\armsrc\glcd.c</file>
+      <file>$PROJ_DIR$\armsrc\fpgaloader.c</file>
+      <file>$PROJ_DIR$\armsrc\iso14443.c</file>
+      <file>$PROJ_DIR$\armsrc\iso14443a.c</file>
+      <file>$PROJ_DIR$\armsrc\iso15693.c</file>
+      <file>$PROJ_DIR$\armsrc\legicrf.c</file>
+      <file>$PROJ_DIR$\armsrc\lfops.c</file>
+      <file>$PROJ_DIR$\armsrc\msd.c</file>
+      <file>$PROJ_DIR$\armsrc\printf.c</file>
+      <file>$PROJ_DIR$\armsrc\pwm.c</file>
+      <file>$PROJ_DIR$\armsrc\spi.c</file>
+      <file>$PROJ_DIR$\armsrc\start.c</file>
+      <file>$PROJ_DIR$\armsrc\util.c</file>
+      <file>$PROJ_DIR$\bootrom\bootrom.c</file>
+      <file>$PROJ_DIR$\diskio.h</file>
+      <file>$PROJ_DIR$\common\crc.c</file>
+      <file>$PROJ_DIR$\bootrom\fromflash.c</file>
+      <file>$PROJ_DIR$\common\usb.c</file>
+      <file>$PROJ_DIR$\common\version.c</file>
+      <file>$PROJ_DIR$\common\iso14443crc.c</file>
+      <file>$PROJ_DIR$\common\iso15693tools.c</file>
+      <file>$PROJ_DIR$\common\iso15693tools.h</file>
+      <file>$PROJ_DIR$\common\legic_prng.c</file>
+      <file>$PROJ_DIR$\apps.h</file>
+      <file>$PROJ_DIR$\..\resources\iar\at91sam7s-ek-flash.mac</file>
+      <file>$PROJ_DIR$\..\resources\iar\at91sam7s-ek-sram.mac</file>
+      <file>$PROJ_DIR$\AT91SAM7S512.h</file>
+      <file>$PROJ_DIR$\..\at91lib\boards\at91sam7s-ek\board_cstartup_iar.s</file>
+      <file>$PROJ_DIR$\chip.h</file>
+      <file>$PROJ_DIR$\ff.h</file>
+      <file>$PROJ_DIR$\flash.icf</file>
+      <file>$PROJ_DIR$\ldscript</file>
+      <file>$PROJ_DIR$\proxmark3lcd.ewp</file>
+      <file>$PROJ_DIR$\armsrc\mifareutil.c</file>
+      <file>$TOOLKIT_DIR$\inc\c\ycheck.h</file>
+      <file>$PROJ_DIR$\Debug\Exe\proxmark3lcd.out</file>
+      <file>$TOOLKIT_DIR$\inc\c\stdint.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\inttypes.h</file>
       <file>$PROJ_DIR$\Debug\Obj\hitag2.o</file>
       <file>$PROJ_DIR$\Debug\Obj\iso15693.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\msd.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\printf.o</file>
       <file>$PROJ_DIR$\Debug\Obj\appmain.o</file>
       <file>$PROJ_DIR$\Debug\Obj\fromflash.o</file>
-      <file>$PROJ_DIR$\Debug\Obj\msd.o</file>
-      <file>$PROJ_DIR$\Debug\Obj\fpgaloader.o</file>
       <file>$PROJ_DIR$\Debug\Obj\pwm.o</file>
-      <file>$PROJ_DIR$\Debug\Obj\printf.o</file>
-      <file>$PROJ_DIR$\Debug\Obj\bootrom.o</file>
-      <file>$PROJ_DIR$\Debug\Obj\spi.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\fpgaloader.o</file>
       <file>$PROJ_DIR$\Debug\Obj\start.o</file>
-      <file>$PROJ_DIR$\Debug\Obj\legic_prng.o</file>
-      <file>$PROJ_DIR$\Debug\Obj\legicrf.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\spi.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\bootrom.o</file>
       <file>$PROJ_DIR$\Debug\Obj\usb.o</file>
       <file>$PROJ_DIR$\Debug\Obj\util.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\legic_prng.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\legicrf.o</file>
       <file>$PROJ_DIR$\Debug\Obj\crc.pbi</file>
       <file>$PROJ_DIR$\Debug\Obj\board_cstartup_iar.o</file>
       <file>$PROJ_DIR$\Debug\Obj\ff.pbi</file>
-      <file>$PROJ_DIR$\Debug\Obj\version.o</file>
-      <file>$PROJ_DIR$\armsrc\hitag2.h</file>
       <file>$PROJ_DIR$\armsrc\apps.h</file>
-      <file>$PROJ_DIR$\armsrc\appmain.c</file>
-      <file>$PROJ_DIR$\include\gui_layout.h</file>
+      <file>$PROJ_DIR$\armsrc\hitag2.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\version.o</file>
       <file>$PROJ_DIR$\armsrc\glcd.h</file>
+      <file>$PROJ_DIR$\armsrc\string.h</file>
+      <file>$PROJ_DIR$\armsrc\mifareutil.h</file>
+      <file>$PROJ_DIR$\include\gui_layout.h</file>
       <file>$PROJ_DIR$\armsrc\legicrf.h</file>
       <file>$PROJ_DIR$\armsrc\msd.h</file>
-      <file>$PROJ_DIR$\armsrc\printf.c</file>
-      <file>$PROJ_DIR$\armsrc\fonts.c</file>
-      <file>$PROJ_DIR$\armsrc\util.c</file>
-      <file>$PROJ_DIR$\armsrc\iso14443a.c</file>
-      <file>$PROJ_DIR$\armsrc\start.c</file>
-      <file>$PROJ_DIR$\armsrc\hitag2.c</file>
-      <file>$PROJ_DIR$\armsrc\iso14443.c</file>
-      <file>$PROJ_DIR$\armsrc\glcd.c</file>
-      <file>$PROJ_DIR$\armsrc\iso15693.c</file>
-      <file>$PROJ_DIR$\armsrc\fpgaloader.c</file>
-      <file>$PROJ_DIR$\armsrc\lfops.c</file>
-      <file>$PROJ_DIR$\armsrc\legicrf.c</file>
+      <file>$PROJ_DIR$\armsrc\util.h</file>
+      <file>$PROJ_DIR$\armsrc\iso14443a.h</file>
+      <file>$PROJ_DIR$\armsrc\ff.h</file>
+      <file>$PROJ_DIR$\armsrc\diskio.h</file>
       <file>$PROJ_DIR$\armsrc\legic_prng.h</file>
+      <file>$PROJ_DIR$\armsrc\crapto1.h</file>
+      <file>$PROJ_DIR$\common\crc16.h</file>
+      <file>$PROJ_DIR$\include\common.h</file>
+      <file>$PROJ_DIR$\common\iso14443crc.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\mifareutil.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\iso14443crc.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\mifareutil.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\iso15693tools.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\iso15693tools.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\iso14443crc.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\crapto1.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\mifarecmd.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\crapto1.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\tunes.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\crypto1.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\crc16.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\mifarecmd.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\crypto1.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\crc16.o</file>
+      <file>$PROJ_DIR$\Debug\Obj\tunes.pbi</file>
+      <file>$PROJ_DIR$\armsrc\crypto1.c</file>
+      <file>$PROJ_DIR$\armsrc\crapto1.c</file>
+      <file>$PROJ_DIR$\armsrc\tunes.c</file>
+      <file>$PROJ_DIR$\armsrc\mifarecmd.h</file>
+      <file>$PROJ_DIR$\armsrc\mifarecmd.c</file>
     </outputs>
     <file>
-      <name>$PROJ_DIR$\common\legic_prng.c</name>
+      <name>[ROOT_NODE]</name>
+      <outputs>
+        <tool>
+          <name>ILINK</name>
+          <file> 102 60</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\armsrc\ff.c</name>
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 67</file>
+          <file> 122</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 58</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 134 52 104 101 103 5 3 9 35 34 135</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 134 52 104 101 103 5 3 11 9 35 34 135</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\armsrc\appmain.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 30</file>
         </tool>
         <tool>
           <name>ICCARM</name>
@@ -159,35 +216,34 @@
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 33 7 4 12 13 14 61 59</file>
+          <file> 6 7 8 52 104 101 103 5 3 9 35 34 14 15 19 17 123 20 130 131 129 126 18</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 33 7 4 12 13 18 14 61 59</file>
+          <file> 6 7 8 52 104 101 103 5 3 11 9 35 34 14 15 19 17 123 20 130 131 129 126 18</file>
         </tool>
       </inputs>
     </file>
     <file>
-      <name>[ROOT_NODE]</name>
+      <name>$PROJ_DIR$\armsrc\diskio.c</name>
       <outputs>
         <tool>
-          <name>ILINK</name>
-          <file> 6 93</file>
+          <name>BICOMP</name>
+          <file> 31</file>
         </tool>
-      </outputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Debug\Exe\proxmark3lcd.out</name>
-      <outputs>
         <tool>
-          <name>ILINK</name>
-          <file> 93</file>
+          <name>ICCARM</name>
+          <file> 55</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
-          <name>ILINK</name>
-          <file> 47 100 114 106 87 88 91 92 103 101 90 98 62 96 99 109 110 97 102 105 104 107 108 111 112 116 16 94 95 86</file>
+          <name>BICOMP</name>
+          <file> 135 52 104 101 103 5 3 9 35 34</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 135 52 104 101 103 5 3 11 9 35 34</file>
         </tool>
       </inputs>
     </file>
@@ -196,284 +252,52 @@
       <inputs>
         <tool>
           <name>BILINK</name>
-          <file> 55 53 113 56 115 58 57 54 52 64 63 65 66 67 68 60 69 70 71 72 73 74 75 76</file>
+          <file> 30 28 149 120 152 151 31 122 33 32 29 27 39 38 40 142 41 144 42 43 37 148 141 44 45 46 47 48 156 49 50 51</file>
         </tool>
       </inputs>
     </file>
     <file>
-      <name>$PROJ_DIR$\bootrom\fromflash.c</name>
+      <name>$PROJ_DIR$\common\crc16.c</name>
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 54</file>
+          <file> 152</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 101</file>
+          <file> 155</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 9 10 11 77 5 4 7 12 13 14 61 59 20 21</file>
+          <file> 138</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 9 10 11 77 5 4 7 12 13 18 14 61 59 20 21</file>
+          <file> 138</file>
         </tool>
       </inputs>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\at91lib\boards\at91sam7s-ek\board_cstartup_iar.s</name>
+      <name>$PROJ_DIR$\armsrc\fonts.c</name>
       <outputs>
         <tool>
-          <name>AARM</name>
-          <file> 114</file>
+          <name>BICOMP</name>
+          <file> 33</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 59</file>
         </tool>
       </outputs>
-      <inputs>
-        <tool>
-          <name>AARM</name>
-          <file> 15 17 19</file>
-        </tool>
-      </inputs>
     </file>
     <file>
-      <name>$PROJ_DIR$\bootrom\bootrom.c</name>
+      <name>$PROJ_DIR$\armsrc\hitag2.c</name>
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 53</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 106</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 9 10 11 77 5 4 7 12 13 14 61 59 20 21</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 9 10 11 77 5 4 7 12 13 18 14 61 59 20 21</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\common\crc.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 113</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 87</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 22 7 4 12 13 14 61 59</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 22 7 4 12 13 18 14 61 59</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\diskio.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 56</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 88</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 44 77 5 4 7 12 13 14 61 59</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 44 77 5 4 7 12 13 18 14 61 59</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\ff.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 115</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 91</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 46 77 5 4 7 12 13 14 61 59 44</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 46 77 5 4 7 12 13 18 14 61 59 44</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\msd.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 69</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 102</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 9 10 11 77 5 4 7 12 13 14 61 59 20 21 80</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 9 10 11 77 5 4 7 12 13 18 14 61 59 20 21 118 26 23 80</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\pwm.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 71</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 104</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 9 10 11 77 5 4 7 12 13 14 61 59 20 21</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 9 10 11 77 5 4 7 12 13 18 14 61 59 20 21 118 26 23</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\spi.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 72</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 107</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 9 10 11 77 5 4 7 12 13 14 61 59 20 21</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 9 10 11 77 5 4 7 12 13 18 14 61 59 20 21 118 26 23</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\common\usb.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 74</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 111</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 9 10 11 77 5 4 7 12 13 14 61 59 20 21</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 9 10 11 77 5 4 7 12 13 18 14 61 59 20 21</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\version.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 76</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 116</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 9 10 11 77 5 4 7 12 13 14 61 59 20 21</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 9 10 11 77 5 4 7 12 13 18 14 61 59 20 21</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\armsrc\appmain.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 55</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 100</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 9 10 11 77 5 4 7 12 13 14 61 59 20 21 25 23 118 26 122 123 120 121 24</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 9 10 11 77 5 4 7 12 13 18 14 61 59 20 21 25 23 118 26 122 123 120 121 24</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\armsrc\printf.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 70</file>
+          <file> 39</file>
         </tool>
         <tool>
           <name>ICCARM</name>
@@ -483,33 +307,43 @@
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 24 4 12 13 14 61 59</file>
+          <file> 6 7 8 52 104 101 103 5 3 9 35 34 14 15 123 20 17 132 124 127</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 24 4 12 13 18 14 61 59</file>
+          <file> 6 7 8 52 104 101 103 5 3 11 9 35 34 14 15 123 20 17 132 124 127</file>
         </tool>
       </inputs>
     </file>
     <file>
-      <name>$PROJ_DIR$\armsrc\fonts.c</name>
+      <name>$PROJ_DIR$\armsrc\glcd.c</name>
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 58</file>
+          <file> 27</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 92</file>
+          <file> 57</file>
         </tool>
       </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 52 104 101 103 5 3 9 35 34 126 6 7 8 14 15 123 20 17 23 21</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 52 104 101 103 5 3 11 9 35 34 126 6 7 8 14 15 123 20 17 23 21</file>
+        </tool>
+      </inputs>
     </file>
     <file>
-      <name>$PROJ_DIR$\armsrc\util.c</name>
+      <name>$PROJ_DIR$\armsrc\fpgaloader.c</name>
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 75</file>
+          <file> 32</file>
         </tool>
         <tool>
           <name>ICCARM</name>
@@ -519,11 +353,34 @@
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 9 10 11 77 5 4 7 12 13 14 61 59 20 21 118 26 23</file>
+          <file> 6 7 8 52 104 101 103 5 3 9 35 34 14 15 123 20 17 22</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 9 10 11 77 5 4 7 12 13 18 14 61 59 20 21 118 26 23</file>
+          <file> 6 7 8 52 104 101 103 5 3 11 9 35 34 14 15 123 20 17 22</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\armsrc\iso14443.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 38</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 36</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 6 7 8 52 104 101 103 5 3 9 35 34 14 15 123 20 17 132 127</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 6 7 8 52 104 101 103 5 3 11 9 35 34 14 15 123 20 17 132 127 140</file>
         </tool>
       </inputs>
     </file>
@@ -532,30 +389,122 @@
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 65</file>
+          <file> 40</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 96</file>
+          <file> 63</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 9 10 11 77 5 4 7 12 13 14 61 59 20 21 118 26 23 32</file>
+          <file> 6 7 8 52 104 101 103 5 3 9 35 34 14 15 123 20 17 132 127 133 139 137 128</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 9 10 11 77 5 4 7 12 13 18 14 61 59 20 21 118 26 23 32</file>
+          <file> 6 7 8 52 104 101 103 5 3 11 9 35 34 14 15 123 20 17 132 127 140 133 139 137 128</file>
         </tool>
       </inputs>
     </file>
     <file>
-      <name>$PROJ_DIR$\armsrc\start.c</name>
+      <name>$PROJ_DIR$\armsrc\iso15693.c</name>
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 73</file>
+          <file> 41</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 106</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 6 7 8 52 104 101 103 5 3 9 35 34 14 15 132 20 17 123 127</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 6 7 8 52 104 101 103 5 3 11 9 35 34 14 15 132 20 17 123 127 88</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\armsrc\legicrf.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 43</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 119</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 6 7 8 52 104 101 103 5 3 9 35 34 14 15 123 20 17 25 24 130 136 16</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 6 7 8 52 104 101 103 5 3 11 9 35 34 14 15 123 20 17 25 24 130 136 16</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\armsrc\lfops.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 37</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 64</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 6 7 8 52 104 101 103 5 3 9 35 34 14 15 123 20 17 132 124 127</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 6 7 8 52 104 101 103 5 3 11 9 35 34 14 15 123 20 17 132 124 138 127</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\armsrc\msd.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 44</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 107</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 6 7 8 52 104 101 103 5 3 9 35 34 14 15 123 20 17 131</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 6 7 8 52 104 101 103 5 3 11 9 35 34 14 15 123 20 17 131</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\armsrc\printf.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 45</file>
         </tool>
         <tool>
           <name>ICCARM</name>
@@ -565,158 +514,158 @@
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 9 10 11 77 5 4 7 12 13 14 61 59 20 21 118 26 23</file>
+          <file> 18 101 5 3 9 35 34</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 9 10 11 77 5 4 7 12 13 18 14 61 59 20 21 118 26 23</file>
+          <file> 18 101 5 3 11 9 35 34</file>
         </tool>
       </inputs>
     </file>
     <file>
-      <name>$PROJ_DIR$\armsrc\hitag2.c</name>
+      <name>$PROJ_DIR$\armsrc\pwm.c</name>
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 64</file>
+          <file> 46</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 98</file>
+          <file> 111</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 9 10 11 77 5 4 7 12 13 14 61 59 20 21 118 26 23 117</file>
+          <file> 6 7 8 52 104 101 103 5 3 9 35 34 14 15 123 20 17</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 9 10 11 77 5 4 7 12 13 18 14 61 59 20 21 118 26 23 117</file>
+          <file> 6 7 8 52 104 101 103 5 3 11 9 35 34 14 15 123 20 17</file>
         </tool>
       </inputs>
     </file>
     <file>
-      <name>$PROJ_DIR$\armsrc\iso14443.c</name>
+      <name>$PROJ_DIR$\armsrc\spi.c</name>
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 63</file>
+          <file> 47</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 62</file>
+          <file> 114</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 9 10 11 77 5 4 7 12 13 14 61 59 20 21 118 26 23 32</file>
+          <file> 6 7 8 52 104 101 103 5 3 9 35 34 14 15 123 20 17</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 9 10 11 77 5 4 7 12 13 18 14 61 59 20 21 118 26 23 32</file>
+          <file> 6 7 8 52 104 101 103 5 3 11 9 35 34 14 15 123 20 17</file>
         </tool>
       </inputs>
     </file>
     <file>
-      <name>$PROJ_DIR$\armsrc\glcd.c</name>
+      <name>$PROJ_DIR$\armsrc\start.c</name>
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 52</file>
+          <file> 48</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 90</file>
+          <file> 113</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 77 5 4 7 12 13 14 61 59 121 9 10 11 20 21 118 26 23 29 27</file>
+          <file> 6 7 8 52 104 101 103 5 3 9 35 34 14 15 123 20 17</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 77 5 4 7 12 13 18 14 61 59 121 9 10 11 20 21 118 26 23 29 27</file>
+          <file> 6 7 8 52 104 101 103 5 3 11 9 35 34 14 15 123 20 17</file>
         </tool>
       </inputs>
     </file>
     <file>
-      <name>$PROJ_DIR$\armsrc\iso15693.c</name>
+      <name>$PROJ_DIR$\armsrc\util.c</name>
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 66</file>
+          <file> 50</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 99</file>
+          <file> 117</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 9 10 11 77 5 4 7 12 13 14 61 59 20 21 118 26 23 31 30 25</file>
+          <file> 6 7 8 52 104 101 103 5 3 9 35 34 14 15 123 20 17</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 9 10 11 77 5 4 7 12 13 18 14 61 59 20 21 118 26 23 31 30 25</file>
+          <file> 6 7 8 52 104 101 103 5 3 11 9 35 34 14 15 123 20 17</file>
         </tool>
       </inputs>
     </file>
     <file>
-      <name>$PROJ_DIR$\armsrc\fpgaloader.c</name>
+      <name>$PROJ_DIR$\bootrom\bootrom.c</name>
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 57</file>
+          <file> 28</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 103</file>
+          <file> 115</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 9 10 11 77 5 4 7 12 13 14 61 59 20 21 118 26 23 28</file>
+          <file> 6 7 8 52 104 101 103 5 3 9 35 34 14 15</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 9 10 11 77 5 4 7 12 13 18 14 61 59 20 21 118 26 23 28</file>
+          <file> 6 7 8 52 104 101 103 5 3 11 9 35 34 14 15</file>
         </tool>
       </inputs>
     </file>
     <file>
-      <name>$PROJ_DIR$\armsrc\lfops.c</name>
+      <name>$PROJ_DIR$\common\crc.c</name>
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 60</file>
+          <file> 120</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 97</file>
+          <file> 54</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 9 10 11 77 5 4 7 12 13 14 61 59 20 21 118 26 23 117 89</file>
+          <file> 16 103 101 5 3 9 35 34</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 9 10 11 77 5 4 7 12 13 18 14 61 59 20 21 118 26 23 117 89</file>
+          <file> 16 103 101 5 3 11 9 35 34</file>
         </tool>
       </inputs>
     </file>
     <file>
-      <name>$PROJ_DIR$\armsrc\legicrf.c</name>
+      <name>$PROJ_DIR$\bootrom\fromflash.c</name>
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 68</file>
+          <file> 29</file>
         </tool>
         <tool>
           <name>ICCARM</name>
@@ -726,37 +675,291 @@
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 9 10 11 77 5 4 7 12 13 14 61 59 20 21 118 26 23 31 30 122 136 22</file>
+          <file> 6 7 8 52 104 101 103 5 3 9 35 34 14 15</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 9 10 11 77 5 4 7 12 13 18 14 61 59 20 21 118 26 23 31 30 122 136 22</file>
+          <file> 6 7 8 52 104 101 103 5 3 11 9 35 34 14 15</file>
         </tool>
       </inputs>
     </file>
-    <forcedrebuild>
-      <name>[MULTI_TOOL]</name>
-      <tool>ILINK</tool>
-    </forcedrebuild>
+    <file>
+      <name>$PROJ_DIR$\common\usb.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 49</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 116</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 6 7 8 52 104 101 103 5 3 9 35 34 14 15</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 6 7 8 52 104 101 103 5 3 11 9 35 34 14 15</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\common\version.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 51</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 125</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 6 7 8 52 104 101 103 5 3 9 35 34 14 15</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 6 7 8 52 104 101 103 5 3 11 9 35 34 14 15</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\common\iso14443crc.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 142</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 146</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 140</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 140</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\common\iso15693tools.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 144</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 145</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 6 7 8 52 104 101 103 5 3 9 35 34 14 15 19 17</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 6 7 8 52 104 101 103 5 3 11 9 35 34 14 15 19 17</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\common\legic_prng.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 42</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 118</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 26 103 101 5 3 9 35 34</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 26 103 101 5 3 11 9 35 34</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\at91lib\boards\at91sam7s-ek\board_cstartup_iar.s</name>
+      <outputs>
+        <tool>
+          <name>AARM</name>
+          <file> 121</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>AARM</name>
+          <file> 10 12 13</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\armsrc\mifareutil.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 141</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 143</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 6 7 8 52 104 101 103 5 3 9 35 34 14 15 123 20 17 132 127 133 139 137 128</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 6 7 8 52 104 101 103 5 3 11 9 35 34 14 15 123 20 17 132 127 140 133 139 137 128</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Debug\Exe\proxmark3lcd.out</name>
+      <outputs>
+        <tool>
+          <name>ILINK</name>
+          <file> 60</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ILINK</name>
+          <file> 97 109 121 115 147 54 155 154 55 58 59 112 110 57 105 36 63 146 106 145 118 119 64 153 143 107 108 111 114 113 150 116 117 125 61 62 53</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\armsrc\crypto1.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 151</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 154</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 137 103 101 5 3 9 35 34 19 17</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 137 103 101 5 3 11 9 35 34 19 17</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\armsrc\crapto1.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 149</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 147</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 137 103 101 5 3 9 35 34 19 17</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 137 103 101 5 3 11 9 35 34 19 17</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\armsrc\tunes.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 156</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 150</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 6 7 8 52 104 101 103 5 3 9 35 34 14 15 19 17 123 20 130 131 126</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 6 7 8 52 104 101 103 5 3 11 9 35 34 14 15 19 17 123 20 130 131 126</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\armsrc\mifarecmd.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 148</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 153</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 160 6 7 8 52 104 101 103 5 3 9 35 34 14 15 123 20 17 132 127 133 139 137 128</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 160 6 7 8 52 104 101 103 5 3 11 9 35 34 14 15 123 20 17 132 127 140 133 139 137 128</file>
+        </tool>
+      </inputs>
+    </file>
   </configuration>
   <configuration>
     <name>Release</name>
     <outputs>
-      <file>$PROJ_DIR$\common\legic_prng.c</file>
-      <file>$PROJ_DIR$\ldscript</file>
-      <file>$TOOLKIT_DIR$\inc\c\ycheck.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\inttypes.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\stdint.h</file>
+      <file>$PROJ_DIR$\armsrc\ff.c</file>
+      <file>$PROJ_DIR$\armsrc\appmain.c</file>
+      <file>$PROJ_DIR$\armsrc\diskio.c</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Defaults.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\yvals.h</file>
       <file>$PROJ_DIR$\include\proxmark3.h</file>
       <file>$PROJ_DIR$\include\at91sam7s512.h</file>
       <file>$PROJ_DIR$\include\config_gpio.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\yvals.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\DLib_Defaults.h</file>
       <file>$TOOLKIT_DIR$\inc\c\DLib_Product.h</file>
       <file>$PROJ_DIR$\..\at91lib\boards\at91sam7s-ek\board.h</file>
       <file>$TOOLKIT_DIR$\lib\shs_l.a</file>
-      <file>$PROJ_DIR$\..\at91lib\boards\at91sam7s-ek\at91sam7s512\chip.h</file>
       <file>$TOOLKIT_DIR$\inc\c\DLib_Config_Normal.h</file>
+      <file>$PROJ_DIR$\..\at91lib\boards\at91sam7s-ek\at91sam7s512\chip.h</file>
       <file>$PROJ_DIR$\..\at91lib\boards\at91sam7s-ek\at91sam7s512\AT91SAM7S512.h</file>
       <file>$PROJ_DIR$\include\usb_cmd.h</file>
       <file>$TOOLKIT_DIR$\inc\c\stdbool.h</file>
@@ -770,14 +973,78 @@
       <file>$PROJ_DIR$\fonts\Default.h</file>
       <file>$TOOLKIT_DIR$\inc\c\ystdio.h</file>
       <file>$TOOLKIT_DIR$\inc\c\stdio.h</file>
-      <file>$PROJ_DIR$\Release\Obj\glcd.o</file>
-      <file>$PROJ_DIR$\Release\Obj\ff.o</file>
-      <file>$PROJ_DIR$\common\iso14443_crc.c</file>
       <file>$PROJ_DIR$\common\legic_prng.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Threads.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\xencoding_limits.h</file>
+      <file>$PROJ_DIR$\include\integer.h</file>
+      <file>$TOOLKIT_DIR$\lib\dl4t_aln.a</file>
+      <file>$PROJ_DIR$\common\crc16.c</file>
+      <file>$TOOLKIT_DIR$\lib\rt4t_al.a</file>
+      <file>$TOOLKIT_DIR$\lib\m4t_al.a</file>
+      <file>$PROJ_DIR$\armsrc\fonts.c</file>
+      <file>$PROJ_DIR$\armsrc\hitag2.c</file>
+      <file>$PROJ_DIR$\armsrc\glcd.c</file>
+      <file>$PROJ_DIR$\armsrc\fpgaloader.c</file>
+      <file>$PROJ_DIR$\armsrc\iso14443.c</file>
+      <file>$PROJ_DIR$\armsrc\iso14443a.c</file>
+      <file>$PROJ_DIR$\armsrc\iso15693.c</file>
+      <file>$PROJ_DIR$\armsrc\legicrf.c</file>
+      <file>$PROJ_DIR$\armsrc\lfops.c</file>
+      <file>$PROJ_DIR$\armsrc\msd.c</file>
+      <file>$PROJ_DIR$\armsrc\printf.c</file>
+      <file>$PROJ_DIR$\armsrc\pwm.c</file>
+      <file>$PROJ_DIR$\armsrc\spi.c</file>
+      <file>$PROJ_DIR$\armsrc\start.c</file>
+      <file>$PROJ_DIR$\armsrc\util.c</file>
+      <file>$PROJ_DIR$\bootrom\bootrom.c</file>
+      <file>$PROJ_DIR$\diskio.h</file>
+      <file>$PROJ_DIR$\common\crc.c</file>
+      <file>$PROJ_DIR$\bootrom\fromflash.c</file>
+      <file>$PROJ_DIR$\common\usb.c</file>
+      <file>$PROJ_DIR$\common\version.c</file>
+      <file>$PROJ_DIR$\common\iso14443crc.c</file>
+      <file>$PROJ_DIR$\common\iso15693tools.c</file>
+      <file>$PROJ_DIR$\common\iso15693tools.h</file>
+      <file>$PROJ_DIR$\common\legic_prng.c</file>
+      <file>$PROJ_DIR$\apps.h</file>
+      <file>$PROJ_DIR$\..\resources\iar\at91sam7s-ek-flash.mac</file>
+      <file>$PROJ_DIR$\..\resources\iar\at91sam7s-ek-sram.mac</file>
+      <file>$PROJ_DIR$\AT91SAM7S512.h</file>
+      <file>$PROJ_DIR$\..\at91lib\boards\at91sam7s-ek\board_cstartup_iar.s</file>
+      <file>$PROJ_DIR$\chip.h</file>
+      <file>$PROJ_DIR$\ff.h</file>
+      <file>$PROJ_DIR$\flash.icf</file>
+      <file>$PROJ_DIR$\ldscript</file>
+      <file>$PROJ_DIR$\proxmark3lcd.ewp</file>
+      <file>$PROJ_DIR$\armsrc\mifareutil.c</file>
+      <file>$TOOLKIT_DIR$\inc\c\ycheck.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\stdint.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\inttypes.h</file>
+      <file>$PROJ_DIR$\Release\Obj\tunes.pbi</file>
+      <file>$PROJ_DIR$\Release\Obj\tunes.o</file>
+      <file>$PROJ_DIR$\Release\Obj\crypto1.o</file>
+      <file>$PROJ_DIR$\Release\Obj\crapto1.o</file>
+      <file>$PROJ_DIR$\armsrc\apps.h</file>
+      <file>$PROJ_DIR$\armsrc\hitag2.h</file>
+      <file>$PROJ_DIR$\armsrc\glcd.h</file>
+      <file>$PROJ_DIR$\armsrc\string.h</file>
+      <file>$PROJ_DIR$\armsrc\mifareutil.h</file>
+      <file>$PROJ_DIR$\include\gui_layout.h</file>
+      <file>$PROJ_DIR$\armsrc\legicrf.h</file>
+      <file>$PROJ_DIR$\armsrc\msd.h</file>
+      <file>$PROJ_DIR$\armsrc\util.h</file>
+      <file>$PROJ_DIR$\armsrc\iso14443a.h</file>
+      <file>$PROJ_DIR$\armsrc\ff.h</file>
+      <file>$PROJ_DIR$\armsrc\diskio.h</file>
+      <file>$PROJ_DIR$\armsrc\legic_prng.h</file>
+      <file>$PROJ_DIR$\Release\Obj\ff.o</file>
+      <file>$PROJ_DIR$\Release\Obj\glcd.o</file>
       <file>$PROJ_DIR$\Release\Obj\crc.o</file>
       <file>$PROJ_DIR$\Release\Obj\spi.pbi</file>
-      <file>$PROJ_DIR$\Release\Obj\appmain.o</file>
       <file>$PROJ_DIR$\Release\Obj\pwm.pbi</file>
+      <file>$PROJ_DIR$\Release\Obj\appmain.o</file>
+      <file>$PROJ_DIR$\Release\Exe\proxmark3lcd.out</file>
+      <file>$PROJ_DIR$\Release\Exe\proxmark3lcd.mot</file>
       <file>$PROJ_DIR$\Release\Obj\iso14443a.o</file>
       <file>$PROJ_DIR$\Release\Obj\lfops.o</file>
       <file>$PROJ_DIR$\Release\Obj\iso14443.o</file>
@@ -785,148 +1052,80 @@
       <file>$PROJ_DIR$\Release\Obj\diskio.o</file>
       <file>$PROJ_DIR$\Release\Obj\iso15693.o</file>
       <file>$PROJ_DIR$\Release\Obj\hitag2.o</file>
-      <file>$PROJ_DIR$\Release\Exe\proxmark3lcd.mot</file>
+      <file>$PROJ_DIR$\Release\Obj\start.pbi</file>
       <file>$PROJ_DIR$\Release\Obj\fpgaloader.o</file>
       <file>$PROJ_DIR$\Release\Obj\fonts.o</file>
-      <file>$PROJ_DIR$\Release\Exe\proxmark3lcd.out</file>
-      <file>$PROJ_DIR$\Release\Obj\legicrf.o</file>
-      <file>$PROJ_DIR$\apps.h</file>
-      <file>$PROJ_DIR$\bootrom\fromflash.c</file>
-      <file>$PROJ_DIR$\..\at91lib\boards\at91sam7s-ek\board_cstartup_iar.s</file>
-      <file>$PROJ_DIR$\AT91SAM7S512.h</file>
-      <file>$PROJ_DIR$\..\resources\iar\at91sam7s-ek-flash.mac</file>
-      <file>$PROJ_DIR$\..\resources\iar\at91sam7s-ek-sram.mac</file>
-      <file>$PROJ_DIR$\bootrom\bootrom.c</file>
-      <file>$PROJ_DIR$\chip.h</file>
-      <file>$PROJ_DIR$\common\crc.c</file>
-      <file>$PROJ_DIR$\diskio.h</file>
-      <file>$PROJ_DIR$\ff.h</file>
-      <file>$PROJ_DIR$\flash.icf</file>
-      <file>$TOOLKIT_DIR$\inc\c\DLib_Threads.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\xencoding_limits.h</file>
-      <file>$PROJ_DIR$\include\integer.h</file>
-      <file>$PROJ_DIR$\proxmark3lcd.ewp</file>
-      <file>$PROJ_DIR$\common\usb.c</file>
-      <file>$TOOLKIT_DIR$\lib\dl4t_aln.a</file>
-      <file>$PROJ_DIR$\common\crc16.c</file>
-      <file>$TOOLKIT_DIR$\lib\rt4t_al.a</file>
-      <file>$TOOLKIT_DIR$\lib\m4t_al.a</file>
       <file>$PROJ_DIR$\Release\Obj\usb.pbi</file>
-      <file>$PROJ_DIR$\Release\Obj\start.pbi</file>
+      <file>$PROJ_DIR$\Release\Obj\legicrf.o</file>
       <file>$PROJ_DIR$\Release\Obj\util.pbi</file>
       <file>$PROJ_DIR$\Release\Obj\proxmark3lcd.pbd</file>
       <file>$PROJ_DIR$\Release\Obj\version.pbi</file>
       <file>$PROJ_DIR$\Release\Obj\hitag2.pbi</file>
       <file>$PROJ_DIR$\Release\Obj\glcd.pbi</file>
+      <file>$PROJ_DIR$\Release\Obj\usb.o</file>
+      <file>$PROJ_DIR$\Release\Obj\pwm.o</file>
+      <file>$PROJ_DIR$\Release\Obj\legic_prng.pbi</file>
       <file>$PROJ_DIR$\Release\Obj\iso14443a.pbi</file>
       <file>$PROJ_DIR$\Release\Obj\iso14443.pbi</file>
-      <file>$PROJ_DIR$\Release\Obj\legic_prng.pbi</file>
+      <file>$PROJ_DIR$\Release\Obj\board_cstartup_iar.o</file>
       <file>$PROJ_DIR$\Release\Obj\iso15693.pbi</file>
       <file>$PROJ_DIR$\Release\Obj\msd.pbi</file>
       <file>$PROJ_DIR$\Release\Obj\legicrf.pbi</file>
       <file>$PROJ_DIR$\Release\Obj\lfops.pbi</file>
       <file>$PROJ_DIR$\Release\Obj\printf.pbi</file>
-      <file>$PROJ_DIR$\Release\Obj\usb.o</file>
-      <file>$PROJ_DIR$\Release\Obj\pwm.o</file>
-      <file>$PROJ_DIR$\Release\Obj\board_cstartup_iar.o</file>
       <file>$PROJ_DIR$\Release\Obj\util.o</file>
-      <file>$PROJ_DIR$\Release\Obj\bootrom.o</file>
-      <file>$PROJ_DIR$\Release\Obj\ff.pbi</file>
-      <file>$PROJ_DIR$\Release\Obj\fromflash.o</file>
-      <file>$PROJ_DIR$\Release\Obj\spi.o</file>
       <file>$PROJ_DIR$\Release\Obj\bootrom.pbi</file>
-      <file>$PROJ_DIR$\Release\Obj\version.o</file>
-      <file>$PROJ_DIR$\Release\Obj\fromflash.pbi</file>
+      <file>$PROJ_DIR$\Release\Obj\ff.pbi</file>
+      <file>$PROJ_DIR$\Release\Obj\bootrom.o</file>
+      <file>$PROJ_DIR$\Release\Obj\spi.o</file>
+      <file>$PROJ_DIR$\Release\Obj\fromflash.o</file>
       <file>$PROJ_DIR$\Release\Obj\appmain.pbi</file>
+      <file>$PROJ_DIR$\Release\Obj\fromflash.pbi</file>
+      <file>$PROJ_DIR$\Release\Obj\version.o</file>
       <file>$PROJ_DIR$\Release\Obj\crc.pbi</file>
       <file>$PROJ_DIR$\Release\Obj\fonts.pbi</file>
       <file>$PROJ_DIR$\Release\Obj\diskio.pbi</file>
       <file>$PROJ_DIR$\Release\Obj\msd.o</file>
+      <file>$PROJ_DIR$\Release\Obj\iso15693tools.pbi</file>
       <file>$PROJ_DIR$\Release\Obj\fpgaloader.pbi</file>
       <file>$PROJ_DIR$\Release\Obj\printf.o</file>
       <file>$PROJ_DIR$\Release\Obj\start.o</file>
-      <file>$PROJ_DIR$\armsrc\hitag2.h</file>
-      <file>$PROJ_DIR$\armsrc\diskio.c</file>
-      <file>$PROJ_DIR$\armsrc\ff.c</file>
-      <file>$PROJ_DIR$\armsrc\msd.c</file>
-      <file>$PROJ_DIR$\armsrc\spi.c</file>
-      <file>$PROJ_DIR$\armsrc\pwm.c</file>
-      <file>$PROJ_DIR$\armsrc\apps.h</file>
-      <file>$PROJ_DIR$\armsrc\appmain.c</file>
-      <file>$PROJ_DIR$\include\gui_layout.h</file>
-      <file>$PROJ_DIR$\armsrc\glcd.h</file>
-      <file>$PROJ_DIR$\armsrc\legicrf.h</file>
-      <file>$PROJ_DIR$\armsrc\msd.h</file>
-      <file>$PROJ_DIR$\armsrc\printf.c</file>
-      <file>$PROJ_DIR$\armsrc\fonts.c</file>
-      <file>$PROJ_DIR$\armsrc\util.c</file>
-      <file>$PROJ_DIR$\armsrc\iso14443a.c</file>
-      <file>$PROJ_DIR$\armsrc\start.c</file>
-      <file>$PROJ_DIR$\armsrc\hitag2.c</file>
-      <file>$PROJ_DIR$\armsrc\iso14443.c</file>
-      <file>$PROJ_DIR$\armsrc\glcd.c</file>
-      <file>$PROJ_DIR$\armsrc\iso15693.c</file>
-      <file>$PROJ_DIR$\armsrc\fpgaloader.c</file>
-      <file>$PROJ_DIR$\armsrc\lfops.c</file>
-      <file>$PROJ_DIR$\armsrc\legicrf.c</file>
-      <file>$PROJ_DIR$\armsrc\legic_prng.h</file>
-      <file>$PROJ_DIR$\armsrc\ff.h</file>
-      <file>$PROJ_DIR$\armsrc\diskio.h</file>
-      <file>$PROJ_DIR$\common\version.c</file>
+      <file>$PROJ_DIR$\Release\Obj\iso14443crc.o</file>
+      <file>$PROJ_DIR$\armsrc\crapto1.h</file>
+      <file>$PROJ_DIR$\common\crc16.h</file>
+      <file>$PROJ_DIR$\Release\Obj\iso15693tools.o</file>
+      <file>$PROJ_DIR$\include\common.h</file>
+      <file>$PROJ_DIR$\Release\Obj\iso14443crc.pbi</file>
+      <file>$PROJ_DIR$\common\iso14443crc.h</file>
+      <file>$PROJ_DIR$\Release\Obj\mifareutil.o</file>
+      <file>$PROJ_DIR$\Release\Obj\mifareutil.pbi</file>
+      <file>$PROJ_DIR$\armsrc\crypto1.c</file>
+      <file>$PROJ_DIR$\armsrc\crapto1.c</file>
+      <file>$PROJ_DIR$\Release\Obj\crc16.o</file>
+      <file>$PROJ_DIR$\Release\Obj\crc16.pbi</file>
+      <file>$PROJ_DIR$\armsrc\tunes.c</file>
+      <file>$PROJ_DIR$\Release\Obj\mifarecmd.o</file>
+      <file>$PROJ_DIR$\Release\Obj\mifarecmd.pbi</file>
+      <file>$PROJ_DIR$\armsrc\mifarecmd.h</file>
+      <file>$PROJ_DIR$\armsrc\mifarecmd.c</file>
+      <file>$PROJ_DIR$\Release\Obj\crypto1.pbi</file>
+      <file>$PROJ_DIR$\Release\Obj\crapto1.pbi</file>
     </outputs>
-    <file>
-      <name>$PROJ_DIR$\common\legic_prng.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 78</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 39</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 31 4 2 8 9 10 61 60</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 31 4 2 8 9 14 10 61 60</file>
-        </tool>
-      </inputs>
-    </file>
     <file>
       <name>[ROOT_NODE]</name>
       <outputs>
         <tool>
           <name>ILINK</name>
-          <file> 46</file>
+          <file> 96</file>
         </tool>
       </outputs>
     </file>
     <file>
-      <name>$PROJ_DIR$\Release\Exe\proxmark3lcd.out</name>
-      <outputs>
-        <tool>
-          <name>OBJCOPY</name>
-          <file> 43</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ILINK</name>
-          <file> 59 34 86 88 32 40 29 45 44 90 28 42 38 36 41 39 47 37 99 101 85 91 102 84 87 93 12 67 68 65</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\bootrom\fromflash.c</name>
+      <name>$PROJ_DIR$\armsrc\ff.c</name>
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 94</file>
+          <file> 128</file>
         </tool>
         <tool>
           <name>ICCARM</name>
@@ -936,215 +1135,11 @@
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 5 6 7 62 3 2 4 8 9 10 61 60 16 17</file>
+          <file> 87 29 72 70 71 4 3 8 28 27 88</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 5 6 7 62 3 2 4 8 9 14 10 61 60 16 17</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\at91lib\boards\at91sam7s-ek\board_cstartup_iar.s</name>
-      <outputs>
-        <tool>
-          <name>AARM</name>
-          <file> 86</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>AARM</name>
-          <file> 11 13 15</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\bootrom\bootrom.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 92</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 88</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 5 6 7 62 3 2 4 8 9 10 61 60 16 17</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 5 6 7 62 3 2 4 8 9 14 10 61 60 16 17</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\common\crc.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 96</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 32</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 18 4 2 8 9 10 61 60</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 18 4 2 8 9 14 10 61 60</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\common\usb.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 69</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 84</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 5 6 7 62 3 2 4 8 9 14 10 61 60 16 17</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Release\Obj\proxmark3lcd.pbd</name>
-      <inputs>
-        <tool>
-          <name>BILINK</name>
-          <file> 95 92 96 98 89 97 100 94 75 74 77 76 79 78 81 82 80 83 35 33 70 69 71 73</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\armsrc\diskio.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 98</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 40</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 129 62 3 2 4 8 9 10 61 60</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 129 62 3 2 4 8 9 14 10 61 60</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\armsrc\ff.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 89</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 29</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 128 62 3 2 4 8 9 10 61 60 129</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 128 62 3 2 4 8 9 14 10 61 60 129</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\armsrc\msd.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 80</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 99</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 5 6 7 62 3 2 4 8 9 10 61 60 16 17 109 22 19 114</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 5 6 7 62 3 2 4 8 9 14 10 61 60 16 17 109 22 19 114</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\armsrc\spi.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 33</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 91</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 5 6 7 62 3 2 4 8 9 10 61 60 16 17 109 22 19</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 5 6 7 62 3 2 4 8 9 14 10 61 60 16 17 109 22 19</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\armsrc\pwm.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 35</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 85</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 5 6 7 62 3 2 4 8 9 10 61 60 16 17 109 22 19</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 5 6 7 62 3 2 4 8 9 14 10 61 60 16 17 109 22 19</file>
+          <file> 87 29 72 70 71 4 3 11 8 28 27 88</file>
         </tool>
       </inputs>
     </file>
@@ -1153,112 +1148,30 @@
       <outputs>
         <tool>
           <name>BICOMP</name>
+          <file> 132</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
           <file> 95</file>
         </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 34</file>
-        </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 5 6 7 62 3 2 4 8 9 10 61 60 16 17 21 19 109 22 113 114 111 112 20</file>
+          <file> 5 6 7 29 72 70 71 4 3 8 28 27 14 15 19 17 77 20 83 84 82 79 18</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 5 6 7 62 3 2 4 8 9 14 10 61 60 16 17 21 19 109 22 113 114 111 112 20</file>
+          <file> 5 6 7 29 72 70 71 4 3 11 8 28 27 14 15 19 17 77 20 83 84 82 79 18</file>
         </tool>
       </inputs>
     </file>
     <file>
-      <name>$PROJ_DIR$\armsrc\printf.c</name>
+      <name>$PROJ_DIR$\armsrc\diskio.c</name>
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 83</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 101</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 20 2 8 9 10 61 60</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 20 2 8 9 14 10 61 60</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\armsrc\fonts.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 97</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 45</file>
-        </tool>
-      </outputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\armsrc\util.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 71</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 87</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 5 6 7 62 3 2 4 8 9 10 61 60 16 17 109 22 19</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 5 6 7 62 3 2 4 8 9 14 10 61 60 16 17 109 22 19</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\armsrc\iso14443a.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 76</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 36</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 5 6 7 62 3 2 4 8 9 10 61 60 16 17 109 22 19 30</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 5 6 7 62 3 2 4 8 9 14 10 61 60 16 17 109 22 19 30</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\armsrc\start.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 70</file>
+          <file> 137</file>
         </tool>
         <tool>
           <name>ICCARM</name>
@@ -1268,57 +1181,70 @@
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 5 6 7 62 3 2 4 8 9 10 61 60 16 17 109 22 19</file>
+          <file> 88 29 72 70 71 4 3 8 28 27</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 5 6 7 62 3 2 4 8 9 14 10 61 60 16 17 109 22 19</file>
+          <file> 88 29 72 70 71 4 3 11 8 28 27</file>
         </tool>
       </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\common\crc16.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 155</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 154</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 145</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 145</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\armsrc\fonts.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 136</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 107</file>
+        </tool>
+      </outputs>
     </file>
     <file>
       <name>$PROJ_DIR$\armsrc\hitag2.c</name>
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 74</file>
+          <file> 113</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 42</file>
+          <file> 104</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 5 6 7 62 3 2 4 8 9 10 61 60 16 17 109 22 19 103</file>
+          <file> 5 6 7 29 72 70 71 4 3 8 28 27 14 15 77 20 17 85 78 80</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 5 6 7 62 3 2 4 8 9 14 10 61 60 16 17 109 22 19 103</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\armsrc\iso14443.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 77</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 38</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 5 6 7 62 3 2 4 8 9 10 61 60 16 17 109 22 19 30</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 5 6 7 62 3 2 4 8 9 14 10 61 60 16 17 109 22 19 30</file>
+          <file> 5 6 7 29 72 70 71 4 3 11 8 28 27 14 15 77 20 17 85 78 80</file>
         </tool>
       </inputs>
     </file>
@@ -1327,44 +1253,21 @@
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 75</file>
+          <file> 114</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 28</file>
+          <file> 91</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 62 3 2 4 8 9 10 61 60 112 5 6 7 16 17 109 22 19 25 23</file>
+          <file> 29 72 70 71 4 3 8 28 27 79 5 6 7 14 15 77 20 17 23 21</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 62 3 2 4 8 9 14 10 61 60 112 5 6 7 16 17 109 22 19 25 23</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\armsrc\iso15693.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 79</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 41</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 5 6 7 62 3 2 4 8 9 10 61 60 16 17 109 22 19 27 26 21</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 5 6 7 62 3 2 4 8 9 14 10 61 60 16 17 109 22 19 27 26 21</file>
+          <file> 29 72 70 71 4 3 11 8 28 27 79 5 6 7 14 15 77 20 17 23 21</file>
         </tool>
       </inputs>
     </file>
@@ -1373,44 +1276,90 @@
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 100</file>
+          <file> 140</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 44</file>
+          <file> 106</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 5 6 7 62 3 2 4 8 9 10 61 60 16 17 109 22 19 24</file>
+          <file> 5 6 7 29 72 70 71 4 3 8 28 27 14 15 77 20 17 22</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 5 6 7 62 3 2 4 8 9 14 10 61 60 16 17 109 22 19 24</file>
+          <file> 5 6 7 29 72 70 71 4 3 11 8 28 27 14 15 77 20 17 22</file>
         </tool>
       </inputs>
     </file>
     <file>
-      <name>$PROJ_DIR$\armsrc\lfops.c</name>
+      <name>$PROJ_DIR$\armsrc\iso14443.c</name>
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 82</file>
+          <file> 119</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 37</file>
+          <file> 100</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 5 6 7 62 3 2 4 8 9 10 61 60 16 17 109 22 19 103 66</file>
+          <file> 5 6 7 29 72 70 71 4 3 8 28 27 14 15 77 20 17 85 80</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 5 6 7 62 3 2 4 8 9 14 10 61 60 16 17 109 22 19 103 66</file>
+          <file> 5 6 7 29 72 70 71 4 3 11 8 28 27 14 15 77 20 17 85 80 149</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\armsrc\iso14443a.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 118</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 98</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 5 6 7 29 72 70 71 4 3 8 28 27 14 15 77 20 17 85 80 86 147 144 81</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 5 6 7 29 72 70 71 4 3 11 8 28 27 14 15 77 20 17 85 80 149 86 147 144 81</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\armsrc\iso15693.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 121</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 103</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 5 6 7 29 72 70 71 4 3 8 28 27 14 15 85 20 17 77 80</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 5 6 7 29 72 70 71 4 3 11 8 28 27 14 15 85 20 17 77 80 57</file>
         </tool>
       </inputs>
     </file>
@@ -1419,21 +1368,274 @@
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 81</file>
+          <file> 123</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 47</file>
+          <file> 109</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 5 6 7 62 3 2 4 8 9 10 61 60 16 17 109 22 19 27 26 113 127 18</file>
+          <file> 5 6 7 29 72 70 71 4 3 8 28 27 14 15 77 20 17 25 24 83 89 16</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 5 6 7 62 3 2 4 8 9 14 10 61 60 16 17 109 22 19 27 26 113 127 18</file>
+          <file> 5 6 7 29 72 70 71 4 3 11 8 28 27 14 15 77 20 17 25 24 83 89 16</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\armsrc\lfops.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 124</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 99</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 5 6 7 29 72 70 71 4 3 8 28 27 14 15 77 20 17 85 78 80</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 5 6 7 29 72 70 71 4 3 11 8 28 27 14 15 77 20 17 85 78 145 80</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\armsrc\msd.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 122</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 138</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 5 6 7 29 72 70 71 4 3 8 28 27 14 15 77 20 17 84</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 5 6 7 29 72 70 71 4 3 11 8 28 27 14 15 77 20 17 84</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\armsrc\printf.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 125</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 141</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 18 70 4 3 8 28 27</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 18 70 4 3 11 8 28 27</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\armsrc\pwm.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 94</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 116</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 5 6 7 29 72 70 71 4 3 8 28 27 14 15 77 20 17</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 5 6 7 29 72 70 71 4 3 11 8 28 27 14 15 77 20 17</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\armsrc\spi.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 93</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 130</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 5 6 7 29 72 70 71 4 3 8 28 27 14 15 77 20 17</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 5 6 7 29 72 70 71 4 3 11 8 28 27 14 15 77 20 17</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\armsrc\start.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 105</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 142</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 5 6 7 29 72 70 71 4 3 8 28 27 14 15 77 20 17</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 5 6 7 29 72 70 71 4 3 11 8 28 27 14 15 77 20 17</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\armsrc\util.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 110</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 126</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 5 6 7 29 72 70 71 4 3 8 28 27 14 15 77 20 17</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 5 6 7 29 72 70 71 4 3 11 8 28 27 14 15 77 20 17</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\bootrom\bootrom.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 127</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 129</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 5 6 7 29 72 70 71 4 3 8 28 27 14 15</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 5 6 7 29 72 70 71 4 3 11 8 28 27 14 15</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\common\crc.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 135</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 92</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 16 71 70 4 3 8 28 27</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 16 71 70 4 3 11 8 28 27</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\bootrom\fromflash.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 133</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 131</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 5 6 7 29 72 70 71 4 3 8 28 27 14 15</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 5 6 7 29 72 70 71 4 3 11 8 28 27 14 15</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\common\usb.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 108</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 115</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 5 6 7 29 72 70 71 4 3 8 28 27 14 15</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 5 6 7 29 72 70 71 4 3 11 8 28 27 14 15</file>
         </tool>
       </inputs>
     </file>
@@ -1442,21 +1644,244 @@
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 73</file>
+          <file> 112</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 93</file>
+          <file> 134</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 5 6 7 62 3 2 4 8 9 10 61 60 16 17</file>
+          <file> 5 6 7 29 72 70 71 4 3 8 28 27 14 15</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 5 6 7 62 3 2 4 8 9 14 10 61 60 16 17</file>
+          <file> 5 6 7 29 72 70 71 4 3 11 8 28 27 14 15</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\common\iso14443crc.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 148</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 143</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 149</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 149</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\common\iso15693tools.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 139</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 146</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 5 6 7 29 72 70 71 4 3 8 28 27 14 15 19 17</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 5 6 7 29 72 70 71 4 3 11 8 28 27 14 15 19 17</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\common\legic_prng.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 117</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 101</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 26 71 70 4 3 8 28 27</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 26 71 70 4 3 11 8 28 27</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\at91lib\boards\at91sam7s-ek\board_cstartup_iar.s</name>
+      <outputs>
+        <tool>
+          <name>AARM</name>
+          <file> 120</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>AARM</name>
+          <file> 9 12 13</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\armsrc\mifareutil.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 151</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 150</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 5 6 7 29 72 70 71 4 3 8 28 27 14 15 77 20 17 85 80 86 147 144 81</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 5 6 7 29 72 70 71 4 3 11 8 28 27 14 15 77 20 17 85 80 149 86 147 144 81</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Release\Exe\proxmark3lcd.out</name>
+      <outputs>
+        <tool>
+          <name>OBJCOPY</name>
+          <file> 97</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ILINK</name>
+          <file> 66 95 120 129 76 92 154 75 102 90 107 106 131 91 104 100 98 143 103 146 101 109 99 157 150 138 141 116 130 142 74 115 126 134 10 32 33 30</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Release\Obj\proxmark3lcd.pbd</name>
+      <inputs>
+        <tool>
+          <name>BILINK</name>
+          <file> 132 127 162 135 155 161 137 128 136 140 133 114 113 119 118 148 121 139 117 123 124 158 151 122 125 94 93 105 73 108 110 112</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\armsrc\crypto1.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 161</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 75</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 144 71 70 4 3 8 28 27 19 17</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 144 71 70 4 3 11 8 28 27 19 17</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\armsrc\crapto1.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 162</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 76</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 144 71 70 4 3 8 28 27 19 17</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 144 71 70 4 3 11 8 28 27 19 17</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\armsrc\tunes.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 73</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 74</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 5 6 7 29 72 70 71 4 3 8 28 27 14 15 19 17 77 20 83 84 79</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 5 6 7 29 72 70 71 4 3 11 8 28 27 14 15 19 17 77 20 83 84 79</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\armsrc\mifarecmd.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 158</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 157</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 159 5 6 7 29 72 70 71 4 3 8 28 27 14 15 77 20 17 85 80 86 147 144 81</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 159 5 6 7 29 72 70 71 4 3 11 8 28 27 14 15 77 20 17 85 80 149 86 147 144 81</file>
         </tool>
       </inputs>
     </file>
