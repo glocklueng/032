@@ -8,6 +8,8 @@
 // Replacement stdint.h because GCC doesn't come with it yet (C99)
 //-----------------------------------------------------------------------------
 
+#ifndef _STDINT
+
 #ifndef __STDINT_H
 #define __STDINT_H
 
@@ -21,7 +23,9 @@ typedef unsigned short int		uint16_t;
 typedef unsigned int			uint32_t;
 typedef unsigned long long int	uint64_t;
 
-typedef int						intptr_t;
+typedef int				intptr_t;
 typedef unsigned int			uintptr_t;
 
 #endif /* __STDINT_H */
+
+#endif
