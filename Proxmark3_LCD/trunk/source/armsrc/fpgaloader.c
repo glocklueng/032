@@ -331,7 +331,7 @@ void FpgaWriteConfWord(BYTE v)
 // closable, but should only close one at a time. Not an FPGA thing, but
 // the samples from the ADC always flow through the FPGA.
 //-----------------------------------------------------------------------------
-void SetAdcMuxFor(DWORD whichGpio)
+void SetAdcMuxFor(uint32_t whichGpio)
 {
 	return; // this function no longer used
 	AT91C_BASE_PIOA->PIO_OER =

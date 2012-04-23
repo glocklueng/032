@@ -12,7 +12,7 @@
       <name>C-SPY</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>22</version>
+        <version>23</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -89,7 +89,7 @@
         </option>
         <option>
           <name>OCLastSavedByProductVersion</name>
-          <state>5.50.5.51996</state>
+          <state>6.30.6.53380</state>
         </option>
         <option>
           <name>OCDownloadAttachToProgram</name>
@@ -170,6 +170,10 @@
         <option>
           <name>OCImagesUse3</name>
           <state>0</state>
+        </option>
+        <option>
+          <name>OCDeviceConfigMacroFile</name>
+          <state>1</state>
         </option>
       </data>
     </settings>
@@ -313,7 +317,7 @@
       <name>JLINK_ID</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>13</version>
+        <version>14</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -423,7 +427,7 @@
         </option>
         <option>
           <name>CCJLinkResetList</name>
-          <version>5</version>
+          <version>6</version>
           <state>5</state>
         </option>
         <option>
@@ -494,6 +498,14 @@
         <option>
           <name>CCSwoClockEdit</name>
           <state>2000</state>
+        </option>
+        <option>
+          <name>OCJLinkTraceSource</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OCJLinkTraceSourceDummy</name>
+          <state>0</state>
         </option>
       </data>
     </settings>
@@ -741,6 +753,63 @@
       </data>
     </settings>
     <settings>
+      <name>RDIJTAGJET_ID</name>
+      <archiveVersion>0</archiveVersion>
+      <data>
+        <version>1</version>
+        <wantNonLocal>1</wantNonLocal>
+        <debug>1</debug>
+        <option>
+          <name>CRDILogFileCheck</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CRDILogFileEdit</name>
+          <state>$PROJ_DIR$\cspycomm.log</state>
+        </option>
+        <option>
+          <name>CCRDIHWReset</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCRDICatchReset</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCRDICatchUndef</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCRDICatchSWI</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCRDICatchData</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCRDICatchPrefetch</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCRDICatchIRQ</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCRDICatchFIQ</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OCDriverInfo</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>JTAGjetConfigure</name>
+          <state></state>
+        </option>
+      </data>
+    </settings>
+    <settings>
       <name>STLINK_ID</name>
       <archiveVersion>2</archiveVersion>
       <data>
@@ -803,7 +872,45 @@
         </option>
       </data>
     </settings>
+    <settings>
+      <name>XDS100_ID</name>
+      <archiveVersion>2</archiveVersion>
+      <data>
+        <version>1</version>
+        <wantNonLocal>1</wantNonLocal>
+        <debug>1</debug>
+        <option>
+          <name>OCDriverInfo</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>OCXDS100AttachSlave</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>TIPackageOverride</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>TIPackage</name>
+          <state></state>
+        </option>
+        <option>
+          <name>CCXds100InterfaceList</name>
+          <version>0</version>
+          <state>0</state>
+        </option>
+        <option>
+          <name>BoardFile</name>
+          <state></state>
+        </option>
+      </data>
+    </settings>
     <debuggerPlugins>
+      <plugin>
+        <file>$TOOLKIT_DIR$\plugins\rtos\AVIX\AVIX.ENU.ewplugin</file>
+        <loadFlag>0</loadFlag>
+      </plugin>
       <plugin>
         <file>$TOOLKIT_DIR$\plugins\rtos\CMX\CmxArmPlugin.ENU.ewplugin</file>
         <loadFlag>0</loadFlag>
@@ -872,7 +979,7 @@
       <name>C-SPY</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>22</version>
+        <version>23</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -945,11 +1052,11 @@
         </option>
         <option>
           <name>OCDynDriverList</name>
-          <state>JLINK_ID</state>
+          <state>ANGEL_ID</state>
         </option>
         <option>
           <name>OCLastSavedByProductVersion</name>
-          <state>6.20.4.52756</state>
+          <state>6.30.6.53380</state>
         </option>
         <option>
           <name>OCDownloadAttachToProgram</name>
@@ -1030,6 +1137,10 @@
         <option>
           <name>OCImagesUse3</name>
           <state>0</state>
+        </option>
+        <option>
+          <name>OCDeviceConfigMacroFile</name>
+          <state>1</state>
         </option>
       </data>
     </settings>
@@ -1173,7 +1284,7 @@
       <name>JLINK_ID</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>13</version>
+        <version>14</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1267,7 +1378,7 @@
         </option>
         <option>
           <name>CCJLinkDoUpdateBreakpoints</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>CCJLinkUpdateBreakpoints</name>
@@ -1283,7 +1394,7 @@
         </option>
         <option>
           <name>CCJLinkResetList</name>
-          <version>5</version>
+          <version>6</version>
           <state>4</state>
         </option>
         <option>
@@ -1354,6 +1465,14 @@
         <option>
           <name>CCSwoClockEdit</name>
           <state>2000</state>
+        </option>
+        <option>
+          <name>OCJLinkTraceSource</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OCJLinkTraceSourceDummy</name>
+          <state>0</state>
         </option>
       </data>
     </settings>
@@ -1601,6 +1720,63 @@
       </data>
     </settings>
     <settings>
+      <name>RDIJTAGJET_ID</name>
+      <archiveVersion>0</archiveVersion>
+      <data>
+        <version>1</version>
+        <wantNonLocal>1</wantNonLocal>
+        <debug>0</debug>
+        <option>
+          <name>CRDILogFileCheck</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CRDILogFileEdit</name>
+          <state>$PROJ_DIR$\cspycomm.log</state>
+        </option>
+        <option>
+          <name>CCRDIHWReset</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCRDICatchReset</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCRDICatchUndef</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCRDICatchSWI</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCRDICatchData</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCRDICatchPrefetch</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCRDICatchIRQ</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCRDICatchFIQ</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OCDriverInfo</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>JTAGjetConfigure</name>
+          <state></state>
+        </option>
+      </data>
+    </settings>
+    <settings>
       <name>STLINK_ID</name>
       <archiveVersion>2</archiveVersion>
       <data>
@@ -1663,7 +1839,45 @@
         </option>
       </data>
     </settings>
+    <settings>
+      <name>XDS100_ID</name>
+      <archiveVersion>2</archiveVersion>
+      <data>
+        <version>1</version>
+        <wantNonLocal>1</wantNonLocal>
+        <debug>0</debug>
+        <option>
+          <name>OCDriverInfo</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>OCXDS100AttachSlave</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>TIPackageOverride</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>TIPackage</name>
+          <state></state>
+        </option>
+        <option>
+          <name>CCXds100InterfaceList</name>
+          <version>0</version>
+          <state>0</state>
+        </option>
+        <option>
+          <name>BoardFile</name>
+          <state></state>
+        </option>
+      </data>
+    </settings>
     <debuggerPlugins>
+      <plugin>
+        <file>$TOOLKIT_DIR$\plugins\rtos\AVIX\AVIX.ENU.ewplugin</file>
+        <loadFlag>0</loadFlag>
+      </plugin>
       <plugin>
         <file>$TOOLKIT_DIR$\plugins\rtos\CMX\CmxArmPlugin.ENU.ewplugin</file>
         <loadFlag>0</loadFlag>

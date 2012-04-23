@@ -1,27 +1,47 @@
 //-----------------------------------------------------------------------------
-// Routines to support ISO 14443 type A.
-//
+// Merlok - June 2011
 // Gerhard de Koning Gans - May 2008
+// Hagen Fritsch - June 2010
+//
+// This code is licensed to you under the terms of the GNU GPL, version 2 or,
+// at your option, any later version. See the LICENSE.txt file for the text of
+// the license.
 //-----------------------------------------------------------------------------
-#include <proxmark3.h>
-#include "apps.h"
-#include "../common/iso14443_crc.c"
+// Routines to support ISO 14443 type A.
+//-----------------------------------------------------------------------------
 
-static BYTE *trace = (BYTE *) BigBuf;
+#include "proxmark3.h"
+#include "apps.h"
+#include "util.h"
+#include "string.h"
+
+#include "iso14443crc.h"
+#include "iso14443a.h"
+#include "crapto1.h"
+#include "mifareutil.h"
+
+static uint8_t *trace = (uint8_t *) BigBuf;
 static int traceLen = 0;
 static int rsamples = 0;
-static BOOL tracing = TRUE;
+static int tracing = TRUE;
+static uint32_t iso14a_timeout;
 
-typedef enum {
-	SEC_D = 1,
-	SEC_E = 2,
-	SEC_F = 3,
-	SEC_X = 4,
-	SEC_Y = 5,
-	SEC_Z = 6
-} SecType;
+// CARD TO READER - manchester
+// Sequence D: 11110000 modulation with subcarrier during first half
+// Sequence E: 00001111 modulation with subcarrier during second half
+// Sequence F: 00000000 no modulation with subcarrier
+// READER TO CARD - miller
+// Sequence X: 00001100 drop after half a period
+// Sequence Y: 00000000 no drop
+// Sequence Z: 11000000 drop at start
+#define	SEC_D 0xf0
+#define	SEC_E 0x0f
+#define	SEC_F 0x00
+#define	SEC_X 0x0c
+#define	SEC_Y 0x00
+#define	SEC_Z 0xc0
 
-static const BYTE OddByteParity[256] = {
+static const uint8_t OddByteParity[256] = {
   1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1,
   0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0,
   0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0,
@@ -40,22 +60,32 @@ static const BYTE OddByteParity[256] = {
   1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1
 };
 
-// BIG CHANGE - UNDERSTAND THIS BEFORE WE COMMIT
-#define RECV_CMD_OFFSET   3032
-#define RECV_RES_OFFSET   3096
-#define DMA_BUFFER_OFFSET 3160
-#define DMA_BUFFER_SIZE   4096
-#define TRACE_LENGTH      3000
+uint8_t trigger = 0;
+void iso14a_set_trigger(int enable) {
+	trigger = enable;
+}
+
+void iso14a_clear_tracelen(void) {
+	traceLen = 0;
+}
+void iso14a_set_tracing(int enable) {
+	tracing = enable;
+}
 
 //-----------------------------------------------------------------------------
 // Generate the parity value for a byte sequence
-// 
+//
 //-----------------------------------------------------------------------------
-DWORD GetParity(const BYTE * pbtCmd, int iLen)
+byte_t oddparity (const byte_t bt)
+{
+  return OddByteParity[bt];
+}
+
+uint32_t GetParity(const uint8_t * pbtCmd, int iLen)
 {
   int i;
-  DWORD dwPar = 0;
-  
+  uint32_t dwPar = 0;
+
   // Generate the encrypted data
   for (i = 0; i < iLen; i++) {
     // Save the encrypted parity bit
@@ -64,16 +94,16 @@ DWORD GetParity(const BYTE * pbtCmd, int iLen)
   return dwPar;
 }
 
-static void AppendCrc14443a(BYTE* data, int len)
+void AppendCrc14443a(uint8_t* data, int len)
 {
   ComputeCrc14443(CRC_14443_A,data,len,data+len,data+len+1);
 }
 
-BOOL LogTrace(const BYTE * btBytes, int iLen, int iSamples, DWORD dwParity, BOOL bReader)
+int LogTrace(const uint8_t * btBytes, int iLen, int iSamples, uint32_t dwParity, int bReader)
 {
   // Return when trace is full
   if (traceLen >= TRACE_LENGTH) return FALSE;
-  
+
   // Trace the random, i'm curious
   rsamples += iSamples;
   trace[traceLen++] = ((rsamples >> 0) & 0xff);
@@ -93,11 +123,6 @@ BOOL LogTrace(const BYTE * btBytes, int iLen, int iSamples, DWORD dwParity, BOOL
   return TRUE;
 }
 
-BOOL LogTraceInfo(byte_t* data, size_t len)
-{
-  return LogTrace(data,len,0,GetParity(data,len),TRUE);
-}
-
 //-----------------------------------------------------------------------------
 // The software UART that receives commands from the reader, and its state
 // variables.
@@ -111,7 +136,7 @@ static struct {
 		STATE_MILLER_Z,
         STATE_ERROR_WAIT
     }       state;
-    WORD    shiftReg;
+    uint16_t    shiftReg;
     int     bitCnt;
     int     byteCnt;
     int     byteCntMax;
@@ -126,12 +151,12 @@ static struct {
 		DROP_FIRST_HALF,
 		DROP_SECOND_HALF
 	}		drop;
-    BYTE   *output;
+    uint8_t   *output;
 } Uart;
 
-static BOOL MillerDecoding(int bit)
+static RAMFUNC int MillerDecoding(int bit)
 {
-	int error;
+	int error = 0;
 	int bitright;
 
 	if(!Uart.bitBuffer) {
@@ -143,7 +168,7 @@ static BOOL MillerDecoding(int bit)
 		Uart.bitBuffer ^= bit;
 	}
 
-	BOOL EOC = FALSE;
+	int EOC = FALSE;
 
 	if(Uart.state != STATE_UNSYNCD) {
 		Uart.posCnt++;
@@ -331,7 +356,7 @@ static BOOL MillerDecoding(int bit)
 				if(!Uart.syncBit)	{ Uart.syncBit = bit & 2; Uart.samples = 1; }
 				else if(bit & 2)	{ Uart.syncBit = bit & 2; Uart.samples = 1; bit <<= 1; }
 				if(!Uart.syncBit)	{ Uart.syncBit = bit & 1; Uart.samples = 0;
-					if(Uart.syncBit & (Uart.bitBuffer & 8)) {
+					if(Uart.syncBit && (Uart.bitBuffer & 8)) {
 						Uart.syncBit = 8;
 
 						// the first half bit period is expected in next sample
@@ -380,7 +405,7 @@ static struct {
     int     posCount;
 	int     syncBit;
 	int     parityBits;
-    WORD    shiftReg;
+    uint16_t    shiftReg;
 	int     buffer;
 	int     buff;
 	int     samples;
@@ -390,10 +415,10 @@ static struct {
 		SUB_FIRST_HALF,
 		SUB_SECOND_HALF
 	}		sub;
-    BYTE   *output;
+    uint8_t   *output;
 } Demod;
 
-static BOOL ManchesterDecoding(int v)
+static RAMFUNC int ManchesterDecoding(int v)
 {
 	int bit;
 	int modulation;
@@ -414,28 +439,29 @@ static BOOL ManchesterDecoding(int v)
 		Demod.syncBit = 0;
 		//Demod.samples = 0;
 		Demod.posCount = 1;		// This is the first half bit period, so after syncing handle the second part
-		if(bit & 0x08) { Demod.syncBit = 0x08; }
-		if(!Demod.syncBit)	{
-			if(bit & 0x04) { Demod.syncBit = 0x04; }
-		}
-		else if(bit & 0x04) { Demod.syncBit = 0x04; bit <<= 4; }
-		if(!Demod.syncBit)	{
-			if(bit & 0x02) { Demod.syncBit = 0x02; }
-		}
-		else if(bit & 0x02) { Demod.syncBit = 0x02; bit <<= 4; }
-		if(!Demod.syncBit)	{
-			if(bit & 0x01) { Demod.syncBit = 0x01; }
 
-			if(Demod.syncBit & (Demod.buffer & 0x08)) {
-				Demod.syncBit = 0x08;
+		if(bit & 0x08) {
+			Demod.syncBit = 0x08;
+		}
 
-				// The first half bitperiod is expected in next sample
-				Demod.posCount = 0;
-				Demod.output[Demod.len] = 0xfb;
+		if(bit & 0x04) {
+			if(Demod.syncBit) {
+				bit <<= 4;
 			}
+			Demod.syncBit = 0x04;
 		}
-		else if(bit & 0x01) { Demod.syncBit = 0x01; }
 
+		if(bit & 0x02) {
+			if(Demod.syncBit) {
+				bit <<= 2;
+			}
+			Demod.syncBit = 0x02;
+		}
+
+		if(bit & 0x01 && Demod.syncBit) {
+			Demod.syncBit = 0x01;
+		}
+		
 		if(Demod.syncBit) {
 			Demod.len = 0;
 			Demod.state = DEMOD_START_OF_COMMUNICATION;
@@ -445,6 +471,7 @@ static BOOL ManchesterDecoding(int v)
 			Demod.parityBits = 0;
 			Demod.samples = 0;
 			if(Demod.posCount) {
+				if(trigger) LED_A_OFF();
 				switch(Demod.syncBit) {
 					case 0x08: Demod.samples = 3; break;
 					case 0x04: Demod.samples = 2; break;
@@ -589,7 +616,7 @@ static BOOL ManchesterDecoding(int v)
 // triggering so that we start recording at the point that the tag is moved
 // near the reader.
 //-----------------------------------------------------------------------------
-void SnoopIso14443a(void)
+void RAMFUNC SnoopIso14443a(void)
 {
 //	#define RECV_CMD_OFFSET 	2032	// original (working as of 21/2/09) values
 //	#define RECV_RES_OFFSET		2096	// original (working as of 21/2/09) values
@@ -600,31 +627,32 @@ void SnoopIso14443a(void)
     // We won't start recording the frames that we acquire until we trigger;
     // a good trigger condition to get started is probably when we see a
     // response from the tag.
-    BOOL triggered = TRUE; // FALSE to wait first for card
+    int triggered = FALSE; // FALSE to wait first for card
 
     // The command (reader -> tag) that we're receiving.
 	// The length of a received command will in most cases be no more than 18 bytes.
 	// So 32 should be enough!
-    BYTE *receivedCmd = (((BYTE *)BigBuf) + RECV_CMD_OFFSET);
+    uint8_t *receivedCmd = (((uint8_t *)BigBuf) + RECV_CMD_OFFSET);
     // The response (tag -> reader) that we're receiving.
-    BYTE *receivedResponse = (((BYTE *)BigBuf) + RECV_RES_OFFSET);
+    uint8_t *receivedResponse = (((uint8_t *)BigBuf) + RECV_RES_OFFSET);
 
     // As we receive stuff, we copy it from receivedCmd or receivedResponse
     // into trace, along with its length and other annotations.
-    //BYTE *trace = (BYTE *)BigBuf;
-    //int traceLen = 0;
+    //uint8_t *trace = (uint8_t *)BigBuf;
+    
+    traceLen = 0; // uncommented to fix ISSUE 15 - gerhard - jan2011
 
     // The DMA buffer, used to stream samples from the FPGA
-    SBYTE *dmaBuf = ((SBYTE *)BigBuf) + DMA_BUFFER_OFFSET;
+    int8_t *dmaBuf = ((int8_t *)BigBuf) + DMA_BUFFER_OFFSET;
     int lastRxCounter;
-    SBYTE *upTo;
+    int8_t *upTo;
     int smpl;
     int maxBehindBy = 0;
 
     // Count of samples received so far, so that we can include timing
     // information in the trace buffer.
     int samples = 0;
-	int rsamples = 0;
+    int rsamples = 0;
 
     memset(trace, 0x44, RECV_CMD_OFFSET);
 
@@ -632,6 +660,12 @@ void SnoopIso14443a(void)
     Demod.output = receivedResponse;
     Demod.len = 0;
     Demod.state = DEMOD_UNSYNCD;
+
+    // Setup for the DMA.
+    FpgaSetupSsc();
+    upTo = dmaBuf;
+    lastRxCounter = DMA_BUFFER_SIZE;
+    FpgaSetupSscDma((uint8_t *)dmaBuf, DMA_BUFFER_SIZE);
 
     // And the reader -> tag commands
     memset(&Uart, 0, sizeof(Uart));
@@ -645,93 +679,86 @@ void SnoopIso14443a(void)
     FpgaWriteConfWord(FPGA_MAJOR_MODE_HF_ISO14443A | FPGA_HF_ISO14443A_SNIFFER);
     SetAdcMuxFor(GPIO_MUXSEL_HIPKD);
 
-	// Setup for the DMA.
-    FpgaSetupSsc();
-    upTo = dmaBuf;
-    lastRxCounter = DMA_BUFFER_SIZE;
-    FpgaSetupSscDma((BYTE *)dmaBuf, DMA_BUFFER_SIZE);
-
-    LED_A_ON();
 
     // And now we loop, receiving samples.
     for(;;) {
-		WDT_HIT();
+        LED_A_ON();
+        WDT_HIT();
         int behindBy = (lastRxCounter - AT91C_BASE_PDC_SSC->PDC_RCR) &
                                 (DMA_BUFFER_SIZE-1);
         if(behindBy > maxBehindBy) {
             maxBehindBy = behindBy;
             if(behindBy > 400) {
-                DbpString("blew circular buffer!");
+                Dbprintf("blew circular buffer! behindBy=0x%x", behindBy);
                 goto done;
             }
         }
         if(behindBy < 1) continue;
 
+	LED_A_OFF();
         smpl = upTo[0];
         upTo++;
         lastRxCounter -= 1;
         if(upTo - dmaBuf > DMA_BUFFER_SIZE) {
             upTo -= DMA_BUFFER_SIZE;
             lastRxCounter += DMA_BUFFER_SIZE;
-            AT91C_BASE_PDC_SSC->PDC_RNPR = (DWORD)upTo;
+            AT91C_BASE_PDC_SSC->PDC_RNPR = (uint32_t) upTo;
             AT91C_BASE_PDC_SSC->PDC_RNCR = DMA_BUFFER_SIZE;
         }
 
         samples += 4;
-#define HANDLE_BIT_IF_BODY \
-            LED_C_ON(); \
-			if(triggered) { \
-				trace[traceLen++] = ((rsamples >>  0) & 0xff); \
-                trace[traceLen++] = ((rsamples >>  8) & 0xff); \
-                trace[traceLen++] = ((rsamples >> 16) & 0xff); \
-                trace[traceLen++] = ((rsamples >> 24) & 0xff); \
-				trace[traceLen++] = ((Uart.parityBits >>  0) & 0xff); \
-				trace[traceLen++] = ((Uart.parityBits >>  8) & 0xff); \
-				trace[traceLen++] = ((Uart.parityBits >> 16) & 0xff); \
-				trace[traceLen++] = ((Uart.parityBits >> 24) & 0xff); \
-                trace[traceLen++] = Uart.byteCnt; \
-                memcpy(trace+traceLen, receivedCmd, Uart.byteCnt); \
-                traceLen += Uart.byteCnt; \
-                if(traceLen > TRACE_LENGTH) break; \
-            } \
-            /* And ready to receive another command. */ \
-            Uart.state = STATE_UNSYNCD; \
-            /* And also reset the demod code, which might have been */ \
-            /* false-triggered by the commands from the reader. */ \
-            Demod.state = DEMOD_UNSYNCD; \
-			LED_B_OFF(); \
-
-		if(MillerDecoding((smpl & 0xF0) >> 4)) {
+        if(MillerDecoding((smpl & 0xF0) >> 4)) {
             rsamples = samples - Uart.samples;
-			HANDLE_BIT_IF_BODY
+            LED_C_ON();
+            if(triggered) {
+                trace[traceLen++] = ((rsamples >>  0) & 0xff);
+                trace[traceLen++] = ((rsamples >>  8) & 0xff);
+                trace[traceLen++] = ((rsamples >> 16) & 0xff);
+                trace[traceLen++] = ((rsamples >> 24) & 0xff);
+                trace[traceLen++] = ((Uart.parityBits >>  0) & 0xff);
+                trace[traceLen++] = ((Uart.parityBits >>  8) & 0xff);
+                trace[traceLen++] = ((Uart.parityBits >> 16) & 0xff);
+                trace[traceLen++] = ((Uart.parityBits >> 24) & 0xff);
+                trace[traceLen++] = Uart.byteCnt;
+                memcpy(trace+traceLen, receivedCmd, Uart.byteCnt);
+                traceLen += Uart.byteCnt;
+                if(traceLen > TRACE_LENGTH) break;
+            }
+            /* And ready to receive another command. */
+            Uart.state = STATE_UNSYNCD;
+            /* And also reset the demod code, which might have been */
+            /* false-triggered by the commands from the reader. */
+            Demod.state = DEMOD_UNSYNCD;
+            LED_B_OFF();
         }
-		if(ManchesterDecoding(smpl & 0x0F)) {
-			rsamples = samples - Demod.samples;
-			LED_B_ON();
 
-			// timestamp, as a count of samples
-			trace[traceLen++] = ((rsamples >>  0) & 0xff);
-			trace[traceLen++] = ((rsamples >>  8) & 0xff);
-			trace[traceLen++] = ((rsamples >> 16) & 0xff);
-			trace[traceLen++] = 0x80 | ((rsamples >> 24) & 0xff);
-			trace[traceLen++] = ((Demod.parityBits >>  0) & 0xff);
-			trace[traceLen++] = ((Demod.parityBits >>  8) & 0xff);
-			trace[traceLen++] = ((Demod.parityBits >> 16) & 0xff);
-			trace[traceLen++] = ((Demod.parityBits >> 24) & 0xff);
-			// length
-			trace[traceLen++] = Demod.len;
-			memcpy(trace+traceLen, receivedResponse, Demod.len);
-			traceLen += Demod.len;
-			if(traceLen > TRACE_LENGTH) break;
+        if(ManchesterDecoding(smpl & 0x0F)) {
+            rsamples = samples - Demod.samples;
+            LED_B_ON();
 
-           	triggered = TRUE;
+            // timestamp, as a count of samples
+            trace[traceLen++] = ((rsamples >>  0) & 0xff);
+            trace[traceLen++] = ((rsamples >>  8) & 0xff);
+            trace[traceLen++] = ((rsamples >> 16) & 0xff);
+            trace[traceLen++] = 0x80 | ((rsamples >> 24) & 0xff);
+            trace[traceLen++] = ((Demod.parityBits >>  0) & 0xff);
+            trace[traceLen++] = ((Demod.parityBits >>  8) & 0xff);
+            trace[traceLen++] = ((Demod.parityBits >> 16) & 0xff);
+            trace[traceLen++] = ((Demod.parityBits >> 24) & 0xff);
+            // length
+            trace[traceLen++] = Demod.len;
+            memcpy(trace+traceLen, receivedResponse, Demod.len);
+            traceLen += Demod.len;
+            if(traceLen > TRACE_LENGTH) break;
+
+            triggered = TRUE;
 
             // And ready to receive another response.
             memset(&Demod, 0, sizeof(Demod));
             Demod.output = receivedResponse;
             Demod.state = DEMOD_UNSYNCD;
-			LED_C_OFF();
-		}
+            LED_C_OFF();
+        }
 
         if(BUTTON_PRESS()) {
             DbpString("cancelled_a");
@@ -754,56 +781,14 @@ done:
 	LED_D_OFF();
 }
 
-// Prepare communication bits to send to FPGA
-void Sequence(SecType seq)
-{
-	ToSendMax++;
-	switch(seq) {
-	// CARD TO READER
-	case SEC_D:
-		// Sequence D: 11110000
-		// modulation with subcarrier during first half
-        ToSend[ToSendMax] = 0xf0;
-		break;
-	case SEC_E:
-		// Sequence E: 00001111
-		// modulation with subcarrier during second half
-        ToSend[ToSendMax] = 0x0f;
-		break;
-	case SEC_F:
-		// Sequence F: 00000000
-		// no modulation with subcarrier
-        ToSend[ToSendMax] = 0x00;
-		break;
-	// READER TO CARD
-	case SEC_X:
-		// Sequence X: 00001100
-		// drop after half a period
-        ToSend[ToSendMax] = 0x0c;
-		break;
-	case SEC_Y:
-	default:
-		// Sequence Y: 00000000
-		// no drop
-        ToSend[ToSendMax] = 0x00;
-		break;
-	case SEC_Z:
-		// Sequence Z: 11000000
-		// drop at start
-        ToSend[ToSendMax] = 0xc0;
-		break;
-	}
-}
-
 //-----------------------------------------------------------------------------
 // Prepare tag messages
 //-----------------------------------------------------------------------------
-static void CodeIso14443aAsTag(const BYTE *cmd, int len)
+static void CodeIso14443aAsTagPar(const uint8_t *cmd, int len, uint32_t dwParity)
 {
-    int i;
-	int oddparity;
+	int i;
 
-    ToSendReset();
+	ToSendReset();
 
 	// Correction bit, might be removed when not needed
 	ToSendStuffBit(0);
@@ -814,55 +799,47 @@ static void CodeIso14443aAsTag(const BYTE *cmd, int len)
 	ToSendStuffBit(0);
 	ToSendStuffBit(0);
 	ToSendStuffBit(0);
-
+	
 	// Send startbit
-	Sequence(SEC_D);
+	ToSend[++ToSendMax] = SEC_D;
 
-    for(i = 0; i < len; i++) {
-        int j;
-        BYTE b = cmd[i];
+	for(i = 0; i < len; i++) {
+		int j;
+		uint8_t b = cmd[i];
 
 		// Data bits
-        oddparity = 0x01;
 		for(j = 0; j < 8; j++) {
-            oddparity ^= (b & 1);
 			if(b & 1) {
-				Sequence(SEC_D);
+				ToSend[++ToSendMax] = SEC_D;
 			} else {
-				Sequence(SEC_E);
-            }
-            b >>= 1;
-        }
-
-        // Parity bit
-        if(oddparity) {
-			Sequence(SEC_D);
-		} else {
-			Sequence(SEC_E);
+				ToSend[++ToSendMax] = SEC_E;
+			}
+			b >>= 1;
 		}
-    }
 
-    // Send stopbit
-	Sequence(SEC_F);
-
-	// Flush the buffer in FPGA!!
-	for(i = 0; i < 5; i++) {
-		Sequence(SEC_F);
+		// Get the parity bit
+		if ((dwParity >> i) & 0x01) {
+			ToSend[++ToSendMax] = SEC_D;
+		} else {
+			ToSend[++ToSendMax] = SEC_E;
+		}
 	}
 
-    // Convert from last byte pos to length
-    ToSendMax++;
+	// Send stopbit
+	ToSend[++ToSendMax] = SEC_F;
 
-    // Add a few more for slop
-    ToSend[ToSendMax++] = 0x00;
-	ToSend[ToSendMax++] = 0x00;
-    //ToSendMax += 2;
+	// Convert from last byte pos to length
+	ToSendMax++;
+}
+
+static void CodeIso14443aAsTag(const uint8_t *cmd, int len){
+	CodeIso14443aAsTagPar(cmd, len, GetParity(cmd, len));
 }
 
 //-----------------------------------------------------------------------------
 // This is to send a NACK kind of answer, its only 3 bits, I know it should be 4
 //-----------------------------------------------------------------------------
-static void CodeStrangeAnswer()
+static void CodeStrangeAnswerAsTag()
 {
 	int i;
 
@@ -879,32 +856,68 @@ static void CodeStrangeAnswer()
 	ToSendStuffBit(0);
 
 	// Send startbit
-	Sequence(SEC_D);
+	ToSend[++ToSendMax] = SEC_D;
 
 	// 0
-	Sequence(SEC_E);
+	ToSend[++ToSendMax] = SEC_E;
 
 	// 0
-	Sequence(SEC_E);
+	ToSend[++ToSendMax] = SEC_E;
 
 	// 1
-	Sequence(SEC_D);
+	ToSend[++ToSendMax] = SEC_D;
 
     // Send stopbit
-	Sequence(SEC_F);
+	ToSend[++ToSendMax] = SEC_F;
 
 	// Flush the buffer in FPGA!!
 	for(i = 0; i < 5; i++) {
-		Sequence(SEC_F);
+		ToSend[++ToSendMax] = SEC_F;
 	}
 
     // Convert from last byte pos to length
     ToSendMax++;
+}
 
-    // Add a few more for slop
-    ToSend[ToSendMax++] = 0x00;
-	ToSend[ToSendMax++] = 0x00;
-    //ToSendMax += 2;
+static void Code4bitAnswerAsTag(uint8_t cmd)
+{
+	int i;
+
+    ToSendReset();
+
+	// Correction bit, might be removed when not needed
+	ToSendStuffBit(0);
+	ToSendStuffBit(0);
+	ToSendStuffBit(0);
+	ToSendStuffBit(0);
+	ToSendStuffBit(1);  // 1
+	ToSendStuffBit(0);
+	ToSendStuffBit(0);
+	ToSendStuffBit(0);
+
+	// Send startbit
+	ToSend[++ToSendMax] = SEC_D;
+
+	uint8_t b = cmd;
+	for(i = 0; i < 4; i++) {
+		if(b & 1) {
+			ToSend[++ToSendMax] = SEC_D;
+		} else {
+			ToSend[++ToSendMax] = SEC_E;
+		}
+		b >>= 1;
+	}
+
+	// Send stopbit
+	ToSend[++ToSendMax] = SEC_F;
+
+	// Flush the buffer in FPGA!!
+	for(i = 0; i < 5; i++) {
+		ToSend[++ToSendMax] = SEC_F;
+	}
+
+    // Convert from last byte pos to length
+    ToSendMax++;
 }
 
 //-----------------------------------------------------------------------------
@@ -912,7 +925,7 @@ static void CodeStrangeAnswer()
 // Stop when button is pressed
 // Or return TRUE when command is captured
 //-----------------------------------------------------------------------------
-static BOOL GetIso14443aCommandFromReader(BYTE *received, int *len, int maxLen)
+static int GetIso14443aCommandFromReader(uint8_t *received, int *len, int maxLen)
 {
     // Set FPGA mode to "simulated ISO 14443 tag", no modulation (listen
     // only, since we are receiving, not transmitting).
@@ -934,7 +947,7 @@ static BOOL GetIso14443aCommandFromReader(BYTE *received, int *len, int maxLen)
             AT91C_BASE_SSC->SSC_THR = 0x00;
         }
         if(AT91C_BASE_SSC->SSC_SR & (AT91C_SSC_RXRDY)) {
-            BYTE b = (BYTE)AT91C_BASE_SSC->SSC_RHR;
+            uint8_t b = (uint8_t)AT91C_BASE_SSC->SSC_RHR;
 			if(MillerDecoding((b & 0xf0) >> 4)) {
 				*len = Uart.byteCnt;
 				return TRUE;
@@ -946,6 +959,7 @@ static BOOL GetIso14443aCommandFromReader(BYTE *received, int *len, int maxLen)
         }
     }
 }
+static int EmSendCmd14443aRaw(uint8_t *resp, int respLen, int correctionNeeded);
 
 //-----------------------------------------------------------------------------
 // Main loop of simulated tag: receive commands from reader, decide what
@@ -956,40 +970,37 @@ void SimulateIso14443aTag(int tagType, int TagUid)
 	// This function contains the tag emulation
 
 	// Prepare protocol messages
-    // static const BYTE cmd1[] = { 0x26 };
-//     static const BYTE response1[] = { 0x02, 0x00 }; // Says: I am Mifare 4k - original line - greg
+    // static const uint8_t cmd1[] = { 0x26 };
+//     static const uint8_t response1[] = { 0x02, 0x00 }; // Says: I am Mifare 4k - original line - greg
 //
-	static const BYTE response1[] = { 0x44, 0x03 }; // Says: I am a DESFire Tag, ph33r me
-//	static const BYTE response1[] = { 0x44, 0x00 }; // Says: I am a ULTRALITE Tag, 0wn me
+	static const uint8_t response1[] = { 0x44, 0x03 }; // Says: I am a DESFire Tag, ph33r me
+//	static const uint8_t response1[] = { 0x44, 0x00 }; // Says: I am a ULTRALITE Tag, 0wn me
 
 	// UID response
-    // static const BYTE cmd2[] = { 0x93, 0x20 };
-    //static const BYTE response2[] = { 0x9a, 0xe5, 0xe4, 0x43, 0xd8 }; // original value - greg
-
-
+    // static const uint8_t cmd2[] = { 0x93, 0x20 };
+    //static const uint8_t response2[] = { 0x9a, 0xe5, 0xe4, 0x43, 0xd8 }; // original value - greg
 
 // my desfire
-    static const BYTE response2[] = { 0x88, 0x04, 0x21, 0x3f, 0x4d }; // known uid - note cascade (0x88), 2nd byte (0x04) = NXP/Phillips
+    static const uint8_t response2[] = { 0x88, 0x04, 0x21, 0x3f, 0x4d }; // known uid - note cascade (0x88), 2nd byte (0x04) = NXP/Phillips
 
 
 // When reader selects us during cascade1 it will send cmd3
-//BYTE response3[] = { 0x04, 0x00, 0x00 }; // SAK Select (cascade1) successful response (ULTRALITE)
-BYTE response3[] = { 0x24, 0x00, 0x00 }; // SAK Select (cascade1) successful response (DESFire)
+//uint8_t response3[] = { 0x04, 0x00, 0x00 }; // SAK Select (cascade1) successful response (ULTRALITE)
+uint8_t response3[] = { 0x24, 0x00, 0x00 }; // SAK Select (cascade1) successful response (DESFire)
 ComputeCrc14443(CRC_14443_A, response3, 1, &response3[1], &response3[2]);
 
 // send cascade2 2nd half of UID
-static const BYTE response2a[] = { 0x51, 0x48, 0x1d, 0x80, 0x84 }; //  uid - cascade2 - 2nd half (4 bytes) of UID+ BCCheck
+static const uint8_t response2a[] = { 0x51, 0x48, 0x1d, 0x80, 0x84 }; //  uid - cascade2 - 2nd half (4 bytes) of UID+ BCCheck
 // NOTE : THE CRC on the above may be wrong as I have obfuscated the actual UID
 
-
 // When reader selects us during cascade2 it will send cmd3a
-//BYTE response3a[] = { 0x00, 0x00, 0x00 }; // SAK Select (cascade2) successful response (ULTRALITE)
-BYTE response3a[] = { 0x20, 0x00, 0x00 }; // SAK Select (cascade2) successful response (DESFire)
+//uint8_t response3a[] = { 0x00, 0x00, 0x00 }; // SAK Select (cascade2) successful response (ULTRALITE)
+uint8_t response3a[] = { 0x20, 0x00, 0x00 }; // SAK Select (cascade2) successful response (DESFire)
 ComputeCrc14443(CRC_14443_A, response3a, 1, &response3a[1], &response3a[2]);
 
-    static const BYTE response5[] = { 0x00, 0x00, 0x00, 0x00 }; // Very random tag nonce
+    static const uint8_t response5[] = { 0x00, 0x00, 0x00, 0x00 }; // Very random tag nonce
 
-    BYTE *resp;
+    uint8_t *resp;
     int respLen;
 
     // Longest possible response will be 16 bytes + 2 CRC = 18 bytes
@@ -1005,42 +1016,41 @@ ComputeCrc14443(CRC_14443_A, response3a, 1, &response3a[1], &response3a[2]);
 	// 166 bytes, since every bit that needs to be send costs us a byte
 	//
 
-
     // Respond with card type
-    BYTE *resp1 = (((BYTE *)BigBuf) + 800);
+    uint8_t *resp1 = (((uint8_t *)BigBuf) + 800);
     int resp1Len;
 
     // Anticollision cascade1 - respond with uid
-    BYTE *resp2 = (((BYTE *)BigBuf) + 970);
+    uint8_t *resp2 = (((uint8_t *)BigBuf) + 970);
     int resp2Len;
 
     // Anticollision cascade2 - respond with 2nd half of uid if asked
     // we're only going to be asked if we set the 1st byte of the UID (during cascade1) to 0x88
-    BYTE *resp2a = (((BYTE *)BigBuf) + 1140);
+    uint8_t *resp2a = (((uint8_t *)BigBuf) + 1140);
     int resp2aLen;
 
     // Acknowledge select - cascade 1
-    BYTE *resp3 = (((BYTE *)BigBuf) + 1310);
+    uint8_t *resp3 = (((uint8_t *)BigBuf) + 1310);
     int resp3Len;
 
     // Acknowledge select - cascade 2
-    BYTE *resp3a = (((BYTE *)BigBuf) + 1480);
+    uint8_t *resp3a = (((uint8_t *)BigBuf) + 1480);
     int resp3aLen;
 
     // Response to a read request - not implemented atm
-    BYTE *resp4 = (((BYTE *)BigBuf) + 1550);
+    uint8_t *resp4 = (((uint8_t *)BigBuf) + 1550);
     int resp4Len;
 
     // Authenticate response - nonce
-    BYTE *resp5 = (((BYTE *)BigBuf) + 1720);
+    uint8_t *resp5 = (((uint8_t *)BigBuf) + 1720);
     int resp5Len;
 
-    BYTE *receivedCmd = (BYTE *)BigBuf;
+    uint8_t *receivedCmd = (uint8_t *)BigBuf;
     int len;
 
     int i;
 	int u;
-	BYTE b;
+	uint8_t b;
 
 	// To control where we are in the protocol
 	int order = 0;
@@ -1052,7 +1062,7 @@ ComputeCrc14443(CRC_14443_A, response3a, 1, &response3a[1], &response3a[2]);
 
     int cmdsRecvd = 0;
 
-	BOOL fdt_indicator;
+	int fdt_indicator;
 
     memset(receivedCmd, 0x44, 400);
 
@@ -1080,7 +1090,7 @@ ComputeCrc14443(CRC_14443_A, response3a, 1, &response3a[1], &response3a[2]);
     memcpy(resp3a, ToSend, ToSendMax); resp3aLen = ToSendMax;
 
 	// Strange answer is an example of rare message size (3 bits)
-	CodeStrangeAnswer();
+	CodeStrangeAnswerAsTag();
 	memcpy(resp4, ToSend, ToSendMax); resp4Len = ToSendMax;
 
 	// Authentication answer (random nonce)
@@ -1166,10 +1176,11 @@ ComputeCrc14443(CRC_14443_A, response3a, 1, &response3a[1], &response3a[2]);
 				receivedCmd[0], receivedCmd[1], receivedCmd[2]);
         } else {
             // Never seen this command before
-		Dbprintf("Unknown command received from reader: %x %x %x %x %x %x %x %x %x",
+		Dbprintf("Unknown command received from reader (len=%d): %x %x %x %x %x %x %x %x %x",
+			len,
 			receivedCmd[0], receivedCmd[1], receivedCmd[2],
-			receivedCmd[3], receivedCmd[3], receivedCmd[4],
-			receivedCmd[5], receivedCmd[6], receivedCmd[7]);
+			receivedCmd[3], receivedCmd[4], receivedCmd[5],
+			receivedCmd[6], receivedCmd[7], receivedCmd[8]);
 			// Do not respond
 			resp = resp1; respLen = 0; order = 0;
         }
@@ -1197,8 +1208,13 @@ ComputeCrc14443(CRC_14443_A, response3a, 1, &response3a[1], &response3a[2]);
 		}
 
         if(respLen <= 0) continue;
+		//----------------------------
+		u = 0;
+		b = 0x00;
+		fdt_indicator = FALSE;
 
-        // Modulate Manchester
+		EmSendCmd14443aRaw(resp, respLen, receivedCmd[0] == 0x52);
+/*        // Modulate Manchester
 		FpgaWriteConfWord(FPGA_MAJOR_MODE_HF_ISO14443A | FPGA_HF_ISO14443A_TAGSIM_MOD);
         AT91C_BASE_SSC->SSC_THR = 0x00;
         FpgaSetupSsc();
@@ -1209,8 +1225,8 @@ ComputeCrc14443(CRC_14443_A, response3a, 1, &response3a[1], &response3a[2]);
 		fdt_indicator = FALSE;
         for(;;) {
             if(AT91C_BASE_SSC->SSC_SR & (AT91C_SSC_RXRDY)) {
-				volatile BYTE c = (BYTE)AT91C_BASE_SSC->SSC_RHR;
-                (void)c;
+				volatile uint8_t b = (uint8_t)AT91C_BASE_SSC->SSC_RHR;
+                (void)b;
             }
             if(AT91C_BASE_SSC->SSC_SR & (AT91C_SSC_TXRDY)) {
 				if(i > respLen) {
@@ -1230,7 +1246,7 @@ ComputeCrc14443(CRC_14443_A, response3a, 1, &response3a[1], &response3a[2]);
 			    break;
 			}
         }
-
+*/
     }
 
 	Dbprintf("%x %x %x", happened, happened2, cmdsRecvd);
@@ -1240,28 +1256,28 @@ ComputeCrc14443(CRC_14443_A, response3a, 1, &response3a[1], &response3a[2]);
 //-----------------------------------------------------------------------------
 // Transmit the command (to the tag) that was placed in ToSend[].
 //-----------------------------------------------------------------------------
-static void TransmitFor14443a(const BYTE *cmd, int len, int *samples, int *wait)
+static void TransmitFor14443a(const uint8_t *cmd, int len, int *samples, int *wait)
 {
   int c;
-  
+
   FpgaWriteConfWord(FPGA_MAJOR_MODE_HF_ISO14443A | FPGA_HF_ISO14443A_READER_MOD);
-  
+
 	if (wait)
     if(*wait < 10)
       *wait = 10;
-  
+
   for(c = 0; c < *wait;) {
     if(AT91C_BASE_SSC->SSC_SR & (AT91C_SSC_TXRDY)) {
       AT91C_BASE_SSC->SSC_THR = 0x00;		// For exact timing!
       c++;
     }
     if(AT91C_BASE_SSC->SSC_SR & (AT91C_SSC_RXRDY)) {
-      volatile DWORD r = AT91C_BASE_SSC->SSC_RHR;
+      volatile uint32_t r = AT91C_BASE_SSC->SSC_RHR;
       (void)r;
     }
     WDT_HIT();
   }
-  
+
   c = 0;
   for(;;) {
     if(AT91C_BASE_SSC->SSC_SR & (AT91C_SSC_TXRDY)) {
@@ -1272,7 +1288,7 @@ static void TransmitFor14443a(const BYTE *cmd, int len, int *samples, int *wait)
       }
     }
     if(AT91C_BASE_SSC->SSC_SR & (AT91C_SSC_RXRDY)) {
-      volatile DWORD r = AT91C_BASE_SSC->SSC_RHR;
+      volatile uint32_t r = AT91C_BASE_SSC->SSC_RHR;
       (void)r;
     }
     WDT_HIT();
@@ -1281,115 +1297,35 @@ static void TransmitFor14443a(const BYTE *cmd, int len, int *samples, int *wait)
 }
 
 //-----------------------------------------------------------------------------
-// To generate an arbitrary stream from reader
-//
-//-----------------------------------------------------------------------------
-void ArbitraryFromReader(const BYTE *cmd, int parity, int len)
-{
-	int i;
-	int j;
-	int last;
-    BYTE b;
-
-	ToSendReset();
-
-	// Start of Communication (Seq. Z)
-	Sequence(SEC_Z);
-	last = 0;
-
-	for(i = 0; i < len; i++) {
-        // Data bits
-        b = cmd[i];
-		for(j = 0; j < 8; j++) {
-			if(b & 1) {
-				// Sequence X
-				Sequence(SEC_X);
-				last = 1;
-			} else {
-				if(last == 0) {
-					// Sequence Z
-					Sequence(SEC_Z);
-				}
-				else {
-					// Sequence Y
-					Sequence(SEC_Y);
-					last = 0;
-				}
-			}
-			b >>= 1;
-
-		}
-
-		// Predefined parity bit, the flipper flips when needed, because of flips in byte sent
-		if(((parity >> (len - i - 1)) & 1)) {
-			// Sequence X
-			Sequence(SEC_X);
-			last = 1;
-		} else {
-			if(last == 0) {
-				// Sequence Z
-				Sequence(SEC_Z);
-			}
-			else {
-				// Sequence Y
-				Sequence(SEC_Y);
-				last = 0;
-			}
-		}
-	}
-
-	// End of Communication
-	if(last == 0) {
-		// Sequence Z
-		Sequence(SEC_Z);
-	}
-	else {
-		// Sequence Y
-		Sequence(SEC_Y);
-		last = 0;
-	}
-	// Sequence Y
-	Sequence(SEC_Y);
-
-	// Just to be sure!
-	Sequence(SEC_Y);
-	Sequence(SEC_Y);
-	Sequence(SEC_Y);
-
-    // Convert from last character reference to length
-    ToSendMax++;
-}
-
-//-----------------------------------------------------------------------------
 // Code a 7-bit command without parity bit
 // This is especially for 0x26 and 0x52 (REQA and WUPA)
 //-----------------------------------------------------------------------------
-void ShortFrameFromReader(const BYTE bt)
+void ShortFrameFromReader(const uint8_t bt)
 {
 	int j;
 	int last;
-  BYTE b;
+  uint8_t b;
 
 	ToSendReset();
 
 	// Start of Communication (Seq. Z)
-	Sequence(SEC_Z);
+	ToSend[++ToSendMax] = SEC_Z;
 	last = 0;
 
 	b = bt;
 	for(j = 0; j < 7; j++) {
 		if(b & 1) {
 			// Sequence X
-			Sequence(SEC_X);
+			ToSend[++ToSendMax] = SEC_X;
 			last = 1;
 		} else {
 			if(last == 0) {
 				// Sequence Z
-				Sequence(SEC_Z);
+				ToSend[++ToSendMax] = SEC_Z;
 			}
 			else {
 				// Sequence Y
-				Sequence(SEC_Y);
+				ToSend[++ToSendMax] = SEC_Y;
 				last = 0;
 			}
 		}
@@ -1399,20 +1335,20 @@ void ShortFrameFromReader(const BYTE bt)
 	// End of Communication
 	if(last == 0) {
 		// Sequence Z
-		Sequence(SEC_Z);
+		ToSend[++ToSendMax] = SEC_Z;
 	}
 	else {
 		// Sequence Y
-		Sequence(SEC_Y);
+		ToSend[++ToSendMax] = SEC_Y;
 		last = 0;
 	}
 	// Sequence Y
-	Sequence(SEC_Y);
+	ToSend[++ToSendMax] = SEC_Y;
 
 	// Just to be sure!
-	Sequence(SEC_Y);
-	Sequence(SEC_Y);
-	Sequence(SEC_Y);
+	ToSend[++ToSendMax] = SEC_Y;
+	ToSend[++ToSendMax] = SEC_Y;
+	ToSend[++ToSendMax] = SEC_Y;
 
     // Convert from last character reference to length
     ToSendMax++;
@@ -1420,79 +1356,229 @@ void ShortFrameFromReader(const BYTE bt)
 
 //-----------------------------------------------------------------------------
 // Prepare reader command to send to FPGA
-// 
+//
 //-----------------------------------------------------------------------------
-void CodeIso14443aAsReaderPar(const BYTE * cmd, int len, DWORD dwParity)
+void CodeIso14443aAsReaderPar(const uint8_t * cmd, int len, uint32_t dwParity)
 {
   int i, j;
   int last;
-  BYTE b;
-  
+  uint8_t b;
+
   ToSendReset();
-  
+
   // Start of Communication (Seq. Z)
-  Sequence(SEC_Z);
+  ToSend[++ToSendMax] = SEC_Z;
   last = 0;
-  
+
   // Generate send structure for the data bits
   for (i = 0; i < len; i++) {
     // Get the current byte to send
     b = cmd[i];
-    
+
     for (j = 0; j < 8; j++) {
       if (b & 1) {
         // Sequence X
-        Sequence(SEC_X);
+    	  ToSend[++ToSendMax] = SEC_X;
         last = 1;
       } else {
         if (last == 0) {
           // Sequence Z
-          Sequence(SEC_Z);
+        	ToSend[++ToSendMax] = SEC_Z;
         } else {
           // Sequence Y
-          Sequence(SEC_Y);
+        	ToSend[++ToSendMax] = SEC_Y;
           last = 0;
         }
       }
       b >>= 1;
     }
-    
+
     // Get the parity bit
     if ((dwParity >> i) & 0x01) {
       // Sequence X
-      Sequence(SEC_X);
+    	ToSend[++ToSendMax] = SEC_X;
       last = 1;
     } else {
       if (last == 0) {
         // Sequence Z
-        Sequence(SEC_Z);
+    	  ToSend[++ToSendMax] = SEC_Z;
       } else {
         // Sequence Y
-        Sequence(SEC_Y);
+    	  ToSend[++ToSendMax] = SEC_Y;
         last = 0;
       }
     }
   }
-  
+
   // End of Communication
   if (last == 0) {
     // Sequence Z
-    Sequence(SEC_Z);
+	  ToSend[++ToSendMax] = SEC_Z;
   } else {
     // Sequence Y
-    Sequence(SEC_Y);
+	  ToSend[++ToSendMax] = SEC_Y;
     last = 0;
   }
   // Sequence Y
-  Sequence(SEC_Y);
-  
+  ToSend[++ToSendMax] = SEC_Y;
+
   // Just to be sure!
-  Sequence(SEC_Y);
-  Sequence(SEC_Y);
-  Sequence(SEC_Y);
-  
+  ToSend[++ToSendMax] = SEC_Y;
+  ToSend[++ToSendMax] = SEC_Y;
+  ToSend[++ToSendMax] = SEC_Y;
+
   // Convert from last character reference to length
   ToSendMax++;
+}
+
+//-----------------------------------------------------------------------------
+// Wait for commands from reader
+// Stop when button is pressed (return 1) or field was gone (return 2)
+// Or return 0 when command is captured
+//-----------------------------------------------------------------------------
+static int EmGetCmd(uint8_t *received, int *len, int maxLen)
+{
+	*len = 0;
+
+	uint32_t timer = 0, vtime = 0;
+	int analogCnt = 0;
+	int analogAVG = 0;
+
+	// Set FPGA mode to "simulated ISO 14443 tag", no modulation (listen
+	// only, since we are receiving, not transmitting).
+	// Signal field is off with the appropriate LED
+	LED_D_OFF();
+	FpgaWriteConfWord(FPGA_MAJOR_MODE_HF_ISO14443A | FPGA_HF_ISO14443A_TAGSIM_LISTEN);
+
+	// Set ADC to read field strength
+	AT91C_BASE_ADC->ADC_CR = AT91C_ADC_SWRST;
+	AT91C_BASE_ADC->ADC_MR =
+				ADC_MODE_PRESCALE(32) |
+				ADC_MODE_STARTUP_TIME(16) |
+				ADC_MODE_SAMPLE_HOLD_TIME(8);
+	AT91C_BASE_ADC->ADC_CHER = ADC_CHANNEL(ADC_CHAN_HF);
+	// start ADC
+	AT91C_BASE_ADC->ADC_CR = AT91C_ADC_START;
+	
+	// Now run a 'software UART' on the stream of incoming samples.
+	Uart.output = received;
+	Uart.byteCntMax = maxLen;
+	Uart.state = STATE_UNSYNCD;
+
+	for(;;) {
+		WDT_HIT();
+
+		if (BUTTON_PRESS()) return 1;
+
+		// test if the field exists
+		if (AT91C_BASE_ADC->ADC_SR & ADC_END_OF_CONVERSION(ADC_CHAN_HF)) {
+			analogCnt++;
+			analogAVG += AT91C_BASE_ADC->ADC_CDR[ADC_CHAN_HF];
+			AT91C_BASE_ADC->ADC_CR = AT91C_ADC_START;
+			if (analogCnt >= 32) {
+				if ((33000 * (analogAVG / analogCnt) >> 10) < MF_MINFIELDV) {
+					vtime = GetTickCount();
+					if (!timer) timer = vtime;
+					// 50ms no field --> card to idle state
+					if (vtime - timer > 50) return 2;
+				} else
+					if (timer) timer = 0;
+				analogCnt = 0;
+				analogAVG = 0;
+			}
+		}
+		// transmit none
+		if(AT91C_BASE_SSC->SSC_SR & (AT91C_SSC_TXRDY)) {
+			AT91C_BASE_SSC->SSC_THR = 0x00;
+		}
+		// receive and test the miller decoding
+		if(AT91C_BASE_SSC->SSC_SR & (AT91C_SSC_RXRDY)) {
+			volatile uint8_t b = (uint8_t)AT91C_BASE_SSC->SSC_RHR;
+			if(MillerDecoding((b & 0xf0) >> 4)) {
+				*len = Uart.byteCnt;
+				if (tracing) LogTrace(received, *len, GetDeltaCountUS(), Uart.parityBits, TRUE);
+				return 0;
+			}
+			if(MillerDecoding(b & 0x0f)) {
+				*len = Uart.byteCnt;
+				if (tracing) LogTrace(received, *len, GetDeltaCountUS(), Uart.parityBits, TRUE);
+				return 0;
+			}
+		}
+	}
+}
+
+static int EmSendCmd14443aRaw(uint8_t *resp, int respLen, int correctionNeeded)
+{
+	int i, u = 0;
+	uint8_t b = 0;
+
+	// Modulate Manchester
+	FpgaWriteConfWord(FPGA_MAJOR_MODE_HF_ISO14443A | FPGA_HF_ISO14443A_TAGSIM_MOD);
+	AT91C_BASE_SSC->SSC_THR = 0x00;
+	FpgaSetupSsc();
+	
+	// include correction bit
+	i = 1;
+	if((Uart.parityBits & 0x01) || correctionNeeded) {
+		// 1236, so correction bit needed
+		i = 0;
+	}
+	
+	// send cycle
+	for(;;) {
+		if(AT91C_BASE_SSC->SSC_SR & (AT91C_SSC_RXRDY)) {
+			volatile uint8_t bx = (uint8_t)AT91C_BASE_SSC->SSC_RHR;
+			(void)bx;
+		}
+		if(AT91C_BASE_SSC->SSC_SR & (AT91C_SSC_TXRDY)) {
+			if(i > respLen) {
+				b = 0xff; // was 0x00
+				u++;
+			} else {
+				b = resp[i];
+				i++;
+			}
+			AT91C_BASE_SSC->SSC_THR = b;
+
+			if(u > 4) break;
+		}
+		if(BUTTON_PRESS()) {
+			break;
+		}
+	}
+
+	return 0;
+}
+
+int EmSend4bitEx(uint8_t resp, int correctionNeeded){
+  Code4bitAnswerAsTag(resp);
+	int res = EmSendCmd14443aRaw(ToSend, ToSendMax, correctionNeeded);
+  if (tracing) LogTrace(&resp, 1, GetDeltaCountUS(), GetParity(&resp, 1), FALSE);
+	return res;
+}
+
+int EmSend4bit(uint8_t resp){
+	return EmSend4bitEx(resp, 0);
+}
+
+int EmSendCmdExPar(uint8_t *resp, int respLen, int correctionNeeded, uint32_t par){
+  CodeIso14443aAsTagPar(resp, respLen, par);
+	int res = EmSendCmd14443aRaw(ToSend, ToSendMax, correctionNeeded);
+  if (tracing) LogTrace(resp, respLen, GetDeltaCountUS(), par, FALSE);
+	return res;
+}
+
+int EmSendCmdEx(uint8_t *resp, int respLen, int correctionNeeded){
+	return EmSendCmdExPar(resp, respLen, correctionNeeded, GetParity(resp, respLen));
+}
+
+int EmSendCmd(uint8_t *resp, int respLen){
+	return EmSendCmdExPar(resp, respLen, 0, GetParity(resp, respLen));
+}
+
+int EmSendCmdPar(uint8_t *resp, int respLen, uint32_t par){
+	return EmSendCmdExPar(resp, respLen, 0, par);
 }
 
 //-----------------------------------------------------------------------------
@@ -1500,37 +1586,37 @@ void CodeIso14443aAsReaderPar(const BYTE * cmd, int len, DWORD dwParity)
 //  If a response is captured return TRUE
 //  If it takes to long return FALSE
 //-----------------------------------------------------------------------------
-static BOOL GetIso14443aAnswerFromTag(BYTE *receivedResponse, int maxLen, int *samples, int *elapsed) //BYTE *buffer
+static int GetIso14443aAnswerFromTag(uint8_t *receivedResponse, int maxLen, int *samples, int *elapsed) //uint8_t *buffer
 {
 	// buffer needs to be 512 bytes
 	int c;
 
 	// Set FPGA mode to "reader listen mode", no modulation (listen
-    // only, since we are receiving, not transmitting).
-    // Signal field is on with the appropriate LED
-    LED_D_ON();
-    FpgaWriteConfWord(FPGA_MAJOR_MODE_HF_ISO14443A | FPGA_HF_ISO14443A_READER_LISTEN);
+	// only, since we are receiving, not transmitting).
+	// Signal field is on with the appropriate LED
+	LED_D_ON();
+	FpgaWriteConfWord(FPGA_MAJOR_MODE_HF_ISO14443A | FPGA_HF_ISO14443A_READER_LISTEN);
 
-    // Now get the answer from the card
-    Demod.output = receivedResponse;
-    Demod.len = 0;
-    Demod.state = DEMOD_UNSYNCD;
+	// Now get the answer from the card
+	Demod.output = receivedResponse;
+	Demod.len = 0;
+	Demod.state = DEMOD_UNSYNCD;
 
-	BYTE b;
+	uint8_t b;
 	if (elapsed) *elapsed = 0;
 
 	c = 0;
 	for(;;) {
-        WDT_HIT();
+		WDT_HIT();
 
-        if(AT91C_BASE_SSC->SSC_SR & (AT91C_SSC_TXRDY)) {
-            AT91C_BASE_SSC->SSC_THR = 0x00;  // To make use of exact timing of next command from reader!!
+		if(AT91C_BASE_SSC->SSC_SR & (AT91C_SSC_TXRDY)) {
+			AT91C_BASE_SSC->SSC_THR = 0x00;  // To make use of exact timing of next command from reader!!
 			if (elapsed) (*elapsed)++;
-        }
-        if(AT91C_BASE_SSC->SSC_SR & (AT91C_SSC_RXRDY)) {
-			if(c < 512) { c++; } else { return FALSE; }
-            b = (BYTE)AT91C_BASE_SSC->SSC_RHR;
-			if(ManchesterDecoding((b & 0xf0) >> 4)) {
+		}
+		if(AT91C_BASE_SSC->SSC_SR & (AT91C_SSC_RXRDY)) {
+			if(c < iso14a_timeout) { c++; } else { return FALSE; }
+			b = (uint8_t)AT91C_BASE_SSC->SSC_RHR;
+			if(ManchesterDecoding((b>>4) & 0xf)) {
 				*samples = ((c - 1) << 3) + 4;
 				return TRUE;
 			}
@@ -1538,324 +1624,790 @@ static BOOL GetIso14443aAnswerFromTag(BYTE *receivedResponse, int maxLen, int *s
 				*samples = c << 3;
 				return TRUE;
 			}
-        }
-    }
+		}
+	}
 }
 
-void ReaderTransmitShort(const BYTE* bt)
+void ReaderTransmitShort(const uint8_t* bt)
 {
   int wait = 0;
   int samples = 0;
 
   ShortFrameFromReader(*bt);
-  
+
   // Select the card
-  TransmitFor14443a(ToSend, ToSendMax, &samples, &wait);		
-  
+  TransmitFor14443a(ToSend, ToSendMax, &samples, &wait);
+
   // Store reader command in buffer
   if (tracing) LogTrace(bt,1,0,GetParity(bt,1),TRUE);
 }
 
-void ReaderTransmitPar(BYTE* frame, int len, DWORD par)
+void ReaderTransmitPar(uint8_t* frame, int len, uint32_t par)
 {
   int wait = 0;
   int samples = 0;
-  
+
   // This is tied to other size changes
-  // 	BYTE* frame_addr = ((BYTE*)BigBuf) + 2024; 
+  // 	uint8_t* frame_addr = ((uint8_t*)BigBuf) + 2024;
   CodeIso14443aAsReaderPar(frame,len,par);
-  
+
   // Select the card
-  TransmitFor14443a(ToSend, ToSendMax, &samples, &wait);		
-  
+  TransmitFor14443a(ToSend, ToSendMax, &samples, &wait);
+  if(trigger)
+  	LED_A_ON();
+
   // Store reader command in buffer
   if (tracing) LogTrace(frame,len,0,par,TRUE);
 }
 
 
-void ReaderTransmit(BYTE* frame, int len)
+void ReaderTransmit(uint8_t* frame, int len)
 {
   // Generate parity and redirect
   ReaderTransmitPar(frame,len,GetParity(frame,len));
 }
 
-BOOL ReaderReceive(BYTE* receivedAnswer)
+int ReaderReceive(uint8_t* receivedAnswer)
 {
   int samples = 0;
-  if (!GetIso14443aAnswerFromTag(receivedAnswer,100,&samples,0)) return FALSE;
+  if (!GetIso14443aAnswerFromTag(receivedAnswer,160,&samples,0)) return FALSE;
   if (tracing) LogTrace(receivedAnswer,Demod.len,samples,Demod.parityBits,FALSE);
-  return TRUE;
+  if(samples == 0) return FALSE;
+  return Demod.len;
 }
 
-//-----------------------------------------------------------------------------
-// Read an ISO 14443a tag. Send out commands and store answers.
-//
-//-----------------------------------------------------------------------------
-void ReaderIso14443a(DWORD parameter)
+int ReaderReceivePar(uint8_t* receivedAnswer, uint32_t * parptr)
 {
-	// Anticollision
-	BYTE wupa[]       = { 0x52 };
-	BYTE sel_all[]    = { 0x93,0x20 };
-	BYTE sel_uid[]    = { 0x93,0x70,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
-	BYTE sel_all_c2[] = { 0x95,0x20 };
-	BYTE sel_uid_c2[] = { 0x95,0x70,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
+  int samples = 0;
+  if (!GetIso14443aAnswerFromTag(receivedAnswer,160,&samples,0)) return FALSE;
+  if (tracing) LogTrace(receivedAnswer,Demod.len,samples,Demod.parityBits,FALSE);
+	*parptr = Demod.parityBits;
+  if(samples == 0) return FALSE;
+  return Demod.len;
+}
 
-	// Mifare AUTH
-	BYTE mf_auth[]    = { 0x60,0x00,0xf5,0x7b };
-//	BYTE mf_nr_ar[]   = { 0x00,0x00,0x00,0x00 };
-  
-  BYTE* receivedAnswer = (((BYTE *)BigBuf) + 3560);	// was 3560 - tied to other size changes
-  traceLen = 0;
+/* performs iso14443a anticolision procedure
+ * fills the uid pointer unless NULL
+ * fills resp_data unless NULL */
+int iso14443a_select_card(uint8_t * uid_ptr, iso14a_card_select_t * resp_data, uint32_t * cuid_ptr) {
+	uint8_t wupa[]       = { 0x52 };  // 0x26 - REQA  0x52 - WAKE-UP
+	uint8_t sel_all[]    = { 0x93,0x20 };
+	uint8_t sel_uid[]    = { 0x93,0x70,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
+	uint8_t rats[]       = { 0xE0,0x80,0x00,0x00 }; // FSD=256, FSDI=8, CID=0
 
-    DbpString("ReaderIso14443a");
-    
-	// Setup SSC
-	FpgaSetupSsc();
+	uint8_t* resp = (((uint8_t *)BigBuf) + 3560);	// was 3560 - tied to other size changes
 
-	// Start from off (no field generated)
-        // Signal field is off with the appropriate LED
-        LED_D_OFF();
-        FpgaWriteConfWord(FPGA_MAJOR_MODE_OFF);
-        SpinDelay(200);
-        
-        SetAdcMuxFor(GPIO_MUXSEL_HIPKD);
-        FpgaSetupSsc();
+	uint8_t sak = 0x04; // cascade uid
+	int cascade_level = 0;
 
-	// Now give it time to spin up.
-        // Signal field is on with the appropriate LED
-        LED_D_ON();
-        FpgaWriteConfWord(FPGA_MAJOR_MODE_HF_ISO14443A | FPGA_HF_ISO14443A_READER_MOD);
-        SpinDelay(200);
+	int len;
+	
+	// clear uid
+	memset(uid_ptr, 0, 8);
 
-	LED_A_ON();
-	LED_B_OFF();
-	LED_C_OFF();
+	// Broadcast for a card, WUPA (0x52) will force response from all cards in the field
+	ReaderTransmitShort(wupa);
+	// Receive the ATQA
+	if(!ReaderReceive(resp)) return 0;
 
- 
-      while(traceLen < TRACE_LENGTH)
-  {
+	if(resp_data)
+		memcpy(resp_data->atqa, resp, 2);
+	
+	// OK we will select at least at cascade 1, lets see if first byte of UID was 0x88 in
+	// which case we need to make a cascade 2 request and select - this is a long UID
+	// While the UID is not complete, the 3nd bit (from the right) is set in the SAK.
+	for(; sak & 0x04; cascade_level++)
+	{
+		// SELECT_* (L1: 0x93, L2: 0x95, L3: 0x97)
+		sel_uid[0] = sel_all[0] = 0x93 + cascade_level * 2;
 
-    DbpString("ReaderIso14443a while");
-    
-    // Broadcast for a card, WUPA (0x52) will force response from all cards in the field
-    ReaderTransmitShort(wupa);
-    
-    // Test if the action was cancelled
-    if(BUTTON_PRESS()) {
-      DbpString("reader aborted by button");
-      break;
-    }
-    
-    // Receive the ATQA
-    if (!ReaderReceive(receivedAnswer)) continue;
+		// SELECT_ALL
+		ReaderTransmit(sel_all,sizeof(sel_all));
+		if (!ReaderReceive(resp)) return 0;
+		if(uid_ptr) memcpy(uid_ptr + cascade_level*4, resp, 4);
+		
+		// calculate crypto UID
+		if(cuid_ptr) *cuid_ptr = bytes_to_num(resp, 4);
 
-    // Transmit SELECT_ALL
-    ReaderTransmit(sel_all,sizeof(sel_all));
+		// Construct SELECT UID command
+		memcpy(sel_uid+2,resp,5);
+		AppendCrc14443a(sel_uid,7);
+		ReaderTransmit(sel_uid,sizeof(sel_uid));
 
-    // Receive the UID
-    if (!ReaderReceive(receivedAnswer)) 
-      continue;
-     // Construct SELECT UID command
-    // First copy the 5 bytes (Mifare Classic) after the 93 70
-    memcpy(sel_uid+2,receivedAnswer,5);
-    // Secondly compute the two CRC bytes at the end
-    
-    AppendCrc14443a(sel_uid,7);
-
-    // Transmit SELECT_UID
-    ReaderTransmit(sel_uid,sizeof(sel_uid));
-    
-    // Receive the SAK
-    if (!ReaderReceive(receivedAnswer)) 
-      continue;
-
-    // OK we have selected at least at cascade 1, lets see if first byte of UID was 0x88 in
-    // which case we need to make a cascade 2 request and select - this is a long UID
-    // When the UID is not complete, the 3nd bit (from the right) is set in the SAK. 
-		if (receivedAnswer[0] &= 0x04)
-		{
-      // Transmit SELECT_ALL
-      ReaderTransmit(sel_all_c2,sizeof(sel_all_c2));
-      
-      // Receive the UID
-      if (!ReaderReceive(receivedAnswer)) continue;
-      
-      // Construct SELECT UID command
-      memcpy(sel_uid_c2+2,receivedAnswer,5);
-      // Secondly compute the two CRC bytes at the end
-      AppendCrc14443a(sel_uid_c2,7);
-      
-      // Transmit SELECT_UID
-      ReaderTransmit(sel_uid_c2,sizeof(sel_uid_c2));
-      
-      // Receive the SAK
-      if (!ReaderReceive(receivedAnswer)) continue;
-		}
-
-    // Transmit MIFARE_CLASSIC_AUTH
-    ReaderTransmit(mf_auth,sizeof(mf_auth));
-
-    // Receive the (16 bit) "random" nonce
-    if (!ReaderReceive(receivedAnswer)) continue;
+		// Receive the SAK
+		if (!ReaderReceive(resp)) return 0;
+		sak = resp[0];
+	}
+	if(resp_data) {
+		resp_data->sak = sak;
+		resp_data->ats_len = 0;
+	}
+	//--  this byte not UID, it CT.  http://www.nxp.com/documents/application_note/AN10927.pdf  page 3
+	if (uid_ptr[0] == 0x88) {  
+		memcpy(uid_ptr, uid_ptr + 1, 7);
+		uid_ptr[7] = 0;
 	}
 
-  // Thats it...
-	FpgaWriteConfWord(FPGA_MAJOR_MODE_OFF);
-	LEDsoff();
-	Dbprintf("%x %x %x", rsamples, 0xCC, 0xCC);
-	DbpString("ready..");
+	if( (sak & 0x20) == 0)
+		return 2; // non iso14443a compliant tag
+
+	// Request for answer to select
+	if(resp_data) {  // JCOP cards - if reader sent RATS then there is no MIFARE session at all!!!
+		AppendCrc14443a(rats, 2);
+		ReaderTransmit(rats, sizeof(rats));
+		
+		if (!(len = ReaderReceive(resp))) return 0;
+		
+		memcpy(resp_data->ats, resp, sizeof(resp_data->ats));
+		resp_data->ats_len = len;
+	}
+	
+	return 1;
 }
+
+void iso14443a_setup() {
+	// Setup SSC
+	FpgaSetupSsc();
+	// Start from off (no field generated)
+	// Signal field is off with the appropriate LED
+	LED_D_OFF();
+	FpgaWriteConfWord(FPGA_MAJOR_MODE_OFF);
+	SpinDelay(200);
+
+	SetAdcMuxFor(GPIO_MUXSEL_HIPKD);
+
+	// Now give it time to spin up.
+	// Signal field is on with the appropriate LED
+	LED_D_ON();
+	FpgaWriteConfWord(FPGA_MAJOR_MODE_HF_ISO14443A | FPGA_HF_ISO14443A_READER_MOD);
+	SpinDelay(200);
+
+	iso14a_timeout = 2048; //default
+}
+
+int iso14_apdu(uint8_t * cmd, size_t cmd_len, void * data) {
+	uint8_t real_cmd[ 64 +4 ];
+        
+	real_cmd[0] = 0x0a; //I-Block
+	real_cmd[1] = 0x00; //CID: 0 //FIXME: allow multiple selected cards
+	memcpy(real_cmd+2, cmd, cmd_len);
+	AppendCrc14443a(real_cmd,cmd_len+2);
+ 
+	ReaderTransmit(real_cmd, cmd_len+4);
+	size_t len = ReaderReceive(data);
+
+        
+	if(!len)
+		return -1; //DATA LINK ERROR
+	
+	return len;
+}
+
 
 //-----------------------------------------------------------------------------
 // Read an ISO 14443a tag. Send out commands and store answers.
 //
 //-----------------------------------------------------------------------------
-void ReaderMifare(DWORD parameter)
+void ReaderIso14443a(UsbCommand * c, UsbCommand * ack)
 {
-  
-	// Anticollision
-	BYTE wupa[]       = { 0x52 };
-	BYTE sel_all[]    = { 0x93,0x20 };
-	BYTE sel_uid[]    = { 0x93,0x70,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
-  
+	iso14a_command_t param = c->arg[0];
+	uint8_t * cmd = c->d.asBytes;
+	size_t len = c->arg[1];
+
+	if(param & ISO14A_REQUEST_TRIGGER) iso14a_set_trigger(1);
+
+	if(param & ISO14A_CONNECT) {
+		iso14443a_setup();
+		ack->arg[0] = iso14443a_select_card(ack->d.asBytes, (iso14a_card_select_t *) (ack->d.asBytes+12), NULL);
+		UsbSendPacket((void *)ack, sizeof(UsbCommand));
+	}
+
+	if(param & ISO14A_SET_TIMEOUT) {
+		iso14a_timeout = c->arg[2];
+	}
+
+	if(param & ISO14A_SET_TIMEOUT) {
+		iso14a_timeout = c->arg[2];
+	}
+
+	if(param & ISO14A_APDU) {
+		ack->arg[0] = iso14_apdu(cmd, len, ack->d.asBytes);
+		UsbSendPacket((void *)ack, sizeof(UsbCommand));
+	}
+
+	if(param & ISO14A_RAW) {
+		if(param & ISO14A_APPEND_CRC) {
+			AppendCrc14443a(cmd,len);
+			len += 2;
+		}
+		ReaderTransmit(cmd,len);
+		ack->arg[0] = ReaderReceive(ack->d.asBytes);
+		UsbSendPacket((void *)ack, sizeof(UsbCommand));
+	}
+
+	if(param & ISO14A_REQUEST_TRIGGER) iso14a_set_trigger(0);
+
+	if(param & ISO14A_NO_DISCONNECT)
+		return;
+
+	FpgaWriteConfWord(FPGA_MAJOR_MODE_OFF);
+	LEDsoff();
+}
+//-----------------------------------------------------------------------------
+// Read an ISO 14443a tag. Send out commands and store answers.
+//
+//-----------------------------------------------------------------------------
+void ReaderMifare(uint32_t parameter)
+{
 	// Mifare AUTH
-	BYTE mf_auth[]    = { 0x60,0x00,0xf5,0x7b };
-  BYTE mf_nr_ar[]   = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
-  
-  BYTE* receivedAnswer = (((BYTE *)BigBuf) + 3560);	// was 3560 - tied to other size changes
-  traceLen = 0;
-  tracing = false;
-  
-	// Setup SSC
-	FpgaSetupSsc();
-  
-	// Start from off (no field generated)
-  // Signal field is off with the appropriate LED
-  LED_D_OFF();
-  FpgaWriteConfWord(FPGA_MAJOR_MODE_OFF);
-  SpinDelay(200);
-  
-  SetAdcMuxFor(GPIO_MUXSEL_HIPKD);
-  FpgaSetupSsc();
-  
-	// Now give it time to spin up.
-  // Signal field is on with the appropriate LED
-  LED_D_ON();
-  FpgaWriteConfWord(FPGA_MAJOR_MODE_HF_ISO14443A | FPGA_HF_ISO14443A_READER_MOD);
-	SpinDelay(200);
-  
+	uint8_t mf_auth[]    = { 0x60,0x00,0xf5,0x7b };
+	uint8_t mf_nr_ar[]   = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
+
+	uint8_t* receivedAnswer = (((uint8_t *)BigBuf) + 3560);	// was 3560 - tied to other size changes
+	traceLen = 0;
+	tracing = false;
+
+	iso14443a_setup();
+
 	LED_A_ON();
 	LED_B_OFF();
 	LED_C_OFF();
-  
-  // Broadcast for a card, WUPA (0x52) will force response from all cards in the field
-  ReaderTransmitShort(wupa);
-  // Receive the ATQA
-  ReaderReceive(receivedAnswer);
-  // Transmit SELECT_ALL
-  ReaderTransmit(sel_all,sizeof(sel_all));
-  // Receive the UID
-  ReaderReceive(receivedAnswer);
-  // Construct SELECT UID command
-  // First copy the 5 bytes (Mifare Classic) after the 93 70
-  memcpy(sel_uid+2,receivedAnswer,5);
-  // Secondly compute the two CRC bytes at the end
-  AppendCrc14443a(sel_uid,7);
-    
-  byte_t nt_diff = 0;
-  LED_A_OFF();
-  byte_t par = 0;
-  byte_t par_mask = 0xff;
-  byte_t par_low = 0;
-  BOOL led_on = TRUE;
-  
-  tracing = FALSE;
-  byte_t nt[4];
-  byte_t nt_attacked[4];
-  byte_t par_list[8];
-  byte_t ks_list[8];
-  num_to_bytes(parameter,4,nt_attacked);
 
-  while(TRUE)
-  {
-    FpgaWriteConfWord(FPGA_MAJOR_MODE_OFF);
-    SpinDelay(200);
-    FpgaWriteConfWord(FPGA_MAJOR_MODE_HF_ISO14443A | FPGA_HF_ISO14443A_READER_MOD);
-    
-    // Broadcast for a card, WUPA (0x52) will force response from all cards in the field
-    ReaderTransmitShort(wupa);
-    
-    // Test if the action was cancelled
-    if(BUTTON_PRESS()) {
-      break;
-    }
-    
-    // Receive the ATQA
-    if (!ReaderReceive(receivedAnswer)) continue;
-    
-    // Transmit SELECT_ALL
-    ReaderTransmit(sel_all,sizeof(sel_all));
-    
-    // Receive the UID
-    if (!ReaderReceive(receivedAnswer)) continue;
-    
-    // Transmit SELECT_UID
-    ReaderTransmit(sel_uid,sizeof(sel_uid));
-    
-    // Receive the SAK
-    if (!ReaderReceive(receivedAnswer)) continue;
-    
-    // Transmit MIFARE_CLASSIC_AUTH
-    ReaderTransmit(mf_auth,sizeof(mf_auth));
-    
-    // Receive the (16 bit) "random" nonce
-    if (!ReaderReceive(receivedAnswer)) continue;
-    memcpy(nt,receivedAnswer,4);
+	byte_t nt_diff = 0;
+	LED_A_OFF();
+	byte_t par = 0;
+	byte_t par_mask = 0xff;
+	byte_t par_low = 0;
+	int led_on = TRUE;
+	uint8_t uid[8];
+	uint32_t cuid;
 
-    // Transmit reader nonce and reader answer
-    ReaderTransmitPar(mf_nr_ar,sizeof(mf_nr_ar),par);
-    
-    // Receive 4 bit answer
-    if (ReaderReceive(receivedAnswer))
-    {
-      if (nt_diff == 0)        
-      {
-        LED_A_ON();
-        memcpy(nt_attacked,nt,4);
-        par_mask = 0xf8;
-        par_low = par & 0x07;
-      }
+	tracing = FALSE;
+	byte_t nt[4] = {0,0,0,0};
+	byte_t nt_attacked[4], nt_noattack[4];
+	byte_t par_list[8] = {0,0,0,0,0,0,0,0};
+	byte_t ks_list[8] = {0,0,0,0,0,0,0,0};
+	num_to_bytes(parameter, 4, nt_noattack);
+	int isOK = 0, isNULL = 0;
 
-      if (memcmp(nt,nt_attacked,4) != 0) continue;
+	while(TRUE)
+	{
+		LED_C_ON();
+		FpgaWriteConfWord(FPGA_MAJOR_MODE_OFF);
+		SpinDelay(200);
+		FpgaWriteConfWord(FPGA_MAJOR_MODE_HF_ISO14443A | FPGA_HF_ISO14443A_READER_MOD);
+		LED_C_OFF();
 
-      led_on = !led_on;
-      if(led_on) LED_B_ON(); else LED_B_OFF();
-      par_list[nt_diff] = par;
-      ks_list[nt_diff] = receivedAnswer[0]^0x05;
-      
-      // Test if the information is complete
-      if (nt_diff == 0x07) break;
-      
-      nt_diff = (nt_diff+1) & 0x07;
-      mf_nr_ar[3] = nt_diff << 5;
-      par = par_low;
-    } else {
-      if (nt_diff == 0)
-      {
-        par++;
-      } else {
-        par = (((par>>3)+1) << 3) | par_low;
-      }
-    }
-  }
-  
-  LogTraceInfo(sel_uid+2,4);
-  LogTraceInfo(nt,4);
-  LogTraceInfo(par_list,8);
-  LogTraceInfo(ks_list,8);
-  
-  // Thats it...
+		// Test if the action was cancelled
+		if(BUTTON_PRESS()) {
+			break;
+		}
+
+		if(!iso14443a_select_card(uid, NULL, &cuid)) continue;
+
+		// Transmit MIFARE_CLASSIC_AUTH
+		ReaderTransmit(mf_auth, sizeof(mf_auth));
+
+		// Receive the (16 bit) "random" nonce
+		if (!ReaderReceive(receivedAnswer)) continue;
+		memcpy(nt, receivedAnswer, 4);
+
+		// Transmit reader nonce and reader answer
+		ReaderTransmitPar(mf_nr_ar, sizeof(mf_nr_ar),par);
+
+		// Receive 4 bit answer
+		if (ReaderReceive(receivedAnswer))
+		{
+			if ( (parameter != 0) && (memcmp(nt, nt_noattack, 4) == 0) ) continue;
+
+			isNULL = (nt_attacked[0] = 0) && (nt_attacked[1] = 0) && (nt_attacked[2] = 0) && (nt_attacked[3] = 0);
+			if ( (isNULL != 0 ) && (memcmp(nt, nt_attacked, 4) != 0) ) continue;
+
+			if (nt_diff == 0)
+			{
+				LED_A_ON();
+				memcpy(nt_attacked, nt, 4);
+				par_mask = 0xf8;
+				par_low = par & 0x07;
+			}
+
+			led_on = !led_on;
+			if(led_on) LED_B_ON(); else LED_B_OFF();
+			par_list[nt_diff] = par;
+			ks_list[nt_diff] = receivedAnswer[0] ^ 0x05;
+
+			// Test if the information is complete
+			if (nt_diff == 0x07) {
+				isOK = 1;
+				break;
+			}
+
+			nt_diff = (nt_diff + 1) & 0x07;
+			mf_nr_ar[3] = nt_diff << 5;
+			par = par_low;
+		} else {
+			if (nt_diff == 0)
+			{
+				par++;
+			} else {
+				par = (((par >> 3) + 1) << 3) | par_low;
+			}
+		}
+	}
+
+	LogTrace(nt, 4, 0, GetParity(nt, 4), TRUE);
+	LogTrace(par_list, 8, 0, GetParity(par_list, 8), TRUE);
+	LogTrace(ks_list, 8, 0, GetParity(ks_list, 8), TRUE);
+
+	UsbCommand ack = {CMD_ACK, {isOK, 0, 0}};
+	memcpy(ack.d.asBytes + 0,  uid, 4);
+	memcpy(ack.d.asBytes + 4,  nt, 4);
+	memcpy(ack.d.asBytes + 8,  par_list, 8);
+	memcpy(ack.d.asBytes + 16, ks_list, 8);
+		
+	LED_B_ON();
+	UsbSendPacket((uint8_t *)&ack, sizeof(UsbCommand));
+	LED_B_OFF();	
+
+	// Thats it...
 	FpgaWriteConfWord(FPGA_MAJOR_MODE_OFF);
 	LEDsoff();
-  tracing = TRUE;
+	tracing = TRUE;
+	
+	if (MF_DBGLEVEL >= 1)	DbpString("COMMAND mifare FINISHED");
+}
+
+
+//-----------------------------------------------------------------------------
+// MIFARE 1K simulate. 
+// 
+//-----------------------------------------------------------------------------
+void Mifare1ksim(uint8_t arg0, uint8_t arg1, uint8_t arg2, uint8_t *datain)
+{
+	int cardSTATE = MFEMUL_NOFIELD;
+	int _7BUID = 0;
+	int vHf = 0;	// in mV
+	int nextCycleTimeout = 0;
+	int res;
+//	uint32_t timer = 0;
+	uint32_t selTimer = 0;
+	uint32_t authTimer = 0;
+	uint32_t par = 0;
+	int len = 0;
+	uint8_t cardWRBL = 0;
+	uint8_t cardAUTHSC = 0;
+	uint8_t cardAUTHKEY = 0xff;  // no authentication
+	uint32_t cardRn = 0;
+	uint32_t cardRr = 0;
+	uint32_t cuid = 0;
+	uint32_t rn_enc = 0;
+	uint32_t ans = 0;
+	uint32_t cardINTREG = 0;
+	uint8_t cardINTBLOCK = 0;
+	struct Crypto1State mpcs = {0, 0};
+	struct Crypto1State *pcs;
+	pcs = &mpcs;
+	
+	uint8_t* receivedCmd = eml_get_bigbufptr_recbuf();
+	uint8_t *response = eml_get_bigbufptr_sendbuf();
+	
+	static uint8_t rATQA[] = {0x04, 0x00}; // Mifare classic 1k 4BUID
+
+	static uint8_t rUIDBCC1[] = {0xde, 0xad, 0xbe, 0xaf, 0x62}; 
+	static uint8_t rUIDBCC2[] = {0xde, 0xad, 0xbe, 0xaf, 0x62}; // !!!
+		
+	static uint8_t rSAK[] = {0x08, 0xb6, 0xdd};
+	static uint8_t rSAK1[] = {0x04, 0xda, 0x17};
+
+	static uint8_t rAUTH_NT[] = {0x01, 0x02, 0x03, 0x04};
+//	static uint8_t rAUTH_NT[] = {0x1a, 0xac, 0xff, 0x4f};
+	static uint8_t rAUTH_AT[] = {0x00, 0x00, 0x00, 0x00};
+
+	// clear trace
+	traceLen = 0;
+	tracing = true;
+
+  // Authenticate response - nonce
+	uint32_t nonce = bytes_to_num(rAUTH_NT, 4);
+	
+	// get UID from emul memory
+	emlGetMemBt(receivedCmd, 7, 1);
+	_7BUID = !(receivedCmd[0] == 0x00);
+	if (!_7BUID) {                     // ---------- 4BUID
+		rATQA[0] = 0x04;
+
+		emlGetMemBt(rUIDBCC1, 0, 4);
+		rUIDBCC1[4] = rUIDBCC1[0] ^ rUIDBCC1[1] ^ rUIDBCC1[2] ^ rUIDBCC1[3];
+	} else {                           // ---------- 7BUID
+		rATQA[0] = 0x44;
+
+		rUIDBCC1[0] = 0x88;
+		emlGetMemBt(&rUIDBCC1[1], 0, 3);
+		rUIDBCC1[4] = rUIDBCC1[0] ^ rUIDBCC1[1] ^ rUIDBCC1[2] ^ rUIDBCC1[3];
+		emlGetMemBt(rUIDBCC2, 3, 4);
+		rUIDBCC2[4] = rUIDBCC2[0] ^ rUIDBCC2[1] ^ rUIDBCC2[2] ^ rUIDBCC2[3];
+	}
+
+// --------------------------------------	test area
+
+// --------------------------------------	END test area
+	// start mkseconds counter
+	StartCountUS();
+
+	// We need to listen to the high-frequency, peak-detected path.
+	SetAdcMuxFor(GPIO_MUXSEL_HIPKD);
+	FpgaSetupSsc();
+
+  FpgaWriteConfWord(FPGA_MAJOR_MODE_HF_ISO14443A | FPGA_HF_ISO14443A_TAGSIM_LISTEN);
+	SpinDelay(200);
+
+	if (MF_DBGLEVEL >= 1)	Dbprintf("Started. 7buid=%d", _7BUID);
+	// calibrate mkseconds counter
+	GetDeltaCountUS();
+	while (true) {
+		WDT_HIT();
+
+		if(BUTTON_PRESS()) {
+			break;
+		}
+
+		// find reader field
+		// Vref = 3300mV, and an 10:1 voltage divider on the input
+		// can measure voltages up to 33000 mV
+		if (cardSTATE == MFEMUL_NOFIELD) {
+			vHf = (33000 * AvgAdc(ADC_CHAN_HF)) >> 10;
+			if (vHf > MF_MINFIELDV) {
+				cardSTATE_TO_IDLE();
+				LED_A_ON();
+			}
+		} 
+
+		if (cardSTATE != MFEMUL_NOFIELD) {
+			res = EmGetCmd(receivedCmd, &len, 100); // (+ nextCycleTimeout)
+			if (res == 2) {
+				cardSTATE = MFEMUL_NOFIELD;
+				LEDsoff();
+				continue;
+			}
+			if(res) break;
+		}
+		
+		nextCycleTimeout = 0;
+		
+//		if (len) Dbprintf("len:%d cmd: %02x %02x %02x %02x", len, receivedCmd[0], receivedCmd[1], receivedCmd[2], receivedCmd[3]);
+
+		if (len != 4 && cardSTATE != MFEMUL_NOFIELD) { // len != 4 <---- speed up the code 4 authentication
+			// REQ or WUP request in ANY state and WUP in HALTED state
+			if (len == 1 && ((receivedCmd[0] == 0x26 && cardSTATE != MFEMUL_HALTED) || receivedCmd[0] == 0x52)) {
+				selTimer = GetTickCount();
+				EmSendCmdEx(rATQA, sizeof(rATQA), (receivedCmd[0] == 0x52));
+				cardSTATE = MFEMUL_SELECT1;
+
+				// init crypto block
+				LED_B_OFF();
+				LED_C_OFF();
+				crypto1_destroy(pcs);
+				cardAUTHKEY = 0xff;
+			}
+		}
+		
+		switch (cardSTATE) {
+			case MFEMUL_NOFIELD:{
+				break;
+			}
+			case MFEMUL_HALTED:{
+				break;
+			}
+			case MFEMUL_IDLE:{
+				break;
+			}
+			case MFEMUL_SELECT1:{
+				// select all
+				if (len == 2 && (receivedCmd[0] == 0x93 && receivedCmd[1] == 0x20)) {
+					EmSendCmd(rUIDBCC1, sizeof(rUIDBCC1));
+					break;
+				}
+
+				// select card
+				if (len == 9 && 
+						(receivedCmd[0] == 0x93 && receivedCmd[1] == 0x70 && memcmp(&receivedCmd[2], rUIDBCC1, 4) == 0)) {
+					if (!_7BUID) 
+						EmSendCmd(rSAK, sizeof(rSAK));
+					else
+						EmSendCmd(rSAK1, sizeof(rSAK1));
+
+					cuid = bytes_to_num(rUIDBCC1, 4);
+					if (!_7BUID) {
+						cardSTATE = MFEMUL_WORK;
+						LED_B_ON();
+						if (MF_DBGLEVEL >= 4)	Dbprintf("--> WORK. anticol1 time: %d", GetTickCount() - selTimer);
+						break;
+					} else {
+						cardSTATE = MFEMUL_SELECT2;
+						break;
+					}
+				}
+				
+				break;
+			}
+			case MFEMUL_SELECT2:{
+				if (!len) break;
+			
+				if (len == 2 && (receivedCmd[0] == 0x95 && receivedCmd[1] == 0x20)) {
+					EmSendCmd(rUIDBCC2, sizeof(rUIDBCC2));
+					break;
+				}
+
+				// select 2 card
+				if (len == 9 && 
+						(receivedCmd[0] == 0x95 && receivedCmd[1] == 0x70 && memcmp(&receivedCmd[2], rUIDBCC2, 4) == 0)) {
+					EmSendCmd(rSAK, sizeof(rSAK));
+
+					cuid = bytes_to_num(rUIDBCC2, 4);
+					cardSTATE = MFEMUL_WORK;
+					LED_B_ON();
+					if (MF_DBGLEVEL >= 4)	Dbprintf("--> WORK. anticol2 time: %d", GetTickCount() - selTimer);
+					break;
+				}
+				
+				// i guess there is a command). go into the work state.
+				if (len != 4) break;
+				cardSTATE = MFEMUL_WORK;
+				goto lbWORK;
+			}
+			case MFEMUL_AUTH1:{
+				if (len == 8) {
+					// --- crypto
+					rn_enc = bytes_to_num(receivedCmd, 4);
+					cardRn = rn_enc ^ crypto1_word(pcs, rn_enc , 1);
+					cardRr = bytes_to_num(&receivedCmd[4], 4) ^ crypto1_word(pcs, 0, 0);
+					// test if auth OK
+					if (cardRr != prng_successor(nonce, 64)){
+						if (MF_DBGLEVEL >= 4)	Dbprintf("AUTH FAILED. cardRr=%08x, succ=%08x", cardRr, prng_successor(nonce, 64));
+						cardSTATE_TO_IDLE();
+						break;
+					}
+					ans = prng_successor(nonce, 96) ^ crypto1_word(pcs, 0, 0);
+					num_to_bytes(ans, 4, rAUTH_AT);
+					// --- crypto
+					EmSendCmd(rAUTH_AT, sizeof(rAUTH_AT));
+					cardSTATE = MFEMUL_AUTH2;
+				} else {
+					cardSTATE_TO_IDLE();
+				}
+				if (cardSTATE != MFEMUL_AUTH2) break;
+			}
+			case MFEMUL_AUTH2:{
+				LED_C_ON();
+				cardSTATE = MFEMUL_WORK;
+				if (MF_DBGLEVEL >= 4)	Dbprintf("AUTH COMPLETED. sec=%d, key=%d time=%d", cardAUTHSC, cardAUTHKEY, GetTickCount() - authTimer);
+				break;
+			}
+			case MFEMUL_WORK:{
+lbWORK:	if (len == 0) break;
+				
+				if (cardAUTHKEY == 0xff) {
+					// first authentication
+					if (len == 4 && (receivedCmd[0] == 0x60 || receivedCmd[0] == 0x61)) {
+						authTimer = GetTickCount();
+
+						cardAUTHSC = receivedCmd[1] / 4;  // received block num
+						cardAUTHKEY = receivedCmd[0] - 0x60;
+
+						// --- crypto
+						crypto1_create(pcs, emlGetKey(cardAUTHSC, cardAUTHKEY));
+						ans = nonce ^ crypto1_word(pcs, cuid ^ nonce, 0); 
+						num_to_bytes(nonce, 4, rAUTH_AT);
+						EmSendCmd(rAUTH_AT, sizeof(rAUTH_AT));
+						// --- crypto
+						
+//   last working revision 
+//						EmSendCmd14443aRaw(resp1, resp1Len, 0);
+//						LogTrace(NULL, 0, GetDeltaCountUS(), 0, true);
+
+						cardSTATE = MFEMUL_AUTH1;
+						nextCycleTimeout = 10;
+						break;
+					}
+				} else {
+					// decrypt seqence
+					mf_crypto1_decrypt(pcs, receivedCmd, len);
+					
+					// nested authentication
+					if (len == 4 && (receivedCmd[0] == 0x60 || receivedCmd[0] == 0x61)) {
+						authTimer = GetTickCount();
+
+						cardAUTHSC = receivedCmd[1] / 4;  // received block num
+						cardAUTHKEY = receivedCmd[0] - 0x60;
+
+						// --- crypto
+						crypto1_create(pcs, emlGetKey(cardAUTHSC, cardAUTHKEY));
+						ans = nonce ^ crypto1_word(pcs, cuid ^ nonce, 0); 
+						num_to_bytes(ans, 4, rAUTH_AT);
+						EmSendCmd(rAUTH_AT, sizeof(rAUTH_AT));
+						// --- crypto
+
+						cardSTATE = MFEMUL_AUTH1;
+						nextCycleTimeout = 10;
+						break;
+					}
+				}
+				
+				// rule 13 of 7.5.3. in ISO 14443-4. chaining shall be continued
+				// BUT... ACK --> NACK
+				if (len == 1 && receivedCmd[0] == CARD_ACK) {
+					EmSend4bit(mf_crypto1_encrypt4bit(pcs, CARD_NACK_NA));
+					break;
+				}
+				
+				// rule 12 of 7.5.3. in ISO 14443-4. R(NAK) --> R(ACK)
+				if (len == 1 && receivedCmd[0] == CARD_NACK_NA) {
+					EmSend4bit(mf_crypto1_encrypt4bit(pcs, CARD_ACK));
+					break;
+				}
+				
+				// read block
+				if (len == 4 && receivedCmd[0] == 0x30) {
+					if (receivedCmd[1] >= 16 * 4 || receivedCmd[1] / 4 != cardAUTHSC) {
+						EmSend4bit(mf_crypto1_encrypt4bit(pcs, CARD_NACK_NA));
+						break;
+					}
+					emlGetMem(response, receivedCmd[1], 1);
+					AppendCrc14443a(response, 16);
+					mf_crypto1_encrypt(pcs, response, 18, &par);
+					EmSendCmdPar(response, 18, par);
+					break;
+				}
+				
+				// write block
+				if (len == 4 && receivedCmd[0] == 0xA0) {
+					if (receivedCmd[1] >= 16 * 4 || receivedCmd[1] / 4 != cardAUTHSC) {
+						EmSend4bit(mf_crypto1_encrypt4bit(pcs, CARD_NACK_NA));
+						break;
+					}
+					EmSend4bit(mf_crypto1_encrypt4bit(pcs, CARD_ACK));
+					nextCycleTimeout = 50;
+					cardSTATE = MFEMUL_WRITEBL2;
+					cardWRBL = receivedCmd[1];
+					break;
+				}
+			
+				// works with cardINTREG
+				
+				// increment, decrement, restore
+				if (len == 4 && (receivedCmd[0] == 0xC0 || receivedCmd[0] == 0xC1 || receivedCmd[0] == 0xC2)) {
+					if (receivedCmd[1] >= 16 * 4 || 
+							receivedCmd[1] / 4 != cardAUTHSC || 
+							emlCheckValBl(receivedCmd[1])) {
+						EmSend4bit(mf_crypto1_encrypt4bit(pcs, CARD_NACK_NA));
+						break;
+					}
+					EmSend4bit(mf_crypto1_encrypt4bit(pcs, CARD_ACK));
+					if (receivedCmd[0] == 0xC1)
+						cardSTATE = MFEMUL_INTREG_INC;
+					if (receivedCmd[0] == 0xC0)
+						cardSTATE = MFEMUL_INTREG_DEC;
+					if (receivedCmd[0] == 0xC2)
+						cardSTATE = MFEMUL_INTREG_REST;
+					cardWRBL = receivedCmd[1];
+					
+					break;
+				}
+				
+
+				// transfer
+				if (len == 4 && receivedCmd[0] == 0xB0) {
+					if (receivedCmd[1] >= 16 * 4 || receivedCmd[1] / 4 != cardAUTHSC) {
+						EmSend4bit(mf_crypto1_encrypt4bit(pcs, CARD_NACK_NA));
+						break;
+					}
+					
+					if (emlSetValBl(cardINTREG, cardINTBLOCK, receivedCmd[1]))
+						EmSend4bit(mf_crypto1_encrypt4bit(pcs, CARD_NACK_NA));
+					else
+						EmSend4bit(mf_crypto1_encrypt4bit(pcs, CARD_ACK));
+						
+					break;
+				}
+
+				// halt
+				if (len == 4 && (receivedCmd[0] == 0x50 && receivedCmd[1] == 0x00)) {
+					LED_B_OFF();
+					LED_C_OFF();
+					cardSTATE = MFEMUL_HALTED;
+					if (MF_DBGLEVEL >= 4)	Dbprintf("--> HALTED. Selected time: %d ms",  GetTickCount() - selTimer);
+					break;
+				}
+				
+				// command not allowed
+				if (len == 4) {
+					EmSend4bit(mf_crypto1_encrypt4bit(pcs, CARD_NACK_NA));
+					break;
+				}
+
+				// case break
+				break;
+			}
+			case MFEMUL_WRITEBL2:{
+				if (len == 18){
+					mf_crypto1_decrypt(pcs, receivedCmd, len);
+					emlSetMem(receivedCmd, cardWRBL, 1);
+					EmSend4bit(mf_crypto1_encrypt4bit(pcs, CARD_ACK));
+					cardSTATE = MFEMUL_WORK;
+					break;
+				} else {
+					cardSTATE_TO_IDLE();
+					break;
+				}
+				break;
+			}
+			
+			case MFEMUL_INTREG_INC:{
+				mf_crypto1_decrypt(pcs, receivedCmd, len);
+				memcpy(&ans, receivedCmd, 4);
+				if (emlGetValBl(&cardINTREG, &cardINTBLOCK, cardWRBL)) {
+					EmSend4bit(mf_crypto1_encrypt4bit(pcs, CARD_NACK_NA));
+					cardSTATE_TO_IDLE();
+					break;
+				}
+				cardINTREG = cardINTREG + ans;
+				cardSTATE = MFEMUL_WORK;
+				break;
+			}
+			case MFEMUL_INTREG_DEC:{
+				mf_crypto1_decrypt(pcs, receivedCmd, len);
+				memcpy(&ans, receivedCmd, 4);
+				if (emlGetValBl(&cardINTREG, &cardINTBLOCK, cardWRBL)) {
+					EmSend4bit(mf_crypto1_encrypt4bit(pcs, CARD_NACK_NA));
+					cardSTATE_TO_IDLE();
+					break;
+				}
+				cardINTREG = cardINTREG - ans;
+				cardSTATE = MFEMUL_WORK;
+				break;
+			}
+			case MFEMUL_INTREG_REST:{
+				mf_crypto1_decrypt(pcs, receivedCmd, len);
+				memcpy(&ans, receivedCmd, 4);
+				if (emlGetValBl(&cardINTREG, &cardINTBLOCK, cardWRBL)) {
+					EmSend4bit(mf_crypto1_encrypt4bit(pcs, CARD_NACK_NA));
+					cardSTATE_TO_IDLE();
+					break;
+				}
+				cardSTATE = MFEMUL_WORK;
+				break;
+			}
+		
+		}
+	
+	}
+
+	FpgaWriteConfWord(FPGA_MAJOR_MODE_OFF);
+	LEDsoff();
+
+	// add trace trailer
+	memset(rAUTH_NT, 0x44, 4);
+	LogTrace(rAUTH_NT, 4, 0, 0, TRUE);
+
+	if (MF_DBGLEVEL >= 1)	Dbprintf("Emulator stopped. Tracing: %d  trace length: %d ",	tracing, traceLen);
 }

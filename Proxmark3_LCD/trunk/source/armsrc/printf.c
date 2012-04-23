@@ -438,6 +438,11 @@ number:
 #undef PCHAR
 }
 
+int vsprintf(char *dest, const char *fmt, va_list ap)
+{
+	return kvsprintf(fmt, dest, 10, ap);
+}
+
 int
 sprintf(char *dest, const char *fmt, ...)
 {

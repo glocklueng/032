@@ -1,3 +1,6 @@
+
+#include "crc16.h"
+
 unsigned short update_crc16( unsigned short crc, unsigned char c ) {
 	unsigned short i, v, tcrc = 0;
 

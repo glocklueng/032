@@ -39,20 +39,20 @@
         <option>
           <name>Input variant</name>
           <version>3</version>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>Input description</name>
-          <state>Full formatting.</state>
+          <state>Automatic choice of formatter.</state>
         </option>
         <option>
           <name>Output variant</name>
           <version>2</version>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>Output description</name>
-          <state>Full formatting.</state>
+          <state>Automatic choice of formatter.</state>
         </option>
         <option>
           <name>GOutputBinary</name>
@@ -87,7 +87,7 @@
         </option>
         <option>
           <name>OGLastSavedByProductVersion</name>
-          <state>6.20.4.52756</state>
+          <state>6.30.6.53380</state>
         </option>
         <option>
           <name>GeneralEnableMisra</name>
@@ -103,7 +103,7 @@
         </option>
         <option>
           <name>GenLowLevelInterface</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>GEndianModeBE</name>
@@ -302,6 +302,8 @@
           <state>$PROJ_DIR$\include\</state>
           <state>.\include</state>
           <state>.\armsrc</state>
+          <state>.\common</state>
+          <state>..\common</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -613,7 +615,7 @@
       <name>ILINK</name>
       <archiveVersion>0</archiveVersion>
       <data>
-        <version>13</version>
+        <version>14</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -875,6 +877,18 @@
           <name>IlinkOptForceVfe</name>
           <state>0</state>
         </option>
+        <option>
+          <name>IlinkStackAnalysisEnable</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkStackControlFile</name>
+          <state></state>
+        </option>
+        <option>
+          <name>IlinkStackCallGraphFile</name>
+          <state></state>
+        </option>
       </data>
     </settings>
     <settings>
@@ -941,20 +955,20 @@
         <option>
           <name>Input variant</name>
           <version>3</version>
-          <state>3</state>
+          <state>0</state>
         </option>
         <option>
           <name>Input description</name>
-          <state>No specifier n, no float nor long long.</state>
+          <state>Automatic choice of formatter.</state>
         </option>
         <option>
           <name>Output variant</name>
           <version>2</version>
-          <state>5</state>
+          <state>0</state>
         </option>
         <option>
           <name>Output description</name>
-          <state>No specifier a, A, no specifier n, no float nor long long.</state>
+          <state>Automatic choice of formatter.</state>
         </option>
         <option>
           <name>GOutputBinary</name>
@@ -989,7 +1003,7 @@
         </option>
         <option>
           <name>OGLastSavedByProductVersion</name>
-          <state>6.20.4.52756</state>
+          <state>6.30.6.53380</state>
         </option>
         <option>
           <name>GeneralEnableMisra</name>
@@ -1158,7 +1172,7 @@
         </option>
         <option>
           <name>CCLangConformance</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>CCSignedPlainChar</name>
@@ -1205,6 +1219,8 @@
           <state>$PROJ_DIR$\include\</state>
           <state>.\include</state>
           <state>.\armsrc</state>
+          <state>.\common</state>
+          <state>..\common</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1216,7 +1232,7 @@
         </option>
         <option>
           <name>IInterwork2</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IProcessorMode2</name>
@@ -1229,7 +1245,7 @@
         <option>
           <name>CCOptStrategy</name>
           <version>0</version>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>CCOptLevelSlave</name>
@@ -1520,7 +1536,7 @@
       <name>ILINK</name>
       <archiveVersion>0</archiveVersion>
       <data>
-        <version>13</version>
+        <version>14</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1782,6 +1798,18 @@
           <name>IlinkOptForceVfe</name>
           <state>0</state>
         </option>
+        <option>
+          <name>IlinkStackAnalysisEnable</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkStackControlFile</name>
+          <state></state>
+        </option>
+        <option>
+          <name>IlinkStackCallGraphFile</name>
+          <state></state>
+        </option>
       </data>
     </settings>
     <settings>
@@ -1817,6 +1845,15 @@
       <name>$PROJ_DIR$\armsrc\appmain.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$\armsrc\crapto1.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\armsrc\crapto1.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\armsrc\crypto1.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$\armsrc\diskio.c</name>
     </file>
     <file>
@@ -1850,6 +1887,15 @@
       <name>$PROJ_DIR$\armsrc\lfops.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$\armsrc\mifarecmd.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\armsrc\mifarecmd.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\armsrc\mifareutil.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$\armsrc\msd.c</name>
     </file>
     <file>
@@ -1863,6 +1909,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$\armsrc\start.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\armsrc\tunes.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$\armsrc\util.c</name>
@@ -1883,7 +1932,19 @@
       <name>$PROJ_DIR$\common\crc.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$\common\crc16.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$\diskio.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\common\iso14443crc.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\common\iso15693tools.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\common\iso15693tools.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$\common\legic_prng.c</name>
@@ -2085,6 +2146,9 @@
   </file>
   <file>
     <name>$PROJ_DIR$\ldscript</name>
+  </file>
+  <file>
+    <name>$PROJ_DIR$\armsrc\mifareutil.c</name>
   </file>
   <file>
     <name>$PROJ_DIR$\proxmark3lcd.ewp</name>
