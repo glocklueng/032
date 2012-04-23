@@ -406,8 +406,8 @@ int legic_write_byte(int byte, int addr, int addr_sz) {
             old_level = level;
         }
         if(edges > 20 && edges < 60) { /* expected are 42 edges */
-			int t = timer->TC_CV;
-			int c = t/TAG_TIME_BIT;
+			int tx = timer->TC_CV;
+			int c = tx/TAG_TIME_BIT;
 			timer->TC_CCR = AT91C_TC_SWTRG;
 			while(timer->TC_CV > 1) ; /* Wait till the clock has reset */
 			legic_prng_forward(c);
