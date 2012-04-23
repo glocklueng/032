@@ -299,8 +299,9 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>.\include</state>
           <state>$PROJ_DIR$\include\</state>
+          <state>.\include</state>
+          <state>.\armsrc</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1201,8 +1202,9 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>.\include</state>
           <state>$PROJ_DIR$\include\</state>
+          <state>.\include</state>
+          <state>.\armsrc</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1227,7 +1229,7 @@
         <option>
           <name>CCOptStrategy</name>
           <version>0</version>
-          <state>2</state>
+          <state>1</state>
         </option>
         <option>
           <name>CCOptLevelSlave</name>
@@ -1810,6 +1812,48 @@
     </settings>
   </configuration>
   <group>
+    <name>armsrc</name>
+    <file>
+      <name>$PROJ_DIR$\armsrc\appmain.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\armsrc\fonts.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\armsrc\fpgaloader.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\armsrc\glcd.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\armsrc\hitag2.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\armsrc\iso14443.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\armsrc\iso14443a.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\armsrc\iso15693.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\armsrc\legicrf.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\armsrc\lfops.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\armsrc\printf.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\armsrc\start.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\armsrc\util.c</name>
+    </file>
+  </group>
+  <group>
     <name>bootrom</name>
     <file>
       <name>$PROJ_DIR$\bootrom\bootrom.c</name>
@@ -1818,9 +1862,6 @@
       <name>$PROJ_DIR$\bootrom\fromflash.c</name>
     </file>
   </group>
-  <file>
-    <name>$PROJ_DIR$\appmain.c</name>
-  </file>
   <file>
     <name>$PROJ_DIR$\apps.h</name>
   </file>
@@ -2022,16 +2063,7 @@
     <name>$PROJ_DIR$\flash.icf</name>
   </file>
   <file>
-    <name>$PROJ_DIR$\fonts.c</name>
-  </file>
-  <file>
     <name>$PROJ_DIR$\fonts.h</name>
-  </file>
-  <file>
-    <name>$PROJ_DIR$\fpgaloader.c</name>
-  </file>
-  <file>
-    <name>$PROJ_DIR$\glcd.c</name>
   </file>
   <file>
     <name>$PROJ_DIR$\glcd.h</name>
@@ -2040,19 +2072,7 @@
     <name>$PROJ_DIR$\gui_layout.h</name>
   </file>
   <file>
-    <name>$PROJ_DIR$\hitag2.c</name>
-  </file>
-  <file>
     <name>$PROJ_DIR$\hitag2.h</name>
-  </file>
-  <file>
-    <name>$PROJ_DIR$\iso14443.c</name>
-  </file>
-  <file>
-    <name>$PROJ_DIR$\iso14443a.c</name>
-  </file>
-  <file>
-    <name>$PROJ_DIR$\iso15693.c</name>
   </file>
   <file>
     <name>$PROJ_DIR$\LCD.h</name>
@@ -2064,13 +2084,7 @@
     <name>$PROJ_DIR$\common\legic_prng.c</name>
   </file>
   <file>
-    <name>$PROJ_DIR$\legicrf.c</name>
-  </file>
-  <file>
     <name>$PROJ_DIR$\legicrf.h</name>
-  </file>
-  <file>
-    <name>$PROJ_DIR$\lfops.c</name>
   </file>
   <file>
     <name>$PROJ_DIR$\Makefile</name>
@@ -2082,9 +2096,6 @@
     <name>$PROJ_DIR$\msd.h</name>
   </file>
   <file>
-    <name>$PROJ_DIR$\printf.c</name>
-  </file>
-  <file>
     <name>$PROJ_DIR$\proxmark3lcd.ewp</name>
   </file>
   <file>
@@ -2094,13 +2105,7 @@
     <name>$PROJ_DIR$\spi.c</name>
   </file>
   <file>
-    <name>$PROJ_DIR$\start.c</name>
-  </file>
-  <file>
     <name>$PROJ_DIR$\common\usb.c</name>
-  </file>
-  <file>
-    <name>$PROJ_DIR$\util.c</name>
   </file>
   <file>
     <name>$PROJ_DIR$\version.c</name>

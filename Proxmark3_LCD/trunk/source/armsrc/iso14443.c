@@ -15,7 +15,7 @@
 //#include "util.h"
 //#include "string.h"
 
-#include "common/iso14443_crc.c"
+#include "../common/iso14443_crc.c"
 
 //static void GetSamplesFor14443(int weTx, int n);
 
