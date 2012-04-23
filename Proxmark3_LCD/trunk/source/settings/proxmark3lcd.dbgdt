@@ -31,7 +31,7 @@
       
       
       
-    <Wnd0>
+    <Wnd2>
         <Tabs>
           <Tab>
             <Identity>TabID-17848-9423</Identity>
@@ -47,7 +47,7 @@
           </Tab>
         <Tab><Identity>TabID-621-32190</Identity><TabName>Find in Files</TabName><Factory>Find-in-Files</Factory><Session/></Tab><Tab><Identity>TabID-20795-21023</Identity><TabName>Breakpoints</TabName><Factory>Breakpoints</Factory></Tab><Tab><Identity>TabID-14839-10882</Identity><TabName>Disassembly</TabName><Factory>Disassembly</Factory><Session/></Tab></Tabs>
         
-      <SelectedTab>0</SelectedTab></Wnd0><Wnd1>
+      <SelectedTab>4</SelectedTab></Wnd2><Wnd4>
         <Tabs>
           <Tab>
             <Identity>TabID-28597-9427</Identity>
@@ -59,20 +59,20 @@
           </Tab>
         </Tabs>
         
-      <SelectedTab>0</SelectedTab></Wnd1><Wnd3><Tabs><Tab><Identity>TabID-25576-6160</Identity><TabName>Call Stack</TabName><Factory>CallStack</Factory><Session/></Tab></Tabs><SelectedTab>0</SelectedTab></Wnd3></Windows>
+      <SelectedTab>0</SelectedTab></Wnd4><Wnd5><Tabs><Tab><Identity>TabID-25576-6160</Identity><TabName>Call Stack</TabName><Factory>CallStack</Factory><Session/></Tab></Tabs><SelectedTab>0</SelectedTab></Wnd5></Windows>
     <Editor>
       
       
       
       
-    <Pane><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\common\iso14443_crc.c</Filename><XPos>0</XPos><YPos>12</YPos><SelStart>1152</SelStart><SelEnd>1152</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\util.c</Filename><XPos>0</XPos><YPos>204</YPos><SelStart>4440</SelStart><SelEnd>4440</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\apps.h</Filename><XPos>0</XPos><YPos>33</YPos><SelStart>1048</SelStart><SelEnd>1048</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\fpgaloader.c</Filename><XPos>0</XPos><YPos>316</YPos><SelStart>11422</SelStart><SelEnd>11422</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\glcd.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>280</SelStart><SelEnd>280</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\iso14443.c</Filename><XPos>0</XPos><YPos>907</YPos><SelStart>27812</SelStart><SelEnd>27812</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\iso14443a.c</Filename><XPos>0</XPos><YPos>1608</YPos><SelStart>43755</SelStart><SelEnd>43755</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\chip.h</Filename><XPos>0</XPos><YPos>63</YPos><SelStart>2666</SelStart><SelEnd>2666</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\iso15693.c</Filename><XPos>0</XPos><YPos>656</YPos><SelStart>17303</SelStart><SelEnd>17303</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\glcd.h</Filename><XPos>0</XPos><YPos>99</YPos><SelStart>2882</SelStart><SelEnd>2882</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\common\usb.c</Filename><XPos>0</XPos><YPos>424</YPos><SelStart>11680</SelStart><SelEnd>11680</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\common\crc.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>656</SelStart><SelEnd>656</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\start.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>905</SelStart><SelEnd>905</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\hitag2.c</Filename><XPos>0</XPos><YPos>132</YPos><SelStart>5001</SelStart><SelEnd>5010</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\Makefile</Filename><XPos>0</XPos><YPos>18</YPos><SelStart>965</SelStart><SelEnd>965</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\appmain.c</Filename><XPos>0</XPos><YPos>775</YPos><SelStart>35932</SelStart><SelEnd>35932</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\at91lib\boards\at91sam7s-ek\board_cstartup_iar.s</Filename><XPos>0</XPos><YPos>147</YPos><SelStart>5697</SelStart><SelEnd>5697</SelEnd></Tab><ActiveTab>16</ActiveTab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\bootrom\bootrom.c</Filename><XPos>0</XPos><YPos>348</YPos><SelStart>11584</SelStart><SelEnd>11584</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\msd.c</Filename><XPos>0</XPos><YPos>110</YPos><SelStart>2682</SelStart><SelEnd>2689</SelEnd></Tab></Pane><ActivePane>0</ActivePane><Sizes><Pane><X>1000000</X><Y>1000000</Y></Pane></Sizes><SplitMode>1</SplitMode></Editor>
+    <Pane><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\stdint.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>968</SelStart><SelEnd>968</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\inc\c\stdint.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>82</SelStart><SelEnd>89</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\legicrf.c</Filename><XPos>0</XPos><YPos>228</YPos><SelStart>900</SelStart><SelEnd>900</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\at91lib\boards\at91sam7s-ek\board_cstartup_iar.s</Filename><XPos>0</XPos><YPos>54</YPos><SelStart>1456</SelStart><SelEnd>1456</SelEnd></Tab><ActiveTab>3</ActiveTab></Pane><ActivePane>0</ActivePane><Sizes><Pane><X>1000000</X><Y>1000000</Y></Pane></Sizes><SplitMode>1</SplitMode></Editor>
     <Positions>
       
       
       
       
       
-    <Top><Row0><Sizes><Toolbar-035d1b10><key>iaridepm.enu1</key></Toolbar-035d1b10><Toolbar-106bdb00><key>debuggergui.enu1</key></Toolbar-106bdb00></Sizes></Row0></Top><Left><Row0><Sizes><Wnd1><Rect><Top>-2</Top><Left>-2</Left><Bottom>810</Bottom><Right>356</Right><x>-2</x><y>-2</y><xscreen>662</xscreen><yscreen>568</yscreen><sizeHorzCX>356681</sizeHorzCX><sizeHorzCY>490501</sizeHorzCY><sizeVertCX>192888</sizeVertCX><sizeVertCY>701209</sizeVertCY></Rect></Wnd1></Sizes></Row0><Row1><Sizes><Wnd3><Rect><Top>-2</Top><Left>354</Left><Bottom>810</Bottom><Right>554</Right><x>354</x><y>-2</y><xscreen>200</xscreen><yscreen>200</yscreen><sizeHorzCX>107759</sizeHorzCX><sizeHorzCY>172712</sizeHorzCY><sizeVertCX>107759</sizeVertCX><sizeVertCY>701209</sizeVertCY></Rect></Wnd3></Sizes></Row1></Left><Right><Row0><Sizes/></Row0></Right><Bottom><Row0><Sizes><Wnd0><Rect><Top>-2</Top><Left>-2</Left><Bottom>303</Bottom><Right>1858</Right><x>-2</x><y>-2</y><xscreen>1860</xscreen><yscreen>305</yscreen><sizeHorzCX>1002155</sizeHorzCX><sizeHorzCY>263385</sizeHorzCY><sizeVertCX>356681</sizeVertCX><sizeVertCY>490501</sizeVertCY></Rect></Wnd0></Sizes></Row0></Bottom><Float><Sizes/></Float></Positions>
+    <Top><Row0><Sizes><Toolbar-00ef1b10><key>iaridepm.enu1</key></Toolbar-00ef1b10><Toolbar-12cec680><key>debuggergui.enu1</key></Toolbar-12cec680></Sizes></Row0></Top><Left><Row0><Sizes><Wnd4><Rect><Top>-2</Top><Left>-2</Left><Bottom>810</Bottom><Right>356</Right><x>-2</x><y>-2</y><xscreen>662</xscreen><yscreen>568</yscreen><sizeHorzCX>356681</sizeHorzCX><sizeHorzCY>490501</sizeHorzCY><sizeVertCX>192888</sizeVertCX><sizeVertCY>701209</sizeVertCY></Rect></Wnd4></Sizes></Row0><Row1><Sizes><Wnd5><Rect><Top>-2</Top><Left>354</Left><Bottom>810</Bottom><Right>554</Right><x>354</x><y>-2</y><xscreen>200</xscreen><yscreen>200</yscreen><sizeHorzCX>107759</sizeHorzCX><sizeHorzCY>172712</sizeHorzCY><sizeVertCX>107759</sizeVertCX><sizeVertCY>701209</sizeVertCY></Rect></Wnd5></Sizes></Row1></Left><Right><Row0><Sizes/></Row0></Right><Bottom><Row0><Sizes><Wnd2><Rect><Top>-2</Top><Left>-2</Left><Bottom>303</Bottom><Right>1858</Right><x>-2</x><y>-2</y><xscreen>1860</xscreen><yscreen>305</yscreen><sizeHorzCX>1002155</sizeHorzCX><sizeHorzCY>263385</sizeHorzCY><sizeVertCX>356681</sizeVertCX><sizeVertCY>490501</sizeVertCY></Rect></Wnd2></Sizes></Row0></Bottom><Float><Sizes/></Float></Positions>
   </Desktop>
 </Project>
 

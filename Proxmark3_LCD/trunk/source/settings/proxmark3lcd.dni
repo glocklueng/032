@@ -1,5 +1,5 @@
 [DebugChecksum]
-Checksum=1929325516
+Checksum=1076829116
 [DisAssemblyWindow]
 NumStates=_ 2
 State 1=_ 1
@@ -74,6 +74,16 @@ StopOnUncaught=_ 0
 StopOnThrow=_ 0
 [CallStack]
 ShowArgs=0
+[Stack]
+FillEnabled=0
+OverflowWarningsEnabled=1
+WarningThreshold=90
+SpWarningsEnabled=1
+WarnLogOnly=1
+UseTrigger=1
+TriggerName=main
+LimitSize=0
+ByteLimit=50
 [Log file]
 LoggingEnabled=_ 0
 LogFile=_ ""
@@ -88,25 +98,13 @@ Enabled=0
 Mode=0
 Graph=0
 Symbiont=0
+[Disassemble mode]
+mode=1
 [Breakpoints2]
 Bp0=_ 0 "STD_CODE2" "{$PROJ_DIR$\appmain.c}.801.2" 0 0 1 "" 0 "" 0
 Bp1=_ 0 "STD_CODE2" "{$PROJ_DIR$\appmain.c}.1426.2" 0 0 1 "" 0 "" 0
 Bp2=_ 0 "STD_CODE2" "{$PROJ_DIR$\appmain.c}.860.4" 0 0 1 "" 0 "" 0
 Count=3
-[Stack]
-FillEnabled=0
-OverflowWarningsEnabled=1
-WarningThreshold=90
-SpWarningsEnabled=1
-WarnLogOnly=1
-UseTrigger=1
-TriggerName=main
-LimitSize=0
-ByteLimit=50
-[Disassemble mode]
-mode=1
-[Breakpoints2]
-Count=0
 [Aliases]
 A0=_ "C:\Program Files\Rowley Associates Limited\CrossWorks for ARM 1.5\samples\ATMEL_AT91SAM7\ctl\..\..\..\source\crt0.s" ""
 A1=_ "C:\Program Files\Rowley Associates Limited\CrossWorks for ARM 1.5\samples\ATMEL_AT91SAM7\ctl\..\..\..\targets\ATMEL_AT91SAM7\AT91SAM7_Startup.s" ""

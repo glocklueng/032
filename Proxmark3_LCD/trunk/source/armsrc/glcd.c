@@ -66,11 +66,11 @@
 #elif defined(ANSI_8x9)
     #include "fonts/ANSI_8x9.h"        
 #else
-    #include "fonts/Default.h"
+    #include "../fonts/Default.h"
 #endif
 
 /* include font file for time display purpose */
-#include "fonts/Tiny_Time.h"
+#include "../fonts/Tiny_Time.h"
 
 /**
  * \name Various variables for LCD control
