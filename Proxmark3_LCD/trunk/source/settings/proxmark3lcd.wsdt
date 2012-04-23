@@ -12,7 +12,7 @@
           
           
           
-        <Column0>432</Column0><Column1>14</Column1><Column2>27</Column2><Column3>0</Column3></ColumnWidths>
+        <Column0>449</Column0><Column1>14</Column1><Column2>27</Column2><Column3>0</Column3></ColumnWidths>
       </Workspace>
       <Build>
         
@@ -20,7 +20,7 @@
         
         
       <ColumnWidth0>20</ColumnWidth0><ColumnWidth1>1347</ColumnWidth1><ColumnWidth2>359</ColumnWidth2><ColumnWidth3>89</ColumnWidth3></Build>
-    <TerminalIO/><Find-in-Files><ColumnWidth0>641</ColumnWidth0><ColumnWidth1>91</ColumnWidth1><ColumnWidth2>1100</ColumnWidth2></Find-in-Files></Static>
+    <TerminalIO/><Find-in-Files><ColumnWidth0>641</ColumnWidth0><ColumnWidth1>91</ColumnWidth1><ColumnWidth2>1100</ColumnWidth2></Find-in-Files><Debug-Log><ColumnWidth0>18</ColumnWidth0><ColumnWidth1>1799</ColumnWidth1></Debug-Log></Static>
     <Windows>
       
       
@@ -32,7 +32,7 @@
             <Factory>Workspace</Factory>
             <Session>
               
-            <NodeDict><ExpandedNode>proxmark3lcd</ExpandedNode><ExpandedNode>proxmark3lcd/armsrc</ExpandedNode></NodeDict></Session>
+            <NodeDict><ExpandedNode>proxmark3lcd</ExpandedNode><ExpandedNode>proxmark3lcd/common</ExpandedNode></NodeDict></Session>
           </Tab>
         </Tabs>
         
@@ -44,7 +44,7 @@
             <Factory>Build</Factory>
             <Session/>
           </Tab>
-        <Tab><Identity>TabID-12606-31843</Identity><TabName>Find in Files</TabName><Factory>Find-in-Files</Factory><Session/></Tab></Tabs>
+        <Tab><Identity>TabID-12606-31843</Identity><TabName>Find in Files</TabName><Factory>Find-in-Files</Factory><Session/></Tab><Tab><Identity>TabID-2383-14414</Identity><TabName>Debug Log</TabName><Factory>Debug-Log</Factory><Session/></Tab></Tabs>
         
       <SelectedTab>0</SelectedTab></Wnd1></Windows>
     <Editor>
@@ -52,7 +52,7 @@
       
       
       
-    <Pane><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\inc\c\stdint.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>82</SelStart><SelEnd>89</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\at91lib\boards\at91sam7s-ek\board_cstartup_iar.s</Filename><XPos>0</XPos><YPos>54</YPos><SelStart>3014</SelStart><SelEnd>3014</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\bootrom\bootrom.c</Filename><XPos>0</XPos><YPos>341</YPos><SelStart>11802</SelStart><SelEnd>11802</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\spi.c</Filename><XPos>0</XPos><YPos>87</YPos><SelStart>967</SelStart><SelEnd>967</SelEnd></Tab><ActiveTab>3</ActiveTab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\diskio.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>815</SelStart><SelEnd>815</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\armsrc\appmain.c</Filename><XPos>0</XPos><YPos>932</YPos><SelStart>39117</SelStart><SelEnd>39117</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\inc\c\inttypes.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>417</SelStart><SelEnd>417</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\armsrc\glcd.c</Filename><XPos>0</XPos><YPos>47</YPos><SelStart>2009</SelStart><SelEnd>2009</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\armsrc\printf.c</Filename><XPos>0</XPos><YPos>414</YPos><SelStart>10322</SelStart><SelEnd>10322</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\armsrc\iso14443.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>711</SelStart><SelEnd>711</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\diskio.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>345</SelStart><SelEnd>345</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\msd.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>40</SelStart><SelEnd>40</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\pwm.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\common\usb.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd></Tab></Pane><ActivePane>0</ActivePane><Sizes><Pane><X>1000000</X><Y>1000000</Y></Pane></Sizes><SplitMode>1</SplitMode></Editor>
+    <Pane><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\inc\c\stdint.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>82</SelStart><SelEnd>89</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\at91lib\boards\at91sam7s-ek\board_cstartup_iar.s</Filename><XPos>0</XPos><YPos>54</YPos><SelStart>3014</SelStart><SelEnd>3014</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\bootrom\bootrom.c</Filename><XPos>0</XPos><YPos>341</YPos><SelStart>11802</SelStart><SelEnd>11802</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\spi.c</Filename><XPos>0</XPos><YPos>93</YPos><SelStart>4338</SelStart><SelEnd>4338</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\diskio.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>815</SelStart><SelEnd>815</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\armsrc\appmain.c</Filename><XPos>0</XPos><YPos>789</YPos><SelStart>35855</SelStart><SelEnd>35855</SelEnd></Tab><ActiveTab>5</ActiveTab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\inc\c\inttypes.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>417</SelStart><SelEnd>417</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\armsrc\glcd.c</Filename><XPos>0</XPos><YPos>47</YPos><SelStart>2009</SelStart><SelEnd>2009</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\armsrc\printf.c</Filename><XPos>0</XPos><YPos>414</YPos><SelStart>10322</SelStart><SelEnd>10322</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\armsrc\iso14443.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>711</SelStart><SelEnd>711</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\diskio.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>345</SelStart><SelEnd>345</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\msd.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>40</SelStart><SelEnd>40</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\pwm.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\common\usb.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\armsrc\msd.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\armsrc\msd.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>522</SelStart><SelEnd>526</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\armsrc\ff.h</Filename><XPos>0</XPos><YPos>343</YPos><SelStart>22915</SelStart><SelEnd>22915</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\armsrc\ff.c</Filename><XPos>0</XPos><YPos>2372</YPos><SelStart>78494</SelStart><SelEnd>78494</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\version.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>234</SelStart><SelEnd>234</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\common\legic_prng.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\common\crc.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>334</SelStart><SelEnd>334</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\armsrc\util.c</Filename><XPos>0</XPos><YPos>202</YPos><SelStart>4440</SelStart><SelEnd>4440</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\armsrc\pwm.c</Filename><XPos>0</XPos><YPos>33</YPos><SelStart>1646</SelStart><SelEnd>1646</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\armsrc\fpgaloader.c</Filename><XPos>0</XPos><YPos>315</YPos><SelStart>11258</SelStart><SelEnd>11258</SelEnd></Tab></Pane><ActivePane>0</ActivePane><Sizes><Pane><X>1000000</X><Y>1000000</Y></Pane></Sizes><SplitMode>1</SplitMode></Editor>
     <Positions>
       
       

@@ -1158,7 +1158,7 @@
         </option>
         <option>
           <name>CCLangConformance</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>CCSignedPlainChar</name>
@@ -1817,6 +1817,12 @@
       <name>$PROJ_DIR$\armsrc\appmain.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$\armsrc\diskio.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\armsrc\ff.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$\armsrc\fonts.c</name>
     </file>
     <file>
@@ -1844,7 +1850,16 @@
       <name>$PROJ_DIR$\armsrc\lfops.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$\armsrc\msd.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$\armsrc\printf.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\armsrc\pwm.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\armsrc\spi.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$\armsrc\start.c</name>
@@ -1860,6 +1875,24 @@
     </file>
     <file>
       <name>$PROJ_DIR$\bootrom\fromflash.c</name>
+    </file>
+  </group>
+  <group>
+    <name>common</name>
+    <file>
+      <name>$PROJ_DIR$\common\crc.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\diskio.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\common\legic_prng.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\common\usb.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\common\version.c</name>
     </file>
   </group>
   <file>
@@ -2045,70 +2078,16 @@
     <name>$PROJ_DIR$\chip.h</name>
   </file>
   <file>
-    <name>$PROJ_DIR$\common\crc.c</name>
-  </file>
-  <file>
-    <name>$PROJ_DIR$\diskio.c</name>
-  </file>
-  <file>
-    <name>$PROJ_DIR$\diskio.h</name>
-  </file>
-  <file>
-    <name>$PROJ_DIR$\ff.c</name>
-  </file>
-  <file>
     <name>$PROJ_DIR$\ff.h</name>
   </file>
   <file>
     <name>$PROJ_DIR$\flash.icf</name>
   </file>
   <file>
-    <name>$PROJ_DIR$\fonts.h</name>
-  </file>
-  <file>
-    <name>$PROJ_DIR$\glcd.h</name>
-  </file>
-  <file>
-    <name>$PROJ_DIR$\gui_layout.h</name>
-  </file>
-  <file>
-    <name>$PROJ_DIR$\hitag2.h</name>
-  </file>
-  <file>
-    <name>$PROJ_DIR$\LCD.h</name>
-  </file>
-  <file>
     <name>$PROJ_DIR$\ldscript</name>
   </file>
   <file>
-    <name>$PROJ_DIR$\common\legic_prng.c</name>
-  </file>
-  <file>
-    <name>$PROJ_DIR$\legicrf.h</name>
-  </file>
-  <file>
-    <name>$PROJ_DIR$\Makefile</name>
-  </file>
-  <file>
-    <name>$PROJ_DIR$\msd.c</name>
-  </file>
-  <file>
-    <name>$PROJ_DIR$\msd.h</name>
-  </file>
-  <file>
     <name>$PROJ_DIR$\proxmark3lcd.ewp</name>
-  </file>
-  <file>
-    <name>$PROJ_DIR$\pwm.c</name>
-  </file>
-  <file>
-    <name>$PROJ_DIR$\spi.c</name>
-  </file>
-  <file>
-    <name>$PROJ_DIR$\common\usb.c</name>
-  </file>
-  <file>
-    <name>$PROJ_DIR$\version.c</name>
   </file>
 </project>
 
