@@ -1814,7 +1814,8 @@ void ReaderIso14443a(UsbCommand * c, UsbCommand * ack)
 	uint8_t * cmd = c->d.asBytes;
 	size_t len = c->arg[1];
 
-	if(param & ISO14A_REQUEST_TRIGGER) iso14a_set_trigger(1);
+	if(param & ISO14A_REQUEST_TRIGGER) 
+          iso14a_set_trigger(1);
 
 	if(param & ISO14A_CONNECT) {
 		iso14443a_setup();
