@@ -22,8 +22,8 @@ LimitSize=0
 ByteLimit=50
 [JLinkDriver]
 WatchCond=_ 0
-Watch0=_ 0 "0x00000000" 0 "0x00000000" 0 "0x00000000" 0 "0x00000000" 0 0 0 0
-Watch1=_ 0 "0x00000000" 0 "0x00000000" 0 "0x00000000" 0 "0x00000000" 0 0 0 0
+Watch0=_ 0 "" 0 "" 0 "" 0 "" 0 0 0 0
+Watch1=_ 0 "" 0 "" 0 "" 0 "" 0 0 0 0
 [Interrupts]
 Enabled=1
 [MemoryMap]
@@ -85,12 +85,6 @@ Bp4=_ "STD_CODE" "{$PROJ_DIR$\iso14443.c}.769.9@1" 0 0 0 0 "" 0 ""
 Bp5=_ "STD_CODE" "{$PROJ_DIR$\bootrom\bootrom.c}.387.5@1" 0 0 0 0 "" 0 ""
 Bp6=_ "STD_CODE" "{$PROJ_DIR$\appmain.c}.396.5@1" 0 0 0 0 "" 0 ""
 Count=7
-[Disassemble mode]
-mode=1
-[Breakpoints2]
-Bp0=_ 0 "EMUL_CODE" "{$PROJ_DIR$\armsrc\iso14443a.c}.692.17" 0 0 1 "" 0 "" 0
-Bp1=_ 0 "EMUL_CODE" "{$PROJ_DIR$\armsrc\iso14443a.c}.769.5" 0 0 1 "" 0 "" 0
-Count=2
 [Log file]
 LoggingEnabled=_ 0
 LogFile=_ ""
@@ -98,14 +92,6 @@ Category=_ 0
 [TermIOLog]
 LoggingEnabled=_ 0
 LogFile=_ ""
-[Aliases]
-A0=_ "C:\Program Files\Rowley Associates Limited\CrossWorks for ARM 1.5\samples\ATMEL_AT91SAM7\ctl\..\..\..\source\crt0.s" ""
-A1=_ "C:\Program Files\Rowley Associates Limited\CrossWorks for ARM 1.5\samples\ATMEL_AT91SAM7\ctl\..\..\..\targets\ATMEL_AT91SAM7\AT91SAM7_Startup.s" ""
-A2=_ "C:\Program Files\Rowley Associates Limited\CrossWorks for ARM 1.5\samples\ATMEL_AT91SAM7\ctl\test6.c" ""
-A3=_ "C:\Program Files\Rowley Associates Limited\CrossWorks for ARM 1.5\samples\ATMEL_AT91SAM7\ctl\test_AT91SAM7.c" ""
-A4=_ "C:\Program Files\Rowley Associates Limited\CrossWorks for ARM 1.5\samples\ATMEL_AT91SAM7\ctl\test_AT91SAM7EK.c" ""
-Count=5
-SuppressDialog=1
 [CallStackLog]
 Enabled=0
 [DriverProfiling]
@@ -114,3 +100,17 @@ Mode=0
 Graph=0
 Symbiont=0
 Exclusions=
+[Disassemble mode]
+mode=1
+[Breakpoints2]
+Bp0=_ 0 "EMUL_CODE" "{$PROJ_DIR$\armsrc\iso14443a.c}.692.17" 0 0 1 "" 0 "" 0
+Bp1=_ 0 "EMUL_CODE" "{$PROJ_DIR$\armsrc\iso14443a.c}.769.5" 0 0 1 "" 0 "" 0
+Count=2
+[Aliases]
+A0=_ "C:\Program Files\Rowley Associates Limited\CrossWorks for ARM 1.5\samples\ATMEL_AT91SAM7\ctl\..\..\..\source\crt0.s" ""
+A1=_ "C:\Program Files\Rowley Associates Limited\CrossWorks for ARM 1.5\samples\ATMEL_AT91SAM7\ctl\..\..\..\targets\ATMEL_AT91SAM7\AT91SAM7_Startup.s" ""
+A2=_ "C:\Program Files\Rowley Associates Limited\CrossWorks for ARM 1.5\samples\ATMEL_AT91SAM7\ctl\test6.c" ""
+A3=_ "C:\Program Files\Rowley Associates Limited\CrossWorks for ARM 1.5\samples\ATMEL_AT91SAM7\ctl\test_AT91SAM7.c" ""
+A4=_ "C:\Program Files\Rowley Associates Limited\CrossWorks for ARM 1.5\samples\ATMEL_AT91SAM7\ctl\test_AT91SAM7EK.c" ""
+Count=5
+SuppressDialog=1
