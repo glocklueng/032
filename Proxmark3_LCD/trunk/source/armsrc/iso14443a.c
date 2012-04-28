@@ -1670,9 +1670,16 @@ void ReaderTransmit(uint8_t* frame, int len)
 int ReaderReceive(uint8_t* receivedAnswer)
 {
   int samples = 0;
-  if (!GetIso14443aAnswerFromTag(receivedAnswer,160,&samples,0)) return FALSE;
-  if (tracing) LogTrace(receivedAnswer,Demod.len,samples,Demod.parityBits,FALSE);
-  if(samples == 0) return FALSE;
+  
+  if (!GetIso14443aAnswerFromTag(receivedAnswer,160,&samples,0)) 
+    return FALSE;
+ 
+  if (tracing) 
+    LogTrace(receivedAnswer,Demod.len,samples,Demod.parityBits,FALSE);
+  
+  if(samples == 0) 
+    return FALSE;
+  
   return Demod.len;
 }
 
@@ -1697,6 +1704,8 @@ int iso14443a_select_card(uint8_t * uid_ptr, iso14a_card_select_t * resp_data, u
 
 	uint8_t* resp = (((uint8_t *)BigBuf) + 3560);	// was 3560 - tied to other size changes
 
+again:;
+  	WDT_HIT();
 	uint8_t sak = 0x04; // cascade uid
 	int cascade_level = 0;
 
@@ -1706,13 +1715,20 @@ int iso14443a_select_card(uint8_t * uid_ptr, iso14a_card_select_t * resp_data, u
 	memset(uid_ptr, 0, 8);
 
 	// Broadcast for a card, WUPA (0x52) will force response from all cards in the field
-	ReaderTransmitShort(wupa);
-	// Receive the ATQA
-	if(!ReaderReceive(resp)) return 0;
-
-	if(resp_data)
-		memcpy(resp_data->atqa, resp, 2);
+        {
+          
+          
+          ReaderTransmitShort(wupa);
 	
+          // Receive the ATQA
+	  if(ReaderReceive(resp)) 
+           return 0;
+        }
+        
+	if(resp_data){
+		memcpy(resp_data->atqa, resp, 2);
+	}
+        
 	// OK we will select at least at cascade 1, lets see if first byte of UID was 0x88 in
 	// which case we need to make a cascade 2 request and select - this is a long UID
 	// While the UID is not complete, the 3nd bit (from the right) is set in the SAK.
@@ -1723,7 +1739,10 @@ int iso14443a_select_card(uint8_t * uid_ptr, iso14a_card_select_t * resp_data, u
 
 		// SELECT_ALL
 		ReaderTransmit(sel_all,sizeof(sel_all));
-		if (!ReaderReceive(resp)) return 0;
+		if (!ReaderReceive(resp)) {
+                 
+                  return 0;
+                }
 		if(uid_ptr) memcpy(uid_ptr + cascade_level*4, resp, 4);
 		
 		// calculate crypto UID
@@ -1735,7 +1754,10 @@ int iso14443a_select_card(uint8_t * uid_ptr, iso14a_card_select_t * resp_data, u
 		ReaderTransmit(sel_uid,sizeof(sel_uid));
 
 		// Receive the SAK
-		if (!ReaderReceive(resp)) return 0;
+		if (!ReaderReceive(resp)) {
+                 
+                  return 0;
+               }
 		sak = resp[0];
 	}
 	if(resp_data) {
@@ -1748,15 +1770,22 @@ int iso14443a_select_card(uint8_t * uid_ptr, iso14a_card_select_t * resp_data, u
 		uid_ptr[7] = 0;
 	}
 
-	if( (sak & 0x20) == 0)
+	if( (sak & 0x20) == 0){
+        
 		return 2; // non iso14443a compliant tag
-
+        }
+        
 	// Request for answer to select
 	if(resp_data) {  // JCOP cards - if reader sent RATS then there is no MIFARE session at all!!!
 		AppendCrc14443a(rats, 2);
 		ReaderTransmit(rats, sizeof(rats));
 		
-		if (!(len = ReaderReceive(resp))) return 0;
+		if (!(len = ReaderReceive(resp))) {
+                    
+                  	WDT_HIT();
+
+                    return 0;
+                }
 		
 		memcpy(resp_data->ats, resp, sizeof(resp_data->ats));
 		resp_data->ats_len = len;
@@ -1778,11 +1807,10 @@ void iso14443a_setup() {
 
 	// Now give it time to spin up.
 	// Signal field is on with the appropriate LED
-	LED_D_ON();
 	FpgaWriteConfWord(FPGA_MAJOR_MODE_HF_ISO14443A | FPGA_HF_ISO14443A_READER_MOD);
 	SpinDelay(200);
 
-	iso14a_timeout = 2048; //default
+	iso14a_timeout = 8192; //default
 }
 
 int iso14_apdu(uint8_t * cmd, size_t cmd_len, void * data) {
@@ -1846,7 +1874,8 @@ void ReaderIso14443a(UsbCommand * c, UsbCommand * ack)
 		UsbSendPacket((void *)ack, sizeof(UsbCommand));
 	}
 
-	if(param & ISO14A_REQUEST_TRIGGER) iso14a_set_trigger(0);
+	if(param & ISO14A_REQUEST_TRIGGER) 
+          iso14a_set_trigger(0);
 
 	if(param & ISO14A_NO_DISCONNECT)
 		return;

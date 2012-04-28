@@ -1199,9 +1199,11 @@ done:
 	LED_A_OFF();
 	LED_B_OFF();
 	LED_C_OFF();
-  AT91C_BASE_PDC_SSC->PDC_PTCR = AT91C_PDC_RXTDIS;
+        
+        AT91C_BASE_PDC_SSC->PDC_PTCR = AT91C_PDC_RXTDIS;
+        
 	DbpString("Snoop statistics:");
-  Dbprintf("  Max behind by: %i", maxBehindBy);
+        Dbprintf("  Max behind by: %i", maxBehindBy);
 	Dbprintf("  Uart State: %x", Uart.state);
 	Dbprintf("  Uart ByteCnt: %i", Uart.byteCnt);
 	Dbprintf("  Uart ByteCntMax: %i", Uart.byteCntMax);
