@@ -6,8 +6,8 @@
 #include "msd.h"
 #include "glcd.h"
 
-#define OCTAVE_OFFSET 0
-#define TONE_PIN 13
+#define OCTAVE_OFFSET ( 0 )
+#define TONE_PIN      ( 13 )
 
 #define NOTE_C4  262
 #define NOTE_CS4 277

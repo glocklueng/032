@@ -1389,35 +1389,35 @@ int testmain(void)
 #endif
 
 
-           
+         
 #if 0
-	        int i;
-                volatile int j ;
-
-		for(i=0;i<100;i++)  {
-			j += ReadAdc(ADC_CHAN_LF);
-		}
-		
-	
-		i = 0;
-		
-		srand(j);
-		j = rand()% (sizeof(song) / sizeof(song[0])) ;
-	
-		play(song[j],0);
-		
+  int i;
+  volatile int j ;
+  
+  for(i=0;i<100;i++)  {
+          j += ReadAdc(ADC_CHAN_LF);
+  }
+  
+  
+  i = 0;
+  
+  srand(j);
+  j = rand()% (sizeof(song) / sizeof(song[0])) ;
+  
+  play(song[j],0);
+  
 #endif
 
-		//play(song[63],0);
-		
-	for(;;) {
-                
-		UsbPoll(FALSE);
-		Check_Button();
-		WDT_HIT();
-		Action_Button();
-		WDT_HIT();
-		
-	}
+            //play(song[63],0);
+            
+    for(;;) {
+            
+            UsbPoll(FALSE);
+            Check_Button();
+            WDT_HIT();
+            Action_Button();
+            WDT_HIT();
+            
+    }
 }
 
