@@ -5,7 +5,7 @@
      behavior or data corruption.  It is strongly advised that
      users do not edit the contents of this file. -->
 <messages>
-<msg type="warning" file="Cpld" num="158" delta="new" >We have detected that a large number of internal signals may be switching at the same time. To avoid potential simultaneous switching/ground bounce issues, please contact Xilinx customer support for more information.
+<msg type="warning" file="Cpld" num="158" delta="old" >We have detected that a large number of internal signals may be switching at the same time. To avoid potential simultaneous switching/ground bounce issues, please contact Xilinx customer support for more information.
 </msg>
 
 </messages>
