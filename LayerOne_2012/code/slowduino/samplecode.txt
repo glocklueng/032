@@ -1,0 +1,17 @@
+#define ledPin 13
+
+void setup(){
+  pinMode(ledPin,OUTPUT);
+  Serial.begin(19200);
+  UBRR0L=25;//2400 baud @1mhz hack
+}
+
+void loop(){
+  digitalWrite(ledPin,HIGH);
+  delay(1000);
+  digitalWrite(ledPin,LOW);
+  delay(1000);
+
+  Serial.println(F_CPU);
+}
+ 
