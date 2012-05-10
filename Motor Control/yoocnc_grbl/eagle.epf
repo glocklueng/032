@@ -400,8 +400,8 @@ UsedLibrary="E:/eagle/lbr/zilog.lbr"
 
 [Win_1]
 Type="Control Panel"
-Loc="929 0 1841 1161"
-State=3
+Loc="0 64 911 1161"
+State=1
 Number=0
 
 [Desktop]
