@@ -1,0 +1,2 @@
+@ECHO OFF
+"C:\Programme\Atmel\AVR Tools\AvrAssembler2\avrasm2.exe" -S "D:\p_bko\BL_active\6a_Turnigy\icp_control\pwm_r02\labels.tmp" -fI -W+ie -o "D:\p_bko\BL_active\6a_Turnigy\icp_control\pwm_r02\6a_pwm.hex" -d "D:\p_bko\BL_active\6a_Turnigy\icp_control\pwm_r02\6a_pwm.obj" -e "D:\p_bko\BL_active\6a_Turnigy\icp_control\pwm_r02\6a_pwm.eep" -m "D:\p_bko\BL_active\6a_Turnigy\icp_control\pwm_r02\6a_pwm.map" -l "D:\p_bko\BL_active\6a_Turnigy\icp_control\pwm_r02\6a_pwm.lst" "D:\p_bko\BL_active\6a_Turnigy\icp_control\pwm_r02\6a_pwm.asm"
