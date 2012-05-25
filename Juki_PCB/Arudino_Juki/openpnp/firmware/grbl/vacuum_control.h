@@ -25,7 +25,7 @@
 #include <avr/io.h>
 
 // ms needed for air to transistion
-#define AIR_SETTLE_TIME		( 500 )
+#define AIR_SETTLE_TIME		( 250 )
 
 #define	VACUUM_PAD_X		( 12.1142 )
 #define	VACUUM_PAD_Y		( 4.92323 )

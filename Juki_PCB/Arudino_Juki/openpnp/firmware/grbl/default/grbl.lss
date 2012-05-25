@@ -11709,8 +11709,8 @@ void vacuum(int state)
     43ea:	80 91 0b 01 	lds	r24, 0x010B
     43ee:	80 61       	ori	r24, 0x10	; 16
     43f0:	80 93 0b 01 	sts	0x010B, r24
-    43f4:	28 e8       	ldi	r18, 0x88	; 136
-    43f6:	33 e1       	ldi	r19, 0x13	; 19
+    43f4:	24 ec       	ldi	r18, 0xC4	; 196
+    43f6:	39 e0       	ldi	r19, 0x09	; 9
     43f8:	40 e9       	ldi	r20, 0x90	; 144
     43fa:	51 e0       	ldi	r21, 0x01	; 1
     43fc:	ca 01       	movw	r24, r20
@@ -11748,8 +11748,8 @@ void vacuum(int state)
     4412:	80 91 0b 01 	lds	r24, 0x010B
     4416:	8f 7e       	andi	r24, 0xEF	; 239
     4418:	80 93 0b 01 	sts	0x010B, r24
-    441c:	28 e8       	ldi	r18, 0x88	; 136
-    441e:	33 e1       	ldi	r19, 0x13	; 19
+    441c:	24 ec       	ldi	r18, 0xC4	; 196
+    441e:	39 e0       	ldi	r19, 0x09	; 9
     4420:	eb cf       	rjmp	.-42     	; 0x43f8 <vacuum+0x18>
     4422:	08 95       	ret
 
@@ -11947,8 +11947,8 @@ unsigned char goto_vacpad( void )
     451e:	81 e0       	ldi	r24, 0x01	; 1
     4520:	90 e0       	ldi	r25, 0x00	; 0
     4522:	0e 94 f0 21 	call	0x43e0	; 0x43e0 <vacuum>
-    4526:	28 e8       	ldi	r18, 0x88	; 136
-    4528:	33 e1       	ldi	r19, 0x13	; 19
+    4526:	24 ec       	ldi	r18, 0xC4	; 196
+    4528:	39 e0       	ldi	r19, 0x09	; 9
     452a:	40 e9       	ldi	r20, 0x90	; 144
     452c:	51 e0       	ldi	r21, 0x01	; 1
     452e:	ca 01       	movw	r24, r20
@@ -12279,8 +12279,8 @@ unsigned char vacuum_state( void )
     4696:	81 e0       	ldi	r24, 0x01	; 1
     4698:	90 e0       	ldi	r25, 0x00	; 0
     469a:	0e 94 f0 21 	call	0x43e0	; 0x43e0 <vacuum>
-    469e:	28 e8       	ldi	r18, 0x88	; 136
-    46a0:	33 e1       	ldi	r19, 0x13	; 19
+    469e:	24 ec       	ldi	r18, 0xC4	; 196
+    46a0:	39 e0       	ldi	r19, 0x09	; 9
     46a2:	40 e9       	ldi	r20, 0x90	; 144
     46a4:	51 e0       	ldi	r21, 0x01	; 1
     46a6:	ca 01       	movw	r24, r20
