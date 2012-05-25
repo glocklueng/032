@@ -915,6 +915,6 @@ public:
 	afx_msg void OnBnClickedTransferXy();
 	afx_msg void OnBnClickedBigView();
 	afx_msg void OnBnClickedButton2();
-	CButton m_Camera2Enable;
-	CButton m_Camera1Enable;
+	CButton m_CameraDownEnable;
+	CButton m_CameraUpEnable;
 };
