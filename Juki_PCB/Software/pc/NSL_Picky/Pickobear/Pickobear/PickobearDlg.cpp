@@ -263,8 +263,8 @@ void CPickobearDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_PCB_LIST, m_PCBList);
 	DDX_Text(pDX, IDC_PCB_INDEX, m_PCBIndex);
 	DDX_Control(pDX, IDC_STATUS_BAR, m_StatusBar);
-	DDX_Control(pDX, IDC_CAMERA2_ENABLE, m_Camera2Enable);
-	DDX_Control(pDX, IDC_CAMERA1_ENABLE, m_Camera1Enable);
+	DDX_Control(pDX, IDC_CAMERA2_ENABLE, m_CameraDownEnable);
+	DDX_Control(pDX, IDC_CAMERA1_ENABLE, m_CameraUpEnable);
 }
 
 BEGIN_MESSAGE_MAP(CPickobearDlg, CDialog) 
@@ -529,9 +529,9 @@ BOOL CPickobearDlg::OnInitDialog()
 
 	DWORD numDevices = VI.listDevices();
 
-	m_Camera1Enable.SetCheck( 1 );
+	m_CameraUpEnable.SetCheck( 1 );
 	//up
-	m_Camera2Enable.SetCheck( 1 );
+	m_CameraDownEnable.SetCheck( 1 );
 
 	for( DWORD i = 0 ; i < numDevices ; i++ ) {
 
@@ -2381,7 +2381,7 @@ void CPickobearDlg::goCamera(LPVOID pThis)
 
 		if( m_CameraUpdateRate ) {
 	
-			if( !m_Camera1Enable.GetState() ) 
+			if( m_CameraUpEnable.GetCheck() ) 
 				m_UpCameraWindow.UpdateCamera( 1 ) ;
 
 			// wastes CPU time
