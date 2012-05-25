@@ -263,6 +263,8 @@ void CPickobearDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_PCB_LIST, m_PCBList);
 	DDX_Text(pDX, IDC_PCB_INDEX, m_PCBIndex);
 	DDX_Control(pDX, IDC_STATUS_BAR, m_StatusBar);
+	DDX_Control(pDX, IDC_CAMERA2_ENABLE, m_Camera2Enable);
+	DDX_Control(pDX, IDC_CAMERA1_ENABLE, m_Camera1Enable);
 }
 
 BEGIN_MESSAGE_MAP(CPickobearDlg, CDialog) 
@@ -332,6 +334,7 @@ BEGIN_MESSAGE_MAP(CPickobearDlg, CDialog)
 	ON_MESSAGE (PB_TEXT_OUT, UpdateTextOut)
 	ON_BN_CLICKED(IDC_TRANSFER_XY, &CPickobearDlg::OnBnClickedTransferXy)
 	ON_BN_CLICKED(IDC_BIG_VIEW, &CPickobearDlg::OnBnClickedBigView)
+	ON_BN_CLICKED(IDC_BUTTON2, &CPickobearDlg::OnBnClickedButton2)
 END_MESSAGE_MAP()
 
 BEGIN_MESSAGE_MAP(CListCtrl_Components, CListCtrl)
@@ -526,6 +529,10 @@ BOOL CPickobearDlg::OnInitDialog()
 
 	DWORD numDevices = VI.listDevices();
 
+	m_Camera1Enable.SetCheck( 1 );
+	//up
+	m_Camera2Enable.SetCheck( 1 );
+
 	for( DWORD i = 0 ; i < numDevices ; i++ ) {
 
 		_RPT2(_CRT_WARN,"%d) Camera name is [%s]\n",i, VI.getDeviceName( i  ));
@@ -616,6 +623,8 @@ BOOL CPickobearDlg::OnInitDialog()
 	do {
 		int ret = m_SerialPicker.DoModal();
 		if (ret == IDCANCEL) {
+
+			break;
 
 			PostQuitMessage(0);
 
@@ -2371,10 +2380,12 @@ void CPickobearDlg::goCamera(LPVOID pThis)
 	while( m_Quit == 0 ) {
 
 		if( m_CameraUpdateRate ) {
-		m_UpCameraWindow.UpdateCamera( 1 ) ;
+	
+			if( !m_Camera1Enable.GetState() ) 
+				m_UpCameraWindow.UpdateCamera( 1 ) ;
 
-		// wastes CPU time
-		Sleep( m_CameraUpdateRate );
+			// wastes CPU time
+			Sleep( m_CameraUpdateRate );
 		} else {
 			Sleep(100);
 		}
@@ -5896,4 +5907,38 @@ void CPickobearDlg::OnBnClickedBigView()
 	m_UpCameraWindow.SetCamera( m_UpCamera.GetCurSel() );
 	m_CameraUpdateRate = rate;
 
+}
+
+
+void CPickobearDlg::OnBnClickedButton2()
+{
+	UpdateData();
+
+	CPickobearDlg *pDlg = (CPickobearDlg*)AfxGetApp()->m_pMainWnd;
+	ASSERT( pDlg );
+
+	// number of items selected in components list
+	int numberComponentsSelected = pDlg->m_ComponentList.GetSelectedCount();
+
+	if( numberComponentsSelected == 0 ) {
+		return ;
+	}
+
+	int nItem = -1;
+
+
+	for( int i = 0 ; i < numberComponentsSelected ; i++ ) {
+
+		// nItem is component index selected, -1 first time
+		nItem = pDlg->m_ComponentList.GetNextItem(nItem, LVNI_SELECTED);
+		if( nItem == -1 ) {
+			break;
+		}
+		
+		m_ComponentList.SetSide( (pDlg->m_ComponentList.GetCount()-1 )-nItem, m_Side );
+
+	}
+
+	// rebuild the list
+	pDlg->m_ComponentList.RebuildList();	
 }

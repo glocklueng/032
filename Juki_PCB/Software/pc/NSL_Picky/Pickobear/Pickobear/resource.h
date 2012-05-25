@@ -124,6 +124,10 @@
 #define IDC_CAMERA                      1102
 #define IDC_BUTTON1                     1103
 #define IDC_BIG_VIEW                    1103
+#define IDC_BUTTON2                     1104
+#define IDC_CAMERA1_ENABLE              1105
+#define IDC_CAMERA1_ENABLE2             1106
+#define IDC_CAMERA2_ENABLE              1106
 
 // Next default values for new objects
 // 
@@ -131,7 +135,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        140
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1104
+#define _APS_NEXT_CONTROL_VALUE         1106
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
