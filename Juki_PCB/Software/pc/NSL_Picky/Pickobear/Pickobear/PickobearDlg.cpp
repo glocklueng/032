@@ -107,18 +107,18 @@ static int CAMERA_Y_OFFSET				=( 73900-540+120 +100);
 #define GCODE_WAIT_MS				( 50 )
 
 // how long to delay after a pickup, this shouldn't be necessary
-#define GCODE_PICKUP_WAIT_MS		( 1000 ) 
+#define GCODE_PICKUP_WAIT_MS		( 10 ) 
 
-#define GCODE_PUTDOWN_WAIT_MS		( 1000 ) 
+#define GCODE_PUTDOWN_WAIT_MS		( 10 ) 
 
 // how long to wait for the head to rotate
-#define GCODE_WAIT_HEAD_ROTATE_MS	( 500 )
+//#define GCODE_WAIT_HEAD_ROTATE_MS	( 500 )
 
 // if nothing is read from the serial port when expected, wait this long in ms for data to appear, this is generally in a timeout loop so its usually time*loopcount
 #define SERIAL_WAIT_MS				( 50 )
 
 //  how long to wait after a part is place in the GO thread
-#define SLEEP_AFTER_PART_PLACE_MS	( 100 )
+#define SLEEP_AFTER_PART_PLACE_MS	( 10 )
 
 // starting to document GCODE, if there is a trailing \n it is an InternalSerialWrite, if not it is AddGCODE*
 // home function, controlled by AddGCODE
@@ -4527,7 +4527,7 @@ DWORD CPickobearDlg::goSingleThread(void )
 		}	
 
 		// @todo :tune this
-		Sleep( GCODE_PICKUP_WAIT_MS );
+		//Sleep( GCODE_PICKUP_WAIT_MS );
 
 		_RPT1(_CRT_WARN,"goSingleThread: Going to component %s\n", entry.label );
 		double angle = 0.0 ;
@@ -4578,7 +4578,7 @@ DWORD CPickobearDlg::goSingleThread(void )
 		}
 
 		//wait
-		Sleep( GCODE_PUTDOWN_WAIT_MS );
+	//	Sleep( GCODE_PUTDOWN_WAIT_MS );
 
 skip:;
 
@@ -4598,13 +4598,18 @@ skip:;
 
 		UpdateWindow();
 
-		Sleep( SLEEP_AFTER_PART_PLACE_MS );
 
-		// Move Camera to part
-		if( bFlip == false ) {
-			MoveHead(entry.x+m_ComponentList.m_OffsetX, entry.y+m_ComponentList.m_OffsetY,0,true );
-		} else {
-			MoveHead(entry.x+m_ComponentList.m_OffsetX, (0-entry.y)+m_ComponentList.m_OffsetY,0,true );
+		// only do look on one part selected
+		if( numberComponentsSelected < 2 ) {
+
+			Sleep( SLEEP_AFTER_PART_PLACE_MS );
+			
+			// Move Camera to part
+			if( bFlip == false ) {
+				MoveHead(entry.x+m_ComponentList.m_OffsetX, entry.y+m_ComponentList.m_OffsetY,0,true );
+			} else {
+				MoveHead(entry.x+m_ComponentList.m_OffsetX, (0-entry.y)+m_ComponentList.m_OffsetY,0,true );
+			}
 		}
 	}
 
