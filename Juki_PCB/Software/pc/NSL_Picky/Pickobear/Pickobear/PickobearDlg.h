@@ -163,6 +163,16 @@ public:
 		strncpy_s( m_ComponentDatabase.at(idd).feeder,string, 256 );
 
 	}
+	
+	void SetSide( unsigned int i, unsigned int side ) {
+
+		if (  i > m_Count ) {
+
+			AfxMessageBox(L"Error:CompDatabase.at range error", MB_OK|MB_ICONSTOP );
+		}
+
+		m_ComponentDatabase.at(i).side = side;
+	}
 
 	CompDatabase at( unsigned int i ) {
 
@@ -174,6 +184,7 @@ public:
 		return m_ComponentDatabase.at(i);
 	}
  
+
 	// search for component by name
 	int Search( const char * name) 
 	{
@@ -903,4 +914,7 @@ public:
 	CEdit m_StatusBar;
 	afx_msg void OnBnClickedTransferXy();
 	afx_msg void OnBnClickedBigView();
+	afx_msg void OnBnClickedButton2();
+	CButton m_Camera2Enable;
+	CButton m_Camera1Enable;
 };
