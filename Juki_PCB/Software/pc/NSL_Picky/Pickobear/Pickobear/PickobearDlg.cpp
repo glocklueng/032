@@ -234,6 +234,7 @@ CPickobearDlg::CPickobearDlg(CWnd* pParent /*=NULL*/)
 	, updateCameraHandle(0)
 	, m_AlertBox(0)
 	, m_Pause( FALSE )
+	, outputFile( NULL)
 
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
@@ -339,6 +340,7 @@ BEGIN_MESSAGE_MAP(CPickobearDlg, CDialog)
 	ON_BN_CLICKED(IDC_CAMERA1_ENABLE, &CPickobearDlg::OnBnClickedCamera1Enable)
 	ON_BN_CLICKED(IDC_CAMERA2_ENABLE, &CPickobearDlg::OnBnClickedCamera2Enable)
 	ON_BN_CLICKED(IDC_PAUSE, &CPickobearDlg::OnBnClickedPause)
+	ON_BN_CLICKED(IDC_GO_FILE, &CPickobearDlg::OnBnClickedGoFile)
 END_MESSAGE_MAP()
 
 BEGIN_MESSAGE_MAP(CListCtrl_Components, CListCtrl)
@@ -707,7 +709,7 @@ BOOL CPickobearDlg::OnInitDialog()
 		
 	m_SpeedSelect.ResetContent();
 
-	for(unsigned long i = 1000; i <= 18000 ; i+= 250 ) {
+	for(unsigned long i = 1000; i <= 30000 ; i+= 250 ) {
 
 		CString num;
 
@@ -1035,6 +1037,10 @@ void CPickobearDlg::SetControls( boolean state )
 	GetDlgItem( IDC_GOFF )->EnableWindow( state );
 
 	GetDlgItem( IDC_GO2 )->EnableWindow( state );
+
+	GetDlgItem( IDC_GO_FILE )->EnableWindow( state );
+
+	GetDlgItem( IDC_PAUSE )->EnableWindow( state );
 }
 
 
@@ -1363,8 +1369,13 @@ bool CPickobearDlg::MoveHead(  long x, long y, double c, bool wait=false )
 	m_TargetXum = x;
 	m_TargetYum = y;
 
-
-	AddGCODECommand(buffer,"MoveHead failed",UpdatePosition_callback );
+	if( outputFile == NULL ) {
+		AddGCODECommand(buffer,"MoveHead failed",UpdatePosition_callback );
+	} else {
+		
+		fprintf(outputFile,"%s",buffer);
+		return true;
+	}
 
 	// if gui asked for a move that waits on the head to finish moving
 	if( wait == true ) {
@@ -6011,4 +6022,271 @@ void CPickobearDlg::OnBnClickedPause()
 	} else { 
 		m_Pause = TRUE ;
 	}
+}
+
+
+void CPickobearDlg::OnBnClickedGoFile()
+{
+	unsigned int local_side;
+
+	// user can change side during pick, so cache it.
+	local_side = m_Side;
+
+	// These are also problematic for the GCODE buffer
+	// Since it is multiple GCODE commands.
+
+	Feeder CurrentFeeder;
+
+	outputFile = fopen("C:\\outgcode.txt","wt");
+	if( outputFile == NULL ) 
+		return ;
+
+	unsigned int i ;
+
+	CListCtrl_Components::CompDatabase entry; 
+
+	
+
+	bBusy = true;
+
+	// Change machine state to busy
+	SetMachineState( MS_GO );
+
+	SetControls( FALSE );
+
+	do {
+
+		// check for more than one PCB
+		if ( !m_PCBs.empty() ) {
+
+			_RPT2(_CRT_WARN,"goThread: Multiple PCBs placing board ( %d ) of ( %d )\n", m_PCBIndex , m_PCBCount);
+
+			// multiple PCB's to place, is this more complicated becase of sides?
+			if( bFlip == false ) {
+				m_ComponentList.m_OffsetX = m_PCBs.at( m_PCBIndex ).x_top ;
+				m_ComponentList.m_OffsetY = m_PCBs.at( m_PCBIndex ).y_top ;
+			} else { 
+				m_ComponentList.m_OffsetX = m_PCBs.at( m_PCBIndex ).x_bottom ;
+				m_ComponentList.m_OffsetY = m_PCBs.at( m_PCBIndex ).y_bottom ;
+			}
+
+			// go to next entry
+			m_PCBIndex ++;
+		}
+
+
+		for (i = 0 ; i < m_ComponentList.GetCount(); i ++ ) {
+
+			int in = (m_ComponentList.GetCount()-1)-i;
+
+			//m_ComponentList.SetItemState(in, LVIS_SELECTED, LVIS_SELECTED);
+			m_ComponentList.EnsureVisible( in ,TRUE );
+
+			entry = m_ComponentList.at(i);
+
+			if( entry.side !=  local_side ) {
+
+				_RPT1(_CRT_WARN,"goThread: skipping %s, wrong side selected\n",entry.label);
+				goto skip_part;
+			} else {
+				_RPT1(_CRT_WARN,"goThread: this side %s selected\n",entry.label);
+			}
+
+			// this should be in the precheck
+			if ( strlen( entry.feeder ) == 0 ) {
+
+				int ret = AfxMessageBox(L"Feeder not defined", MB_OK|MB_ICONHAND);
+
+				// move back
+				if( m_PCBIndex > 0 ) 
+					m_PCBIndex--;
+				
+				// thread not busy
+				bBusy = false;
+
+				// Machine is IDLE
+				SetMachineState( MS_IDLE );
+
+				SetControls( TRUE );
+				fclose(outputFile);
+				outputFile = NULL ;
+
+				// failed
+				return;
+			}
+
+			CListCtrl_FeederList::FeederDatabase feeder;
+
+			int feederEntry = m_FeederList.Search( entry.feeder  );
+			feeder = m_FeederList.at ( feederEntry );
+
+			// duplication as we change over to the new class
+			CurrentFeeder = m_FeederList.m_Feeders.at( feederEntry );
+
+			if (feeder.tool < 1 || feeder.tool > 6 ) {
+
+				int ret = AfxMessageBox(L"Tool not defined", MB_OK|MB_ICONHAND);
+				
+				goto skip_part;
+			}
+
+			_RPT1(_CRT_WARN,"goThread: Going to tool %d\n", feeder.tool );
+
+			// can't tool change at the moment...
+#if 0
+			switch ( feeder.tool ) {
+			case 1:
+				WriteSerial("M24\n");
+				break;
+			case 2:
+				WriteSerial("M24\n");
+				break;
+			case 3:
+				WriteSerial("M24\n");
+				break;
+			case 4:
+				WriteSerial("M24\n");
+				break;
+			case 5:
+				WriteSerial("M24\n");
+				break;
+			case 6:
+				WriteSerial("M24\n");
+				break;
+			}
+#endif
+
+
+			/// slow the camera down
+			m_CameraUpdateRate = CAMERA_SLOW_UPDATE_RATE_MS ;
+
+			_RPT1(_CRT_WARN,"goThread: Going to feeder %s\n", feeder.label );
+
+			unsigned long feederX,feederY;
+
+			if( CurrentFeeder.GetNextPartPosition( feederX, feederY ) ) {
+
+				/// wait for move
+				MoveHead(feederX + CAMERA_X_OFFSET , feederY - CAMERA_Y_OFFSET, 0, true);
+			
+
+				// next part, fail if none available
+				if( CurrentFeeder.AdvancePart() == false ) {
+
+					CString Error ;			
+					CurrentFeeder.GetLabel( Error ) ;
+
+					Error += L"\n"+CurrentFeeder.ErrorMessage();
+
+					int ret = AfxMessageBox(Error ,MB_OK|MB_ICONEXCLAMATION );
+
+					m_FeederList.RebuildList();
+
+					// move back
+					if( m_PCBIndex > 0 ) {
+						m_PCBIndex--;
+					}
+
+					// Machine is IDLE
+					SetMachineState( MS_IDLE ) ;
+
+					// thread is no longer busy
+					bBusy = false;
+
+					SetControls( TRUE );
+							
+					fclose(outputFile);
+					outputFile = NULL ;
+					
+					return ;
+				}
+
+				// reflect quantities
+				m_FeederList.RebuildList();
+
+			} else {
+
+				CString Error ;			
+				CurrentFeeder.GetLabel( Error ) ;
+				Error += L"\n"+CurrentFeeder.ErrorMessage();
+				int ret = AfxMessageBox(Error ,MB_OK|MB_ICONEXCLAMATION );
+
+				// move back
+				if( m_PCBIndex > 0 ) 
+					m_PCBIndex--;
+
+				// Machine is IDLE
+				SetMachineState( MS_IDLE );
+				
+				// thread is no longer busy
+				bBusy = false;
+
+				SetControls( TRUE );
+				
+				fclose(outputFile );
+				outputFile = NULL ;
+
+				return ;
+			}
+
+			_RPT0(_CRT_WARN,"goThread: Picking up part\n");
+			
+			fprintf( outputFile, "%s", GCODE_PICK_UP ); 
+
+
+			double angle;
+
+			if( entry.rot  || feeder.rot) {
+
+				_RPT1(_CRT_WARN,"goThread: Rotating part %d degrees \n", entry.rot );
+
+				angle = ( entry.rot + feeder.rot );
+			
+				_RPT1(_CRT_WARN,"goThread: Adding feeder rotation %d degrees \n",feeder.rot );
+
+
+			}
+						
+			_RPT1(_CRT_WARN,"goThread: Going to component %s\n", entry.label );
+
+			// wait for move
+			if( bFlip == false ) {
+				MoveHead(entry.x+m_ComponentList.m_OffsetX + CAMERA_X_OFFSET, entry.y+m_ComponentList.m_OffsetY - CAMERA_Y_OFFSET,angle, true);
+			} else {
+				MoveHead(entry.x+m_ComponentList.m_OffsetX + CAMERA_X_OFFSET , (0-entry.y)+m_ComponentList.m_OffsetY - CAMERA_Y_OFFSET,angle, true);
+			}
+
+			_RPT0(_CRT_WARN,"goThread: dropping off part\n");
+
+			// head down/air off/up
+			// Put Part down
+
+			fprintf(outputFile,"%s",GCODE_PUT_DOWN);
+
+//			InternalWriteSerial(GCODE_PUT_DOWN);
+		
+
+			// comes here if the part is skipped for some reason
+skip_part:;
+
+
+			UpdateWindow();
+
+		}
+
+	// looop for all PCB's
+	} while(m_PCBCount, m_PCBIndex < m_PCBCount ) ;
+
+
+	// switch state to idle
+	SetMachineState( MS_IDLE );
+	
+	bBusy = false;
+
+	SetControls( TRUE );
+
+	fclose(outputFile);
+	outputFile = NULL ;
+
+	return;
 }
