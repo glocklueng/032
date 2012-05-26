@@ -6320,6 +6320,7 @@ void CPickobearDlg::OnBnClickedRunGcode()
 		return;
 	}
 
+
 	FILE *inputFile = fopen(LoadFile,"rt");
 	if( inputFile == NULL ) 
 		return ;
