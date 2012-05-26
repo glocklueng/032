@@ -1041,7 +1041,9 @@ void CPickobearDlg::SetControls( boolean state )
 
 	GetDlgItem( IDC_GO_FILE )->EnableWindow( state );
 
-	GetDlgItem( IDC_PAUSE )->EnableWindow( state );
+	GetDlgItem( IDC_PAUSE )->EnableWindow( TRUE );
+
+	GetDlgItem( IDC_RUN_GCODE )->EnableWindow( state );
 
 	GetDlgItem( IDC_RUN_GCODE )->EnableWindow( state );
 }
@@ -1376,7 +1378,7 @@ bool CPickobearDlg::MoveHead(  long x, long y, double c, bool wait=false )
 		AddGCODECommand(buffer,"MoveHead failed",UpdatePosition_callback );
 	} else {
 		
-		fprintf(outputFile,"%s",buffer);
+		fprintf(outputFile,"%s\n",buffer);
 		return true;
 	}
 
@@ -2692,7 +2694,7 @@ void CPickobearDlg::goSetup(LPVOID pThis)
 			}	
 			
 			//@todo : tune this ( why isn't it using the delay?
-			Sleep( 10 );
+			//Sleep( 10 );
 
 			// comes here if the part is skipped for some reason
 skip_part:;
@@ -6051,6 +6053,7 @@ void CPickobearDlg::OnBnClickedGoFile()
 	}
 
 	outputFile = fopen(SaveFile,"wt");
+
 	if( outputFile == NULL ) 
 		return ;
 
@@ -6313,36 +6316,51 @@ void CPickobearDlg::OnBnClickedRunGcode()
 		_T("Pick GCODE file to load from"),
 		NULL
 		)
-		);
+	);
 
 
 	if (LoadFile.GetLength() == 0 ) {
 		return;
 	}
 
-
 	FILE *inputFile = fopen(LoadFile,"rt");
-	if( inputFile == NULL ) 
+	if( inputFile == NULL ) {
 		return ;
+	}
 
 	char rawBuffer[100];
 	unsigned char buffer[100];
 	DWORD lengthRead;
+	
+	bBusy = true;
+
+	// Change machine state to busy
+	SetMachineState( MS_GO );
+
+	SetControls( FALSE );
 
 	while( !feof( inputFile ) ) {
+		
+		UpdateWindow();
 
 		// Get from file
 		if ( fgets(rawBuffer,sizeof( rawBuffer)  , inputFile ) ) {
 			
+			while ( m_Pause ) {
+				Sleep( 10) ;
+			}
+
 			if( InternalWriteSerial( rawBuffer, true ) == false ) {
 				break;
 			}
 
-			Sleep( 200 );
 		}
 
 	}
 
 	fclose( inputFile ) ;
+	
+	SetControls( TRUE );
 
+	bBusy = false;
 }
