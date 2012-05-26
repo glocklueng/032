@@ -18,7 +18,6 @@
 #define IDD_POPUP_CAMERA                139
 #define IDC_TEXTOUT                     1000
 #define IDC_GO                          1001
-#define IDC_PAUSE                       1001
 #define IDC_UP                          1002
 #define IDC_RIGHT                       1003
 #define IDC_HEAD                        1004
@@ -35,7 +34,7 @@
 #define IDC_TEACH                       1015
 #define IDC_GO_FILE                     1015
 #define IDC_RUN                         1016
-#define IDC_GO3                         1016
+#define IDC_GO_FILE2                    1016
 #define IDC_PARK                        1017
 #define IDC_UPRIGHT                     1018
 #define IDC_ROTATE                      1019
@@ -122,7 +121,6 @@
 #define IDC_STATUS_BAR                  1098
 #define IDC_ALERT_TEXT                  1099
 #define IDC_SIMULATION_DRAW             1100
-#define IDC_COMBO1                      1101
 #define IDC_SERIAL_LIST                 1101
 #define IDC_CAMERA                      1102
 #define IDC_BUTTON1                     1103
@@ -130,6 +128,8 @@
 #define IDC_BUTTON2                     1104
 #define IDC_CAMERA1_ENABLE              1105
 #define IDC_CAMERA2_ENABLE              1106
+#define IDC_PAUSE                       1107
+#define IDC_RUN_GCODE                   1108
 
 // Next default values for new objects
 // 
@@ -137,7 +137,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        140
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1106
+#define _APS_NEXT_CONTROL_VALUE         1109
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
