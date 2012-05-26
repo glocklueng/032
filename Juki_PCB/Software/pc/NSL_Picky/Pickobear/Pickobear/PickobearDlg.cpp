@@ -1042,6 +1042,8 @@ void CPickobearDlg::SetControls( boolean state )
 	GetDlgItem( IDC_GO_FILE )->EnableWindow( state );
 
 	GetDlgItem( IDC_PAUSE )->EnableWindow( state );
+
+	GetDlgItem( IDC_RUN_GCODE )->EnableWindow( state );
 }
 
 
@@ -6330,50 +6332,12 @@ void CPickobearDlg::OnBnClickedRunGcode()
 
 		// Get from file
 		if ( fgets(rawBuffer,sizeof( rawBuffer)  , inputFile ) ) {
-
-			// Write to Serial Port
-			m_Serial.Write( rawBuffer );
-			if(strstr(rawBuffer,"\n") == 0 ) {
-				m_Serial.Write( "\n" );
+			
+			if( InternalWriteSerial( rawBuffer, true ) == false ) {
+				break;
 			}
 
-			// Read back from Serial Port
-
-			do {
-				Sleep ( 10 );
-
-				memset(buffer,0,sizeof( buffer ) );
-
-				if(ReadSerial(&buffer[0],sizeof(buffer),lengthRead ) == false ){ 
-
-					// dont show an error
-					if (m_MachineState == MS_ESTOP && m_Homed == false ){
-						fclose( inputFile ) ;
-						return ;
-					}
-
-					CString Error;
-					Error.Format(L"Error in Serial.Read %d",m_Serial.GetLastError() );
-
-					int ret = AfxMessageBox( Error ,MB_RETRYCANCEL);
-
-					if( ret == IDCANCEL ) {
-						fclose( inputFile ) ;
-						return ;
-					}
-
-				}
-				// check for error
-				if( strstr((char*)buffer,"err") ) {
-					OnBnClickedEstop();
-					_RPT0(_CRT_WARN,"InternalWriteSerial: Machine returned error\n");
-					m_Homed = false;
-					fclose( inputFile ) ;
-					return ;
-				}
-
-			} while( strstr((char*)buffer,"ok") == NULL );
-
+			Sleep( 200 );
 		}
 
 	}
