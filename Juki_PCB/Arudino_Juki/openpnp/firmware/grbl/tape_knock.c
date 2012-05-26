@@ -183,7 +183,7 @@ char putdown_part ( void )
 	set_busy( TRUE ) ;
 
 	// settle time
-//	_delay_ms( 100 );
+	_delay_ms( 80 );
 
 // disable while debugging air pressure
 #if 0
@@ -219,7 +219,7 @@ char putdown_part ( void )
 	// head up
 	head_down ( 0 ) ;
 
-//	_delay_ms( 100 );
+	_delay_ms( 80 );
 
 	set_busy( FALSE) ;
 
