@@ -233,6 +233,7 @@ CPickobearDlg::CPickobearDlg(CWnd* pParent /*=NULL*/)
 	, updateThreadXYHandle(0)
 	, updateCameraHandle(0)
 	, m_AlertBox(0)
+	, m_Pause( FALSE )
 
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
@@ -335,6 +336,9 @@ BEGIN_MESSAGE_MAP(CPickobearDlg, CDialog)
 	ON_BN_CLICKED(IDC_TRANSFER_XY, &CPickobearDlg::OnBnClickedTransferXy)
 	ON_BN_CLICKED(IDC_BIG_VIEW, &CPickobearDlg::OnBnClickedBigView)
 	ON_BN_CLICKED(IDC_BUTTON2, &CPickobearDlg::OnBnClickedButton2)
+	ON_BN_CLICKED(IDC_CAMERA1_ENABLE, &CPickobearDlg::OnBnClickedCamera1Enable)
+	ON_BN_CLICKED(IDC_CAMERA2_ENABLE, &CPickobearDlg::OnBnClickedCamera2Enable)
+	ON_BN_CLICKED(IDC_PAUSE, &CPickobearDlg::OnBnClickedPause)
 END_MESSAGE_MAP()
 
 BEGIN_MESSAGE_MAP(CListCtrl_Components, CListCtrl)
@@ -528,10 +532,21 @@ BOOL CPickobearDlg::OnInitDialog()
 	m_DownCamera.ResetContent();
 
 	DWORD numDevices = VI.listDevices();
-
-	m_CameraUpEnable.SetCheck( 1 );
+	
 	//up
-	m_CameraDownEnable.SetCheck( 1 );
+	regEntry = 1 ;
+
+	if( GetRegistryDWORD(L"up_enable",regEntry) ) 
+		m_CameraUpEnable.SetCheck( 1 );
+	else
+		m_CameraUpEnable.SetCheck( 0 );
+	
+	regEntry = 1;
+
+	if( GetRegistryDWORD(L"down_enable",regEntry) ) 
+		m_CameraDownEnable.SetCheck( 1 );
+	else
+		m_CameraDownEnable.SetCheck( 0 );
 
 	for( DWORD i = 0 ; i < numDevices ; i++ ) {
 
@@ -5462,6 +5477,12 @@ void CPickobearDlg::StartGCODEThread(LPVOID pThis)
 		// wastes cpu time, message?
 		if ( !command_buffer.empty() ) {
 
+			while ( m_Pause == TRUE ) {
+				
+				Sleep(100);
+
+			}
+
 			_RPT0(_CRT_WARN,"ProcessGCODECommandsThread: command to process (");
 
 			// copy into buffer, std::vector front returns the oldest entry.
@@ -5941,4 +5962,53 @@ void CPickobearDlg::OnBnClickedButton2()
 
 	// rebuild the list
 	pDlg->m_ComponentList.RebuildList();	
+}
+
+
+void CPickobearDlg::OnBnClickedCamera1Enable()
+{
+
+	CRegKey regKey;
+	DWORD regEntry;
+	long lResult;
+
+	if ((lResult = regKey.Open(HKEY_CURRENT_USER,  _T("Software\\NullSpaceLabs\\PickoBear\\Settings"))) != ERROR_SUCCESS)
+		lResult = regKey.Create(HKEY_CURRENT_USER, _T("Software\\NullSpaceLabs\\PickoBear\\Settings"));
+
+	if (ERROR_SUCCESS == lResult)
+	{
+		regEntry = m_CameraUpEnable.GetCheck(  );
+		regKey.SetDWORDValue(_T("up_enable"), regEntry);
+	}
+
+	regKey.Close();
+}
+
+
+void CPickobearDlg::OnBnClickedCamera2Enable()
+{
+	CRegKey regKey;
+	DWORD regEntry;
+	long lResult;
+
+	if ((lResult = regKey.Open(HKEY_CURRENT_USER,  _T("Software\\NullSpaceLabs\\PickoBear\\Settings"))) != ERROR_SUCCESS)
+		lResult = regKey.Create(HKEY_CURRENT_USER, _T("Software\\NullSpaceLabs\\PickoBear\\Settings"));
+
+	if (ERROR_SUCCESS == lResult)
+	{
+		regEntry = m_CameraDownEnable.GetCheck(  );
+		regKey.SetDWORDValue(_T("down_enable"), regEntry);
+	}
+
+	regKey.Close();
+}
+
+
+void CPickobearDlg::OnBnClickedPause()
+{
+	if( m_Pause ) {
+		m_Pause = FALSE ;
+	} else { 
+		m_Pause = TRUE ;
+	}
 }

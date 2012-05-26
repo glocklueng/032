@@ -590,6 +590,8 @@ private:
 
 	CSerialPicker m_SerialPicker;
 
+	BOOL	m_Pause;
+
 	HANDLE processGCODE;
 	HANDLE updateThreadXYHandle;
 	HANDLE updateCameraHandle;
@@ -917,4 +919,7 @@ public:
 	afx_msg void OnBnClickedButton2();
 	CButton m_CameraDownEnable;
 	CButton m_CameraUpEnable;
+	afx_msg void OnBnClickedCamera1Enable();
+	afx_msg void OnBnClickedCamera2Enable();
+	afx_msg void OnBnClickedPause();
 };
