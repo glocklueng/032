@@ -24,7 +24,7 @@
 #include <avr/io.h>
 
 // number of ms to hold tape knock down
-#define TAPE_KNOCK_SETTLE ( 200 )
+#define TAPE_KNOCK_SETTLE ( 150 )
 
 void tape_init();
 void tape_knock( void );

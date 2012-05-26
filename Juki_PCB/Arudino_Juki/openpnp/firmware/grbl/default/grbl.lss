@@ -12677,8 +12677,8 @@ void tape_init(void)
     4868:	80 91 08 01 	lds	r24, 0x0108
     486c:	8f 77       	andi	r24, 0x7F	; 127
     486e:	80 93 08 01 	sts	0x0108, r24
-    4872:	20 ed       	ldi	r18, 0xD0	; 208
-    4874:	37 e0       	ldi	r19, 0x07	; 7
+    4872:	2c ed       	ldi	r18, 0xDC	; 220
+    4874:	35 e0       	ldi	r19, 0x05	; 5
     4876:	40 e9       	ldi	r20, 0x90	; 144
     4878:	51 e0       	ldi	r21, 0x01	; 1
     487a:	ca 01       	movw	r24, r20
@@ -12704,8 +12704,8 @@ void tape_init(void)
     4886:	80 91 08 01 	lds	r24, 0x0108
     488a:	80 68       	ori	r24, 0x80	; 128
     488c:	80 93 08 01 	sts	0x0108, r24
-    4890:	20 ed       	ldi	r18, 0xD0	; 208
-    4892:	37 e0       	ldi	r19, 0x07	; 7
+    4890:	2c ed       	ldi	r18, 0xDC	; 220
+    4892:	35 e0       	ldi	r19, 0x05	; 5
     4894:	40 e9       	ldi	r20, 0x90	; 144
     4896:	51 e0       	ldi	r21, 0x01	; 1
     4898:	ca 01       	movw	r24, r20
