@@ -924,4 +924,5 @@ public:
 	afx_msg void OnBnClickedCamera2Enable();
 	afx_msg void OnBnClickedPause();
 	afx_msg void OnBnClickedGoFile();
+	afx_msg void OnBnClickedRunGcode();
 };

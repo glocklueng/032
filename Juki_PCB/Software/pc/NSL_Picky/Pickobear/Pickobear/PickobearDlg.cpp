@@ -341,6 +341,7 @@ BEGIN_MESSAGE_MAP(CPickobearDlg, CDialog)
 	ON_BN_CLICKED(IDC_CAMERA2_ENABLE, &CPickobearDlg::OnBnClickedCamera2Enable)
 	ON_BN_CLICKED(IDC_PAUSE, &CPickobearDlg::OnBnClickedPause)
 	ON_BN_CLICKED(IDC_GO_FILE, &CPickobearDlg::OnBnClickedGoFile)
+	ON_BN_CLICKED(IDC_RUN_GCODE, &CPickobearDlg::OnBnClickedRunGcode)
 END_MESSAGE_MAP()
 
 BEGIN_MESSAGE_MAP(CListCtrl_Components, CListCtrl)
@@ -6036,8 +6037,18 @@ void CPickobearDlg::OnBnClickedGoFile()
 	// Since it is multiple GCODE commands.
 
 	Feeder CurrentFeeder;
+	
+	CStringA SaveFile(::GetLoadFile( 
+	_T("Supported Files Types(*.txt)\0*.txt\0\0"),
+	_T("Pick GCODE file to save"),
+	NULL
+	));
 
-	outputFile = fopen("C:\\outgcode.txt","wt");
+	if (SaveFile.GetLength() == 0 ) {
+		return;
+	}
+
+	outputFile = fopen(SaveFile,"wt");
 	if( outputFile == NULL ) 
 		return ;
 
@@ -6289,4 +6300,84 @@ skip_part:;
 	outputFile = NULL ;
 
 	return;
+}
+
+
+void CPickobearDlg::OnBnClickedRunGcode()
+{
+
+	CStringA LoadFile(::GetLoadFile( 
+		_T("Supported Files Types(*.txt)\0*.txt\0\0"),
+		_T("Pick GCODE file to load from"),
+		NULL
+		)
+		);
+
+
+	if (LoadFile.GetLength() == 0 ) {
+		return;
+	}
+
+	FILE *inputFile = fopen(LoadFile,"rt");
+	if( inputFile == NULL ) 
+		return ;
+
+	char rawBuffer[100];
+	unsigned char buffer[100];
+	DWORD lengthRead;
+
+	while( !feof( inputFile ) ) {
+
+		// Get from file
+		if ( fgets(rawBuffer,sizeof( rawBuffer)  , inputFile ) ) {
+
+			// Write to Serial Port
+			m_Serial.Write( rawBuffer );
+			if(strstr(rawBuffer,"\n") == 0 ) {
+				m_Serial.Write( "\n" );
+			}
+
+			// Read back from Serial Port
+
+			do {
+				Sleep ( 10 );
+
+				memset(buffer,0,sizeof( buffer ) );
+
+				if(ReadSerial(&buffer[0],sizeof(buffer),lengthRead ) == false ){ 
+
+					// dont show an error
+					if (m_MachineState == MS_ESTOP && m_Homed == false ){
+						fclose( inputFile ) ;
+						return ;
+					}
+
+					CString Error;
+					Error.Format(L"Error in Serial.Read %d",m_Serial.GetLastError() );
+
+					int ret = AfxMessageBox( Error ,MB_RETRYCANCEL);
+
+					if( ret == IDCANCEL ) {
+						fclose( inputFile ) ;
+						return ;
+					}
+
+				}
+				// check for error
+				if( strstr((char*)buffer,"err") ) {
+					OnBnClickedEstop();
+					_RPT0(_CRT_WARN,"InternalWriteSerial: Machine returned error\n");
+					m_Homed = false;
+					fclose( inputFile ) ;
+					return ;
+				}
+
+			} while( strstr((char*)buffer,"ok") == NULL );
+
+		}
+
+	}
+
+	fclose( inputFile ) ;
+
 }
