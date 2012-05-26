@@ -106,7 +106,7 @@ char pickup_part ( void )
 		head_down( 1 );
 
 		//settle (probably doesn't need this)
-		//_delay_ms( 150 );
+		_delay_ms( 150 );
 
 		// head up
 		head_down ( 0 ) ;
@@ -211,7 +211,7 @@ char putdown_part ( void )
 	head_down( 1 );
 
 	// settle after head down ( probably doesn't need it  )
-	//_delay_ms( 50 );
+	_delay_ms( 150 );
 
 	// vacuum off
 	vacuum ( 0 );
