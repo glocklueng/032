@@ -18,6 +18,7 @@
 #define IDD_POPUP_CAMERA                139
 #define IDC_TEXTOUT                     1000
 #define IDC_GO                          1001
+#define IDC_PAUSE                       1001
 #define IDC_UP                          1002
 #define IDC_RIGHT                       1003
 #define IDC_HEAD                        1004
@@ -32,7 +33,9 @@
 #define IDC_HOME                        1013
 #define IDC_ESTOP                       1014
 #define IDC_TEACH                       1015
+#define IDC_GO_FILE                     1015
 #define IDC_RUN                         1016
+#define IDC_GO3                         1016
 #define IDC_PARK                        1017
 #define IDC_UPRIGHT                     1018
 #define IDC_ROTATE                      1019
@@ -126,7 +129,6 @@
 #define IDC_BIG_VIEW                    1103
 #define IDC_BUTTON2                     1104
 #define IDC_CAMERA1_ENABLE              1105
-#define IDC_CAMERA1_ENABLE2             1106
 #define IDC_CAMERA2_ENABLE              1106
 
 // Next default values for new objects
