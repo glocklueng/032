@@ -147,7 +147,7 @@ char pickup_part ( void )
 
 	}
 
-	_delay_ms( 10 );
+	_delay_ms( 100 );
 
 	set_busy( FALSE ) ;
 
@@ -183,7 +183,7 @@ char putdown_part ( void )
 	set_busy( TRUE ) ;
 
 	// settle time
-	_delay_ms( 80 );
+	_delay_ms( 100 );
 
 // disable while debugging air pressure
 #if 0
@@ -211,7 +211,7 @@ char putdown_part ( void )
 	head_down( 1 );
 
 	// settle after head down ( probably doesn't need it  )
-	_delay_ms( 150 );
+	_delay_ms( 50 );
 
 	// vacuum off
 	vacuum ( 0 );
@@ -219,7 +219,7 @@ char putdown_part ( void )
 	// head up
 	head_down ( 0 ) ;
 
-	_delay_ms( 80 );
+	_delay_ms( 100 );
 
 	set_busy( FALSE) ;
 
