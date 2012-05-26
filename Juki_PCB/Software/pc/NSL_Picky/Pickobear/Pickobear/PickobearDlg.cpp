@@ -710,7 +710,7 @@ BOOL CPickobearDlg::OnInitDialog()
 		
 	m_SpeedSelect.ResetContent();
 
-	for(unsigned long i = 1000; i <= 30000 ; i+= 250 ) {
+	for(unsigned long i = 1000; i <= 18000 ; i+= 250 ) {
 
 		CString num;
 
@@ -1045,7 +1045,6 @@ void CPickobearDlg::SetControls( boolean state )
 
 	GetDlgItem( IDC_RUN_GCODE )->EnableWindow( state );
 
-	GetDlgItem( IDC_RUN_GCODE )->EnableWindow( state );
 }
 
 
@@ -5747,6 +5746,7 @@ void CPickobearDlg::OnTimer(UINT_PTR nIDEvent)
 
 	xstring.Format(L"%d",m_headXPosUM);
 	ystring.Format(L"%d",m_headYPosUM);
+
 	( ( CWnd* ) GetDlgItem( IDC_X_POS ) )->SetWindowText( xstring ) ;
 	( ( CWnd* ) GetDlgItem( IDC_Y_POS ) )->SetWindowText( ystring ) ;
 
@@ -6353,9 +6353,7 @@ void CPickobearDlg::OnBnClickedRunGcode()
 			if( InternalWriteSerial( rawBuffer, true ) == false ) {
 				break;
 			}
-
 		}
-
 	}
 
 	fclose( inputFile ) ;
