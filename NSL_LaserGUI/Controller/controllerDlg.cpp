@@ -479,11 +479,17 @@ dll_error:;
 
 }
 
+
+BOOL M05_Init= FALSE ;
+
+
 void FreeM05(void)
 {
 	if( h_M05 ) {
 		FreeLibrary( h_M05 );
 	}
+	
+	M05_Init = FALSE;
 
 	h_M05 = NULL ;
 }
@@ -541,6 +547,7 @@ BEGIN_MESSAGE_MAP(CcontrollerDlg, CDialogEx)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
 	ON_BN_CLICKED(IDC_CONNECT, &CcontrollerDlg::OnBnClickedConnect)
+	ON_BN_CLICKED(IDC_DEL_ALL, &CcontrollerDlg::OnBnClickedDelAll)
 END_MESSAGE_MAP()
 
 
@@ -633,10 +640,23 @@ HCURSOR CcontrollerDlg::OnQueryDragIcon()
 
 void CcontrollerDlg::OnBnClickedConnect()
 {
+	M05_Init = 0;
+
 	if ( M05_init_board() )  {
 
-		MessageBox(L"Failed to connect");
+
+		MessageBox(L"Failed to init");
 		return ;
 	}
+
+	M05_Init = 1;
+
 }
 
+void CcontrollerDlg::OnBnClickedDelAll()
+{
+	if( M05_Init == 1 ) {
+		
+		M05_del_all_file();
+	}
+}
