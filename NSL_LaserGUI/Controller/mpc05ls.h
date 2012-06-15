@@ -307,7 +307,7 @@ typedef int (WINAPI *t_M05_decel_stop2)(int ch1,int ch2);
 typedef int (WINAPI *t_M05_decel_stop3)(int ch1,int ch2,int ch3);
 typedef int (WINAPI *t_M05_delay_time)(int ms);
 typedef int (WINAPI *t_M05_del_file)(int FileID);
-typedef int (WINAPI *t_M05_del_all_file)();
+typedef int (WINAPI *t_M05_del_all_file)(void);
 typedef int (WINAPI *t_M05_download_work_file)(char* filename);
 
 typedef int (WINAPI *t_M05_fast_arc_center)(int ch1,int ch2,long cenx,long ceny,double angle);
