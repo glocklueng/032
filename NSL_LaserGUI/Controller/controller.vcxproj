@@ -101,8 +101,6 @@
     <None Include="ReadMe.txt" />
     <None Include="res\controller.ico" />
     <None Include="res\controller.rc2" />
-    <None Include="TEST.MOL" />
-    <None Include="test.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="controller.h" />
