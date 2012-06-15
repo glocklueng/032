@@ -446,7 +446,6 @@ int InitM05( void )
     INIT_PROC_ADDR( M05_write_power_data);
     INIT_PROC_ADDR( M05_write_power_tab);
 	INIT_PROC_ADDR( M05_compile_work_file );	
-	
 
     INIT_PROC_ADDR( M05_set_pwm2_frq);
 
@@ -639,7 +638,5 @@ void CcontrollerDlg::OnBnClickedConnect()
 		MessageBox(L"Failed to connect");
 		return ;
 	}
-
-	M05_compile_work_file("test.txt");
 }
 
