@@ -548,6 +548,15 @@ BEGIN_MESSAGE_MAP(CcontrollerDlg, CDialogEx)
 	ON_WM_QUERYDRAGICON()
 	ON_BN_CLICKED(IDC_CONNECT, &CcontrollerDlg::OnBnClickedConnect)
 	ON_BN_CLICKED(IDC_DEL_ALL, &CcontrollerDlg::OnBnClickedDelAll)
+	ON_BN_CLICKED(IDC_BUTTON3, &CcontrollerDlg::OnBnClickedButton3)
+	ON_BN_CLICKED(IDC_BUTTON4, &CcontrollerDlg::OnBnClickedButton4)
+	ON_BN_CLICKED(IDC_RIGHT, &CcontrollerDlg::OnBnClickedRight)
+	ON_BN_CLICKED(IDC_DOWN, &CcontrollerDlg::OnBnClickedDown)
+	ON_BN_CLICKED(IDC_UP2, &CcontrollerDlg::OnBnClickedUp2)
+	ON_BN_CLICKED(IDC_Z_UP, &CcontrollerDlg::OnBnClickedZUp)
+	ON_BN_CLICKED(IDC_Z_DOWN, &CcontrollerDlg::OnBnClickedZDown)
+	ON_BN_CLICKED(IDC_ZAP, &CcontrollerDlg::OnBnClickedZap)
+	ON_BN_CLICKED(IDC_FIRE, &CcontrollerDlg::OnBnClickedFire)
 END_MESSAGE_MAP()
 
 
@@ -641,9 +650,15 @@ HCURSOR CcontrollerDlg::OnQueryDragIcon()
 void CcontrollerDlg::OnBnClickedConnect()
 {
 	M05_Init = 0;
+	M05_on_comm(1);
+
+	if( M05_open_link(1,115200) ) 		 { 
+		MessageBox(L"Failed to open comm");
+		return ;
+	}
 
 	if ( M05_init_board() )  {
-
+			
 
 		MessageBox(L"Failed to init");
 		return ;
@@ -660,3 +675,91 @@ void CcontrollerDlg::OnBnClickedDelAll()
 		M05_del_all_file();
 	}
 }
+
+
+void CcontrollerDlg::OnBnClickedButton3()
+{
+	M05_compile_work_file("test.txt");
+}
+
+
+void CcontrollerDlg::OnBnClickedButton4()
+{
+	//0x10 laser on (bad)
+	M05_control_func(10); // go X+		
+
+	Sleep(100);
+
+	M05_control_func(12); // turn off		
+
+}
+
+
+void CcontrollerDlg::OnBnClickedRight()
+{
+	//0x10 laser on (bad)
+	M05_control_func(11); // go X+		
+
+	Sleep(100);
+
+	M05_control_func(12); // turn off	
+}
+
+
+void CcontrollerDlg::OnBnClickedUp2()
+{
+	//0x10 laser on (bad)
+	M05_control_func(8); // go X+		
+
+	Sleep(100);
+
+	M05_control_func(12); // turn off	
+}
+
+
+void CcontrollerDlg::OnBnClickedDown()
+{
+	//0x10 laser on (bad)
+	M05_control_func(9); // go X+		
+
+	Sleep(100);
+
+	M05_control_func(12); // turn off	
+}
+
+
+void CcontrollerDlg::OnBnClickedZUp()
+{
+	//0x10 laser on (bad)
+	M05_control_func(13); // go z+		
+
+	Sleep(100);
+
+	M05_control_func(12); // turn off	
+}
+
+
+void CcontrollerDlg::OnBnClickedZDown()
+{
+	//0x10 laser on (bad)
+	M05_control_func(14); // go z-	
+
+	Sleep(100);
+
+	M05_control_func(12); // turn off	
+}
+
+void CcontrollerDlg::OnBnClickedZap()
+{
+	
+
+}
+
+
+void CcontrollerDlg::OnBnClickedFire()
+{
+
+		M05_control_func(0x10); // laser off	
+}
+// run box 5
+// cut box 6

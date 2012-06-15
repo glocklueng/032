@@ -32,4 +32,13 @@ protected:
 public:
 	afx_msg void OnBnClickedConnect();
 	afx_msg void OnBnClickedDelAll();
+	afx_msg void OnBnClickedButton3();
+	afx_msg void OnBnClickedButton4();
+	afx_msg void OnBnClickedRight();
+	afx_msg void OnBnClickedDown();
+	afx_msg void OnBnClickedUp2();
+	afx_msg void OnBnClickedZUp();
+	afx_msg void OnBnClickedZDown();
+	afx_msg void OnBnClickedZap();
+	afx_msg void OnBnClickedFire();
 };
