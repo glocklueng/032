@@ -633,8 +633,8 @@ HCURSOR CcontrollerDlg::OnQueryDragIcon()
 
 void CcontrollerDlg::OnBnClickedConnect()
 {
-	if (M05_init_board()) 
-	{
+	if ( M05_init_board() )  {
+
 		MessageBox(L"Failed to connect");
 		return ;
 	}
