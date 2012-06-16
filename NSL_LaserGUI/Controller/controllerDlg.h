@@ -41,4 +41,5 @@ public:
 	afx_msg void OnBnClickedZDown();
 	afx_msg void OnBnClickedZap();
 	afx_msg void OnBnClickedFire();
+	afx_msg void OnBnClickedUpload();
 };

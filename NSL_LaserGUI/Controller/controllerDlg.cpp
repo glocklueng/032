@@ -557,6 +557,7 @@ BEGIN_MESSAGE_MAP(CcontrollerDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_Z_DOWN, &CcontrollerDlg::OnBnClickedZDown)
 	ON_BN_CLICKED(IDC_ZAP, &CcontrollerDlg::OnBnClickedZap)
 	ON_BN_CLICKED(IDC_FIRE, &CcontrollerDlg::OnBnClickedFire)
+	ON_BN_CLICKED(IDC_UPLOAD, &CcontrollerDlg::OnBnClickedUpload)
 END_MESSAGE_MAP()
 
 
@@ -679,7 +680,7 @@ void CcontrollerDlg::OnBnClickedDelAll()
 
 void CcontrollerDlg::OnBnClickedButton3()
 {
-	M05_compile_work_file("test.txt");
+	M05_compile_work_file("c:\\laser.txt");
 }
 
 
@@ -758,8 +759,14 @@ void CcontrollerDlg::OnBnClickedZap()
 
 void CcontrollerDlg::OnBnClickedFire()
 {
-
-		M05_control_func(0x10); // laser off	
+	M05_control_func(0x10); // laser off	
 }
 // run box 5
 // cut box 6
+
+//cmd 050 1,1/0 laser on/off
+
+void CcontrollerDlg::OnBnClickedUpload()
+{
+	M05_download_work_file("C:\\laser.mol");
+}
