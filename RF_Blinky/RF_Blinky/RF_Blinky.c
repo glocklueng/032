@@ -61,31 +61,23 @@ int main(void)
 
 	M_ACTIVE();
 
-	while(1) {
-		MODE(1);
-		Range_TX();
-		MODE(0);
-	}
+
 	r = 0;
 	g = 0;
 	b = 0;
 	
 	tr = 4096;
-	tg = 0;
-	tb = 0;
+	tg = 4096;
+	tb = 4096;
 	
-#define SUB	( 2 )
+#define SUB	( 0 )
 
-	while( 1 )					// Loop Here
+	while( 0 )					// Loop Here
 	{
 	int d;
 		sei();					// Enable all interrupts
 
-		if(fRTESTx)				// Test if Range test ON?
-		{
-			Range_Config();		// Do Configuration once
-
-		}
+		
 
 		for (float offset = 0; offset < 180; offset += 1 ) {
 
