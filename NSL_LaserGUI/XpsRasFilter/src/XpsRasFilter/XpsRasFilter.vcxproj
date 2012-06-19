@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{F2F6D719-32AD-46BF-B2B6-18ACAD082123}</ProjectGuid>
+    <Keyword>MakeFileProj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Makefile</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Makefile</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <NMakeOutput>XpsRasFilter.exe</NMakeOutput>
+    <NMakePreprocessorDefinitions>WIN32;_DEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
+    <NMakeBuildCommandLine>call D:\WinDDK\7600.16385.1\bin\setenv.bat D:\WinDDK\7600.16385.1\ chk x86 WIN7
+cd D:\WinDDK\7600.16385.1\src\print\XpsRasFilter
+build
+copy D:\WinDDK\7600.16385.1\src\print\XpsRasFilter\install\x86\xpsrasfilter.dll D:\Windows\System32\spool\drivers\w32x86\3\ /y
+</NMakeBuildCommandLine>
+    <NMakeReBuildCommandLine>call D:\WinDDK\7600.16385.1\bin\setenv.bat D:\WinDDK\7600.16385.1\ chk x86 WIN7
+cd D:\WinDDK\7600.16385.1\src\print\XpsRasFilter
+build /v
+copy D:\WinDDK\7600.16385.1\src\print\XpsRasFilter\install\x86\xpsrasfilter.dll D:\Windows\System32\spool\drivers\w32x86\3\ /y
+
+</NMakeReBuildCommandLine>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <NMakeOutput>XpsRasFilter.exe</NMakeOutput>
+    <NMakePreprocessorDefinitions>WIN32;NDEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="..\makefile" />
+    <None Include="..\makefile.inc" />
+    <None Include="..\sources" />
+    <None Include="..\xpsrasfilter.def" />
+    <None Include="readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\BitmapHandler.cpp" />
+    <ClCompile Include="..\dllentry.cpp" />
+    <ClCompile Include="..\Exception.cpp" />
+    <ClCompile Include="..\OMConvertor.cpp" />
+    <ClCompile Include="..\PThandler.cpp" />
+    <ClCompile Include="..\rasinterface.cpp" />
+    <ClCompile Include="..\WppTrace.cpp" />
+    <ClCompile Include="..\xpsrasfilter.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\BitmapHandler.h" />
+    <ClInclude Include="..\Exception.h" />
+    <ClInclude Include="..\filtertypes.h" />
+    <ClInclude Include="..\OMConvertor.h" />
+    <ClInclude Include="..\precomp.h" />
+    <ClInclude Include="..\PThandler.h" />
+    <ClInclude Include="..\rasinterface.h" />
+    <ClInclude Include="..\resource.h" />
+    <ClInclude Include="..\UnknownBase.h" />
+    <ClInclude Include="..\WppTrace.h" />
+    <ClInclude Include="..\xpsrasfilter.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\xpsrasfilter.rc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
