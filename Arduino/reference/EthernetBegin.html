@@ -128,11 +128,13 @@ a.varlink { text-decoration:none; }
 <p class='vspace'></p><p>With version 1.0, the library supports DHCP. Using Ethernet.begin(mac) with the proper network setup, the Ethernet shield will automatically obtain an IP address. This increases the sketch size significantly.
 </p>
 <p class='vspace'></p><h4>Syntax</h4>
-<p>Ethernet.begin(mac); <br />Ethernet.begin(mac, ip); <br />Ethernet.begin(mac, ip, gateway); <br />Ethernet.begin(mac, ip, gateway, subnet); <br />
+<p>Ethernet.begin(mac); <br />Ethernet.begin(mac, ip); <br />Ethernet.begin(mac, ip, dns); <br />Ethernet.begin(mac, ip, dns, gateway); <br />Ethernet.begin(mac, ip, dns, gateway, subnet); <br />
 </p><h4>Parameters</h4>
 <p><strong>mac</strong>: the MAC (Media access control) address for the device (array of 6 bytes). this is the Ethernet hardware address of your shield. Newer Arduino Ethernet Shields include a sticker with the device's MAC address. For older shields, choose your own.
 </p>
 <p class='vspace'></p><p><strong>ip</strong>: the IP address of the device (array of 4 bytes)
+</p>
+<p class='vspace'></p><p><strong>dns</strong>: the address for a DNS server.
 </p>
 <p class='vspace'></p><p><strong>gateway</strong>: the IP address of the network gateway (array of 4 bytes).  optional: defaults to the device IP address with the last octet set to 1
 </p>

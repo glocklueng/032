@@ -72,22 +72,34 @@ a.varlink { text-decoration:none; }
 </p>
 <p class='vspace'></p><p>You can use the Arduino environment's built-in serial monitor to communicate with an Arduino board.  Click the serial monitor button in the toolbar and select the same baud rate used in the call to begin().
 </p>
-<p class='vspace'></p><p>The Arduino Mega has three additional serial ports: <strong>Serial1</strong> on pins 19 (RX) and 18 (TX),  <strong>Serial2</strong> on pins 17 (RX) and 16 (TX), <strong>Serial3</strong> on pins 15 (RX) and 14 (TX).   To use these pins to communicate with your personal computer, you will need an additional USB-to-serial adaptor, as they are not connected to the Mega's USB-to-serial adaptor. To use them to communicate with an external TTL serial device, connect the TX pin to your device's RX pin, the RX to your device's TX pin, and the ground of your Mega to your device's ground.  (Don't connect these pins directly to an <span class='wikiword'>RS232</span> serial port; they operate at +/- 12V and can damage your Arduino board.)
+<p class='vspace'></p><p>The <a class='wikilink' href='http://arduino.cc/en/Main/ArduinoBoardMega2560'>Arduino Mega</a> has three additional serial ports: <strong>Serial1</strong> on pins 19 (RX) and 18 (TX),  <strong>Serial2</strong> on pins 17 (RX) and 16 (TX), <strong>Serial3</strong> on pins 15 (RX) and 14 (TX).   To use these pins to communicate with your personal computer, you will need an additional USB-to-serial adaptor, as they are not connected to the Mega's USB-to-serial adaptor. To use them to communicate with an external TTL serial device, connect the TX pin to your device's RX pin, the RX to your device's TX pin, and the ground of your Mega to your device's ground.  (Don't connect these pins directly to an <span class='wikiword'>RS232</span> serial port; they operate at +/- 12V and can damage your Arduino board.)
+</p>
+<p class='vspace'></p><p>The Arduino Leonardo board uses <strong>Serial1</strong> to communicate via <span class='wikiword'>RS232</span> on pins 0 (RX) and 1 (TX). <strong>Serial</strong> is reserved for USB CDC communication through the <a class='wikilink' href='MouseKeyboard.html'>Mouse and Keyboard libraries</a>. For more information, refer to the Leonardo <a class='wikilink' href='Guide_ArduinoLeonardo.html'>getting started</a> page and <a class='wikilink' href='http://arduino.cc/en/Main/ArduinoBoardLeonardo'>hardware page</a>. 
 </p>
 <p class='vspace'></p></td><td  width='10%' valign='top'>
 <p class='vspace'></p></td><td  width='35%' valign='top'>
 <p class='vspace'></p><h4>Functions</h4>
-<ul><li><a class='wikilink' href='Serial_Begin.html'>begin</a>()
-</li><li><a class='wikilink' href='Serial_End.html'>end</a>()
+<ul><li><a class='wikilink' href='Serial_IfSerial.html'>if (Serial)</a>
 </li><li><a class='wikilink' href='Serial_Available.html'>available</a>()
-</li><li><a class='wikilink' href='Serial_Read.html'>read</a>()
-</li><li><a class='wikilink' href='Serial_Peek.html'>peek</a>()
+</li><li><a class='wikilink' href='Serial_Begin.html'>begin</a>()
+</li><li><a class='wikilink' href='Serial_End.html'>end</a>()
+</li><li><a class='wikilink' href='Serial_Find.html'>find</a>()
+</li><li><a class='wikilink' href='Serial_FindUntil.html'>findUntil</a>()
 </li><li><a class='wikilink' href='Serial_Flush.html'>flush</a>()
+</li><li><a class='wikilink' href='Serial_ParseFloat.html'>parseFloat</a>()
+</li><li><a class='wikilink' href='Serial_ParseInt.html'>parseInt</a>()
+</li><li><a class='wikilink' href='Serial_Peek.html'>peek</a>()
 </li><li><a class='wikilink' href='Serial_Print.html'>print</a>()
 </li><li><a class='wikilink' href='Serial_Println.html'>println</a>()
+</li><li><a class='wikilink' href='Serial_Read.html'>read</a>()
+</li><li><a class='wikilink' href='Serial_ReadBytes.html'>readBytes</a>()
+</li><li><a class='wikilink' href='Serial_ReadBytesUntil.html'>readBytesUntil</a>()
+</li><li><a class='wikilink' href='Serial_SetTimeout.html'>setTimeout</a>()
 </li><li><a class='wikilink' href='Serial_Write.html'>write</a>()
+</li><li><a class='wikilink' href='SerialEvent.html'>SerialEvent</a>()
 </li></ul><p class='vspace'></p><h4>Examples</h4>
-<ul><li><a class='wikilink' href='http://arduino.cc/en/Tutorial/ASCIITable'>ASCII Table</a>
+<ul><li><a class='wikilink' href='http://arduino.cc/en/Tutorial/ReadASCIIString'>ReadASCIIString</a>
+</li><li><a class='wikilink' href='http://arduino.cc/en/Tutorial/ASCIITable'>ASCII Table</a>
 </li><li><a class='wikilink' href='http://arduino.cc/en/Tutorial/Dimmer'>Dimmer</a>
 </li><li><a class='wikilink' href='http://arduino.cc/en/Tutorial/Graph'>Graph</a>
 </li><li><a class='wikilink' href='http://arduino.cc/en/Tutorial/PhysicalPixel'>Physical Pixel</a>
@@ -95,7 +107,7 @@ a.varlink { text-decoration:none; }
 </li><li><a class='wikilink' href='http://arduino.cc/en/Tutorial/SerialCallResponse'>Serial Call Response</a>
 </li><li><a class='wikilink' href='http://arduino.cc/en/Tutorial/SerialCallResponseASCII'>Serial Call Response ASCII</a>
 </li></ul><p class='vspace'></p></td></tr></table>
-<p class='vspace'></p><p><a class='wikilink' href='index.html'>Reference Home</a>
+<p><a class='wikilink' href='index.html'>Reference Home</a>
 </p>
 <p class='vspace'></p><p><em>Corrections, suggestions, and new documentation should be posted to the <a class='urllink' href='http://arduino.cc/forum/index.php/board,23.0.html' rel='nofollow'>Forum</a>.</em>
 </p>

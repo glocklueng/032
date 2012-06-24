@@ -121,7 +121,9 @@ a.varlink { text-decoration:none; }
 </p>
 <p class='vspace'></p><h2><span class='wikiword'>SoftwareSerial</span>: overflow()</h2>
 <h4>Description</h4>
-<p>Tests to see if a software serial buffer overflow has occurred. A software serial buffer can hold 64 bytes.
+<p>Tests to see if a software serial buffer overflow has occurred.  Calling this function clears the overflow flag, meaning that subsequent calls will return false unless another byte of data has been received and discarded in the meantime.
+</p>
+<p class='vspace'></p><p>The software serial buffer can hold 64 bytes.
 </p>
 <p class='vspace'></p><h4>Syntax</h4>
 <p>mySerial.overflow()

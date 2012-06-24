@@ -68,9 +68,7 @@ a.varlink { text-decoration:none; }
 </p>
 <p class='vspace'></p><h2>flush()</h2>
 <h4>Description</h4>
-<p>Flushes the buffer of incoming serial data.  Any call to Serial.read() or Serial.available() will return only data received after all the most recent call to Serial.flush().
-</p>
-<p class='vspace'></p><p>Serial.flush() waits for outgoing data to transmit before clearing the buffer contents.
+<p>Waits for the transmission of outgoing serial data to complete.  (Prior to Arduino 1.0, this instead removed any buffered incoming serial data.)
 </p>
 <p class='vspace'></p><p>flush() inherits from the <a class='wikilink' href='Stream.html'>Stream</a> utility class.
 </p>
@@ -86,8 +84,17 @@ a.varlink { text-decoration:none; }
 <p>nothing
 </p>
 <p class='vspace'></p><h4>See also</h4>
-<ul><li><a class='wikilink' href='Serial_Read.html'>Serial.read</a>()
-</li><li><a class='wikilink' href='Serial_Available.html'>Serial.available</a>()
+<ul><li><a class='wikilink' href='Serial_Begin.html'>begin</a>()
+</li><li><a class='wikilink' href='Serial_End.html'>end</a>()
+</li><li><a class='wikilink' href='Serial_Available.html'>available</a>()
+</li><li><a class='wikilink' href='Serial_Read.html'>read</a>()
+</li><li><a class='wikilink' href='Serial_Peek.html'>peek</a>()
+</li><li><a class='wikilink' href='Serial_ParseInt.html'>parseInt</a>()
+</li><li><a class='selflink' href='Serial_Flush.html'>flush</a>()
+</li><li><a class='wikilink' href='Serial_Print.html'>print</a>()
+</li><li><a class='wikilink' href='Serial_Println.html'>println</a>()
+</li><li><a class='wikilink' href='Serial_Write.html'>write</a>()
+</li><li><a class='wikilink' href='SerialEvent.html'>SerialEvent</a>()<br />
 </li><li><a class='wikilink' href='StreamFlush.html'>Stream.flush()</a>
 </li></ul><p class='vspace'></p><p><a class='wikilink' href='index.html'>Reference Home</a>
 </p>

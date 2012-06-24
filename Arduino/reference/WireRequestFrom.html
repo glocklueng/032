@@ -66,22 +66,35 @@ a.varlink { text-decoration:none; }
 <div id='wikitext'>
 <p><strong>Reference</strong> &nbsp;  <a class='wikilink' href='index.html'>Language</a> | <a class='wikilink' href='Libraries.html'>Libraries</a> | <a class='wikilink' href='Comparison.html'>Comparison</a> | <a class='wikilink' href='Changes.html'>Changes</a>
 </p>
-<p class='vspace'></p><h2>Wire.requestFrom(address, quantity)</h2>
+<p class='vspace'></p><h2>Wire.requestFrom()</h2>
 <h4>Description</h4>
-<p>Used by the master to request bytes from a slave device.  The bytes may then be retrieved with the <a class='wikilink' href='WireAvailable.html'>available()</a> and <a class='wikilink' href='WireReceive.html'>receive()</a> functions.
+<p>Used by the master to request bytes from a slave device.  The bytes may then be retrieved with the <a class='wikilink' href='WireAvailable.html'>available()</a> and <a class='wikilink' href='WireRead.html'>read()</a> functions.
+</p>
+<p class='vspace'></p><p>As of Arduino 1.0.1, requestFrom() accepts a boolean argument changing its behavior for compatibility with certain <span class='wikiword'>I2C</span> devices. 
+</p>
+<p class='vspace'></p><p>If true, requestFrom() sends a stop message after the request, releasing the <span class='wikiword'>I2C</span> bus. 
+</p>
+<p class='vspace'></p><p>If false, requestFrom() sends a restart message after the request. The bus will not be released, which prevents another master device from requesting between messages. This allows one master device to send multiple requests while in control.
+</p>
+<p class='vspace'></p><p>The default value is true.
+</p>
+<p class='vspace'></p><h4>Syntax</h4>
+<p>Wire.requestFrom(address, quantity)<br />Wire.requestFrom(address, quantity, stop)
 </p>
 <p class='vspace'></p><h4>Parameters</h4>
 <p>address: the 7-bit address of the device to request bytes from
 </p>
 <p class='vspace'></p><p>quantity: the number of bytes to request
 </p>
+<p class='vspace'></p><p>stop : boolean. true will send a stop message after the request, releasing the bus. false will continually send a restart after the request, keeping the connection active.
+</p>
 <p class='vspace'></p><h4>Returns</h4>
 <p>None
 </p>
 <p class='vspace'></p><h4>See Also</h4>
 <ul><li><a class='wikilink' href='WireAvailable.html'>Wire.available()</a>
-</li><li><a class='wikilink' href='WireReceive.html'>Wire.receive()</a>
-</li></ul><p class='vspace'></p><p><a class='wikilink' href='index.html'>Reference Home</a>
+</li><li><a class='wikilink' href='WireRead.html'>Wire.read()</a>
+</li></ul><p><a class='wikilink' href='index.html'>Reference Home</a>
 </p>
 <p class='vspace'></p><p><em>Corrections, suggestions, and new documentation should be posted to the <a class='urllink' href='http://arduino.cc/forum/index.php/board,23.0.html' rel='nofollow'>Forum</a>.</em>
 </p>

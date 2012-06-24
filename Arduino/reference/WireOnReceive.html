@@ -71,7 +71,7 @@ a.varlink { text-decoration:none; }
 <p>Registers a function to be called when a slave device receives a transmission from a master.
 </p>
 <p class='vspace'></p><h4>Parameters</h4>
-<p>handler: the function to be called when the slave receives data; this should take a single int parameter (the number of bytes received from the master) and return nothing, e.g.:  <code>void myHandler(int numBytes)</code>
+<p>handler: the function to be called when the slave receives data; this should take a single int parameter (the number of bytes read from the master) and return nothing, e.g.:  <code>void myHandler(int numBytes)</code>
 </p>
 <p class='vspace'></p><h4>Returns</h4>
 <p>None

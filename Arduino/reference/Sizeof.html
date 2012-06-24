@@ -93,20 +93,21 @@ void loop() {
   for (i = 0; i &lt; sizeof(myStr) - 1; i++){
     Serial.print(i, DEC);
     Serial.print(" = ");
-    Serial.println(myStr[i], BYTE);
+    Serial.write(myStr[i]);
+    Serial.println();
   }
+  delay(5000); // slow down the program
 }
 
-
 </pre><p>Note that sizeof returns the total number of bytes. So for larger variable types such as ints, the for loop would look something like this.
+Note also that a properly formatted string ends with the NULL symbol, which has ASCII value 0. 
 </p>
 <p class='vspace'></p><pre>
 for (i = 0; i &lt; (sizeof(myInts)/sizeof(int)) - 1; i++) {
   // do something with myInts[i]
 }
 
-</pre>
-<p class='vspace'></p><p><a class='wikilink' href='index.html'>Reference Home</a>
+</pre><p><a class='wikilink' href='index.html'>Reference Home</a>
 </p>
 <p class='vspace'></p><p><em>Corrections, suggestions, and new documentation should be posted to the <a class='urllink' href='http://arduino.cc/forum/index.php/board,23.0.html' rel='nofollow'>Forum</a>.</em>
 </p>

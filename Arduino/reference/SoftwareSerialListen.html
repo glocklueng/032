@@ -121,7 +121,7 @@ a.varlink { text-decoration:none; }
 </p>
 <p class='vspace'></p><h2><span class='wikiword'>SoftwareSerial</span>: listen()</h2>
 <h4>Description</h4>
-<p>Enables the selected software serial port to listen. Only one software port can listen at a time.
+<p>Enables the selected software serial port to listen. Only one software serial port can listen at a time; data that arrives for other ports will be discarded.  Any data already received is discarded during the call to listen() (unless the given instance is already listening).  
 </p>
 <p class='vspace'></p><h4>Syntax</h4>
 <p><em>mySerial</em>.listen()

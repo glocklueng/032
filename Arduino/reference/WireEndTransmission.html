@@ -68,21 +68,32 @@ a.varlink { text-decoration:none; }
 </p>
 <p class='vspace'></p><h2>Wire.endTransmission()</h2>
 <h4>Description</h4>
-<p>Ends a transmission to a slave device that was begun by <a class='wikilink' href='WireBeginTransmission.html'>beginTransmission()</a> and actually transmits the bytes that were queued by <a class='wikilink' href='WireSend.html'>send()</a>.  
+<p>Ends a transmission to a slave device that was begun by <a class='wikilink' href='WireBeginTransmission.html'>beginTransmission()</a> and transmits the bytes that were queued by <a class='wikilink' href='WireWrite.html'>write()</a>.  
+</p>
+<p class='vspace'></p><p>As of Arduino 1.0.1, endTransmission() accepts a boolean argument changing its behavior for compatibility with certain <span class='wikiword'>I2C</span> devices. 
+</p>
+<p class='vspace'></p><p>If true, endTransmission() sends a stop message after transmission, releasing the <span class='wikiword'>I2C</span> bus. 
+</p>
+<p class='vspace'></p><p>If false, endTransmission() sends a restart message after transmission. The bus will not be released, which prevents another master device from transmitting between messages. This allows one master device to send multiple transmissions while in control.
+</p>
+<p class='vspace'></p><p>The default value is true.
+</p>
+<p class='vspace'></p><h4>Syntax</h4>
+<p>Wire.endTransmission()<br />Wire.endTransmission(stop)
 </p>
 <p class='vspace'></p><h4>Parameters</h4>
-<p>None
+<p>stop : boolean. true will send a stop message, releasing the bus after transmission. false will send a restart, keeping the connection active.
 </p>
 <p class='vspace'></p><h4>Returns </h4>
 <p>byte, which indicates the status of the transmission:
-</p><dl><dt> 0 </dt><dd> success
-</dd><dt> 1 </dt><dd> data too long to fit in transmit buffer
-</dd><dt> 2 </dt><dd> received NACK on transmit of address
-</dd><dt> 3 </dt><dd> received NACK on transmit of data
-</dd><dt> 4 </dt><dd> other error
-</dd></dl><p class='vspace'></p><h4>See Also</h4>
+</p><ul><li>0:success
+</li><li>1:data too long to fit in transmit buffer
+</li><li>2:received NACK on transmit of address
+</li><li>3:received NACK on transmit of data
+</li><li>4:other error
+</li></ul><p class='vspace'></p><h4>See Also</h4>
 <ul><li><a class='wikilink' href='WireBeginTransmission.html'>Wire.beginTransmission()</a>
-</li><li><a class='wikilink' href='WireSend.html'>Wire.send()</a>
+</li><li><a class='wikilink' href='WireWrite.html'>Wire.write()</a>
 </li></ul><p><a class='wikilink' href='index.html'>Reference Home</a>
 </p>
 <p class='vspace'></p><p><em>Corrections, suggestions, and new documentation should be posted to the <a class='urllink' href='http://arduino.cc/forum/index.php/board,23.0.html' rel='nofollow'>Forum</a>.</em>
