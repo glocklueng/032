@@ -73,14 +73,16 @@ a.varlink { text-decoration:none; }
 <p class='vspace'></p><p>Note: this is a software implementation; Arduino also provides an <a class='wikilink' href='SPI.html'>SPI library</a> that uses the hardware implementation, which is faster but only works on specific pins.
 </p>
 <p class='vspace'></p><h4>Syntax</h4>
-<p>shiftIn(dataPin, clockPin, bitOrder)
-</p>
+<pre>
+byte incoming = shiftIn(dataPin, clockPin, bitOrder)
+
+</pre>
 <p class='vspace'></p><h4>Parameters</h4>
-<p>dataPin: the pin on which to output each bit (<em>int</em>)
+<p>dataPin: the pin on which to input each bit (<em>int</em>)
 </p>
-<p class='vspace'></p><p>clockPin: the pin to toggle once the <strong>dataPin</strong> has been set to the correct value (<em>int</em>)
+<p class='vspace'></p><p>clockPin: the pin to toggle to signal a read from  <strong>dataPin</strong> 
 </p>
-<p class='vspace'></p><p>bitOrder: which order to shift out the bits; either <strong>MSBFIRST</strong> or <strong>LSBFIRST</strong>.<br />(Most Significant Bit First, or, Least Significant Bit First) 
+<p class='vspace'></p><p>bitOrder: which order to shift in the bits; either <strong>MSBFIRST</strong> or <strong>LSBFIRST</strong>.<br />(Most Significant Bit First, or, Least Significant Bit First) 
 </p>
 <p class='vspace'></p><h4>Returns</h4>
 <p>the value read (<em>byte</em>)

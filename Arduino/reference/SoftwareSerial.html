@@ -135,13 +135,37 @@ a.varlink { text-decoration:none; }
 <div  class='code' >
 <p class='vspace'></p><p>
 <div class='sourceblock ' id='sourceblock1'>
-  <div class='sourceblocktext'><div class="arduino"><span class="co2">#include &lt;SoftwareSerial.h&gt;</span><br />
+  <div class='sourceblocktext'><div class="arduino"><span class="coMULTI">/*<br />
+&nbsp; Software serial multple serial test<br />
+&nbsp;<br />
+&nbsp;Receives from the hardware serial, sends to software serial.<br />
+&nbsp;Receives from software serial, sends to hardware serial.<br />
+&nbsp;<br />
+&nbsp;The circuit: <br />
+&nbsp;* RX is digital pin 2 (connect to TX of other device)<br />
+&nbsp;* TX is digital pin 3 (connect to RX of other device)<br />
+&nbsp;<br />
+&nbsp;created back in the mists of time<br />
+&nbsp;modified 9 Apr 2012<br />
+&nbsp;by Tom Igoe<br />
+&nbsp;based on Mikal Hart's example<br />
+&nbsp;<br />
+&nbsp;This example code is in the public domain.<br />
+&nbsp;<br />
+&nbsp;*/</span><br />
+<span class="co2">#include &lt;SoftwareSerial.h&gt;</span><br />
 <br />
-SoftwareSerial mySerial<span class="br0">&#40;</span><span class="nu0">2</span><span class="sy0">,</span> <span class="nu0">3</span><span class="br0">&#41;</span><span class="sy0">;</span><br />
+SoftwareSerial mySerial<span class="br0">&#40;</span><span class="nu0">2</span><span class="sy0">,</span> <span class="nu0">3</span><span class="br0">&#41;</span><span class="sy0">;</span> <span class="co1">// RX, TX</span><br />
 <br />
 <span class="kw1">void</span> <span class="kw3">setup</span><span class="br0">&#40;</span><span class="br0">&#41;</span> &nbsp;<br />
 <span class="br0">&#123;</span><br />
+&nbsp;<span class="co1">// Open serial communications and wait for port to open:</span><br />
 &nbsp; <span class="kw1">Serial</span>.<span class="kw1">begin</span><span class="br0">&#40;</span><span class="nu0">57600</span><span class="br0">&#41;</span><span class="sy0">;</span><br />
+&nbsp; &nbsp;<span class="kw1">while</span> <span class="br0">&#40;</span><span class="sy0">!</span><span class="kw1">Serial</span><span class="br0">&#41;</span> <span class="br0">&#123;</span><br />
+&nbsp; &nbsp; <span class="sy0">;</span> <span class="co1">// wait for serial port to connect. Needed for Leonardo only</span><br />
+&nbsp; <span class="br0">&#125;</span><br />
+<br />
+&nbsp; <br />
 &nbsp; <span class="kw1">Serial</span>.<span class="kw1">println</span><span class="br0">&#40;</span><span class="st0">&quot;Goodnight moon!&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span><br />
 <br />
 &nbsp; <span class="co1">// set the data rate for the SoftwareSerial port</span><br />
@@ -167,6 +191,7 @@ SoftwareSerial mySerial<span class="br0">&#40;</span><span class="nu0">2</span><
 </li><li><a class='wikilink' href='SoftwareSerialBegin.html'>begin</a>()
 </li><li><a class='wikilink' href='SoftwareSerialIsListening.html'>isListening</a>()
 </li><li><a class='wikilink' href='SoftwareSerialOverflow.html'>overflow</a>()
+</li><li><a class='wikilink' href='SoftwareSerialPeek.html'>peek</a>()
 </li><li><a class='wikilink' href='SoftwareSerialRead.html'>read</a>()
 </li><li><a class='wikilink' href='SoftwareSerialPrint.html'>print</a>()
 </li><li><a class='wikilink' href='SoftwareSerialPrintln.html'>println</a>()

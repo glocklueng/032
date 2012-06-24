@@ -73,15 +73,14 @@ a.varlink { text-decoration:none; }
 </p>
 <p class='vspace'></p><h4>Functions</h4>
 <ul><li><a class='wikilink' href='WireBegin.html'>begin</a>()
-</li><li><a class='wikilink' href='WireBegin.html'>begin</a>(address)
-</li><li><a class='wikilink' href='WireRequestFrom.html'>requestFrom</a>(address, count)
-</li><li><a class='wikilink' href='WireBeginTransmission.html'>beginTransmission</a>(address)
+</li><li><a class='wikilink' href='WireRequestFrom.html'>requestFrom</a>()
+</li><li><a class='wikilink' href='WireBeginTransmission.html'>beginTransmission</a>()
 </li><li><a class='wikilink' href='WireEndTransmission.html'>endTransmission</a>()
 </li><li><a class='wikilink' href='WireWrite.html'>write</a>()
-</li><li>byte <a class='wikilink' href='WireAvailable.html'>available</a>()
-</li><li>byte <a class='wikilink' href='WireRead.html'>read</a>()
-</li><li><a class='wikilink' href='WireOnReceive.html'>onReceive</a>(handler)
-</li><li><a class='wikilink' href='WireOnRequest.html'>onRequest</a>(handler)
+</li><li><a class='wikilink' href='WireAvailable.html'>available</a>()
+</li><li><a class='wikilink' href='WireRead.html'>read</a>()
+</li><li><a class='wikilink' href='WireOnReceive.html'>onReceive</a>()
+</li><li><a class='wikilink' href='WireOnRequest.html'>onRequest</a>()
 </li></ul><p class='vspace'></p><h4>Note</h4>
 <p>There are both 7- and 8-bit versions of <span class='wikiword'>I2C</span> addresses.  7 bits identify the device, and the eighth bit determines if it's being written to or read from.  The Wire library uses 7 bit addresses throughout.  If you have a datasheet or sample code that uses 8 bit address, you'll want to drop the low bit (i.e. shift the value one bit to the right), yielding an address between 0 and 127.
 </p>

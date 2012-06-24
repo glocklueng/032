@@ -71,13 +71,13 @@ a.varlink { text-decoration:none; }
 <p class='vspace'></p></li><li>You need to select <strong>Arduino Mini</strong> from the <strong>Tools | Board</strong> menu of the Arduino environment.
 <p class='vspace'></p></li><li>To upload a new sketch to the Arduino Mini, you need to press the reset button on the board immediately before pressing the upload button in the Arduino environment.
 </li></ul><p class='vspace'></p><h3>Information about the Arduino Mini</h3>
-<p>The microcontroller (an <span class='wikiword'>ATmega168</span>) on the Arduino Mini is a physically smaller version of the chip on the USB Arduino boards, with the following small difference:
+<p>The microcontroller (an <span class='wikiword'>ATmega328</span>) on the Arduino Mini is a physically smaller version of the chip on the USB Arduino boards, with the following small difference:
 </p>
 <p class='vspace'></p><ul><li>There are two extra analog inputs on the Mini (8 total).  Four of these, however, are not connected to the legs that come on the Arduino Mini, requiring you to solder wires to their holes to use them.  Two of these unconnected pins are also used by the Wire library (<span class='wikiword'>I2C</span>), meaning that its use will require soldering as well.
 </li></ul><p class='vspace'></p><p>Also, the Arduino Mini is more <strong>fragile and easy to break</strong> than a regular Arduino board.  
 </p>
-<p class='vspace'></p><ul><li>Don't connect more than 9 volts to the +9V pin or reverse the power and ground pins of your power supply, or you might kill the <span class='wikiword'>ATmega168</span> on the Arduino Mini.
-<p class='vspace'></p></li><li>You can't remove the <span class='wikiword'>ATmega168</span>, so if you kill it, you need a new Mini.
+<p class='vspace'></p><ul><li>Don't connect more than 9 volts to the +9V pin or reverse the power and ground pins of your power supply, or you might kill the <span class='wikiword'>ATmega328</span> on the Arduino Mini.
+<p class='vspace'></p></li><li>You can't remove the <span class='wikiword'>ATmega328</span>, so if you kill it, you need a new Mini.
 </li></ul><p class='vspace'></p><p><a name='connecting' id='connecting'></a>
 </p><h3>Connecting the Arduino Mini</h3>
 <p>Here's a diagram of the pin layout of the Arduino Mini:
@@ -89,7 +89,7 @@ a.varlink { text-decoration:none; }
 </p>
 <p class='vspace'></p></td><td  width='50%' valign='top'>
 <p class='vspace'></p><div><img src='http://arduino.cc/en/uploads/Guide/arduino_mini04_pinout.png' alt='' title='' /></div>
-<p class='vspace'></p><p><em>Mini 04 pinout</em> (the ground on the left has moved down one pin)
+<p class='vspace'></p><p><em>Mini 04 and 05 pinout</em> (the ground on the left has moved down one pin)
 </p>
 <p class='vspace'></p></td></tr></table>
 <p class='vspace'></p><p>To use the Arduino Mini, you need to connect:
@@ -102,9 +102,12 @@ a.varlink { text-decoration:none; }
 </li></ul><p class='vspace'></p><p>You have a few options for connecting the board: the Mini USB Adapter, a regular Arduino board, or your own power supply and USB/Serial adapter.
 </p>
 <p class='vspace'></p><h4>Connecting the Arduino Mini and Mini USB Adapter</h4>
-<p>Here is a photo showing the Arduino Mini connected to the Mini USB adapter.  Notice that the reset pin is connected directly to +5V (the orange wire), without a pushbutton.  Thus, to reset the Arduino Mini, you will need to unplug and reconnect the USB cable to the Mini USB Adapter, or manually move the orange wire connected to the reset pin from +5V to ground and back.
+<p>The circuit shown here is the basic setup for an Arduino mini connected to a USB-to-serial converter. You can see power and ground from the USB are run to the rails of the breadboard so it's convenient for the other components on the board. The 0.1uF capacitor from the reset pin is connected to the RTS pin on the mini USB adaptor. This enables auto-reset when the serial port is opened, meaning you don't have to press the reset button every time you upload new code. If it gives you problems, you can remove it, and press reset every time.
 </p>
-<p class='vspace'></p><div><img src='http://arduino.cc/en/uploads/Guide/ArduinoMiniBreadboardPhoto.jpg' alt='' title='' /></div>
+<p class='vspace'></p><div><img src='http://arduino.cc/en/uploads/Guide/ArduinoMiniBreadboardPhoto3.jpg' alt='' title='' /></div>
+<p class='vspace'></p><p>You can use a <span class='wikiword'>USBSerial</span> connector wired up in a similar fashion :
+</p>
+<p class='vspace'></p><div><img src='http://arduino.cc/en/uploads/Guide/ArduinoMiniUSBSerialLite.jpg' alt='' title='' /></div>
 <p class='vspace'></p><h4>Connecting the Arduino Mini and a regular Arduino</h4>
 <p>Here's a photo of the Arduino Mini connected to an Arduino NG.  The NG has its <span class='wikiword'>ATmega8</span> removed and is being used for its USB connection, power source, and reset button.  Thus, you can reset the Arduino Mini just by pressing the button on the NG.
 </p>

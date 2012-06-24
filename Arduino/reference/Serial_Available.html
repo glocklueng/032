@@ -121,7 +121,7 @@ a.varlink { text-decoration:none; }
 </p>
 <p class='vspace'></p><h2>available()</h2>
 <h4>Description</h4>
-<p>Get the number of bytes (characters) available for reading from the serial port.  This is data that's already arrived and stored in the serial receive buffer (which holds 128 bytes). available() inherits from the <a class='wikilink' href='Stream.html'>Stream</a> utility class.
+<p>Get the number of bytes (characters) available for reading from the serial port.  This is data that's already arrived and stored in the serial receive buffer (which holds 64 bytes). available() inherits from the <a class='wikilink' href='Stream.html'>Stream</a> utility class.
 </p>
 <p class='vspace'></p><h4>Syntax</h4>
 <p>Serial.available()
@@ -154,13 +154,16 @@ a.varlink { text-decoration:none; }
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class="kw1">Serial</span>.<span class="kw1">print</span><span class="br0">&#40;</span><span class="st0">&quot;I received: &quot;</span><span class="br0">&#41;</span><span class="sy0">;</span><br />
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class="kw1">Serial</span>.<span class="kw1">println</span><span class="br0">&#40;</span>incomingByte<span class="sy0">,</span> <span class="kw2">DEC</span><span class="br0">&#41;</span><span class="sy0">;</span><br />
 &nbsp; &nbsp; &nbsp; &nbsp; <span class="br0">&#125;</span><br />
-<span class="br0">&#125;</span><br />
-@<span class="br0">&#93;</span><br />
-<br />
-<span class="st0">''</span><span class="st0">'Arduino Mega example:'</span><span class="st0">''</span><br />
-<br />
-<span class="br0">&#91;</span>@<br />
-<span class="kw1">void</span> <span class="kw3">setup</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span><br />
+<span class="br0">&#125;</span></div></div>
+  <div class='sourceblocklink'><a href='Serial_Available?action=sourceblock&amp;num=1.html' type='text/plain'>[Get Code]</a></div>
+</div>
+
+</p>
+<p class='vspace'></p><p><strong>Arduino Mega example:</strong>
+</p>
+<p class='vspace'></p><p>
+<div class='sourceblock ' id='sourceblock2'>
+  <div class='sourceblocktext'><div class="arduino"><span class="kw1">void</span> <span class="kw3">setup</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span><br />
 &nbsp; <span class="kw1">Serial</span>.<span class="kw1">begin</span><span class="br0">&#40;</span><span class="nu0">9600</span><span class="br0">&#41;</span><span class="sy0">;</span><br />
 &nbsp; <span class="kw1">Serial1</span>.<span class="kw1">begin</span><span class="br0">&#40;</span><span class="nu0">9600</span><span class="br0">&#41;</span><span class="sy0">;</span><br />
 <br />
@@ -179,13 +182,22 @@ a.varlink { text-decoration:none; }
 &nbsp; &nbsp; <span class="kw1">Serial</span>.<span class="kw1">print</span><span class="br0">&#40;</span>inByte<span class="sy0">,</span> <span class="kw2">BYTE</span><span class="br0">&#41;</span><span class="sy0">;</span> <br />
 &nbsp; <span class="br0">&#125;</span><br />
 <span class="br0">&#125;</span></div></div>
-  <div class='sourceblocklink'><a href='Serial_Available?action=sourceblock&amp;num=1.html' type='text/plain'>[Get Code]</a></div>
+  <div class='sourceblocklink'><a href='Serial_Available?action=sourceblock&amp;num=2.html' type='text/plain'>[Get Code]</a></div>
 </div>
 
 </p>
 <p class='vspace'></p><h4>See also</h4>
-<ul><li><a class='wikilink' href='Serial_Read.html'>Serial.read</a>()
-</li><li><a class='wikilink' href='Serial_Flush.html'>Serial.flush</a>()
+<ul><li><a class='wikilink' href='Serial_Begin.html'>begin</a>()
+</li><li><a class='wikilink' href='Serial_End.html'>end</a>()
+</li><li><a class='selflink' href='Serial_Available.html'>available</a>()
+</li><li><a class='wikilink' href='Serial_Read.html'>read</a>()
+</li><li><a class='wikilink' href='Serial_Peek.html'>peek</a>()
+</li><li><a class='wikilink' href='Serial_ParseInt.html'>parseInt</a>()
+</li><li><a class='wikilink' href='Serial_Flush.html'>flush</a>()
+</li><li><a class='wikilink' href='Serial_Print.html'>print</a>()
+</li><li><a class='wikilink' href='Serial_Println.html'>println</a>()
+</li><li><a class='wikilink' href='Serial_Write.html'>write</a>()
+</li><li><a class='wikilink' href='SerialEvent.html'>SerialEvent</a>()<br />
 </li><li><a class='wikilink' href='StreamAvailable.html'>Stream.available</a>()
 </li></ul><p class='vspace'></p><p><a class='wikilink' href='index.html'>Reference Home</a>
 </p>
