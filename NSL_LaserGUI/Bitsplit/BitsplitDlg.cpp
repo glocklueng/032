@@ -322,7 +322,7 @@ BOOL CBitSplitDlg::CreateImage( CImage *newBitmap, CImage *source_bitmap, COLORR
 				if( m_BlackAndWhite ) { 
 					
 					if( newBitmap->IsIndexed() ) {
-						newBitmap->SetPixelIndexed(x,y, 1);
+						newBitmap->SetPixelIndexed(x,y, 0);
 					} else {
 						newBitmap->SetPixel(x,y, source);
 					}
@@ -339,11 +339,11 @@ BOOL CBitSplitDlg::CreateImage( CImage *newBitmap, CImage *source_bitmap, COLORR
 				// all black
 				if( m_BlackAndWhite ) { 
 					if( newBitmap->IsIndexed() )
-						newBitmap->SetPixelIndexed(x,y, 0);
+						newBitmap->SetPixelIndexed(x,y, 1);
 					else
-						newBitmap->SetPixel(x,y, RGB(0,0,0));
+						newBitmap->SetPixel(x,y, RGB(0xff,0xff,0xff));
 				} else {
-					newBitmap->SetPixel(x,y, RGB(0,0,0));
+					newBitmap->SetPixel(x,y, RGB(0xff,0xff,0xff));
 				}
 			}
 		}
