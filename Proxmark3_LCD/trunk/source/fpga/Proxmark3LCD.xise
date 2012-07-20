@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<project xmlns="http://www.xilinx.com/XMLSchema" xmlns:xil_pn="http://www.xilinx.com/XMLSchema">
+
+  <header>
+    <!-- ISE source project file created by Project Navigator.             -->
+    <!--                                                                   -->
+    <!-- This file contains project source information including a list of -->
+    <!-- project source files, project and process properties.  This file, -->
+    <!-- along with the project source files, is sufficient to open and    -->
+    <!-- implement in ISE Project Navigator.                               -->
+    <!--                                                                   -->
+    <!-- Copyright (c) 1995-2009 Xilinx, Inc.  All rights reserved. -->
+  </header>
+
+  <version xil_pn:ise_version="11.2" xil_pn:schema_version="2"/>
+
+  <files>
+    <file xil_pn:name="fpga.ucf" xil_pn:type="FILE_UCF">
+      <association xil_pn:name="Implementation"/>
+    </file>
+    <file xil_pn:name="fpga.v" xil_pn:type="FILE_VERILOG">
+      <association xil_pn:name="BehavioralSimulation"/>
+      <association xil_pn:name="Implementation"/>
+    </file>
+    <file xil_pn:name="hi_iso14443a.v" xil_pn:type="FILE_VERILOG">
+      <association xil_pn:name="BehavioralSimulation"/>
+      <association xil_pn:name="Implementation"/>
+    </file>
+    <file xil_pn:name="hi_read_rx_xcorr.v" xil_pn:type="FILE_VERILOG">
+      <association xil_pn:name="BehavioralSimulation"/>
+      <association xil_pn:name="Implementation"/>
+    </file>
+    <file xil_pn:name="hi_read_tx.v" xil_pn:type="FILE_VERILOG">
+      <association xil_pn:name="BehavioralSimulation"/>
+      <association xil_pn:name="Implementation"/>
+    </file>
+    <file xil_pn:name="hi_simulate.v" xil_pn:type="FILE_VERILOG">
+      <association xil_pn:name="BehavioralSimulation"/>
+      <association xil_pn:name="Implementation"/>
+    </file>
+    <file xil_pn:name="lo_passthru.v" xil_pn:type="FILE_VERILOG">
+      <association xil_pn:name="BehavioralSimulation"/>
+      <association xil_pn:name="Implementation"/>
+    </file>
+    <file xil_pn:name="lo_read.v" xil_pn:type="FILE_VERILOG">
+      <association xil_pn:name="BehavioralSimulation"/>
+      <association xil_pn:name="Implementation"/>
+    </file>
+    <file xil_pn:name="lo_simulate.v" xil_pn:type="FILE_VERILOG">
+      <association xil_pn:name="BehavioralSimulation"/>
+      <association xil_pn:name="Implementation"/>
+    </file>
+    <file xil_pn:name="util.v" xil_pn:type="FILE_VERILOG">
+      <association xil_pn:name="BehavioralSimulation"/>
+      <association xil_pn:name="Implementation"/>
+    </file>
+  </files>
+
+  <properties>
+    <property xil_pn:name="Constraints Entry" xil_pn:value="Constraints Editor"/>
+    <property xil_pn:name="Device" xil_pn:value="xc3s250e"/>
+    <property xil_pn:name="Device Family" xil_pn:value="Spartan3E"/>
+    <property xil_pn:name="Extra Effort" xil_pn:value="Normal" xil_pn:x_locked="true"/>
+    <property xil_pn:name="Extra Effort (Highest PAR level only)" xil_pn:value="Normal" xil_pn:x_locked="true"/>
+    <property xil_pn:name="Fitter Report Format" xil_pn:value="HTML"/>
+    <property xil_pn:name="Implementation Top" xil_pn:value="Module|fpga"/>
+    <property xil_pn:name="Implementation Top Instance Path" xil_pn:value="/fpga"/>
+    <property xil_pn:name="Last Applied Goal" xil_pn:value="Timing Performance"/>
+    <property xil_pn:name="Last Applied Strategy" xil_pn:value="Performance with IOB Packing;C:/Xilinx/11.1/ISE/spartan3e/data/spartan3e_performance_with_iobpacking.xds"/>
+    <property xil_pn:name="Map Effort Level" xil_pn:value="High" xil_pn:x_locked="true"/>
+    <property xil_pn:name="Optimization Effort" xil_pn:value="High" xil_pn:x_locked="true"/>
+    <property xil_pn:name="Optimization Goal" xil_pn:value="Speed" xil_pn:x_locked="true"/>
+    <property xil_pn:name="PROP_BehavioralSimTop" xil_pn:value="Module|fpga"/>
+    <property xil_pn:name="PROP_DesignName" xil_pn:value="Proxmark3LCD"/>
+    <property xil_pn:name="PROP_DevFamilyPMName" xil_pn:value="spartan3e"/>
+    <property xil_pn:name="Pack I/O Registers into IOBs" xil_pn:value="Yes" xil_pn:x_locked="true"/>
+    <property xil_pn:name="Pack I/O Registers/Latches into IOBs" xil_pn:value="For Inputs and Outputs" xil_pn:x_locked="true"/>
+    <property xil_pn:name="Package" xil_pn:value="vq100"/>
+    <property xil_pn:name="Perform Timing-Driven Packing and Placement" xil_pn:value="true" xil_pn:x_locked="true"/>
+    <property xil_pn:name="Place &amp; Route Effort Level (Overall)" xil_pn:value="High" xil_pn:x_locked="true"/>
+    <property xil_pn:name="Place And Route Mode" xil_pn:value="Normal Place and Route" xil_pn:x_locked="true"/>
+    <property xil_pn:name="Placer Effort Level (Overrides Overall Level)" xil_pn:value="High" xil_pn:x_locked="true"/>
+    <property xil_pn:name="Preferred Language" xil_pn:value="Verilog"/>
+    <property xil_pn:name="Project Description" xil_pn:value="Proxmark 3 LCD&#xA;"/>
+    <property xil_pn:name="Property Specification in Project File" xil_pn:value="Store non-default values only"/>
+    <property xil_pn:name="Register Balancing" xil_pn:value="Yes" xil_pn:x_locked="true"/>
+    <property xil_pn:name="Router Effort Level (Overrides Overall Level)" xil_pn:value="High" xil_pn:x_locked="true"/>
+    <property xil_pn:name="Selected Simulation Root Source Node Behavioral" xil_pn:value="Module|fpga"/>
+    <property xil_pn:name="Simulator" xil_pn:value="Modelsim-SE Mixed"/>
+    <property xil_pn:name="Speed Grade" xil_pn:value="-4"/>
+    <property xil_pn:name="Synthesis Tool" xil_pn:value="XST (VHDL/Verilog)"/>
+    <property xil_pn:name="Top-Level Source Type" xil_pn:value="HDL"/>
+    <property xil_pn:name="Working Directory" xil_pn:value="D:/032/032/Proxmark3_LCD/trunk/source/fpga"/>
+  </properties>
+
+  <bindings/>
+
+  <libraries/>
+
+  <partitions/>
+
+</project>

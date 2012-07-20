@@ -272,14 +272,18 @@ begin
 			else if(fdt_elapsed && ~temp_buffer_reset)
 			begin
 				if(ssp_dout) temp_buffer_reset = 1'b1;
-				if(mod_sig_ptr == 6'b000010) mod_sig_ptr <= 6'b001001;
-				else mod_sig_ptr <= mod_sig_ptr - 1;
+				if(mod_sig_ptr == 6'b000010) 
+					mod_sig_ptr <= 6'b001001;
+				else 
+					mod_sig_ptr <= mod_sig_ptr - 1;
 			end
 			else
 			begin
 				// side effect: when ptr = 1 it will cancel the first 1 of every block of ones
-				if(~mod_sig_buf[mod_sig_ptr-1] && ~mod_sig_buf[mod_sig_ptr+1]) mod_sig = 1'b0;
-				else mod_sig = mod_sig_buf[mod_sig_ptr] & fdt_elapsed; // & fdt_elapsed  was for direct relay to oe4
+				if(~mod_sig_buf[mod_sig_ptr-1] && ~mod_sig_buf[mod_sig_ptr+1]) 
+					mod_sig = 1'b0;
+				else 
+					mod_sig = mod_sig_buf[mod_sig_ptr] & fdt_elapsed; // & fdt_elapsed  was for direct relay to oe4
 			end
 		end
 	end

@@ -1,0 +1,2 @@
+verilog work "fpga.v"
+verilog work "testbed_fpga.v"
