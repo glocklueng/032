@@ -1,0 +1,126 @@
+
+/* Ports and Pins
+ Direct port access is much faster than digitalWrite.
+ You must match the correct port and pin as shown in the table below.
+ 
+ Arduino Pin        Port        Pin
+ 13 (SCK)           PORTB       5
+ 12 (MISO)          PORTB       4
+ 11 (MOSI)          PORTB       3
+ 10 (SS)            PORTB       2
+ 9                 PORTB       1
+ 8                 PORTB       0
+ 7                 PORTD       7
+ 6                 PORTD       6
+ 5                 PORTD       5
+ 4                 PORTD       4
+ 3                 PORTD       3
+ 2                 PORTD       2
+ 1 (TX)            PORTD       1
+ 0 (RX)            PORTD       0
+ A5 (Analog)        PORTC       5
+ A4 (Analog)        PORTC       4
+ A3 (Analog)        PORTC       3
+ A2 (Analog)        PORTC       2
+ A1 (Analog)        PORTC       1
+ A0 (Analog)        PORTC       0
+*/
+
+// Defines for use with Arduino functions
+#define latchpin   A0 // XL
+#define enablepin  A1 // BL
+#define datapin    A2 // SI
+#define clockpin   A3 // CL
+
+// Defines for direct port access
+#define CLKPORT PORTC
+#define ENAPORT PORTC
+#define LATPORT PORTC
+#define DATPORT PORTC
+#define DATDDR DDRC
+
+#define LATPIN  0
+#define ENAPIN  1
+#define DATPIN  2
+#define CLKPIN  3
+
+// Number of OctoBrites / TLC5947 devices
+#define NumOctoBrites (100)
+
+// Array storing  values
+// LEDChannels[x]   Range: {0 to 4095}
+uint16_t LEDChannels[NumOctoBrites] = {0};
+
+// Variables for sample function
+float offset = 0;
+
+
+// Set pins to outputs and initial states
+void setup() {
+
+  pinMode(datapin, OUTPUT);
+  pinMode(latchpin, OUTPUT);
+  pinMode(enablepin, OUTPUT);
+  pinMode(clockpin, OUTPUT);
+  digitalWrite(latchpin, LOW);
+  digitalWrite(enablepin, LOW);
+ 
+  
+  //memset(&LEDChannels[0],0,sizeof(LEDChannels)*2);
+}
+
+// Read all bits in the LEDChannels array and send them on the selected pins
+void WriteLEDArray() {
+
+  unsigned int tempOne = 0;
+
+  for (int i = 0; i < (NumOctoBrites); i++) {
+
+    tempOne = LEDChannels[i];
+
+    for (int j = 0; j < 12; j++) {
+      if ((tempOne >> (11 - j)) & 1) {
+        DATPORT |= (1 << DATPIN);
+      } 
+      else {
+        DATPORT &= ~(1 << DATPIN);
+      }
+      CLKPORT |= (1 << CLKPIN);
+      CLKPORT &= ~(1 << CLKPIN); 
+    } 
+
+  }
+
+  LATPORT |= (1 << LATPIN | 1 << ENAPIN);
+  LATPORT &= ~(1 << LATPIN | 1 << ENAPIN);
+}
+
+// Sample function to draw a scanning pattern with fading
+void LEDscan(int grey, float degreeoffset) {
+
+  float brightnessfactor = 0;
+  
+  float scanindex = (1.0f + sin(degreeoffset*3.14159f/180.0f)) * ((float)(NumOctoBrites) / 2.0f);
+  
+    for(int LEDindex = 0; LEDindex < (NumOctoBrites); LEDindex++) {
+      
+      brightnessfactor = exp(0.0f - fabs(scanindex - ((float)LEDindex + 0.5f)) * 1.3f);
+      
+      LEDChannels[LEDindex] = grey * brightnessfactor;  
+    }
+    
+    WriteLEDArray();  
+
+}
+
+void loop() {
+static unsigned count = 0;
+
+
+  // Scan across whole array with fading
+  
+  for (offset = 0; offset < 360; offset += 0.5) {
+    LEDscan(4095,  offset);
+    delay(2);
+  }
+}
