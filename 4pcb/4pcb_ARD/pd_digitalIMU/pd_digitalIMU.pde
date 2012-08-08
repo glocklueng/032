@@ -74,6 +74,9 @@ void setup()
   pinMode(6, OUTPUT);
   pinMode(11, OUTPUT);
   pinMode(13, OUTPUT);
+  pinMode(9, OUTPUT);
+  pinMode(10, OUTPUT);
+  
   
   Wire.begin();
   
@@ -232,10 +235,10 @@ void loop()
     roll_error_int = 0.0;
   }
   
-  analogWrite(3, left_command); // LEFT
-  analogWrite(5, front_command); // FRONT
-  analogWrite(6, right_command); // RIGHT
-  analogWrite(11, rear_command); // REAR
+  analogWrite(5, left_command); // LEFT
+  analogWrite(3, front_command); // FRONT
+  analogWrite(9, right_command); // RIGHT
+  analogWrite(10, rear_command); // REAR
   
   rate_pitch_int = (unsigned int)(rate_pitch * 10.0 + 8192.0);
   angle_pitch_int = (unsigned int)(angle_pitch * 10.0 + 8192.0); 
