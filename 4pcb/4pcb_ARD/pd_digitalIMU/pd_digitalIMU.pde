@@ -81,9 +81,10 @@ void setup()
   Wire.begin();
   
   Serial.begin(57600);
-  UCSR0A |= (1 << U2X0);
-  UBRR0L = 33;
-  
+   
+//  UCSR0A |= (1 << U2X0);
+//  UBRR0L = 33;
+
   writeGyroReg(L3G4200D_CTRL_REG1, 0x4F);
   writeAccReg(LSM303_CTRL_REG1_A, 0x27);
   writeMagReg(LSM303_MR_REG_M, 0x00);
@@ -97,6 +98,10 @@ void setup()
   // what does this do?
   digitalWrite(2, HIGH);
   digitalWrite(8, HIGH);
+
+   //Serial.println("Started");
+    
+  
 }
 
 void loop()
@@ -134,8 +139,10 @@ void loop()
   digitalWrite(13, HIGH);
   
   rx_len = Serial.available();
+  
   if(rx_len > 0)
   {
+  #if 0
     for(rx_n = 0; rx_n < (rx_len - 1); rx_n++)
     {
       rx_byte = Serial.read();
@@ -156,7 +163,59 @@ void loop()
         rx_i = 6;
       }
     }
-  }
+ #else
+   rx_byte = Serial.read();
+   switch( rx_byte ) {
+     case 't':
+       if(throttle_command > 0 ){
+         throttle_command --;
+         Serial.print("throttle ");Serial.println(throttle_command);
+       }     
+       break;
+     case 'T':
+         throttle_command ++;
+         Serial.print("throttle ");Serial.println(throttle_command);
+       break;
+       
+     case 'p':
+       if(pitch_command > 0 ){
+         pitch_command  --;
+         Serial.print("pitch_command  ");Serial.println(pitch_command );
+       }     
+       break;
+     case 'P':
+         pitch_command ++;
+         Serial.print("pitch_command  ");Serial.println(pitch_command );
+       break;
+       
+     case 'r':
+       if(roll_command > 0 ){
+         roll_command  --;
+         Serial.print("roll_command  ");Serial.println( roll_command );
+       }     
+       break;
+     case 'R':
+         roll_command ++;
+         Serial.print("roll_command  ");Serial.println( roll_command );
+       break;    
+      
+    case 'y':
+       if(yaw_command  > 0 ){
+         yaw_command   --;
+         Serial.print("yaw_command   ");Serial.println( yaw_command  );
+       }     
+       break;
+     case 'Y':
+         yaw_command  ++;
+         Serial.print("yaw_command   ");Serial.println( yaw_command  );
+       break;    
+    
+       
+   }
+  rx_timeout = 0;
+   
+#endif
+}
       
   rx_timeout++;
   if(rx_timeout >= 50)
@@ -234,11 +293,18 @@ void loop()
     pitch_error_int = 0.0;
     roll_error_int = 0.0;
   }
-  
-  analogWrite(5, left_command); // LEFT
-  analogWrite(3, front_command); // FRONT
-  analogWrite(9, right_command); // RIGHT
+  #if 0
+  analogWrite(5, left_command); // LEFT PD5 MAG4
+  analogWrite(3, front_command); // FRONT PD3 MAG1
+  analogWrite(9, right_command); // RIGHT PB1 mag2
   analogWrite(10, rear_command); // REAR
+  #endif
+  
+  analogWrite(5, 0); // LEFT PD5 MAG4
+  analogWrite(3, 0); // FRONT PD3 MAG1
+  analogWrite(9, 205); // RIGHT PB1 mag2
+  analogWrite(10,0); // REAR mag3
+  
   
   rate_pitch_int = (unsigned int)(rate_pitch * 10.0 + 8192.0);
   angle_pitch_int = (unsigned int)(angle_pitch * 10.0 + 8192.0); 
@@ -252,8 +318,9 @@ void loop()
   tx_packet[6] = (unsigned char) (vref >> 7);
   tx_packet[7] = (unsigned char) (vref & 0x7F);
   
-  Serial.write(tx_packet, 8);
+  //Serial.write(tx_packet, 8);
  
+
   digitalWrite(13, LOW);
   delay(375);
 }
@@ -287,6 +354,8 @@ void readGyro()
   gyro_x = xha << 8 | xla;
   gyro_y = yha << 8 | yla;
   gyro_z = zha << 8 | zla;
+
+  
 }
 
 void readAcc(void)
