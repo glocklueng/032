@@ -1,7 +1,7 @@
 [Eagle]
 Version="05 11 00"
 Platform="Windows"
-Serial="112EB429D6-LSR-WLM-NCP"
+Serial="3AAD427689-LSR-WLM-NCP"
 Globals="Globals"
 Desktop="Desktop"
 
@@ -18,9 +18,6 @@ UsedLibrary="C:/Program Files (x86)/EAGLE-5.11.0/lbr/74xx-little-de.lbr"
 UsedLibrary="C:/Program Files (x86)/EAGLE-5.11.0/lbr/74xx-little-us.lbr"
 UsedLibrary="C:/Program Files (x86)/EAGLE-5.11.0/lbr/74xx-us.lbr"
 UsedLibrary="C:/Program Files (x86)/EAGLE-5.11.0/lbr/751xx.lbr"
-UsedLibrary="C:/Program Files (x86)/EAGLE-5.11.0/lbr/IR-rcv.lbr"
-UsedLibrary="C:/Program Files (x86)/EAGLE-5.11.0/lbr/LGA16.lbr"
-UsedLibrary="C:/Program Files (x86)/EAGLE-5.11.0/lbr/NSL_LOGO.lbr"
 UsedLibrary="C:/Program Files (x86)/EAGLE-5.11.0/lbr/SparkFun.lbr"
 UsedLibrary="C:/Program Files (x86)/EAGLE-5.11.0/lbr/advanced-test-technologies.lbr"
 UsedLibrary="C:/Program Files (x86)/EAGLE-5.11.0/lbr/agilent-technologies.lbr"
@@ -298,7 +295,6 @@ UsedLibrary="C:/Program Files (x86)/EAGLE-5.11.0/lbr/switch-misc.lbr"
 UsedLibrary="C:/Program Files (x86)/EAGLE-5.11.0/lbr/switch-omron.lbr"
 UsedLibrary="C:/Program Files (x86)/EAGLE-5.11.0/lbr/switch-raychem.lbr"
 UsedLibrary="C:/Program Files (x86)/EAGLE-5.11.0/lbr/switch.lbr"
-UsedLibrary="C:/Program Files (x86)/EAGLE-5.11.0/lbr/tcs20dor.lbr"
 UsedLibrary="C:/Program Files (x86)/EAGLE-5.11.0/lbr/telcom.lbr"
 UsedLibrary="C:/Program Files (x86)/EAGLE-5.11.0/lbr/telecontrolli.lbr"
 UsedLibrary="C:/Program Files (x86)/EAGLE-5.11.0/lbr/telefunken.lbr"
@@ -334,15 +330,13 @@ UsedLibrary="C:/Program Files (x86)/EAGLE-5.11.0/lbr/xilinx-xc9.lbr"
 UsedLibrary="C:/Program Files (x86)/EAGLE-5.11.0/lbr/xilinx-xcv.lbr"
 UsedLibrary="C:/Program Files (x86)/EAGLE-5.11.0/lbr/zetex.lbr"
 UsedLibrary="C:/Program Files (x86)/EAGLE-5.11.0/lbr/zilog.lbr"
-UsedLibrary="D:/NSL_eagle/NSL_Digital_Detector/FED_detector_motor.lbr"
-UsedLibrary="D:/NSL_eagle/Hexapod/PWM.lbr"
 
 [Win_1]
 Type="Control Panel"
-Loc="123 51 1230 1204"
+Loc="182 113 781 1017"
 State=2
 Number=0
 
 [Desktop]
-Screen="2560 1440"
+Screen="1920 1200"
 Window="Win_1"
