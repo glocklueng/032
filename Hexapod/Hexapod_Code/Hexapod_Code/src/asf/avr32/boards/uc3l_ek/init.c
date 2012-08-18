@@ -48,40 +48,73 @@
 #include "gpio.h"
 #include "board.h"
 
-#if defined (CONF_BOARD_AT45DBX)
-#define AT45DBX_MEM_CNT             1
-#endif
 
 void board_init(void)
 {
-
-#if defined (CONF_BOARD_AT45DBX)
-	static const gpio_map_t AT45DBX_SPI_GPIO_MAP =
-	{
-		{AT45DBX_SPI_SCK_PIN,          AT45DBX_SPI_SCK_FUNCTION         },  // SPI Clock.
-		{AT45DBX_SPI_MISO_PIN,         AT45DBX_SPI_MISO_FUNCTION        },  // MISO.
-		{AT45DBX_SPI_MOSI_PIN,         AT45DBX_SPI_MOSI_FUNCTION        },  // MOSI.
-#define AT45DBX_ENABLE_NPCS_PIN(NPCS, unused) \
-		{AT45DBX_SPI_NPCS##NPCS##_PIN, AT45DBX_SPI_NPCS##NPCS##_FUNCTION},  // Chip Select NPCS.
-		MREPEAT(AT45DBX_MEM_CNT, AT45DBX_ENABLE_NPCS_PIN, ~)
-#undef AT45DBX_ENABLE_NPCS_PIN
-	};
-
-	// Assign I/Os to SPI.
-	gpio_enable_module(AT45DBX_SPI_GPIO_MAP,
-		sizeof(AT45DBX_SPI_GPIO_MAP) / sizeof(AT45DBX_SPI_GPIO_MAP[0]));
-#endif
-
 	// Configure the pins connected to LEDs as output and set their default
 	// initial state to high (LEDs off).
-	gpio_configure_pin(LED0_GPIO, GPIO_DIR_OUTPUT | GPIO_INIT_HIGH);
-	gpio_configure_pin(LED1_GPIO, GPIO_DIR_OUTPUT | GPIO_INIT_HIGH);
-	gpio_configure_pin(LED2_GPIO, GPIO_DIR_OUTPUT | GPIO_INIT_HIGH);
-	gpio_configure_pin(LED3_GPIO, GPIO_DIR_OUTPUT | GPIO_INIT_HIGH);
+	gpio_configure_pin(PWMA11_GPIO, GPIO_DIR_OUTPUT | GPIO_INIT_HIGH);
+	gpio_configure_pin(PWMA12_GPIO, GPIO_DIR_OUTPUT | GPIO_INIT_HIGH);
+	gpio_configure_pin(PWMA13_GPIO, GPIO_DIR_OUTPUT | GPIO_INIT_HIGH);
+	gpio_configure_pin(PWMA14_GPIO, GPIO_DIR_OUTPUT | GPIO_INIT_HIGH);
+	gpio_configure_pin(PWMA15_GPIO, GPIO_DIR_OUTPUT | GPIO_INIT_HIGH);
+	gpio_configure_pin(PWMA16_GPIO, GPIO_DIR_OUTPUT | GPIO_INIT_HIGH);
+	gpio_configure_pin(PWMA17_GPIO, GPIO_DIR_OUTPUT | GPIO_INIT_HIGH);
+	gpio_configure_pin(PWMA18_GPIO, GPIO_DIR_OUTPUT | GPIO_INIT_HIGH);
+	gpio_configure_pin(PWMA19_GPIO, GPIO_DIR_OUTPUT | GPIO_INIT_HIGH);
+	gpio_configure_pin(PWMA20_GPIO, GPIO_DIR_OUTPUT | GPIO_INIT_HIGH);
+	gpio_configure_pin(PWMA21_GPIO, GPIO_DIR_OUTPUT | GPIO_INIT_HIGH);
+	gpio_configure_pin(PWMA22_GPIO, GPIO_DIR_OUTPUT | GPIO_INIT_HIGH);
+	
+	gpio_configure_pin(PWMA23_GPIO, GPIO_DIR_OUTPUT | GPIO_INIT_HIGH);
+	gpio_configure_pin(PWMA24_GPIO, GPIO_DIR_OUTPUT | GPIO_INIT_HIGH);
+	gpio_configure_pin(PWMA25_GPIO, GPIO_DIR_OUTPUT | GPIO_INIT_HIGH);
+	gpio_configure_pin(PWMA26_GPIO, GPIO_DIR_OUTPUT | GPIO_INIT_HIGH);
+	gpio_configure_pin(PWMA27_GPIO, GPIO_DIR_OUTPUT | GPIO_INIT_HIGH);
+	gpio_configure_pin(PWMA28_GPIO, GPIO_DIR_OUTPUT | GPIO_INIT_HIGH);
+	gpio_configure_pin(PWMA29_GPIO, GPIO_DIR_OUTPUT | GPIO_INIT_HIGH);
+	gpio_configure_pin(PWMA30_GPIO, GPIO_DIR_OUTPUT | GPIO_INIT_HIGH);
+	gpio_configure_pin(PWMA31_GPIO, GPIO_DIR_OUTPUT | GPIO_INIT_HIGH);
+	gpio_configure_pin(PWMA32_GPIO, GPIO_DIR_OUTPUT | GPIO_INIT_HIGH);
+	gpio_configure_pin(PWMA33_GPIO, GPIO_DIR_OUTPUT | GPIO_INIT_HIGH);
+	gpio_configure_pin(PWMA34_GPIO, GPIO_DIR_OUTPUT | GPIO_INIT_HIGH);
+	gpio_configure_pin(PWMA35_GPIO, GPIO_DIR_OUTPUT | GPIO_INIT_HIGH);
+	
+	
+	/* Enable the PWMA output on the example PWM pin. */
+	gpio_enable_module_pin(PWMA11_GPIO, AVR32_PWMA_11_FUNCTION);
+	gpio_enable_module_pin(PWMA12_GPIO, AVR32_PWMA_12_FUNCTION);
+	gpio_enable_module_pin(PWMA13_GPIO, AVR32_PWMA_13_FUNCTION);
+	gpio_enable_module_pin(PWMA14_GPIO, AVR32_PWMA_14_FUNCTION);
+	gpio_enable_module_pin(PWMA15_GPIO, AVR32_PWMA_15_FUNCTION);
+	gpio_enable_module_pin(PWMA16_GPIO, AVR32_PWMA_16_FUNCTION);
+	gpio_enable_module_pin(PWMA17_GPIO, AVR32_PWMA_17_FUNCTION);
+	gpio_enable_module_pin(PWMA18_GPIO, AVR32_PWMA_18_FUNCTION);
+	gpio_enable_module_pin(PWMA19_GPIO, AVR32_PWMA_19_FUNCTION);
+	gpio_enable_module_pin(PWMA20_GPIO, AVR32_PWMA_20_FUNCTION);
+	gpio_enable_module_pin(PWMA21_GPIO, AVR32_PWMA_21_FUNCTION);
+	gpio_enable_module_pin(PWMA22_GPIO, AVR32_PWMA_22_FUNCTION);
+	
+	gpio_enable_module_pin(PWMA23_GPIO, AVR32_PWMA_23_FUNCTION);
+	gpio_enable_module_pin(PWMA24_GPIO, AVR32_PWMA_24_FUNCTION);
+	gpio_enable_module_pin(PWMA25_GPIO, AVR32_PWMA_25_FUNCTION);
+	gpio_enable_module_pin(PWMA26_GPIO, AVR32_PWMA_26_FUNCTION);
+	gpio_enable_module_pin(PWMA27_GPIO, AVR32_PWMA_27_FUNCTION);
+	gpio_enable_module_pin(PWMA28_GPIO, AVR32_PWMA_28_FUNCTION);
+	gpio_enable_module_pin(PWMA29_GPIO, AVR32_PWMA_29_FUNCTION);
+	gpio_enable_module_pin(PWMA30_GPIO, AVR32_PWMA_30_FUNCTION);
+	gpio_enable_module_pin(PWMA31_GPIO, AVR32_PWMA_31_FUNCTION);
+	gpio_enable_module_pin(PWMA32_GPIO, AVR32_PWMA_32_FUNCTION);
+	gpio_enable_module_pin(PWMA33_GPIO, AVR32_PWMA_33_FUNCTION);
+	gpio_enable_module_pin(PWMA34_GPIO, AVR32_PWMA_34_FUNCTION);
+	gpio_enable_module_pin(PWMA35_GPIO, AVR32_PWMA_35_FUNCTION);
+	
+	
+	//gpio_enable_module_pin(AVR32_PIN_PA21, AVR32_PWMA_21_FUNCTION);
+	//gpio_enable_module_pin(AVR32_PIN_PA20, AVR32_PWMA_20_FUNCTION);
+	//gpio_enable_module_pin(AVR32_PIN_PA13, AVR32_PWMA_13_FUNCTION);
 
-	// Configure the pin connected to the WAKE button as input.
-	gpio_configure_pin(GPIO_WAKE_BUTTON, GPIO_DIR_INPUT);
-
+/*
 #if defined (CONF_BOARD_COM_PORT)
 	// USART GPIO pin configuration.
 	static const gpio_map_t COMPORT_GPIO_MAP =
@@ -103,4 +136,5 @@ void board_init(void)
 	// TWI gpio pins cofiguration
 	gpio_enable_module(TWI_GPIO_MAP, sizeof(TWI_GPIO_MAP) / sizeof(TWI_GPIO_MAP[0]));
 #endif
+*/
 }

@@ -102,12 +102,6 @@
 // DEFINES GOES HERE
 
 
-
-#if !defined(EXAMPLE_PWMA_PIN) || !defined(EXAMPLE_PWMA_FUNCTION) || \
-	!defined(EXAMPLE_PWMA_CHANNEL_ID)
-# error Example PWM configuration is missing or bad, check conf_pwma_example.h
-#endif
-
 /**
  * \brief Main function. Execution starts here.
  *
@@ -117,8 +111,16 @@
 int main(void)
 {
 	struct genclk_config gcfg;
-	uint8_t duty = 0;
-
+	
+	uint8_t servo_top = 34;	//34
+	uint8_t servo_middle = 20;
+	uint8_t servo_bottom = 14;	// 8
+	
+	
+	static uint8_t duty = 10;
+	static uint8_t direction = 0;
+	
+	
 	board_init();
 	/**
 	 * \note the call to sysclk_init() will disable all non-vital
@@ -127,12 +129,12 @@ int main(void)
 	 */
 	sysclk_init();
 
+	
 	/**
 	 * Start generic clock 3 for the PWM module running at half the clock
 	 * speed of the CPU clock.
 	 */
 	genclk_enable_source(GENCLK_SRC_RC32K);
-	
 	genclk_config_defaults(&gcfg, AVR32_PM_GCLK_GCLK3);
 	genclk_config_set_source(&gcfg, GENCLK_SRC_RC32K);
 	genclk_config_set_divider(&gcfg, 2);
@@ -142,14 +144,100 @@ int main(void)
 	 * Configure the PWM channel with a TOP of 255 and a starting duty
 	 * cycle of 0.
 	 */
-	pwma_config_and_enable(&AVR32_PWMA,
-			(1 << EXAMPLE_PWMA_CHANNEL_ID), 255, 0);
-
-	/* Enable the PWMA output on the example PWM pin. */
-	gpio_enable_module_pin(EXAMPLE_PWMA_PIN, EXAMPLE_PWMA_FUNCTION);
-
+	/*
+	pwma_config_and_enable(&AVR32_PWMA, (1 << PWMA11_GPIO) 
+									  | (1 << PWMA12_GPIO) 
+									  | (1 << PWMA13_GPIO)
+									  | (1 << PWMA14_GPIO)
+									  | (1 << PWMA15_GPIO)
+									  | (1 << PWMA16_GPIO)
+									  | (1 << PWMA17_GPIO)
+									  | (1 << PWMA18_GPIO)
+									  | (1 << PWMA19_GPIO)
+									  | (1 << PWMA20_GPIO)
+									  | (1 << PWMA21_GPIO)
+									  | (1 << PWMA22_GPIO)
+									  | (1 << PWMA23_GPIO)
+									  | (1 << PWMA24_GPIO)
+									  | (1 << PWMA25_GPIO)
+									  | (1 << PWMA26_GPIO)
+									  | (1 << PWMA27_GPIO)
+									  | (1 << PWMA28_GPIO)
+									  | (1 << PWMA29_GPIO)
+									  | (1 << PWMA30_GPIO)
+									  | (1 << PWMA31_GPIO)
+									  | (1 << PWMA32_GPIO)
+									  | (1 << PWMA33_GPIO)
+									  | (1 << PWMA34_GPIO)
+									  | (1 << PWMA35_GPIO)
+									  , 255, 0);   
+	*/
+	
+	pwma_config_and_enable(&AVR32_PWMA,   (1 << 11)
+										| (1 << 12)
+										| (1 << 13)
+										| (1 << 14)
+										| (1 << 15)
+										| (1 << 16)
+										| (1 << 17)
+										| (1 << 18)
+										| (1 << 19)
+										| (1 << 20)
+										| (1 << 21)
+										| (1 << 22)
+										| (1 << 23)
+										| (1 << 24)
+										| (1 << 25)
+										| (1 << 26)
+										| (1 << 27)
+										| (1 << 28)
+										| (1 << 29)
+										| (1 << 30)
+										| (1 << 31)
+										| (1 << 32)
+										| (1 << 33)
+										| (1 << 34)
+										| (1 << 35)
+										, 255, 0);
+	
+	//pwma_config_and_enable(&AVR32_PWMA, (1 << PWM_CH7), 255, 0);   
+	
 	/* Initialize the delay routine by providing the CPU clock speed. */
 	delay_init(sysclk_get_cpu_hz());
+	
+	delay_ms(100);
+	
+	///pwma_set_channels_value(&AVR32_PWMA, (1 << PWM_CH5), servo_middle);
+	///pwma_set_channels_value(&AVR32_PWMA, (1 << PWM_CH6), servo_middle);
+	///pwma_set_channels_value(&AVR32_PWMA, (1 << PWM_CH7), servo_middle);
+	
+	pwma_set_channels_value(&AVR32_PWMA, (1 << 11), servo_middle);
+	pwma_set_channels_value(&AVR32_PWMA, (1 << 12), servo_middle);
+	pwma_set_channels_value(&AVR32_PWMA, (1 << 13), servo_middle);
+	pwma_set_channels_value(&AVR32_PWMA, (1 << 14), servo_middle);
+	pwma_set_channels_value(&AVR32_PWMA, (1 << 15), servo_middle);
+	pwma_set_channels_value(&AVR32_PWMA, (1 << 16), servo_middle);
+	pwma_set_channels_value(&AVR32_PWMA, (1 << 17), servo_middle);
+	pwma_set_channels_value(&AVR32_PWMA, (1 << 18), servo_middle);
+	pwma_set_channels_value(&AVR32_PWMA, (1 << 19), servo_middle);
+	pwma_set_channels_value(&AVR32_PWMA, (1 << 20), servo_middle);
+	pwma_set_channels_value(&AVR32_PWMA, (1 << 21), servo_middle);
+	pwma_set_channels_value(&AVR32_PWMA, (1 << 22), servo_middle);
+	/*
+	pwma_set_channels_value(&AVR32_PWMA, (1 << 23), servo_middle);
+	pwma_set_channels_value(&AVR32_PWMA, (1 << 24), servo_middle);
+	pwma_set_channels_value(&AVR32_PWMA, (1 << 25), servo_middle);
+	pwma_set_channels_value(&AVR32_PWMA, (1 << 26), servo_middle);
+	pwma_set_channels_value(&AVR32_PWMA, (1 << 27), servo_middle);
+	pwma_set_channels_value(&AVR32_PWMA, (1 << 28), servo_middle);
+	pwma_set_channels_value(&AVR32_PWMA, (1 << 29), servo_middle);
+	pwma_set_channels_value(&AVR32_PWMA, (1 << 30), servo_middle);
+	pwma_set_channels_value(&AVR32_PWMA, (1 << 31), servo_middle);
+	pwma_set_channels_value(&AVR32_PWMA, (1 << 32), servo_middle);
+	pwma_set_channels_value(&AVR32_PWMA, (1 << 33), servo_middle);
+	pwma_set_channels_value(&AVR32_PWMA, (1 << 34), servo_middle);
+	pwma_set_channels_value(&AVR32_PWMA, (1 << 35), servo_middle);
+	*/
 	
 	for (;;) {
 		/**
@@ -157,14 +245,65 @@ int main(void)
 		 * increment the duty cycle by one. Since the duty variable is
 		 * an uint8_t type it will wrap around at 255 and go to zero.
 		 */
-		duty += 1;
-		pwma_set_channels_value(&AVR32_PWMA,
-				(1 << EXAMPLE_PWMA_CHANNEL_ID), duty);
+		
+		/*** CALCULATE LEG POSITIONS ****/
+		if(duty >= servo_bottom && duty <= servo_top && direction == 0)
+		{
+			duty += 1;
+		}
+		else
+		{
+			if(duty >= servo_bottom)
+			{
+				duty -= 1;
+				direction = 1;	
+			}
+			else
+			{
+				duty = servo_bottom;
+				direction = 0;
+			}
+		}
 
-		/**
-		 * Busy-wait the CPU for a short instance so that the PWM duty
-		 * cycle change is visual on the LED wired to the PWMA channel.
-		 */
-		delay_ms(10);
+		/*** CALCULATE LEG POSITIONS ****/
+		
+		
+		/*** MOVE LEGS ****/
+		//pwma_set_channels_value(&AVR32_PWMA, (1 << PWM_CH5), duty);
+		//delay_ms(100);
+		//pwma_set_channels_value(&AVR32_PWMA, (1 << PWM_CH6), duty);
+		//delay_ms(100);
+		//pwma_set_channels_value(&AVR32_PWMA, (1 << PWM_CH7), duty);
+		
+		pwma_set_channels_value(&AVR32_PWMA, (1 << 11), duty);
+		pwma_set_channels_value(&AVR32_PWMA, (1 << 12), duty);
+		pwma_set_channels_value(&AVR32_PWMA, (1 << 13), duty);
+		pwma_set_channels_value(&AVR32_PWMA, (1 << 14), duty);
+		pwma_set_channels_value(&AVR32_PWMA, (1 << 15), duty);
+		pwma_set_channels_value(&AVR32_PWMA, (1 << 16), duty);
+		pwma_set_channels_value(&AVR32_PWMA, (1 << 17), duty);
+		pwma_set_channels_value(&AVR32_PWMA, (1 << 18), duty);
+		pwma_set_channels_value(&AVR32_PWMA, (1 << 19), duty);
+		pwma_set_channels_value(&AVR32_PWMA, (1 << 20), duty);
+		pwma_set_channels_value(&AVR32_PWMA, (1 << 21), duty);
+		pwma_set_channels_value(&AVR32_PWMA, (1 << 22), duty);
+		/*
+		pwma_set_channels_value(&AVR32_PWMA, (1 << 23), duty);
+		pwma_set_channels_value(&AVR32_PWMA, (1 << 24), duty);
+		pwma_set_channels_value(&AVR32_PWMA, (1 << 25), duty);
+		pwma_set_channels_value(&AVR32_PWMA, (1 << 26), duty);
+		pwma_set_channels_value(&AVR32_PWMA, (1 << 27), duty);
+		pwma_set_channels_value(&AVR32_PWMA, (1 << 28), duty);
+		pwma_set_channels_value(&AVR32_PWMA, (1 << 29), duty);
+		pwma_set_channels_value(&AVR32_PWMA, (1 << 30), duty);
+		pwma_set_channels_value(&AVR32_PWMA, (1 << 31), duty);
+		pwma_set_channels_value(&AVR32_PWMA, (1 << 32), duty);
+		pwma_set_channels_value(&AVR32_PWMA, (1 << 33), duty);
+		pwma_set_channels_value(&AVR32_PWMA, (1 << 34), duty);
+		pwma_set_channels_value(&AVR32_PWMA, (1 << 35), duty);
+		*/
+
+		delay_ms(100);
+		/*** MOVE LEGS ****/
 	}
 }
