@@ -80,37 +80,94 @@
 
 //! The ADVREF value in Volt == VDDANA
 #define AT32UC3L_EK_ADVREF_V      (1.8F)
-
 //! @}
-
-
-//! Number of LEDs.
-#define LED_COUNT   4
 
 /*! \name GPIO Connections of LEDs
  */
 //! @{
-#  define LED0_GPIO   AVR32_PIN_PA21
-#  define LED1_GPIO   AVR32_PIN_PB10
-#  define LED3_GPIO   AVR32_PIN_PB03
-#if defined(UC3L_EK_REV1)
-#  define LED2_GPIO   AVR32_PIN_PA15
-#else // UC3L_EK_REV2
-#  define LED2_GPIO   AVR32_PIN_PB02
-#endif
+#define PWMA11_GPIO   AVR32_PIN_PA11
+#define PWMA12_GPIO   AVR32_PIN_PA12
+#define PWMA13_GPIO   AVR32_PIN_PA13
+#define PWMA14_GPIO   AVR32_PIN_PA14
+#define PWMA15_GPIO   AVR32_PIN_PA15
+#define PWMA16_GPIO   AVR32_PIN_PA16
+#define PWMA17_GPIO   AVR32_PIN_PA17
+#define PWMA18_GPIO   AVR32_PIN_PA18
+#define PWMA19_GPIO   AVR32_PIN_PA19
+#define PWMA20_GPIO   AVR32_PIN_PA20
+#define PWMA21_GPIO   AVR32_PIN_PA21
+#define PWMA22_GPIO   AVR32_PIN_PA22
+
+#define PWMA23_GPIO   AVR32_PIN_PB00
+#define PWMA24_GPIO   AVR32_PIN_PB01
+#define PWMA25_GPIO   AVR32_PIN_PB02
+#define PWMA26_GPIO   AVR32_PIN_PB03
+#define PWMA27_GPIO   AVR32_PIN_PB04
+#define PWMA28_GPIO   AVR32_PIN_PB05
+#define PWMA29_GPIO   AVR32_PIN_PB06
+#define PWMA30_GPIO   AVR32_PIN_PB07
+#define PWMA31_GPIO   AVR32_PIN_PB08
+#define PWMA32_GPIO   AVR32_PIN_PB09
+#define PWMA33_GPIO   AVR32_PIN_PB10
+#define PWMA34_GPIO   AVR32_PIN_PB11
+#define PWMA35_GPIO   AVR32_PIN_PB12
 //! @}
 
 /*! \name PWM Channels of LEDs
  */
 //! @{
-#define LED0_PWM      21
-#define LED1_PWM      33
-#define LED3_PWM      26
-#if defined(UC3L_EK_REV1)
-#define LED2_PWM      15
-#else // UC3L_EK_REV2
-#define LED2_PWM      25
-#endif
+/* OLD DEFINE
+#define PWM_CH1		22	//A22
+#define PWM_CH2		5	//B05
+#define PWM_CH3		4	//B04
+#define PWM_CH4		10	//B10
+#define PWM_CH5		21	//A21
+#define PWM_CH6		20	//A20
+#define PWM_CH7		13	//A13
+#define PWM_CH8		11	//A11
+#define PWM_CH9		9	//B09
+#define PWM_CH10	6	//B06
+#define PWM_CH11	7	//B07
+#define PWM_CH12	8	//B08
+
+#define PWM_CH13	3	//B03
+#define PWM_CH14	2	//B02
+#define PWM_CH15	0	//B00
+#define PWM_CH16	12	//B12
+#define PWM_CH17	9	//A09
+#define PWM_CH18	12	//A12
+#define PWM_CH19	11	//B11
+#define PWM_CH20	18	//A18
+#define PWM_CH21	19	//A19
+#define PWM_CH22	17	//A17
+#define PWM_CH23	16	//A16
+#define PWM_CH24	15	//A15
+*/
+#define PWM_CH1		22	//A22
+#define PWM_CH2		28	//B05
+#define PWM_CH3		27	//B04
+#define PWM_CH4		33	//B10
+#define PWM_CH5		21	//A21
+#define PWM_CH6		20	//A20
+#define PWM_CH7		13	//A13
+#define PWM_CH8		11	//A11
+#define PWM_CH9		32	//B09
+#define PWM_CH10	29	//B06
+#define PWM_CH11	30	//B07
+#define PWM_CH12	31	//B08
+
+#define PWM_CH13	26	//B03
+#define PWM_CH14	25	//B02
+#define PWM_CH15	23	//B00
+#define PWM_CH16	35	//B12
+#define PWM_CH17	9	//A09
+#define PWM_CH18	12	//A12
+#define PWM_CH19	34	//B11
+#define PWM_CH20	18	//A18
+#define PWM_CH21	19	//A19
+#define PWM_CH22	17	//A17
+#define PWM_CH23	16	//A16
+#define PWM_CH24	15	//A15
 //! @}
 
 /*! \name PWM Functions of LEDs
@@ -125,22 +182,12 @@
 #endif
 
 
-#define LED0_PWM_FUNCTION   AVR32_PWMA_21_FUNCTION
-#define LED1_PWM_FUNCTION   AVR32_PWMA_33_FUNCTION
-#define LED3_PWM_FUNCTION   AVR32_PWMA_26_FUNCTION
-#if defined(UC3L_EK_REV1)
-#define LED2_PWM_FUNCTION   AVR32_PWMA_15_FUNCTION
-#else
-#define LED2_PWM_FUNCTION   AVR32_PWMA_25_FUNCTION
-#endif
-
 //! @}
 
 /*! \name GPIO Connections of Push Buttons
  */
 //! @{
-#define GPIO_WAKE_BUTTON          AVR32_PIN_PA11
-#define GPIO_WAKE_BUTTON_PRESSED  0
+
 //! @}
 
 /*! \name SPI Connections of the AT45DBX Data Flash Memory

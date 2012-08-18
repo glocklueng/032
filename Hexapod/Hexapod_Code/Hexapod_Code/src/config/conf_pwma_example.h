@@ -45,11 +45,7 @@
  * \name PWM example configuration
  */
 //! @{
-#define EXAMPLE_PWMA_PIN        LED0_GPIO
-#define EXAMPLE_PWMA_FUNCTION   LED0_PWM_FUNCTION
-#define EXAMPLE_PWMA_CHANNEL_ID LED0_PWM
 
-#define EXAMPLE_PWMA_CHANNEL_GCLK AVR32_PM_GCLK_GCLK3
 //! @}
 
 #endif /* _CONF_PWMA_EXAMPLE_H_ */
