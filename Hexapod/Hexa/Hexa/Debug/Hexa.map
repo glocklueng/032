@@ -546,7 +546,7 @@ LOAD c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0
 .plt
  *(.plt)
 
-.text           0x80002004      0xbd2
+.text           0x80002004      0xbfa
  *(.text .stub .text.* .gnu.linkonce.t.*)
  .text.flashcdw_set_wait_state
                 0x80002004        0xe src/asf/avr32/drivers/flashcdw/flashcdw.o
@@ -645,11 +645,11 @@ LOAD c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0
  .text._stext   0x8000282c       0x3c src/asf/avr32/utils/startup/startup_uc3.o
                                  0x50 (size before relaxing)
                 0x8000282c                _stext
- .text.main     0x80002868       0xdc src/pwma_example.o
+ .text.main     0x80002868      0x104 src/pwma_example.o
                 0x80002868                main
- .text          0x80002944      0x292 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr32/4.4.3/ucr3\libgcc.a(_udivdi3.o)
-                0x80002944                __avr32_udiv64
-                0x80002944                __udivdi3
+ .text          0x8000296c      0x292 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr32/4.4.3/ucr3\libgcc.a(_udivdi3.o)
+                0x8000296c                __avr32_udiv64
+                0x8000296c                __udivdi3
  *(.text.*personality*)
  *(.gnu.warning)
 
@@ -951,7 +951,7 @@ LOAD c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0
  .debug_pubnames
                 0x000011f4       0x20 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr32/4.4.3/ucr3\libgcc.a(_udivdi3.o)
 
-.debug_info     0x00000000     0x8f62
+.debug_info     0x00000000     0x8f9b
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000     0x1dd2 src/asf/avr32/drivers/flashcdw/flashcdw.o
  .debug_info    0x00001dd2      0xedb src/asf/avr32/drivers/gpio/gpio.o
@@ -963,8 +963,8 @@ LOAD c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0
  .debug_info    0x00004f67     0x2f72 src/asf/avr32/drivers/scif/scif_uc3l.o
  .debug_info    0x00007ed9       0x87 src/asf/avr32/utils/startup/startup_uc3.o
  .debug_info    0x00007f60       0x8e src/asf/avr32/utils/startup/trampoline_uc3.o
- .debug_info    0x00007fee      0xa01 src/pwma_example.o
- .debug_info    0x000089ef      0x573 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr32/4.4.3/ucr3\libgcc.a(_udivdi3.o)
+ .debug_info    0x00007fee      0xa3a src/pwma_example.o
+ .debug_info    0x00008a28      0x573 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr32/4.4.3/ucr3\libgcc.a(_udivdi3.o)
 
 .debug_abbrev   0x00000000     0x13cd
  *(.debug_abbrev)
@@ -981,7 +981,7 @@ LOAD c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0
  .debug_abbrev  0x0000100d      0x26f src/pwma_example.o
  .debug_abbrev  0x0000127c      0x151 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr32/4.4.3/ucr3\libgcc.a(_udivdi3.o)
 
-.debug_line     0x00000000     0x4979
+.debug_line     0x00000000     0x4980
  *(.debug_line)
  .debug_line    0x00000000      0xcc2 src/asf/avr32/drivers/flashcdw/flashcdw.o
  .debug_line    0x00000cc2      0x941 src/asf/avr32/drivers/gpio/gpio.o
@@ -993,10 +993,10 @@ LOAD c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0
  .debug_line    0x000033f1      0x920 src/asf/avr32/drivers/scif/scif_uc3l.o
  .debug_line    0x00003d11       0xf2 src/asf/avr32/utils/startup/startup_uc3.o
  .debug_line    0x00003e03       0x67 src/asf/avr32/utils/startup/trampoline_uc3.o
- .debug_line    0x00003e6a      0x92a src/pwma_example.o
- .debug_line    0x00004794      0x1e5 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr32/4.4.3/ucr3\libgcc.a(_udivdi3.o)
+ .debug_line    0x00003e6a      0x931 src/pwma_example.o
+ .debug_line    0x0000479b      0x1e5 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr32/4.4.3/ucr3\libgcc.a(_udivdi3.o)
 
-.debug_frame    0x00000000      0xea8
+.debug_frame    0x00000000      0xeac
  *(.debug_frame)
  .debug_frame   0x00000000      0x754 src/asf/avr32/drivers/flashcdw/flashcdw.o
  .debug_frame   0x00000754      0x238 src/asf/avr32/drivers/gpio/gpio.o
@@ -1005,10 +1005,10 @@ LOAD c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0
  .debug_frame   0x00000aa8       0xdc src/asf/avr32/drivers/pm/power_clocks_lib.o
  .debug_frame   0x00000b84       0x70 src/asf/avr32/drivers/pwma/pwma.o
  .debug_frame   0x00000bf4      0x234 src/asf/avr32/drivers/scif/scif_uc3l.o
- .debug_frame   0x00000e28       0x3c src/pwma_example.o
- .debug_frame   0x00000e64       0x44 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr32/4.4.3/ucr3\libgcc.a(_udivdi3.o)
+ .debug_frame   0x00000e28       0x40 src/pwma_example.o
+ .debug_frame   0x00000e68       0x44 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr32/4.4.3/ucr3\libgcc.a(_udivdi3.o)
 
-.debug_str      0x00000000     0x3264
+.debug_str      0x00000000     0x3288
  *(.debug_str)
  .debug_str     0x00000000      0xd59 src/asf/avr32/drivers/flashcdw/flashcdw.o
                                 0xe5f (size before relaxing)
@@ -1024,9 +1024,9 @@ LOAD c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0
                                 0x375 (size before relaxing)
  .debug_str     0x00002373      0xc6e src/asf/avr32/drivers/scif/scif_uc3l.o
                                0x12af (size before relaxing)
- .debug_str     0x00002fe1      0x15d src/pwma_example.o
-                                0x66a (size before relaxing)
- .debug_str     0x0000313e      0x126 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr32/4.4.3/ucr3\libgcc.a(_udivdi3.o)
+ .debug_str     0x00002fe1      0x181 src/pwma_example.o
+                                0x6a0 (size before relaxing)
+ .debug_str     0x00003162      0x126 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr32/4.4.3/ucr3\libgcc.a(_udivdi3.o)
                                 0x1db (size before relaxing)
 
 .debug_loc      0x00000000     0x2902

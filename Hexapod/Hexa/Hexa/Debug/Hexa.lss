@@ -7,7 +7,7 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
   1 .rela.got     00000000  80002004  80002004  00002404  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  2 .text         00000bd2  80002004  80002004  00002404  2**2
+  2 .text         00000bfa  80002004  80002004  00002404  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
   3 .exception    00000200  80002c00  80002c00  00003000  2**9
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
@@ -27,23 +27,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
  11 .debug_pubnames 00001214  00000000  00000000  00003a78  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_info   00008f62  00000000  00000000  00004c8c  2**0
+ 12 .debug_info   00008f9b  00000000  00000000  00004c8c  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_abbrev 000013cd  00000000  00000000  0000dbee  2**0
+ 13 .debug_abbrev 000013cd  00000000  00000000  0000dc27  2**0
                   CONTENTS, READONLY, DEBUGGING
- 14 .debug_line   00004979  00000000  00000000  0000efbb  2**0
+ 14 .debug_line   00004980  00000000  00000000  0000eff4  2**0
                   CONTENTS, READONLY, DEBUGGING
- 15 .debug_frame  00000ea8  00000000  00000000  00013934  2**2
+ 15 .debug_frame  00000eac  00000000  00000000  00013974  2**2
                   CONTENTS, READONLY, DEBUGGING
- 16 .debug_str    00003264  00000000  00000000  000147dc  2**0
+ 16 .debug_str    00003288  00000000  00000000  00014820  2**0
                   CONTENTS, READONLY, DEBUGGING
- 17 .debug_loc    00002902  00000000  00000000  00017a40  2**0
+ 17 .debug_loc    00002902  00000000  00000000  00017aa8  2**0
                   CONTENTS, READONLY, DEBUGGING
- 18 .debug_macinfo 00557f12  00000000  00000000  0001a342  2**0
+ 18 .debug_macinfo 00557f12  00000000  00000000  0001a3aa  2**0
                   CONTENTS, READONLY, DEBUGGING
  19 .stack        00001000  00003000  00003000  00000000  2**0
                   ALLOC
- 20 .debug_ranges 00000658  00000000  00000000  00572258  2**3
+ 20 .debug_ranges 00000658  00000000  00000000  005722c0  2**3
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .reset:
@@ -1534,7 +1534,7 @@ long int scif_dfll0_closedloop_configure_and_start( const scif_gclk_opt_t *gc_df
 80002780:	80 00       	ld.sh	r0,r0[0x0]
 80002782:	24 10       	sub	r0,65
 80002784:	80 00       	ld.sh	r0,r0[0x0]
-80002786:	29 44       	sub	r4,-108
+80002786:	29 6c       	sub	r12,-106
 80002788:	80 00       	ld.sh	r0,r0[0x0]
 8000278a:	25 8c       	sub	r12,88
 
@@ -1734,394 +1734,427 @@ udata_clear_loop:
 80002866:	d7 03       	nop
 
 80002868 <main>:
-
-
+    while(1); 
+  }
 }
 
 int main(void)
 {
-80002868:	eb cd 40 ef 	pushm	r0-r3,r5-r7,lr
+80002868:	d4 31       	pushm	r0-r7,lr
+
 static unsigned long init_clock( unsigned long cpuclk_hz )
 {
   unsigned long ret_val = 0u;
-
-  // Program the DFLL and switch the main clock source to the DFLL.
+  
   pcl_configure_clocks(&pcl_dfll_freq_param);
-8000286c:	4a ec       	lddpc	r12,80002924 <main+0xbc>
-8000286e:	f0 1f 00 2f 	mcall	80002928 <main+0xc0>
+8000286a:	4b 9c       	lddpc	r12,8000294c <main+0xe4>
+8000286c:	f0 1f 00 39 	mcall	80002950 <main+0xe8>
+
 int main(void)
 {
 	init_system();
 	
-	
 	gpio_enable_module_pin(LED0_GPIO, LED0_PWM_FUNCTION);
-80002872:	30 4b       	mov	r11,4
-80002874:	31 5c       	mov	r12,21
-80002876:	f0 1f 00 2e 	mcall	8000292c <main+0xc4>
+80002870:	30 4b       	mov	r11,4
+80002872:	31 5c       	mov	r12,21
+80002874:	f0 1f 00 38 	mcall	80002954 <main+0xec>
 	gpio_enable_module_pin(LED1_GPIO, LED1_PWM_FUNCTION);
-8000287a:	30 4b       	mov	r11,4
-8000287c:	31 4c       	mov	r12,20
-8000287e:	f0 1f 00 2c 	mcall	8000292c <main+0xc4>
+80002878:	30 4b       	mov	r11,4
+8000287a:	31 4c       	mov	r12,20
+8000287c:	f0 1f 00 36 	mcall	80002954 <main+0xec>
 	gpio_enable_module_pin(LED2_GPIO, LED2_PWM_FUNCTION);
-80002882:	30 4b       	mov	r11,4
-80002884:	32 2c       	mov	r12,34
-80002886:	f0 1f 00 2a 	mcall	8000292c <main+0xc4>
+80002880:	30 4b       	mov	r11,4
+80002882:	32 2c       	mov	r12,34
+80002884:	f0 1f 00 34 	mcall	80002954 <main+0xec>
 	gpio_enable_module_pin(LED3_GPIO, LED3_PWM_FUNCTION);
-8000288a:	30 4b       	mov	r11,4
-8000288c:	30 dc       	mov	r12,13
-8000288e:	f0 1f 00 28 	mcall	8000292c <main+0xc4>
+80002888:	30 4b       	mov	r11,4
+8000288a:	30 dc       	mov	r12,13
+8000288c:	f0 1f 00 32 	mcall	80002954 <main+0xec>
 	
-	////scif_start_rc120M();
 	scif_start_rc32k();
-80002892:	f0 1f 00 28 	mcall	80002930 <main+0xc8>
-	// Setup the generic clock at 120MHz
-	scif_gc_setup(  AVR32_PM_GCLK_PWMA, // The generic clock to setup
-80002896:	30 29       	mov	r9,2
-80002898:	30 1a       	mov	r10,1
-8000289a:	30 9b       	mov	r11,9
-8000289c:	30 3c       	mov	r12,3
-8000289e:	f0 1f 00 26 	mcall	80002934 <main+0xcc>
-					SCIF_GCCTRL_RC32K, // The input clock source to use for the generic clock  SCIF_GCCTRL_RC120M
-					true,              // Disable the generic clock divisor
-					2);                 // divfactor = DFLL0freq/gclkfreq
-	// Enable the generic clock
+80002890:	f0 1f 00 32 	mcall	80002958 <main+0xf0>
+	scif_gc_setup(  AVR32_PM_GCLK_PWMA, 
+80002894:	30 29       	mov	r9,2
+80002896:	30 1a       	mov	r10,1
+80002898:	30 9b       	mov	r11,9
+8000289a:	30 3c       	mov	r12,3
+8000289c:	f0 1f 00 30 	mcall	8000295c <main+0xf4>
+					SCIF_GCCTRL_RC32K, 
+					true,              
+					2);                 
 	scif_gc_enable(AVR32_PM_GCLK_PWMA);
-800028a2:	30 3c       	mov	r12,3
-800028a4:	f0 1f 00 25 	mcall	80002938 <main+0xd0>
+800028a0:	30 3c       	mov	r12,3
+800028a2:	f0 1f 00 30 	mcall	80002960 <main+0xf8>
 
-	//#
-	//# Enable all the PWMAs to output to all LEDs. LEDs are default turned on by
-	//# setting PWM duty cycles to 0.
-	//#
 	pwma_config_and_enable( &AVR32_PWMA, (1 << 20) | (1 << 21) | (1 << 13) | (1 << 34), PWMA_PERIOD_CYCLES, PWMA_DUTY_CYCLE_INIT_VAL );
-800028a8:	30 08       	mov	r8,0
-800028aa:	e0 69 00 ff 	mov	r9,255
-800028ae:	e0 6a 20 04 	mov	r10,8196
-800028b2:	ea 1a 00 30 	orh	r10,0x30
-800028b6:	30 0b       	mov	r11,0
-800028b8:	fe 7c 54 00 	mov	r12,-44032
-800028bc:	f0 1f 00 20 	mcall	8000293c <main+0xd4>
-800028c0:	30 09       	mov	r9,0
-800028c2:	e0 67 00 fe 	mov	r7,254
-		///for(i=0; i<LED_COUNT;i++)
-		///duty_cycles_per_led[i] = current_duty_cycle;
-		
-		///////pwma_set_channels_value(&AVR32_PWMA, (1 << 20) | (1 << 21) | (1 << 13) | (1 << 34), current_duty_cycle++);
-		
-		pwma_set_channels_value(&AVR32_PWMA, (1 << 20) | (1 << 21), current_duty_cycle++);
-800028c6:	fc 12 00 30 	movh	r2,0x30
-800028ca:	30 03       	mov	r3,0
-800028cc:	fe 76 54 00 	mov	r6,-44032
-		pwma_set_channels_value(&AVR32_PWMA, (1 << 13) | (1 << 34), 0xFF-current_duty_cycle);
-800028d0:	e0 60 20 04 	mov	r0,8196
-800028d4:	30 01       	mov	r1,0
-800028d6:	c0 38       	rjmp	800028dc <main+0x74>
+800028a6:	30 08       	mov	r8,0
+800028a8:	e0 69 00 ff 	mov	r9,255
+800028ac:	e0 6a 20 04 	mov	r10,8196
+800028b0:	ea 1a 00 30 	orh	r10,0x30
+800028b4:	30 0b       	mov	r11,0
+800028b6:	fe 7c 54 00 	mov	r12,-44032
+800028ba:	f0 1f 00 2b 	mcall	80002964 <main+0xfc>
+800028be:	30 02       	mov	r2,0
+800028c0:	04 97       	mov	r7,r2
+	uint8_t direction = 0;
+	
+	do
+	{
+		/*** CALCULATE LEG POSITIONS ****/
+		if(current_duty_cycle >= servo_bottom && current_duty_cycle <= servo_top && direction == 0)
+800028c2:	30 d5       	mov	r5,13
+800028c4:	32 24       	mov	r4,34
+800028c6:	30 03       	mov	r3,0
+			}
+		}
 
-	//#
-	//# Enable all the PWMAs to output to all LEDs. LEDs are default turned on by
-	//# setting PWM duty cycles to 0.
-	//#
-	pwma_config_and_enable( &AVR32_PWMA, (1 << 20) | (1 << 21) | (1 << 13) | (1 << 34), PWMA_PERIOD_CYCLES, PWMA_DUTY_CYCLE_INIT_VAL );
-800028d8:	20 17       	sub	r7,1
-800028da:	0a 99       	mov	r9,r5
-		///for(i=0; i<LED_COUNT;i++)
-		///duty_cycles_per_led[i] = current_duty_cycle;
+		/*** CALCULATE LEG POSITIONS ****/
 		
-		///////pwma_set_channels_value(&AVR32_PWMA, (1 << 20) | (1 << 21) | (1 << 13) | (1 << 34), current_duty_cycle++);
+		pwma_set_channels_value(&AVR32_PWMA, (1 << 20) | (1 << 21), current_duty_cycle);
+800028c8:	fc 10 00 30 	movh	r0,0x30
+800028cc:	30 01       	mov	r1,0
+800028ce:	fe 76 54 00 	mov	r6,-44032
+	uint8_t direction = 0;
+	
+	do
+	{
+		/*** CALCULATE LEG POSITIONS ****/
+		if(current_duty_cycle >= servo_bottom && current_duty_cycle <= servo_top && direction == 0)
+800028d2:	ea 07 18 00 	cp.b	r7,r5
+800028d6:	5f b8       	srhi	r8
+800028d8:	e8 07 18 00 	cp.b	r7,r4
+800028dc:	5f 89       	srls	r9
+800028de:	f1 e9 00 09 	and	r9,r8,r9
+800028e2:	e6 09 18 00 	cp.b	r9,r3
+800028e6:	c0 60       	breq	800028f2 <main+0x8a>
+800028e8:	58 02       	cp.w	r2,0
+800028ea:	c0 41       	brne	800028f2 <main+0x8a>
+		{
+			current_duty_cycle += 1;
+800028ec:	2f f7       	sub	r7,-1
+800028ee:	5c 57       	castu.b	r7
+	uint8_t direction = 0;
+	
+	do
+	{
+		/*** CALCULATE LEG POSITIONS ****/
+		if(current_duty_cycle >= servo_bottom && current_duty_cycle <= servo_top && direction == 0)
+800028f0:	c0 98       	rjmp	80002902 <main+0x9a>
+		{
+			current_duty_cycle += 1;
+		}
+		else
+		{
+			if(current_duty_cycle >= servo_bottom)
+800028f2:	58 08       	cp.w	r8,0
+800028f4:	c0 41       	brne	800028fc <main+0x94>
+800028f6:	30 02       	mov	r2,0
+800028f8:	30 e7       	mov	r7,14
+800028fa:	c0 48       	rjmp	80002902 <main+0x9a>
+			{
+				current_duty_cycle -= 1;
+800028fc:	20 17       	sub	r7,1
+800028fe:	5c 57       	castu.b	r7
+80002900:	30 12       	mov	r2,1
+			}
+		}
+
+		/*** CALCULATE LEG POSITIONS ****/
 		
-		pwma_set_channels_value(&AVR32_PWMA, (1 << 20) | (1 << 21), current_duty_cycle++);
-800028dc:	f2 c5 ff ff 	sub	r5,r9,-1
-800028e0:	04 9a       	mov	r10,r2
-800028e2:	06 9b       	mov	r11,r3
-800028e4:	0c 9c       	mov	r12,r6
-800028e6:	f0 1f 00 17 	mcall	80002940 <main+0xd8>
-		pwma_set_channels_value(&AVR32_PWMA, (1 << 13) | (1 << 34), 0xFF-current_duty_cycle);
-800028ea:	0e 99       	mov	r9,r7
-800028ec:	00 9a       	mov	r10,r0
-800028ee:	02 9b       	mov	r11,r1
-800028f0:	0c 9c       	mov	r12,r6
-800028f2:	f0 1f 00 14 	mcall	80002940 <main+0xd8>
+		pwma_set_channels_value(&AVR32_PWMA, (1 << 20) | (1 << 21), current_duty_cycle);
+80002902:	0e 99       	mov	r9,r7
+80002904:	00 9a       	mov	r10,r0
+80002906:	02 9b       	mov	r11,r1
+80002908:	0c 9c       	mov	r12,r6
+8000290a:	f0 1f 00 18 	mcall	80002968 <main+0x100>
+		pwma_set_channels_value(&AVR32_PWMA, (1 << 13) | (1 << 34), current_duty_cycle);
+8000290e:	0e 99       	mov	r9,r7
+80002910:	e0 6a 20 04 	mov	r10,8196
+80002914:	30 0b       	mov	r11,0
+80002916:	0c 9c       	mov	r12,r6
+80002918:	f0 1f 00 14 	mcall	80002968 <main+0x100>
 #if (defined __GNUC__)
 __attribute__((__always_inline__))
 #endif
 static inline void cpu_set_timeout(unsigned long delay, t_cpu_time *cpu_time)
 {
   cpu_time->delay_start_cycle = Get_system_register(AVR32_COUNT);
-800028f6:	e1 b8 00 42 	mfsr	r8,0x108
+8000291c:	e1 b8 00 42 	mfsr	r8,0x108
   cpu_time->delay_end_cycle   = cpu_time->delay_start_cycle + delay;
-800028fa:	e6 69 dd d0 	mov	r9,450000
-800028fe:	f0 09 00 0a 	add	r10,r8,r9
+80002920:	e6 69 dd d0 	mov	r9,450000
+80002924:	f0 09 00 0a 	add	r10,r8,r9
 #if (defined __GNUC__)
 __attribute__((__always_inline__))
 #endif
 static inline unsigned long cpu_is_timeout(t_cpu_time *cpu_time)
 {
   unsigned long current_cycle_count = Get_system_register(AVR32_COUNT);
-80002902:	e1 b9 00 42 	mfsr	r9,0x108
+80002928:	e1 b9 00 42 	mfsr	r9,0x108
   // Test if the timeout as already occured.
   else if (cpu_time->timer_state == CPU_TIMER_STATE_REACHED)
     return true;
 
   // If the ending cycle count of this timeout is wrapped, ...
   else if (cpu_time->delay_start_cycle > cpu_time->delay_end_cycle)
-80002906:	14 38       	cp.w	r8,r10
-80002908:	e0 88 00 08 	brls	80002918 <main+0xb0>
+8000292c:	14 38       	cp.w	r8,r10
+8000292e:	e0 88 00 08 	brls	8000293e <main+0xd6>
   {
     if (current_cycle_count < cpu_time->delay_start_cycle && current_cycle_count > cpu_time->delay_end_cycle)
-8000290c:	12 38       	cp.w	r8,r9
-8000290e:	fe 98 ff fa 	brls	80002902 <main+0x9a>
-80002912:	12 3a       	cp.w	r10,r9
-80002914:	ce 23       	brcs	800028d8 <main+0x70>
-80002916:	cf 6b       	rjmp	80002902 <main+0x9a>
+80002932:	12 38       	cp.w	r8,r9
+80002934:	fe 98 ff fa 	brls	80002928 <main+0xc0>
+80002938:	12 3a       	cp.w	r10,r9
+8000293a:	cc c3       	brcs	800028d2 <main+0x6a>
+8000293c:	cf 6b       	rjmp	80002928 <main+0xc0>
     }
     return false;
   }
   else
   {
     if (current_cycle_count < cpu_time->delay_start_cycle || current_cycle_count > cpu_time->delay_end_cycle)
-80002918:	12 38       	cp.w	r8,r9
-8000291a:	fe 9b ff df 	brhi	800028d8 <main+0x70>
-8000291e:	12 3a       	cp.w	r10,r9
-80002920:	cd c3       	brcs	800028d8 <main+0x70>
-80002922:	cf 0b       	rjmp	80002902 <main+0x9a>
-80002924:	00 00       	add	r0,r0
-80002926:	00 0c       	add	r12,r0
-80002928:	80 00       	ld.sh	r0,r0[0x0]
-8000292a:	23 9c       	sub	r12,57
-8000292c:	80 00       	ld.sh	r0,r0[0x0]
-8000292e:	20 d0       	sub	r0,13
-80002930:	80 00       	ld.sh	r0,r0[0x0]
-80002932:	25 42       	sub	r2,84
-80002934:	80 00       	ld.sh	r0,r0[0x0]
-80002936:	24 80       	sub	r0,72
-80002938:	80 00       	ld.sh	r0,r0[0x0]
-8000293a:	25 04       	sub	r4,80
-8000293c:	80 00       	ld.sh	r0,r0[0x0]
-8000293e:	23 f8       	sub	r8,63
-80002940:	80 00       	ld.sh	r0,r0[0x0]
-80002942:	23 d4       	sub	r4,61
+8000293e:	12 38       	cp.w	r8,r9
+80002940:	fe 9b ff c9 	brhi	800028d2 <main+0x6a>
+80002944:	12 3a       	cp.w	r10,r9
+80002946:	cc 63       	brcs	800028d2 <main+0x6a>
+80002948:	cf 0b       	rjmp	80002928 <main+0xc0>
+8000294a:	00 00       	add	r0,r0
+8000294c:	00 00       	add	r0,r0
+8000294e:	00 0c       	add	r12,r0
+80002950:	80 00       	ld.sh	r0,r0[0x0]
+80002952:	23 9c       	sub	r12,57
+80002954:	80 00       	ld.sh	r0,r0[0x0]
+80002956:	20 d0       	sub	r0,13
+80002958:	80 00       	ld.sh	r0,r0[0x0]
+8000295a:	25 42       	sub	r2,84
+8000295c:	80 00       	ld.sh	r0,r0[0x0]
+8000295e:	24 80       	sub	r0,72
+80002960:	80 00       	ld.sh	r0,r0[0x0]
+80002962:	25 04       	sub	r4,80
+80002964:	80 00       	ld.sh	r0,r0[0x0]
+80002966:	23 f8       	sub	r8,63
+80002968:	80 00       	ld.sh	r0,r0[0x0]
+8000296a:	23 d4       	sub	r4,61
 
-80002944 <__avr32_udiv64>:
-80002944:	d4 31       	pushm	r0-r7,lr
-80002946:	1a 97       	mov	r7,sp
-80002948:	20 2d       	sub	sp,8
-8000294a:	10 9e       	mov	lr,r8
-8000294c:	12 95       	mov	r5,r9
-8000294e:	14 96       	mov	r6,r10
-80002950:	58 09       	cp.w	r9,0
-80002952:	c4 91       	brne	800029e4 <__avr32_udiv64+0xa0>
-80002954:	16 38       	cp.w	r8,r11
-80002956:	e0 88 00 57 	brls	80002a04 <__avr32_udiv64+0xc0>
-8000295a:	f0 08 12 00 	clz	r8,r8
-8000295e:	c0 d0       	breq	80002978 <__avr32_udiv64+0x34>
-80002960:	f6 08 09 4b 	lsl	r11,r11,r8
-80002964:	f0 09 11 20 	rsub	r9,r8,32
-80002968:	fc 08 09 4e 	lsl	lr,lr,r8
-8000296c:	f4 09 0a 49 	lsr	r9,r10,r9
-80002970:	f4 08 09 46 	lsl	r6,r10,r8
-80002974:	f3 eb 10 0b 	or	r11,r9,r11
-80002978:	fc 05 16 10 	lsr	r5,lr,0x10
-8000297c:	f9 de c0 10 	bfextu	r12,lr,0x0,0x10
-80002980:	f6 05 0d 0a 	divu	r10,r11,r5
-80002984:	ec 08 16 10 	lsr	r8,r6,0x10
-80002988:	14 99       	mov	r9,r10
-8000298a:	f1 eb 11 08 	or	r8,r8,r11<<0x10
-8000298e:	b9 3a       	mul	r10,r12
-80002990:	10 3a       	cp.w	r10,r8
-80002992:	e0 88 00 0c 	brls	800029aa <__avr32_udiv64+0x66>
-80002996:	20 19       	sub	r9,1
-80002998:	1c 08       	add	r8,lr
-8000299a:	10 3e       	cp.w	lr,r8
-8000299c:	e0 8b 00 07 	brhi	800029aa <__avr32_udiv64+0x66>
-800029a0:	10 3a       	cp.w	r10,r8
-800029a2:	f7 b9 0b 01 	subhi	r9,1
-800029a6:	f1 de eb 08 	addhi	r8,r8,lr
-800029aa:	f0 0a 01 0b 	sub	r11,r8,r10
-800029ae:	ed d6 c0 10 	bfextu	r6,r6,0x0,0x10
-800029b2:	f6 05 0d 0a 	divu	r10,r11,r5
-800029b6:	ed eb 11 06 	or	r6,r6,r11<<0x10
-800029ba:	14 98       	mov	r8,r10
-800029bc:	f4 0c 02 4c 	mul	r12,r10,r12
-800029c0:	0c 3c       	cp.w	r12,r6
-800029c2:	e0 88 00 0a 	brls	800029d6 <__avr32_udiv64+0x92>
-800029c6:	20 18       	sub	r8,1
-800029c8:	1c 06       	add	r6,lr
-800029ca:	0c 3e       	cp.w	lr,r6
-800029cc:	e0 8b 00 05 	brhi	800029d6 <__avr32_udiv64+0x92>
-800029d0:	0c 3c       	cp.w	r12,r6
-800029d2:	f7 b8 0b 01 	subhi	r8,1
-800029d6:	f1 e9 11 0b 	or	r11,r8,r9<<0x10
-800029da:	30 0c       	mov	r12,0
-800029dc:	16 9a       	mov	r10,r11
-800029de:	18 9b       	mov	r11,r12
-800029e0:	2f ed       	sub	sp,-8
-800029e2:	d8 32       	popm	r0-r7,pc
-800029e4:	16 39       	cp.w	r9,r11
-800029e6:	e0 8b 00 51 	brhi	80002a88 <__avr32_udiv64+0x144>
-800029ea:	f2 0c 12 00 	clz	r12,r9
-800029ee:	c5 31       	brne	80002a94 <__avr32_udiv64+0x150>
-800029f0:	14 38       	cp.w	r8,r10
-800029f2:	5f 89       	srls	r9
-800029f4:	16 35       	cp.w	r5,r11
-800029f6:	5f 38       	srlo	r8
-800029f8:	10 49       	or	r9,r8
-800029fa:	f8 09 18 00 	cp.b	r9,r12
-800029fe:	c4 50       	breq	80002a88 <__avr32_udiv64+0x144>
-80002a00:	30 1b       	mov	r11,1
-80002a02:	c4 58       	rjmp	80002a8c <__avr32_udiv64+0x148>
-80002a04:	58 08       	cp.w	r8,0
-80002a06:	c0 51       	brne	80002a10 <__avr32_udiv64+0xcc>
-80002a08:	30 19       	mov	r9,1
-80002a0a:	f2 08 0d 08 	divu	r8,r9,r8
-80002a0e:	10 9e       	mov	lr,r8
-80002a10:	fc 08 12 00 	clz	r8,lr
-80002a14:	e0 81 00 91 	brne	80002b36 <__avr32_udiv64+0x1f2>
-80002a18:	1c 1b       	sub	r11,lr
-80002a1a:	fc 05 16 10 	lsr	r5,lr,0x10
-80002a1e:	f3 de c0 10 	bfextu	r9,lr,0x0,0x10
-80002a22:	30 1c       	mov	r12,1
-80002a24:	f6 05 0d 0a 	divu	r10,r11,r5
-80002a28:	ec 08 16 10 	lsr	r8,r6,0x10
-80002a2c:	f4 09 02 43 	mul	r3,r10,r9
-80002a30:	f1 eb 11 08 	or	r8,r8,r11<<0x10
-80002a34:	14 9b       	mov	r11,r10
-80002a36:	10 33       	cp.w	r3,r8
-80002a38:	e0 88 00 0c 	brls	80002a50 <__avr32_udiv64+0x10c>
-80002a3c:	20 1b       	sub	r11,1
-80002a3e:	1c 08       	add	r8,lr
-80002a40:	10 3e       	cp.w	lr,r8
-80002a42:	e0 8b 00 07 	brhi	80002a50 <__avr32_udiv64+0x10c>
-80002a46:	10 33       	cp.w	r3,r8
-80002a48:	f7 bb 0b 01 	subhi	r11,1
-80002a4c:	f1 de eb 08 	addhi	r8,r8,lr
-80002a50:	f0 03 01 03 	sub	r3,r8,r3
-80002a54:	ed d6 c0 10 	bfextu	r6,r6,0x0,0x10
-80002a58:	e6 05 0d 02 	divu	r2,r3,r5
-80002a5c:	ed e3 11 06 	or	r6,r6,r3<<0x10
-80002a60:	04 98       	mov	r8,r2
-80002a62:	e4 09 02 49 	mul	r9,r2,r9
-80002a66:	0c 39       	cp.w	r9,r6
-80002a68:	e0 88 00 0a 	brls	80002a7c <__avr32_udiv64+0x138>
-80002a6c:	20 18       	sub	r8,1
-80002a6e:	1c 06       	add	r6,lr
-80002a70:	0c 3e       	cp.w	lr,r6
-80002a72:	e0 8b 00 05 	brhi	80002a7c <__avr32_udiv64+0x138>
-80002a76:	0c 39       	cp.w	r9,r6
-80002a78:	f7 b8 0b 01 	subhi	r8,1
-80002a7c:	f1 eb 11 0b 	or	r11,r8,r11<<0x10
-80002a80:	16 9a       	mov	r10,r11
-80002a82:	18 9b       	mov	r11,r12
-80002a84:	2f ed       	sub	sp,-8
-80002a86:	d8 32       	popm	r0-r7,pc
-80002a88:	30 0b       	mov	r11,0
-80002a8a:	16 9c       	mov	r12,r11
-80002a8c:	16 9a       	mov	r10,r11
-80002a8e:	18 9b       	mov	r11,r12
-80002a90:	2f ed       	sub	sp,-8
-80002a92:	d8 32       	popm	r0-r7,pc
-80002a94:	f2 0c 09 45 	lsl	r5,r9,r12
-80002a98:	f8 0e 11 20 	rsub	lr,r12,32
-80002a9c:	f0 0c 09 43 	lsl	r3,r8,r12
-80002aa0:	f4 0e 0a 46 	lsr	r6,r10,lr
-80002aa4:	f0 0e 0a 48 	lsr	r8,r8,lr
-80002aa8:	f6 0e 0a 4e 	lsr	lr,r11,lr
-80002aac:	0a 48       	or	r8,r5
-80002aae:	f0 01 16 10 	lsr	r1,r8,0x10
-80002ab2:	fc 01 0d 04 	divu	r4,lr,r1
-80002ab6:	ee e5 ff f8 	st.d	r7[-8],r4
-80002aba:	f6 0c 09 49 	lsl	r9,r11,r12
-80002abe:	eb d8 c0 10 	bfextu	r5,r8,0x0,0x10
-80002ac2:	ed e9 10 09 	or	r9,r6,r9
-80002ac6:	08 96       	mov	r6,r4
-80002ac8:	f2 0e 16 10 	lsr	lr,r9,0x10
-80002acc:	ee f4 ff f8 	ld.w	r4,r7[-8]
-80002ad0:	ec 05 02 4b 	mul	r11,r6,r5
-80002ad4:	fd e4 11 0e 	or	lr,lr,r4<<0x10
-80002ad8:	1c 3b       	cp.w	r11,lr
-80002ada:	e0 88 00 07 	brls	80002ae8 <__avr32_udiv64+0x1a4>
-80002ade:	20 16       	sub	r6,1
-80002ae0:	10 0e       	add	lr,r8
-80002ae2:	1c 38       	cp.w	r8,lr
-80002ae4:	e0 88 00 6d 	brls	80002bbe <__avr32_udiv64+0x27a>
-80002ae8:	16 1e       	sub	lr,r11
-80002aea:	f3 d9 c0 10 	bfextu	r9,r9,0x0,0x10
-80002aee:	fc 01 0d 00 	divu	r0,lr,r1
-80002af2:	f3 e1 11 09 	or	r9,r9,r1<<0x10
-80002af6:	00 9b       	mov	r11,r0
-80002af8:	e0 05 02 4e 	mul	lr,r0,r5
-80002afc:	12 3e       	cp.w	lr,r9
-80002afe:	e0 88 00 07 	brls	80002b0c <__avr32_udiv64+0x1c8>
-80002b02:	20 1b       	sub	r11,1
-80002b04:	10 09       	add	r9,r8
-80002b06:	12 38       	cp.w	r8,r9
-80002b08:	e0 88 00 55 	brls	80002bb2 <__avr32_udiv64+0x26e>
-80002b0c:	f7 e6 11 0b 	or	r11,r11,r6<<0x10
-80002b10:	1c 19       	sub	r9,lr
-80002b12:	f6 03 06 42 	mulu.d	r2,r11,r3
-80002b16:	06 39       	cp.w	r9,r3
-80002b18:	c0 93       	brcs	80002b2a <__avr32_udiv64+0x1e6>
-80002b1a:	5f 09       	sreq	r9
-80002b1c:	f4 0c 09 4c 	lsl	r12,r10,r12
-80002b20:	04 3c       	cp.w	r12,r2
-80002b22:	5f 38       	srlo	r8
-80002b24:	f3 e8 00 08 	and	r8,r9,r8
-80002b28:	c0 20       	breq	80002b2c <__avr32_udiv64+0x1e8>
+8000296c <__avr32_udiv64>:
+8000296c:	d4 31       	pushm	r0-r7,lr
+8000296e:	1a 97       	mov	r7,sp
+80002970:	20 2d       	sub	sp,8
+80002972:	10 9e       	mov	lr,r8
+80002974:	12 95       	mov	r5,r9
+80002976:	14 96       	mov	r6,r10
+80002978:	58 09       	cp.w	r9,0
+8000297a:	c4 91       	brne	80002a0c <__avr32_udiv64+0xa0>
+8000297c:	16 38       	cp.w	r8,r11
+8000297e:	e0 88 00 57 	brls	80002a2c <__avr32_udiv64+0xc0>
+80002982:	f0 08 12 00 	clz	r8,r8
+80002986:	c0 d0       	breq	800029a0 <__avr32_udiv64+0x34>
+80002988:	f6 08 09 4b 	lsl	r11,r11,r8
+8000298c:	f0 09 11 20 	rsub	r9,r8,32
+80002990:	fc 08 09 4e 	lsl	lr,lr,r8
+80002994:	f4 09 0a 49 	lsr	r9,r10,r9
+80002998:	f4 08 09 46 	lsl	r6,r10,r8
+8000299c:	f3 eb 10 0b 	or	r11,r9,r11
+800029a0:	fc 05 16 10 	lsr	r5,lr,0x10
+800029a4:	f9 de c0 10 	bfextu	r12,lr,0x0,0x10
+800029a8:	f6 05 0d 0a 	divu	r10,r11,r5
+800029ac:	ec 08 16 10 	lsr	r8,r6,0x10
+800029b0:	14 99       	mov	r9,r10
+800029b2:	f1 eb 11 08 	or	r8,r8,r11<<0x10
+800029b6:	b9 3a       	mul	r10,r12
+800029b8:	10 3a       	cp.w	r10,r8
+800029ba:	e0 88 00 0c 	brls	800029d2 <__avr32_udiv64+0x66>
+800029be:	20 19       	sub	r9,1
+800029c0:	1c 08       	add	r8,lr
+800029c2:	10 3e       	cp.w	lr,r8
+800029c4:	e0 8b 00 07 	brhi	800029d2 <__avr32_udiv64+0x66>
+800029c8:	10 3a       	cp.w	r10,r8
+800029ca:	f7 b9 0b 01 	subhi	r9,1
+800029ce:	f1 de eb 08 	addhi	r8,r8,lr
+800029d2:	f0 0a 01 0b 	sub	r11,r8,r10
+800029d6:	ed d6 c0 10 	bfextu	r6,r6,0x0,0x10
+800029da:	f6 05 0d 0a 	divu	r10,r11,r5
+800029de:	ed eb 11 06 	or	r6,r6,r11<<0x10
+800029e2:	14 98       	mov	r8,r10
+800029e4:	f4 0c 02 4c 	mul	r12,r10,r12
+800029e8:	0c 3c       	cp.w	r12,r6
+800029ea:	e0 88 00 0a 	brls	800029fe <__avr32_udiv64+0x92>
+800029ee:	20 18       	sub	r8,1
+800029f0:	1c 06       	add	r6,lr
+800029f2:	0c 3e       	cp.w	lr,r6
+800029f4:	e0 8b 00 05 	brhi	800029fe <__avr32_udiv64+0x92>
+800029f8:	0c 3c       	cp.w	r12,r6
+800029fa:	f7 b8 0b 01 	subhi	r8,1
+800029fe:	f1 e9 11 0b 	or	r11,r8,r9<<0x10
+80002a02:	30 0c       	mov	r12,0
+80002a04:	16 9a       	mov	r10,r11
+80002a06:	18 9b       	mov	r11,r12
+80002a08:	2f ed       	sub	sp,-8
+80002a0a:	d8 32       	popm	r0-r7,pc
+80002a0c:	16 39       	cp.w	r9,r11
+80002a0e:	e0 8b 00 51 	brhi	80002ab0 <__avr32_udiv64+0x144>
+80002a12:	f2 0c 12 00 	clz	r12,r9
+80002a16:	c5 31       	brne	80002abc <__avr32_udiv64+0x150>
+80002a18:	14 38       	cp.w	r8,r10
+80002a1a:	5f 89       	srls	r9
+80002a1c:	16 35       	cp.w	r5,r11
+80002a1e:	5f 38       	srlo	r8
+80002a20:	10 49       	or	r9,r8
+80002a22:	f8 09 18 00 	cp.b	r9,r12
+80002a26:	c4 50       	breq	80002ab0 <__avr32_udiv64+0x144>
+80002a28:	30 1b       	mov	r11,1
+80002a2a:	c4 58       	rjmp	80002ab4 <__avr32_udiv64+0x148>
+80002a2c:	58 08       	cp.w	r8,0
+80002a2e:	c0 51       	brne	80002a38 <__avr32_udiv64+0xcc>
+80002a30:	30 19       	mov	r9,1
+80002a32:	f2 08 0d 08 	divu	r8,r9,r8
+80002a36:	10 9e       	mov	lr,r8
+80002a38:	fc 08 12 00 	clz	r8,lr
+80002a3c:	e0 81 00 91 	brne	80002b5e <__avr32_udiv64+0x1f2>
+80002a40:	1c 1b       	sub	r11,lr
+80002a42:	fc 05 16 10 	lsr	r5,lr,0x10
+80002a46:	f3 de c0 10 	bfextu	r9,lr,0x0,0x10
+80002a4a:	30 1c       	mov	r12,1
+80002a4c:	f6 05 0d 0a 	divu	r10,r11,r5
+80002a50:	ec 08 16 10 	lsr	r8,r6,0x10
+80002a54:	f4 09 02 43 	mul	r3,r10,r9
+80002a58:	f1 eb 11 08 	or	r8,r8,r11<<0x10
+80002a5c:	14 9b       	mov	r11,r10
+80002a5e:	10 33       	cp.w	r3,r8
+80002a60:	e0 88 00 0c 	brls	80002a78 <__avr32_udiv64+0x10c>
+80002a64:	20 1b       	sub	r11,1
+80002a66:	1c 08       	add	r8,lr
+80002a68:	10 3e       	cp.w	lr,r8
+80002a6a:	e0 8b 00 07 	brhi	80002a78 <__avr32_udiv64+0x10c>
+80002a6e:	10 33       	cp.w	r3,r8
+80002a70:	f7 bb 0b 01 	subhi	r11,1
+80002a74:	f1 de eb 08 	addhi	r8,r8,lr
+80002a78:	f0 03 01 03 	sub	r3,r8,r3
+80002a7c:	ed d6 c0 10 	bfextu	r6,r6,0x0,0x10
+80002a80:	e6 05 0d 02 	divu	r2,r3,r5
+80002a84:	ed e3 11 06 	or	r6,r6,r3<<0x10
+80002a88:	04 98       	mov	r8,r2
+80002a8a:	e4 09 02 49 	mul	r9,r2,r9
+80002a8e:	0c 39       	cp.w	r9,r6
+80002a90:	e0 88 00 0a 	brls	80002aa4 <__avr32_udiv64+0x138>
+80002a94:	20 18       	sub	r8,1
+80002a96:	1c 06       	add	r6,lr
+80002a98:	0c 3e       	cp.w	lr,r6
+80002a9a:	e0 8b 00 05 	brhi	80002aa4 <__avr32_udiv64+0x138>
+80002a9e:	0c 39       	cp.w	r9,r6
+80002aa0:	f7 b8 0b 01 	subhi	r8,1
+80002aa4:	f1 eb 11 0b 	or	r11,r8,r11<<0x10
+80002aa8:	16 9a       	mov	r10,r11
+80002aaa:	18 9b       	mov	r11,r12
+80002aac:	2f ed       	sub	sp,-8
+80002aae:	d8 32       	popm	r0-r7,pc
+80002ab0:	30 0b       	mov	r11,0
+80002ab2:	16 9c       	mov	r12,r11
+80002ab4:	16 9a       	mov	r10,r11
+80002ab6:	18 9b       	mov	r11,r12
+80002ab8:	2f ed       	sub	sp,-8
+80002aba:	d8 32       	popm	r0-r7,pc
+80002abc:	f2 0c 09 45 	lsl	r5,r9,r12
+80002ac0:	f8 0e 11 20 	rsub	lr,r12,32
+80002ac4:	f0 0c 09 43 	lsl	r3,r8,r12
+80002ac8:	f4 0e 0a 46 	lsr	r6,r10,lr
+80002acc:	f0 0e 0a 48 	lsr	r8,r8,lr
+80002ad0:	f6 0e 0a 4e 	lsr	lr,r11,lr
+80002ad4:	0a 48       	or	r8,r5
+80002ad6:	f0 01 16 10 	lsr	r1,r8,0x10
+80002ada:	fc 01 0d 04 	divu	r4,lr,r1
+80002ade:	ee e5 ff f8 	st.d	r7[-8],r4
+80002ae2:	f6 0c 09 49 	lsl	r9,r11,r12
+80002ae6:	eb d8 c0 10 	bfextu	r5,r8,0x0,0x10
+80002aea:	ed e9 10 09 	or	r9,r6,r9
+80002aee:	08 96       	mov	r6,r4
+80002af0:	f2 0e 16 10 	lsr	lr,r9,0x10
+80002af4:	ee f4 ff f8 	ld.w	r4,r7[-8]
+80002af8:	ec 05 02 4b 	mul	r11,r6,r5
+80002afc:	fd e4 11 0e 	or	lr,lr,r4<<0x10
+80002b00:	1c 3b       	cp.w	r11,lr
+80002b02:	e0 88 00 07 	brls	80002b10 <__avr32_udiv64+0x1a4>
+80002b06:	20 16       	sub	r6,1
+80002b08:	10 0e       	add	lr,r8
+80002b0a:	1c 38       	cp.w	r8,lr
+80002b0c:	e0 88 00 6d 	brls	80002be6 <__avr32_udiv64+0x27a>
+80002b10:	16 1e       	sub	lr,r11
+80002b12:	f3 d9 c0 10 	bfextu	r9,r9,0x0,0x10
+80002b16:	fc 01 0d 00 	divu	r0,lr,r1
+80002b1a:	f3 e1 11 09 	or	r9,r9,r1<<0x10
+80002b1e:	00 9b       	mov	r11,r0
+80002b20:	e0 05 02 4e 	mul	lr,r0,r5
+80002b24:	12 3e       	cp.w	lr,r9
+80002b26:	e0 88 00 07 	brls	80002b34 <__avr32_udiv64+0x1c8>
 80002b2a:	20 1b       	sub	r11,1
-80002b2c:	30 0c       	mov	r12,0
-80002b2e:	16 9a       	mov	r10,r11
-80002b30:	18 9b       	mov	r11,r12
-80002b32:	2f ed       	sub	sp,-8
-80002b34:	d8 32       	popm	r0-r7,pc
-80002b36:	f6 08 09 49 	lsl	r9,r11,r8
-80002b3a:	fc 08 09 4e 	lsl	lr,lr,r8
-80002b3e:	f0 01 11 20 	rsub	r1,r8,32
-80002b42:	fc 05 16 10 	lsr	r5,lr,0x10
-80002b46:	f4 01 0a 42 	lsr	r2,r10,r1
-80002b4a:	f6 01 0a 41 	lsr	r1,r11,r1
-80002b4e:	12 42       	or	r2,r9
-80002b50:	e2 05 0d 00 	divu	r0,r1,r5
-80002b54:	f3 de c0 10 	bfextu	r9,lr,0x0,0x10
-80002b58:	e4 06 16 10 	lsr	r6,r2,0x10
-80002b5c:	00 93       	mov	r3,r0
-80002b5e:	ed e1 11 06 	or	r6,r6,r1<<0x10
-80002b62:	e0 09 02 4c 	mul	r12,r0,r9
-80002b66:	0c 3c       	cp.w	r12,r6
-80002b68:	e0 88 00 07 	brls	80002b76 <__avr32_udiv64+0x232>
-80002b6c:	20 13       	sub	r3,1
-80002b6e:	1c 06       	add	r6,lr
-80002b70:	0c 3e       	cp.w	lr,r6
-80002b72:	e0 88 00 2c 	brls	80002bca <__avr32_udiv64+0x286>
-80002b76:	ec 0c 01 01 	sub	r1,r6,r12
-80002b7a:	f7 d2 c0 10 	bfextu	r11,r2,0x0,0x10
-80002b7e:	e2 05 0d 00 	divu	r0,r1,r5
-80002b82:	f7 e1 11 0b 	or	r11,r11,r1<<0x10
-80002b86:	00 9c       	mov	r12,r0
-80002b88:	e0 09 02 41 	mul	r1,r0,r9
-80002b8c:	16 31       	cp.w	r1,r11
-80002b8e:	e0 88 00 0c 	brls	80002ba6 <__avr32_udiv64+0x262>
-80002b92:	20 1c       	sub	r12,1
-80002b94:	1c 0b       	add	r11,lr
-80002b96:	16 3e       	cp.w	lr,r11
-80002b98:	e0 8b 00 07 	brhi	80002ba6 <__avr32_udiv64+0x262>
-80002b9c:	16 31       	cp.w	r1,r11
-80002b9e:	f7 bc 0b 01 	subhi	r12,1
-80002ba2:	f7 de eb 0b 	addhi	r11,r11,lr
-80002ba6:	f4 08 09 46 	lsl	r6,r10,r8
-80002baa:	02 1b       	sub	r11,r1
-80002bac:	f9 e3 11 0c 	or	r12,r12,r3<<0x10
-80002bb0:	c3 ab       	rjmp	80002a24 <__avr32_udiv64+0xe0>
-80002bb2:	12 3e       	cp.w	lr,r9
-80002bb4:	f3 d8 eb 09 	addhi	r9,r9,r8
-80002bb8:	f7 bb 0b 01 	subhi	r11,1
-80002bbc:	ca 8b       	rjmp	80002b0c <__avr32_udiv64+0x1c8>
-80002bbe:	1c 3b       	cp.w	r11,lr
-80002bc0:	f7 b6 0b 01 	subhi	r6,1
-80002bc4:	fd d8 eb 0e 	addhi	lr,lr,r8
-80002bc8:	c9 0b       	rjmp	80002ae8 <__avr32_udiv64+0x1a4>
-80002bca:	0c 3c       	cp.w	r12,r6
-80002bcc:	f7 b3 0b 01 	subhi	r3,1
-80002bd0:	ed de eb 06 	addhi	r6,r6,lr
-80002bd4:	cd 1b       	rjmp	80002b76 <__avr32_udiv64+0x232>
+80002b2c:	10 09       	add	r9,r8
+80002b2e:	12 38       	cp.w	r8,r9
+80002b30:	e0 88 00 55 	brls	80002bda <__avr32_udiv64+0x26e>
+80002b34:	f7 e6 11 0b 	or	r11,r11,r6<<0x10
+80002b38:	1c 19       	sub	r9,lr
+80002b3a:	f6 03 06 42 	mulu.d	r2,r11,r3
+80002b3e:	06 39       	cp.w	r9,r3
+80002b40:	c0 93       	brcs	80002b52 <__avr32_udiv64+0x1e6>
+80002b42:	5f 09       	sreq	r9
+80002b44:	f4 0c 09 4c 	lsl	r12,r10,r12
+80002b48:	04 3c       	cp.w	r12,r2
+80002b4a:	5f 38       	srlo	r8
+80002b4c:	f3 e8 00 08 	and	r8,r9,r8
+80002b50:	c0 20       	breq	80002b54 <__avr32_udiv64+0x1e8>
+80002b52:	20 1b       	sub	r11,1
+80002b54:	30 0c       	mov	r12,0
+80002b56:	16 9a       	mov	r10,r11
+80002b58:	18 9b       	mov	r11,r12
+80002b5a:	2f ed       	sub	sp,-8
+80002b5c:	d8 32       	popm	r0-r7,pc
+80002b5e:	f6 08 09 49 	lsl	r9,r11,r8
+80002b62:	fc 08 09 4e 	lsl	lr,lr,r8
+80002b66:	f0 01 11 20 	rsub	r1,r8,32
+80002b6a:	fc 05 16 10 	lsr	r5,lr,0x10
+80002b6e:	f4 01 0a 42 	lsr	r2,r10,r1
+80002b72:	f6 01 0a 41 	lsr	r1,r11,r1
+80002b76:	12 42       	or	r2,r9
+80002b78:	e2 05 0d 00 	divu	r0,r1,r5
+80002b7c:	f3 de c0 10 	bfextu	r9,lr,0x0,0x10
+80002b80:	e4 06 16 10 	lsr	r6,r2,0x10
+80002b84:	00 93       	mov	r3,r0
+80002b86:	ed e1 11 06 	or	r6,r6,r1<<0x10
+80002b8a:	e0 09 02 4c 	mul	r12,r0,r9
+80002b8e:	0c 3c       	cp.w	r12,r6
+80002b90:	e0 88 00 07 	brls	80002b9e <__avr32_udiv64+0x232>
+80002b94:	20 13       	sub	r3,1
+80002b96:	1c 06       	add	r6,lr
+80002b98:	0c 3e       	cp.w	lr,r6
+80002b9a:	e0 88 00 2c 	brls	80002bf2 <__avr32_udiv64+0x286>
+80002b9e:	ec 0c 01 01 	sub	r1,r6,r12
+80002ba2:	f7 d2 c0 10 	bfextu	r11,r2,0x0,0x10
+80002ba6:	e2 05 0d 00 	divu	r0,r1,r5
+80002baa:	f7 e1 11 0b 	or	r11,r11,r1<<0x10
+80002bae:	00 9c       	mov	r12,r0
+80002bb0:	e0 09 02 41 	mul	r1,r0,r9
+80002bb4:	16 31       	cp.w	r1,r11
+80002bb6:	e0 88 00 0c 	brls	80002bce <__avr32_udiv64+0x262>
+80002bba:	20 1c       	sub	r12,1
+80002bbc:	1c 0b       	add	r11,lr
+80002bbe:	16 3e       	cp.w	lr,r11
+80002bc0:	e0 8b 00 07 	brhi	80002bce <__avr32_udiv64+0x262>
+80002bc4:	16 31       	cp.w	r1,r11
+80002bc6:	f7 bc 0b 01 	subhi	r12,1
+80002bca:	f7 de eb 0b 	addhi	r11,r11,lr
+80002bce:	f4 08 09 46 	lsl	r6,r10,r8
+80002bd2:	02 1b       	sub	r11,r1
+80002bd4:	f9 e3 11 0c 	or	r12,r12,r3<<0x10
+80002bd8:	c3 ab       	rjmp	80002a4c <__avr32_udiv64+0xe0>
+80002bda:	12 3e       	cp.w	lr,r9
+80002bdc:	f3 d8 eb 09 	addhi	r9,r9,r8
+80002be0:	f7 bb 0b 01 	subhi	r11,1
+80002be4:	ca 8b       	rjmp	80002b34 <__avr32_udiv64+0x1c8>
+80002be6:	1c 3b       	cp.w	r11,lr
+80002be8:	f7 b6 0b 01 	subhi	r6,1
+80002bec:	fd d8 eb 0e 	addhi	lr,lr,r8
+80002bf0:	c9 0b       	rjmp	80002b10 <__avr32_udiv64+0x1a4>
+80002bf2:	0c 3c       	cp.w	r12,r6
+80002bf4:	f7 b3 0b 01 	subhi	r3,1
+80002bf8:	ed de eb 06 	addhi	r6,r6,lr
+80002bfc:	cd 1b       	rjmp	80002b9e <__avr32_udiv64+0x232>
 
 Disassembly of section .exception:
 

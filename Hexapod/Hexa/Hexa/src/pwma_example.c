@@ -14,15 +14,13 @@
 #define EXAMPLE_TARGET_MCUCLK_FREQ_HZ   (48000000UL)
 #define EXAMPLE_TARGET_PBACLK_FREQ_HZ   (48000000UL)
 
-//! Number of period cycles for the PWMA module (0 - 0xff).
 #define PWMA_PERIOD_CYCLES    0xFF
-//! Minimum number of duty cycles for a PWM channel.
+
 #define PWMA_MIN_DUTY_CYCLES  0
 
-//! Maximum number of duty cycles for a PWM channel.
 #define PWMA_MAX_DUTY_CYCLES  0xFF
 
-#define PWMA_DUTY_CYCLES_STEP 0xF // 0xF // 0x11 // 0x19
+#define PWMA_DUTY_CYCLES_STEP 0xF 
 
 #define PWMA_DUTY_CYCLE_INIT_VAL  0
 
@@ -53,8 +51,7 @@ static pcl_freq_param_t pcl_dfll_freq_param = {
 static unsigned long init_clock( unsigned long cpuclk_hz )
 {
   unsigned long ret_val = 0u;
-
-  // Program the DFLL and switch the main clock source to the DFLL.
+  
   pcl_configure_clocks(&pcl_dfll_freq_param);
 
   return (ret_val);
@@ -65,75 +62,66 @@ static void init_system( void )
 {
   int32_t ret_val = 0u;
 
-  /* 1. Configure and start the DFLL0 in closed-loop mode to generate a frequency of 96MHz.
-     2. Set Flash Wait state.
-     3. Configure CPU, PBA, PBB clock to 48MHz.
-     4. Set up the GCLK_CAT for QMatrix operation.  */
   ret_val = init_clock( EXAMPLE_CPUCLK_HZ );
   if(ret_val != 0u)
   {
-    while(1); /* Clock configuration failed. */
+    while(1); 
   }
-
-
 }
 
 int main(void)
 {
 	init_system();
 	
-	
 	gpio_enable_module_pin(LED0_GPIO, LED0_PWM_FUNCTION);
 	gpio_enable_module_pin(LED1_GPIO, LED1_PWM_FUNCTION);
 	gpio_enable_module_pin(LED2_GPIO, LED2_PWM_FUNCTION);
 	gpio_enable_module_pin(LED3_GPIO, LED3_PWM_FUNCTION);
 	
-	////scif_start_rc120M();
 	scif_start_rc32k();
-	// Setup the generic clock at 120MHz
-	scif_gc_setup(  AVR32_PM_GCLK_PWMA, // The generic clock to setup
-					SCIF_GCCTRL_RC32K, // The input clock source to use for the generic clock  SCIF_GCCTRL_RC120M
-					true,              // Disable the generic clock divisor
-					2);                 // divfactor = DFLL0freq/gclkfreq
-	// Enable the generic clock
+	scif_gc_setup(  AVR32_PM_GCLK_PWMA, 
+					SCIF_GCCTRL_RC32K, 
+					true,              
+					2);                 
 	scif_gc_enable(AVR32_PM_GCLK_PWMA);
 
-	//#
-	//# Enable all the PWMAs to output to all LEDs. LEDs are default turned on by
-	//# setting PWM duty cycles to 0.
-	//#
 	pwma_config_and_enable( &AVR32_PWMA, (1 << 20) | (1 << 21) | (1 << 13) | (1 << 34), PWMA_PERIOD_CYCLES, PWMA_DUTY_CYCLE_INIT_VAL );
 	
-	int current_duty_cycle;
+	uint8_t current_duty_cycle = 0;
 	int leds_intensity_direction = PWMA_DUTY_CYCLE_INCREASE;
 	int i;
 
-
+	uint8_t servo_top = 34;	//34
+	uint8_t servo_middle = 20;
+	uint8_t servo_bottom = 14;	// 8
+	uint8_t direction = 0;
+	
 	do
 	{
-		// Get the current duty cycle (at that point, all LEDs have the same duty cycle value).
-		///current_duty_cycle = duty_cycles_per_led[current_led];
-		// Change the duty cycle
-		///current_duty_cycle += leds_intensity_direction*PWMA_DUTY_CYCLES_STEP;
-		// Constrain the duty cycle to be in [PWMA_MIN_DUTY_CYCLES,PWMA_MAX_DUTY_CYCLES]
-		///current_duty_cycle = max(current_duty_cycle, PWMA_MIN_DUTY_CYCLES);
-		///current_duty_cycle = min(current_duty_cycle, PWMA_MAX_DUTY_CYCLES);
-		// Update the duty cycle of all LEDs.
-		///for(i=0; i<LED_COUNT;i++)
-		///duty_cycles_per_led[i] = current_duty_cycle;
+		/*** CALCULATE LEG POSITIONS ****/
+		if(current_duty_cycle >= servo_bottom && current_duty_cycle <= servo_top && direction == 0)
+		{
+			current_duty_cycle += 1;
+		}
+		else
+		{
+			if(current_duty_cycle >= servo_bottom)
+			{
+				current_duty_cycle -= 1;
+				direction = 1;
+			}
+			else
+			{
+				current_duty_cycle = servo_bottom;
+				direction = 0;
+			}
+		}
+
+		/*** CALCULATE LEG POSITIONS ****/
 		
-		///////pwma_set_channels_value(&AVR32_PWMA, (1 << 20) | (1 << 21) | (1 << 13) | (1 << 34), current_duty_cycle++);
-		
-		pwma_set_channels_value(&AVR32_PWMA, (1 << 20) | (1 << 21), current_duty_cycle++);
-		pwma_set_channels_value(&AVR32_PWMA, (1 << 13) | (1 << 34), 0xFF-current_duty_cycle);
+		pwma_set_channels_value(&AVR32_PWMA, (1 << 20) | (1 << 21), current_duty_cycle);
+		pwma_set_channels_value(&AVR32_PWMA, (1 << 13) | (1 << 34), current_duty_cycle);
 				
-		// Change the direction of the LEDs intensity change.
-		///if((current_duty_cycle == PWMA_MAX_DUTY_CYCLES) || (current_duty_cycle == PWMA_MIN_DUTY_CYCLES))
-		///{
-		///	leds_intensity_direction *= -1;
-		///}
-		// Make the changes progressive to a human eye by slowing down the rates of
-		// the duty cycle changes.
 		delay_ms(15);
 	}while(1);
 	
