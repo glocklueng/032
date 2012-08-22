@@ -23,74 +23,74 @@
     <AsfVersion>3.1.3</AsfVersion>
     <AsfFrameworkConfig>
       <framework-data xmlns="">
-  <options>
-    <option id="avr32.drivers.gpio" value="Add" config="" content-id="Atmel.ASF" />
-    <option id="avr32.drivers.pm" value="Add" config="" content-id="Atmel.ASF" />
-    <option id="avr32.drivers.pwma" value="Add" config="" content-id="Atmel.ASF" />
-    <option id="avr32.drivers.pwma.example" value="Add" config="" content-id="Atmel.ASF" />
-    <option id="common.boards" value="Add" config="" content-id="Atmel.ASF" />
-    <option id="common.services.basic.clock" value="Add" config="" content-id="Atmel.ASF" />
-    <option id="common.services.delay" value="Add" config="" content-id="Atmel.ASF" />
-  </options>
-  <configurations>
-    <configuration key="config.compiler.avr32gcc.programming_clock" value="int" default="int" content-id="Atmel.ASF" />
-  </configurations>
-  <files>
-    <file path="src/asf.h" framework="" version="3.1.3" source="./avr32/drivers/pwma/example/at32uc3l064_uc3l_ek/as5_32/asf.h" changed="False" content-id="Atmel.ASF" />
-    <file path="src/asf/avr32/boards/uc3l_ek/init.c" framework="" version="3.1.3" source="avr32/boards/uc3l_ek/init.c" changed="False" content-id="Atmel.ASF" />
-    <file path="src/asf/avr32/boards/uc3l_ek/led.h" framework="" version="3.1.3" source="avr32/boards/uc3l_ek/led.h" changed="False" content-id="Atmel.ASF" />
-    <file path="src/asf/avr32/boards/uc3l_ek/uc3l_ek.h" framework="" version="3.1.3" source="avr32/boards/uc3l_ek/uc3l_ek.h" changed="False" content-id="Atmel.ASF" />
-    <file path="src/asf/avr32/drivers/cpu/cycle_counter/cycle_counter.h" framework="" version="3.1.3" source="avr32/drivers/cpu/cycle_counter/cycle_counter.h" changed="False" content-id="Atmel.ASF" />
-    <file path="src/asf/avr32/drivers/flashcdw/flashcdw.c" framework="" version="3.1.3" source="avr32/drivers/flashcdw/flashcdw.c" changed="False" content-id="Atmel.ASF" />
-    <file path="src/asf/avr32/drivers/flashcdw/flashcdw.h" framework="" version="3.1.3" source="avr32/drivers/flashcdw/flashcdw.h" changed="False" content-id="Atmel.ASF" />
-    <file path="src/asf/avr32/drivers/gpio/gpio.c" framework="" version="3.1.3" source="avr32/drivers/gpio/gpio.c" changed="False" content-id="Atmel.ASF" />
-    <file path="src/asf/avr32/drivers/gpio/gpio.h" framework="" version="3.1.3" source="avr32/drivers/gpio/gpio.h" changed="False" content-id="Atmel.ASF" />
-    <file path="src/asf/avr32/drivers/intc/exception.S" framework="" version="3.1.3" source="avr32/drivers/intc/exception.S" changed="False" content-id="Atmel.ASF" />
-    <file path="src/asf/avr32/drivers/intc/intc.c" framework="" version="3.1.3" source="avr32/drivers/intc/intc.c" changed="False" content-id="Atmel.ASF" />
-    <file path="src/asf/avr32/drivers/intc/intc.h" framework="" version="3.1.3" source="avr32/drivers/intc/intc.h" changed="False" content-id="Atmel.ASF" />
-    <file path="src/asf/avr32/drivers/pm/pm_uc3l.c" framework="" version="3.1.3" source="avr32/drivers/pm/pm_uc3l.c" changed="False" content-id="Atmel.ASF" />
-    <file path="src/asf/avr32/drivers/pm/pm_uc3l.h" framework="" version="3.1.3" source="avr32/drivers/pm/pm_uc3l.h" changed="False" content-id="Atmel.ASF" />
-    <file path="src/asf/avr32/drivers/pm/power_clocks_lib.c" framework="" version="3.1.3" source="avr32/drivers/pm/power_clocks_lib.c" changed="False" content-id="Atmel.ASF" />
-    <file path="src/asf/avr32/drivers/pm/power_clocks_lib.h" framework="" version="3.1.3" source="avr32/drivers/pm/power_clocks_lib.h" changed="False" content-id="Atmel.ASF" />
-    <file path="src/asf/avr32/drivers/pm/sleep.h" framework="" version="3.1.3" source="avr32/drivers/pm/sleep.h" changed="False" content-id="Atmel.ASF" />
-    <file path="src/config/conf_board.h" framework="" version="3.1.3" source="avr32/drivers/pwma/example/at32uc3l064_uc3l_ek/conf_board.h" changed="False" content-id="Atmel.ASF" />
-    <file path="src/config/conf_clock.h" framework="" version="3.1.3" source="avr32/drivers/pwma/example/at32uc3l064_uc3l_ek/conf_clock.h" changed="False" content-id="Atmel.ASF" />
-    <file path="src/config/conf_pwma_example.h" framework="" version="3.1.3" source="avr32/drivers/pwma/example/at32uc3l064_uc3l_ek/conf_pwma_example.h" changed="False" content-id="Atmel.ASF" />
-    <file path="src/pwma_example.c" framework="" version="3.1.3" source="avr32/drivers/pwma/example/pwma_example.c" changed="False" content-id="Atmel.ASF" />
-    <file path="src/asf/avr32/drivers/pwma/pwma.c" framework="" version="3.1.3" source="avr32/drivers/pwma/pwma.c" changed="False" content-id="Atmel.ASF" />
-    <file path="src/asf/avr32/drivers/pwma/pwma.h" framework="" version="3.1.3" source="avr32/drivers/pwma/pwma.h" changed="False" content-id="Atmel.ASF" />
-    <file path="src/asf/avr32/drivers/scif/scif_uc3l.c" framework="" version="3.1.3" source="avr32/drivers/scif/scif_uc3l.c" changed="False" content-id="Atmel.ASF" />
-    <file path="src/asf/avr32/drivers/scif/scif_uc3l.h" framework="" version="3.1.3" source="avr32/drivers/scif/scif_uc3l.h" changed="False" content-id="Atmel.ASF" />
-    <file path="src/asf/avr32/utils/compiler.h" framework="" version="3.1.3" source="avr32/utils/compiler.h" changed="False" content-id="Atmel.ASF" />
-    <file path="src/asf/avr32/utils/header_files/uc3d_defines_fix.h" framework="" version="3.1.3" source="avr32/utils/header_files/uc3d_defines_fix.h" changed="False" content-id="Atmel.ASF" />
-    <file path="src/asf/avr32/utils/linker_scripts/at32uc3l/064/gcc/link_uc3l064.lds" framework="" version="3.1.3" source="avr32/utils/linker_scripts/at32uc3l/064/gcc/link_uc3l064.lds" changed="False" content-id="Atmel.ASF" />
-    <file path="src/asf/avr32/utils/parts.h" framework="" version="3.1.3" source="avr32/utils/parts.h" changed="False" content-id="Atmel.ASF" />
-    <file path="src/asf/avr32/utils/preprocessor/mrepeat.h" framework="" version="3.1.3" source="avr32/utils/preprocessor/mrepeat.h" changed="False" content-id="Atmel.ASF" />
-    <file path="src/asf/avr32/utils/preprocessor/preprocessor.h" framework="" version="3.1.3" source="avr32/utils/preprocessor/preprocessor.h" changed="False" content-id="Atmel.ASF" />
-    <file path="src/asf/avr32/utils/preprocessor/stringz.h" framework="" version="3.1.3" source="avr32/utils/preprocessor/stringz.h" changed="False" content-id="Atmel.ASF" />
-    <file path="src/asf/avr32/utils/preprocessor/tpaste.h" framework="" version="3.1.3" source="avr32/utils/preprocessor/tpaste.h" changed="False" content-id="Atmel.ASF" />
-    <file path="src/asf/avr32/utils/startup/startup_uc3.S" framework="" version="3.1.3" source="avr32/utils/startup/startup_uc3.S" changed="False" content-id="Atmel.ASF" />
-    <file path="src/asf/avr32/utils/startup/trampoline_uc3.S" framework="" version="3.1.3" source="avr32/utils/startup/trampoline_uc3.S" changed="False" content-id="Atmel.ASF" />
-    <file path="src/asf/avr32/utils/startup/trampoline_uc3.h" framework="" version="3.1.3" source="avr32/utils/startup/trampoline_uc3.h" changed="False" content-id="Atmel.ASF" />
-    <file path="src/asf/avr32/utils/status_codes.h" framework="" version="3.1.3" source="avr32/utils/status_codes.h" changed="False" content-id="Atmel.ASF" />
-    <file path="src/asf/common/boards/board.h" framework="" version="3.1.3" source="common/boards/board.h" changed="False" content-id="Atmel.ASF" />
-    <file path="src/asf/common/services/clock/dfll.h" framework="" version="3.1.3" source="common/services/clock/dfll.h" changed="False" content-id="Atmel.ASF" />
-    <file path="src/asf/common/services/clock/genclk.h" framework="" version="3.1.3" source="common/services/clock/genclk.h" changed="False" content-id="Atmel.ASF" />
-    <file path="src/asf/common/services/clock/osc.h" framework="" version="3.1.3" source="common/services/clock/osc.h" changed="False" content-id="Atmel.ASF" />
-    <file path="src/asf/common/services/clock/sysclk.h" framework="" version="3.1.3" source="common/services/clock/sysclk.h" changed="False" content-id="Atmel.ASF" />
-    <file path="src/asf/common/services/clock/uc3l/dfll.c" framework="" version="3.1.3" source="common/services/clock/uc3l/dfll.c" changed="False" content-id="Atmel.ASF" />
-    <file path="src/asf/common/services/clock/uc3l/dfll.h" framework="" version="3.1.3" source="common/services/clock/uc3l/dfll.h" changed="False" content-id="Atmel.ASF" />
-    <file path="src/asf/common/services/clock/uc3l/genclk.h" framework="" version="3.1.3" source="common/services/clock/uc3l/genclk.h" changed="False" content-id="Atmel.ASF" />
-    <file path="src/asf/common/services/clock/uc3l/osc.c" framework="" version="3.1.3" source="common/services/clock/uc3l/osc.c" changed="False" content-id="Atmel.ASF" />
-    <file path="src/asf/common/services/clock/uc3l/osc.h" framework="" version="3.1.3" source="common/services/clock/uc3l/osc.h" changed="False" content-id="Atmel.ASF" />
-    <file path="src/asf/common/services/clock/uc3l/sysclk.c" framework="" version="3.1.3" source="common/services/clock/uc3l/sysclk.c" changed="False" content-id="Atmel.ASF" />
-    <file path="src/asf/common/services/clock/uc3l/sysclk.h" framework="" version="3.1.3" source="common/services/clock/uc3l/sysclk.h" changed="False" content-id="Atmel.ASF" />
-    <file path="src/asf/common/services/delay/delay.h" framework="" version="3.1.3" source="common/services/delay/delay.h" changed="False" content-id="Atmel.ASF" />
-    <file path="src/asf/common/utils/interrupt.h" framework="" version="3.1.3" source="common/utils/interrupt.h" changed="False" content-id="Atmel.ASF" />
-    <file path="src/asf/common/utils/interrupt/interrupt_avr32.h" framework="" version="3.1.3" source="common/utils/interrupt/interrupt_avr32.h" changed="False" content-id="Atmel.ASF" />
-  </files>
-  <documentation help="http://asf.atmel.com/docs/3.1.3/avr32.drivers.pwma.example.uc3l_ek/html/index.html" />
-</framework-data>
+        <options>
+          <option id="avr32.drivers.gpio" value="Add" config="" content-id="Atmel.ASF" />
+          <option id="avr32.drivers.pm" value="Add" config="" content-id="Atmel.ASF" />
+          <option id="avr32.drivers.pwma" value="Add" config="" content-id="Atmel.ASF" />
+          <option id="avr32.drivers.pwma.example" value="Add" config="" content-id="Atmel.ASF" />
+          <option id="common.boards" value="Add" config="" content-id="Atmel.ASF" />
+          <option id="common.services.basic.clock" value="Add" config="" content-id="Atmel.ASF" />
+          <option id="common.services.delay" value="Add" config="" content-id="Atmel.ASF" />
+        </options>
+        <configurations>
+          <configuration key="config.compiler.avr32gcc.programming_clock" value="int" default="int" content-id="Atmel.ASF" />
+        </configurations>
+        <files>
+          <file path="src/asf.h" framework="" version="3.1.3" source="./avr32/drivers/pwma/example/at32uc3l064_uc3l_ek/as5_32/asf.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/asf/avr32/boards/uc3l_ek/init.c" framework="" version="3.1.3" source="avr32/boards/uc3l_ek/init.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/asf/avr32/boards/uc3l_ek/led.h" framework="" version="3.1.3" source="avr32/boards/uc3l_ek/led.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/asf/avr32/boards/uc3l_ek/uc3l_ek.h" framework="" version="3.1.3" source="avr32/boards/uc3l_ek/uc3l_ek.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/asf/avr32/drivers/cpu/cycle_counter/cycle_counter.h" framework="" version="3.1.3" source="avr32/drivers/cpu/cycle_counter/cycle_counter.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/asf/avr32/drivers/flashcdw/flashcdw.c" framework="" version="3.1.3" source="avr32/drivers/flashcdw/flashcdw.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/asf/avr32/drivers/flashcdw/flashcdw.h" framework="" version="3.1.3" source="avr32/drivers/flashcdw/flashcdw.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/asf/avr32/drivers/gpio/gpio.c" framework="" version="3.1.3" source="avr32/drivers/gpio/gpio.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/asf/avr32/drivers/gpio/gpio.h" framework="" version="3.1.3" source="avr32/drivers/gpio/gpio.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/asf/avr32/drivers/intc/exception.S" framework="" version="3.1.3" source="avr32/drivers/intc/exception.S" changed="False" content-id="Atmel.ASF" />
+          <file path="src/asf/avr32/drivers/intc/intc.c" framework="" version="3.1.3" source="avr32/drivers/intc/intc.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/asf/avr32/drivers/intc/intc.h" framework="" version="3.1.3" source="avr32/drivers/intc/intc.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/asf/avr32/drivers/pm/pm_uc3l.c" framework="" version="3.1.3" source="avr32/drivers/pm/pm_uc3l.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/asf/avr32/drivers/pm/pm_uc3l.h" framework="" version="3.1.3" source="avr32/drivers/pm/pm_uc3l.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/asf/avr32/drivers/pm/power_clocks_lib.c" framework="" version="3.1.3" source="avr32/drivers/pm/power_clocks_lib.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/asf/avr32/drivers/pm/power_clocks_lib.h" framework="" version="3.1.3" source="avr32/drivers/pm/power_clocks_lib.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/asf/avr32/drivers/pm/sleep.h" framework="" version="3.1.3" source="avr32/drivers/pm/sleep.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/config/conf_board.h" framework="" version="3.1.3" source="avr32/drivers/pwma/example/at32uc3l064_uc3l_ek/conf_board.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/config/conf_clock.h" framework="" version="3.1.3" source="avr32/drivers/pwma/example/at32uc3l064_uc3l_ek/conf_clock.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/config/conf_pwma_example.h" framework="" version="3.1.3" source="avr32/drivers/pwma/example/at32uc3l064_uc3l_ek/conf_pwma_example.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/pwma_example.c" framework="" version="3.1.3" source="avr32/drivers/pwma/example/pwma_example.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/asf/avr32/drivers/pwma/pwma.c" framework="" version="3.1.3" source="avr32/drivers/pwma/pwma.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/asf/avr32/drivers/pwma/pwma.h" framework="" version="3.1.3" source="avr32/drivers/pwma/pwma.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/asf/avr32/drivers/scif/scif_uc3l.c" framework="" version="3.1.3" source="avr32/drivers/scif/scif_uc3l.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/asf/avr32/drivers/scif/scif_uc3l.h" framework="" version="3.1.3" source="avr32/drivers/scif/scif_uc3l.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/asf/avr32/utils/compiler.h" framework="" version="3.1.3" source="avr32/utils/compiler.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/asf/avr32/utils/header_files/uc3d_defines_fix.h" framework="" version="3.1.3" source="avr32/utils/header_files/uc3d_defines_fix.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/asf/avr32/utils/linker_scripts/at32uc3l/064/gcc/link_uc3l064.lds" framework="" version="3.1.3" source="avr32/utils/linker_scripts/at32uc3l/064/gcc/link_uc3l064.lds" changed="False" content-id="Atmel.ASF" />
+          <file path="src/asf/avr32/utils/parts.h" framework="" version="3.1.3" source="avr32/utils/parts.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/asf/avr32/utils/preprocessor/mrepeat.h" framework="" version="3.1.3" source="avr32/utils/preprocessor/mrepeat.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/asf/avr32/utils/preprocessor/preprocessor.h" framework="" version="3.1.3" source="avr32/utils/preprocessor/preprocessor.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/asf/avr32/utils/preprocessor/stringz.h" framework="" version="3.1.3" source="avr32/utils/preprocessor/stringz.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/asf/avr32/utils/preprocessor/tpaste.h" framework="" version="3.1.3" source="avr32/utils/preprocessor/tpaste.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/asf/avr32/utils/startup/startup_uc3.S" framework="" version="3.1.3" source="avr32/utils/startup/startup_uc3.S" changed="False" content-id="Atmel.ASF" />
+          <file path="src/asf/avr32/utils/startup/trampoline_uc3.S" framework="" version="3.1.3" source="avr32/utils/startup/trampoline_uc3.S" changed="False" content-id="Atmel.ASF" />
+          <file path="src/asf/avr32/utils/startup/trampoline_uc3.h" framework="" version="3.1.3" source="avr32/utils/startup/trampoline_uc3.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/asf/avr32/utils/status_codes.h" framework="" version="3.1.3" source="avr32/utils/status_codes.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/asf/common/boards/board.h" framework="" version="3.1.3" source="common/boards/board.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/asf/common/services/clock/dfll.h" framework="" version="3.1.3" source="common/services/clock/dfll.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/asf/common/services/clock/genclk.h" framework="" version="3.1.3" source="common/services/clock/genclk.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/asf/common/services/clock/osc.h" framework="" version="3.1.3" source="common/services/clock/osc.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/asf/common/services/clock/sysclk.h" framework="" version="3.1.3" source="common/services/clock/sysclk.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/asf/common/services/clock/uc3l/dfll.c" framework="" version="3.1.3" source="common/services/clock/uc3l/dfll.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/asf/common/services/clock/uc3l/dfll.h" framework="" version="3.1.3" source="common/services/clock/uc3l/dfll.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/asf/common/services/clock/uc3l/genclk.h" framework="" version="3.1.3" source="common/services/clock/uc3l/genclk.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/asf/common/services/clock/uc3l/osc.c" framework="" version="3.1.3" source="common/services/clock/uc3l/osc.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/asf/common/services/clock/uc3l/osc.h" framework="" version="3.1.3" source="common/services/clock/uc3l/osc.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/asf/common/services/clock/uc3l/sysclk.c" framework="" version="3.1.3" source="common/services/clock/uc3l/sysclk.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/asf/common/services/clock/uc3l/sysclk.h" framework="" version="3.1.3" source="common/services/clock/uc3l/sysclk.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/asf/common/services/delay/delay.h" framework="" version="3.1.3" source="common/services/delay/delay.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/asf/common/utils/interrupt.h" framework="" version="3.1.3" source="common/utils/interrupt.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/asf/common/utils/interrupt/interrupt_avr32.h" framework="" version="3.1.3" source="common/utils/interrupt/interrupt_avr32.h" changed="False" content-id="Atmel.ASF" />
+        </files>
+        <documentation help="http://asf.atmel.com/docs/3.1.3/avr32.drivers.pwma.example.uc3l_ek/html/index.html" />
+      </framework-data>
     </AsfFrameworkConfig>
     <avrtoolinterface>JTAG</avrtoolinterface>
     <avrtool>com.atmel.avrdbg.tool.avrdragon</avrtool>
@@ -99,13 +99,12 @@
       <ToolName>AVR Dragon</ToolName>
       <ToolNumber>00A200025094</ToolNumber>
       <KeepTimersRunning>true</KeepTimersRunning>
-      <OverrideVtor>
-      </OverrideVtor>
+      <OverrideVtor>false</OverrideVtor>
       <OverrideVtorValue>
       </OverrideVtorValue>
       <Channel>
         <host>127.0.0.1</host>
-        <port>3051</port>
+        <port>3686</port>
         <ssl>False</ssl>
       </Channel>
       <ToolOptions>
@@ -127,99 +126,99 @@
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <ToolchainSettings>
       <Avr32Gcc>
-  <avr32gcc.common.outputfiles.hex>True</avr32gcc.common.outputfiles.hex>
-  <avr32gcc.common.outputfiles.lss>True</avr32gcc.common.outputfiles.lss>
-  <avr32gcc.common.outputfiles.eep>True</avr32gcc.common.outputfiles.eep>
-  <avr32gcc.compiler.symbols.DefSymbols>
-    <ListValues>
-      <Value>BOARD=UC3L_EK</Value>
-    </ListValues>
-  </avr32gcc.compiler.symbols.DefSymbols>
-  <avr32gcc.compiler.directories.IncludePaths>
-    <ListValues>
-      <Value>../src/asf/common/services/delay</Value>
-      <Value>../src/asf/avr32/utils/preprocessor</Value>
-      <Value>../src/asf/avr32/drivers/intc</Value>
-      <Value>../src/asf/avr32/drivers/pm</Value>
-      <Value>../src/asf/avr32/utils</Value>
-      <Value>../src/asf/avr32/drivers/flashcdw</Value>
-      <Value>../src/asf/common/utils</Value>
-      <Value>../src/asf/avr32/drivers/pwma</Value>
-      <Value>../src/asf/common/boards</Value>
-      <Value>../src/asf/avr32/boards/uc3l_ek</Value>
-      <Value>../src/asf/avr32/drivers/pwma/example/at32uc3l064_uc3l_ek</Value>
-      <Value>../src/asf/avr32/drivers/cpu/cycle_counter</Value>
-      <Value>../src/asf/common/services/clock</Value>
-      <Value>../src/asf/avr32/boards</Value>
-      <Value>../src/asf/avr32/drivers/gpio</Value>
-      <Value>../src/asf/avr32/drivers/scif</Value>
-      <Value>../src</Value>
-      <Value>../src/config</Value>
-    </ListValues>
-  </avr32gcc.compiler.directories.IncludePaths>
-  <avr32gcc.compiler.optimization.level>Optimize for size (-Os)</avr32gcc.compiler.optimization.level>
-  <avr32gcc.compiler.optimization.OtherFlags>-fdata-sections</avr32gcc.compiler.optimization.OtherFlags>
-  <avr32gcc.compiler.optimization.PrepareFunctionsForGarbageCollection>True</avr32gcc.compiler.optimization.PrepareFunctionsForGarbageCollection>
-  <avr32gcc.compiler.optimization.UseAssemblerForPseudoInstructions>True</avr32gcc.compiler.optimization.UseAssemblerForPseudoInstructions>
-  <avr32gcc.compiler.warnings.AllWarnings>True</avr32gcc.compiler.warnings.AllWarnings>
-  <avr32gcc.compiler.miscellaneous.OtherFlags>-Werror-implicit-function-declaration -Wmissing-prototypes -Wpointer-arith -Wstrict-prototypes -mno-cond-exec-before-reload -mrelax -std=gnu99</avr32gcc.compiler.miscellaneous.OtherFlags>
-  <avr32gcc.linker.general.DoNotUseStandardStartFiles>True</avr32gcc.linker.general.DoNotUseStandardStartFiles>
-  <avr32gcc.linker.libraries.Libraries>
-    <ListValues>
-      <Value>m</Value>
-    </ListValues>
-  </avr32gcc.linker.libraries.Libraries>
-  <avr32gcc.linker.optimization.GarbageCollectUnusedSections>True</avr32gcc.linker.optimization.GarbageCollectUnusedSections>
-  <avr32gcc.linker.optimization.PutReadOnlyDataInWritableDataSection>True</avr32gcc.linker.optimization.PutReadOnlyDataInWritableDataSection>
-  <avr32gcc.linker.optimization.AllowDirectReferencesToDataSection>True</avr32gcc.linker.optimization.AllowDirectReferencesToDataSection>
-  <avr32gcc.linker.miscellaneous.LinkerFlags>-T../src/asf/avr32/utils/linker_scripts/at32uc3l/064/gcc/link_uc3l064.lds -Wl,--relax -Wl,-e,_trampoline</avr32gcc.linker.miscellaneous.LinkerFlags>
-  <avr32gcc.assembler.general.AssemblerFlags>-mrelax</avr32gcc.assembler.general.AssemblerFlags>
-  <avr32gcc.assembler.general.IncludePaths>
-    <ListValues>
-      <Value>../src/asf/common/services/delay</Value>
-      <Value>../src/asf/avr32/utils/preprocessor</Value>
-      <Value>../src/asf/avr32/drivers/intc</Value>
-      <Value>../src/asf/avr32/drivers/pm</Value>
-      <Value>../src/asf/avr32/utils</Value>
-      <Value>../src/asf/avr32/drivers/flashcdw</Value>
-      <Value>../src/asf/common/utils</Value>
-      <Value>../src/asf/avr32/drivers/pwma</Value>
-      <Value>../src/asf/common/boards</Value>
-      <Value>../src/asf/avr32/boards/uc3l_ek</Value>
-      <Value>../src/asf/avr32/drivers/pwma/example/at32uc3l064_uc3l_ek</Value>
-      <Value>../src/asf/avr32/drivers/cpu/cycle_counter</Value>
-      <Value>../src/asf/common/services/clock</Value>
-      <Value>../src/asf/avr32/boards</Value>
-      <Value>../src/asf/avr32/drivers/gpio</Value>
-      <Value>../src/asf/avr32/drivers/scif</Value>
-      <Value>../src</Value>
-      <Value>../src/config</Value>
-    </ListValues>
-  </avr32gcc.assembler.general.IncludePaths>
-  <avr32gcc.preprocessingassembler.general.AssemblerFlags>-DBOARD=UC3L_EK -mrelax</avr32gcc.preprocessingassembler.general.AssemblerFlags>
-  <avr32gcc.preprocessingassembler.general.IncludePaths>
-    <ListValues>
-      <Value>../src/asf/common/services/delay</Value>
-      <Value>../src/asf/avr32/utils/preprocessor</Value>
-      <Value>../src/asf/avr32/drivers/intc</Value>
-      <Value>../src/asf/avr32/drivers/pm</Value>
-      <Value>../src/asf/avr32/utils</Value>
-      <Value>../src/asf/avr32/drivers/flashcdw</Value>
-      <Value>../src/asf/common/utils</Value>
-      <Value>../src/asf/avr32/drivers/pwma</Value>
-      <Value>../src/asf/common/boards</Value>
-      <Value>../src/asf/avr32/boards/uc3l_ek</Value>
-      <Value>../src/asf/avr32/drivers/pwma/example/at32uc3l064_uc3l_ek</Value>
-      <Value>../src/asf/avr32/drivers/cpu/cycle_counter</Value>
-      <Value>../src/asf/common/services/clock</Value>
-      <Value>../src/asf/avr32/boards</Value>
-      <Value>../src/asf/avr32/drivers/gpio</Value>
-      <Value>../src/asf/avr32/drivers/scif</Value>
-      <Value>../src</Value>
-      <Value>../src/config</Value>
-    </ListValues>
-  </avr32gcc.preprocessingassembler.general.IncludePaths>
-</Avr32Gcc>
+        <avr32gcc.common.outputfiles.hex>True</avr32gcc.common.outputfiles.hex>
+        <avr32gcc.common.outputfiles.lss>True</avr32gcc.common.outputfiles.lss>
+        <avr32gcc.common.outputfiles.eep>True</avr32gcc.common.outputfiles.eep>
+        <avr32gcc.compiler.symbols.DefSymbols>
+          <ListValues>
+            <Value>BOARD=UC3L_EK</Value>
+          </ListValues>
+        </avr32gcc.compiler.symbols.DefSymbols>
+        <avr32gcc.compiler.directories.IncludePaths>
+          <ListValues>
+            <Value>../src/asf/common/services/delay</Value>
+            <Value>../src/asf/avr32/utils/preprocessor</Value>
+            <Value>../src/asf/avr32/drivers/intc</Value>
+            <Value>../src/asf/avr32/drivers/pm</Value>
+            <Value>../src/asf/avr32/utils</Value>
+            <Value>../src/asf/avr32/drivers/flashcdw</Value>
+            <Value>../src/asf/common/utils</Value>
+            <Value>../src/asf/avr32/drivers/pwma</Value>
+            <Value>../src/asf/common/boards</Value>
+            <Value>../src/asf/avr32/boards/uc3l_ek</Value>
+            <Value>../src/asf/avr32/drivers/pwma/example/at32uc3l064_uc3l_ek</Value>
+            <Value>../src/asf/avr32/drivers/cpu/cycle_counter</Value>
+            <Value>../src/asf/common/services/clock</Value>
+            <Value>../src/asf/avr32/boards</Value>
+            <Value>../src/asf/avr32/drivers/gpio</Value>
+            <Value>../src/asf/avr32/drivers/scif</Value>
+            <Value>../src</Value>
+            <Value>../src/config</Value>
+          </ListValues>
+        </avr32gcc.compiler.directories.IncludePaths>
+        <avr32gcc.compiler.optimization.level>Optimize for size (-Os)</avr32gcc.compiler.optimization.level>
+        <avr32gcc.compiler.optimization.OtherFlags>-fdata-sections</avr32gcc.compiler.optimization.OtherFlags>
+        <avr32gcc.compiler.optimization.PrepareFunctionsForGarbageCollection>True</avr32gcc.compiler.optimization.PrepareFunctionsForGarbageCollection>
+        <avr32gcc.compiler.optimization.UseAssemblerForPseudoInstructions>True</avr32gcc.compiler.optimization.UseAssemblerForPseudoInstructions>
+        <avr32gcc.compiler.warnings.AllWarnings>True</avr32gcc.compiler.warnings.AllWarnings>
+        <avr32gcc.compiler.miscellaneous.OtherFlags>-Werror-implicit-function-declaration -Wmissing-prototypes -Wpointer-arith -Wstrict-prototypes -mno-cond-exec-before-reload -mrelax -std=gnu99</avr32gcc.compiler.miscellaneous.OtherFlags>
+        <avr32gcc.linker.general.DoNotUseStandardStartFiles>True</avr32gcc.linker.general.DoNotUseStandardStartFiles>
+        <avr32gcc.linker.libraries.Libraries>
+          <ListValues>
+            <Value>m</Value>
+          </ListValues>
+        </avr32gcc.linker.libraries.Libraries>
+        <avr32gcc.linker.optimization.GarbageCollectUnusedSections>True</avr32gcc.linker.optimization.GarbageCollectUnusedSections>
+        <avr32gcc.linker.optimization.PutReadOnlyDataInWritableDataSection>True</avr32gcc.linker.optimization.PutReadOnlyDataInWritableDataSection>
+        <avr32gcc.linker.optimization.AllowDirectReferencesToDataSection>True</avr32gcc.linker.optimization.AllowDirectReferencesToDataSection>
+        <avr32gcc.linker.miscellaneous.LinkerFlags>-T../src/asf/avr32/utils/linker_scripts/at32uc3l/064/gcc/link_uc3l064.lds -Wl,--relax -Wl,-e,_trampoline</avr32gcc.linker.miscellaneous.LinkerFlags>
+        <avr32gcc.assembler.general.AssemblerFlags>-mrelax</avr32gcc.assembler.general.AssemblerFlags>
+        <avr32gcc.assembler.general.IncludePaths>
+          <ListValues>
+            <Value>../src/asf/common/services/delay</Value>
+            <Value>../src/asf/avr32/utils/preprocessor</Value>
+            <Value>../src/asf/avr32/drivers/intc</Value>
+            <Value>../src/asf/avr32/drivers/pm</Value>
+            <Value>../src/asf/avr32/utils</Value>
+            <Value>../src/asf/avr32/drivers/flashcdw</Value>
+            <Value>../src/asf/common/utils</Value>
+            <Value>../src/asf/avr32/drivers/pwma</Value>
+            <Value>../src/asf/common/boards</Value>
+            <Value>../src/asf/avr32/boards/uc3l_ek</Value>
+            <Value>../src/asf/avr32/drivers/pwma/example/at32uc3l064_uc3l_ek</Value>
+            <Value>../src/asf/avr32/drivers/cpu/cycle_counter</Value>
+            <Value>../src/asf/common/services/clock</Value>
+            <Value>../src/asf/avr32/boards</Value>
+            <Value>../src/asf/avr32/drivers/gpio</Value>
+            <Value>../src/asf/avr32/drivers/scif</Value>
+            <Value>../src</Value>
+            <Value>../src/config</Value>
+          </ListValues>
+        </avr32gcc.assembler.general.IncludePaths>
+        <avr32gcc.preprocessingassembler.general.AssemblerFlags>-DBOARD=UC3L_EK -mrelax</avr32gcc.preprocessingassembler.general.AssemblerFlags>
+        <avr32gcc.preprocessingassembler.general.IncludePaths>
+          <ListValues>
+            <Value>../src/asf/common/services/delay</Value>
+            <Value>../src/asf/avr32/utils/preprocessor</Value>
+            <Value>../src/asf/avr32/drivers/intc</Value>
+            <Value>../src/asf/avr32/drivers/pm</Value>
+            <Value>../src/asf/avr32/utils</Value>
+            <Value>../src/asf/avr32/drivers/flashcdw</Value>
+            <Value>../src/asf/common/utils</Value>
+            <Value>../src/asf/avr32/drivers/pwma</Value>
+            <Value>../src/asf/common/boards</Value>
+            <Value>../src/asf/avr32/boards/uc3l_ek</Value>
+            <Value>../src/asf/avr32/drivers/pwma/example/at32uc3l064_uc3l_ek</Value>
+            <Value>../src/asf/avr32/drivers/cpu/cycle_counter</Value>
+            <Value>../src/asf/common/services/clock</Value>
+            <Value>../src/asf/avr32/boards</Value>
+            <Value>../src/asf/avr32/drivers/gpio</Value>
+            <Value>../src/asf/avr32/drivers/scif</Value>
+            <Value>../src</Value>
+            <Value>../src/config</Value>
+          </ListValues>
+        </avr32gcc.preprocessingassembler.general.IncludePaths>
+      </Avr32Gcc>
     </ToolchainSettings>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -255,7 +254,7 @@
       <Value>../src/config</Value>
     </ListValues>
   </avr32gcc.compiler.directories.IncludePaths>
-  <avr32gcc.compiler.optimization.level>Optimize (-O1)</avr32gcc.compiler.optimization.level>
+  <avr32gcc.compiler.optimization.level>Optimize most (-O3)</avr32gcc.compiler.optimization.level>
   <avr32gcc.compiler.optimization.OtherFlags>-fdata-sections</avr32gcc.compiler.optimization.OtherFlags>
   <avr32gcc.compiler.optimization.PrepareFunctionsForGarbageCollection>True</avr32gcc.compiler.optimization.PrepareFunctionsForGarbageCollection>
   <avr32gcc.compiler.optimization.UseAssemblerForPseudoInstructions>True</avr32gcc.compiler.optimization.UseAssemblerForPseudoInstructions>
@@ -487,7 +486,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="src\config\conf_pwma_example.h">
+    <None Include="src\config\conf_pwma.h">
       <SubType>compile</SubType>
     </None>
   </ItemGroup>
@@ -582,7 +581,7 @@
     <Compile Include="src\asf\common\services\clock\uc3l\sysclk.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\pwma_example.c">
+    <Compile Include="src\hexa.c">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>
