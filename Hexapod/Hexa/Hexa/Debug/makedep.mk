@@ -30,5 +30,5 @@ src\asf\common\services\clock\uc3l\osc.c
 
 src\asf\common\services\clock\uc3l\sysclk.c
 
-src\pwma_example.c
+src\hexa.c
 
