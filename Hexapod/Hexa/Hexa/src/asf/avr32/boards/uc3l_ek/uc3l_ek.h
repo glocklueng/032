@@ -141,31 +141,31 @@
 /*! \name PWMs of PWMA Connections
  */
 //! @{
-#define PWM_CH1		22	//A22
-#define PWM_CH2		28	//B05
-#define PWM_CH3		27	//B04
-#define PWM_CH4		33	//B10
-#define PWM_CH5		21	//A21
-#define PWM_CH6		20	//A20
-#define PWM_CH7		13	//A13
-#define PWM_CH8		11	//A11
-#define PWM_CH9		32	//B09
-#define PWM_CH10	29	//B06
-#define PWM_CH11	30	//B07
-#define PWM_CH12	31	//B08
+#define PWM_CH1		(0x400000ULL) | 0x1ULL		//A22 // 22
+#define PWM_CH2		(0x10000000ULL) | 0x1ULL	//B05 // 28
+#define PWM_CH3		(0x8000000ULL) | 0x1ULL		//B04 // 27
+#define PWM_CH4		(0x200000000ULL) | 0x1ULL	//B10 // 33
+#define PWM_CH5		(0x200000ULL) | 0x1ULL		//A21 // 21
+#define PWM_CH6		(0x100000ULL) | 0x1ULL		//A20 // 20
+#define PWM_CH7		(0x2000ULL) | 0x1ULL		//A13 // 13
+#define PWM_CH8		(0x800ULL) | 0x1ULL			//A11 // 11
+#define PWM_CH9		(0x100000000ULL) | 0x1ULL	//B09 // 32
+#define PWM_CH10	(0x20000000ULL) | 0x1ULL	//B06 // 29
+#define PWM_CH11	(0x40000000ULL) | 0x1ULL	//B07 // 30
+#define PWM_CH12	(0x80000000ULL) | 0x1ULL	//B08 // 31
 
-#define PWM_CH13	26	//B03
-#define PWM_CH14	25	//B02
-#define PWM_CH15	23	//B00
-#define PWM_CH16	35	//B12
-#define PWM_CH17	9	//A09
-#define PWM_CH18	12	//A12
-#define PWM_CH19	34	//B11
-#define PWM_CH20	18	//A18
-#define PWM_CH21	19	//A19
-#define PWM_CH22	17	//A17
-#define PWM_CH23	16	//A16
-#define PWM_CH24	15	//A15
+#define PWM_CH13	(0x4000000ULL) | 0x1ULL		//B03 // 26
+#define PWM_CH14	(0x2000000ULL) | 0x1ULL		//B02 // 25
+#define PWM_CH15	(0x800000ULL) | 0x1ULL		//B00 // 23
+#define PWM_CH16	(0x800000000ULL) | 0x1ULL	//B12 // 35
+#define PWM_CH17	(0x200ULL)  | 0x1ULL		//A09 // 9
+#define PWM_CH18	(0x1000ULL) | 0x1ULL		//A12 // 12
+#define PWM_CH19	(0x400000000ULL) | 0x1ULL	//B11 // 34
+#define PWM_CH20	(0x40000ULL) | 0x1ULL		//A18 // 18
+#define PWM_CH21	(0x80000ULL) | 0x1ULL		//A19 // 19
+#define PWM_CH22	(0x20000ULL) | 0x1ULL		//A17 // 17
+#define PWM_CH23	(0x10000ULL) | 0x1ULL		//A16 // 16
+#define PWM_CH24	(0x8000ULL) | 0x1ULL		//A15 // 15
 //! @}
 
 
