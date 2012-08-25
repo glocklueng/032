@@ -113,107 +113,379 @@ int main(void)
 	scif_gc_enable(AVR32_PM_GCLK_PWMA);
 	
 	
-	pwma_config_and_enable( &AVR32_PWMA, (1 << PWM_CH1)
-									   | (1 << PWM_CH2)
-									   | (1 << PWM_CH3)
-									   | (1 << PWM_CH4)
-									   | (1 << PWM_CH5)
-									   | (1 << PWM_CH6)
-									   | (1 << PWM_CH7)
-									   | (1 << PWM_CH8)
-									   | (1 << PWM_CH9)
-									   | (1 << PWM_CH10)
-									   | (1 << PWM_CH11)
-									   | (1 << PWM_CH12)
-									   | (1 << PWM_CH13)
-									   | (1 << PWM_CH14)
-									   | (1 << PWM_CH15)
-									   | (1 << PWM_CH16)
-									   | (1 << PWM_CH17)
-									   | (1 << PWM_CH18)
-									   | (1 << PWM_CH19)
-									   | (1 << PWM_CH20)
-									   | (1 << PWM_CH21)
-									   | (1 << PWM_CH22)
-									   | (1 << PWM_CH23)
-									   | (1 << PWM_CH24)
+	pwma_config_and_enable( &AVR32_PWMA, (PWM_CH1)
+									   | (PWM_CH2)
+									   | (PWM_CH3)		
+									   | (PWM_CH4)		// Base 1
+									   | (PWM_CH5)		// Leg  1
+									   | (PWM_CH6)		// Foot 1
+									   | (PWM_CH7)		// Base 2
+									   | (PWM_CH8)		// Leg  2
+									   | (PWM_CH9)		// Foot 2
+									   | (PWM_CH10)		// Base 3
+									   | (PWM_CH11)		// Leg  3	
+									   | (PWM_CH12)		// Foot 3
+									   | (PWM_CH13)		
+									   | (PWM_CH14)		
+									   | (PWM_CH15)
+									   | (PWM_CH16)		// Base 4
+									   | (PWM_CH17)		// Leg  4
+									   | (PWM_CH18)		// Foot 4
+									   | (PWM_CH19)		// Base 5
+									   | (PWM_CH20)		// Leg  5
+									   | (PWM_CH21)		// Foot 5
+									   | (PWM_CH22)		// Base 6
+									   | (PWM_CH23)		// Leg  6
+									   | (PWM_CH24)		// Foot 6
 									   , PWMA_PERIOD_CYCLES, PWMA_DUTY_CYCLE_INIT_VAL );
-							 
-	uint8_t current_duty_cycle = 0;
-	int leds_intensity_direction = PWMA_DUTY_CYCLE_INCREASE;
-	int i;
 
-	uint8_t servo_top = 34;	//34
-	uint8_t servo_middle = 20;
-	uint8_t servo_bottom = 14;	// 8
-	uint8_t direction = 0;
+	
+//		SERVOS			{Base,Leg,Foot}
+	uint8_t servos[6][3] = {{23,10,28},
+						    {19,10,28},
+							{17,10,28},
+							{16,10,28},
+							{22,10,28},
+							{22,10,28}};
+	
+	//		CENTER			{Base,Leg,Foot}
+	uint8_t center[6][3] = {{23,10,28},
+						    {19,10,28},
+							{17,10,28},
+							{16,10,28},
+							{22,10,28},
+							{22,10,28}};
+	
+	//		DIRECTION		   {Base,Leg,Foot}
+	uint8_t direction[6][3] = {{0,0,0},
+						       {0,0,0},
+							   {0,0,0},
+						       {0,0,0},
+						       {0,0,0},
+						       {0,0,0}};
+															
+	uint8_t base_width = 4; // 2
+	uint8_t leg_width = 4;  // 2
+	uint8_t foot_width = 2;
+	 					 
+	// CCW +
+	// CW -					 
+	
+	delay_init(sysclk_get_cpu_hz());
+	
+	// Center all motors
+	// ----------------------------------------------------
+	// Update Leg 1
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH4), servos[0][0]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH5), servos[0][1]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH6), servos[0][2]);
+	
+	// Update Leg 2
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH7), servos[1][0]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH8), servos[1][1]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH9), servos[1][2]);
+	
+	// Update Leg 3
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH10), servos[2][0]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH11), servos[2][1]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH12), servos[2][2]);
+	
+	// Update Leg 4
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH16), servos[3][0]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH17), servos[3][1]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH18), servos[3][2]);
+	
+	// Update Leg 5
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH19), servos[4][0]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH20), servos[4][1]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH21), servos[4][2]);
+	
+	// Update Leg 6
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH22), servos[5][0]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH23), servos[5][1]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH24), servos[5][2]);
+	// ----------------------------------------------------
 	
 	do
 	{
-		/*** CALCULATE LEG POSITIONS ****/
-		if(current_duty_cycle >= servo_bottom && current_duty_cycle <= servo_top && direction == 0)
+		int l = 0;
+		int r = 0;
+		
+		for(r = 0; r < 6; r++)
 		{
-			current_duty_cycle += 5;
-		}
-		else
-		{
-			if(current_duty_cycle >= servo_bottom)
+			// Move Base
+			if(servos[r][1] >= center[r][1]-base_width && servos[r][1] <= center[r][1]+base_width && direction[r][1] == 0)
 			{
-				current_duty_cycle -= 5;
-				direction = 1;
+				servos[r][1] += 1;
 			}
 			else
 			{
-				current_duty_cycle = servo_bottom;
-				direction = 0;
+				if(servos[r][1] >= center[r][1]-base_width)
+				{
+					servos[r][1] -= 1;
+					direction[r][1] = 1;
+				}
+				else
+				{
+					servos[r][1] = center[r][1]-base_width;
+					direction[r][1] = 0;
+				}
+			}
+		
+			// Move Leg
+			if(servos[r][2] >= center[r][2] && servos[r][2] <= center[r][2]+base_width && direction[r][2] == 0)
+			{
+				servos[r][2] += 1;
+			}
+			else
+			{
+				if(servos[r][2] >= center[r][2])
+				{
+					servos[r][2] -= 1;
+					direction[r][2] = 1;
+				}
+				else
+				{
+					servos[r][2] = center[r][2];
+					direction[r][2] = 0;
+				}
 			}
 		}
-		/*** CALCULATE LEG POSITIONS ****/
-		
-		pwma_set_channels_value(&AVR32_PWMA, (1 << PWM_CH1) | (1 << PWM_CH2) | (1 << PWM_CH3) | (1 << PWM_CH4)
-											|(1 << PWM_CH5) | (1 << PWM_CH6) | (1 << PWM_CH7) | (1 << PWM_CH8)
-											|(1 << PWM_CH9) | (1 << PWM_CH10) | (1 << PWM_CH11) | (1 << PWM_CH12)
-											|(1 << PWM_CH13) | (1 << PWM_CH14) | (1 << PWM_CH15) | (1 << PWM_CH16)
-											|(1 << PWM_CH17) | (1 << PWM_CH18) | (1 << PWM_CH19) | (1 << PWM_CH20)
-											|(1 << PWM_CH21) | (1 << PWM_CH22) | (1 << PWM_CH23) | (1 << PWM_CH24), current_duty_cycle);
-		
-		
-		/*
-		pwma_set_channels_value(&AVR32_PWMA, (1 << PWM_CH1) | (1 << PWM_CH2) | (1 << PWM_CH3) | (1 << PWM_CH4), current_duty_cycle);
 
-		pwma_set_channels_value(&AVR32_PWMA, (1 << PWM_CH5) | (1 << PWM_CH6) | (1 << PWM_CH7) | (1 << PWM_CH8), current_duty_cycle);
+		// Update Leg 1
+		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH4), servos[0][0]);
+		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH5), servos[0][1]);
+		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH6), servos[0][2]);
 		
-		pwma_set_channels_value(&AVR32_PWMA, (1 << PWM_CH9) | (1 << PWM_CH10) | (1 << PWM_CH11) | (1 << PWM_CH12), current_duty_cycle);
+		// Update Leg 2
+		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH7), servos[1][0]);
+		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH8), servos[1][1]);
+		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH9), servos[1][2]);
 		
-		pwma_set_channels_value(&AVR32_PWMA, (1 << PWM_CH13) | (1 << PWM_CH14) | (1 << PWM_CH15) | (1 << PWM_CH16), current_duty_cycle);
+		// Update Leg 3
+		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH10), servos[2][0]);
+		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH11), servos[2][1]);
+		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH12), servos[2][2]);
 		
-		pwma_set_channels_value(&AVR32_PWMA, (1 << PWM_CH17) | (1 << PWM_CH18) | (1 << PWM_CH19) | (1 << PWM_CH20), current_duty_cycle);
+		// Update Leg 4
+		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH16), servos[3][0]);
+		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH17), servos[3][1]);
+		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH18), servos[3][2]);
+		
+		// Update Leg 5
+		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH19), servos[4][0]);
+		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH20), servos[4][1]);
+		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH21), servos[4][2]);
+		
+		// Update Leg 6
+		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH22), servos[5][0]);
+		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH23), servos[5][1]);
+		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH24), servos[5][2]);
 
-		pwma_set_channels_value(&AVR32_PWMA, (1 << PWM_CH21) | (1 << PWM_CH22) | (1 << PWM_CH23) | (1 << PWM_CH24), current_duty_cycle);
-		*/
-		/*
-		pwma_set_channels_value(&AVR32_PWMA, (1 << PWM_CH1) | (1 << PWM_CH2), current_duty_cycle);
-		pwma_set_channels_value(&AVR32_PWMA, (1 << PWM_CH3) | (1 << PWM_CH4), current_duty_cycle);
+		
 
-		pwma_set_channels_value(&AVR32_PWMA, (1 << PWM_CH5) | (1 << PWM_CH6), current_duty_cycle);
-		pwma_set_channels_value(&AVR32_PWMA, (1 << PWM_CH7) | (1 << PWM_CH8), current_duty_cycle);
-		
-		pwma_set_channels_value(&AVR32_PWMA, (1 << PWM_CH9) | (1 << PWM_CH10), current_duty_cycle);
-		pwma_set_channels_value(&AVR32_PWMA, (1 << PWM_CH11) | (1 << PWM_CH12), current_duty_cycle);
-				
-		pwma_set_channels_value(&AVR32_PWMA, (1 << PWM_CH13) | (1 << PWM_CH14), current_duty_cycle);
-		pwma_set_channels_value(&AVR32_PWMA, (1 << PWM_CH15) | (1 << PWM_CH16), current_duty_cycle);
-		
-		pwma_set_channels_value(&AVR32_PWMA, (1 << PWM_CH17) | (1 << PWM_CH18), current_duty_cycle);
-		pwma_set_channels_value(&AVR32_PWMA, (1 << PWM_CH19) | (1 << PWM_CH20), current_duty_cycle);
-
-		pwma_set_channels_value(&AVR32_PWMA, (1 << PWM_CH21) | (1 << PWM_CH22), current_duty_cycle);
-		pwma_set_channels_value(&AVR32_PWMA, (1 << PWM_CH23) | (1 << PWM_CH24), current_duty_cycle);
-		*/
-		
-		
-		//delay_ms(15);
 
 	}while(1);
 	
 }
+
+
+
+/*
+void dance(void)
+{
+	int l = 0;
+	int r = 0;
+	
+	for(r = 0; r < 6; r++)
+	{
+		// Move Base
+		if(servos[r][1] >= center[r][1]-base_width && servos[r][1] <= center[r][1]+base_width && direction[r][1] == 0)
+		{
+			servos[r][1] += 1;
+		}
+		else
+		{
+			if(servos[r][1] >= center[r][1]-base_width)
+			{
+				servos[r][1] -= 1;
+				direction[r][1] = 1;
+			}
+			else
+			{
+				servos[r][1] = center[r][1]-base_width;
+				direction[r][1] = 0;
+			}
+		}
+		
+		// Move Leg
+		if(servos[r][2] >= center[r][2] && servos[r][2] <= center[r][2]+base_width && direction[r][2] == 0)
+		{
+			servos[r][2] += 1;
+		}
+		else
+		{
+			if(servos[r][2] >= center[r][2])
+			{
+				servos[r][2] -= 1;
+				direction[r][2] = 1;
+			}
+			else
+			{
+				servos[r][2] = center[r][2];
+				direction[r][2] = 0;
+			}
+		}
+	}
+
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH5)|(PWM_CH8)|(PWM_CH11)|(PWM_CH17)|(PWM_CH20)|(PWM_CH23), servos[0][1]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH6)|(PWM_CH9)|(PWM_CH12)|(PWM_CH18)|(PWM_CH21)|(PWM_CH24), servos[0][2]);
+}
+*/
+
+
+
+
+
+
+
+		/*
+		uint8_t base_duty_cycle = 23;
+		uint8_t leg_duty_cycle = 10;
+		uint8_t foot_duty_cycle = 28;
+		
+		uint8_t servo_base_top = 26;		// IN // CCW +
+		uint8_t servo_base_middle = 23;		// CENTER
+		uint8_t servo_base_bottom = 20;		// OUT // CW -
+		uint8_t servo_base_direction = 0;
+		
+		uint8_t servo_leg_top = 22;			// IN // CCW
+		uint8_t servo_leg_middle = 10;		// CENTER
+		uint8_t servo_leg_bottom = 4;		// OUT // CW
+		uint8_t servo_leg_direction = 0;
+		
+		uint8_t servo_foot_top = 33;		// IN // CCW
+		uint8_t servo_foot_middle = 28;		// CENTER
+		uint8_t servo_foot_bottom = 14;		// OUT // CW
+		uint8_t servo_foot_direction = 0;
+		
+		
+		uint8_t servo_base_1 = 23;
+		uint8_t servo_base_2 = 19;
+		uint8_t servo_base_3 = 17;
+		uint8_t servo_base_4 = 16;
+		uint8_t servo_base_5 = 22;
+		uint8_t servo_base_6 = 22;
+		
+		int leds_intensity_direction = PWMA_DUTY_CYCLE_INCREASE;
+		int i;
+		
+		/*
+		// CALCULATE FOOT POSITIONS
+		if(foot_duty_cycle >= servo_foot_bottom && foot_duty_cycle <= servo_foot_top && servo_foot_direction == 0)
+		{
+			foot_duty_cycle += 1;
+		}
+		else
+		{
+			if(foot_duty_cycle >= servo_foot_bottom)
+			{
+				foot_duty_cycle -= 1;
+				servo_foot_direction = 1;
+			}
+			else
+			{
+				foot_duty_cycle = servo_foot_bottom;
+				servo_foot_direction = 0;
+			}
+		}
+		// CALCULATE FOOT POSITIONS 
+		
+		// CALCULATE LEG POSITIONS 
+		if(leg_duty_cycle >= servo_leg_bottom && leg_duty_cycle <= servo_leg_top && servo_leg_direction == 0)
+		{
+			leg_duty_cycle += 1;
+		}
+		else
+		{
+			if(leg_duty_cycle >= servo_leg_bottom)
+			{
+				leg_duty_cycle -= 1;
+				servo_leg_direction = 1;
+			}
+			else
+			{
+				leg_duty_cycle = servo_leg_bottom;
+				servo_leg_direction = 0;
+			}
+		}
+		// CALCULATE LEG POSITIONS 
+		
+		// CALCULATE BASE POSITIONS 
+		if(base_duty_cycle >= servo_base_bottom && base_duty_cycle <= servo_base_top && servo_base_direction == 0)
+		{
+			base_duty_cycle += 1;
+		}
+		else
+		{
+			if(base_duty_cycle >= servo_base_bottom)
+			{
+				base_duty_cycle -= 1;
+				servo_base_direction = 1;
+			}
+			else
+			{
+				base_duty_cycle = servo_base_bottom;
+				servo_base_direction = 0;
+			}
+		}
+		// CALCULATE BASE POSITIONS 
+		*/
+		
+
+
+		/* FAST SPEED UPDATE ALL
+		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH1) | (PWM_CH2) | (PWM_CH3) | (PWM_CH4)
+											|(PWM_CH5) | (PWM_CH6) | (PWM_CH7) | (PWM_CH8)
+											|(PWM_CH9) | (PWM_CH10) | (PWM_CH11) | (PWM_CH12)
+											|(PWM_CH13) | (PWM_CH14) | (PWM_CH15) | (PWM_CH16)
+											|(PWM_CH17) | (PWM_CH18) | (PWM_CH19) | (PWM_CH20)
+											|(PWM_CH21) | (PWM_CH22) | (PWM_CH23) | (PWM_CH24), current_duty_cycle);
+		/* */
+		
+		
+		/* MEDIUM SPEED UPDATE ALL
+		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH1) | (PWM_CH2) | (PWM_CH3) | (PWM_CH4), current_duty_cycle);
+
+		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH5) | (PWM_CH6) | (PWM_CH7) | (PWM_CH8), current_duty_cycle);
+		
+		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH9) | (PWM_CH10) | (PWM_CH11) | (PWM_CH12), current_duty_cycle);
+		
+		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH13) | (PWM_CH14) | (PWM_CH15) | (PWM_CH16), current_duty_cycle);
+		
+		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH17) | (PWM_CH18) | (PWM_CH19) | (PWM_CH20), current_duty_cycle);
+
+		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH21) | (PWM_CH22) | (PWM_CH23) | (PWM_CH24), current_duty_cycle);
+		/* */
+		
+		
+		/* SLOW SPEED UPDATE ALL */
+		/*
+		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH1) | (PWM_CH2), current_duty_cycle);
+		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH3) | (PWM_CH4), current_duty_cycle);
+
+		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH5) | (PWM_CH6), current_duty_cycle);
+		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH7) | (PWM_CH8), current_duty_cycle);
+		
+		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH9) | (PWM_CH10), current_duty_cycle);
+		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH11) | (PWM_CH12), current_duty_cycle);
+				
+		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH13) | (PWM_CH14), current_duty_cycle);
+		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH15) | (PWM_CH16), current_duty_cycle);
+		
+		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH17) | (PWM_CH18), current_duty_cycle);
+		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH19) | (PWM_CH20), current_duty_cycle);
+
+		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH21) | (PWM_CH22), current_duty_cycle);
+		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH23) | (PWM_CH24), current_duty_cycle);
+		/* */
