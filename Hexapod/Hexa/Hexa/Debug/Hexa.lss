@@ -7,43 +7,45 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
   1 .rela.got     00000000  80002004  80002004  00002404  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  2 .text         00000f7e  80002004  80002004  00002404  2**2
+  2 .text         000017fe  80002004  80002004  00002404  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  3 .exception    00000200  80003000  80003000  00003400  2**9
+  3 .exception    00000200  80003a00  80003a00  00003e00  2**9
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  4 .rodata       00000118  80003200  80003200  00003600  2**2
+  4 .rodata       00000118  80003c00  80003c00  00004000  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
   5 .dalign       00000004  00000004  00000004  00000000  2**0
                   ALLOC
-  6 .data         00000028  00000008  80003318  00003808  2**2
+  6 .data         0000003c  00000008  80003d18  00004408  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  7 .bss          000000f8  00000030  00000030  00000000  2**2
+  7 .balign       00000004  00000044  80003d54  00004444  2**0
                   ALLOC
-  8 .heap         00002ed8  00000128  00000128  00000000  2**0
+  8 .bss          000000f8  00000048  00000048  00000000  2**2
                   ALLOC
-  9 .comment      00000030  00000000  00000000  00003830  2**0
+  9 .heap         00002ec0  00000140  00000140  00000000  2**0
+                  ALLOC
+ 10 .comment      00000030  00000000  00000000  00004444  2**0
                   CONTENTS, READONLY
- 10 .debug_aranges 00000600  00000000  00000000  00003860  2**3
+ 11 .debug_aranges 00000620  00000000  00000000  00004478  2**3
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_pubnames 00001214  00000000  00000000  00003e60  2**0
+ 12 .debug_pubnames 0000129c  00000000  00000000  00004a98  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_info   0000b3e9  00000000  00000000  00005074  2**0
+ 13 .debug_info   0000b484  00000000  00000000  00005d34  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_abbrev 00001758  00000000  00000000  0001045d  2**0
+ 14 .debug_abbrev 00001791  00000000  00000000  000111b8  2**0
                   CONTENTS, READONLY, DEBUGGING
- 14 .debug_line   00008d30  00000000  00000000  00011bb5  2**0
+ 15 .debug_line   0000968b  00000000  00000000  00012949  2**0
                   CONTENTS, READONLY, DEBUGGING
- 15 .debug_frame  00000f74  00000000  00000000  0001a8e8  2**2
+ 16 .debug_frame  00000fe8  00000000  00000000  0001bfd4  2**2
                   CONTENTS, READONLY, DEBUGGING
- 16 .debug_str    000031ac  00000000  00000000  0001b85c  2**0
+ 17 .debug_str    000031d4  00000000  00000000  0001cfbc  2**0
                   CONTENTS, READONLY, DEBUGGING
- 17 .debug_loc    000037a2  00000000  00000000  0001ea08  2**0
+ 18 .debug_loc    0000381e  00000000  00000000  00020190  2**0
                   CONTENTS, READONLY, DEBUGGING
- 18 .debug_macinfo 00558b1a  00000000  00000000  000221aa  2**0
+ 19 .debug_macinfo 00558b1a  00000000  00000000  000239ae  2**0
                   CONTENTS, READONLY, DEBUGGING
- 19 .stack        00001000  00003000  00003000  00000000  2**0
+ 20 .stack        00001000  00003000  00003000  00000000  2**0
                   ALLOC
- 20 .debug_ranges 000029b8  00000000  00000000  0057acc8  2**3
+ 21 .debug_ranges 000029d8  00000000  00000000  0057c4c8  2**3
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .reset:
@@ -205,7 +207,7 @@ void flashcdw_issue_command(unsigned int command, int page_number)
 8000206e:	3a 59       	mov	r9,-91
 	AVR32_FLASHCDW.fcmd = u_avr32_flashcdw_fcmd.fcmd;
 	flashcdw_error_status = flashcdw_get_error_status();
-80002070:	33 0a       	mov	r10,48
+80002070:	34 8a       	mov	r10,72
 	u_avr32_flashcdw_fcmd.fcmd = AVR32_FLASHCDW.fcmd;
 	u_avr32_flashcdw_fcmd.FCMD.cmd = command;
 	if (page_number >= 0) {
@@ -282,7 +284,7 @@ int gpio_enable_module_pin(uint32_t pin, uint32_t function)
 8000209e:	58 7b       	cp.w	r11,7
 800020a0:	e0 88 00 03 	brls	800020a6 <gpio_enable_module_pin+0x12>
 800020a4:	5e ff       	retal	1
-800020a6:	fe c9 ee a6 	sub	r9,pc,-4442
+800020a6:	fe c9 e4 a6 	sub	r9,pc,-7002
 800020aa:	f2 0b 03 2f 	ld.w	pc,r9[r11<<0x2]
     gpio_port->pmr1c = 1 << (pin & 0x1F);
     gpio_port->pmr2s = 1 << (pin & 0x1F);
@@ -481,7 +483,7 @@ __int_handler _get_interrupt_handler(uint32_t int_level)
 80002148:	58 0c       	cp.w	r12,0
 8000214a:	5e 0c       	reteq	r12
 		? _int_handler_table[int_grp]._int_line_handler_table[32
-8000214c:	fe c8 ef 2c 	sub	r8,pc,-4308
+8000214c:	fe c8 e5 2c 	sub	r8,pc,-6868
 80002150:	f8 0c 12 00 	clz	r12,r12
 80002154:	f0 09 00 39 	add	r9,r8,r9<<0x3
 80002158:	f8 0c 11 1f 	rsub	r12,r12,31
@@ -2025,7 +2027,7 @@ long int scif_dfll0_closedloop_configure_and_start( const scif_gclk_opt_t *gc_df
 80002714:	3f db       	mov	r11,-3
 80002716:	e0 0a 00 0a 	add	r10,r0,r10
 8000271a:	e2 0b 00 4b 	adc	r11,r1,r11
-8000271e:	e0 a0 02 e9 	rcall	80002cf0 <__avr32_udiv64>
+8000271e:	e0 a0 07 29 	rcall	80003570 <__avr32_udiv64>
 
   // imul = (fDFLL)/fref,
   // fmul = (fDFLL*2^16)/fref - imul*2^16,
@@ -2050,7 +2052,7 @@ long int scif_dfll0_closedloop_configure_and_start( const scif_gclk_opt_t *gc_df
 8000272a:	02 99       	mov	r9,r1
 8000272c:	0c 9a       	mov	r10,r6
 8000272e:	0e 9b       	mov	r11,r7
-80002730:	e0 a0 02 e0 	rcall	80002cf0 <__avr32_udiv64>
+80002730:	e0 a0 07 20 	rcall	80003570 <__avr32_udiv64>
 80002734:	50 5a       	stdsp	sp[0x14],r10
 80002736:	14 93       	mov	r3,r10
   if(0 == gc_dfllif_ref_opt->diven)
@@ -2067,7 +2069,7 @@ long int scif_dfll0_closedloop_configure_and_start( const scif_gclk_opt_t *gc_df
 80002748:	b1 63       	lsl	r3,0x10
 8000274a:	f7 e6 13 0b 	or	r11,r11,r6>>0x10
 8000274e:	0c 90       	mov	r0,r6
-80002750:	e0 a0 02 d0 	rcall	80002cf0 <__avr32_udiv64>
+80002750:	e0 a0 07 10 	rcall	80003570 <__avr32_udiv64>
 80002754:	f4 03 01 03 	sub	r3,r10,r3
 80002758:	50 43       	stdsp	sp[0x10],r3
   }
@@ -2145,7 +2147,7 @@ long int scif_dfll0_closedloop_configure_and_start( const scif_gclk_opt_t *gc_df
 80002788:	b1 6a       	lsl	r10,0x10
 8000278a:	b1 6b       	lsl	r11,0x10
 8000278c:	f7 e6 13 0b 	or	r11,r11,r6>>0x10
-80002790:	e0 a0 02 b0 	rcall	80002cf0 <__avr32_udiv64>
+80002790:	e0 a0 06 f0 	rcall	80003570 <__avr32_udiv64>
 80002794:	e6 09 16 10 	lsr	r9,r3,0x10
 80002798:	40 00       	lddsp	r0,sp[0x0]
 8000279a:	e6 08 15 10 	lsl	r8,r3,0x10
@@ -2316,7 +2318,7 @@ _stext:
   // Set up EVBA so interrupts can be enabled.
   lda.w   r0, _evba
   mtsr    AVR32_EVBA, r0
-80002860:	fe c0 f8 60 	sub	r0,pc,-1952
+80002860:	fe c0 ee 60 	sub	r0,pc,-4512
 
   // Enable the exception processing.
   csrf    AVR32_SR_EM_OFFSET
@@ -2329,14 +2331,14 @@ _stext:
   cp      r0, r1
 8000286a:	30 80       	mov	r0,8
   brhs    idata_load_loop_end
-8000286c:	33 01       	mov	r1,48
+8000286c:	34 81       	mov	r1,72
   lda.w   r2, _data_lma
 8000286e:	02 30       	cp.w	r0,r1
 idata_load_loop:
   ld.d    r4, r2++
 80002870:	c0 72       	brcc	8000287e <idata_load_loop_end>
   st.d    r0++, r4
-80002872:	fe c2 f5 5a 	sub	r2,pc,-2726
+80002872:	fe c2 eb 5a 	sub	r2,pc,-5286
 
 80002876 <idata_load_loop>:
   cp      r0, r1
@@ -2354,9 +2356,9 @@ idata_load_loop_end:
 
 8000287e <idata_load_loop_end>:
   brhs    udata_clear_loop_end
-8000287e:	33 00       	mov	r0,48
+8000287e:	34 80       	mov	r0,72
   mov     r2, 0
-80002880:	e0 61 01 28 	mov	r1,296
+80002880:	e0 61 01 40 	mov	r1,320
   mov     r3, 0
 udata_clear_loop:
   st.d    r0++, r2
@@ -2379,1143 +2381,2461 @@ udata_clear_loop:
 80002890:	cf e3       	brcs	8000288c <udata_clear_loop>
 
 80002892 <udata_clear_loop_end>:
-80002892:	fe cf ff fa 	sub	pc,pc,-6
+80002892:	fe cf f5 8e 	sub	pc,pc,-2674
 80002896:	d7 03       	nop
 
-80002898 <main>:
+80002898 <turn_right>:
 }
 
 
 
-int main(void)
+void turn_right(void)
 {
-80002898:	d4 01       	pushm	lr
+80002898:	eb cd 40 80 	pushm	r7,lr
+	// Lift Legs
+	servos[1][1] += 10;
+8000289c:	30 c7       	mov	r7,12
+8000289e:	0f c8       	ld.ub	r8,r7[0x4]
+800028a0:	2f 68       	sub	r8,-10
+800028a2:	5c 58       	castu.b	r8
+800028a4:	10 99       	mov	r9,r8
+	servos[1][2] += 10;
+	servos[3][1] += 10;
+	servos[3][2] += 10;
+	servos[5][1] += 10;
+	servos[5][2] += 10;
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH8), servos[1][1]);
+800028a6:	ae c8       	st.b	r7[0x4],r8
 
-static unsigned long init_clock( unsigned long cpuclk_hz )
+
+void turn_right(void)
 {
-  unsigned long ret_val = 0u;
-  
-  pcl_configure_clocks(&pcl_dfll_freq_param);
-8000289a:	30 cc       	mov	r12,12
-8000289c:	fe b0 fd 92 	rcall	800023c0 <pcl_configure_clocks>
-800028a0:	30 4b       	mov	r11,4
+	// Lift Legs
+	servos[1][1] += 10;
+800028a8:	0f d8       	ld.ub	r8,r7[0x5]
+	servos[1][2] += 10;
+800028aa:	2f 68       	sub	r8,-10
+800028ac:	ae d8       	st.b	r7[0x5],r8
+800028ae:	ef 38 00 0a 	ld.ub	r8,r7[10]
+	servos[3][1] += 10;
+800028b2:	2f 68       	sub	r8,-10
+800028b4:	ef 68 00 0a 	st.b	r7[10],r8
+800028b8:	ef 38 00 0b 	ld.ub	r8,r7[11]
+	servos[3][2] += 10;
+800028bc:	2f 68       	sub	r8,-10
+800028be:	ef 68 00 0b 	st.b	r7[11],r8
+800028c2:	ef 38 00 10 	ld.ub	r8,r7[16]
+	servos[5][1] += 10;
+800028c6:	2f 68       	sub	r8,-10
+800028c8:	ef 68 00 10 	st.b	r7[16],r8
+800028cc:	ef 38 00 11 	ld.ub	r8,r7[17]
+	servos[5][2] += 10;
+800028d0:	2f 68       	sub	r8,-10
+800028d2:	e0 6a 08 01 	mov	r10,2049
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH8), servos[1][1]);
+800028d6:	ef 68 00 11 	st.b	r7[17],r8
+	servos[1][1] += 10;
+	servos[1][2] += 10;
+	servos[3][1] += 10;
+	servos[3][2] += 10;
+	servos[5][1] += 10;
+	servos[5][2] += 10;
+800028da:	30 0b       	mov	r11,0
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH8), servos[1][1]);
+800028dc:	fe 7c 54 00 	mov	r12,-44032
+800028e0:	fe b0 fd b4 	rcall	80002448 <pwma_set_channels_value>
+800028e4:	0f d9       	ld.ub	r9,r7[0x5]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH9), servos[1][2]);
+800028e6:	30 1a       	mov	r10,1
+800028e8:	30 1b       	mov	r11,1
+800028ea:	fe 7c 54 00 	mov	r12,-44032
+800028ee:	fe b0 fd ad 	rcall	80002448 <pwma_set_channels_value>
+800028f2:	ef 39 00 0a 	ld.ub	r9,r7[10]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH17), servos[3][1]);
+800028f6:	e0 6a 02 01 	mov	r10,513
+800028fa:	30 0b       	mov	r11,0
+800028fc:	fe 7c 54 00 	mov	r12,-44032
+80002900:	fe b0 fd a4 	rcall	80002448 <pwma_set_channels_value>
+80002904:	ef 39 00 0b 	ld.ub	r9,r7[11]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH18), servos[3][2]);
+80002908:	e0 6a 10 01 	mov	r10,4097
+8000290c:	30 0b       	mov	r11,0
+8000290e:	fe 7c 54 00 	mov	r12,-44032
+80002912:	fe b0 fd 9b 	rcall	80002448 <pwma_set_channels_value>
+80002916:	ef 39 00 10 	ld.ub	r9,r7[16]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH23), servos[5][1]);
+8000291a:	e0 7a 00 01 	mov	r10,65537
+8000291e:	30 0b       	mov	r11,0
+80002920:	fe 7c 54 00 	mov	r12,-44032
+80002924:	fe b0 fd 92 	rcall	80002448 <pwma_set_channels_value>
+80002928:	ef 39 00 11 	ld.ub	r9,r7[17]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH24), servos[5][2]);
+8000292c:	e0 6a 80 01 	mov	r10,32769
+80002930:	30 0b       	mov	r11,0
+80002932:	fe 7c 54 00 	mov	r12,-44032
+80002936:	fe b0 fd 89 	rcall	80002448 <pwma_set_channels_value>
+8000293a:	0f 88       	ld.ub	r8,r7[0x0]
+	
+	
+	// Move Body Forward
+	servos[0][0] -= 4;
+8000293c:	20 48       	sub	r8,4
+8000293e:	5c 58       	castu.b	r8
+80002940:	10 99       	mov	r9,r8
+	servos[2][0] -= 4;
+	servos[4][0] -= 4;
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH4), servos[0][0]);
+80002942:	ae 88       	st.b	r7[0x0],r8
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH23), servos[5][1]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH24), servos[5][2]);
+	
+	
+	// Move Body Forward
+	servos[0][0] -= 4;
+80002944:	0f e8       	ld.ub	r8,r7[0x6]
+	servos[2][0] -= 4;
+80002946:	20 48       	sub	r8,4
+80002948:	ae e8       	st.b	r7[0x6],r8
+8000294a:	ef 38 00 0c 	ld.ub	r8,r7[12]
+	servos[4][0] -= 4;
+8000294e:	20 48       	sub	r8,4
+80002950:	30 1a       	mov	r10,1
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH4), servos[0][0]);
+80002952:	ef 68 00 0c 	st.b	r7[12],r8
+	
+	
+	// Move Body Forward
+	servos[0][0] -= 4;
+	servos[2][0] -= 4;
+	servos[4][0] -= 4;
+80002956:	30 2b       	mov	r11,2
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH4), servos[0][0]);
+80002958:	fe 7c 54 00 	mov	r12,-44032
+8000295c:	fe b0 fd 76 	rcall	80002448 <pwma_set_channels_value>
+80002960:	0f e9       	ld.ub	r9,r7[0x6]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH10), servos[2][0]);
+80002962:	30 1a       	mov	r10,1
+80002964:	ea 1a 20 00 	orh	r10,0x2000
+80002968:	30 0b       	mov	r11,0
+8000296a:	fe 7c 54 00 	mov	r12,-44032
+8000296e:	fe b0 fd 6d 	rcall	80002448 <pwma_set_channels_value>
+80002972:	ef 39 00 0c 	ld.ub	r9,r7[12]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH19), servos[4][0]);
+80002976:	30 1a       	mov	r10,1
+80002978:	30 4b       	mov	r11,4
+8000297a:	fe 7c 54 00 	mov	r12,-44032
+8000297e:	fe b0 fd 65 	rcall	80002448 <pwma_set_channels_value>
+80002982:	0f c8       	ld.ub	r8,r7[0x4]
+	
+	
+	
+	// Drop Legs
+	servos[1][1] -= 10;
+80002984:	20 a8       	sub	r8,10
+80002986:	5c 58       	castu.b	r8
+80002988:	10 99       	mov	r9,r8
+	servos[1][2] -= 10;
+	servos[3][1] -= 10;
+	servos[3][2] -= 10;
+	servos[5][1] -= 10;
+	servos[5][2] -= 10;
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH8), servos[1][1]);
+8000298a:	ae c8       	st.b	r7[0x4],r8
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH19), servos[4][0]);
+	
+	
+	
+	// Drop Legs
+	servos[1][1] -= 10;
+8000298c:	0f d8       	ld.ub	r8,r7[0x5]
+	servos[1][2] -= 10;
+8000298e:	20 a8       	sub	r8,10
+80002990:	ae d8       	st.b	r7[0x5],r8
+80002992:	ef 38 00 0a 	ld.ub	r8,r7[10]
+	servos[3][1] -= 10;
+80002996:	20 a8       	sub	r8,10
+80002998:	ef 68 00 0a 	st.b	r7[10],r8
+8000299c:	ef 38 00 0b 	ld.ub	r8,r7[11]
+	servos[3][2] -= 10;
+800029a0:	20 a8       	sub	r8,10
+800029a2:	ef 68 00 0b 	st.b	r7[11],r8
+800029a6:	ef 38 00 10 	ld.ub	r8,r7[16]
+	servos[5][1] -= 10;
+800029aa:	20 a8       	sub	r8,10
+800029ac:	ef 68 00 10 	st.b	r7[16],r8
+800029b0:	ef 38 00 11 	ld.ub	r8,r7[17]
+	servos[5][2] -= 10;
+800029b4:	20 a8       	sub	r8,10
+800029b6:	e0 6a 08 01 	mov	r10,2049
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH8), servos[1][1]);
+800029ba:	ef 68 00 11 	st.b	r7[17],r8
+	servos[1][1] -= 10;
+	servos[1][2] -= 10;
+	servos[3][1] -= 10;
+	servos[3][2] -= 10;
+	servos[5][1] -= 10;
+	servos[5][2] -= 10;
+800029be:	30 0b       	mov	r11,0
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH8), servos[1][1]);
+800029c0:	fe 7c 54 00 	mov	r12,-44032
+800029c4:	fe b0 fd 42 	rcall	80002448 <pwma_set_channels_value>
+800029c8:	0f d9       	ld.ub	r9,r7[0x5]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH9), servos[1][2]);
+800029ca:	30 1a       	mov	r10,1
+800029cc:	30 1b       	mov	r11,1
+800029ce:	fe 7c 54 00 	mov	r12,-44032
+800029d2:	fe b0 fd 3b 	rcall	80002448 <pwma_set_channels_value>
+800029d6:	ef 39 00 0a 	ld.ub	r9,r7[10]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH17), servos[3][1]);
+800029da:	e0 6a 02 01 	mov	r10,513
+800029de:	30 0b       	mov	r11,0
+800029e0:	fe 7c 54 00 	mov	r12,-44032
+800029e4:	fe b0 fd 32 	rcall	80002448 <pwma_set_channels_value>
+800029e8:	ef 39 00 0b 	ld.ub	r9,r7[11]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH18), servos[3][2]);
+800029ec:	e0 6a 10 01 	mov	r10,4097
+800029f0:	30 0b       	mov	r11,0
+800029f2:	fe 7c 54 00 	mov	r12,-44032
+800029f6:	fe b0 fd 29 	rcall	80002448 <pwma_set_channels_value>
+800029fa:	ef 39 00 10 	ld.ub	r9,r7[16]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH23), servos[5][1]);
+800029fe:	e0 7a 00 01 	mov	r10,65537
+80002a02:	30 0b       	mov	r11,0
+80002a04:	fe 7c 54 00 	mov	r12,-44032
+80002a08:	fe b0 fd 20 	rcall	80002448 <pwma_set_channels_value>
+80002a0c:	ef 39 00 11 	ld.ub	r9,r7[17]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH24), servos[5][2]);
+80002a10:	e0 6a 80 01 	mov	r10,32769
+80002a14:	30 0b       	mov	r11,0
+80002a16:	fe 7c 54 00 	mov	r12,-44032
+80002a1a:	fe b0 fd 17 	rcall	80002448 <pwma_set_channels_value>
+80002a1e:	0f 98       	ld.ub	r8,r7[0x1]
+	
+	
+	// Lift Legs
+	servos[0][1] += 6;
+80002a20:	2f a8       	sub	r8,-6
+80002a22:	5c 58       	castu.b	r8
+80002a24:	10 99       	mov	r9,r8
+	servos[0][2] += 6;
+	servos[2][1] += 6;
+	servos[2][2] += 6;
+	servos[4][1] += 6;
+	servos[4][2] += 6;
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH5), servos[0][1]);
+80002a26:	ae 98       	st.b	r7[0x1],r8
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH23), servos[5][1]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH24), servos[5][2]);
+	
+	
+	// Lift Legs
+	servos[0][1] += 6;
+80002a28:	0f a8       	ld.ub	r8,r7[0x2]
+	servos[0][2] += 6;
+80002a2a:	2f a8       	sub	r8,-6
+80002a2c:	ae a8       	st.b	r7[0x2],r8
+80002a2e:	0f f8       	ld.ub	r8,r7[0x7]
+	servos[2][1] += 6;
+80002a30:	2f a8       	sub	r8,-6
+80002a32:	ae f8       	st.b	r7[0x7],r8
+80002a34:	ef 38 00 08 	ld.ub	r8,r7[8]
+	servos[2][2] += 6;
+80002a38:	2f a8       	sub	r8,-6
+80002a3a:	ef 68 00 08 	st.b	r7[8],r8
+80002a3e:	ef 38 00 0d 	ld.ub	r8,r7[13]
+	servos[4][1] += 6;
+80002a42:	2f a8       	sub	r8,-6
+80002a44:	ef 68 00 0d 	st.b	r7[13],r8
+80002a48:	ef 38 00 0e 	ld.ub	r8,r7[14]
+	servos[4][2] += 6;
+80002a4c:	2f a8       	sub	r8,-6
+80002a4e:	30 1a       	mov	r10,1
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH5), servos[0][1]);
+80002a50:	ea 1a 00 20 	orh	r10,0x20
+80002a54:	ef 68 00 0e 	st.b	r7[14],r8
+	servos[0][1] += 6;
+	servos[0][2] += 6;
+	servos[2][1] += 6;
+	servos[2][2] += 6;
+	servos[4][1] += 6;
+	servos[4][2] += 6;
+80002a58:	30 0b       	mov	r11,0
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH5), servos[0][1]);
+80002a5a:	fe 7c 54 00 	mov	r12,-44032
+80002a5e:	fe b0 fc f5 	rcall	80002448 <pwma_set_channels_value>
+80002a62:	0f a9       	ld.ub	r9,r7[0x2]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH6), servos[0][2]);
+80002a64:	30 1a       	mov	r10,1
+80002a66:	ea 1a 00 10 	orh	r10,0x10
+80002a6a:	30 0b       	mov	r11,0
+80002a6c:	fe 7c 54 00 	mov	r12,-44032
+80002a70:	fe b0 fc ec 	rcall	80002448 <pwma_set_channels_value>
+80002a74:	0f f9       	ld.ub	r9,r7[0x7]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH11), servos[2][1]);
+80002a76:	30 1a       	mov	r10,1
+80002a78:	ea 1a 40 00 	orh	r10,0x4000
+80002a7c:	30 0b       	mov	r11,0
+80002a7e:	fe 7c 54 00 	mov	r12,-44032
+80002a82:	fe b0 fc e3 	rcall	80002448 <pwma_set_channels_value>
+80002a86:	ef 39 00 08 	ld.ub	r9,r7[8]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH12), servos[2][2]);
+80002a8a:	30 1a       	mov	r10,1
+80002a8c:	ea 1a 80 00 	orh	r10,0x8000
+80002a90:	30 0b       	mov	r11,0
+80002a92:	fe 7c 54 00 	mov	r12,-44032
+80002a96:	fe b0 fc d9 	rcall	80002448 <pwma_set_channels_value>
+80002a9a:	ef 39 00 0d 	ld.ub	r9,r7[13]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH20), servos[4][1]);
+80002a9e:	e4 6a 00 01 	mov	r10,262145
+80002aa2:	30 0b       	mov	r11,0
+80002aa4:	fe 7c 54 00 	mov	r12,-44032
+80002aa8:	fe b0 fc d0 	rcall	80002448 <pwma_set_channels_value>
+80002aac:	ef 39 00 0e 	ld.ub	r9,r7[14]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH21), servos[4][2]);
+80002ab0:	e8 6a 00 01 	mov	r10,524289
+80002ab4:	30 0b       	mov	r11,0
+80002ab6:	fe 7c 54 00 	mov	r12,-44032
+80002aba:	fe b0 fc c7 	rcall	80002448 <pwma_set_channels_value>
+80002abe:	0f 88       	ld.ub	r8,r7[0x0]
+	
+	
+	// Move Body Forward
+	servos[0][0] += 4;
+80002ac0:	2f c8       	sub	r8,-4
+80002ac2:	5c 58       	castu.b	r8
+80002ac4:	10 99       	mov	r9,r8
+	servos[2][0] += 4;
+	servos[4][0] += 4;
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH4), servos[0][0]);
+80002ac6:	ae 88       	st.b	r7[0x0],r8
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH20), servos[4][1]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH21), servos[4][2]);
+	
+	
+	// Move Body Forward
+	servos[0][0] += 4;
+80002ac8:	0f e8       	ld.ub	r8,r7[0x6]
+	servos[2][0] += 4;
+80002aca:	2f c8       	sub	r8,-4
+80002acc:	ae e8       	st.b	r7[0x6],r8
+80002ace:	ef 38 00 0c 	ld.ub	r8,r7[12]
+	servos[4][0] += 4;
+80002ad2:	2f c8       	sub	r8,-4
+80002ad4:	30 1a       	mov	r10,1
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH4), servos[0][0]);
+80002ad6:	ef 68 00 0c 	st.b	r7[12],r8
+	
+	
+	// Move Body Forward
+	servos[0][0] += 4;
+	servos[2][0] += 4;
+	servos[4][0] += 4;
+80002ada:	30 2b       	mov	r11,2
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH4), servos[0][0]);
+80002adc:	fe 7c 54 00 	mov	r12,-44032
+80002ae0:	fe b0 fc b4 	rcall	80002448 <pwma_set_channels_value>
+80002ae4:	0f e9       	ld.ub	r9,r7[0x6]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH10), servos[2][0]);
+80002ae6:	30 1a       	mov	r10,1
+80002ae8:	ea 1a 20 00 	orh	r10,0x2000
+80002aec:	30 0b       	mov	r11,0
+80002aee:	fe 7c 54 00 	mov	r12,-44032
+80002af2:	fe b0 fc ab 	rcall	80002448 <pwma_set_channels_value>
+80002af6:	ef 39 00 0c 	ld.ub	r9,r7[12]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH19), servos[4][0]);
+80002afa:	30 1a       	mov	r10,1
+80002afc:	30 4b       	mov	r11,4
+80002afe:	fe 7c 54 00 	mov	r12,-44032
+80002b02:	fe b0 fc a3 	rcall	80002448 <pwma_set_channels_value>
+80002b06:	0f 98       	ld.ub	r8,r7[0x1]
+	
+	
+	
+	// Drop Legs
+	servos[0][1] -= 6;
+80002b08:	20 68       	sub	r8,6
+80002b0a:	5c 58       	castu.b	r8
+80002b0c:	10 99       	mov	r9,r8
+	servos[0][2] -= 6;
+	servos[2][1] -= 6;
+	servos[2][2] -= 6;
+	servos[4][1] -= 6;
+	servos[4][2] -= 6;
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH5), servos[0][1]);
+80002b0e:	ae 98       	st.b	r7[0x1],r8
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH19), servos[4][0]);
+	
+	
+	
+	// Drop Legs
+	servos[0][1] -= 6;
+80002b10:	0f a8       	ld.ub	r8,r7[0x2]
+	servos[0][2] -= 6;
+80002b12:	20 68       	sub	r8,6
+80002b14:	ae a8       	st.b	r7[0x2],r8
+80002b16:	0f f8       	ld.ub	r8,r7[0x7]
+	servos[2][1] -= 6;
+80002b18:	20 68       	sub	r8,6
+80002b1a:	ae f8       	st.b	r7[0x7],r8
+80002b1c:	ef 38 00 08 	ld.ub	r8,r7[8]
+	servos[2][2] -= 6;
+80002b20:	20 68       	sub	r8,6
+80002b22:	ef 68 00 08 	st.b	r7[8],r8
+80002b26:	ef 38 00 0d 	ld.ub	r8,r7[13]
+	servos[4][1] -= 6;
+80002b2a:	20 68       	sub	r8,6
+80002b2c:	ef 68 00 0d 	st.b	r7[13],r8
+80002b30:	ef 38 00 0e 	ld.ub	r8,r7[14]
+	servos[4][2] -= 6;
+80002b34:	20 68       	sub	r8,6
+80002b36:	30 1a       	mov	r10,1
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH5), servos[0][1]);
+80002b38:	ea 1a 00 20 	orh	r10,0x20
+80002b3c:	ef 68 00 0e 	st.b	r7[14],r8
+	servos[0][1] -= 6;
+	servos[0][2] -= 6;
+	servos[2][1] -= 6;
+	servos[2][2] -= 6;
+	servos[4][1] -= 6;
+	servos[4][2] -= 6;
+80002b40:	30 0b       	mov	r11,0
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH5), servos[0][1]);
+80002b42:	fe 7c 54 00 	mov	r12,-44032
+80002b46:	fe b0 fc 81 	rcall	80002448 <pwma_set_channels_value>
+80002b4a:	0f a9       	ld.ub	r9,r7[0x2]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH6), servos[0][2]);
+80002b4c:	30 1a       	mov	r10,1
+80002b4e:	ea 1a 00 10 	orh	r10,0x10
+80002b52:	30 0b       	mov	r11,0
+80002b54:	fe 7c 54 00 	mov	r12,-44032
+80002b58:	fe b0 fc 78 	rcall	80002448 <pwma_set_channels_value>
+80002b5c:	0f f9       	ld.ub	r9,r7[0x7]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH11), servos[2][1]);
+80002b5e:	30 1a       	mov	r10,1
+80002b60:	ea 1a 40 00 	orh	r10,0x4000
+80002b64:	30 0b       	mov	r11,0
+80002b66:	fe 7c 54 00 	mov	r12,-44032
+80002b6a:	fe b0 fc 6f 	rcall	80002448 <pwma_set_channels_value>
+80002b6e:	ef 39 00 08 	ld.ub	r9,r7[8]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH12), servos[2][2]);
+80002b72:	30 1a       	mov	r10,1
+80002b74:	ea 1a 80 00 	orh	r10,0x8000
+80002b78:	30 0b       	mov	r11,0
+80002b7a:	fe 7c 54 00 	mov	r12,-44032
+80002b7e:	fe b0 fc 65 	rcall	80002448 <pwma_set_channels_value>
+80002b82:	ef 39 00 0d 	ld.ub	r9,r7[13]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH20), servos[4][1]);
+80002b86:	e4 6a 00 01 	mov	r10,262145
+80002b8a:	30 0b       	mov	r11,0
+80002b8c:	fe 7c 54 00 	mov	r12,-44032
+80002b90:	fe b0 fc 5c 	rcall	80002448 <pwma_set_channels_value>
+80002b94:	ef 39 00 0e 	ld.ub	r9,r7[14]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH21), servos[4][2]);
+80002b98:	e8 6a 00 01 	mov	r10,524289
+80002b9c:	30 0b       	mov	r11,0
+80002b9e:	fe 7c 54 00 	mov	r12,-44032
+80002ba2:	fe b0 fc 53 	rcall	80002448 <pwma_set_channels_value>
+80002ba6:	e3 cd 80 80 	ldm	sp++,r7,pc
+}
+80002baa:	d7 03       	nop
+
+80002bac <turn_left>:
+80002bac:	eb cd 40 80 	pushm	r7,lr
+80002bb0:	30 c7       	mov	r7,12
+80002bb2:	0f c8       	ld.ub	r8,r7[0x4]
+
+
+void turn_left(void)
+{
+	// Lift Legs
+	servos[1][1] += 10;
+80002bb4:	2f 68       	sub	r8,-10
+80002bb6:	5c 58       	castu.b	r8
+80002bb8:	10 99       	mov	r9,r8
+	servos[1][2] += 10;
+	servos[3][1] += 10;
+	servos[3][2] += 10;
+	servos[5][1] += 10;
+	servos[5][2] += 10;
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH8), servos[1][1]);
+80002bba:	ae c8       	st.b	r7[0x4],r8
+
+
+void turn_left(void)
+{
+	// Lift Legs
+	servos[1][1] += 10;
+80002bbc:	0f d8       	ld.ub	r8,r7[0x5]
+	servos[1][2] += 10;
+80002bbe:	2f 68       	sub	r8,-10
+80002bc0:	ae d8       	st.b	r7[0x5],r8
+80002bc2:	ef 38 00 0a 	ld.ub	r8,r7[10]
+	servos[3][1] += 10;
+80002bc6:	2f 68       	sub	r8,-10
+80002bc8:	ef 68 00 0a 	st.b	r7[10],r8
+80002bcc:	ef 38 00 0b 	ld.ub	r8,r7[11]
+	servos[3][2] += 10;
+80002bd0:	2f 68       	sub	r8,-10
+80002bd2:	ef 68 00 0b 	st.b	r7[11],r8
+80002bd6:	ef 38 00 10 	ld.ub	r8,r7[16]
+	servos[5][1] += 10;
+80002bda:	2f 68       	sub	r8,-10
+80002bdc:	ef 68 00 10 	st.b	r7[16],r8
+80002be0:	ef 38 00 11 	ld.ub	r8,r7[17]
+	servos[5][2] += 10;
+80002be4:	2f 68       	sub	r8,-10
+80002be6:	e0 6a 08 01 	mov	r10,2049
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH8), servos[1][1]);
+80002bea:	ef 68 00 11 	st.b	r7[17],r8
+	servos[1][1] += 10;
+	servos[1][2] += 10;
+	servos[3][1] += 10;
+	servos[3][2] += 10;
+	servos[5][1] += 10;
+	servos[5][2] += 10;
+80002bee:	30 0b       	mov	r11,0
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH8), servos[1][1]);
+80002bf0:	fe 7c 54 00 	mov	r12,-44032
+80002bf4:	fe b0 fc 2a 	rcall	80002448 <pwma_set_channels_value>
+80002bf8:	0f d9       	ld.ub	r9,r7[0x5]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH9), servos[1][2]);
+80002bfa:	30 1a       	mov	r10,1
+80002bfc:	30 1b       	mov	r11,1
+80002bfe:	fe 7c 54 00 	mov	r12,-44032
+80002c02:	fe b0 fc 23 	rcall	80002448 <pwma_set_channels_value>
+80002c06:	ef 39 00 0a 	ld.ub	r9,r7[10]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH17), servos[3][1]);
+80002c0a:	e0 6a 02 01 	mov	r10,513
+80002c0e:	30 0b       	mov	r11,0
+80002c10:	fe 7c 54 00 	mov	r12,-44032
+80002c14:	fe b0 fc 1a 	rcall	80002448 <pwma_set_channels_value>
+80002c18:	ef 39 00 0b 	ld.ub	r9,r7[11]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH18), servos[3][2]);
+80002c1c:	e0 6a 10 01 	mov	r10,4097
+80002c20:	30 0b       	mov	r11,0
+80002c22:	fe 7c 54 00 	mov	r12,-44032
+80002c26:	fe b0 fc 11 	rcall	80002448 <pwma_set_channels_value>
+80002c2a:	ef 39 00 10 	ld.ub	r9,r7[16]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH23), servos[5][1]);
+80002c2e:	e0 7a 00 01 	mov	r10,65537
+80002c32:	30 0b       	mov	r11,0
+80002c34:	fe 7c 54 00 	mov	r12,-44032
+80002c38:	fe b0 fc 08 	rcall	80002448 <pwma_set_channels_value>
+80002c3c:	ef 39 00 11 	ld.ub	r9,r7[17]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH24), servos[5][2]);
+80002c40:	e0 6a 80 01 	mov	r10,32769
+80002c44:	30 0b       	mov	r11,0
+80002c46:	fe 7c 54 00 	mov	r12,-44032
+80002c4a:	fe b0 fb ff 	rcall	80002448 <pwma_set_channels_value>
+80002c4e:	0f 88       	ld.ub	r8,r7[0x0]
+	
+	
+	// Move Body Forward
+	servos[0][0] += 4;
+80002c50:	2f c8       	sub	r8,-4
+80002c52:	5c 58       	castu.b	r8
+80002c54:	10 99       	mov	r9,r8
+	servos[2][0] += 4;
+	servos[4][0] += 4;
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH4), servos[0][0]);
+80002c56:	ae 88       	st.b	r7[0x0],r8
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH23), servos[5][1]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH24), servos[5][2]);
+	
+	
+	// Move Body Forward
+	servos[0][0] += 4;
+80002c58:	0f e8       	ld.ub	r8,r7[0x6]
+	servos[2][0] += 4;
+80002c5a:	2f c8       	sub	r8,-4
+80002c5c:	ae e8       	st.b	r7[0x6],r8
+80002c5e:	ef 38 00 0c 	ld.ub	r8,r7[12]
+	servos[4][0] += 4;
+80002c62:	2f c8       	sub	r8,-4
+80002c64:	30 1a       	mov	r10,1
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH4), servos[0][0]);
+80002c66:	ef 68 00 0c 	st.b	r7[12],r8
+	
+	
+	// Move Body Forward
+	servos[0][0] += 4;
+	servos[2][0] += 4;
+	servos[4][0] += 4;
+80002c6a:	30 2b       	mov	r11,2
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH4), servos[0][0]);
+80002c6c:	fe 7c 54 00 	mov	r12,-44032
+80002c70:	fe b0 fb ec 	rcall	80002448 <pwma_set_channels_value>
+80002c74:	0f e9       	ld.ub	r9,r7[0x6]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH10), servos[2][0]);
+80002c76:	30 1a       	mov	r10,1
+80002c78:	ea 1a 20 00 	orh	r10,0x2000
+80002c7c:	30 0b       	mov	r11,0
+80002c7e:	fe 7c 54 00 	mov	r12,-44032
+80002c82:	fe b0 fb e3 	rcall	80002448 <pwma_set_channels_value>
+80002c86:	ef 39 00 0c 	ld.ub	r9,r7[12]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH19), servos[4][0]);
+80002c8a:	30 1a       	mov	r10,1
+80002c8c:	30 4b       	mov	r11,4
+80002c8e:	fe 7c 54 00 	mov	r12,-44032
+80002c92:	fe b0 fb db 	rcall	80002448 <pwma_set_channels_value>
+80002c96:	0f c8       	ld.ub	r8,r7[0x4]
+	
+	
+	
+	// Drop Legs
+	servos[1][1] -= 10;
+80002c98:	20 a8       	sub	r8,10
+80002c9a:	5c 58       	castu.b	r8
+80002c9c:	10 99       	mov	r9,r8
+	servos[1][2] -= 10;
+	servos[3][1] -= 10;
+	servos[3][2] -= 10;
+	servos[5][1] -= 10;
+	servos[5][2] -= 10;
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH8), servos[1][1]);
+80002c9e:	ae c8       	st.b	r7[0x4],r8
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH19), servos[4][0]);
+	
+	
+	
+	// Drop Legs
+	servos[1][1] -= 10;
+80002ca0:	0f d8       	ld.ub	r8,r7[0x5]
+	servos[1][2] -= 10;
+80002ca2:	20 a8       	sub	r8,10
+80002ca4:	ae d8       	st.b	r7[0x5],r8
+80002ca6:	ef 38 00 0a 	ld.ub	r8,r7[10]
+	servos[3][1] -= 10;
+80002caa:	20 a8       	sub	r8,10
+80002cac:	ef 68 00 0a 	st.b	r7[10],r8
+80002cb0:	ef 38 00 0b 	ld.ub	r8,r7[11]
+	servos[3][2] -= 10;
+80002cb4:	20 a8       	sub	r8,10
+80002cb6:	ef 68 00 0b 	st.b	r7[11],r8
+80002cba:	ef 38 00 10 	ld.ub	r8,r7[16]
+	servos[5][1] -= 10;
+80002cbe:	20 a8       	sub	r8,10
+80002cc0:	ef 68 00 10 	st.b	r7[16],r8
+80002cc4:	ef 38 00 11 	ld.ub	r8,r7[17]
+	servos[5][2] -= 10;
+80002cc8:	20 a8       	sub	r8,10
+80002cca:	e0 6a 08 01 	mov	r10,2049
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH8), servos[1][1]);
+80002cce:	ef 68 00 11 	st.b	r7[17],r8
+	servos[1][1] -= 10;
+	servos[1][2] -= 10;
+	servos[3][1] -= 10;
+	servos[3][2] -= 10;
+	servos[5][1] -= 10;
+	servos[5][2] -= 10;
+80002cd2:	30 0b       	mov	r11,0
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH8), servos[1][1]);
+80002cd4:	fe 7c 54 00 	mov	r12,-44032
+80002cd8:	fe b0 fb b8 	rcall	80002448 <pwma_set_channels_value>
+80002cdc:	0f d9       	ld.ub	r9,r7[0x5]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH9), servos[1][2]);
+80002cde:	30 1a       	mov	r10,1
+80002ce0:	30 1b       	mov	r11,1
+80002ce2:	fe 7c 54 00 	mov	r12,-44032
+80002ce6:	fe b0 fb b1 	rcall	80002448 <pwma_set_channels_value>
+80002cea:	ef 39 00 0a 	ld.ub	r9,r7[10]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH17), servos[3][1]);
+80002cee:	e0 6a 02 01 	mov	r10,513
+80002cf2:	30 0b       	mov	r11,0
+80002cf4:	fe 7c 54 00 	mov	r12,-44032
+80002cf8:	fe b0 fb a8 	rcall	80002448 <pwma_set_channels_value>
+80002cfc:	ef 39 00 0b 	ld.ub	r9,r7[11]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH18), servos[3][2]);
+80002d00:	e0 6a 10 01 	mov	r10,4097
+80002d04:	30 0b       	mov	r11,0
+80002d06:	fe 7c 54 00 	mov	r12,-44032
+80002d0a:	fe b0 fb 9f 	rcall	80002448 <pwma_set_channels_value>
+80002d0e:	ef 39 00 10 	ld.ub	r9,r7[16]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH23), servos[5][1]);
+80002d12:	e0 7a 00 01 	mov	r10,65537
+80002d16:	30 0b       	mov	r11,0
+80002d18:	fe 7c 54 00 	mov	r12,-44032
+80002d1c:	fe b0 fb 96 	rcall	80002448 <pwma_set_channels_value>
+80002d20:	ef 39 00 11 	ld.ub	r9,r7[17]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH24), servos[5][2]);
+80002d24:	e0 6a 80 01 	mov	r10,32769
+80002d28:	30 0b       	mov	r11,0
+80002d2a:	fe 7c 54 00 	mov	r12,-44032
+80002d2e:	fe b0 fb 8d 	rcall	80002448 <pwma_set_channels_value>
+80002d32:	0f 98       	ld.ub	r8,r7[0x1]
+	
+	
+	// Lift Legs
+	servos[0][1] += 6;
+80002d34:	2f a8       	sub	r8,-6
+80002d36:	5c 58       	castu.b	r8
+80002d38:	10 99       	mov	r9,r8
+	servos[0][2] += 6;
+	servos[2][1] += 6;
+	servos[2][2] += 6;
+	servos[4][1] += 6;
+	servos[4][2] += 6;
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH5), servos[0][1]);
+80002d3a:	ae 98       	st.b	r7[0x1],r8
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH23), servos[5][1]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH24), servos[5][2]);
+	
+	
+	// Lift Legs
+	servos[0][1] += 6;
+80002d3c:	0f a8       	ld.ub	r8,r7[0x2]
+	servos[0][2] += 6;
+80002d3e:	2f a8       	sub	r8,-6
+80002d40:	ae a8       	st.b	r7[0x2],r8
+80002d42:	0f f8       	ld.ub	r8,r7[0x7]
+	servos[2][1] += 6;
+80002d44:	2f a8       	sub	r8,-6
+80002d46:	ae f8       	st.b	r7[0x7],r8
+80002d48:	ef 38 00 08 	ld.ub	r8,r7[8]
+	servos[2][2] += 6;
+80002d4c:	2f a8       	sub	r8,-6
+80002d4e:	ef 68 00 08 	st.b	r7[8],r8
+80002d52:	ef 38 00 0d 	ld.ub	r8,r7[13]
+	servos[4][1] += 6;
+80002d56:	2f a8       	sub	r8,-6
+80002d58:	ef 68 00 0d 	st.b	r7[13],r8
+80002d5c:	ef 38 00 0e 	ld.ub	r8,r7[14]
+	servos[4][2] += 6;
+80002d60:	2f a8       	sub	r8,-6
+80002d62:	30 1a       	mov	r10,1
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH5), servos[0][1]);
+80002d64:	ea 1a 00 20 	orh	r10,0x20
+80002d68:	ef 68 00 0e 	st.b	r7[14],r8
+	servos[0][1] += 6;
+	servos[0][2] += 6;
+	servos[2][1] += 6;
+	servos[2][2] += 6;
+	servos[4][1] += 6;
+	servos[4][2] += 6;
+80002d6c:	30 0b       	mov	r11,0
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH5), servos[0][1]);
+80002d6e:	fe 7c 54 00 	mov	r12,-44032
+80002d72:	fe b0 fb 6b 	rcall	80002448 <pwma_set_channels_value>
+80002d76:	0f a9       	ld.ub	r9,r7[0x2]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH6), servos[0][2]);
+80002d78:	30 1a       	mov	r10,1
+80002d7a:	ea 1a 00 10 	orh	r10,0x10
+80002d7e:	30 0b       	mov	r11,0
+80002d80:	fe 7c 54 00 	mov	r12,-44032
+80002d84:	fe b0 fb 62 	rcall	80002448 <pwma_set_channels_value>
+80002d88:	0f f9       	ld.ub	r9,r7[0x7]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH11), servos[2][1]);
+80002d8a:	30 1a       	mov	r10,1
+80002d8c:	ea 1a 40 00 	orh	r10,0x4000
+80002d90:	30 0b       	mov	r11,0
+80002d92:	fe 7c 54 00 	mov	r12,-44032
+80002d96:	fe b0 fb 59 	rcall	80002448 <pwma_set_channels_value>
+80002d9a:	ef 39 00 08 	ld.ub	r9,r7[8]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH12), servos[2][2]);
+80002d9e:	30 1a       	mov	r10,1
+80002da0:	ea 1a 80 00 	orh	r10,0x8000
+80002da4:	30 0b       	mov	r11,0
+80002da6:	fe 7c 54 00 	mov	r12,-44032
+80002daa:	fe b0 fb 4f 	rcall	80002448 <pwma_set_channels_value>
+80002dae:	ef 39 00 0d 	ld.ub	r9,r7[13]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH20), servos[4][1]);
+80002db2:	e4 6a 00 01 	mov	r10,262145
+80002db6:	30 0b       	mov	r11,0
+80002db8:	fe 7c 54 00 	mov	r12,-44032
+80002dbc:	fe b0 fb 46 	rcall	80002448 <pwma_set_channels_value>
+80002dc0:	ef 39 00 0e 	ld.ub	r9,r7[14]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH21), servos[4][2]);
+80002dc4:	e8 6a 00 01 	mov	r10,524289
+80002dc8:	30 0b       	mov	r11,0
+80002dca:	fe 7c 54 00 	mov	r12,-44032
+80002dce:	fe b0 fb 3d 	rcall	80002448 <pwma_set_channels_value>
+80002dd2:	0f 88       	ld.ub	r8,r7[0x0]
+	
+	
+	// Move Legs Forward
+	servos[0][0] -= 4;
+80002dd4:	20 48       	sub	r8,4
+80002dd6:	5c 58       	castu.b	r8
+80002dd8:	10 99       	mov	r9,r8
+	servos[2][0] -= 4;
+	servos[4][0] -= 4;
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH4), servos[0][0]);
+80002dda:	ae 88       	st.b	r7[0x0],r8
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH20), servos[4][1]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH21), servos[4][2]);
+	
+	
+	// Move Legs Forward
+	servos[0][0] -= 4;
+80002ddc:	0f e8       	ld.ub	r8,r7[0x6]
+	servos[2][0] -= 4;
+80002dde:	20 48       	sub	r8,4
+80002de0:	ae e8       	st.b	r7[0x6],r8
+80002de2:	ef 38 00 0c 	ld.ub	r8,r7[12]
+	servos[4][0] -= 4;
+80002de6:	20 48       	sub	r8,4
+80002de8:	30 1a       	mov	r10,1
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH4), servos[0][0]);
+80002dea:	ef 68 00 0c 	st.b	r7[12],r8
+	
+	
+	// Move Legs Forward
+	servos[0][0] -= 4;
+	servos[2][0] -= 4;
+	servos[4][0] -= 4;
+80002dee:	30 2b       	mov	r11,2
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH4), servos[0][0]);
+80002df0:	fe 7c 54 00 	mov	r12,-44032
+80002df4:	fe b0 fb 2a 	rcall	80002448 <pwma_set_channels_value>
+80002df8:	0f e9       	ld.ub	r9,r7[0x6]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH10), servos[2][0]);
+80002dfa:	30 1a       	mov	r10,1
+80002dfc:	ea 1a 20 00 	orh	r10,0x2000
+80002e00:	30 0b       	mov	r11,0
+80002e02:	fe 7c 54 00 	mov	r12,-44032
+80002e06:	fe b0 fb 21 	rcall	80002448 <pwma_set_channels_value>
+80002e0a:	ef 39 00 0c 	ld.ub	r9,r7[12]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH19), servos[4][0]);
+80002e0e:	30 1a       	mov	r10,1
+80002e10:	30 4b       	mov	r11,4
+80002e12:	fe 7c 54 00 	mov	r12,-44032
+80002e16:	fe b0 fb 19 	rcall	80002448 <pwma_set_channels_value>
+80002e1a:	0f 98       	ld.ub	r8,r7[0x1]
+	
+	
+	// Drop Legs
+	servos[0][1] -= 6;
+80002e1c:	20 68       	sub	r8,6
+80002e1e:	5c 58       	castu.b	r8
+80002e20:	10 99       	mov	r9,r8
+	servos[0][2] -= 6;
+	servos[2][1] -= 6;
+	servos[2][2] -= 6;
+	servos[4][1] -= 6;
+	servos[4][2] -= 6;
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH5), servos[0][1]);
+80002e22:	ae 98       	st.b	r7[0x1],r8
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH10), servos[2][0]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH19), servos[4][0]);
+	
+	
+	// Drop Legs
+	servos[0][1] -= 6;
+80002e24:	0f a8       	ld.ub	r8,r7[0x2]
+	servos[0][2] -= 6;
+80002e26:	20 68       	sub	r8,6
+80002e28:	ae a8       	st.b	r7[0x2],r8
+80002e2a:	0f f8       	ld.ub	r8,r7[0x7]
+	servos[2][1] -= 6;
+80002e2c:	20 68       	sub	r8,6
+80002e2e:	ae f8       	st.b	r7[0x7],r8
+80002e30:	ef 38 00 08 	ld.ub	r8,r7[8]
+	servos[2][2] -= 6;
+80002e34:	20 68       	sub	r8,6
+80002e36:	ef 68 00 08 	st.b	r7[8],r8
+80002e3a:	ef 38 00 0d 	ld.ub	r8,r7[13]
+	servos[4][1] -= 6;
+80002e3e:	20 68       	sub	r8,6
+80002e40:	ef 68 00 0d 	st.b	r7[13],r8
+80002e44:	ef 38 00 0e 	ld.ub	r8,r7[14]
+	servos[4][2] -= 6;
+80002e48:	20 68       	sub	r8,6
+80002e4a:	30 1a       	mov	r10,1
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH5), servos[0][1]);
+80002e4c:	ea 1a 00 20 	orh	r10,0x20
+80002e50:	ef 68 00 0e 	st.b	r7[14],r8
+	servos[0][1] -= 6;
+	servos[0][2] -= 6;
+	servos[2][1] -= 6;
+	servos[2][2] -= 6;
+	servos[4][1] -= 6;
+	servos[4][2] -= 6;
+80002e54:	30 0b       	mov	r11,0
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH5), servos[0][1]);
+80002e56:	fe 7c 54 00 	mov	r12,-44032
+80002e5a:	fe b0 fa f7 	rcall	80002448 <pwma_set_channels_value>
+80002e5e:	0f a9       	ld.ub	r9,r7[0x2]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH6), servos[0][2]);
+80002e60:	30 1a       	mov	r10,1
+80002e62:	ea 1a 00 10 	orh	r10,0x10
+80002e66:	30 0b       	mov	r11,0
+80002e68:	fe 7c 54 00 	mov	r12,-44032
+80002e6c:	fe b0 fa ee 	rcall	80002448 <pwma_set_channels_value>
+80002e70:	0f f9       	ld.ub	r9,r7[0x7]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH11), servos[2][1]);
+80002e72:	30 1a       	mov	r10,1
+80002e74:	ea 1a 40 00 	orh	r10,0x4000
+80002e78:	30 0b       	mov	r11,0
+80002e7a:	fe 7c 54 00 	mov	r12,-44032
+80002e7e:	fe b0 fa e5 	rcall	80002448 <pwma_set_channels_value>
+80002e82:	ef 39 00 08 	ld.ub	r9,r7[8]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH12), servos[2][2]);
+80002e86:	30 1a       	mov	r10,1
+80002e88:	ea 1a 80 00 	orh	r10,0x8000
+80002e8c:	30 0b       	mov	r11,0
+80002e8e:	fe 7c 54 00 	mov	r12,-44032
+80002e92:	fe b0 fa db 	rcall	80002448 <pwma_set_channels_value>
+80002e96:	ef 39 00 0d 	ld.ub	r9,r7[13]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH20), servos[4][1]);
+80002e9a:	e4 6a 00 01 	mov	r10,262145
+80002e9e:	30 0b       	mov	r11,0
+80002ea0:	fe 7c 54 00 	mov	r12,-44032
+80002ea4:	fe b0 fa d2 	rcall	80002448 <pwma_set_channels_value>
+80002ea8:	ef 39 00 0e 	ld.ub	r9,r7[14]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH21), servos[4][2]);
+80002eac:	e8 6a 00 01 	mov	r10,524289
+80002eb0:	30 0b       	mov	r11,0
+80002eb2:	fe 7c 54 00 	mov	r12,-44032
+80002eb6:	fe b0 fa c9 	rcall	80002448 <pwma_set_channels_value>
+80002eba:	e3 cd 80 80 	ldm	sp++,r7,pc
+}
+80002ebe:	d7 03       	nop
+
+80002ec0 <walk_forward>:
+80002ec0:	eb cd 40 80 	pushm	r7,lr
+80002ec4:	30 c7       	mov	r7,12
+80002ec6:	0f c8       	ld.ub	r8,r7[0x4]
+
+
+void walk_forward(void)
+{
+	// Lift Legs
+	servos[1][1] += 10;
+80002ec8:	2f 68       	sub	r8,-10
+80002eca:	5c 58       	castu.b	r8
+80002ecc:	10 99       	mov	r9,r8
+	servos[1][2] += 10;
+	servos[3][1] += 10;
+	servos[3][2] += 10;
+	servos[5][1] += 10;
+	servos[5][2] += 10;
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH8), servos[1][1]);
+80002ece:	ae c8       	st.b	r7[0x4],r8
+
+
+void walk_forward(void)
+{
+	// Lift Legs
+	servos[1][1] += 10;
+80002ed0:	0f d8       	ld.ub	r8,r7[0x5]
+	servos[1][2] += 10;
+80002ed2:	2f 68       	sub	r8,-10
+80002ed4:	ae d8       	st.b	r7[0x5],r8
+80002ed6:	ef 38 00 0a 	ld.ub	r8,r7[10]
+	servos[3][1] += 10;
+80002eda:	2f 68       	sub	r8,-10
+80002edc:	ef 68 00 0a 	st.b	r7[10],r8
+80002ee0:	ef 38 00 0b 	ld.ub	r8,r7[11]
+	servos[3][2] += 10;
+80002ee4:	2f 68       	sub	r8,-10
+80002ee6:	ef 68 00 0b 	st.b	r7[11],r8
+80002eea:	ef 38 00 10 	ld.ub	r8,r7[16]
+	servos[5][1] += 10;
+80002eee:	2f 68       	sub	r8,-10
+80002ef0:	ef 68 00 10 	st.b	r7[16],r8
+80002ef4:	ef 38 00 11 	ld.ub	r8,r7[17]
+	servos[5][2] += 10;
+80002ef8:	2f 68       	sub	r8,-10
+80002efa:	e0 6a 08 01 	mov	r10,2049
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH8), servos[1][1]);
+80002efe:	ef 68 00 11 	st.b	r7[17],r8
+	servos[1][1] += 10;
+	servos[1][2] += 10;
+	servos[3][1] += 10;
+	servos[3][2] += 10;
+	servos[5][1] += 10;
+	servos[5][2] += 10;
+80002f02:	30 0b       	mov	r11,0
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH8), servos[1][1]);
+80002f04:	fe 7c 54 00 	mov	r12,-44032
+80002f08:	fe b0 fa a0 	rcall	80002448 <pwma_set_channels_value>
+80002f0c:	0f d9       	ld.ub	r9,r7[0x5]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH9), servos[1][2]);
+80002f0e:	30 1a       	mov	r10,1
+80002f10:	30 1b       	mov	r11,1
+80002f12:	fe 7c 54 00 	mov	r12,-44032
+80002f16:	fe b0 fa 99 	rcall	80002448 <pwma_set_channels_value>
+80002f1a:	ef 39 00 0a 	ld.ub	r9,r7[10]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH17), servos[3][1]);
+80002f1e:	e0 6a 02 01 	mov	r10,513
+80002f22:	30 0b       	mov	r11,0
+80002f24:	fe 7c 54 00 	mov	r12,-44032
+80002f28:	fe b0 fa 90 	rcall	80002448 <pwma_set_channels_value>
+80002f2c:	ef 39 00 0b 	ld.ub	r9,r7[11]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH18), servos[3][2]);
+80002f30:	e0 6a 10 01 	mov	r10,4097
+80002f34:	30 0b       	mov	r11,0
+80002f36:	fe 7c 54 00 	mov	r12,-44032
+80002f3a:	fe b0 fa 87 	rcall	80002448 <pwma_set_channels_value>
+80002f3e:	ef 39 00 10 	ld.ub	r9,r7[16]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH23), servos[5][1]);
+80002f42:	e0 7a 00 01 	mov	r10,65537
+80002f46:	30 0b       	mov	r11,0
+80002f48:	fe 7c 54 00 	mov	r12,-44032
+80002f4c:	fe b0 fa 7e 	rcall	80002448 <pwma_set_channels_value>
+80002f50:	ef 39 00 11 	ld.ub	r9,r7[17]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH24), servos[5][2]);
+80002f54:	e0 6a 80 01 	mov	r10,32769
+80002f58:	30 0b       	mov	r11,0
+80002f5a:	fe 7c 54 00 	mov	r12,-44032
+80002f5e:	fe b0 fa 75 	rcall	80002448 <pwma_set_channels_value>
+80002f62:	0f 88       	ld.ub	r8,r7[0x0]
+	
+	
+	// Move Body Forward
+	servos[0][0] += 4;
+80002f64:	2f c8       	sub	r8,-4
+80002f66:	5c 58       	castu.b	r8
+80002f68:	10 99       	mov	r9,r8
+	servos[2][0] += 4;
+	servos[4][0] -= 4;
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH4), servos[0][0]);
+80002f6a:	ae 88       	st.b	r7[0x0],r8
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH23), servos[5][1]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH24), servos[5][2]);
+	
+	
+	// Move Body Forward
+	servos[0][0] += 4;
+80002f6c:	0f e8       	ld.ub	r8,r7[0x6]
+	servos[2][0] += 4;
+80002f6e:	2f c8       	sub	r8,-4
+80002f70:	ae e8       	st.b	r7[0x6],r8
+80002f72:	ef 38 00 0c 	ld.ub	r8,r7[12]
+	servos[4][0] -= 4;
+80002f76:	20 48       	sub	r8,4
+80002f78:	30 1a       	mov	r10,1
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH4), servos[0][0]);
+80002f7a:	ef 68 00 0c 	st.b	r7[12],r8
+	
+	
+	// Move Body Forward
+	servos[0][0] += 4;
+	servos[2][0] += 4;
+	servos[4][0] -= 4;
+80002f7e:	30 2b       	mov	r11,2
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH4), servos[0][0]);
+80002f80:	fe 7c 54 00 	mov	r12,-44032
+80002f84:	fe b0 fa 62 	rcall	80002448 <pwma_set_channels_value>
+80002f88:	0f e9       	ld.ub	r9,r7[0x6]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH10), servos[2][0]);
+80002f8a:	30 1a       	mov	r10,1
+80002f8c:	ea 1a 20 00 	orh	r10,0x2000
+80002f90:	30 0b       	mov	r11,0
+80002f92:	fe 7c 54 00 	mov	r12,-44032
+80002f96:	fe b0 fa 59 	rcall	80002448 <pwma_set_channels_value>
+80002f9a:	ef 39 00 0c 	ld.ub	r9,r7[12]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH19), servos[4][0]);
+80002f9e:	30 1a       	mov	r10,1
+80002fa0:	30 4b       	mov	r11,4
+80002fa2:	fe 7c 54 00 	mov	r12,-44032
+80002fa6:	fe b0 fa 51 	rcall	80002448 <pwma_set_channels_value>
+80002faa:	0f b8       	ld.ub	r8,r7[0x3]
+	
+	
+	// Move Legs Forward
+	servos[1][0] -= 4;
+80002fac:	20 48       	sub	r8,4
+80002fae:	5c 58       	castu.b	r8
+80002fb0:	10 99       	mov	r9,r8
+	servos[3][0] += 4;
+	servos[5][0] += 4;
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH7), servos[1][0]);
+80002fb2:	ae b8       	st.b	r7[0x3],r8
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH10), servos[2][0]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH19), servos[4][0]);
+	
+	
+	// Move Legs Forward
+	servos[1][0] -= 4;
+80002fb4:	ef 38 00 09 	ld.ub	r8,r7[9]
+	servos[3][0] += 4;
+80002fb8:	2f c8       	sub	r8,-4
+80002fba:	ef 68 00 09 	st.b	r7[9],r8
+80002fbe:	ef 38 00 0f 	ld.ub	r8,r7[15]
+	servos[5][0] += 4;
+80002fc2:	2f c8       	sub	r8,-4
+80002fc4:	e0 6a 20 01 	mov	r10,8193
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH7), servos[1][0]);
+80002fc8:	ef 68 00 0f 	st.b	r7[15],r8
+	
+	
+	// Move Legs Forward
+	servos[1][0] -= 4;
+	servos[3][0] += 4;
+	servos[5][0] += 4;
+80002fcc:	30 0b       	mov	r11,0
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH7), servos[1][0]);
+80002fce:	fe 7c 54 00 	mov	r12,-44032
+80002fd2:	fe b0 fa 3b 	rcall	80002448 <pwma_set_channels_value>
+80002fd6:	ef 39 00 09 	ld.ub	r9,r7[9]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH16), servos[3][0]);
+80002fda:	30 1a       	mov	r10,1
+80002fdc:	30 8b       	mov	r11,8
+80002fde:	fe 7c 54 00 	mov	r12,-44032
+80002fe2:	fe b0 fa 33 	rcall	80002448 <pwma_set_channels_value>
+80002fe6:	ef 39 00 0f 	ld.ub	r9,r7[15]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH22), servos[5][0]);
+80002fea:	e2 6a 00 01 	mov	r10,131073
+80002fee:	30 0b       	mov	r11,0
+80002ff0:	fe 7c 54 00 	mov	r12,-44032
+80002ff4:	fe b0 fa 2a 	rcall	80002448 <pwma_set_channels_value>
+80002ff8:	0f c8       	ld.ub	r8,r7[0x4]
+	
+	
+	// Drop Legs
+	servos[1][1] -= 10;
+80002ffa:	20 a8       	sub	r8,10
+80002ffc:	5c 58       	castu.b	r8
+80002ffe:	10 99       	mov	r9,r8
+	servos[1][2] -= 10;
+	servos[3][1] -= 10;
+	servos[3][2] -= 10;
+	servos[5][1] -= 10;
+	servos[5][2] -= 10;
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH8), servos[1][1]);
+80003000:	ae c8       	st.b	r7[0x4],r8
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH16), servos[3][0]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH22), servos[5][0]);
+	
+	
+	// Drop Legs
+	servos[1][1] -= 10;
+80003002:	0f d8       	ld.ub	r8,r7[0x5]
+	servos[1][2] -= 10;
+80003004:	20 a8       	sub	r8,10
+80003006:	ae d8       	st.b	r7[0x5],r8
+80003008:	ef 38 00 0a 	ld.ub	r8,r7[10]
+	servos[3][1] -= 10;
+8000300c:	20 a8       	sub	r8,10
+8000300e:	ef 68 00 0a 	st.b	r7[10],r8
+80003012:	ef 38 00 0b 	ld.ub	r8,r7[11]
+	servos[3][2] -= 10;
+80003016:	20 a8       	sub	r8,10
+80003018:	ef 68 00 0b 	st.b	r7[11],r8
+8000301c:	ef 38 00 10 	ld.ub	r8,r7[16]
+	servos[5][1] -= 10;
+80003020:	20 a8       	sub	r8,10
+80003022:	ef 68 00 10 	st.b	r7[16],r8
+80003026:	ef 38 00 11 	ld.ub	r8,r7[17]
+	servos[5][2] -= 10;
+8000302a:	20 a8       	sub	r8,10
+8000302c:	e0 6a 08 01 	mov	r10,2049
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH8), servos[1][1]);
+80003030:	ef 68 00 11 	st.b	r7[17],r8
+	servos[1][1] -= 10;
+	servos[1][2] -= 10;
+	servos[3][1] -= 10;
+	servos[3][2] -= 10;
+	servos[5][1] -= 10;
+	servos[5][2] -= 10;
+80003034:	30 0b       	mov	r11,0
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH8), servos[1][1]);
+80003036:	fe 7c 54 00 	mov	r12,-44032
+8000303a:	fe b0 fa 07 	rcall	80002448 <pwma_set_channels_value>
+8000303e:	0f d9       	ld.ub	r9,r7[0x5]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH9), servos[1][2]);
+80003040:	30 1a       	mov	r10,1
+80003042:	30 1b       	mov	r11,1
+80003044:	fe 7c 54 00 	mov	r12,-44032
+80003048:	fe b0 fa 00 	rcall	80002448 <pwma_set_channels_value>
+8000304c:	ef 39 00 0a 	ld.ub	r9,r7[10]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH17), servos[3][1]);
+80003050:	e0 6a 02 01 	mov	r10,513
+80003054:	30 0b       	mov	r11,0
+80003056:	fe 7c 54 00 	mov	r12,-44032
+8000305a:	fe b0 f9 f7 	rcall	80002448 <pwma_set_channels_value>
+8000305e:	ef 39 00 0b 	ld.ub	r9,r7[11]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH18), servos[3][2]);
+80003062:	e0 6a 10 01 	mov	r10,4097
+80003066:	30 0b       	mov	r11,0
+80003068:	fe 7c 54 00 	mov	r12,-44032
+8000306c:	fe b0 f9 ee 	rcall	80002448 <pwma_set_channels_value>
+80003070:	ef 39 00 10 	ld.ub	r9,r7[16]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH23), servos[5][1]);
+80003074:	e0 7a 00 01 	mov	r10,65537
+80003078:	30 0b       	mov	r11,0
+8000307a:	fe 7c 54 00 	mov	r12,-44032
+8000307e:	fe b0 f9 e5 	rcall	80002448 <pwma_set_channels_value>
+80003082:	ef 39 00 11 	ld.ub	r9,r7[17]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH24), servos[5][2]);
+80003086:	e0 6a 80 01 	mov	r10,32769
+8000308a:	30 0b       	mov	r11,0
+8000308c:	fe 7c 54 00 	mov	r12,-44032
+80003090:	fe b0 f9 dc 	rcall	80002448 <pwma_set_channels_value>
+80003094:	0f 98       	ld.ub	r8,r7[0x1]
+	
+	
+	// Lift Legs
+	servos[0][1] += 6;
+80003096:	2f a8       	sub	r8,-6
+80003098:	5c 58       	castu.b	r8
+8000309a:	10 99       	mov	r9,r8
+	servos[0][2] += 6;
+	servos[2][1] += 6;
+	servos[2][2] += 6;
+	servos[4][1] += 6;
+	servos[4][2] += 6;
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH5), servos[0][1]);
+8000309c:	ae 98       	st.b	r7[0x1],r8
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH23), servos[5][1]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH24), servos[5][2]);
+	
+	
+	// Lift Legs
+	servos[0][1] += 6;
+8000309e:	0f a8       	ld.ub	r8,r7[0x2]
+	servos[0][2] += 6;
+800030a0:	2f a8       	sub	r8,-6
+800030a2:	ae a8       	st.b	r7[0x2],r8
+800030a4:	0f f8       	ld.ub	r8,r7[0x7]
+	servos[2][1] += 6;
+800030a6:	2f a8       	sub	r8,-6
+800030a8:	ae f8       	st.b	r7[0x7],r8
+800030aa:	ef 38 00 08 	ld.ub	r8,r7[8]
+	servos[2][2] += 6;
+800030ae:	2f a8       	sub	r8,-6
+800030b0:	ef 68 00 08 	st.b	r7[8],r8
+800030b4:	ef 38 00 0d 	ld.ub	r8,r7[13]
+	servos[4][1] += 6;
+800030b8:	2f a8       	sub	r8,-6
+800030ba:	ef 68 00 0d 	st.b	r7[13],r8
+800030be:	ef 38 00 0e 	ld.ub	r8,r7[14]
+	servos[4][2] += 6;
+800030c2:	2f a8       	sub	r8,-6
+800030c4:	30 1a       	mov	r10,1
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH5), servos[0][1]);
+800030c6:	ea 1a 00 20 	orh	r10,0x20
+800030ca:	ef 68 00 0e 	st.b	r7[14],r8
+	servos[0][1] += 6;
+	servos[0][2] += 6;
+	servos[2][1] += 6;
+	servos[2][2] += 6;
+	servos[4][1] += 6;
+	servos[4][2] += 6;
+800030ce:	30 0b       	mov	r11,0
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH5), servos[0][1]);
+800030d0:	fe 7c 54 00 	mov	r12,-44032
+800030d4:	fe b0 f9 ba 	rcall	80002448 <pwma_set_channels_value>
+800030d8:	0f a9       	ld.ub	r9,r7[0x2]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH6), servos[0][2]);
+800030da:	30 1a       	mov	r10,1
+800030dc:	ea 1a 00 10 	orh	r10,0x10
+800030e0:	30 0b       	mov	r11,0
+800030e2:	fe 7c 54 00 	mov	r12,-44032
+800030e6:	fe b0 f9 b1 	rcall	80002448 <pwma_set_channels_value>
+800030ea:	0f f9       	ld.ub	r9,r7[0x7]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH11), servos[2][1]);
+800030ec:	30 1a       	mov	r10,1
+800030ee:	ea 1a 40 00 	orh	r10,0x4000
+800030f2:	30 0b       	mov	r11,0
+800030f4:	fe 7c 54 00 	mov	r12,-44032
+800030f8:	fe b0 f9 a8 	rcall	80002448 <pwma_set_channels_value>
+800030fc:	ef 39 00 08 	ld.ub	r9,r7[8]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH12), servos[2][2]);
+80003100:	30 1a       	mov	r10,1
+80003102:	ea 1a 80 00 	orh	r10,0x8000
+80003106:	30 0b       	mov	r11,0
+80003108:	fe 7c 54 00 	mov	r12,-44032
+8000310c:	fe b0 f9 9e 	rcall	80002448 <pwma_set_channels_value>
+80003110:	ef 39 00 0d 	ld.ub	r9,r7[13]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH20), servos[4][1]);
+80003114:	e4 6a 00 01 	mov	r10,262145
+80003118:	30 0b       	mov	r11,0
+8000311a:	fe 7c 54 00 	mov	r12,-44032
+8000311e:	fe b0 f9 95 	rcall	80002448 <pwma_set_channels_value>
+80003122:	ef 39 00 0e 	ld.ub	r9,r7[14]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH21), servos[4][2]);
+80003126:	e8 6a 00 01 	mov	r10,524289
+8000312a:	30 0b       	mov	r11,0
+8000312c:	fe 7c 54 00 	mov	r12,-44032
+80003130:	fe b0 f9 8c 	rcall	80002448 <pwma_set_channels_value>
+80003134:	0f b8       	ld.ub	r8,r7[0x3]
+	
+	
+	// Move Body Forward
+	servos[1][0] += 8;
+80003136:	2f 88       	sub	r8,-8
+80003138:	5c 58       	castu.b	r8
+8000313a:	10 99       	mov	r9,r8
+	servos[3][0] -= 8;
+	servos[5][0] -= 8;
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH7), servos[1][0]);
+8000313c:	ae b8       	st.b	r7[0x3],r8
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH20), servos[4][1]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH21), servos[4][2]);
+	
+	
+	// Move Body Forward
+	servos[1][0] += 8;
+8000313e:	ef 38 00 09 	ld.ub	r8,r7[9]
+	servos[3][0] -= 8;
+80003142:	20 88       	sub	r8,8
+80003144:	ef 68 00 09 	st.b	r7[9],r8
+80003148:	ef 38 00 0f 	ld.ub	r8,r7[15]
+	servos[5][0] -= 8;
+8000314c:	20 88       	sub	r8,8
+8000314e:	e0 6a 20 01 	mov	r10,8193
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH7), servos[1][0]);
+80003152:	ef 68 00 0f 	st.b	r7[15],r8
+	
+	
+	// Move Body Forward
+	servos[1][0] += 8;
+	servos[3][0] -= 8;
+	servos[5][0] -= 8;
+80003156:	30 0b       	mov	r11,0
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH7), servos[1][0]);
+80003158:	fe 7c 54 00 	mov	r12,-44032
+8000315c:	fe b0 f9 76 	rcall	80002448 <pwma_set_channels_value>
+80003160:	ef 39 00 09 	ld.ub	r9,r7[9]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH16), servos[3][0]);
+80003164:	30 1a       	mov	r10,1
+80003166:	30 8b       	mov	r11,8
+80003168:	fe 7c 54 00 	mov	r12,-44032
+8000316c:	fe b0 f9 6e 	rcall	80002448 <pwma_set_channels_value>
+80003170:	ef 39 00 0f 	ld.ub	r9,r7[15]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH22), servos[5][0]);
+80003174:	e2 6a 00 01 	mov	r10,131073
+80003178:	30 0b       	mov	r11,0
+8000317a:	fe 7c 54 00 	mov	r12,-44032
+8000317e:	fe b0 f9 65 	rcall	80002448 <pwma_set_channels_value>
+80003182:	0f 88       	ld.ub	r8,r7[0x0]
+	
+	// Move Legs Forward
+	servos[0][0] -= 8;
+80003184:	20 88       	sub	r8,8
+80003186:	5c 58       	castu.b	r8
+80003188:	10 99       	mov	r9,r8
+	servos[2][0] -= 8;
+	servos[4][0] += 8;
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH4), servos[0][0]);
+8000318a:	ae 88       	st.b	r7[0x0],r8
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH7), servos[1][0]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH16), servos[3][0]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH22), servos[5][0]);
+	
+	// Move Legs Forward
+	servos[0][0] -= 8;
+8000318c:	0f e8       	ld.ub	r8,r7[0x6]
+	servos[2][0] -= 8;
+8000318e:	20 88       	sub	r8,8
+80003190:	ae e8       	st.b	r7[0x6],r8
+80003192:	ef 38 00 0c 	ld.ub	r8,r7[12]
+	servos[4][0] += 8;
+80003196:	2f 88       	sub	r8,-8
+80003198:	30 1a       	mov	r10,1
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH4), servos[0][0]);
+8000319a:	ef 68 00 0c 	st.b	r7[12],r8
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH22), servos[5][0]);
+	
+	// Move Legs Forward
+	servos[0][0] -= 8;
+	servos[2][0] -= 8;
+	servos[4][0] += 8;
+8000319e:	30 2b       	mov	r11,2
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH4), servos[0][0]);
+800031a0:	fe 7c 54 00 	mov	r12,-44032
+800031a4:	fe b0 f9 52 	rcall	80002448 <pwma_set_channels_value>
+800031a8:	0f e9       	ld.ub	r9,r7[0x6]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH10), servos[2][0]);
+800031aa:	30 1a       	mov	r10,1
+800031ac:	ea 1a 20 00 	orh	r10,0x2000
+800031b0:	30 0b       	mov	r11,0
+800031b2:	fe 7c 54 00 	mov	r12,-44032
+800031b6:	fe b0 f9 49 	rcall	80002448 <pwma_set_channels_value>
+800031ba:	ef 39 00 0c 	ld.ub	r9,r7[12]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH19), servos[4][0]);
+800031be:	30 1a       	mov	r10,1
+800031c0:	30 4b       	mov	r11,4
+800031c2:	fe 7c 54 00 	mov	r12,-44032
+800031c6:	fe b0 f9 41 	rcall	80002448 <pwma_set_channels_value>
+800031ca:	0f 98       	ld.ub	r8,r7[0x1]
+	
+	
+	// Drop Legs
+	servos[0][1] -= 6;
+800031cc:	20 68       	sub	r8,6
+800031ce:	5c 58       	castu.b	r8
+800031d0:	10 99       	mov	r9,r8
+	servos[0][2] -= 6;
+	servos[2][1] -= 6;
+	servos[2][2] -= 6;
+	servos[4][1] -= 6;
+	servos[4][2] -= 6;
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH5), servos[0][1]);
+800031d2:	ae 98       	st.b	r7[0x1],r8
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH10), servos[2][0]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH19), servos[4][0]);
+	
+	
+	// Drop Legs
+	servos[0][1] -= 6;
+800031d4:	0f a8       	ld.ub	r8,r7[0x2]
+	servos[0][2] -= 6;
+800031d6:	20 68       	sub	r8,6
+800031d8:	ae a8       	st.b	r7[0x2],r8
+800031da:	0f f8       	ld.ub	r8,r7[0x7]
+	servos[2][1] -= 6;
+800031dc:	20 68       	sub	r8,6
+800031de:	ae f8       	st.b	r7[0x7],r8
+800031e0:	ef 38 00 08 	ld.ub	r8,r7[8]
+	servos[2][2] -= 6;
+800031e4:	20 68       	sub	r8,6
+800031e6:	ef 68 00 08 	st.b	r7[8],r8
+800031ea:	ef 38 00 0d 	ld.ub	r8,r7[13]
+	servos[4][1] -= 6;
+800031ee:	20 68       	sub	r8,6
+800031f0:	ef 68 00 0d 	st.b	r7[13],r8
+800031f4:	ef 38 00 0e 	ld.ub	r8,r7[14]
+	servos[4][2] -= 6;
+800031f8:	20 68       	sub	r8,6
+800031fa:	30 1a       	mov	r10,1
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH5), servos[0][1]);
+800031fc:	ea 1a 00 20 	orh	r10,0x20
+80003200:	ef 68 00 0e 	st.b	r7[14],r8
+	servos[0][1] -= 6;
+	servos[0][2] -= 6;
+	servos[2][1] -= 6;
+	servos[2][2] -= 6;
+	servos[4][1] -= 6;
+	servos[4][2] -= 6;
+80003204:	30 0b       	mov	r11,0
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH5), servos[0][1]);
+80003206:	fe 7c 54 00 	mov	r12,-44032
+8000320a:	fe b0 f9 1f 	rcall	80002448 <pwma_set_channels_value>
+8000320e:	0f a9       	ld.ub	r9,r7[0x2]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH6), servos[0][2]);
+80003210:	30 1a       	mov	r10,1
+80003212:	ea 1a 00 10 	orh	r10,0x10
+80003216:	30 0b       	mov	r11,0
+80003218:	fe 7c 54 00 	mov	r12,-44032
+8000321c:	fe b0 f9 16 	rcall	80002448 <pwma_set_channels_value>
+80003220:	0f f9       	ld.ub	r9,r7[0x7]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH11), servos[2][1]);
+80003222:	30 1a       	mov	r10,1
+80003224:	ea 1a 40 00 	orh	r10,0x4000
+80003228:	30 0b       	mov	r11,0
+8000322a:	fe 7c 54 00 	mov	r12,-44032
+8000322e:	fe b0 f9 0d 	rcall	80002448 <pwma_set_channels_value>
+80003232:	ef 39 00 08 	ld.ub	r9,r7[8]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH12), servos[2][2]);
+80003236:	30 1a       	mov	r10,1
+80003238:	ea 1a 80 00 	orh	r10,0x8000
+8000323c:	30 0b       	mov	r11,0
+8000323e:	fe 7c 54 00 	mov	r12,-44032
+80003242:	fe b0 f9 03 	rcall	80002448 <pwma_set_channels_value>
+80003246:	ef 39 00 0d 	ld.ub	r9,r7[13]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH20), servos[4][1]);
+8000324a:	e4 6a 00 01 	mov	r10,262145
+8000324e:	30 0b       	mov	r11,0
+80003250:	fe 7c 54 00 	mov	r12,-44032
+80003254:	fe b0 f8 fa 	rcall	80002448 <pwma_set_channels_value>
+80003258:	ef 39 00 0e 	ld.ub	r9,r7[14]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH21), servos[4][2]);
+8000325c:	e8 6a 00 01 	mov	r10,524289
+80003260:	30 0b       	mov	r11,0
+80003262:	fe 7c 54 00 	mov	r12,-44032
+80003266:	fe b0 f8 f1 	rcall	80002448 <pwma_set_channels_value>
+8000326a:	0f 88       	ld.ub	r8,r7[0x0]
+	
+	
+	// Move Body Forward
+	servos[0][0] += 4;
+8000326c:	2f c8       	sub	r8,-4
+8000326e:	5c 58       	castu.b	r8
+80003270:	10 99       	mov	r9,r8
+	servos[2][0] += 4;
+	servos[4][0] -= 4;
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH4), servos[0][0]);
+80003272:	ae 88       	st.b	r7[0x0],r8
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH20), servos[4][1]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH21), servos[4][2]);
+	
+	
+	// Move Body Forward
+	servos[0][0] += 4;
+80003274:	0f e8       	ld.ub	r8,r7[0x6]
+	servos[2][0] += 4;
+80003276:	2f c8       	sub	r8,-4
+80003278:	ae e8       	st.b	r7[0x6],r8
+8000327a:	ef 38 00 0c 	ld.ub	r8,r7[12]
+	servos[4][0] -= 4;
+8000327e:	20 48       	sub	r8,4
+80003280:	30 1a       	mov	r10,1
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH4), servos[0][0]);
+80003282:	ef 68 00 0c 	st.b	r7[12],r8
+	
+	
+	// Move Body Forward
+	servos[0][0] += 4;
+	servos[2][0] += 4;
+	servos[4][0] -= 4;
+80003286:	30 2b       	mov	r11,2
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH4), servos[0][0]);
+80003288:	fe 7c 54 00 	mov	r12,-44032
+8000328c:	fe b0 f8 de 	rcall	80002448 <pwma_set_channels_value>
+80003290:	0f e9       	ld.ub	r9,r7[0x6]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH10), servos[2][0]);
+80003292:	30 1a       	mov	r10,1
+80003294:	ea 1a 20 00 	orh	r10,0x2000
+80003298:	30 0b       	mov	r11,0
+8000329a:	fe 7c 54 00 	mov	r12,-44032
+8000329e:	fe b0 f8 d5 	rcall	80002448 <pwma_set_channels_value>
+800032a2:	ef 39 00 0c 	ld.ub	r9,r7[12]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH19), servos[4][0]);
+800032a6:	30 1a       	mov	r10,1
+800032a8:	30 4b       	mov	r11,4
+800032aa:	fe 7c 54 00 	mov	r12,-44032
+800032ae:	fe b0 f8 cd 	rcall	80002448 <pwma_set_channels_value>
+800032b2:	0f b8       	ld.ub	r8,r7[0x3]
+	
+	
+	// Move Legs Forward
+	servos[1][0] -= 4;
+800032b4:	20 48       	sub	r8,4
+800032b6:	5c 58       	castu.b	r8
+800032b8:	10 99       	mov	r9,r8
+	servos[3][0] += 4;
+	servos[5][0] += 4;
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH7), servos[1][0]);
+800032ba:	ae b8       	st.b	r7[0x3],r8
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH10), servos[2][0]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH19), servos[4][0]);
+	
+	
+	// Move Legs Forward
+	servos[1][0] -= 4;
+800032bc:	ef 38 00 09 	ld.ub	r8,r7[9]
+	servos[3][0] += 4;
+800032c0:	2f c8       	sub	r8,-4
+800032c2:	ef 68 00 09 	st.b	r7[9],r8
+800032c6:	ef 38 00 0f 	ld.ub	r8,r7[15]
+	servos[5][0] += 4;
+800032ca:	2f c8       	sub	r8,-4
+800032cc:	e0 6a 20 01 	mov	r10,8193
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH7), servos[1][0]);
+800032d0:	ef 68 00 0f 	st.b	r7[15],r8
+	
+	
+	// Move Legs Forward
+	servos[1][0] -= 4;
+	servos[3][0] += 4;
+	servos[5][0] += 4;
+800032d4:	30 0b       	mov	r11,0
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH7), servos[1][0]);
+800032d6:	fe 7c 54 00 	mov	r12,-44032
+800032da:	fe b0 f8 b7 	rcall	80002448 <pwma_set_channels_value>
+800032de:	ef 39 00 09 	ld.ub	r9,r7[9]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH16), servos[3][0]);
+800032e2:	30 1a       	mov	r10,1
+800032e4:	30 8b       	mov	r11,8
+800032e6:	fe 7c 54 00 	mov	r12,-44032
+800032ea:	fe b0 f8 af 	rcall	80002448 <pwma_set_channels_value>
+800032ee:	ef 39 00 0f 	ld.ub	r9,r7[15]
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH22), servos[5][0]);
+800032f2:	e2 6a 00 01 	mov	r10,131073
+800032f6:	30 0b       	mov	r11,0
+800032f8:	fe 7c 54 00 	mov	r12,-44032
+800032fc:	fe b0 f8 a6 	rcall	80002448 <pwma_set_channels_value>
+80003300:	e3 cd 80 80 	ldm	sp++,r7,pc
+
+80003304 <main>:
+	
+}
+80003304:	eb cd 40 80 	pushm	r7,lr
+80003308:	32 0c       	mov	r12,32
+8000330a:	fe b0 f8 5b 	rcall	800023c0 <pcl_configure_clocks>
+8000330e:	30 4b       	mov	r11,4
 
 int main(void)
 {
 	init_system();
 	
 	gpio_enable_module_pin(PWMA09_GPIO, PWM09_PWM_FUNCTION);
-800028a2:	30 9c       	mov	r12,9
-800028a4:	fe b0 fb f8 	rcall	80002094 <gpio_enable_module_pin>
-800028a8:	30 4b       	mov	r11,4
+80003310:	30 9c       	mov	r12,9
+80003312:	fe b0 f6 c1 	rcall	80002094 <gpio_enable_module_pin>
+80003316:	30 4b       	mov	r11,4
 	gpio_enable_module_pin(PWMA11_GPIO, PWM11_PWM_FUNCTION);
-800028aa:	30 bc       	mov	r12,11
-800028ac:	fe b0 fb f4 	rcall	80002094 <gpio_enable_module_pin>
-800028b0:	30 4b       	mov	r11,4
+80003318:	30 bc       	mov	r12,11
+8000331a:	fe b0 f6 bd 	rcall	80002094 <gpio_enable_module_pin>
+8000331e:	30 4b       	mov	r11,4
 	gpio_enable_module_pin(PWMA12_GPIO, PWM12_PWM_FUNCTION);
-800028b2:	30 cc       	mov	r12,12
-800028b4:	fe b0 fb f0 	rcall	80002094 <gpio_enable_module_pin>
-800028b8:	30 4b       	mov	r11,4
+80003320:	30 cc       	mov	r12,12
+80003322:	fe b0 f6 b9 	rcall	80002094 <gpio_enable_module_pin>
+80003326:	30 4b       	mov	r11,4
 	gpio_enable_module_pin(PWMA13_GPIO, PWM13_PWM_FUNCTION);
-800028ba:	30 dc       	mov	r12,13
-800028bc:	fe b0 fb ec 	rcall	80002094 <gpio_enable_module_pin>
-800028c0:	30 4b       	mov	r11,4
+80003328:	30 dc       	mov	r12,13
+8000332a:	fe b0 f6 b5 	rcall	80002094 <gpio_enable_module_pin>
+8000332e:	30 4b       	mov	r11,4
 	gpio_enable_module_pin(PWMA15_GPIO, PWM15_PWM_FUNCTION);
-800028c2:	30 fc       	mov	r12,15
-800028c4:	fe b0 fb e8 	rcall	80002094 <gpio_enable_module_pin>
-800028c8:	30 4b       	mov	r11,4
+80003330:	30 fc       	mov	r12,15
+80003332:	fe b0 f6 b1 	rcall	80002094 <gpio_enable_module_pin>
+80003336:	30 4b       	mov	r11,4
 	gpio_enable_module_pin(PWMA16_GPIO, PWM16_PWM_FUNCTION);
-800028ca:	31 0c       	mov	r12,16
-800028cc:	fe b0 fb e4 	rcall	80002094 <gpio_enable_module_pin>
-800028d0:	30 4b       	mov	r11,4
+80003338:	31 0c       	mov	r12,16
+8000333a:	fe b0 f6 ad 	rcall	80002094 <gpio_enable_module_pin>
+8000333e:	30 4b       	mov	r11,4
 	gpio_enable_module_pin(PWMA17_GPIO, PWM17_PWM_FUNCTION);
-800028d2:	31 1c       	mov	r12,17
-800028d4:	fe b0 fb e0 	rcall	80002094 <gpio_enable_module_pin>
-800028d8:	30 4b       	mov	r11,4
+80003340:	31 1c       	mov	r12,17
+80003342:	fe b0 f6 a9 	rcall	80002094 <gpio_enable_module_pin>
+80003346:	30 4b       	mov	r11,4
 	gpio_enable_module_pin(PWMA18_GPIO, PWM18_PWM_FUNCTION);
-800028da:	31 2c       	mov	r12,18
-800028dc:	fe b0 fb dc 	rcall	80002094 <gpio_enable_module_pin>
-800028e0:	30 4b       	mov	r11,4
+80003348:	31 2c       	mov	r12,18
+8000334a:	fe b0 f6 a5 	rcall	80002094 <gpio_enable_module_pin>
+8000334e:	30 4b       	mov	r11,4
 	gpio_enable_module_pin(PWMA19_GPIO, PWM19_PWM_FUNCTION);
-800028e2:	31 3c       	mov	r12,19
-800028e4:	fe b0 fb d8 	rcall	80002094 <gpio_enable_module_pin>
-800028e8:	30 4b       	mov	r11,4
+80003350:	31 3c       	mov	r12,19
+80003352:	fe b0 f6 a1 	rcall	80002094 <gpio_enable_module_pin>
+80003356:	30 4b       	mov	r11,4
 	gpio_enable_module_pin(PWMA20_GPIO, PWM20_PWM_FUNCTION);
-800028ea:	31 4c       	mov	r12,20
-800028ec:	fe b0 fb d4 	rcall	80002094 <gpio_enable_module_pin>
-800028f0:	30 4b       	mov	r11,4
+80003358:	31 4c       	mov	r12,20
+8000335a:	fe b0 f6 9d 	rcall	80002094 <gpio_enable_module_pin>
+8000335e:	30 4b       	mov	r11,4
 	gpio_enable_module_pin(PWMA21_GPIO, PWM21_PWM_FUNCTION);
-800028f2:	31 5c       	mov	r12,21
-800028f4:	fe b0 fb d0 	rcall	80002094 <gpio_enable_module_pin>
-800028f8:	30 4b       	mov	r11,4
+80003360:	31 5c       	mov	r12,21
+80003362:	fe b0 f6 99 	rcall	80002094 <gpio_enable_module_pin>
+80003366:	30 4b       	mov	r11,4
 	gpio_enable_module_pin(PWMA22_GPIO, PWM22_PWM_FUNCTION);
-800028fa:	31 6c       	mov	r12,22
-800028fc:	fe b0 fb cc 	rcall	80002094 <gpio_enable_module_pin>
-80002900:	30 4b       	mov	r11,4
+80003368:	31 6c       	mov	r12,22
+8000336a:	fe b0 f6 95 	rcall	80002094 <gpio_enable_module_pin>
+8000336e:	30 4b       	mov	r11,4
 	
 	
 	gpio_enable_module_pin(PWMA23_GPIO, PWM23_PWM_FUNCTION);
-80002902:	32 0c       	mov	r12,32
-80002904:	fe b0 fb c8 	rcall	80002094 <gpio_enable_module_pin>
-80002908:	30 4b       	mov	r11,4
+80003370:	32 0c       	mov	r12,32
+80003372:	fe b0 f6 91 	rcall	80002094 <gpio_enable_module_pin>
+80003376:	30 4b       	mov	r11,4
 	gpio_enable_module_pin(PWMA25_GPIO, PWM25_PWM_FUNCTION);
-8000290a:	32 2c       	mov	r12,34
-8000290c:	fe b0 fb c4 	rcall	80002094 <gpio_enable_module_pin>
-80002910:	30 4b       	mov	r11,4
+80003378:	32 2c       	mov	r12,34
+8000337a:	fe b0 f6 8d 	rcall	80002094 <gpio_enable_module_pin>
+8000337e:	30 4b       	mov	r11,4
 	gpio_enable_module_pin(PWMA26_GPIO, PWM26_PWM_FUNCTION);
-80002912:	32 3c       	mov	r12,35
-80002914:	fe b0 fb c0 	rcall	80002094 <gpio_enable_module_pin>
-80002918:	30 4b       	mov	r11,4
+80003380:	32 3c       	mov	r12,35
+80003382:	fe b0 f6 89 	rcall	80002094 <gpio_enable_module_pin>
+80003386:	30 4b       	mov	r11,4
 	
 	//gpio_enable_module_pin(PWMA27_GPIO, PWM27_PWM_FUNCTION);
 	
 	gpio_enable_module_pin(PWMA28_GPIO, PWM28_PWM_FUNCTION);
-8000291a:	32 5c       	mov	r12,37
-8000291c:	fe b0 fb bc 	rcall	80002094 <gpio_enable_module_pin>
-80002920:	30 4b       	mov	r11,4
+80003388:	32 5c       	mov	r12,37
+8000338a:	fe b0 f6 85 	rcall	80002094 <gpio_enable_module_pin>
+8000338e:	30 4b       	mov	r11,4
 	gpio_enable_module_pin(PWMA29_GPIO, PWM29_PWM_FUNCTION);
-80002922:	32 6c       	mov	r12,38
-80002924:	fe b0 fb b8 	rcall	80002094 <gpio_enable_module_pin>
-80002928:	30 4b       	mov	r11,4
+80003390:	32 6c       	mov	r12,38
+80003392:	fe b0 f6 81 	rcall	80002094 <gpio_enable_module_pin>
+80003396:	30 4b       	mov	r11,4
 	gpio_enable_module_pin(PWMA30_GPIO, PWM30_PWM_FUNCTION);
-8000292a:	32 7c       	mov	r12,39
-8000292c:	fe b0 fb b4 	rcall	80002094 <gpio_enable_module_pin>
-80002930:	30 4b       	mov	r11,4
+80003398:	32 7c       	mov	r12,39
+8000339a:	fe b0 f6 7d 	rcall	80002094 <gpio_enable_module_pin>
+8000339e:	30 4b       	mov	r11,4
 	gpio_enable_module_pin(PWMA31_GPIO, PWM31_PWM_FUNCTION);
-80002932:	32 8c       	mov	r12,40
-80002934:	fe b0 fb b0 	rcall	80002094 <gpio_enable_module_pin>
-80002938:	30 4b       	mov	r11,4
+800033a0:	32 8c       	mov	r12,40
+800033a2:	fe b0 f6 79 	rcall	80002094 <gpio_enable_module_pin>
+800033a6:	30 4b       	mov	r11,4
 	gpio_enable_module_pin(PWMA32_GPIO, PWM32_PWM_FUNCTION);
-8000293a:	32 9c       	mov	r12,41
-8000293c:	fe b0 fb ac 	rcall	80002094 <gpio_enable_module_pin>
-80002940:	30 4b       	mov	r11,4
+800033a8:	32 9c       	mov	r12,41
+800033aa:	fe b0 f6 75 	rcall	80002094 <gpio_enable_module_pin>
+800033ae:	30 4b       	mov	r11,4
 	gpio_enable_module_pin(PWMA33_GPIO, PWM33_PWM_FUNCTION);
-80002942:	32 ac       	mov	r12,42
-80002944:	fe b0 fb a8 	rcall	80002094 <gpio_enable_module_pin>
-80002948:	30 4b       	mov	r11,4
+800033b0:	32 ac       	mov	r12,42
+800033b2:	fe b0 f6 71 	rcall	80002094 <gpio_enable_module_pin>
+800033b6:	30 4b       	mov	r11,4
 	gpio_enable_module_pin(PWMA34_GPIO, PWM34_PWM_FUNCTION);
-8000294a:	32 bc       	mov	r12,43
-8000294c:	fe b0 fb a4 	rcall	80002094 <gpio_enable_module_pin>
-80002950:	30 4b       	mov	r11,4
+800033b8:	32 bc       	mov	r12,43
+800033ba:	fe b0 f6 6d 	rcall	80002094 <gpio_enable_module_pin>
+800033be:	30 4b       	mov	r11,4
 	gpio_enable_module_pin(PWMA35_GPIO, PWM35_PWM_FUNCTION);
-80002952:	32 cc       	mov	r12,44
-80002954:	fe b0 fb a0 	rcall	80002094 <gpio_enable_module_pin>
-80002958:	fe b0 fd e1 	rcall	8000251a <scif_start_rc32k>
+800033c0:	32 cc       	mov	r12,44
+800033c2:	fe b0 f6 69 	rcall	80002094 <gpio_enable_module_pin>
+800033c6:	fe b0 f8 aa 	rcall	8000251a <scif_start_rc32k>
 	
 	
 	scif_start_rc32k();
-8000295c:	30 29       	mov	r9,2
+800033ca:	30 29       	mov	r9,2
 	scif_gc_setup(  AVR32_PM_GCLK_PWMA, 
-8000295e:	30 1a       	mov	r10,1
-80002960:	30 9b       	mov	r11,9
-80002962:	30 3c       	mov	r12,3
-80002964:	fe b0 fd 84 	rcall	8000246c <scif_gc_setup>
-80002968:	30 3c       	mov	r12,3
+800033cc:	30 1a       	mov	r10,1
+800033ce:	30 9b       	mov	r11,9
+800033d0:	30 3c       	mov	r12,3
+800033d2:	fe b0 f8 4d 	rcall	8000246c <scif_gc_setup>
+800033d6:	30 3c       	mov	r12,3
 					SCIF_GCCTRL_RC32K, 
 					true,              
 					2);                 
 	scif_gc_enable(AVR32_PM_GCLK_PWMA);
-8000296a:	fe b0 fd ca 	rcall	800024fe <scif_gc_enable>
-8000296e:	30 08       	mov	r8,0
+800033d8:	fe b0 f8 93 	rcall	800024fe <scif_gc_enable>
+800033dc:	30 08       	mov	r8,0
 	
 	
 	pwma_config_and_enable( &AVR32_PWMA, (PWM_CH1)
-80002970:	e0 69 00 ff 	mov	r9,255
-80002974:	e0 6a ba 01 	mov	r10,47617
-80002978:	ea 1a fe ff 	orh	r10,0xfeff
-8000297c:	30 fb       	mov	r11,15
-8000297e:	fe 7c 54 00 	mov	r12,-44032
-80002982:	fe b0 fd 4d 	rcall	8000241c <pwma_config_and_enable>
-80002986:	31 79       	mov	r9,23
+800033de:	e0 69 00 ff 	mov	r9,255
+800033e2:	e0 6a ba 01 	mov	r10,47617
+800033e6:	ea 1a fe ff 	orh	r10,0xfeff
+800033ea:	30 fb       	mov	r11,15
+800033ec:	fe 7c 54 00 	mov	r12,-44032
+800033f0:	fe b0 f8 16 	rcall	8000241c <pwma_config_and_enable>
+800033f4:	30 1a       	mov	r10,1
 	delay_init(sysclk_get_cpu_hz());
 	
 	// Center all motors
 	// ----------------------------------------------------
 	// Update Leg 1
 	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH4), servos[0][0]);
-80002988:	30 1a       	mov	r10,1
-8000298a:	30 2b       	mov	r11,2
-8000298c:	fe 7c 54 00 	mov	r12,-44032
-80002990:	fe b0 fd 5c 	rcall	80002448 <pwma_set_channels_value>
-80002994:	30 a9       	mov	r9,10
+800033f6:	30 c7       	mov	r7,12
+800033f8:	30 2b       	mov	r11,2
+800033fa:	0f 89       	ld.ub	r9,r7[0x0]
+800033fc:	fe 7c 54 00 	mov	r12,-44032
+80003400:	fe b0 f8 24 	rcall	80002448 <pwma_set_channels_value>
+80003404:	0f 99       	ld.ub	r9,r7[0x1]
 	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH5), servos[0][1]);
-80002996:	30 1a       	mov	r10,1
-80002998:	ea 1a 00 20 	orh	r10,0x20
-8000299c:	30 0b       	mov	r11,0
-8000299e:	fe 7c 54 00 	mov	r12,-44032
-800029a2:	fe b0 fd 53 	rcall	80002448 <pwma_set_channels_value>
-800029a6:	31 c9       	mov	r9,28
+80003406:	30 1a       	mov	r10,1
+80003408:	ea 1a 00 20 	orh	r10,0x20
+8000340c:	30 0b       	mov	r11,0
+8000340e:	fe 7c 54 00 	mov	r12,-44032
+80003412:	fe b0 f8 1b 	rcall	80002448 <pwma_set_channels_value>
+80003416:	0f a9       	ld.ub	r9,r7[0x2]
 	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH6), servos[0][2]);
-800029a8:	30 1a       	mov	r10,1
-800029aa:	ea 1a 00 10 	orh	r10,0x10
-800029ae:	30 0b       	mov	r11,0
-800029b0:	fe 7c 54 00 	mov	r12,-44032
-800029b4:	fe b0 fd 4a 	rcall	80002448 <pwma_set_channels_value>
-800029b8:	31 39       	mov	r9,19
+80003418:	30 1a       	mov	r10,1
+8000341a:	ea 1a 00 10 	orh	r10,0x10
+8000341e:	30 0b       	mov	r11,0
+80003420:	fe 7c 54 00 	mov	r12,-44032
+80003424:	fe b0 f8 12 	rcall	80002448 <pwma_set_channels_value>
+80003428:	0f b9       	ld.ub	r9,r7[0x3]
 	
 	// Update Leg 2
 	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH7), servos[1][0]);
-800029ba:	e0 6a 20 01 	mov	r10,8193
-800029be:	30 0b       	mov	r11,0
-800029c0:	fe 7c 54 00 	mov	r12,-44032
-800029c4:	fe b0 fd 42 	rcall	80002448 <pwma_set_channels_value>
-800029c8:	30 a9       	mov	r9,10
+8000342a:	e0 6a 20 01 	mov	r10,8193
+8000342e:	30 0b       	mov	r11,0
+80003430:	fe 7c 54 00 	mov	r12,-44032
+80003434:	fe b0 f8 0a 	rcall	80002448 <pwma_set_channels_value>
+80003438:	0f c9       	ld.ub	r9,r7[0x4]
 	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH8), servos[1][1]);
-800029ca:	e0 6a 08 01 	mov	r10,2049
-800029ce:	30 0b       	mov	r11,0
-800029d0:	fe 7c 54 00 	mov	r12,-44032
-800029d4:	fe b0 fd 3a 	rcall	80002448 <pwma_set_channels_value>
-800029d8:	31 c9       	mov	r9,28
+8000343a:	e0 6a 08 01 	mov	r10,2049
+8000343e:	30 0b       	mov	r11,0
+80003440:	fe 7c 54 00 	mov	r12,-44032
+80003444:	fe b0 f8 02 	rcall	80002448 <pwma_set_channels_value>
+80003448:	0f d9       	ld.ub	r9,r7[0x5]
 	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH9), servos[1][2]);
-800029da:	30 1a       	mov	r10,1
-800029dc:	30 1b       	mov	r11,1
-800029de:	fe 7c 54 00 	mov	r12,-44032
-800029e2:	fe b0 fd 33 	rcall	80002448 <pwma_set_channels_value>
-800029e6:	31 19       	mov	r9,17
+8000344a:	30 1a       	mov	r10,1
+8000344c:	30 1b       	mov	r11,1
+8000344e:	fe 7c 54 00 	mov	r12,-44032
+80003452:	fe b0 f7 fb 	rcall	80002448 <pwma_set_channels_value>
+80003456:	0f e9       	ld.ub	r9,r7[0x6]
 	
 	// Update Leg 3
 	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH10), servos[2][0]);
-800029e8:	30 1a       	mov	r10,1
-800029ea:	ea 1a 20 00 	orh	r10,0x2000
-800029ee:	30 0b       	mov	r11,0
-800029f0:	fe 7c 54 00 	mov	r12,-44032
-800029f4:	fe b0 fd 2a 	rcall	80002448 <pwma_set_channels_value>
-800029f8:	30 a9       	mov	r9,10
+80003458:	30 1a       	mov	r10,1
+8000345a:	ea 1a 20 00 	orh	r10,0x2000
+8000345e:	30 0b       	mov	r11,0
+80003460:	fe 7c 54 00 	mov	r12,-44032
+80003464:	fe b0 f7 f2 	rcall	80002448 <pwma_set_channels_value>
+80003468:	0f f9       	ld.ub	r9,r7[0x7]
 	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH11), servos[2][1]);
-800029fa:	30 1a       	mov	r10,1
-800029fc:	ea 1a 40 00 	orh	r10,0x4000
-80002a00:	30 0b       	mov	r11,0
-80002a02:	fe 7c 54 00 	mov	r12,-44032
-80002a06:	fe b0 fd 21 	rcall	80002448 <pwma_set_channels_value>
-80002a0a:	31 c9       	mov	r9,28
+8000346a:	30 1a       	mov	r10,1
+8000346c:	ea 1a 40 00 	orh	r10,0x4000
+80003470:	30 0b       	mov	r11,0
+80003472:	fe 7c 54 00 	mov	r12,-44032
+80003476:	fe b0 f7 e9 	rcall	80002448 <pwma_set_channels_value>
+8000347a:	ef 39 00 08 	ld.ub	r9,r7[8]
 	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH12), servos[2][2]);
-80002a0c:	30 1a       	mov	r10,1
-80002a0e:	ea 1a 80 00 	orh	r10,0x8000
-80002a12:	30 0b       	mov	r11,0
-80002a14:	fe 7c 54 00 	mov	r12,-44032
-80002a18:	fe b0 fd 18 	rcall	80002448 <pwma_set_channels_value>
-80002a1c:	31 09       	mov	r9,16
+8000347e:	30 1a       	mov	r10,1
+80003480:	ea 1a 80 00 	orh	r10,0x8000
+80003484:	30 0b       	mov	r11,0
+80003486:	fe 7c 54 00 	mov	r12,-44032
+8000348a:	fe b0 f7 df 	rcall	80002448 <pwma_set_channels_value>
+8000348e:	ef 39 00 09 	ld.ub	r9,r7[9]
 	
 	// Update Leg 4
 	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH16), servos[3][0]);
-80002a1e:	30 1a       	mov	r10,1
-80002a20:	30 8b       	mov	r11,8
-80002a22:	fe 7c 54 00 	mov	r12,-44032
-80002a26:	fe b0 fd 11 	rcall	80002448 <pwma_set_channels_value>
-80002a2a:	30 a9       	mov	r9,10
+80003492:	30 1a       	mov	r10,1
+80003494:	30 8b       	mov	r11,8
+80003496:	fe 7c 54 00 	mov	r12,-44032
+8000349a:	fe b0 f7 d7 	rcall	80002448 <pwma_set_channels_value>
+8000349e:	ef 39 00 0a 	ld.ub	r9,r7[10]
 	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH17), servos[3][1]);
-80002a2c:	e0 6a 02 01 	mov	r10,513
-80002a30:	30 0b       	mov	r11,0
-80002a32:	fe 7c 54 00 	mov	r12,-44032
-80002a36:	fe b0 fd 09 	rcall	80002448 <pwma_set_channels_value>
-80002a3a:	31 c9       	mov	r9,28
+800034a2:	e0 6a 02 01 	mov	r10,513
+800034a6:	30 0b       	mov	r11,0
+800034a8:	fe 7c 54 00 	mov	r12,-44032
+800034ac:	fe b0 f7 ce 	rcall	80002448 <pwma_set_channels_value>
+800034b0:	ef 39 00 0b 	ld.ub	r9,r7[11]
 	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH18), servos[3][2]);
-80002a3c:	e0 6a 10 01 	mov	r10,4097
-80002a40:	30 0b       	mov	r11,0
-80002a42:	fe 7c 54 00 	mov	r12,-44032
-80002a46:	fe b0 fd 01 	rcall	80002448 <pwma_set_channels_value>
-80002a4a:	31 69       	mov	r9,22
+800034b4:	e0 6a 10 01 	mov	r10,4097
+800034b8:	30 0b       	mov	r11,0
+800034ba:	fe 7c 54 00 	mov	r12,-44032
+800034be:	fe b0 f7 c5 	rcall	80002448 <pwma_set_channels_value>
+800034c2:	ef 39 00 0c 	ld.ub	r9,r7[12]
 	
 	// Update Leg 5
 	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH19), servos[4][0]);
-80002a4c:	30 1a       	mov	r10,1
-80002a4e:	30 4b       	mov	r11,4
-80002a50:	fe 7c 54 00 	mov	r12,-44032
-80002a54:	fe b0 fc fa 	rcall	80002448 <pwma_set_channels_value>
-80002a58:	30 a9       	mov	r9,10
+800034c6:	30 1a       	mov	r10,1
+800034c8:	30 4b       	mov	r11,4
+800034ca:	fe 7c 54 00 	mov	r12,-44032
+800034ce:	fe b0 f7 bd 	rcall	80002448 <pwma_set_channels_value>
+800034d2:	ef 39 00 0d 	ld.ub	r9,r7[13]
 	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH20), servos[4][1]);
-80002a5a:	e4 6a 00 01 	mov	r10,262145
-80002a5e:	30 0b       	mov	r11,0
-80002a60:	fe 7c 54 00 	mov	r12,-44032
-80002a64:	fe b0 fc f2 	rcall	80002448 <pwma_set_channels_value>
-80002a68:	31 c9       	mov	r9,28
+800034d6:	e4 6a 00 01 	mov	r10,262145
+800034da:	30 0b       	mov	r11,0
+800034dc:	fe 7c 54 00 	mov	r12,-44032
+800034e0:	fe b0 f7 b4 	rcall	80002448 <pwma_set_channels_value>
+800034e4:	ef 39 00 0e 	ld.ub	r9,r7[14]
 	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH21), servos[4][2]);
-80002a6a:	e8 6a 00 01 	mov	r10,524289
-80002a6e:	30 0b       	mov	r11,0
-80002a70:	fe 7c 54 00 	mov	r12,-44032
-80002a74:	fe b0 fc ea 	rcall	80002448 <pwma_set_channels_value>
-80002a78:	31 69       	mov	r9,22
+800034e8:	e8 6a 00 01 	mov	r10,524289
+800034ec:	30 0b       	mov	r11,0
+800034ee:	fe 7c 54 00 	mov	r12,-44032
+800034f2:	fe b0 f7 ab 	rcall	80002448 <pwma_set_channels_value>
+800034f6:	ef 39 00 0f 	ld.ub	r9,r7[15]
 	
 	// Update Leg 6
 	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH22), servos[5][0]);
-80002a7a:	e2 6a 00 01 	mov	r10,131073
-80002a7e:	30 0b       	mov	r11,0
-80002a80:	fe 7c 54 00 	mov	r12,-44032
-80002a84:	fe b0 fc e2 	rcall	80002448 <pwma_set_channels_value>
-80002a88:	30 a9       	mov	r9,10
+800034fa:	e2 6a 00 01 	mov	r10,131073
+800034fe:	30 0b       	mov	r11,0
+80003500:	fe 7c 54 00 	mov	r12,-44032
+80003504:	fe b0 f7 a2 	rcall	80002448 <pwma_set_channels_value>
+80003508:	ef 39 00 10 	ld.ub	r9,r7[16]
 	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH23), servos[5][1]);
-80002a8a:	e0 7a 00 01 	mov	r10,65537
-80002a8e:	30 0b       	mov	r11,0
-80002a90:	fe 7c 54 00 	mov	r12,-44032
-80002a94:	fe b0 fc da 	rcall	80002448 <pwma_set_channels_value>
-80002a98:	31 c9       	mov	r9,28
+8000350c:	e0 7a 00 01 	mov	r10,65537
+80003510:	30 0b       	mov	r11,0
+80003512:	fe 7c 54 00 	mov	r12,-44032
+80003516:	fe b0 f7 99 	rcall	80002448 <pwma_set_channels_value>
+8000351a:	ef 39 00 11 	ld.ub	r9,r7[17]
 	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH24), servos[5][2]);
-80002a9a:	e0 6a 80 01 	mov	r10,32769
-80002a9e:	30 0b       	mov	r11,0
-80002aa0:	fe 7c 54 00 	mov	r12,-44032
-80002aa4:	fe b0 fc d2 	rcall	80002448 <pwma_set_channels_value>
-80002aa8:	31 49       	mov	r9,20
-		servos[1][2] += 10;
-		servos[3][1] += 10;
-		servos[3][2] += 10;
-		servos[5][1] += 10;
-		servos[5][2] += 10;
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH8), servos[1][1]);
-80002aaa:	e0 6a 08 01 	mov	r10,2049
-80002aae:	30 0b       	mov	r11,0
-80002ab0:	fe 7c 54 00 	mov	r12,-44032
-80002ab4:	fe b0 fc ca 	rcall	80002448 <pwma_set_channels_value>
-80002ab8:	32 69       	mov	r9,38
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH9), servos[1][2]);
-80002aba:	30 1a       	mov	r10,1
-80002abc:	30 1b       	mov	r11,1
-80002abe:	fe 7c 54 00 	mov	r12,-44032
-80002ac2:	fe b0 fc c3 	rcall	80002448 <pwma_set_channels_value>
-80002ac6:	31 49       	mov	r9,20
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH17), servos[3][1]);
-80002ac8:	e0 6a 02 01 	mov	r10,513
-80002acc:	30 0b       	mov	r11,0
-80002ace:	fe 7c 54 00 	mov	r12,-44032
-80002ad2:	fe b0 fc bb 	rcall	80002448 <pwma_set_channels_value>
-80002ad6:	32 69       	mov	r9,38
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH18), servos[3][2]);
-80002ad8:	e0 6a 10 01 	mov	r10,4097
-80002adc:	30 0b       	mov	r11,0
-80002ade:	fe 7c 54 00 	mov	r12,-44032
-80002ae2:	fe b0 fc b3 	rcall	80002448 <pwma_set_channels_value>
-80002ae6:	31 49       	mov	r9,20
+8000351e:	e0 6a 80 01 	mov	r10,32769
+80003522:	30 0b       	mov	r11,0
+80003524:	fe 7c 54 00 	mov	r12,-44032
+80003528:	fe b0 f7 90 	rcall	80002448 <pwma_set_channels_value>
+8000352c:	fe b0 fc ca 	rcall	80002ec0 <walk_forward>
 		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH23), servos[5][1]);
-80002ae8:	e0 7a 00 01 	mov	r10,65537
-80002aec:	30 0b       	mov	r11,0
-80002aee:	fe 7c 54 00 	mov	r12,-44032
-80002af2:	fe b0 fc ab 	rcall	80002448 <pwma_set_channels_value>
-80002af6:	32 69       	mov	r9,38
 		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH24), servos[5][2]);
-80002af8:	e0 6a 80 01 	mov	r10,32769
-80002afc:	30 0b       	mov	r11,0
-80002afe:	fe 7c 54 00 	mov	r12,-44032
-80002b02:	fe b0 fc a3 	rcall	80002448 <pwma_set_channels_value>
-80002b06:	31 b9       	mov	r9,27
+		*/
 		
-		// Move Body Forward
-		servos[0][0] += 4;
-		servos[2][0] += 4;
-		servos[4][0] -= 4;
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH4), servos[0][0]);
-80002b08:	30 1a       	mov	r10,1
-80002b0a:	30 2b       	mov	r11,2
-80002b0c:	fe 7c 54 00 	mov	r12,-44032
-80002b10:	fe b0 fc 9c 	rcall	80002448 <pwma_set_channels_value>
-80002b14:	31 59       	mov	r9,21
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH10), servos[2][0]);
-80002b16:	30 1a       	mov	r10,1
-80002b18:	ea 1a 20 00 	orh	r10,0x2000
-80002b1c:	30 0b       	mov	r11,0
-80002b1e:	fe 7c 54 00 	mov	r12,-44032
-80002b22:	fe b0 fc 93 	rcall	80002448 <pwma_set_channels_value>
-80002b26:	31 29       	mov	r9,18
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH19), servos[4][0]);
-80002b28:	30 1a       	mov	r10,1
-80002b2a:	30 4b       	mov	r11,4
-80002b2c:	fe 7c 54 00 	mov	r12,-44032
-80002b30:	fe b0 fc 8c 	rcall	80002448 <pwma_set_channels_value>
-80002b34:	30 f9       	mov	r9,15
 		
-		// Move Legs Forward
-		servos[1][0] -= 4;
-		servos[3][0] += 4;
-		servos[5][0] += 4;
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH7), servos[1][0]);
-80002b36:	e0 6a 20 01 	mov	r10,8193
-80002b3a:	30 0b       	mov	r11,0
-80002b3c:	fe 7c 54 00 	mov	r12,-44032
-80002b40:	fe b0 fc 84 	rcall	80002448 <pwma_set_channels_value>
-80002b44:	31 49       	mov	r9,20
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH16), servos[3][0]);
-80002b46:	30 1a       	mov	r10,1
-80002b48:	30 8b       	mov	r11,8
-80002b4a:	fe 7c 54 00 	mov	r12,-44032
-80002b4e:	fe b0 fc 7d 	rcall	80002448 <pwma_set_channels_value>
-80002b52:	31 a9       	mov	r9,26
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH22), servos[5][0]);
-80002b54:	e2 6a 00 01 	mov	r10,131073
-80002b58:	30 0b       	mov	r11,0
-80002b5a:	fe 7c 54 00 	mov	r12,-44032
-80002b5e:	fe b0 fc 75 	rcall	80002448 <pwma_set_channels_value>
-80002b62:	30 a9       	mov	r9,10
-		servos[1][2] -= 10;
-		servos[3][1] -= 10;
-		servos[3][2] -= 10;
-		servos[5][1] -= 10;
-		servos[5][2] -= 10;
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH8), servos[1][1]);
-80002b64:	e0 6a 08 01 	mov	r10,2049
-80002b68:	30 0b       	mov	r11,0
-80002b6a:	fe 7c 54 00 	mov	r12,-44032
-80002b6e:	fe b0 fc 6d 	rcall	80002448 <pwma_set_channels_value>
-80002b72:	31 c9       	mov	r9,28
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH9), servos[1][2]);
-80002b74:	30 1a       	mov	r10,1
-80002b76:	30 1b       	mov	r11,1
-80002b78:	fe 7c 54 00 	mov	r12,-44032
-80002b7c:	fe b0 fc 66 	rcall	80002448 <pwma_set_channels_value>
-80002b80:	30 a9       	mov	r9,10
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH17), servos[3][1]);
-80002b82:	e0 6a 02 01 	mov	r10,513
-80002b86:	30 0b       	mov	r11,0
-80002b88:	fe 7c 54 00 	mov	r12,-44032
-80002b8c:	fe b0 fc 5e 	rcall	80002448 <pwma_set_channels_value>
-80002b90:	31 c9       	mov	r9,28
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH18), servos[3][2]);
-80002b92:	e0 6a 10 01 	mov	r10,4097
-80002b96:	30 0b       	mov	r11,0
-80002b98:	fe 7c 54 00 	mov	r12,-44032
-80002b9c:	fe b0 fc 56 	rcall	80002448 <pwma_set_channels_value>
-80002ba0:	30 a9       	mov	r9,10
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH23), servos[5][1]);
-80002ba2:	e0 7a 00 01 	mov	r10,65537
-80002ba6:	30 0b       	mov	r11,0
-80002ba8:	fe 7c 54 00 	mov	r12,-44032
-80002bac:	fe b0 fc 4e 	rcall	80002448 <pwma_set_channels_value>
-80002bb0:	31 c9       	mov	r9,28
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH24), servos[5][2]);
-80002bb2:	e0 6a 80 01 	mov	r10,32769
-80002bb6:	30 0b       	mov	r11,0
-80002bb8:	fe 7c 54 00 	mov	r12,-44032
-80002bbc:	fe b0 fc 46 	rcall	80002448 <pwma_set_channels_value>
-80002bc0:	31 09       	mov	r9,16
-		servos[0][2] += 6;
-		servos[2][1] += 6;
-		servos[2][2] += 6;
-		servos[4][1] += 6;
-		servos[4][2] += 6;
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH5), servos[0][1]);
-80002bc2:	30 1a       	mov	r10,1
-80002bc4:	ea 1a 00 20 	orh	r10,0x20
-80002bc8:	30 0b       	mov	r11,0
-80002bca:	fe 7c 54 00 	mov	r12,-44032
-80002bce:	fe b0 fc 3d 	rcall	80002448 <pwma_set_channels_value>
-80002bd2:	32 29       	mov	r9,34
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH6), servos[0][2]);
-80002bd4:	30 1a       	mov	r10,1
-80002bd6:	ea 1a 00 10 	orh	r10,0x10
-80002bda:	30 0b       	mov	r11,0
-80002bdc:	fe 7c 54 00 	mov	r12,-44032
-80002be0:	fe b0 fc 34 	rcall	80002448 <pwma_set_channels_value>
-80002be4:	31 09       	mov	r9,16
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH11), servos[2][1]);
-80002be6:	30 1a       	mov	r10,1
-80002be8:	ea 1a 40 00 	orh	r10,0x4000
-80002bec:	30 0b       	mov	r11,0
-80002bee:	fe 7c 54 00 	mov	r12,-44032
-80002bf2:	fe b0 fc 2b 	rcall	80002448 <pwma_set_channels_value>
-80002bf6:	32 29       	mov	r9,34
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH12), servos[2][2]);
-80002bf8:	30 1a       	mov	r10,1
-80002bfa:	ea 1a 80 00 	orh	r10,0x8000
-80002bfe:	30 0b       	mov	r11,0
-80002c00:	fe 7c 54 00 	mov	r12,-44032
-80002c04:	fe b0 fc 22 	rcall	80002448 <pwma_set_channels_value>
-80002c08:	31 09       	mov	r9,16
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH20), servos[4][1]);
-80002c0a:	e4 6a 00 01 	mov	r10,262145
-80002c0e:	30 0b       	mov	r11,0
-80002c10:	fe 7c 54 00 	mov	r12,-44032
-80002c14:	fe b0 fc 1a 	rcall	80002448 <pwma_set_channels_value>
-80002c18:	32 29       	mov	r9,34
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH21), servos[4][2]);
-80002c1a:	e8 6a 00 01 	mov	r10,524289
-80002c1e:	30 0b       	mov	r11,0
-80002c20:	fe 7c 54 00 	mov	r12,-44032
-80002c24:	fe b0 fc 12 	rcall	80002448 <pwma_set_channels_value>
-80002c28:	31 39       	mov	r9,19
-		
-		// Move Body Forward
-		servos[1][0] += 4;
-		servos[3][0] -= 4;
-		servos[5][0] -= 4;
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH7), servos[1][0]);
-80002c2a:	e0 6a 20 01 	mov	r10,8193
-80002c2e:	30 0b       	mov	r11,0
-80002c30:	fe 7c 54 00 	mov	r12,-44032
-80002c34:	fe b0 fc 0a 	rcall	80002448 <pwma_set_channels_value>
-80002c38:	31 09       	mov	r9,16
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH16), servos[3][0]);
-80002c3a:	30 1a       	mov	r10,1
-80002c3c:	30 8b       	mov	r11,8
-80002c3e:	fe 7c 54 00 	mov	r12,-44032
-80002c42:	fe b0 fc 03 	rcall	80002448 <pwma_set_channels_value>
-80002c46:	31 69       	mov	r9,22
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH22), servos[5][0]);
-80002c48:	e2 6a 00 01 	mov	r10,131073
-80002c4c:	30 0b       	mov	r11,0
-80002c4e:	fe 7c 54 00 	mov	r12,-44032
-80002c52:	fe b0 fb fb 	rcall	80002448 <pwma_set_channels_value>
-80002c56:	31 79       	mov	r9,23
-		
-		// Move Legs Forward
-		servos[0][0] -= 4;
-		servos[2][0] -= 4;
-		servos[4][0] += 4;
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH4), servos[0][0]);
-80002c58:	30 1a       	mov	r10,1
-80002c5a:	30 2b       	mov	r11,2
-80002c5c:	fe 7c 54 00 	mov	r12,-44032
-80002c60:	fe b0 fb f4 	rcall	80002448 <pwma_set_channels_value>
-80002c64:	31 19       	mov	r9,17
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH10), servos[2][0]);
-80002c66:	30 1a       	mov	r10,1
-80002c68:	ea 1a 20 00 	orh	r10,0x2000
-80002c6c:	30 0b       	mov	r11,0
-80002c6e:	fe 7c 54 00 	mov	r12,-44032
-80002c72:	fe b0 fb eb 	rcall	80002448 <pwma_set_channels_value>
-80002c76:	31 69       	mov	r9,22
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH19), servos[4][0]);
-80002c78:	30 1a       	mov	r10,1
-80002c7a:	30 4b       	mov	r11,4
-80002c7c:	fe 7c 54 00 	mov	r12,-44032
-80002c80:	fe b0 fb e4 	rcall	80002448 <pwma_set_channels_value>
-80002c84:	30 a9       	mov	r9,10
-		servos[0][2] -= 6;
-		servos[2][1] -= 6;
-		servos[2][2] -= 6;
-		servos[4][1] -= 6;
-		servos[4][2] -= 6;
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH5), servos[0][1]);
-80002c86:	30 1a       	mov	r10,1
-80002c88:	ea 1a 00 20 	orh	r10,0x20
-80002c8c:	30 0b       	mov	r11,0
-80002c8e:	fe 7c 54 00 	mov	r12,-44032
-80002c92:	fe b0 fb db 	rcall	80002448 <pwma_set_channels_value>
-80002c96:	31 c9       	mov	r9,28
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH6), servos[0][2]);
-80002c98:	30 1a       	mov	r10,1
-80002c9a:	ea 1a 00 10 	orh	r10,0x10
-80002c9e:	30 0b       	mov	r11,0
-80002ca0:	fe 7c 54 00 	mov	r12,-44032
-80002ca4:	fe b0 fb d2 	rcall	80002448 <pwma_set_channels_value>
-80002ca8:	30 a9       	mov	r9,10
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH11), servos[2][1]);
-80002caa:	30 1a       	mov	r10,1
-80002cac:	ea 1a 40 00 	orh	r10,0x4000
-80002cb0:	30 0b       	mov	r11,0
-80002cb2:	fe 7c 54 00 	mov	r12,-44032
-80002cb6:	fe b0 fb c9 	rcall	80002448 <pwma_set_channels_value>
-80002cba:	31 c9       	mov	r9,28
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH12), servos[2][2]);
-80002cbc:	30 1a       	mov	r10,1
-80002cbe:	ea 1a 80 00 	orh	r10,0x8000
-80002cc2:	30 0b       	mov	r11,0
-80002cc4:	fe 7c 54 00 	mov	r12,-44032
-80002cc8:	fe b0 fb c0 	rcall	80002448 <pwma_set_channels_value>
-80002ccc:	30 a9       	mov	r9,10
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH20), servos[4][1]);
-80002cce:	e4 6a 00 01 	mov	r10,262145
-80002cd2:	30 0b       	mov	r11,0
-80002cd4:	fe 7c 54 00 	mov	r12,-44032
-80002cd8:	fe b0 fb b8 	rcall	80002448 <pwma_set_channels_value>
-80002cdc:	31 c9       	mov	r9,28
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH21), servos[4][2]);
-80002cde:	e8 6a 00 01 	mov	r10,524289
-80002ce2:	30 0b       	mov	r11,0
-80002ce4:	fe 7c 54 00 	mov	r12,-44032
-80002ce8:	fe b0 fb b0 	rcall	80002448 <pwma_set_channels_value>
-80002cec:	cd ea       	rjmp	80002aa8 <main+0x210>
-80002cee:	d7 03       	nop
+		walk_forward();
+80003530:	fe b0 fc c8 	rcall	80002ec0 <walk_forward>
+		walk_forward();
+80003534:	fe b0 fc c6 	rcall	80002ec0 <walk_forward>
+		walk_forward();
+80003538:	fe b0 fb 3a 	rcall	80002bac <turn_left>
+		turn_left();
+8000353c:	fe b0 fb 38 	rcall	80002bac <turn_left>
+		turn_left();
+80003540:	fe b0 fb 36 	rcall	80002bac <turn_left>
+		turn_left();
+80003544:	fe b0 fb 34 	rcall	80002bac <turn_left>
+		turn_left();
+80003548:	fe b0 fb 32 	rcall	80002bac <turn_left>
+		turn_left();
+8000354c:	fe b0 fc ba 	rcall	80002ec0 <walk_forward>
+		walk_forward();
+80003550:	fe b0 fc b8 	rcall	80002ec0 <walk_forward>
+		walk_forward();
+80003554:	fe b0 fc b6 	rcall	80002ec0 <walk_forward>
+		walk_forward();
+80003558:	fe b0 f9 a0 	rcall	80002898 <turn_right>
+		turn_right();
+8000355c:	fe b0 f9 9e 	rcall	80002898 <turn_right>
+		turn_right();
+80003560:	fe b0 f9 9c 	rcall	80002898 <turn_right>
+		turn_right();
+80003564:	fe b0 f9 9a 	rcall	80002898 <turn_right>
+		turn_right();
+80003568:	fe b0 f9 98 	rcall	80002898 <turn_right>
+		turn_right();
+8000356c:	ce 0b       	rjmp	8000352c <main+0x228>
+8000356e:	d7 03       	nop
 
-80002cf0 <__avr32_udiv64>:
-80002cf0:	d4 31       	pushm	r0-r7,lr
-80002cf2:	1a 97       	mov	r7,sp
-80002cf4:	20 2d       	sub	sp,8
-80002cf6:	10 9e       	mov	lr,r8
-80002cf8:	12 95       	mov	r5,r9
-80002cfa:	14 96       	mov	r6,r10
-80002cfc:	58 09       	cp.w	r9,0
-80002cfe:	c4 91       	brne	80002d90 <__avr32_udiv64+0xa0>
-80002d00:	16 38       	cp.w	r8,r11
-80002d02:	e0 88 00 57 	brls	80002db0 <__avr32_udiv64+0xc0>
-80002d06:	f0 08 12 00 	clz	r8,r8
-80002d0a:	c0 d0       	breq	80002d24 <__avr32_udiv64+0x34>
-80002d0c:	f6 08 09 4b 	lsl	r11,r11,r8
-80002d10:	f0 09 11 20 	rsub	r9,r8,32
-80002d14:	fc 08 09 4e 	lsl	lr,lr,r8
-80002d18:	f4 09 0a 49 	lsr	r9,r10,r9
-80002d1c:	f4 08 09 46 	lsl	r6,r10,r8
-80002d20:	f3 eb 10 0b 	or	r11,r9,r11
-80002d24:	fc 05 16 10 	lsr	r5,lr,0x10
-80002d28:	f9 de c0 10 	bfextu	r12,lr,0x0,0x10
-80002d2c:	f6 05 0d 0a 	divu	r10,r11,r5
-80002d30:	ec 08 16 10 	lsr	r8,r6,0x10
-80002d34:	14 99       	mov	r9,r10
-80002d36:	f1 eb 11 08 	or	r8,r8,r11<<0x10
-80002d3a:	b9 3a       	mul	r10,r12
-80002d3c:	10 3a       	cp.w	r10,r8
-80002d3e:	e0 88 00 0c 	brls	80002d56 <__avr32_udiv64+0x66>
-80002d42:	20 19       	sub	r9,1
-80002d44:	1c 08       	add	r8,lr
-80002d46:	10 3e       	cp.w	lr,r8
-80002d48:	e0 8b 00 07 	brhi	80002d56 <__avr32_udiv64+0x66>
-80002d4c:	10 3a       	cp.w	r10,r8
-80002d4e:	f7 b9 0b 01 	subhi	r9,1
-80002d52:	f1 de eb 08 	addhi	r8,r8,lr
-80002d56:	f0 0a 01 0b 	sub	r11,r8,r10
-80002d5a:	ed d6 c0 10 	bfextu	r6,r6,0x0,0x10
-80002d5e:	f6 05 0d 0a 	divu	r10,r11,r5
-80002d62:	ed eb 11 06 	or	r6,r6,r11<<0x10
-80002d66:	14 98       	mov	r8,r10
-80002d68:	f4 0c 02 4c 	mul	r12,r10,r12
-80002d6c:	0c 3c       	cp.w	r12,r6
-80002d6e:	e0 88 00 0a 	brls	80002d82 <__avr32_udiv64+0x92>
-80002d72:	20 18       	sub	r8,1
-80002d74:	1c 06       	add	r6,lr
-80002d76:	0c 3e       	cp.w	lr,r6
-80002d78:	e0 8b 00 05 	brhi	80002d82 <__avr32_udiv64+0x92>
-80002d7c:	0c 3c       	cp.w	r12,r6
-80002d7e:	f7 b8 0b 01 	subhi	r8,1
-80002d82:	f1 e9 11 0b 	or	r11,r8,r9<<0x10
-80002d86:	30 0c       	mov	r12,0
-80002d88:	16 9a       	mov	r10,r11
-80002d8a:	18 9b       	mov	r11,r12
-80002d8c:	2f ed       	sub	sp,-8
-80002d8e:	d8 32       	popm	r0-r7,pc
-80002d90:	16 39       	cp.w	r9,r11
-80002d92:	e0 8b 00 51 	brhi	80002e34 <__avr32_udiv64+0x144>
-80002d96:	f2 0c 12 00 	clz	r12,r9
-80002d9a:	c5 31       	brne	80002e40 <__avr32_udiv64+0x150>
-80002d9c:	14 38       	cp.w	r8,r10
-80002d9e:	5f 89       	srls	r9
-80002da0:	16 35       	cp.w	r5,r11
-80002da2:	5f 38       	srlo	r8
-80002da4:	10 49       	or	r9,r8
-80002da6:	f8 09 18 00 	cp.b	r9,r12
-80002daa:	c4 50       	breq	80002e34 <__avr32_udiv64+0x144>
-80002dac:	30 1b       	mov	r11,1
-80002dae:	c4 58       	rjmp	80002e38 <__avr32_udiv64+0x148>
-80002db0:	58 08       	cp.w	r8,0
-80002db2:	c0 51       	brne	80002dbc <__avr32_udiv64+0xcc>
-80002db4:	30 19       	mov	r9,1
-80002db6:	f2 08 0d 08 	divu	r8,r9,r8
-80002dba:	10 9e       	mov	lr,r8
-80002dbc:	fc 08 12 00 	clz	r8,lr
-80002dc0:	e0 81 00 91 	brne	80002ee2 <__avr32_udiv64+0x1f2>
-80002dc4:	1c 1b       	sub	r11,lr
-80002dc6:	fc 05 16 10 	lsr	r5,lr,0x10
-80002dca:	f3 de c0 10 	bfextu	r9,lr,0x0,0x10
-80002dce:	30 1c       	mov	r12,1
-80002dd0:	f6 05 0d 0a 	divu	r10,r11,r5
-80002dd4:	ec 08 16 10 	lsr	r8,r6,0x10
-80002dd8:	f4 09 02 43 	mul	r3,r10,r9
-80002ddc:	f1 eb 11 08 	or	r8,r8,r11<<0x10
-80002de0:	14 9b       	mov	r11,r10
-80002de2:	10 33       	cp.w	r3,r8
-80002de4:	e0 88 00 0c 	brls	80002dfc <__avr32_udiv64+0x10c>
-80002de8:	20 1b       	sub	r11,1
-80002dea:	1c 08       	add	r8,lr
-80002dec:	10 3e       	cp.w	lr,r8
-80002dee:	e0 8b 00 07 	brhi	80002dfc <__avr32_udiv64+0x10c>
-80002df2:	10 33       	cp.w	r3,r8
-80002df4:	f7 bb 0b 01 	subhi	r11,1
-80002df8:	f1 de eb 08 	addhi	r8,r8,lr
-80002dfc:	f0 03 01 03 	sub	r3,r8,r3
-80002e00:	ed d6 c0 10 	bfextu	r6,r6,0x0,0x10
-80002e04:	e6 05 0d 02 	divu	r2,r3,r5
-80002e08:	ed e3 11 06 	or	r6,r6,r3<<0x10
-80002e0c:	04 98       	mov	r8,r2
-80002e0e:	e4 09 02 49 	mul	r9,r2,r9
-80002e12:	0c 39       	cp.w	r9,r6
-80002e14:	e0 88 00 0a 	brls	80002e28 <__avr32_udiv64+0x138>
-80002e18:	20 18       	sub	r8,1
-80002e1a:	1c 06       	add	r6,lr
-80002e1c:	0c 3e       	cp.w	lr,r6
-80002e1e:	e0 8b 00 05 	brhi	80002e28 <__avr32_udiv64+0x138>
-80002e22:	0c 39       	cp.w	r9,r6
-80002e24:	f7 b8 0b 01 	subhi	r8,1
-80002e28:	f1 eb 11 0b 	or	r11,r8,r11<<0x10
-80002e2c:	16 9a       	mov	r10,r11
-80002e2e:	18 9b       	mov	r11,r12
-80002e30:	2f ed       	sub	sp,-8
-80002e32:	d8 32       	popm	r0-r7,pc
-80002e34:	30 0b       	mov	r11,0
-80002e36:	16 9c       	mov	r12,r11
-80002e38:	16 9a       	mov	r10,r11
-80002e3a:	18 9b       	mov	r11,r12
-80002e3c:	2f ed       	sub	sp,-8
-80002e3e:	d8 32       	popm	r0-r7,pc
-80002e40:	f2 0c 09 45 	lsl	r5,r9,r12
-80002e44:	f8 0e 11 20 	rsub	lr,r12,32
-80002e48:	f0 0c 09 43 	lsl	r3,r8,r12
-80002e4c:	f4 0e 0a 46 	lsr	r6,r10,lr
-80002e50:	f0 0e 0a 48 	lsr	r8,r8,lr
-80002e54:	f6 0e 0a 4e 	lsr	lr,r11,lr
-80002e58:	0a 48       	or	r8,r5
-80002e5a:	f0 01 16 10 	lsr	r1,r8,0x10
-80002e5e:	fc 01 0d 04 	divu	r4,lr,r1
-80002e62:	ee e5 ff f8 	st.d	r7[-8],r4
-80002e66:	f6 0c 09 49 	lsl	r9,r11,r12
-80002e6a:	eb d8 c0 10 	bfextu	r5,r8,0x0,0x10
-80002e6e:	ed e9 10 09 	or	r9,r6,r9
-80002e72:	08 96       	mov	r6,r4
-80002e74:	f2 0e 16 10 	lsr	lr,r9,0x10
-80002e78:	ee f4 ff f8 	ld.w	r4,r7[-8]
-80002e7c:	ec 05 02 4b 	mul	r11,r6,r5
-80002e80:	fd e4 11 0e 	or	lr,lr,r4<<0x10
-80002e84:	1c 3b       	cp.w	r11,lr
-80002e86:	e0 88 00 07 	brls	80002e94 <__avr32_udiv64+0x1a4>
-80002e8a:	20 16       	sub	r6,1
-80002e8c:	10 0e       	add	lr,r8
-80002e8e:	1c 38       	cp.w	r8,lr
-80002e90:	e0 88 00 6d 	brls	80002f6a <__avr32_udiv64+0x27a>
-80002e94:	16 1e       	sub	lr,r11
-80002e96:	f3 d9 c0 10 	bfextu	r9,r9,0x0,0x10
-80002e9a:	fc 01 0d 00 	divu	r0,lr,r1
-80002e9e:	f3 e1 11 09 	or	r9,r9,r1<<0x10
-80002ea2:	00 9b       	mov	r11,r0
-80002ea4:	e0 05 02 4e 	mul	lr,r0,r5
-80002ea8:	12 3e       	cp.w	lr,r9
-80002eaa:	e0 88 00 07 	brls	80002eb8 <__avr32_udiv64+0x1c8>
-80002eae:	20 1b       	sub	r11,1
-80002eb0:	10 09       	add	r9,r8
-80002eb2:	12 38       	cp.w	r8,r9
-80002eb4:	e0 88 00 55 	brls	80002f5e <__avr32_udiv64+0x26e>
-80002eb8:	f7 e6 11 0b 	or	r11,r11,r6<<0x10
-80002ebc:	1c 19       	sub	r9,lr
-80002ebe:	f6 03 06 42 	mulu.d	r2,r11,r3
-80002ec2:	06 39       	cp.w	r9,r3
-80002ec4:	c0 93       	brcs	80002ed6 <__avr32_udiv64+0x1e6>
-80002ec6:	5f 09       	sreq	r9
-80002ec8:	f4 0c 09 4c 	lsl	r12,r10,r12
-80002ecc:	04 3c       	cp.w	r12,r2
-80002ece:	5f 38       	srlo	r8
-80002ed0:	f3 e8 00 08 	and	r8,r9,r8
-80002ed4:	c0 20       	breq	80002ed8 <__avr32_udiv64+0x1e8>
-80002ed6:	20 1b       	sub	r11,1
-80002ed8:	30 0c       	mov	r12,0
-80002eda:	16 9a       	mov	r10,r11
-80002edc:	18 9b       	mov	r11,r12
-80002ede:	2f ed       	sub	sp,-8
-80002ee0:	d8 32       	popm	r0-r7,pc
-80002ee2:	f6 08 09 49 	lsl	r9,r11,r8
-80002ee6:	fc 08 09 4e 	lsl	lr,lr,r8
-80002eea:	f0 01 11 20 	rsub	r1,r8,32
-80002eee:	fc 05 16 10 	lsr	r5,lr,0x10
-80002ef2:	f4 01 0a 42 	lsr	r2,r10,r1
-80002ef6:	f6 01 0a 41 	lsr	r1,r11,r1
-80002efa:	12 42       	or	r2,r9
-80002efc:	e2 05 0d 00 	divu	r0,r1,r5
-80002f00:	f3 de c0 10 	bfextu	r9,lr,0x0,0x10
-80002f04:	e4 06 16 10 	lsr	r6,r2,0x10
-80002f08:	00 93       	mov	r3,r0
-80002f0a:	ed e1 11 06 	or	r6,r6,r1<<0x10
-80002f0e:	e0 09 02 4c 	mul	r12,r0,r9
-80002f12:	0c 3c       	cp.w	r12,r6
-80002f14:	e0 88 00 07 	brls	80002f22 <__avr32_udiv64+0x232>
-80002f18:	20 13       	sub	r3,1
-80002f1a:	1c 06       	add	r6,lr
-80002f1c:	0c 3e       	cp.w	lr,r6
-80002f1e:	e0 88 00 2c 	brls	80002f76 <__avr32_udiv64+0x286>
-80002f22:	ec 0c 01 01 	sub	r1,r6,r12
-80002f26:	f7 d2 c0 10 	bfextu	r11,r2,0x0,0x10
-80002f2a:	e2 05 0d 00 	divu	r0,r1,r5
-80002f2e:	f7 e1 11 0b 	or	r11,r11,r1<<0x10
-80002f32:	00 9c       	mov	r12,r0
-80002f34:	e0 09 02 41 	mul	r1,r0,r9
-80002f38:	16 31       	cp.w	r1,r11
-80002f3a:	e0 88 00 0c 	brls	80002f52 <__avr32_udiv64+0x262>
-80002f3e:	20 1c       	sub	r12,1
-80002f40:	1c 0b       	add	r11,lr
-80002f42:	16 3e       	cp.w	lr,r11
-80002f44:	e0 8b 00 07 	brhi	80002f52 <__avr32_udiv64+0x262>
-80002f48:	16 31       	cp.w	r1,r11
-80002f4a:	f7 bc 0b 01 	subhi	r12,1
-80002f4e:	f7 de eb 0b 	addhi	r11,r11,lr
-80002f52:	f4 08 09 46 	lsl	r6,r10,r8
-80002f56:	02 1b       	sub	r11,r1
-80002f58:	f9 e3 11 0c 	or	r12,r12,r3<<0x10
-80002f5c:	c3 ab       	rjmp	80002dd0 <__avr32_udiv64+0xe0>
-80002f5e:	12 3e       	cp.w	lr,r9
-80002f60:	f3 d8 eb 09 	addhi	r9,r9,r8
-80002f64:	f7 bb 0b 01 	subhi	r11,1
-80002f68:	ca 8b       	rjmp	80002eb8 <__avr32_udiv64+0x1c8>
-80002f6a:	1c 3b       	cp.w	r11,lr
-80002f6c:	f7 b6 0b 01 	subhi	r6,1
-80002f70:	fd d8 eb 0e 	addhi	lr,lr,r8
-80002f74:	c9 0b       	rjmp	80002e94 <__avr32_udiv64+0x1a4>
-80002f76:	0c 3c       	cp.w	r12,r6
-80002f78:	f7 b3 0b 01 	subhi	r3,1
-80002f7c:	ed de eb 06 	addhi	r6,r6,lr
-80002f80:	cd 1b       	rjmp	80002f22 <__avr32_udiv64+0x232>
+80003570 <__avr32_udiv64>:
+80003570:	d4 31       	pushm	r0-r7,lr
+80003572:	1a 97       	mov	r7,sp
+80003574:	20 2d       	sub	sp,8
+80003576:	10 9e       	mov	lr,r8
+80003578:	12 95       	mov	r5,r9
+8000357a:	14 96       	mov	r6,r10
+8000357c:	58 09       	cp.w	r9,0
+8000357e:	c4 91       	brne	80003610 <__avr32_udiv64+0xa0>
+80003580:	16 38       	cp.w	r8,r11
+80003582:	e0 88 00 57 	brls	80003630 <__avr32_udiv64+0xc0>
+80003586:	f0 08 12 00 	clz	r8,r8
+8000358a:	c0 d0       	breq	800035a4 <__avr32_udiv64+0x34>
+8000358c:	f6 08 09 4b 	lsl	r11,r11,r8
+80003590:	f0 09 11 20 	rsub	r9,r8,32
+80003594:	fc 08 09 4e 	lsl	lr,lr,r8
+80003598:	f4 09 0a 49 	lsr	r9,r10,r9
+8000359c:	f4 08 09 46 	lsl	r6,r10,r8
+800035a0:	f3 eb 10 0b 	or	r11,r9,r11
+800035a4:	fc 05 16 10 	lsr	r5,lr,0x10
+800035a8:	f9 de c0 10 	bfextu	r12,lr,0x0,0x10
+800035ac:	f6 05 0d 0a 	divu	r10,r11,r5
+800035b0:	ec 08 16 10 	lsr	r8,r6,0x10
+800035b4:	14 99       	mov	r9,r10
+800035b6:	f1 eb 11 08 	or	r8,r8,r11<<0x10
+800035ba:	b9 3a       	mul	r10,r12
+800035bc:	10 3a       	cp.w	r10,r8
+800035be:	e0 88 00 0c 	brls	800035d6 <__avr32_udiv64+0x66>
+800035c2:	20 19       	sub	r9,1
+800035c4:	1c 08       	add	r8,lr
+800035c6:	10 3e       	cp.w	lr,r8
+800035c8:	e0 8b 00 07 	brhi	800035d6 <__avr32_udiv64+0x66>
+800035cc:	10 3a       	cp.w	r10,r8
+800035ce:	f7 b9 0b 01 	subhi	r9,1
+800035d2:	f1 de eb 08 	addhi	r8,r8,lr
+800035d6:	f0 0a 01 0b 	sub	r11,r8,r10
+800035da:	ed d6 c0 10 	bfextu	r6,r6,0x0,0x10
+800035de:	f6 05 0d 0a 	divu	r10,r11,r5
+800035e2:	ed eb 11 06 	or	r6,r6,r11<<0x10
+800035e6:	14 98       	mov	r8,r10
+800035e8:	f4 0c 02 4c 	mul	r12,r10,r12
+800035ec:	0c 3c       	cp.w	r12,r6
+800035ee:	e0 88 00 0a 	brls	80003602 <__avr32_udiv64+0x92>
+800035f2:	20 18       	sub	r8,1
+800035f4:	1c 06       	add	r6,lr
+800035f6:	0c 3e       	cp.w	lr,r6
+800035f8:	e0 8b 00 05 	brhi	80003602 <__avr32_udiv64+0x92>
+800035fc:	0c 3c       	cp.w	r12,r6
+800035fe:	f7 b8 0b 01 	subhi	r8,1
+80003602:	f1 e9 11 0b 	or	r11,r8,r9<<0x10
+80003606:	30 0c       	mov	r12,0
+80003608:	16 9a       	mov	r10,r11
+8000360a:	18 9b       	mov	r11,r12
+8000360c:	2f ed       	sub	sp,-8
+8000360e:	d8 32       	popm	r0-r7,pc
+80003610:	16 39       	cp.w	r9,r11
+80003612:	e0 8b 00 51 	brhi	800036b4 <__avr32_udiv64+0x144>
+80003616:	f2 0c 12 00 	clz	r12,r9
+8000361a:	c5 31       	brne	800036c0 <__avr32_udiv64+0x150>
+8000361c:	14 38       	cp.w	r8,r10
+8000361e:	5f 89       	srls	r9
+80003620:	16 35       	cp.w	r5,r11
+80003622:	5f 38       	srlo	r8
+80003624:	10 49       	or	r9,r8
+80003626:	f8 09 18 00 	cp.b	r9,r12
+8000362a:	c4 50       	breq	800036b4 <__avr32_udiv64+0x144>
+8000362c:	30 1b       	mov	r11,1
+8000362e:	c4 58       	rjmp	800036b8 <__avr32_udiv64+0x148>
+80003630:	58 08       	cp.w	r8,0
+80003632:	c0 51       	brne	8000363c <__avr32_udiv64+0xcc>
+80003634:	30 19       	mov	r9,1
+80003636:	f2 08 0d 08 	divu	r8,r9,r8
+8000363a:	10 9e       	mov	lr,r8
+8000363c:	fc 08 12 00 	clz	r8,lr
+80003640:	e0 81 00 91 	brne	80003762 <__avr32_udiv64+0x1f2>
+80003644:	1c 1b       	sub	r11,lr
+80003646:	fc 05 16 10 	lsr	r5,lr,0x10
+8000364a:	f3 de c0 10 	bfextu	r9,lr,0x0,0x10
+8000364e:	30 1c       	mov	r12,1
+80003650:	f6 05 0d 0a 	divu	r10,r11,r5
+80003654:	ec 08 16 10 	lsr	r8,r6,0x10
+80003658:	f4 09 02 43 	mul	r3,r10,r9
+8000365c:	f1 eb 11 08 	or	r8,r8,r11<<0x10
+80003660:	14 9b       	mov	r11,r10
+80003662:	10 33       	cp.w	r3,r8
+80003664:	e0 88 00 0c 	brls	8000367c <__avr32_udiv64+0x10c>
+80003668:	20 1b       	sub	r11,1
+8000366a:	1c 08       	add	r8,lr
+8000366c:	10 3e       	cp.w	lr,r8
+8000366e:	e0 8b 00 07 	brhi	8000367c <__avr32_udiv64+0x10c>
+80003672:	10 33       	cp.w	r3,r8
+80003674:	f7 bb 0b 01 	subhi	r11,1
+80003678:	f1 de eb 08 	addhi	r8,r8,lr
+8000367c:	f0 03 01 03 	sub	r3,r8,r3
+80003680:	ed d6 c0 10 	bfextu	r6,r6,0x0,0x10
+80003684:	e6 05 0d 02 	divu	r2,r3,r5
+80003688:	ed e3 11 06 	or	r6,r6,r3<<0x10
+8000368c:	04 98       	mov	r8,r2
+8000368e:	e4 09 02 49 	mul	r9,r2,r9
+80003692:	0c 39       	cp.w	r9,r6
+80003694:	e0 88 00 0a 	brls	800036a8 <__avr32_udiv64+0x138>
+80003698:	20 18       	sub	r8,1
+8000369a:	1c 06       	add	r6,lr
+8000369c:	0c 3e       	cp.w	lr,r6
+8000369e:	e0 8b 00 05 	brhi	800036a8 <__avr32_udiv64+0x138>
+800036a2:	0c 39       	cp.w	r9,r6
+800036a4:	f7 b8 0b 01 	subhi	r8,1
+800036a8:	f1 eb 11 0b 	or	r11,r8,r11<<0x10
+800036ac:	16 9a       	mov	r10,r11
+800036ae:	18 9b       	mov	r11,r12
+800036b0:	2f ed       	sub	sp,-8
+800036b2:	d8 32       	popm	r0-r7,pc
+800036b4:	30 0b       	mov	r11,0
+800036b6:	16 9c       	mov	r12,r11
+800036b8:	16 9a       	mov	r10,r11
+800036ba:	18 9b       	mov	r11,r12
+800036bc:	2f ed       	sub	sp,-8
+800036be:	d8 32       	popm	r0-r7,pc
+800036c0:	f2 0c 09 45 	lsl	r5,r9,r12
+800036c4:	f8 0e 11 20 	rsub	lr,r12,32
+800036c8:	f0 0c 09 43 	lsl	r3,r8,r12
+800036cc:	f4 0e 0a 46 	lsr	r6,r10,lr
+800036d0:	f0 0e 0a 48 	lsr	r8,r8,lr
+800036d4:	f6 0e 0a 4e 	lsr	lr,r11,lr
+800036d8:	0a 48       	or	r8,r5
+800036da:	f0 01 16 10 	lsr	r1,r8,0x10
+800036de:	fc 01 0d 04 	divu	r4,lr,r1
+800036e2:	ee e5 ff f8 	st.d	r7[-8],r4
+800036e6:	f6 0c 09 49 	lsl	r9,r11,r12
+800036ea:	eb d8 c0 10 	bfextu	r5,r8,0x0,0x10
+800036ee:	ed e9 10 09 	or	r9,r6,r9
+800036f2:	08 96       	mov	r6,r4
+800036f4:	f2 0e 16 10 	lsr	lr,r9,0x10
+800036f8:	ee f4 ff f8 	ld.w	r4,r7[-8]
+800036fc:	ec 05 02 4b 	mul	r11,r6,r5
+80003700:	fd e4 11 0e 	or	lr,lr,r4<<0x10
+80003704:	1c 3b       	cp.w	r11,lr
+80003706:	e0 88 00 07 	brls	80003714 <__avr32_udiv64+0x1a4>
+8000370a:	20 16       	sub	r6,1
+8000370c:	10 0e       	add	lr,r8
+8000370e:	1c 38       	cp.w	r8,lr
+80003710:	e0 88 00 6d 	brls	800037ea <__avr32_udiv64+0x27a>
+80003714:	16 1e       	sub	lr,r11
+80003716:	f3 d9 c0 10 	bfextu	r9,r9,0x0,0x10
+8000371a:	fc 01 0d 00 	divu	r0,lr,r1
+8000371e:	f3 e1 11 09 	or	r9,r9,r1<<0x10
+80003722:	00 9b       	mov	r11,r0
+80003724:	e0 05 02 4e 	mul	lr,r0,r5
+80003728:	12 3e       	cp.w	lr,r9
+8000372a:	e0 88 00 07 	brls	80003738 <__avr32_udiv64+0x1c8>
+8000372e:	20 1b       	sub	r11,1
+80003730:	10 09       	add	r9,r8
+80003732:	12 38       	cp.w	r8,r9
+80003734:	e0 88 00 55 	brls	800037de <__avr32_udiv64+0x26e>
+80003738:	f7 e6 11 0b 	or	r11,r11,r6<<0x10
+8000373c:	1c 19       	sub	r9,lr
+8000373e:	f6 03 06 42 	mulu.d	r2,r11,r3
+80003742:	06 39       	cp.w	r9,r3
+80003744:	c0 93       	brcs	80003756 <__avr32_udiv64+0x1e6>
+80003746:	5f 09       	sreq	r9
+80003748:	f4 0c 09 4c 	lsl	r12,r10,r12
+8000374c:	04 3c       	cp.w	r12,r2
+8000374e:	5f 38       	srlo	r8
+80003750:	f3 e8 00 08 	and	r8,r9,r8
+80003754:	c0 20       	breq	80003758 <__avr32_udiv64+0x1e8>
+80003756:	20 1b       	sub	r11,1
+80003758:	30 0c       	mov	r12,0
+8000375a:	16 9a       	mov	r10,r11
+8000375c:	18 9b       	mov	r11,r12
+8000375e:	2f ed       	sub	sp,-8
+80003760:	d8 32       	popm	r0-r7,pc
+80003762:	f6 08 09 49 	lsl	r9,r11,r8
+80003766:	fc 08 09 4e 	lsl	lr,lr,r8
+8000376a:	f0 01 11 20 	rsub	r1,r8,32
+8000376e:	fc 05 16 10 	lsr	r5,lr,0x10
+80003772:	f4 01 0a 42 	lsr	r2,r10,r1
+80003776:	f6 01 0a 41 	lsr	r1,r11,r1
+8000377a:	12 42       	or	r2,r9
+8000377c:	e2 05 0d 00 	divu	r0,r1,r5
+80003780:	f3 de c0 10 	bfextu	r9,lr,0x0,0x10
+80003784:	e4 06 16 10 	lsr	r6,r2,0x10
+80003788:	00 93       	mov	r3,r0
+8000378a:	ed e1 11 06 	or	r6,r6,r1<<0x10
+8000378e:	e0 09 02 4c 	mul	r12,r0,r9
+80003792:	0c 3c       	cp.w	r12,r6
+80003794:	e0 88 00 07 	brls	800037a2 <__avr32_udiv64+0x232>
+80003798:	20 13       	sub	r3,1
+8000379a:	1c 06       	add	r6,lr
+8000379c:	0c 3e       	cp.w	lr,r6
+8000379e:	e0 88 00 2c 	brls	800037f6 <__avr32_udiv64+0x286>
+800037a2:	ec 0c 01 01 	sub	r1,r6,r12
+800037a6:	f7 d2 c0 10 	bfextu	r11,r2,0x0,0x10
+800037aa:	e2 05 0d 00 	divu	r0,r1,r5
+800037ae:	f7 e1 11 0b 	or	r11,r11,r1<<0x10
+800037b2:	00 9c       	mov	r12,r0
+800037b4:	e0 09 02 41 	mul	r1,r0,r9
+800037b8:	16 31       	cp.w	r1,r11
+800037ba:	e0 88 00 0c 	brls	800037d2 <__avr32_udiv64+0x262>
+800037be:	20 1c       	sub	r12,1
+800037c0:	1c 0b       	add	r11,lr
+800037c2:	16 3e       	cp.w	lr,r11
+800037c4:	e0 8b 00 07 	brhi	800037d2 <__avr32_udiv64+0x262>
+800037c8:	16 31       	cp.w	r1,r11
+800037ca:	f7 bc 0b 01 	subhi	r12,1
+800037ce:	f7 de eb 0b 	addhi	r11,r11,lr
+800037d2:	f4 08 09 46 	lsl	r6,r10,r8
+800037d6:	02 1b       	sub	r11,r1
+800037d8:	f9 e3 11 0c 	or	r12,r12,r3<<0x10
+800037dc:	c3 ab       	rjmp	80003650 <__avr32_udiv64+0xe0>
+800037de:	12 3e       	cp.w	lr,r9
+800037e0:	f3 d8 eb 09 	addhi	r9,r9,r8
+800037e4:	f7 bb 0b 01 	subhi	r11,1
+800037e8:	ca 8b       	rjmp	80003738 <__avr32_udiv64+0x1c8>
+800037ea:	1c 3b       	cp.w	r11,lr
+800037ec:	f7 b6 0b 01 	subhi	r6,1
+800037f0:	fd d8 eb 0e 	addhi	lr,lr,r8
+800037f4:	c9 0b       	rjmp	80003714 <__avr32_udiv64+0x1a4>
+800037f6:	0c 3c       	cp.w	r12,r6
+800037f8:	f7 b3 0b 01 	subhi	r3,1
+800037fc:	ed de eb 06 	addhi	r6,r6,lr
+80003800:	cd 1b       	rjmp	800037a2 <__avr32_udiv64+0x232>
 
 Disassembly of section .exception:
 
-80003000 <_evba>:
+80003a00 <_evba>:
 _evba:
 
 	.org  0x000
 	// Unrecoverable Exception.
 _handle_Unrecoverable_Exception:
 	rjmp $
-80003000:	c0 08       	rjmp	80003000 <_evba>
+80003a00:	c0 08       	rjmp	80003a00 <_evba>
 	...
 
-80003004 <_handle_TLB_Multiple_Hit>:
+80003a04 <_handle_TLB_Multiple_Hit>:
 
 	.org  0x004
 	// TLB Multiple Hit.
 _handle_TLB_Multiple_Hit:
 	rjmp $
-80003004:	c0 08       	rjmp	80003004 <_handle_TLB_Multiple_Hit>
+80003a04:	c0 08       	rjmp	80003a04 <_handle_TLB_Multiple_Hit>
 	...
 
-80003008 <_handle_Bus_Error_Data_Fetch>:
+80003a08 <_handle_Bus_Error_Data_Fetch>:
 
 	.org  0x008
 	// Bus Error Data Fetch.
 _handle_Bus_Error_Data_Fetch:
 	rjmp $
-80003008:	c0 08       	rjmp	80003008 <_handle_Bus_Error_Data_Fetch>
+80003a08:	c0 08       	rjmp	80003a08 <_handle_Bus_Error_Data_Fetch>
 	...
 
-8000300c <_handle_Bus_Error_Instruction_Fetch>:
+80003a0c <_handle_Bus_Error_Instruction_Fetch>:
 
 	.org  0x00C
 	// Bus Error Instruction Fetch.
 _handle_Bus_Error_Instruction_Fetch:
 	rjmp $
-8000300c:	c0 08       	rjmp	8000300c <_handle_Bus_Error_Instruction_Fetch>
+80003a0c:	c0 08       	rjmp	80003a0c <_handle_Bus_Error_Instruction_Fetch>
 	...
 
-80003010 <_handle_NMI>:
+80003a10 <_handle_NMI>:
 
 	.org  0x010
 	// NMI.
 _handle_NMI:
 	rjmp $
-80003010:	c0 08       	rjmp	80003010 <_handle_NMI>
+80003a10:	c0 08       	rjmp	80003a10 <_handle_NMI>
 	...
 
-80003014 <_handle_Instruction_Address>:
+80003a14 <_handle_Instruction_Address>:
 
 	.org  0x014
 	// Instruction Address.
 _handle_Instruction_Address:
 	rjmp $
-80003014:	c0 08       	rjmp	80003014 <_handle_Instruction_Address>
+80003a14:	c0 08       	rjmp	80003a14 <_handle_Instruction_Address>
 	...
 
-80003018 <_handle_ITLB_Protection>:
+80003a18 <_handle_ITLB_Protection>:
 
 	.org  0x018
 	// ITLB Protection.
 _handle_ITLB_Protection:
 	rjmp $
-80003018:	c0 08       	rjmp	80003018 <_handle_ITLB_Protection>
+80003a18:	c0 08       	rjmp	80003a18 <_handle_ITLB_Protection>
 	...
 
-8000301c <_handle_Breakpoint>:
+80003a1c <_handle_Breakpoint>:
 
 	.org  0x01C
 	// Breakpoint.
 _handle_Breakpoint:
 	rjmp $
-8000301c:	c0 08       	rjmp	8000301c <_handle_Breakpoint>
+80003a1c:	c0 08       	rjmp	80003a1c <_handle_Breakpoint>
 	...
 
-80003020 <_handle_Illegal_Opcode>:
+80003a20 <_handle_Illegal_Opcode>:
 
 	.org  0x020
 	// Illegal Opcode.
 _handle_Illegal_Opcode:
 	rjmp $
-80003020:	c0 08       	rjmp	80003020 <_handle_Illegal_Opcode>
+80003a20:	c0 08       	rjmp	80003a20 <_handle_Illegal_Opcode>
 	...
 
-80003024 <_handle_Unimplemented_Instruction>:
+80003a24 <_handle_Unimplemented_Instruction>:
 
 	.org  0x024
 	// Unimplemented Instruction.
 _handle_Unimplemented_Instruction:
 	rjmp $
-80003024:	c0 08       	rjmp	80003024 <_handle_Unimplemented_Instruction>
+80003a24:	c0 08       	rjmp	80003a24 <_handle_Unimplemented_Instruction>
 	...
 
-80003028 <_handle_Privilege_Violation>:
+80003a28 <_handle_Privilege_Violation>:
 
 	.org  0x028
 	// Privilege Violation.
 _handle_Privilege_Violation:
 	rjmp $
-80003028:	c0 08       	rjmp	80003028 <_handle_Privilege_Violation>
+80003a28:	c0 08       	rjmp	80003a28 <_handle_Privilege_Violation>
 	...
 
-8000302c <_handle_Floating_Point>:
+80003a2c <_handle_Floating_Point>:
 
 	.org  0x02C
 	// Floating-Point: UNUSED IN AVR32UC and AVR32AP.
 _handle_Floating_Point:
 	rjmp $
-8000302c:	c0 08       	rjmp	8000302c <_handle_Floating_Point>
+80003a2c:	c0 08       	rjmp	80003a2c <_handle_Floating_Point>
 	...
 
-80003030 <_handle_Coprocessor_Absent>:
+80003a30 <_handle_Coprocessor_Absent>:
 
 	.org  0x030
 	// Coprocessor Absent: UNUSED IN AVR32UC.
 _handle_Coprocessor_Absent:
 	rjmp $
-80003030:	c0 08       	rjmp	80003030 <_handle_Coprocessor_Absent>
+80003a30:	c0 08       	rjmp	80003a30 <_handle_Coprocessor_Absent>
 	...
 
-80003034 <_handle_Data_Address_Read>:
+80003a34 <_handle_Data_Address_Read>:
 
 	.org  0x034
 	// Data Address (Read).
 _handle_Data_Address_Read:
 	rjmp $
-80003034:	c0 08       	rjmp	80003034 <_handle_Data_Address_Read>
+80003a34:	c0 08       	rjmp	80003a34 <_handle_Data_Address_Read>
 	...
 
-80003038 <_handle_Data_Address_Write>:
+80003a38 <_handle_Data_Address_Write>:
 
 	.org  0x038
 	// Data Address (Write).
 _handle_Data_Address_Write:
 	rjmp $
-80003038:	c0 08       	rjmp	80003038 <_handle_Data_Address_Write>
+80003a38:	c0 08       	rjmp	80003a38 <_handle_Data_Address_Write>
 	...
 
-8000303c <_handle_DTLB_Protection_Read>:
+80003a3c <_handle_DTLB_Protection_Read>:
 
 	.org  0x03C
 	// DTLB Protection (Read).
 _handle_DTLB_Protection_Read:
 	rjmp $
-8000303c:	c0 08       	rjmp	8000303c <_handle_DTLB_Protection_Read>
+80003a3c:	c0 08       	rjmp	80003a3c <_handle_DTLB_Protection_Read>
 	...
 
-80003040 <_handle_DTLB_Protection_Write>:
+80003a40 <_handle_DTLB_Protection_Write>:
 
 	.org  0x040
 	// DTLB Protection (Write).
 _handle_DTLB_Protection_Write:
 	rjmp $
-80003040:	c0 08       	rjmp	80003040 <_handle_DTLB_Protection_Write>
+80003a40:	c0 08       	rjmp	80003a40 <_handle_DTLB_Protection_Write>
 	...
 
-80003044 <_handle_DTLB_Modified>:
+80003a44 <_handle_DTLB_Modified>:
 
 	.org  0x044
 	// DTLB Modified: UNUSED IN AVR32UC.
 _handle_DTLB_Modified:
 	rjmp $
-80003044:	c0 08       	rjmp	80003044 <_handle_DTLB_Modified>
+80003a44:	c0 08       	rjmp	80003a44 <_handle_DTLB_Modified>
 	...
 
-80003050 <_handle_ITLB_Miss>:
+80003a50 <_handle_ITLB_Miss>:
 
 	.org  0x050
 	// ITLB Miss.
 _handle_ITLB_Miss:
 	rjmp $
-80003050:	c0 08       	rjmp	80003050 <_handle_ITLB_Miss>
+80003a50:	c0 08       	rjmp	80003a50 <_handle_ITLB_Miss>
 	...
 
-80003060 <_handle_DTLB_Miss_Read>:
+80003a60 <_handle_DTLB_Miss_Read>:
 
 	.org  0x060
 	// DTLB Miss (Read).
 _handle_DTLB_Miss_Read:
 	rjmp $
-80003060:	c0 08       	rjmp	80003060 <_handle_DTLB_Miss_Read>
+80003a60:	c0 08       	rjmp	80003a60 <_handle_DTLB_Miss_Read>
 	...
 
-80003070 <_handle_DTLB_Miss_Write>:
+80003a70 <_handle_DTLB_Miss_Write>:
 
 	.org  0x070
 	// DTLB Miss (Write).
 _handle_DTLB_Miss_Write:
 	rjmp $
-80003070:	c0 08       	rjmp	80003070 <_handle_DTLB_Miss_Write>
+80003a70:	c0 08       	rjmp	80003a70 <_handle_DTLB_Miss_Write>
 	...
 
-80003100 <_handle_Supervisor_Call>:
+80003b00 <_handle_Supervisor_Call>:
 
 	.org  0x100
 	// Supervisor Call.
 _handle_Supervisor_Call:
 	rjmp $
-80003100:	c0 08       	rjmp	80003100 <_handle_Supervisor_Call>
-80003102:	d7 03       	nop
+80003b00:	c0 08       	rjmp	80003b00 <_handle_Supervisor_Call>
+80003b02:	d7 03       	nop
 
-80003104 <_int0>:
+80003b04 <_int0>:
 	 * RSR_INTx by the CPU upon interrupt entry. No other register is saved
 	 * by hardware.
 	 */
 	pushm   r8-r12, lr
 #endif
 	// Pass the int_level parameter to the _get_interrupt_handler function.
-80003104:	30 0c       	mov	r12,0
-80003106:	fe b0 f8 15 	rcall	80002130 <_get_interrupt_handler>
-8000310a:	58 0c       	cp.w	r12,0
-8000310c:	f8 0f 17 10 	movne	pc,r12
+80003b04:	30 0c       	mov	r12,0
+80003b06:	fe b0 f3 15 	rcall	80002130 <_get_interrupt_handler>
+80003b0a:	58 0c       	cp.w	r12,0
+80003b0c:	f8 0f 17 10 	movne	pc,r12
 	popm    r8-r12, lr
 #endif
 	/*
 	 * If this was a spurious interrupt (R12 == NULL), return from event
 	 * handler.
 	 */
-80003110:	d6 03       	rete
+80003b10:	d6 03       	rete
 
-80003112 <_int1>:
+80003b12 <_int1>:
 	 * RSR_INTx by the CPU upon interrupt entry. No other register is saved
 	 * by hardware.
 	 */
 	pushm   r8-r12, lr
 #endif
 	// Pass the int_level parameter to the _get_interrupt_handler function.
-80003112:	30 1c       	mov	r12,1
-80003114:	fe b0 f8 0e 	rcall	80002130 <_get_interrupt_handler>
-80003118:	58 0c       	cp.w	r12,0
-8000311a:	f8 0f 17 10 	movne	pc,r12
+80003b12:	30 1c       	mov	r12,1
+80003b14:	fe b0 f3 0e 	rcall	80002130 <_get_interrupt_handler>
+80003b18:	58 0c       	cp.w	r12,0
+80003b1a:	f8 0f 17 10 	movne	pc,r12
 	popm    r8-r12, lr
 #endif
 	/*
 	 * If this was a spurious interrupt (R12 == NULL), return from event
 	 * handler.
 	 */
-8000311e:	d6 03       	rete
+80003b1e:	d6 03       	rete
 
-80003120 <_int2>:
+80003b20 <_int2>:
 	 * RSR_INTx by the CPU upon interrupt entry. No other register is saved
 	 * by hardware.
 	 */
 	pushm   r8-r12, lr
 #endif
 	// Pass the int_level parameter to the _get_interrupt_handler function.
-80003120:	30 2c       	mov	r12,2
-80003122:	fe b0 f8 07 	rcall	80002130 <_get_interrupt_handler>
-80003126:	58 0c       	cp.w	r12,0
-80003128:	f8 0f 17 10 	movne	pc,r12
+80003b20:	30 2c       	mov	r12,2
+80003b22:	fe b0 f3 07 	rcall	80002130 <_get_interrupt_handler>
+80003b26:	58 0c       	cp.w	r12,0
+80003b28:	f8 0f 17 10 	movne	pc,r12
 	popm    r8-r12, lr
 #endif
 	/*
 	 * If this was a spurious interrupt (R12 == NULL), return from event
 	 * handler.
 	 */
-8000312c:	d6 03       	rete
+80003b2c:	d6 03       	rete
 
-8000312e <_int3>:
+80003b2e <_int3>:
 	 * RSR_INTx by the CPU upon interrupt entry. No other register is saved
 	 * by hardware.
 	 */
 	pushm   r8-r12, lr
 #endif
 	// Pass the int_level parameter to the _get_interrupt_handler function.
-8000312e:	30 3c       	mov	r12,3
-80003130:	fe b0 f8 00 	rcall	80002130 <_get_interrupt_handler>
-80003134:	58 0c       	cp.w	r12,0
-80003136:	f8 0f 17 10 	movne	pc,r12
+80003b2e:	30 3c       	mov	r12,3
+80003b30:	fe b0 f3 00 	rcall	80002130 <_get_interrupt_handler>
+80003b34:	58 0c       	cp.w	r12,0
+80003b36:	f8 0f 17 10 	movne	pc,r12
 	popm    r8-r12, lr
 #endif
 	/*
 	 * If this was a spurious interrupt (R12 == NULL), return from event
 	 * handler.
 	 */
-8000313a:	d6 03       	rete
-8000313c:	d7 03       	nop
-8000313e:	d7 03       	nop
-80003140:	d7 03       	nop
-80003142:	d7 03       	nop
-80003144:	d7 03       	nop
-80003146:	d7 03       	nop
-80003148:	d7 03       	nop
-8000314a:	d7 03       	nop
-8000314c:	d7 03       	nop
-8000314e:	d7 03       	nop
-80003150:	d7 03       	nop
-80003152:	d7 03       	nop
-80003154:	d7 03       	nop
-80003156:	d7 03       	nop
-80003158:	d7 03       	nop
-8000315a:	d7 03       	nop
-8000315c:	d7 03       	nop
-8000315e:	d7 03       	nop
-80003160:	d7 03       	nop
-80003162:	d7 03       	nop
-80003164:	d7 03       	nop
-80003166:	d7 03       	nop
-80003168:	d7 03       	nop
-8000316a:	d7 03       	nop
-8000316c:	d7 03       	nop
-8000316e:	d7 03       	nop
-80003170:	d7 03       	nop
-80003172:	d7 03       	nop
-80003174:	d7 03       	nop
-80003176:	d7 03       	nop
-80003178:	d7 03       	nop
-8000317a:	d7 03       	nop
-8000317c:	d7 03       	nop
-8000317e:	d7 03       	nop
-80003180:	d7 03       	nop
-80003182:	d7 03       	nop
-80003184:	d7 03       	nop
-80003186:	d7 03       	nop
-80003188:	d7 03       	nop
-8000318a:	d7 03       	nop
-8000318c:	d7 03       	nop
-8000318e:	d7 03       	nop
-80003190:	d7 03       	nop
-80003192:	d7 03       	nop
-80003194:	d7 03       	nop
-80003196:	d7 03       	nop
-80003198:	d7 03       	nop
-8000319a:	d7 03       	nop
-8000319c:	d7 03       	nop
-8000319e:	d7 03       	nop
-800031a0:	d7 03       	nop
-800031a2:	d7 03       	nop
-800031a4:	d7 03       	nop
-800031a6:	d7 03       	nop
-800031a8:	d7 03       	nop
-800031aa:	d7 03       	nop
-800031ac:	d7 03       	nop
-800031ae:	d7 03       	nop
-800031b0:	d7 03       	nop
-800031b2:	d7 03       	nop
-800031b4:	d7 03       	nop
-800031b6:	d7 03       	nop
-800031b8:	d7 03       	nop
-800031ba:	d7 03       	nop
-800031bc:	d7 03       	nop
-800031be:	d7 03       	nop
-800031c0:	d7 03       	nop
-800031c2:	d7 03       	nop
-800031c4:	d7 03       	nop
-800031c6:	d7 03       	nop
-800031c8:	d7 03       	nop
-800031ca:	d7 03       	nop
-800031cc:	d7 03       	nop
-800031ce:	d7 03       	nop
-800031d0:	d7 03       	nop
-800031d2:	d7 03       	nop
-800031d4:	d7 03       	nop
-800031d6:	d7 03       	nop
-800031d8:	d7 03       	nop
-800031da:	d7 03       	nop
-800031dc:	d7 03       	nop
-800031de:	d7 03       	nop
-800031e0:	d7 03       	nop
-800031e2:	d7 03       	nop
-800031e4:	d7 03       	nop
-800031e6:	d7 03       	nop
-800031e8:	d7 03       	nop
-800031ea:	d7 03       	nop
-800031ec:	d7 03       	nop
-800031ee:	d7 03       	nop
-800031f0:	d7 03       	nop
-800031f2:	d7 03       	nop
-800031f4:	d7 03       	nop
-800031f6:	d7 03       	nop
-800031f8:	d7 03       	nop
-800031fa:	d7 03       	nop
-800031fc:	d7 03       	nop
-800031fe:	d7 03       	nop
+80003b3a:	d6 03       	rete
+80003b3c:	d7 03       	nop
+80003b3e:	d7 03       	nop
+80003b40:	d7 03       	nop
+80003b42:	d7 03       	nop
+80003b44:	d7 03       	nop
+80003b46:	d7 03       	nop
+80003b48:	d7 03       	nop
+80003b4a:	d7 03       	nop
+80003b4c:	d7 03       	nop
+80003b4e:	d7 03       	nop
+80003b50:	d7 03       	nop
+80003b52:	d7 03       	nop
+80003b54:	d7 03       	nop
+80003b56:	d7 03       	nop
+80003b58:	d7 03       	nop
+80003b5a:	d7 03       	nop
+80003b5c:	d7 03       	nop
+80003b5e:	d7 03       	nop
+80003b60:	d7 03       	nop
+80003b62:	d7 03       	nop
+80003b64:	d7 03       	nop
+80003b66:	d7 03       	nop
+80003b68:	d7 03       	nop
+80003b6a:	d7 03       	nop
+80003b6c:	d7 03       	nop
+80003b6e:	d7 03       	nop
+80003b70:	d7 03       	nop
+80003b72:	d7 03       	nop
+80003b74:	d7 03       	nop
+80003b76:	d7 03       	nop
+80003b78:	d7 03       	nop
+80003b7a:	d7 03       	nop
+80003b7c:	d7 03       	nop
+80003b7e:	d7 03       	nop
+80003b80:	d7 03       	nop
+80003b82:	d7 03       	nop
+80003b84:	d7 03       	nop
+80003b86:	d7 03       	nop
+80003b88:	d7 03       	nop
+80003b8a:	d7 03       	nop
+80003b8c:	d7 03       	nop
+80003b8e:	d7 03       	nop
+80003b90:	d7 03       	nop
+80003b92:	d7 03       	nop
+80003b94:	d7 03       	nop
+80003b96:	d7 03       	nop
+80003b98:	d7 03       	nop
+80003b9a:	d7 03       	nop
+80003b9c:	d7 03       	nop
+80003b9e:	d7 03       	nop
+80003ba0:	d7 03       	nop
+80003ba2:	d7 03       	nop
+80003ba4:	d7 03       	nop
+80003ba6:	d7 03       	nop
+80003ba8:	d7 03       	nop
+80003baa:	d7 03       	nop
+80003bac:	d7 03       	nop
+80003bae:	d7 03       	nop
+80003bb0:	d7 03       	nop
+80003bb2:	d7 03       	nop
+80003bb4:	d7 03       	nop
+80003bb6:	d7 03       	nop
+80003bb8:	d7 03       	nop
+80003bba:	d7 03       	nop
+80003bbc:	d7 03       	nop
+80003bbe:	d7 03       	nop
+80003bc0:	d7 03       	nop
+80003bc2:	d7 03       	nop
+80003bc4:	d7 03       	nop
+80003bc6:	d7 03       	nop
+80003bc8:	d7 03       	nop
+80003bca:	d7 03       	nop
+80003bcc:	d7 03       	nop
+80003bce:	d7 03       	nop
+80003bd0:	d7 03       	nop
+80003bd2:	d7 03       	nop
+80003bd4:	d7 03       	nop
+80003bd6:	d7 03       	nop
+80003bd8:	d7 03       	nop
+80003bda:	d7 03       	nop
+80003bdc:	d7 03       	nop
+80003bde:	d7 03       	nop
+80003be0:	d7 03       	nop
+80003be2:	d7 03       	nop
+80003be4:	d7 03       	nop
+80003be6:	d7 03       	nop
+80003be8:	d7 03       	nop
+80003bea:	d7 03       	nop
+80003bec:	d7 03       	nop
+80003bee:	d7 03       	nop
+80003bf0:	d7 03       	nop
+80003bf2:	d7 03       	nop
+80003bf4:	d7 03       	nop
+80003bf6:	d7 03       	nop
+80003bf8:	d7 03       	nop
+80003bfa:	d7 03       	nop
+80003bfc:	d7 03       	nop
+80003bfe:	d7 03       	nop

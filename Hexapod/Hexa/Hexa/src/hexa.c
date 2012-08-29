@@ -28,6 +28,42 @@
 #define PWMA_DUTY_CYCLE_DECREASE  (-1)
 
 
+//		SERVOS			{Base,Leg,Foot}
+uint8_t servos[6][3] = {{23,10,28},
+						{19,10,28},
+						{17,10,28},
+						{16,10,28},
+						{22,10,28},
+						{22,10,28}};
+	
+//		CENTER			{Base,Leg,Foot}
+uint8_t center[6][3] = {{23,10,28},
+						{19,10,28},
+						{17,10,28},
+						{16,10,28},
+						{22,10,28},
+						{22,10,28}};
+	
+//		DIRECTION		   {Base,Leg,Foot}
+uint8_t direction[6][3] = {{0,0,0},
+						    {0,0,0},
+							{0,0,0},
+						    {0,0,0},
+						    {0,0,0},
+						    {0,0,0}};
+															
+uint8_t base_width = 4; // 2
+uint8_t leg_width = 4;  // 2
+uint8_t foot_width = 2;
+	 					 
+// CCW +
+// CW -	
+
+void walk_forward(void);
+void turn_left(void);
+void turn_right(void);
+void dance(void);
+
 unsigned char duty_cycles_per_led[LED_COUNT] =
 {
 	PWMA_DUTY_CYCLE_INIT_VAL,
@@ -138,38 +174,7 @@ int main(void)
 									   | (PWM_CH23)		// Leg  6
 									   | (PWM_CH24)		// Foot 6
 									   , PWMA_PERIOD_CYCLES, PWMA_DUTY_CYCLE_INIT_VAL );
-
-	
-//		SERVOS			{Base,Leg,Foot}
-	uint8_t servos[6][3] = {{23,10,28},
-						    {19,10,28},
-							{17,10,28},
-							{16,10,28},
-							{22,10,28},
-							{22,10,28}};
-	
-	//		CENTER			{Base,Leg,Foot}
-	uint8_t center[6][3] = {{23,10,28},
-						    {19,10,28},
-							{17,10,28},
-							{16,10,28},
-							{22,10,28},
-							{22,10,28}};
-	
-	//		DIRECTION		   {Base,Leg,Foot}
-	uint8_t direction[6][3] = {{0,0,0},
-						       {0,0,0},
-							   {0,0,0},
-						       {0,0,0},
-						       {0,0,0},
-						       {0,0,0}};
-															
-	uint8_t base_width = 4; // 2
-	uint8_t leg_width = 4;  // 2
-	uint8_t foot_width = 2;
-	 					 
-	// CCW +
-	// CW -					 
+ 
 	
 	delay_init(sysclk_get_cpu_hz());
 	
@@ -208,52 +213,8 @@ int main(void)
 	
 	do
 	{
-		/* DANCE MODE
-		int l = 0;
-		int r = 0;
 		
-		for(r = 0; r < 6; r++)
-		{
-			// Move Base
-			if(servos[r][1] >= center[r][1]-base_width && servos[r][1] <= center[r][1]+base_width && direction[r][1] == 0)
-			{
-				servos[r][1] += 1;
-			}
-			else
-			{
-				if(servos[r][1] >= center[r][1]-base_width)
-				{
-					servos[r][1] -= 1;
-					direction[r][1] = 1;
-				}
-				else
-				{
-					servos[r][1] = center[r][1]-base_width;
-					direction[r][1] = 0;
-				}
-			}
-		
-			// Move Leg
-			if(servos[r][2] >= center[r][2] && servos[r][2] <= center[r][2]+base_width && direction[r][2] == 0)
-			{
-				servos[r][2] += 1;
-			}
-			else
-			{
-				if(servos[r][2] >= center[r][2])
-				{
-					servos[r][2] -= 1;
-					direction[r][2] = 1;
-				}
-				else
-				{
-					servos[r][2] = center[r][2];
-					direction[r][2] = 0;
-				}
-			}
-		}
-		
-		
+		/*
 		// Update Leg 1
 		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH4), servos[0][0]);
 		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH5), servos[0][1]);
@@ -286,101 +247,22 @@ int main(void)
 		*/
 		
 		
-		// Lift Legs
-		servos[1][1] += 10;
-		servos[1][2] += 10;
-		servos[3][1] += 10;
-		servos[3][2] += 10;
-		servos[5][1] += 10;
-		servos[5][2] += 10;
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH8), servos[1][1]);
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH9), servos[1][2]);
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH17), servos[3][1]);
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH18), servos[3][2]);
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH23), servos[5][1]);
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH24), servos[5][2]);
-		
-		
-		// Move Body Forward
-		servos[0][0] += 4;
-		servos[2][0] += 4;
-		servos[4][0] -= 4;
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH4), servos[0][0]);
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH10), servos[2][0]);
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH19), servos[4][0]);
-		
-		
-		// Move Legs Forward
-		servos[1][0] -= 4;
-		servos[3][0] += 4;
-		servos[5][0] += 4;
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH7), servos[1][0]);
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH16), servos[3][0]);
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH22), servos[5][0]);
-		
-		
-		// Drop Legs
-		servos[1][1] -= 10;
-		servos[1][2] -= 10;
-		servos[3][1] -= 10;
-		servos[3][2] -= 10;
-		servos[5][1] -= 10;
-		servos[5][2] -= 10;
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH8), servos[1][1]);
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH9), servos[1][2]);
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH17), servos[3][1]);
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH18), servos[3][2]);
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH23), servos[5][1]);
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH24), servos[5][2]);
-		
-		
-		// Lift Legs
-		servos[0][1] += 6;
-		servos[0][2] += 6;
-		servos[2][1] += 6;
-		servos[2][2] += 6;
-		servos[4][1] += 6;
-		servos[4][2] += 6;
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH5), servos[0][1]);
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH6), servos[0][2]);
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH11), servos[2][1]);
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH12), servos[2][2]);
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH20), servos[4][1]);
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH21), servos[4][2]);
-		
-		
-		// Move Body Forward
-		servos[1][0] += 4;
-		servos[3][0] -= 4;
-		servos[5][0] -= 4;
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH7), servos[1][0]);
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH16), servos[3][0]);
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH22), servos[5][0]);
-		
-		// Move Legs Forward
-		servos[0][0] -= 4;
-		servos[2][0] -= 4;
-		servos[4][0] += 4;
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH4), servos[0][0]);
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH10), servos[2][0]);
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH19), servos[4][0]);
-		
-		
-		// Drop Legs
-		servos[0][1] -= 6;
-		servos[0][2] -= 6;
-		servos[2][1] -= 6;
-		servos[2][2] -= 6;
-		servos[4][1] -= 6;
-		servos[4][2] -= 6;
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH5), servos[0][1]);
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH6), servos[0][2]);
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH11), servos[2][1]);
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH12), servos[2][2]);
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH20), servos[4][1]);
-		pwma_set_channels_value(&AVR32_PWMA, (PWM_CH21), servos[4][2]);
-		
-	
+		walk_forward();
+		walk_forward();
+		walk_forward();
+		turn_left();
+		turn_left();
+		turn_left();
+		turn_left();
+		turn_left();
+		walk_forward();
+		walk_forward();
+		walk_forward();
+		turn_right();
+		turn_right();
+		turn_right();
+		turn_right();
+		turn_right();
 		
 	}while(1);
 	
@@ -388,7 +270,291 @@ int main(void)
 
 
 
-/*
+void walk_forward(void)
+{
+	// Lift Legs
+	servos[1][1] += 10;
+	servos[1][2] += 10;
+	servos[3][1] += 10;
+	servos[3][2] += 10;
+	servos[5][1] += 10;
+	servos[5][2] += 10;
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH8), servos[1][1]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH9), servos[1][2]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH17), servos[3][1]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH18), servos[3][2]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH23), servos[5][1]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH24), servos[5][2]);
+	
+	
+	// Move Body Forward
+	servos[0][0] += 4;
+	servos[2][0] += 4;
+	servos[4][0] -= 4;
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH4), servos[0][0]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH10), servos[2][0]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH19), servos[4][0]);
+	
+	
+	// Move Legs Forward
+	servos[1][0] -= 4;
+	servos[3][0] += 4;
+	servos[5][0] += 4;
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH7), servos[1][0]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH16), servos[3][0]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH22), servos[5][0]);
+	
+	
+	// Drop Legs
+	servos[1][1] -= 10;
+	servos[1][2] -= 10;
+	servos[3][1] -= 10;
+	servos[3][2] -= 10;
+	servos[5][1] -= 10;
+	servos[5][2] -= 10;
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH8), servos[1][1]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH9), servos[1][2]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH17), servos[3][1]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH18), servos[3][2]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH23), servos[5][1]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH24), servos[5][2]);
+	
+	
+	// Lift Legs
+	servos[0][1] += 6;
+	servos[0][2] += 6;
+	servos[2][1] += 6;
+	servos[2][2] += 6;
+	servos[4][1] += 6;
+	servos[4][2] += 6;
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH5), servos[0][1]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH6), servos[0][2]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH11), servos[2][1]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH12), servos[2][2]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH20), servos[4][1]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH21), servos[4][2]);
+	
+	
+	// Move Body Forward
+	servos[1][0] += 8;
+	servos[3][0] -= 8;
+	servos[5][0] -= 8;
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH7), servos[1][0]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH16), servos[3][0]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH22), servos[5][0]);
+	
+	// Move Legs Forward
+	servos[0][0] -= 8;
+	servos[2][0] -= 8;
+	servos[4][0] += 8;
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH4), servos[0][0]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH10), servos[2][0]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH19), servos[4][0]);
+	
+	
+	// Drop Legs
+	servos[0][1] -= 6;
+	servos[0][2] -= 6;
+	servos[2][1] -= 6;
+	servos[2][2] -= 6;
+	servos[4][1] -= 6;
+	servos[4][2] -= 6;
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH5), servos[0][1]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH6), servos[0][2]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH11), servos[2][1]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH12), servos[2][2]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH20), servos[4][1]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH21), servos[4][2]);
+	
+	
+	// Move Body Forward
+	servos[0][0] += 4;
+	servos[2][0] += 4;
+	servos[4][0] -= 4;
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH4), servos[0][0]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH10), servos[2][0]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH19), servos[4][0]);
+	
+	
+	// Move Legs Forward
+	servos[1][0] -= 4;
+	servos[3][0] += 4;
+	servos[5][0] += 4;
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH7), servos[1][0]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH16), servos[3][0]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH22), servos[5][0]);
+	
+}
+
+
+
+void turn_left(void)
+{
+	// Lift Legs
+	servos[1][1] += 10;
+	servos[1][2] += 10;
+	servos[3][1] += 10;
+	servos[3][2] += 10;
+	servos[5][1] += 10;
+	servos[5][2] += 10;
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH8), servos[1][1]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH9), servos[1][2]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH17), servos[3][1]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH18), servos[3][2]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH23), servos[5][1]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH24), servos[5][2]);
+	
+	
+	// Move Body Forward
+	servos[0][0] += 4;
+	servos[2][0] += 4;
+	servos[4][0] += 4;
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH4), servos[0][0]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH10), servos[2][0]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH19), servos[4][0]);
+	
+	
+	
+	// Drop Legs
+	servos[1][1] -= 10;
+	servos[1][2] -= 10;
+	servos[3][1] -= 10;
+	servos[3][2] -= 10;
+	servos[5][1] -= 10;
+	servos[5][2] -= 10;
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH8), servos[1][1]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH9), servos[1][2]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH17), servos[3][1]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH18), servos[3][2]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH23), servos[5][1]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH24), servos[5][2]);
+	
+	
+	// Lift Legs
+	servos[0][1] += 6;
+	servos[0][2] += 6;
+	servos[2][1] += 6;
+	servos[2][2] += 6;
+	servos[4][1] += 6;
+	servos[4][2] += 6;
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH5), servos[0][1]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH6), servos[0][2]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH11), servos[2][1]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH12), servos[2][2]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH20), servos[4][1]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH21), servos[4][2]);
+	
+	
+	// Move Legs Forward
+	servos[0][0] -= 4;
+	servos[2][0] -= 4;
+	servos[4][0] -= 4;
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH4), servos[0][0]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH10), servos[2][0]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH19), servos[4][0]);
+	
+	
+	// Drop Legs
+	servos[0][1] -= 6;
+	servos[0][2] -= 6;
+	servos[2][1] -= 6;
+	servos[2][2] -= 6;
+	servos[4][1] -= 6;
+	servos[4][2] -= 6;
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH5), servos[0][1]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH6), servos[0][2]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH11), servos[2][1]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH12), servos[2][2]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH20), servos[4][1]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH21), servos[4][2]);
+}
+
+
+
+void turn_right(void)
+{
+	// Lift Legs
+	servos[1][1] += 10;
+	servos[1][2] += 10;
+	servos[3][1] += 10;
+	servos[3][2] += 10;
+	servos[5][1] += 10;
+	servos[5][2] += 10;
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH8), servos[1][1]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH9), servos[1][2]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH17), servos[3][1]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH18), servos[3][2]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH23), servos[5][1]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH24), servos[5][2]);
+	
+	
+	// Move Body Forward
+	servos[0][0] -= 4;
+	servos[2][0] -= 4;
+	servos[4][0] -= 4;
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH4), servos[0][0]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH10), servos[2][0]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH19), servos[4][0]);
+	
+	
+	
+	// Drop Legs
+	servos[1][1] -= 10;
+	servos[1][2] -= 10;
+	servos[3][1] -= 10;
+	servos[3][2] -= 10;
+	servos[5][1] -= 10;
+	servos[5][2] -= 10;
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH8), servos[1][1]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH9), servos[1][2]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH17), servos[3][1]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH18), servos[3][2]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH23), servos[5][1]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH24), servos[5][2]);
+	
+	
+	// Lift Legs
+	servos[0][1] += 6;
+	servos[0][2] += 6;
+	servos[2][1] += 6;
+	servos[2][2] += 6;
+	servos[4][1] += 6;
+	servos[4][2] += 6;
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH5), servos[0][1]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH6), servos[0][2]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH11), servos[2][1]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH12), servos[2][2]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH20), servos[4][1]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH21), servos[4][2]);
+	
+	
+	// Move Body Forward
+	servos[0][0] += 4;
+	servos[2][0] += 4;
+	servos[4][0] += 4;
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH4), servos[0][0]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH10), servos[2][0]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH19), servos[4][0]);
+	
+	
+	
+	// Drop Legs
+	servos[0][1] -= 6;
+	servos[0][2] -= 6;
+	servos[2][1] -= 6;
+	servos[2][2] -= 6;
+	servos[4][1] -= 6;
+	servos[4][2] -= 6;
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH5), servos[0][1]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH6), servos[0][2]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH11), servos[2][1]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH12), servos[2][2]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH20), servos[4][1]);
+	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH21), servos[4][2]);
+}
+
+
+
 void dance(void)
 {
 	int l = 0;
@@ -438,7 +604,7 @@ void dance(void)
 	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH5)|(PWM_CH8)|(PWM_CH11)|(PWM_CH17)|(PWM_CH20)|(PWM_CH23), servos[0][1]);
 	pwma_set_channels_value(&AVR32_PWMA, (PWM_CH6)|(PWM_CH9)|(PWM_CH12)|(PWM_CH18)|(PWM_CH21)|(PWM_CH24), servos[0][2]);
 }
-*/
+
 
 
 
