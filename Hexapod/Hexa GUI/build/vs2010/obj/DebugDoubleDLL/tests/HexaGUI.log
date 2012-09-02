@@ -1,0 +1,37 @@
+﻿Build started 9/1/2012 11:47:09 PM.
+     1>Project "C:\Users\Arko\Desktop\Tesla\nsl\Hexapod\Hexa GUI\build\vs2010\HexaGUI.vcxproj" on node 2 (rebuild target(s)).
+     1>_PrepareForClean:
+         Deleting file "obj\DebugDoubleDLL\tests\HexaGUI.lastbuildstate".
+       InitializeBuildStatus:
+         Creating "obj\DebugDoubleDLL\tests\HexaGUI.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I..\..\drawstuff\src /I..\..\ode\demo /I..\..\include /I..\..\ode\src /I..\..\tests\UnitTest++\src /ZI /nologo /W3 /WX- /Od /Oy- /D _DEBUG /D dDOUBLE /D CCD_DOUBLE /D WIN32 /D _CRT_SECURE_NO_DEPRECATE /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"obj\DebugDoubleDLL\tests\\" /Fd"obj\DebugDoubleDLL\tests\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\tests\main.cpp
+         main.cpp
+       ResourceCompile:
+         c:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /D _DEBUG /D dDOUBLE /D CCD_DOUBLE /D WIN32 /D _CRT_SECURE_NO_DEPRECATE /l"0x0409" /I..\..\include /I..\..\ode\src /I..\..\tests\UnitTest++\src /nologo /fo"obj\DebugDoubleDLL\tests\resources.res" ..\..\drawstuff\src\resources.rc 
+       ManifestResourceCompile:
+         c:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /nologo /fo"obj\DebugDoubleDLL\tests\tests.exe.embed.manifest.res" obj\DebugDoubleDLL\tests\tests_manifest.rc 
+       Link:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"..\..\lib\DebugDoubleDLL\tests.exe" /INCREMENTAL /NOLOGO ..\..\lib\DebugDoubleDLL\ode_doubled.lib ..\..\lib\DebugDoubleDLL\drawstuffd.lib user32.lib winmm.lib gdi32.lib opengl32.lib glu32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"obj\DebugDoubleDLL\tests\tests.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\Arko\Desktop\Tesla\nsl\Hexapod\Hexa GUI\lib\DebugDoubleDLL\tests.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /ENTRY:"mainCRTStartup" /DYNAMICBASE /NXCOMPAT /IMPLIB:"..\..\lib\DebugDoubleDLL\tests.lib" /MACHINE:X86 obj\DebugDoubleDLL\tests\resources.res
+         obj\DebugDoubleDLL\tests\tests.exe.embed.manifest.res
+         obj\DebugDoubleDLL\tests\main.obj
+       Manifest:
+         Deleting file "obj\DebugDoubleDLL\tests\tests.exe.embed.manifest".
+         c:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:"obj\DebugDoubleDLL\tests\tests.exe.embed.manifest" /manifest obj\DebugDoubleDLL\tests\tests.exe.intermediate.manifest
+         c:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /nologo /fo"obj\DebugDoubleDLL\tests\tests.exe.embed.manifest.res" obj\DebugDoubleDLL\tests\tests_manifest.rc 
+       LinkEmbedManifest:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"..\..\lib\DebugDoubleDLL\tests.exe" /INCREMENTAL /NOLOGO ..\..\lib\DebugDoubleDLL\ode_doubled.lib ..\..\lib\DebugDoubleDLL\drawstuffd.lib user32.lib winmm.lib gdi32.lib opengl32.lib glu32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"obj\DebugDoubleDLL\tests\tests.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\Arko\Desktop\Tesla\nsl\Hexapod\Hexa GUI\lib\DebugDoubleDLL\tests.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /ENTRY:"mainCRTStartup" /DYNAMICBASE /NXCOMPAT /IMPLIB:"..\..\lib\DebugDoubleDLL\tests.lib" /MACHINE:X86 obj\DebugDoubleDLL\tests\resources.res
+         obj\DebugDoubleDLL\tests\tests.exe.embed.manifest.res
+         obj\DebugDoubleDLL\tests\main.obj
+         HexaGUI.vcxproj -> C:\Users\Arko\Desktop\Tesla\nsl\Hexapod\Hexa GUI\build\vs2010\..\..\lib\DebugDoubleDLL\tests.exe
+       PostBuildEvent:
+         ..\..\lib\DebugDoubleDLL\tests
+         :VCEnd
+       FinalizeBuildStatus:
+         Deleting file "obj\DebugDoubleDLL\tests\HexaGUI.unsuccessfulbuild".
+         Touching "obj\DebugDoubleDLL\tests\HexaGUI.lastbuildstate".
+     1>Done Building Project "C:\Users\Arko\Desktop\Tesla\nsl\Hexapod\Hexa GUI\build\vs2010\HexaGUI.vcxproj" (rebuild target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:04.50
