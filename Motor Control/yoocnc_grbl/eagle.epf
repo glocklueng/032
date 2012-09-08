@@ -10,7 +10,7 @@ AutoSaveProject=1
 
 [Win_1]
 Type="Schematic Editor"
-Loc="200 200 799 599"
+Loc="150 150 749 549"
 State=0
 Number=2
 File="yoocnc_grbl.sch"
