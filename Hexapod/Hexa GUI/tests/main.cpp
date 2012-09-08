@@ -11,8 +11,8 @@ dBodyID     link[NUM];			// Links　link[0] is a base
 dJointID    joint[NUM];			// Joints    joint[0] is a fixed joint between a base and a ground
 
 static double THETA[NUM] = { 0.0, 0.0, 0.0, 0.0};		// Target joint angles[rad]
-static double l[NUM]  = { 0.10, 0.90, 1.00, 1.00};		// Length of links[m]
-static double r[NUM]  = { 0.20, 0.04, 0.04, 0.04};		// Radius of links[m]
+static double l[NUM]  = { 0.10, 0.10, 1.00, 1.00};		// Length of links[m]
+static double r[NUM]  = { 0.80, 0.04, 0.04, 0.04};		// Radius of links[m]
 
 void control() 
 { 
@@ -77,8 +77,11 @@ void simLoop(int pause)
   dWorldStep(world, 0.02);
 
   // Draw a robot
-  dsSetColor(1.0,1.0,1.0);					// Set color (r, g, b), In this case white is set
-  for (int i=0; i < NUM; i++)
+  dsSetColor(0.0,0.0,1.0);					// Set color (r, g, b), In this case white is set
+
+  dsDrawCylinderD(dBodyGetPosition(link[0]), dBodyGetRotation(link[0]), l[0], r[0]);
+  
+  for (int i=1; i < NUM; i++)
   {
 	  dsDrawCapsuleD(dBodyGetPosition(link[i]), dBodyGetRotation(link[i]), l[i], r[i]);
   }
@@ -87,16 +90,20 @@ void simLoop(int pause)
 int main(int argc, char *argv[]) 
 {
   dsFunctions fn;
-  double x[NUM] = {0.00};
-  double y[NUM] = {0.00};											// Center of gravity
-  double z[NUM]	= { 1.05, 1.50, 2.50, 3.55};
-  double m[NUM] = {10.00, 2.00, 2.00, 20.00};						// mass
-  double anchor_x[NUM]  = {0.00};
-  double anchor_y[NUM] = {0.00};									// anchors of joints   
-  double anchor_z[NUM] = { 1.00, 1.10, 2.00, 3.00};
+  double x[NUM] = { 0.00, 0.00, 0.00, 0.00};						// Center of gravity
+  double y[NUM] = { 0.00, 0.00, 0.00, 0.00};						
+  double z[NUM]	= { 1.05, 1.05, 1.60, 2.60};
+
+  double m[NUM] = {10.00, 2.00, 2.00, 2.00};						// mass
+
+  double anchor_x[NUM] = { 0.00, 0.00, 0.00, 0.00};					// anchors of joints
+  double anchor_y[NUM] = { 0.00, 0.00, 0.00, 0.00};					   
+  double anchor_z[NUM] = { 1.10, 1.10, 1.10, 2.10};
+
   double axis_x[NUM]  = { 0.00, 0.00, 0.00, 0.00};					// axises of joints
   double axis_y[NUM]  = { 0.00, 0.00, 1.00, 1.00};
   double axis_z[NUM]  = { 1.00, 1.00, 0.00, 0.00};
+
   fn.version = DS_VERSION;  fn.start   = &start;   fn.step   = &simLoop;
   fn.command = &command;
   fn.path_to_textures = "../../drawstuff/textures";
@@ -122,7 +129,7 @@ int main(int argc, char *argv[])
   for (int j = 1; j < NUM; j++) 
   {
     joint[j] = dJointCreateHinge(world, 0);			 // Create a hinge joint
-    dJointAttach(joint[j], link[j-1], link[j]);		// Attach the joint
+    dJointAttach(joint[j], link[j-1], link[j]);		 // Attach the joint
     dJointSetHingeAnchor(joint[j], anchor_x[j], anchor_y[j],anchor_z[j]);
     dJointSetHingeAxis(joint[j], axis_x[j], axis_y[j], axis_z[j]);
   }
