@@ -2,24 +2,26 @@ EAGLE AutoRouter Statistics:
 
 Job           : E:/032/tron_disc/oops/tron_disc.brd
 
-Start at      : 23:36:33 (9/7/2012)
-End at        : 23:54:18 (9/7/2012)
-Elapsed time  : 00:17:45
+Start at      : 23:13:34 (9/11/2012)
+End at        : 23:17:13 (9/11/2012)
+Elapsed time  : 00:03:39
 
-Signals       :   103   RoutingGrid: 10 mil  Layers: 1
-Connections   :   199   predefined:  95 ( 29 Vias )
+Signals       :   103   RoutingGrid: 1 mil  Layers: 2
+Connections   :   207   predefined:  109 ( 50 Vias )
 
-Router memory :   1161288
+Router memory :   228251664
 
-Passname          :     Route Optimize1 Optimize2 Optimize3 Optimize4
+Job has been interrupted!
 
-Time per pass     :  00:17:34  00:00:03  00:00:03  00:00:02  00:00:03
-Number of Ripups  :      1318         0         0         0         0
-max. Level        :         3         0         0         0         0
-max. Total        :        72         0         0         0         0
+Passname          :     Route
 
-Routed            :        89        90        90        90        90
-Vias              :         0         0         0         0         0
-Resolution        :    92.5 %    93.0 %    93.0 %    93.0 %    93.0 %
+Time per pass     :  00:03:39
+Number of Ripups  :         0
+max. Level        :         0
+max. Total        :         0
 
-Final             : 86.2% finished. Polygons may have fallen apart.
+Routed            :        41
+Vias              :         1
+Resolution        :    72.5 %
+
+Final             : interrupted
