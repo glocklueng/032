@@ -100,8 +100,18 @@
   <ItemGroup>
     <None Include="Font5x7.bmp" />
     <None Include="ReadMe.txt" />
+    <None Include="res\background4a151x.bmp" />
+    <None Include="res\bitmap1.bmp" />
+    <None Include="res\bitmap9.bmp" />
     <None Include="res\pfunk.ico" />
     <None Include="res\pfunk.rc2" />
+    <None Include="res\rotary22a135x.bmp" />
+    <None Include="res\rotarydot22a15x.bmp" />
+    <None Include="res\rotarydot23a15x.bmp" />
+    <None Include="res\rotaryknob22a77x.bmp" />
+    <None Include="res\rotaryknob23a77x.bmp" />
+    <None Include="res\rotaryscale22a151x.bmp" />
+    <None Include="res\rotaryscale23a151x.bmp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Encoders.h" />
@@ -143,6 +153,8 @@
     <ClInclude Include="RoundRect.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="VMBitmap.h" />
+    <ClInclude Include="VMRotaryFaderCtrl.h" />
     <ClInclude Include="wirish.h" />
   </ItemGroup>
   <ItemGroup>
@@ -248,6 +260,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="VMBitmap.cpp" />
+    <ClCompile Include="VMRotaryFaderCtrl.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="pfunk.rc" />
