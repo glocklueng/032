@@ -4,21 +4,79 @@
 #include <math.h>
 #include "texturepath.h"
 
-#define NUM 4					// Number of links
+#define NUM 19					// Number of links
 
-dWorldID    world;				// A dynamic world
-dBodyID     link[NUM];			// Links　link[0] is a base
+#define PI 3.141592653
+
+static dWorldID world;
+static dSpaceID space;
+static dGeomID  ground;
+static dJointGroupID contactgroup;
+static int flag = 0;
+dsFunctions fn;
+
+static double THETA[NUM] = { 0.0,	0.0, 0.0, 0.0,		
+									0.0, 0.0, 0.0,	
+									0.0, 0.0, 0.0,
+									0.0, 0.0, 0.0,
+									0.0, 0.0, 0.0,
+									0.0, 0.0, 0.0		};		// Target joint angles[rad]
+
+static double l[NUM]  =	   { 0.10,	1.00, 1.00, 1.00,	
+									1.00, 1.00, 1.00,	
+									1.00, 1.00, 1.00,
+									1.00, 1.00, 1.00,
+									1.00, 1.00, 1.00,
+									1.00, 1.00, 1.00	};		// Length of links[m]
+
+static double r[NUM]  =	   { 0.80,	0.04, 0.04, 0.04,	
+									0.04, 0.04, 0.04,
+									0.04, 0.04, 0.04,
+									0.04, 0.04, 0.04,
+									0.04, 0.04, 0.04,
+									0.04, 0.04, 0.04	};		// Radius of links[m]
+
+
+typedef struct {
+	dBodyID body;
+	dGeomID geom;
+} Object;
+
+//dWorldID    world;			// A dynamic world
+Object		link[NUM];			// Links　link[0] is a base
 dJointID    joint[NUM];			// Joints    joint[0] is a fixed joint between a base and a ground
 
-static double THETA[NUM] = { 0.0, 0.0, 0.0, 0.0};		// Target joint angles[rad]
-static double l[NUM]  = { 0.10, 0.10, 1.00, 1.00};		// Length of links[m]
-static double r[NUM]  = { 0.80, 0.04, 0.04, 0.04};		// Radius of links[m]
+
+static void nearCallback(void *data, dGeomID o1, dGeomID o2)
+{
+  //printf("Hit");
+  const int N = 10;
+  dContact contact[N];
+
+  int isGround = ((ground == o1) || (ground == o2));
+
+  int n =  dCollide(o1,o2,N,&contact[0].geom,sizeof(dContact));
+
+  if (isGround)  {
+    if (n >= 1) flag = 1;
+    else        flag = 0;
+    for (int i = 0; i < n; i++) {
+      contact[i].surface.mode = dContactBounce;
+      contact[i].surface.mu   = 1.0;
+      contact[i].surface.bounce     = 0.0; // (0.0~1.0) restitution parameter
+      contact[i].surface.bounce_vel = 0.0; // minimum incoming velocity for bounce
+      dJointID c = dJointCreateContact(world,contactgroup,&contact[i]);
+      dJointAttach (c,dGeomGetBody(contact[i].geom.g1),dGeomGetBody(contact[i].geom.g2));
+    }
+  }
+}
+
 
 void control() 
 { 
 	/***  P control  ****/
 	static int step = 0;									// Steps of simulation    
-	double k1 =  10.0,  fMax  = 100.0;						// k1: proportional gain,  fMax：Max torque[Nm]
+	double k1 =  10.0,  fMax  = 500.0;						// k1: proportional gain,  fMax：Max torque[Nm]
 
 	printf("\r%6d:",step++);
 	for (int j = 1; j < NUM; j++) 
@@ -68,41 +126,114 @@ void command(int cmd)
     if (THETA[2] >   2*M_PI/3)  THETA[2] =    2*M_PI/3;
     if (THETA[3] <  -2*M_PI/3)  THETA[3] =  - 2*M_PI/3;
     if (THETA[3] >   2*M_PI/3)  THETA[3] =    2*M_PI/3;
+
+	THETA[4] = THETA[7] = THETA[10] = THETA[13] = THETA[16] = THETA[1];
+	THETA[5] = THETA[8] = THETA[11] = THETA[14] = THETA[17] = THETA[2];
+	THETA[6] = THETA[9] = THETA[12] = THETA[15] = THETA[18] = THETA[3];
 }
 
 // Simulation loop
 void simLoop(int pause) 
 {
   control();
-  dWorldStep(world, 0.02);
+  
+  dSpaceCollide(space,0,&nearCallback);
+
+  dWorldStep(world,0.01);
+
+  dJointGroupEmpty(contactgroup);
 
   // Draw a robot
   dsSetColor(0.0,0.0,1.0);					// Set color (r, g, b), In this case white is set
 
-  dsDrawCylinderD(dBodyGetPosition(link[0]), dBodyGetRotation(link[0]), l[0], r[0]);
+  dsDrawCylinderD(dBodyGetPosition(link[0].body), dBodyGetRotation(link[0].body), l[0], r[0]);
   
   for (int i=1; i < NUM; i++)
   {
-	  dsDrawCapsuleD(dBodyGetPosition(link[i]), dBodyGetRotation(link[i]), l[i], r[i]);
+	  dsDrawCapsuleD(dBodyGetPosition(link[i].body), dBodyGetRotation(link[i].body), l[i], r[i]);
   }
 }
 
 int main(int argc, char *argv[]) 
 {
   dsFunctions fn;
-  double x[NUM] = { 0.00, 0.00, 0.00, 0.00};						// Center of gravity
-  double y[NUM] = { 0.00, 0.00, 0.00, 0.00};						
-  double z[NUM]	= { 1.05, 1.05, 1.60, 2.60};
 
-  double m[NUM] = {10.00, 2.00, 2.00, 2.00};						// mass
+  dMatrix3 R;
 
-  double anchor_x[NUM] = { 0.00, 0.00, 0.00, 0.00};					// anchors of joints
-  double anchor_y[NUM] = { 0.00, 0.00, 0.00, 0.00};					   
-  double anchor_z[NUM] = { 1.10, 1.10, 1.10, 2.10};
+  double x[NUM] = { 0.00,	0.90*cos(0.0), 1.90*cos(0.0), 2.90*cos(0.0),
+							0.90*cos(PI/3), 1.90*cos(PI/3), 2.90*cos(PI/3),
+							0.90*cos(2*PI/3), 1.90*cos(2*PI/3), 2.90*cos(2*PI/3),
+							0.90*cos(PI), 1.90*cos(PI), 2.90*cos(PI),
+							0.90*cos(4*PI/3), 1.90*cos(4*PI/3), 2.90*cos(4*PI/3),
+							0.90*cos(5*PI/3), 1.90*cos(5*PI/3), 2.90*cos(5*PI/3)		};					// Center of gravity
 
-  double axis_x[NUM]  = { 0.00, 0.00, 0.00, 0.00};					// axises of joints
-  double axis_y[NUM]  = { 0.00, 0.00, 1.00, 1.00};
-  double axis_z[NUM]  = { 1.00, 1.00, 0.00, 0.00};
+  double y[NUM] = { 0.00,	0.90*sin(0.0), 1.90*sin(0.0), 2.90*sin(0.0),
+							0.90*sin(PI/3), 1.90*sin(PI/3), 2.90*sin(PI/3),
+							0.90*sin(2*PI/3), 1.90*sin(2*PI/3), 2.90*sin(2*PI/3),
+							0.90*sin(PI), 1.90*sin(PI), 2.90*sin(PI),
+							0.90*sin(4*PI/3), 1.90*sin(4*PI/3), 2.90*sin(4*PI/3),
+							0.90*sin(5*PI/3), 1.90*sin(5*PI/3), 2.90*sin(5*PI/3)		};			
+
+  double z[NUM]	= { 2.05,	2.02, 2.02, 2.02,
+							2.02, 2.02, 2.02,
+							2.02, 2.02, 2.02,
+							2.02, 2.02, 2.02,
+							2.02, 2.02, 2.02,
+							2.02, 2.02, 2.02	};
+
+
+  double m[NUM] = {10.00,	2.00, 2.00, 2.00,
+							2.00, 2.00, 2.00,
+							2.00, 2.00, 2.00,
+							2.00, 2.00, 2.00,
+							2.00, 2.00, 2.00,
+							2.00, 2.00, 2.00	};					// mass
+
+
+
+  double anchor_x[NUM] = { 0.00,	0.40*cos(0.0), 1.40*cos(0.0), 2.40*cos(0.0),
+									0.40*cos(PI/3), 1.40*cos(PI/3), 2.40*cos(PI/3),
+									0.40*cos(2*PI/3), 1.40*cos(2*PI/3), 2.40*cos(2*PI/3),
+									0.40*cos(PI), 1.40*cos(PI), 2.40*cos(PI),
+									0.40*cos(4*PI/3), 1.40*cos(4*PI/3), 2.40*cos(4*PI/3),
+									0.40*cos(5*PI/3), 1.40*cos(5*PI/3), 2.40*cos(5*PI/3)		};			// anchors of joints
+
+  double anchor_y[NUM] = { 0.00,	0.40*sin(0.0), 1.40*sin(0.0), 2.40*sin(0.0),
+									0.40*sin(PI/3), 1.40*sin(PI/3), 2.40*sin(PI/3),
+									0.40*sin(2*PI/3), 1.40*sin(2*PI/3), 2.40*sin(2*PI/3),
+									0.40*sin(PI), 1.40*sin(PI), 2.40*sin(PI),
+									0.40*sin(4*PI/3), 1.40*sin(4*PI/3), 2.40*sin(4*PI/3),
+									0.40*sin(5*PI/3), 1.40*sin(5*PI/3), 2.40*sin(5*PI/3)		};			
+
+  double anchor_z[NUM] = { 2.05,	2.02, 2.02, 2.02,
+									2.02, 2.02, 2.02,
+									2.02, 2.02, 2.02,
+									2.02, 2.02, 2.02,
+									2.02, 2.02, 2.02,
+									2.02, 2.02, 2.02	};
+
+
+  double axis_x[NUM]  = { 0.00,		0.00, 0.00, 0.00,
+									0.00, -sin(PI/3), -sin(PI/3),
+									0.00, -sin(PI/3), -sin(PI/3),
+									0.00, 0.00, 0.00,
+									0.00, sin(PI/3), sin(PI/3),
+									0.00, sin(PI/3), sin(PI/3)	};					// axises of joints
+
+  double axis_y[NUM]  = { 0.00,		0.00, 1.00, 1.00,
+									0.00, cos(PI/3), cos(PI/3),
+									0.00, -cos(PI/3), -cos(PI/3),
+									0.00, -1.00, -1.00,
+									0.00, -cos(PI/3), -cos(PI/3),
+									0.00, cos(PI/3), cos(PI/3),	};
+
+  double axis_z[NUM]  = { 1.00,		1.00, 0.00, 0.00,
+									1.00, 0.00, 0.00,
+									1.00, 0.00, 0.00,
+									1.00, 0.00, 0.00,
+									1.00, 0.00, 0.00,
+									1.00, 0.00, 0.00	};
+
 
   fn.version = DS_VERSION;  fn.start   = &start;   fn.step   = &simLoop;
   fn.command = &command;
@@ -110,28 +241,78 @@ int main(int argc, char *argv[])
 
   dInitODE();										// Initialize ODE
   world = dWorldCreate();							// Create a world
+  space = dHashSpaceCreate(0);						// Create space
+  contactgroup = dJointGroupCreate(0);
+
   dWorldSetGravity(world, 0, 0, -9.81);
+
+  // Create a ground
+  ground = dCreatePlane(space,0,0,1,0);
 
   for (int i = 0; i < NUM; i++) 
   {
     dMass mass;
-    link[i] = dBodyCreate(world);
-    dBodySetPosition(link[i], x[i], y[i], z[i]);	// Set a position
+    link[i].body = dBodyCreate(world);
+    dBodySetPosition(link[i].body, x[i], y[i], z[i]);	// Set a position
+
+	if(i > 0)
+	{
+		dRFromAxisAndAngle(R, 0, 1, 0, 3.141592653 / 2);
+		dBodySetRotation(link[i].body, R);
+	}
+
+	
+	if((i > 3 && i < 7) || (i > 12 && i < 16))
+	{
+		dRFromEulerAngles(R, PI/2, -PI/6 , 0);
+		dBodySetRotation(link[i].body, R);
+	}
+
+	if((i > 6 && i < 10) || (i > 15 && i < 19))
+	{
+		dRFromEulerAngles(R, PI/2, PI/6 , 0);
+		dBodySetRotation(link[i].body, R);
+	}
+	
+
     dMassSetZero(&mass);							// Set mass parameter to zero
     dMassSetCapsuleTotal(&mass,m[i],3,r[i],l[i]);   // Calculate mass parameter
-    dBodySetMass(link[i], &mass);					// Set mass
+    dBodySetMass(link[i].body, &mass);				// Set mass
   }
 
-  joint[0] = dJointCreateFixed(world, 0);			// A fixed joint
-  dJointAttach(joint[0], link[0], 0);				// Attach the joint between the ground and the base
-  dJointSetFixed(joint[0]);							// Set the fixed joint
+
+
+
+
 
   for (int j = 1; j < NUM; j++) 
   {
-    joint[j] = dJointCreateHinge(world, 0);			 // Create a hinge joint
-    dJointAttach(joint[j], link[j-1], link[j]);		 // Attach the joint
-    dJointSetHingeAnchor(joint[j], anchor_x[j], anchor_y[j],anchor_z[j]);
-    dJointSetHingeAxis(joint[j], axis_x[j], axis_y[j], axis_z[j]);
+	if(j == 1 || j == 4 || j == 7 || j == 10 || j == 13 || j == 16)
+	{
+		joint[j] = dJointCreateHinge(world, 0);										// Create a hinge joint
+		dJointAttach(joint[j], link[0].body, link[j].body);						// Attach the joint
+		dJointSetHingeAnchor(joint[j], anchor_x[j], anchor_y[j],anchor_z[j]);
+		dJointSetHingeAxis(joint[j], axis_x[j], axis_y[j], axis_z[j]);
+	}
+	else
+	{
+		joint[j] = dJointCreateHinge(world, 0);										// Create a hinge joint
+		dJointAttach(joint[j], link[j-1].body, link[j].body);						// Attach the joint
+		dJointSetHingeAnchor(joint[j], anchor_x[j], anchor_y[j],anchor_z[j]);
+		dJointSetHingeAxis(joint[j], axis_x[j], axis_y[j], axis_z[j]);
+	}
+  }
+
+
+  for(int i=0; i < NUM; i++)
+  {
+	link[i].geom = dCreateCylinder(space,r[i],l[i]);
+	dGeomSetBody(link[i].geom,link[i].body);
+  }
+
+  for (int j = 1; j < NUM; j++) 
+  {
+	dJointGetHingeAngle(joint[j]);
   }
 
   dsSimulationLoop(argc, argv, 800, 600, &fn);
