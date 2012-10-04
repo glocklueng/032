@@ -1,6 +1,8 @@
 #ifndef LIB_MAPLE_H_
 #define LIB_MAPLE_H_ (1)
 
+#include <stdlib.h>
+
 #define PREENFM_VERSION "1.0"
 
 typedef unsigned char byte;
@@ -118,7 +120,7 @@ public:
 	};
 
 	unsigned char read(void){
-		return 0;
+		return 0xaa;
 	};
 
 	int print(unsigned char ch )

@@ -13,6 +13,7 @@ class CpfunkDlg : public CDialogEx
 // Construction
 public:
 	CpfunkDlg(CWnd* pParent = NULL);	// standard constructor
+	~CpfunkDlg();
 
 // Dialog Data
 	enum { IDD = IDD_PFUNK_DIALOG };

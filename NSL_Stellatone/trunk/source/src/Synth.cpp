@@ -113,7 +113,7 @@ void Synth::noteOn(char note, char velocity) {
         }
 
         if (voices[k].isReleased()) {
-            int indexVoice = voices[k].getIndex();
+            unsigned int indexVoice = voices[k].getIndex();
             if (indexVoice < indexMin) {
                 indexMin = indexVoice;
                 voiceToUse = k;
@@ -123,7 +123,7 @@ void Synth::noteOn(char note, char velocity) {
 
     if (voiceToUse == -1) {
         for (int k = 0; k < numberOfNote; k++) {
-            int indexVoice = voices[k].getIndex();
+            unsigned int indexVoice = voices[k].getIndex();
             if (indexVoice < indexMin) {
                 indexMin = indexVoice;
                 voiceToUse = k;
