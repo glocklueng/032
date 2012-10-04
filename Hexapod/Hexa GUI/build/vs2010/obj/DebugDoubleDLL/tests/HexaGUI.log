@@ -1,4 +1,4 @@
-﻿Build started 9/29/2012 11:32:12 PM.
+﻿Build started 10/3/2012 8:22:54 PM.
      1>Project "C:\Users\Arko\Desktop\Tesla\nsl\Hexapod\Hexa GUI\build\vs2010\HexaGUI.vcxproj" on node 2 (rebuild target(s)).
      1>_PrepareForClean:
          Deleting file "obj\DebugDoubleDLL\tests\HexaGUI.lastbuildstate".
@@ -7,13 +7,13 @@
        ClCompile:
          c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I..\..\drawstuff\src /I..\..\ode\demo /I..\..\include /I..\..\ode\src /I..\..\tests\UnitTest++\src /ZI /nologo /W3 /WX- /Od /Oy- /D _DEBUG /D dDOUBLE /D CCD_DOUBLE /D WIN32 /D _CRT_SECURE_NO_DEPRECATE /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"obj\DebugDoubleDLL\tests\\" /Fd"obj\DebugDoubleDLL\tests\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\tests\main.cpp
          main.cpp
-     1>c:\users\arko\desktop\tesla\nsl\hexapod\hexa gui\tests\main.cpp(94): warning C4305: 'initializing' : truncation from 'double' to 'float'
-     1>c:\users\arko\desktop\tesla\nsl\hexapod\hexa gui\tests\main.cpp(94): warning C4305: 'initializing' : truncation from 'double' to 'float'
-     1>c:\users\arko\desktop\tesla\nsl\hexapod\hexa gui\tests\main.cpp(94): warning C4305: 'initializing' : truncation from 'double' to 'float'
-     1>c:\users\arko\desktop\tesla\nsl\hexapod\hexa gui\tests\main.cpp(149): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\arko\desktop\tesla\nsl\hexapod\hexa gui\tests\main.cpp(149): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\arko\desktop\tesla\nsl\hexapod\hexa gui\tests\main.cpp(153): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\arko\desktop\tesla\nsl\hexapod\hexa gui\tests\main.cpp(153): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\arko\desktop\tesla\nsl\hexapod\hexa gui\tests\main.cpp(106): warning C4305: 'initializing' : truncation from 'double' to 'float'
+     1>c:\users\arko\desktop\tesla\nsl\hexapod\hexa gui\tests\main.cpp(106): warning C4305: 'initializing' : truncation from 'double' to 'float'
+     1>c:\users\arko\desktop\tesla\nsl\hexapod\hexa gui\tests\main.cpp(106): warning C4305: 'initializing' : truncation from 'double' to 'float'
+     1>c:\users\arko\desktop\tesla\nsl\hexapod\hexa gui\tests\main.cpp(247): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\arko\desktop\tesla\nsl\hexapod\hexa gui\tests\main.cpp(247): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\arko\desktop\tesla\nsl\hexapod\hexa gui\tests\main.cpp(251): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\arko\desktop\tesla\nsl\hexapod\hexa gui\tests\main.cpp(251): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
        ResourceCompile:
          c:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /D _DEBUG /D dDOUBLE /D CCD_DOUBLE /D WIN32 /D _CRT_SECURE_NO_DEPRECATE /l"0x0409" /I..\..\include /I..\..\ode\src /I..\..\tests\UnitTest++\src /nologo /fo"obj\DebugDoubleDLL\tests\resources.res" ..\..\drawstuff\src\resources.rc 
        ManifestResourceCompile:
@@ -42,4 +42,4 @@ C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppCommon.targets(11
 
 Build FAILED.
 
-Time Elapsed 00:02:12.54
+Time Elapsed 00:04:04.04
