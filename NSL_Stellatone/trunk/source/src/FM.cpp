@@ -83,7 +83,20 @@ HardwareTimer mainTimer(TIME_NUMBER);
 
 int mainCpt = 0;
 
-void IRQSendSample() {
+signed short getrb(void)
+{
+	if( rb.getCount() > 0 ) {
+		int sample = rb.remove() ;;//+ 32768;
+
+		return sample;
+	}
+	 
+	return 0;
+}
+
+
+void IRQSendSample() 
+{
     if (rb.getCount()>0) {
 #ifndef PCB_R4
         timer_dev *dev = PIN_MAP[AUDIO_PIN].timer_device;
@@ -301,11 +314,12 @@ void setup()
 #endif
     delay(500);
 
-
     fillSoundBuffer();
     synth.noteOn(48, 60);
     fillSoundBuffer();
+
     int notes[] = { 60, 64, 60, 67, 60, 72};
+
     for (int k=0; k<6; k++) {
         synth.noteOn(notes[k], 60);
         for (int cpt=0; cpt<1500; cpt++) {

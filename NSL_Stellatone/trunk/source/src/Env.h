@@ -106,8 +106,112 @@ public:
 
     }
 
+#if 0
+	int getAmp(struct EnvData& env) {
+	    int rAmp = 0;
+		switch (env.envState) {
+		case ENV_STATE_DEAD:
+			return 0;
+			break;
+		case ENV_STATE_QUICK_OFF_USELESSNOW__:
+			if (env.index < 32) {
+				return env.releaseSample - ((env.index * env.releaseSample) >> 5);
+			} else {
+				env.envState = ENV_STATE_DEAD;
+				return 0;
+			}
+			break;
+		case ENV_STATE_ON_A:
+			if (env.index<attack) {
+				return (env.index << 15) / attack;
+			}
+			env.index = 0;
+			env.envState = ENV_STATE_ON_D;
+			// No break go to next state
+		case ENV_STATE_ON_D:
+			if (env.index <  decay) {
+				return (((decay - env.index) << 15) +  env.index * sustain ) / decay;
+			}
+			// No break go to next state
+			env.envState = ENV_STATE_ON_S;
+		case ENV_STATE_ON_S:
+			return sustain;
+		case ENV_STATE_ON_R:
+/*
+            int tmp;
+		    asm volatile("  cmp %4, %3\n\t"
+		        "   beq 1\n\t"
+		        "   mov %4, %2\n\t"
+		        "   mul %4, %4, %2\n\t"
+		        "   sdiv %4, %4, %3\n\t"
+                "   mov %0, %2\n\t"
+		        "   sub %0, %0, %4\n\t"
+		        "   b 2\n\t"
+		        "1:\n\t"
+		        "   mov %1, #4\n\t"
+		        "2:\n\t"
+                "nop\n\t"
+		            : "=r" (rAmp), "=r "(env.envState)
+		            : "r" (&env), "r" (release), "r" (tmp));
+*/
+
+
+            if (env.index< release) {
+				return env.releaseSample - env.index * env.releaseSample / release;
+			}
+			env.envState = ENV_STATE_DEAD;
+		    break;
+		}
+//		asm volatile("mov %0, %0, ror #1" : "=r" (rAmp) );
+		return rAmp;
+	}
+#endif
+
+
+
     inline int getNextAmp(struct EnvData* env)  INLINE  {
-#ifdef __ARM__
+#ifndef __ARM__
+		
+		unsigned int index = env->index;
+		unsigned int release ;
+
+		index--;
+
+		switch( env->envState ) {
+
+			case    ENV_STATE_ON_A:			// attack
+
+				if( index ) {
+					
+					env->currentAmp += env->currentAmpSpeed;
+					env->index = index;
+
+				} else {
+
+				}
+
+				break;
+
+			case	ENV_STATE_ON_D:			// decay
+				break;
+
+			case	ENV_STATE_ON_S:			// sustain
+				break;
+
+			case	ENV_STATE_ON_R:			// release
+				env->envState = ENV_STATE_DEAD;
+				break;
+
+			case	ENV_STATE_QUICK_OFF_USELESSNOW__:
+				break;
+
+			case	ENV_STATE_DEAD:
+			default:
+				break;
+		}
+
+#else
+
 		asm volatile(
                 // r5 : index, r6 : currentAmp, r7 : envState, r8 : currentAmpSpeed
                 "    ldm %[env], {r5-r8}\n\t"

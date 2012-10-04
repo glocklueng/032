@@ -89,7 +89,7 @@ public:
     bool isGliding() { return this->gliding; }
     unsigned int getIndex() { return this->index; }
     char getNote() { return this->note; }
-    char getNextNote() { return this->nextNote; }
+    short getNextNote() { return this->nextNote; }
 
     int* getSamples() { return currentSamples; }
 
@@ -137,7 +137,7 @@ private:
 
     // Fixing the "plop" when all notes are buisy...
     bool newNotePending;
-    char nextNote;
+    short nextNote;
     char nextVelocity;
     unsigned int nextIndex;
 

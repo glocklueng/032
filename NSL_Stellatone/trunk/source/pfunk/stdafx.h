@@ -36,6 +36,10 @@
 #endif // _AFX_NO_AFXCMN_SUPPORT
 
 #include <afxcontrolbars.h>     // MFC support for ribbons and control bars
+#include <math.h>
+
+#include "fmod.h"
+#include "fmod_errors.h"
 
 #include "GdiPlusWnd.h"
 #include "IsiLcdDisplay.h"
