@@ -15,12 +15,24 @@ static dJointGroupID contactgroup;
 static int flag = 0;
 dsFunctions fn;
 
-static double THETA[NUM] = { 0.0,	0.0, 0.0, 0.0,		
-									0.0, 0.0, 0.0,	
-									0.0, 0.0, 0.0,
-									0.0, 0.0, 0.0,
-									0.0, 0.0, 0.0,
-									0.0, 0.0, 0.0		};		// Target joint angles[rad]
+int loopstep = 1;
+int loopcount = 0;
+
+//		SERVOS			{Base,Leg,Foot}
+static double servos[6][3] =   {{0.0, -0.50, -0.750,},
+								{0.0, -0.50, -0.750,},
+								{0.0, -0.50, -0.750,},
+								{0.0, -0.50, -0.750,},
+								{0.0, -0.50, -0.750,},
+								{0.0, -0.50, -0.750}};
+
+
+static double THETA[NUM] = { 0.0,	0.0, -0.50, -0.750,		
+									0.0, -0.50, -0.750,	
+									0.0, -0.50, -0.750,
+									0.0, -0.50, -0.750,
+									0.0, -0.50, -0.750,
+									0.0, -0.50, -0.750		};		// Target joint angles[rad]
 
 static double l[NUM]  =	   { 0.10,	1.00, 1.00, 1.00,	
 									1.00, 1.00, 1.00,	
@@ -62,7 +74,7 @@ static void nearCallback(void *data, dGeomID o1, dGeomID o2)
     else        flag = 0;
     for (int i = 0; i < n; i++) {
       contact[i].surface.mode = dContactBounce;
-      contact[i].surface.mu   = 1.0;
+      contact[i].surface.mu   = 200.0;
       contact[i].surface.bounce     = 0.0; // (0.0~1.0) restitution parameter
       contact[i].surface.bounce_vel = 0.0; // minimum incoming velocity for bounce
       dJointID c = dJointCreateContact(world,contactgroup,&contact[i]);
@@ -127,9 +139,95 @@ void command(int cmd)
     if (THETA[3] <  -2*M_PI/3)  THETA[3] =  - 2*M_PI/3;
     if (THETA[3] >   2*M_PI/3)  THETA[3] =    2*M_PI/3;
 
-	THETA[4] = THETA[7] = THETA[10] = THETA[13] = THETA[16] = THETA[1];
-	THETA[5] = THETA[8] = THETA[11] = THETA[14] = THETA[17] = THETA[2];
-	THETA[6] = THETA[9] = THETA[12] = THETA[15] = THETA[18] = THETA[3];
+
+	
+	switch(cmd)
+	{
+	case '1':
+		// Lift Legs
+		servos[1][1] += 0.50;
+		servos[1][2] += 0.50;
+		servos[3][1] += 0.50;
+		servos[3][2] += 0.50;
+		servos[5][1] += 0.50;
+		servos[5][2] += 0.50;
+		break;
+	case '2':
+		// Move Body Forward
+		servos[0][0] += 0.25;
+		servos[2][0] += 0.25;
+		servos[4][0] -= 0.25;
+		break;
+	case '3':
+		// Move Legs Forward
+		servos[1][0] -= 0.25;
+		servos[3][0] += 0.25;
+		servos[5][0] += 0.25;
+		break;
+	case '4':
+		// Drop Legs
+		servos[1][1] -= 0.50;
+		servos[1][2] -= 0.50;
+		servos[3][1] -= 0.50;
+		servos[3][2] -= 0.50;
+		servos[5][1] -= 0.50;
+		servos[5][2] -= 0.50;
+		break;
+	case '5':
+		// Lift Legs
+		servos[0][1] += 0.25;
+		servos[0][2] += 0.25;
+		servos[2][1] += 0.25;
+		servos[2][2] += 0.25;
+		servos[4][1] += 0.25;
+		servos[4][2] += 0.25;
+		break;
+	case '6':
+		// Move Body Forward
+		servos[1][0] += 0.25;
+		servos[3][0] -= 0.25;
+		servos[5][0] -= 0.25;
+		break;
+	case '7':
+		// Move Legs Forward
+		servos[0][0] -= 0.25;
+		servos[2][0] -= 0.25;
+		servos[4][0] += 0.25;
+		break;
+	case '8':
+		// Drop Legs
+		servos[0][1] -= 0.25;
+		servos[0][2] -= 0.25;
+		servos[2][1] -= 0.25;
+		servos[2][2] -= 0.25;
+		servos[4][1] -= 0.25;
+		servos[4][2] -= 0.25;
+		break;
+	case '9':
+		// Move Body Forward
+		servos[0][0] += 0.25;
+		servos[2][0] += 0.25;
+		servos[4][0] -= 0.25;
+		break;
+	case '0':
+		// Move Legs Forward
+		servos[1][0] -= 0.25;
+		servos[3][0] += 0.25;
+		servos[5][0] += 0.25;
+		break;
+	}
+
+	THETA[4] = servos[0][0]; THETA[7] = servos[1][0]; THETA[10] = servos[2][0]; THETA[13] = servos[3][0]; THETA[16] = servos[4][0]; THETA[1] = servos[5][0];		// base
+	THETA[5] = servos[0][1]; THETA[8] = servos[1][1]; THETA[11] = servos[2][1]; THETA[14] = servos[3][1]; THETA[17] = servos[4][1]; THETA[2] = servos[5][1];		// leg
+	THETA[6] = servos[0][2]; THETA[9] = servos[1][2]; THETA[12] = servos[2][2]; THETA[15] = servos[3][2]; THETA[18] = servos[4][2]; THETA[3] = servos[5][2];		// foot
+
+
+	/*
+	Leg 1		Leg 2		Leg3		Leg 4		Leg 5		Leg 6
+	THETA[4] = THETA[7] = THETA[10] = THETA[13] = THETA[16] = THETA[1];		// base
+	THETA[5] = THETA[8] = THETA[11] = THETA[14] = THETA[17] = THETA[2];		// leg
+	THETA[6] = THETA[9] = THETA[12] = THETA[15] = THETA[18] = THETA[3];		// foot
+	*/
 }
 
 // Simulation loop
@@ -152,6 +250,105 @@ void simLoop(int pause)
   {
 	  dsDrawCapsuleD(dBodyGetPosition(link[i].body), dBodyGetRotation(link[i].body), l[i], r[i]);
   }
+
+
+	if(loopcount > 100)
+	{
+		loopcount = 0;
+		switch(loopstep)
+		{
+		case 1:
+			// Lift Legs
+			servos[1][1] += 0.50;
+			servos[1][2] += 0.50;
+			servos[3][1] += 0.50;
+			servos[3][2] += 0.50;
+			servos[5][1] += 0.50;
+			servos[5][2] += 0.50;
+			loopstep = 2;
+			break;
+		case 2:
+			// Move Body Forward
+			servos[0][0] += 0.25;
+			servos[2][0] += 0.25;
+			servos[4][0] -= 0.25;
+			loopstep = 3;
+			break;
+		case 3:
+			// Move Legs Forward
+			servos[1][0] -= 0.25;
+			servos[3][0] += 0.25;
+			servos[5][0] += 0.25;
+			loopstep = 4;
+			break;
+		case 4:
+			// Drop Legs
+			servos[1][1] -= 0.50;
+			servos[1][2] -= 0.50;
+			servos[3][1] -= 0.50;
+			servos[3][2] -= 0.50;
+			servos[5][1] -= 0.50;
+			servos[5][2] -= 0.50;
+			loopstep = 5;
+			break;
+		case 5:
+			// Lift Legs
+			servos[0][1] += 0.25;
+			servos[0][2] += 0.25;
+			servos[2][1] += 0.25;
+			servos[2][2] += 0.25;
+			servos[4][1] += 0.25;
+			servos[4][2] += 0.25;
+			loopstep = 6;
+			break;
+		case 6:
+			// Move Body Forward
+			servos[1][0] += 0.25;
+			servos[3][0] -= 0.25;
+			servos[5][0] -= 0.25;
+			loopstep = 7;
+			break;
+		case 7:
+			// Move Legs Forward
+			servos[0][0] -= 0.25;
+			servos[2][0] -= 0.25;
+			servos[4][0] += 0.25;
+			loopstep = 8;
+			break;
+		case 8:
+			// Drop Legs
+			servos[0][1] -= 0.25;
+			servos[0][2] -= 0.25;
+			servos[2][1] -= 0.25;
+			servos[2][2] -= 0.25;
+			servos[4][1] -= 0.25;
+			servos[4][2] -= 0.25;
+			loopstep = 1;
+			break;
+		case 9:
+			// Move Body Forward
+			servos[0][0] += 0.25;
+			servos[2][0] += 0.25;
+			servos[4][0] -= 0.25;
+			break;
+		case 0:
+			// Move Legs Forward
+			servos[1][0] -= 0.25;
+			servos[3][0] += 0.25;
+			servos[5][0] += 0.25;
+			break;
+		}
+	}	
+	else
+	{
+		loopcount++;
+	}
+
+
+	THETA[4] = servos[0][0]; THETA[7] = servos[1][0]; THETA[10] = servos[2][0]; THETA[13] = servos[3][0]; THETA[16] = servos[4][0]; THETA[1] = servos[5][0];		// base
+	THETA[5] = servos[0][1]; THETA[8] = servos[1][1]; THETA[11] = servos[2][1]; THETA[14] = servos[3][1]; THETA[17] = servos[4][1]; THETA[2] = servos[5][1];		// leg
+	THETA[6] = servos[0][2]; THETA[9] = servos[1][2]; THETA[12] = servos[2][2]; THETA[15] = servos[3][2]; THETA[18] = servos[4][2]; THETA[3] = servos[5][2];		// foot
+
 }
 
 int main(int argc, char *argv[]) 
