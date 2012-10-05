@@ -55,6 +55,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
     <UseDebugLibraries>true</UseDebugLibraries>
+    <UseOfMfc>Dynamic</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugDoubleLib|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -417,13 +418,39 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\tests\enumser.cpp" />
     <ClCompile Include="..\..\tests\main.cpp">
     </ClCompile>
+    <ClCompile Include="..\..\tests\Serial.cpp" />
+    <ClCompile Include="..\..\tests\SerialEx.cpp" />
+    <ClCompile Include="..\..\tests\SerialPicker.cpp" />
+    <ClCompile Include="..\..\tests\SerialWnd.cpp" />
+    <ClCompile Include="..\..\tests\SplashScreenEx.cpp" />
+    <ClCompile Include="..\..\tests\stdafx.cpp" />
+    <ClCompile Include="..\..\tests\Thread.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\..\drawstuff\src\resources.rc" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\drawstuff\src\resource.h" />
+    <ClInclude Include="..\..\tests\enumser.h" />
+    <ClInclude Include="..\..\tests\Serial.h" />
+    <ClInclude Include="..\..\tests\SerialEx.h" />
+    <ClInclude Include="..\..\tests\SerialMFC.h" />
+    <ClInclude Include="..\..\tests\SerialPicker.h" />
+    <ClInclude Include="..\..\tests\SerialWnd.h" />
+    <ClInclude Include="..\..\tests\SplashScreenEx.h" />
+    <ClInclude Include="..\..\tests\stdafx.h" />
+    <ClInclude Include="..\..\tests\targetver.h" />
+    <ClInclude Include="..\..\tests\Thread.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties RESOURCE_FILE="\Users\Arko\Desktop\Tesla\nsl\Hexapod\Hexa GUI\drawstuff\src\resources.rc" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>

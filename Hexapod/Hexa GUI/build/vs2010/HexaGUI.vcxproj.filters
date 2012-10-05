@@ -15,10 +15,67 @@
     <ClCompile Include="..\..\tests\main.cpp">
       <Filter>HexaGUI</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\tests\Serial.cpp">
+      <Filter>HexaGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\tests\SerialEx.cpp">
+      <Filter>HexaGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\tests\SerialPicker.cpp">
+      <Filter>HexaGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\tests\SerialWnd.cpp">
+      <Filter>HexaGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\tests\stdafx.cpp">
+      <Filter>HexaGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\tests\SplashScreenEx.cpp">
+      <Filter>HexaGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\tests\Thread.cpp">
+      <Filter>HexaGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\tests\enumser.cpp">
+      <Filter>HexaGUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\..\drawstuff\src\resources.rc">
       <Filter>drawstuff\src</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\tests\Serial.h">
+      <Filter>HexaGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\tests\SerialEx.h">
+      <Filter>HexaGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\tests\SerialMFC.h">
+      <Filter>HexaGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\tests\SerialPicker.h">
+      <Filter>HexaGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\tests\SerialWnd.h">
+      <Filter>HexaGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\tests\stdafx.h">
+      <Filter>HexaGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\tests\targetver.h">
+      <Filter>HexaGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\tests\SplashScreenEx.h">
+      <Filter>HexaGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\tests\Thread.h">
+      <Filter>HexaGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\tests\enumser.h">
+      <Filter>HexaGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\drawstuff\src\resource.h" />
   </ItemGroup>
 </Project>
