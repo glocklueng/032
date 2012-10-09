@@ -1,4 +1,5 @@
 #pragma once
+#include "resource.h"
 #include "afxwin.h"
 
 #include "enumser.h"

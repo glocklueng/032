@@ -57,7 +57,7 @@ using namespace Gdiplus;
 
 
 #include "SerialMFC.h"
-
+#include "resource.h"
 
 
 #ifdef _UNICODE

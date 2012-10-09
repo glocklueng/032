@@ -104,7 +104,7 @@ BOOL CSerialPicker::OnInitDialog()
       _tprintf(_T("COM%d\n"), ports[i]);
 	  _RPT1(_CRT_WARN,"COM%d\n", ports[i]);
 	  CString port;
-	  port.Format(L"COM%d",ports[i]);
+	  port.Format(_T("COM%d"),ports[i]);
 	  m_SerialList.AddString( port );
   }
   #endif
