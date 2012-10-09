@@ -41,7 +41,11 @@ public:
 	CIsiLcdDisplay m_LCDPanelB;
 	CIsiLcdDisplay m_LCDPanelC;
 	CIsiLcdDisplay m_LCDPanelD;
-	CVMRotaryFaderCtrl  m_Encoder1;
+	CVMRotaryFaderCtrl  m_EncoderEdit1;
+	CVMRotaryFaderCtrl  m_EncoderEdit2;
+	CVMRotaryFaderCtrl  m_EncoderEdit3;
+	CVMRotaryFaderCtrl  m_EncoderEdit4;
+	CVMRotaryFaderCtrl  m_EncoderVolume;
 	CButton m_Eng;
 	CButton m_Osc;
 	CButton m_Env;
