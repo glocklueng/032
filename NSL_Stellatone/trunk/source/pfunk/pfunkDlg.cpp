@@ -123,7 +123,11 @@ void CpfunkDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_RENDER_WINDOW2, m_LCDPanelB);
 	DDX_Control(pDX, IDC_RENDER_WINDOW3, m_LCDPanelC);
 	DDX_Control(pDX, IDC_RENDER_WINDOW4, m_LCDPanelD);
-	DDX_Control(pDX, IDC_E1, m_Encoder1);
+	DDX_Control(pDX, IDC_E1, m_EncoderEdit1);
+	DDX_Control(pDX, IDC_E2, m_EncoderEdit2);
+	DDX_Control(pDX, IDC_E3, m_EncoderEdit3);
+	DDX_Control(pDX, IDC_E4, m_EncoderEdit4);
+	DDX_Control(pDX, IDC_EVOLUME, m_EncoderVolume);
 	DDX_Control(pDX, IDC_ENG, m_Eng);
 	DDX_Control(pDX, IDC_OSC, m_Osc);
 	DDX_Control(pDX, IDC_ENV, m_Env);
@@ -211,9 +215,25 @@ BOOL CpfunkDlg::OnInitDialog()
 	m_hBitmap[Knob1]	= (HBITMAP)::LoadImage(GetModuleHandle(NULL), MAKEINTRESOURCE(IDB_BITMAP9), IMAGE_BITMAP, 0,0,LR_CREATEDIBSECTION | LR_DEFAULTCOLOR);
 	m_hBitmap[Dot1]		= (HBITMAP)::LoadImage(GetModuleHandle(NULL), MAKEINTRESOURCE(IDB_BITMAP4), IMAGE_BITMAP, 0,0,LR_CREATEDIBSECTION | LR_DEFAULTCOLOR);
 
-	m_Encoder1.SetBitmap(m_hBitmap[Scale1], CVMRotaryFaderCtrl::Scale);
-	m_Encoder1.SetBitmap(m_hBitmap[Knob1], CVMRotaryFaderCtrl::Knob);
-	m_Encoder1.SetBitmap(m_hBitmap[Dot1], CVMRotaryFaderCtrl::Dot);
+	m_EncoderEdit1.SetBitmap(m_hBitmap[Scale1], CVMRotaryFaderCtrl::Scale);
+	m_EncoderEdit1.SetBitmap(m_hBitmap[Knob1], CVMRotaryFaderCtrl::Knob);
+	m_EncoderEdit1.SetBitmap(m_hBitmap[Dot1], CVMRotaryFaderCtrl::Dot);
+	
+	m_EncoderEdit2.SetBitmap(m_hBitmap[Scale1], CVMRotaryFaderCtrl::Scale);
+	m_EncoderEdit2.SetBitmap(m_hBitmap[Knob1], CVMRotaryFaderCtrl::Knob);
+	m_EncoderEdit2.SetBitmap(m_hBitmap[Dot1], CVMRotaryFaderCtrl::Dot);
+	
+	m_EncoderEdit3.SetBitmap(m_hBitmap[Scale1], CVMRotaryFaderCtrl::Scale);
+	m_EncoderEdit3.SetBitmap(m_hBitmap[Knob1], CVMRotaryFaderCtrl::Knob);
+	m_EncoderEdit3.SetBitmap(m_hBitmap[Dot1], CVMRotaryFaderCtrl::Dot);
+	
+	m_EncoderEdit4.SetBitmap(m_hBitmap[Scale1], CVMRotaryFaderCtrl::Scale);
+	m_EncoderEdit4.SetBitmap(m_hBitmap[Knob1], CVMRotaryFaderCtrl::Knob);
+	m_EncoderEdit4.SetBitmap(m_hBitmap[Dot1], CVMRotaryFaderCtrl::Dot);
+	
+	m_EncoderVolume.SetBitmap(m_hBitmap[Scale1], CVMRotaryFaderCtrl::Scale);
+	m_EncoderVolume.SetBitmap(m_hBitmap[Knob1], CVMRotaryFaderCtrl::Knob);
+	m_EncoderVolume.SetBitmap(m_hBitmap[Dot1], CVMRotaryFaderCtrl::Dot);
 	
 	m_LCDPanelA.StringMode(TRUE, TRUE);
 	//m_LCDPanelA.LoadMatrix( IDB_MATRIX5x7 );  

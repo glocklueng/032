@@ -170,6 +170,7 @@ public:
 
 
     inline int getNextAmp(struct EnvData* env)  INLINE  {
+
 #ifndef __ARM__
 		
 		unsigned int index = env->index;
@@ -188,14 +189,37 @@ public:
 
 				} else {
 
+					env->envState = ENV_STATE_ON_D;
+					env->currentAmp;
 				}
 
 				break;
 
 			case	ENV_STATE_ON_D:			// decay
+				
+				if( index ) {
+					
+					env->index = index;
+
+				} else {
+
+					env->envState = ENV_STATE_ON_S;
+					env->currentAmp;
+				}
+
 				break;
 
 			case	ENV_STATE_ON_S:			// sustain
+				if( index ) {
+					
+					env->index = index;
+
+				} else {
+
+					env->envState = ENV_STATE_ON_R;
+					env->currentAmp;
+				}
+
 				break;
 
 			case	ENV_STATE_ON_R:			// release
@@ -221,15 +245,17 @@ public:
                 // switch
                 "    tbb [pc, r7]\n\t"
                 "7:\n\t"
-                "    .byte   (1f-7b)/2\n\t"
-                "    .byte   (2f-7b)/2\n\t"
-                "    .byte   (3f-7b)/2\n\t"
-                "    .byte   (4f-7b)/2\n\t"
-                "    .byte   (5f-7b)/2\n\t"
-                "    .byte   (6f-7b)/2\n\t"
+                "    .byte   (1f-7b)/2\n\t" //ENV_STATE_ON_A
+                "    .byte   (2f-7b)/2\n\t" //ENV_STATE_ON_D
+                "    .byte   (3f-7b)/2\n\t" //ENV_STATE_ON_S
+                "    .byte   (4f-7b)/2\n\t" //ENV_STATE_ON_R
+                "    .byte   (5f-7b)/2\n\t" //ENV_STATE_QUICK_OFF_USELESSNOW__
+                "    .byte   (6f-7b)/2\n\t" //ENV_STATE_DEAD
                 "    .align  1\n\t"
 
-                // attack
+                
+				// attack
+				//ENV_STATE_ON_A
                 "1:  cbz r5, 11f\n\t"
                 "    add R6, r8\n\t"
                 // store index and currentAmp
@@ -248,6 +274,7 @@ public:
                 "    str r8, [%[env], #12]\n\t"
 
                 // decay
+				//ENV_STATE_ON_D
                 "2:  cbz r5, 21f\n\t"
                 "    sub r6, r8\n\t"
                 // store index and currentAmp
@@ -257,13 +284,17 @@ public:
                 "    str r7, [%[env], #8]\n\t"
 
                 // sustain
+				// ENV_STATE_ON_S
                 "3:  ldr r6, [%[adsr], #8]\n\t"
                 "    lsl r6, #15\n\t"
                 "    str r6, [%[env], #4]\n\t"
                 "    b 6f\n\t"
 
                 // release & Quick Off
+				// ENV_STATE_ON_R
                 "4: \n\t"
+
+				//ENV_STATE_QUICK_OFF_USELESSNOW__
                 "5: \n\t"
                 "    cbz r5, 41f\n\t"
                 "    sub r6, r8\n\t"
@@ -276,6 +307,7 @@ public:
                 "    str r6, [%[env], #4]\n\t"
                 "    b 6f\n\t"
 
+				//ENV_STATE_DEAD
                 // env.envState = ENV_STATE_DEAD;
                 "6:\n\t"
                 : [env]"+rV" (env)
