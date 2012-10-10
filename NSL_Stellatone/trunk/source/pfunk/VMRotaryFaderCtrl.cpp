@@ -204,17 +204,14 @@ bool CVMRotaryFaderCtrl::SetKnobPos(int nPos)
 	m_Bitmap[Dot].GetSize(nwDot, nhDot);
 	
 	// radians
-	m_ptDot.x = m_ptCenter.x - (nwDot/2) + m_nKnobRadius * sin(radPos);
-	m_ptDot.y = m_ptCenter.y - (nhDot/2) + m_nKnobRadius * cos(radPos);
+	m_ptDot.x = m_ptCenter.x - (nwDot/2.0) + m_nKnobRadius * sin(radPos);
+	m_ptDot.y = m_ptCenter.y - (nhDot/2.0) + m_nKnobRadius * cos(radPos);
 
 	CString str;
 	str.Format(" Pos=%d (%f=%f)\r\n", nPos, (float)radPos, (float)dbDegree);
 	::OutputDebugString(str);
 
-	return(nOldPos != nPos);
-
-
-
+	return( nOldPos != nPos );
 }
 
 /**
