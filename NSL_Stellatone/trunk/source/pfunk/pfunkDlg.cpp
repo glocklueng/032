@@ -24,9 +24,10 @@ unsigned int            version;
 extern void __cdecl  setup();
 extern void __cdecl loop();
 
+void set_encoder( int enc, int ticks );
+
 static int ok = 0;
 
-	
 FMOD_RESULT F_CALLBACK pcmsetposcallback(FMOD_SOUND *sound, int subsound, unsigned int position, FMOD_TIMEUNIT postype)
 {
     /*
@@ -172,7 +173,6 @@ UINT ThreadFunc(LPVOID pParam)
 
 			loop();
 
-			FMOD_System_Update( fsystem );
 			Sleep(10);
 
 		}
@@ -416,6 +416,15 @@ void CpfunkDlg::OnTimer(UINT nIDEvent)
 	if( ok && nIDEvent == 1 ) {
 
 	}
+	
+	FMOD_System_Update( fsystem );
+
+	
+	set_encoder( 0, m_EncoderEdit1.GetPos());
+	set_encoder( 1, m_EncoderEdit2.GetPos());
+	set_encoder( 2, m_EncoderEdit3.GetPos());
+	set_encoder( 3, m_EncoderEdit4.GetPos());
+	set_encoder( 4, m_EncoderVolume.GetPos());
 
 
 	CDialogEx::OnTimer(nIDEvent);
