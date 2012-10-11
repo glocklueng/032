@@ -93,6 +93,15 @@ signed short getrb(void)
 	 
 	return 0;
 }
+void set_encoder( int enc, int ticks )
+{
+}
+
+void press_button( int button)
+{
+	 synthState.buttonPressed(button);
+}
+
 
 
 void IRQSendSample() 

@@ -53,4 +53,11 @@ public:
 	CButton m_LFo;
 	CButton m_Back;
 	CButton m_Menu;
+	afx_msg void OnBnClickedEng();
+	afx_msg void OnBnClickedOsc();
+	afx_msg void OnBnClickedEnv();
+	afx_msg void OnBnClickedMtx();
+	afx_msg void OnBnClickedLfo();
+	afx_msg void OnBnClickedBack();
+	afx_msg void OnBnClickedMenu();
 };
