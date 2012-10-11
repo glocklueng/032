@@ -25,6 +25,7 @@ extern void __cdecl  setup();
 extern void __cdecl loop();
 
 void set_encoder( int enc, int ticks );
+void press_button(int button);
 
 static int ok = 0;
 
@@ -144,6 +145,13 @@ BEGIN_MESSAGE_MAP(CpfunkDlg, CDialogEx)
 	ON_WM_QUERYDRAGICON()
 	ON_WM_ERASEBKGND()
 	ON_WM_TIMER()
+	ON_BN_CLICKED(IDC_ENG, &CpfunkDlg::OnBnClickedEng)
+	ON_BN_CLICKED(IDC_OSC, &CpfunkDlg::OnBnClickedOsc)
+	ON_BN_CLICKED(IDC_ENV, &CpfunkDlg::OnBnClickedEnv)
+	ON_BN_CLICKED(IDC_MTX, &CpfunkDlg::OnBnClickedMtx)
+	ON_BN_CLICKED(IDC_LFO, &CpfunkDlg::OnBnClickedLfo)
+	ON_BN_CLICKED(IDC_BACK, &CpfunkDlg::OnBnClickedBack)
+	ON_BN_CLICKED(IDC_Menu, &CpfunkDlg::OnBnClickedMenu)
 END_MESSAGE_MAP()
 
 
@@ -533,6 +541,8 @@ unsigned char __cdecl digitalRead(int port)
 { 
 	int ret  = 0;
 
+	return ;
+
 	if( port == HC165_DATA )  {
 
 		switch( encoderIndex ) {
@@ -581,3 +591,52 @@ void __cdecl delay(int length)
 	Sleep( length) ;
 }
 
+
+
+void CpfunkDlg::OnBnClickedEng()
+{
+		press_button( 0 ); 
+}
+
+
+void CpfunkDlg::OnBnClickedOsc()
+{
+	// TODO: Add your control notification handler code here
+		press_button( BUTTON_OSC ); 
+}
+
+
+void CpfunkDlg::OnBnClickedEnv()
+{
+	// TODO: Add your control notification handler code here
+		press_button( BUTTON_ENV ); 
+}
+
+
+void CpfunkDlg::OnBnClickedMtx()
+{
+	// TODO: Add your control notification handler code here
+		press_button( BUTTON_MATRIX ); 
+}
+
+
+void CpfunkDlg::OnBnClickedLfo()
+{
+	// TODO: Add your control notification handler code here
+		press_button( BUTTON_LFO ); 
+}
+
+
+void CpfunkDlg::OnBnClickedBack()
+{
+	// TODO: Add your control notification handler code here
+		press_button( BUTTON_BACK ); 
+}
+
+
+void CpfunkDlg::OnBnClickedMenu()
+{
+	// TODO: Add your control notification handler code here
+
+		press_button( BUTTON_MENUSELECT ); 
+}
