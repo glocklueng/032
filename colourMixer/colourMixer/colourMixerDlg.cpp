@@ -15,7 +15,7 @@ paletteEntry fullPalette[] ={
    {
     "0001375",
     "Titanate Yellow",
-    "143.83",
+    143.83,
     rgb(253,240,113),
     rgb(253,240,113),
     rgb(253,231,113),
@@ -27,7 +27,7 @@ paletteEntry fullPalette[] ={
  {
     "0001135",
     "Cadmium Yellow Primrose",
-    "157.6",
+    157.6,
     rgb(249,240,64),
     rgb(253,240,82),
     rgb(253,239,82),
@@ -39,7 +39,7 @@ paletteEntry fullPalette[] ={
  {
     "0001180",
     "Hansa Yellow Light",
-    "23.6",
+    23.6,
     rgb(255,224,26),
     rgb(255,214,26),
     rgb(255,201,26),
@@ -51,7 +51,7 @@ paletteEntry fullPalette[] ={
  {
     "0001007",
     "Bismuth Vanadate Yellow",
-    "24.4",
+    24.4,
     rgb(255,213,0),
     rgb(255,207,36),
     rgb(255,205,36),
@@ -63,7 +63,7 @@ paletteEntry fullPalette[] ={
  {
     "0001120",
     "Cadmium Yellow Light",
-    "85.400",
+    85.400,
     rgb(246,219,0),
     rgb(248,219,0),
     rgb(250,219,0),
@@ -75,7 +75,7 @@ paletteEntry fullPalette[] ={
  {
     "0001530",
     "Primary Yellow",
-    "95.17",
+    95.17,
     rgb(255,202,3),
     rgb(255,202,3),
     rgb(255,202,3),
@@ -87,7 +87,7 @@ paletteEntry fullPalette[] ={
  {
     "0001191",
     "Hansa Yellow Opaque",
-    "92.91",
+    92.91,
     rgb(255,191,0),
     rgb(255,191,0),
     rgb(255,171,23),
@@ -99,7 +99,7 @@ paletteEntry fullPalette[] ={
  {
     "0001130",
     "Cad Yellow Medium",
-    "90",
+    90,
     rgb(248,180,9),
     rgb(248,173,9),
     rgb(248,162,9),
@@ -111,7 +111,7 @@ paletteEntry fullPalette[] ={
  {
     "0001554",
     "Cadmium Yellow Medium Hue",
-    "70.3",
+    70.3,
     rgb(245,173,0),
     rgb(245,170,48),
     rgb(237,159,39),
@@ -123,7 +123,7 @@ paletteEntry fullPalette[] ={
  {
     "0001190",
     "Hansa Yellow Medium",
-    "30.4",
+    30.4,
     rgb(255,183,0),
     rgb(235,170,24),
     rgb(235,163,25),
@@ -135,7 +135,7 @@ paletteEntry fullPalette[] ={
  {
     "0001463",
     "Aureolin Hue",
-    "77.36",
+    77.36,
     rgb(186,124,27),
     rgb(186,124,27),
     rgb(186,124,27),
@@ -147,7 +147,7 @@ paletteEntry fullPalette[] ={
  {
     "0001225",
     "Nickel Azo Yellow",
-    "79.6",
+    79.6,
     rgb(132,72,13),
     rgb(132,88,13),
     rgb(169,106,18),
@@ -159,7 +159,7 @@ paletteEntry fullPalette[] ={
  {
     "0001455",
     "Indian Yellow Hue",
-    "18.860",
+    18.860,
     rgb(193,78,12),
     rgb(169,78,12),
     rgb(169,78,12),
@@ -171,7 +171,7 @@ paletteEntry fullPalette[] ={
  {
     "0001280",
     "Quin Burnt Orange",
-    "40.4",
+    40.4,
     rgb(68,14,22),
     rgb(100,14,13),
     rgb(89,13,14),
@@ -183,7 +183,7 @@ paletteEntry fullPalette[] ={
  {
     "0001301",
     "Quin Nickel Azo",
-    "27.6",
+    27.6,
     rgb(97,26,0),
     rgb(109,35,0),
     rgb(109,35,0),
@@ -195,7 +195,7 @@ paletteEntry fullPalette[] ={
  {
     "0001110",
     "Cadmium Yellow Dark",
-    "121.6",
+    121.6,
     rgb(246,148,0),
     rgb(246,139,0),
     rgb(246,128,0),
@@ -207,7 +207,7 @@ paletteEntry fullPalette[] ={
  {
     "0001147",
     "Diarylide Yellow",
-    "94.4",
+    94.4,
     rgb(255,136,19),
     rgb(255,130,30),
     rgb(255,118,29),
@@ -219,7 +219,7 @@ paletteEntry fullPalette[] ={
  {
     "0001070",
     "Cadmium Orange",
-    "111.2",
+    111.2,
     rgb(250,71,0),
     rgb(250,72,17),
     rgb(250,67,24),
@@ -231,7 +231,7 @@ paletteEntry fullPalette[] ={
  {
     "0001403",
     "Vat Orange",
-    "54.4",
+    54.4,
     rgb(225,54,24),
     rgb(225,49,24),
     rgb(225,44,24),
@@ -243,7 +243,7 @@ paletteEntry fullPalette[] ={
  {
     "0001384",
     "Transparent Pyrrole Orange",
-    "32",
+    32,
     rgb(240,21,0),
     rgb(205,40,0),
     rgb(169,33,8),
@@ -255,7 +255,7 @@ paletteEntry fullPalette[] ={
   {
     "0001276",
     "Pyrrole Orange",
-    "26.69",
+    26.69,
     rgb(244,38,12),
     rgb(244,30,14),
     rgb(226,28,18),
@@ -267,7 +267,7 @@ paletteEntry fullPalette[] ={
   {
     "0001090",
     "Cadmium Red Light",
-    "23.500",
+    23.500,
     rgb(203,21,26),
     rgb(203,24,36),
     rgb(203,24,27),
@@ -279,7 +279,7 @@ paletteEntry fullPalette[] ={
   {
     "0001279",
     "Pyrrole Red Light",
-    "78.4",
+    78.4,
     rgb(203,0,27),
     rgb(193,0,25),
     rgb(183,16,25),
@@ -291,7 +291,7 @@ paletteEntry fullPalette[] ={
   {
     "0001210",
     "Naphthol Red Light",
-    "86.4",
+    86.4,
     rgb(200,24,30),
     rgb(178,13,26),
     rgb(178,9,26),
@@ -303,7 +303,7 @@ paletteEntry fullPalette[] ={
   {
     "0001277",
     "Pyrrole Red",
-    "88.4",
+    88.4,
     rgb(182,1,30),
     rgb(170,3,28),
     rgb(163,3,22),
@@ -315,7 +315,7 @@ paletteEntry fullPalette[] ={
   {
     "0001100",
     "Cadmium Red Medium",
-    "50.8",
+    50.8,
     rgb(171,11,28),
     rgb(153,6,23),
     rgb(131,18,23),
@@ -327,7 +327,7 @@ paletteEntry fullPalette[] ={
   {
     "0001552",
     "Cadmium Red Medium Hue",
-    "78.4",
+    78.4,
     rgb(165,11,26),
     rgb(155,10,24),
     rgb(138,14,27),
@@ -339,7 +339,7 @@ paletteEntry fullPalette[] ={
   {
     "0001320",
     "Quin Red Light",
-    "38",
+    38,
     rgb(166,24,36),
     rgb(166,21,36),
     rgb(166,26,39),
@@ -351,7 +351,7 @@ paletteEntry fullPalette[] ={
   {
     "0001080",
     "Cadmium Red Dark",
-    "47.6",
+    47.6,
     rgb(134,4,36),
     rgb(138,15,36),
     rgb(110,18,25),
@@ -363,7 +363,7 @@ paletteEntry fullPalette[] ={
   {
     "0001278",
     "Pyrrole Red Dark",
-    "58.8",
+    58.8,
     rgb(145,0,29),
     rgb(138,0,37),
     rgb(125,0,27),
@@ -375,7 +375,7 @@ paletteEntry fullPalette[] ={
   {
     "0001510",
     "Primary Magenta",
-    "36.4",
+    36.4,
     rgb(160,15,35),
     rgb(160,15,35),
     rgb(149,10,41),
@@ -387,7 +387,7 @@ paletteEntry fullPalette[] ={
   {
     "0001562",
     "Light Magenta",
-    "150",
+    150,
     rgb(255,108,125),
     rgb(255,108,125),
     rgb(244,103,120),
@@ -399,7 +399,7 @@ paletteEntry fullPalette[] ={
   {
     "0001220",
     "Naphthol Red Medium",
-    "82.4",
+    82.4,
     rgb(141,1,22),
     rgb(127,1,29),
     rgb(127,1,28),
@@ -411,7 +411,7 @@ paletteEntry fullPalette[] ={
   {
     "0001310",
     "Quin Red",
-    "79.2",
+    79.2,
     rgb(138,13,37),
     rgb(128,6,43),
     rgb(128,6,38),
@@ -423,7 +423,7 @@ paletteEntry fullPalette[] ={
   {
     "0001450",
     "Alizarin Crimson Hue",
-    "10.400",
+    10.400,
     rgb(44,11,14),
     rgb(44,11,14),
     rgb(44,11,14),
@@ -435,7 +435,7 @@ paletteEntry fullPalette[] ={
   {
     "0001290",
     "Quin Crimson",
-    "72.4",
+    72.4,
     rgb(49,6,17),
     rgb(63,6,17),
     rgb(65,11,20),
@@ -447,7 +447,7 @@ paletteEntry fullPalette[] ={
   {
     "0001252",
     "Permanent Maroon",
-    "60",
+    60,
     rgb(29,0,16),
     rgb(43,4,16),
     rgb(51,10,21),
@@ -459,7 +459,7 @@ paletteEntry fullPalette[] ={
   {
     "0001305",
     "Quin Magenta",
-    "35.8",
+    35.8,
     rgb(94,0,42),
     rgb(109,0,53),
     rgb(109,0,47),
@@ -471,7 +471,7 @@ paletteEntry fullPalette[] ={
   {
     "0001570",
     "Medium Magenta",
-    "88.4",
+    88.4,
     rgb(173,35,97),
     rgb(173,35,106),
     rgb(161,33,91),
@@ -483,7 +483,7 @@ paletteEntry fullPalette[] ={
   {
     "0001330",
     "Quin Violet",
-    "70.65",
+    70.65,
     rgb(83,5,26),
     rgb(83,5,38),
     rgb(79,17,43),
@@ -495,7 +495,7 @@ paletteEntry fullPalette[] ={
   {
     "0001253",
     "Permanent Violet Dark",
-    "36.4",
+    36.4,
     rgb(30,9,24),
     rgb(31,5,33),
     rgb(30,5,26),
@@ -507,7 +507,7 @@ paletteEntry fullPalette[] ={
   {
     "0001465",
     "Cobalt Violet Hue",
-    "42",
+    42,
     rgb(49,14,32),
     rgb(49,14,40),
     rgb(50,13,38),
@@ -519,7 +519,7 @@ paletteEntry fullPalette[] ={
   {
     "0001572",
     "Medium Violet",
-    "119.6",
+    119.6,
     rgb(57,28,66),
     rgb(64,28,70),
     rgb(61,27,63),
@@ -531,7 +531,7 @@ paletteEntry fullPalette[] ={
   {
     "0001568",
     "Light Violet",
-    "134.4",
+    134.4,
     rgb(88,65,109),
     rgb(80,59,99),
     rgb(69,50,82),
@@ -543,7 +543,7 @@ paletteEntry fullPalette[] ={
   {
     "0001401",
     "Ultramarine Violet",
-    "9.2",
+    9.2,
     rgb(33,19,50),
     rgb(40,26,52),
     rgb(39,24,40),
@@ -555,7 +555,7 @@ paletteEntry fullPalette[] ={
   {
     "0001150",
     "Dioxazine Purple",
-    "15.6",
+    15.6,
     rgb(10,5,14),
     rgb(10,5,19),
     rgb(9,4,19),
@@ -567,7 +567,7 @@ paletteEntry fullPalette[] ={
   {
     "0001467",
     "Smalt Hue",
-    "0.69",
+    0.69,
     rgb(11,11,36),
     rgb(9,13,30),
     rgb(6,8,14),
@@ -579,7 +579,7 @@ paletteEntry fullPalette[] ={
   {
     "0001400",
     "Ultramarine Blue",
-    "2.500",
+    2.500,
     rgb(19,5,61),
     rgb(8,12,56),
     rgb(8,12,40),
@@ -591,7 +591,7 @@ paletteEntry fullPalette[] ={
   {
     "0001566",
     "Light Ultramarine Blue",
-    "67.3",
+    67.3,
     rgb(94,116,164),
     rgb(94,116,164),
     rgb(71,88,141),
@@ -603,7 +603,7 @@ paletteEntry fullPalette[] ={
   {
     "0001140",
     "Cobalt Blue",
-    "32.8",
+    32.8,
     rgb(0,25,110),
     rgb(0,39,92),
     rgb(15,41,80),
@@ -615,7 +615,7 @@ paletteEntry fullPalette[] ={
   {
     "0001556",
     "Cobalt Blue Hue",
-    "115.6",
+    115.6,
     rgb(2,39,92),
     rgb(6,38,88),
     rgb(5,41,95),
@@ -627,7 +627,7 @@ paletteEntry fullPalette[] ={
   {
     "0001050",
     "Cerulean Blue Chromium",
-    "34",
+    34,
     rgb(5,62,90),
     rgb(5,62,92),
     rgb(16,54,75),
@@ -639,7 +639,7 @@ paletteEntry fullPalette[] ={
   {
     "0001005",
     "Anthraquinone Blue",
-    "15.4",
+    15.4,
     rgb(12,11,20),
     rgb(8,11,47),
     rgb(5,15,42),
@@ -651,7 +651,7 @@ paletteEntry fullPalette[] ={
   {
     "0001460",
     "Prussian Blue Hue",
-    "2.000",
+    2.000,
     rgb(3,8,14),
     rgb(3,7,13),
     rgb(1,11,19),
@@ -663,7 +663,7 @@ paletteEntry fullPalette[] ={
   {
     "0001260",
     "Phthalo Blue RS",
-    "100.8",
+    100.8,
     rgb(6,1,30),
     rgb(4,27,73),
     rgb(0,37,83),
@@ -675,7 +675,7 @@ paletteEntry fullPalette[] ={
   {
     "0001255",
     "Phthalo Blue GS",
-    "67.6",
+    67.6,
     rgb(1,2,28),
     rgb(0,50,84),
     rgb(0,55,80),
@@ -687,7 +687,7 @@ paletteEntry fullPalette[] ={
   {
     "0001500",
     "Primary Cyan",
-    "42",
+    42,
     rgb(8,47,78),
     rgb(6,52,86),
     rgb(0,50,78),
@@ -699,7 +699,7 @@ paletteEntry fullPalette[] ={
   {
     "0001464",
     "Azurite Hue",
-    "30.4",
+    30.4,
     rgb(18,34,47),
     rgb(12,49,61),
     rgb(9,45,53),
@@ -711,7 +711,7 @@ paletteEntry fullPalette[] ={
   {
     "0001051",
     "Cerulean Blue Deep",
-    "31.6",
+    31.6,
     rgb(0,62,83),
     rgb(0,62,83),
     rgb(0,36,44),
@@ -723,7 +723,7 @@ paletteEntry fullPalette[] ={
   {
     "0001457",
     "Manganese Blue Hue",
-    "10",
+    10,
     rgb(0,59,89),
     rgb(0,62,86),
     rgb(0,43,59),
@@ -735,7 +735,7 @@ paletteEntry fullPalette[] ={
   {
     "0001390",
     "Turquoise",
-    "88",
+    88,
     rgb(0,10,8),
     rgb(0,92,86),
     rgb(0,76,71),
@@ -747,7 +747,7 @@ paletteEntry fullPalette[] ={
   {
     "0001144",
     "Cobalt Turquoise",
-    "55.2",
+    55.2,
     rgb(1,76,73),
     rgb(0,77,72),
     rgb(0,55,47),
@@ -759,7 +759,7 @@ paletteEntry fullPalette[] ={
   {
     "0001145",
     "Teal",
-    "23.6",
+    23.6,
     rgb(7,131,122),
     rgb(7,125,117),
     rgb(15,117,103),
@@ -771,7 +771,7 @@ paletteEntry fullPalette[] ={
   {
     "0001564",
     "Light Turquois (Phthalo)",
-    "45.3",
+    45.3,
     rgb(0,118,93),
     rgb(5,91,73),
     rgb(4,75,60),
@@ -783,7 +783,7 @@ paletteEntry fullPalette[] ={
   {
     "0001270",
     "Phthalo Green BS",
-    "0.75",
+    0.75,
     rgb(0,5,5),
     rgb(0,34,23),
     rgb(0,25,16),
@@ -795,7 +795,7 @@ paletteEntry fullPalette[] ={
   {
     "0001469",
     "Viridian Green Hue",
-    "15.200",
+    15.200,
     rgb(0,52,39),
     rgb(0,81,66),
     rgb(6,73,59),
@@ -807,7 +807,7 @@ paletteEntry fullPalette[] ={
   {
     "0001275",
     "Phthalo Green YS",
-    "130",
+    130,
     rgb(0,22,11),
     rgb(0,100,60),
     rgb(0,96,53),
@@ -819,7 +819,7 @@ paletteEntry fullPalette[] ={
   {
     "0001250",
     "Perm Green Light",
-    "97.6",
+    97.6,
     rgb(0,83,42),
     rgb(0,114,57),
     rgb(0,90,45),
@@ -831,7 +831,7 @@ paletteEntry fullPalette[] ={
   {
     "0001142",
     "Cobalt Green",
-    "114",
+    114,
     rgb(16,46,31),
     rgb(20,56,43),
     rgb(31,56,45),
@@ -843,7 +843,7 @@ paletteEntry fullPalette[] ={
   {
     "0001454",
     "Hookers Green Hue",
-    "80.4",
+    80.4,
     rgb(4,9,5),
     rgb(10,28,21),
     rgb(8,28,17),
@@ -855,7 +855,7 @@ paletteEntry fullPalette[] ={
   {
     "0001195",
     "Jenkins Green",
-    "19.2",
+    19.2,
     rgb(6,13,7),
     rgb(18,35,23),
     rgb(17,28,16),
@@ -867,7 +867,7 @@ paletteEntry fullPalette[] ={
   {
     "0001461",
     "Sap Green Hue",
-    "6",
+    6,
     rgb(13,15,7),
     rgb(13,15,7),
     rgb(11,14,6),
@@ -879,7 +879,7 @@ paletteEntry fullPalette[] ={
   {
     "0001468",
     "Terre Verte Hue",
-    "11.2",
+    11.2,
     rgb(39,43,26),
     rgb(39,43,26),
     rgb(39,40,26),
@@ -891,7 +891,7 @@ paletteEntry fullPalette[] ={
   {
     "0001061",
     "Chromium Oxide Dark",
-    "106",
+    106,
     rgb(30,45,21),
     rgb(29,42,27),
     rgb(46,58,44),
@@ -903,7 +903,7 @@ paletteEntry fullPalette[] ={
   {
     "0001060",
     "Chromium Oxide",
-    "12.19",
+    12.19,
     rgb(47,71,34),
     rgb(47,71,34),
     rgb(47,71,34),
@@ -915,7 +915,7 @@ paletteEntry fullPalette[] ={
   {
     "0001143",
     "Cobalt Titanate Green",
-    "24.27",
+    24.27,
     rgb(68,131,66),
     rgb(68,131,66),
     rgb(68,131,66),
@@ -927,7 +927,7 @@ paletteEntry fullPalette[] ={
   {
     "0001558",
     "Light Green/B.S.",
-    "27.6",
+    27.6,
     rgb(45,150,58),
     rgb(42,155,54),
     rgb(35,136,30),
@@ -939,7 +939,7 @@ paletteEntry fullPalette[] ={
   {
     "0001560",
     "Light Green/Y.S.",
-    "25.2",
+    25.2,
     rgb(77,150,39),
     rgb(70,136,35),
     rgb(54,124,27),
@@ -951,7 +951,7 @@ paletteEntry fullPalette[] ={
   {
     "0001170",
     "Green Gold",
-    "28.4",
+    28.4,
     rgb(58,67,11),
     rgb(82,77,10),
     rgb(77,72,9),
@@ -963,7 +963,7 @@ paletteEntry fullPalette[] ={
   {
     "0001459",
     "Naples Yellow Hue",
-    "11.6",
+    11.6,
     rgb(222,158,90),
     rgb(175,120,61),
     rgb(127,80,39),
@@ -975,7 +975,7 @@ paletteEntry fullPalette[] ={
   {
     "0001410",
     "Yellow Oxide",
-    "27.6",
+    27.6,
     rgb(179,117,42),
     rgb(151,94,35),
     rgb(120,72,28),
@@ -987,7 +987,7 @@ paletteEntry fullPalette[] ={
   {
     "0001407",
     "Yellow Ochre",
-    "32.4",
+    32.4,
     rgb(160,96,44),
     rgb(160,96,44),
     rgb(136,81,37),
@@ -999,7 +999,7 @@ paletteEntry fullPalette[] ={
   {
     "0001386",
     "Transparent Yellow Iron Oxide",
-    "21.6",
+    21.6,
     rgb(117,65,14),
     rgb(117,65,14),
     rgb(116,58,13),
@@ -1011,7 +1011,7 @@ paletteEntry fullPalette[] ={
   {
     "0001340",
     "Raw Sienna",
-    "46.08",
+    46.08,
     rgb(132,77,32),
     rgb(132,77,32),
     rgb(132,77,32),
@@ -1023,7 +1023,7 @@ paletteEntry fullPalette[] ={
   {
     "0001202",
     "Mars yellow",
-    "32",
+    32,
     rgb(131,60,30),
     rgb(118,52,30),
     rgb(92,35,20),
@@ -1035,7 +1035,7 @@ paletteEntry fullPalette[] ={
   {
     "0001385",
     "Transparent Red Iron Oxide",
-    "15.51",
+    15.51,
     rgb(69,18,0),
     rgb(62,16,7),
     rgb(75,24,12),
@@ -1047,7 +1047,7 @@ paletteEntry fullPalette[] ={
   {
     "0001360",
     "Red Oxide",
-    "45.2",
+    45.2,
     rgb(110,27,4),
     rgb(92,22,18),
     rgb(69,16,13),
@@ -1059,7 +1059,7 @@ paletteEntry fullPalette[] ={
   {
     "0001405",
     "Violet Oxide",
-    "52",
+    52,
     rgb(80,28,28),
     rgb(54,22,22),
     rgb(51,23,21),
@@ -1071,7 +1071,7 @@ paletteEntry fullPalette[] ={
   {
     "0001020",
     "Burnt Sienna",
-    "26.56",
+    26.56,
     rgb(87,44,32),
     rgb(87,44,32),
     rgb(87,44,32),
@@ -1083,7 +1083,7 @@ paletteEntry fullPalette[] ={
   {
     "0001383",
     "Transparent Brown Iron Oxide",
-    "10.4",
+    10.4,
     rgb(34,13,0),
     rgb(40,15,0),
     rgb(34,12,3),
@@ -1095,7 +1095,7 @@ paletteEntry fullPalette[] ={
   {
     "0001035",
     "Burnt Umber Light",
-    "22",
+    22,
     rgb(48,27,17),
     rgb(41,23,14),
     rgb(34,18,10),
@@ -1107,7 +1107,7 @@ paletteEntry fullPalette[] ={
   {
     "0001030",
     "Burnt Umber",
-    "25.5",
+    25.5,
     rgb(37,24,17),
     rgb(37,24,17),
     rgb(37,24,17),
@@ -1119,7 +1119,7 @@ paletteEntry fullPalette[] ={
   {
     "0001350",
     "Raw Umber",
-    "50.39",
+    50.39,
     rgb(40,30,18),
     rgb(40,30,18),
     rgb(40,30,18),
@@ -1131,7 +1131,7 @@ paletteEntry fullPalette[] ={
   {
     "0001462",
     "Van Dyke Brown  Hue",
-    "5.36",
+    5.36,
     rgb(12,8,5),
     rgb(10,7,4),
     rgb(9,6,4),
@@ -1143,7 +1143,7 @@ paletteEntry fullPalette[] ={
   {
     "0001040",
     "Carbon Black",
-    "74.8",
+    74.8,
     rgb(7,9,8),
     rgb(6,5,7),
     rgb(6,6,6),
@@ -1155,7 +1155,7 @@ paletteEntry fullPalette[] ={
   {
     "0001200",
     "Mars Black",
-    "12.4",
+    12.4,
     rgb(12,12,12),
     rgb(12,14,12),
     rgb(14,13,12),
@@ -1167,7 +1167,7 @@ paletteEntry fullPalette[] ={
   {
     "0001010",
     "Bone Black",
-    "3.6",
+    3.6,
     rgb(8,8,8),
     rgb(7,7,7),
     rgb(7,7,7),
@@ -1179,7 +1179,7 @@ paletteEntry fullPalette[] ={
   {
     "0001160",
     "Graphite Gray",
-    "1.6",
+    1.6,
     rgb(63,56,46),
     rgb(19,18,17),
     rgb(7,7,7),
@@ -1191,7 +1191,7 @@ paletteEntry fullPalette[] ={
   {
     "0001240",
     "Paynes Gray",
-    "12",
+    12,
     rgb(8,11,14),
     rgb(17,21,29),
     rgb(13,19,29),
@@ -1203,7 +1203,7 @@ paletteEntry fullPalette[] ={
   {
     "0001370",
     "Titan Buff",
-    "35.6",
+    35.6,
     rgb(215,188,146),
     rgb(215,191,146),
     rgb(211,189,143),
@@ -1215,7 +1215,7 @@ paletteEntry fullPalette[] ={
   {
     "0001415",
     "Zinc White",
-    "12.5",
+    12.5,
     rgb(250,250,247),
     rgb(250,250,247),
     rgb(250,250,247),
@@ -1227,7 +1227,7 @@ paletteEntry fullPalette[] ={
   {
     "0001380",
     "Titanium White",
-    "99.99",
+    99.99,
     rgb(250,250,247),
     rgb(250,250,247),
     rgb(250,250,247),
@@ -1239,7 +1239,7 @@ paletteEntry fullPalette[] ={
   {
     "0001442",
     "Neutral Gray N2",
-    "27.2",
+    27.2,
     rgb(24,22,19),
     rgb(24,22,19),
     rgb(24,22,19),
@@ -1251,7 +1251,7 @@ paletteEntry fullPalette[] ={
   {
     "0001443",
     "Neutral Gray N3",
-    "27.2",
+    27.2,
     rgb(30,27,23),
     rgb(30,27,23),
     rgb(30,27,23),
@@ -1263,7 +1263,7 @@ paletteEntry fullPalette[] ={
   {
     "0001444",
     "Neutral Gray N4",
-    "27.2",
+    27.2,
     rgb(38,35,29),
     rgb(38,35,29),
     rgb(38,35,29),
@@ -1275,7 +1275,7 @@ paletteEntry fullPalette[] ={
   {
     "0001445",
     "Neutral Gray N5",
-    "27.2",
+    27.2,
     rgb(51,46,40),
     rgb(51,46,40),
     rgb(51,46,40),
@@ -1287,7 +1287,7 @@ paletteEntry fullPalette[] ={
   {
     "0001446",
     "Neutral Gray N6",
-    "27.2",
+    27.2,
     rgb(65,65,60),
     rgb(65,65,60),
     rgb(65,65,60),
@@ -1299,7 +1299,7 @@ paletteEntry fullPalette[] ={
   {
     "0001447",
     "Neutral Gray N7",
-    "27.2",
+    27.2,
     rgb(101,94,89),
     rgb(101,94,89),
     rgb(101,94,89),
@@ -1311,7 +1311,7 @@ paletteEntry fullPalette[] ={
   {
     "0001448",
     "Neutral Gray N8",
-    "27.2",
+    27.2,
     rgb(118,108,101),
     rgb(118,108,101),
     rgb(118,108,101),
@@ -1369,7 +1369,7 @@ CcolourMixerDlg::CcolourMixerDlg(CWnd* pParent /*=NULL*/)
 void CcolourMixerDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
-	DDX_Control(pDX, IDC_MFCCOLORBUTTON1, m_CButton);
+	DDX_Control(pDX, IDC_MFCCOLORBUTTON1, m_CButtonB);
 }
 
 BEGIN_MESSAGE_MAP(CcolourMixerDlg, CDialogEx)

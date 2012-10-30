@@ -17,7 +17,7 @@ typedef struct PaletteEntry_tag{
 	
 	char id[8];
 	char colourName[32];
-	char ratio[8];
+	double ratio;
 
 	pal_rgb colours[6];
 

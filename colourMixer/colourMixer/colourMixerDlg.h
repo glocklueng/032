@@ -32,5 +32,5 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg void OnBnClickedButton1();
-	CMFCColorButton m_CButton;
+	CMFCColorButton m_CButtonB;
 };
