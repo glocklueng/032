@@ -4,6 +4,7 @@
 
 #pragma once
 #include "afxcolorbutton.h"
+#include "afxcmn.h"
 
 
 // CcolourMixerDlg dialog
@@ -33,4 +34,5 @@ protected:
 public:
 	afx_msg void OnBnClickedButton1();
 	CMFCColorButton m_CButtonB;
+	CSliderCtrl m_MixAmount_A;
 };

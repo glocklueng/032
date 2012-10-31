@@ -11,7 +11,7 @@
 #define new DEBUG_NEW
 #endif
 
-paletteEntry fullPalette[] ={
+paletteEntry fullPalette[] = {
    {
     "0001375",
     "Titanate Yellow",
@@ -1370,6 +1370,7 @@ void CcolourMixerDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_MFCCOLORBUTTON1, m_CButtonB);
+	DDX_Control(pDX, IDC_SLIDER1, m_MixAmount_A);
 }
 
 BEGIN_MESSAGE_MAP(CcolourMixerDlg, CDialogEx)
