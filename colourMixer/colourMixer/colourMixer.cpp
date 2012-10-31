@@ -1,4 +1,3 @@
-
 // colourMixer.cpp : Defines the class behaviors for the application.
 //
 
@@ -10,13 +9,11 @@
 #define new DEBUG_NEW
 #endif
 
-
 // CcolourMixerApp
 
 BEGIN_MESSAGE_MAP(CcolourMixerApp, CWinApp)
 	ON_COMMAND(ID_HELP, &CWinApp::OnHelp)
 END_MESSAGE_MAP()
-
 
 // CcolourMixerApp construction
 
@@ -29,11 +26,9 @@ CcolourMixerApp::CcolourMixerApp()
 	// Place all significant initialization in InitInstance
 }
 
-
 // The one and only CcolourMixerApp object
 
 CcolourMixerApp theApp;
-
 
 // CcolourMixerApp initialization
 
@@ -57,7 +52,6 @@ BOOL CcolourMixerApp::InitInstance()
 		return FALSE;
 	}
 
-
 	AfxEnableControlContainer();
 
 	// Create the shell manager, in case the dialog contains
@@ -71,7 +65,7 @@ BOOL CcolourMixerApp::InitInstance()
 	// Change the registry key under which our settings are stored
 	// TODO: You should modify this string to be something appropriate
 	// such as the name of your company or organization
-	SetRegistryKey(_T("Local AppWizard-Generated Applications"));
+	SetRegistryKey(_T("colourMixer"));
 
 	CcolourMixerDlg dlg;
 	m_pMainWnd = &dlg;
@@ -97,4 +91,3 @@ BOOL CcolourMixerApp::InitInstance()
 	//  application, rather than start the application's message pump.
 	return FALSE;
 }
-

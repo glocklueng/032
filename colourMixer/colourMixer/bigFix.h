@@ -1,11 +1,8 @@
-/*
-** Copyright (c) Golden Artist Colors, Inc.
-** All Rights Reserved.
-*/
+#ifndef  _BIGFIX_H_
 
+#define  _BIGFIX_H_ (1)
 
 #define rgb(r,g,b) r,g,b
-
 
 typedef struct pal_rgb_tag{ 
 	unsigned short r;
@@ -15,7 +12,7 @@ typedef struct pal_rgb_tag{
 
 typedef struct PaletteEntry_tag{ 
 	
-	char id[8];
+	char stock_id[8];
 	char colourName[32];
 	double ratio;
 
@@ -25,3 +22,4 @@ typedef struct PaletteEntry_tag{
 
 } paletteEntry;
 
+#endif
