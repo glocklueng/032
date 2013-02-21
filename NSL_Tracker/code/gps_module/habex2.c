@@ -2,7 +2,6 @@
 
 // Define baud rate 
 #define F_CPU 16000000UL
-//#define F_CPU  7372800UL
 
 #define USART_BAUDRATE 57600
 #define BAUD_PRESCALE (((F_CPU / (USART_BAUDRATE * 16UL))) - 1) 
