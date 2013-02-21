@@ -1,13 +1,25 @@
 #include <avr/io.h> 
+#include <avr/interrupt.h>
+
+// macros
+#define SET_BIT(p,m) ((p) |= (m))
+#define CLEAR_BIT(p,m) ((p) &= ~(m))
+
+#ifndef cbi
+#define cbi(sfr, bit) (_SFR_BYTE(sfr) &= ~_BV(bit))
+#endif
+#ifndef sbi
+#define sbi(sfr, bit) (_SFR_BYTE(sfr) |= _BV(bit))
+#endif
 
 // Define baud rate 
-#define F_CPU 16000000UL
+#define F_CPU ( 16000000UL )
 
-#define USART_BAUDRATE 57600
+#define USART_BAUDRATE ( 9600 )
 #define BAUD_PRESCALE (((F_CPU / (USART_BAUDRATE * 16UL))) - 1) 
 
 
-/*! \brief Initiliaze the USART0 for the communication bus 
+/*! \brief Initialize the USART0 for the communication bus 
  * This function is used to initialize the USART which a baudrate
  * that needs to be sent in as a parameter Use the baudrate settings
  * specified in the ATMEGA2560 baudrate setting.
@@ -59,7 +71,7 @@ unsigned char usart0_receive(void ) {
 	return UDR0;
 }
 
-/*! \brief The USART0 recieve loopback
+/*! \brief The USART0 receive loop back
  * This function does wait for a character in the RX buffer and returns
  * it to the transmit buffer.
  * \return The character from the RX USART buffer
@@ -83,13 +95,13 @@ unsigned char poll_usart0_receive(void ) {
 	/* Check if data is received */
 	return ((UCSR0A & (1<<RXC0)));
 }
-/*! \brief Initiliaze the USART3 for the radio interface
+/*! \brief Initialize the USART3 for the radio interface
  * This function is used to initialize the USART which a baudrate
  * that needs to be sent in as a parameter Use the baudrate settings
  * specified in the ATMEGA2560 baudrate setting.
- * \param baud The baudrate param from the ATMEGA2560 datasheet.
+ * \param baud The baudrate param from the ATMEGA2560 data sheet.
  */
-void usart3_init(unsigned int baudrate, unsigned char stopbits) {
+void usart3_init(unsigned int baudrate) {
 
 	/* Set baud rate */
 	UBRR3H = (unsigned char) (baudrate>>8);
@@ -97,15 +109,13 @@ void usart3_init(unsigned int baudrate, unsigned char stopbits) {
 
 	/* Set frame format: 8data, no parity */
 	UCSR3C = (1<<UCSZ31) | (1<<UCSZ30) | (0<<UCSZ32);
-	/* Set the number of stopbits */
-	if (stopbits == 1)
-		UCSR3C |= (0<<USBS3);
-	else if (stopbits == 2)
-		UCSR3C |= (1<<USBS3);
+	
+	UCSR3C |= (0<<USBS3);
 	
 	/* Enable receiver, transmitter and RX interrupt */
 	UCSR3B = (1<<RXEN3) | (1<<TXEN3) | (1<<RXCIE3);
 }
+	
 
 /*! \brief Send a character to the USART3
  * Send a single character to the USART used for the communication bus
@@ -144,21 +154,97 @@ unsigned char usart3_receive(void ) {
 	return UDR0;
 }
 
+/*! \brief Retrieve one character from the USART3
+ * Retrieve one character from the USART. With this function you will
+ * need to poll the USART, it does NOT wait until a character is in the buffer.
+ * \return The character from the RX USART buffer
+ */
+unsigned char poll_usart3_receive(void ) {
+	/* Check if data is received */
+	return ((UCSR3A & (1<<RXC3)));
+}
+
+
+
+ISR(USART3_RX_vect)
+/*************************************************************************
+Function: UART3 Receive Complete interrupt
+Purpose:  called when the UART3 has received a character
+**************************************************************************/
+{
+	unsigned char data;
+	
+	
+	/* read UART data register */
+	data = UDR3;
+	
+	/* Wait for empty transmit buffer */
+	while (!( UCSR0A & (1<<UDRE0)));
+	
+	/* Put data into buffer, sends the data */
+	UDR0 = data;
+
+}
+
+ISR(USART0_RX_vect)
+/*************************************************************************
+Function: UART0 Receive Complete interrupt
+Purpose:  called when the UART0 has received a character
+**************************************************************************/
+{
+	unsigned char data;
+
+	/* read UART data register */
+	data = UDR0;
+	
+	/* Wait for empty transmit buffer */
+	while (!( UCSR3A & (1<<UDRE3)));
+	
+	/* Put data into buffer, sends the data */
+	UDR3 = data;
+	
+	/* Wait for empty transmit buffer */
+	while (!( UCSR0A & (1<<UDRE0)));
+	UDR0 = data;
+
+}
+
 
 int main(void) 
 { 
 	usart0_init( BAUD_PRESCALE );
 
-	usart3_init( BAUD_PRESCALE, 1 ) ;
-
-	unsigned char data = 'z'; 
+	usart3_init( BAUD_PRESCALE ) ;
 
 
-	for(;;) // Repeat indefinitely 
+	usart0_sendstring("SYSTEM\r\n",8);
+	usart3_sendstring("AT?\r\n",5);
+
+
+
+	//outputs
+	SET_BIT( DDRD, _BV(PD7) );
+	SET_BIT( PORTD, _BV(PD7) );
+	
+	CLEAR_BIT( DDRC, _BV(PC0) );
+
+	//inputs
+	CLEAR_BIT( DDRC, _BV(PC3) );
+	SET_BIT( PORTC, _BV(PC3) );
+	
+	CLEAR_BIT( DDRC, _BV(PC0) );
+  	SET_BIT( PORTC, _BV(PC0) );
+
+	//Start interrupst
+	sei();
+	
+	for(;;) 
 	{ 
 
-		data = usart3_receive ();
-
-		usart0_transmit (data );
-} 
+		if( bit_is_clear( PINC, PC3 )) {
+			SET_BIT(PORTD, PD7);
+		} else {
+			CLEAR_BIT(PORTD, PD7);
+		}
+	}	 
 } 
