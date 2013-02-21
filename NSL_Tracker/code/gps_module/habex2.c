@@ -4,6 +4,9 @@
 // avr specific
 #include <avr/io.h> 
 #include <avr/interrupt.h>
+#include <avr/sleep.h>
+#include <avr/power.h>
+#include <avr/wdt.h>
 
 // utilities
 #include <util/delay.h>
@@ -241,6 +244,63 @@ ISR(USART0_RX_vect)
 	//UDR0 = data;
 
 }
+
+/////////////////////////////////////////////////////
+//
+// Power handling code
+//
+/////////////////////////////////////////////////////
+
+
+/*! \brief shutdown ADC
+ * Purpose:  Save power by turning off ADC
+ * \return none
+ */
+void shutdown_adc(void)
+{
+    ACSR = (1<<ACD);                        // disable A/D comparator
+    ADCSRA = (0<<ADEN);                     // disable A/D converter
+    DIDR0 = 0x3f;                           // disable all A/D inputs (ADC0-ADC5)
+    DIDR1 = 0x03;                           // disable AIN0 and AIN1
+}
+
+
+/*! \brief go into hibernation
+ * Purpose:  Save power by sleeping
+ * \return none
+ */
+void  hibernate(void)
+{
+
+    cli();                                    // quiet for just a moment
+    shutdown_adc();                           // prepare ADC for sleep
+
+    PRR0 = (1<<PRTWI) | (1<<PRTIM0) | (1<<PRTIM1) | (1<<PRTIM2) | (1<<PRSPI) | (1<<PRADC) | (1<<PRUSART0);
+
+    set_sleep_mode(SLEEP_MODE_PWR_DOWN);      // set the type of sleep mode to use
+    sleep_enable();                           // enable sleep mode
+    sei();                                    // allow interrupts to end sleep mode                                    
+
+    PCICR = (1<<PCIE0) | (1<<PCIE2);          // enable interrupt on pin-change on PB0 and PD0
+
+// for atmega328
+#if 0
+	{
+		volatile uint8_t mcutmp;
+	    mcutmp = MCUCR | ((1<<BODS) | (1<<BODSE));
+	    MCUCR = mcutmp;
+	    mcutmp = mcutmp & ~(1<<BODSE);
+	    MCUCR = mcutmp;	
+	}
+#endif
+
+    sleep_cpu();                              // nighty-night
+
+    sleep_disable	();                       // just woke up, disable sleep mode for safety
+    PRR0 = PRR0 & ~((1<<PRTWI) | (1<<PRTIM2));// bring up the systems we need now
+
+}
+
 
 /////////////////////////////////////////////////////
 //
