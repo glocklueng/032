@@ -385,7 +385,10 @@ int main(void)
 	CLEAR_BIT( DDRC,  _BV(PC0) );
   	SET_BIT  ( PORTC, _BV(PC0) );
 
-	// give it time to warmup
+	// setup the accelerometer
+	mma_init();
+
+	// give everything time to warmup
 	_delay_ms( 1500 );
 
 	// init GPS etc
