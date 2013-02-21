@@ -37,9 +37,6 @@ extern "C" {
 
 //#define USE_INTERRUPT
 
-static void swspi_init();
-static uint8_t swspi_shift( uint8_t data );
-
 void mma_init();
 void mma_write( uint8_t address, uint8_t value );
 uint8_t mma_read( uint8_t address );
