@@ -15,7 +15,7 @@
 // Define baud rate 
 #define F_CPU ( 16000000UL )
 
-#define USART_BAUDRATE ( 9600 )
+#define USART_BAUDRATE ( 57600 )
 #define BAUD_PRESCALE (((F_CPU / (USART_BAUDRATE * 16UL))) - 1) 
 
 
@@ -218,9 +218,7 @@ int main(void)
 
 
 	usart0_sendstring("SYSTEM\r\n",8);
-	usart3_sendstring("AT?\r\n",5);
-
-
+	usart3_sendstring("ATE1\r\n",5);
 
 	//outputs
 	SET_BIT( DDRD, _BV(PD7) );
