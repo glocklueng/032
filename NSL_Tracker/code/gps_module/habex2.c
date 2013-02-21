@@ -1,5 +1,8 @@
+#define F_CPU ( 16000000UL )
+
 #include <avr/io.h> 
 #include <avr/interrupt.h>
+#include <avr/delay.h>
 
 // macros
 #define SET_BIT(p,m) ((p) |= (m))
@@ -13,8 +16,6 @@
 #endif
 
 // Define baud rate 
-#define F_CPU ( 16000000UL )
-
 #define USART_BAUDRATE ( 57600 )
 #define BAUD_PRESCALE (((F_CPU / (USART_BAUDRATE * 16UL))) - 1) 
 
@@ -40,8 +41,10 @@ void usart0_init(unsigned int baudrate) {
  * \param data The character you want to send
  */
 void usart0_transmit(char data ) {
+	
 	/* Wait for empty transmit buffer */
 	while (!( UCSR0A & (1<<UDRE0)));
+	
 	/* Put data into buffer, sends the data */
 	UDR0 = data;
 }
@@ -52,7 +55,9 @@ void usart0_transmit(char data ) {
  * \param length The length of the string you wish to send
  */
 unsigned char usart0_sendstring(char *data,unsigned char length) {
+	
 	int i;
+	
 	for (i=0;i<length;i++)
 		usart0_transmit(*(data++));
 	
@@ -125,7 +130,7 @@ unsigned char usart3_transmit(char  data ) {
 	/* Wait for empty transmit buffer */
 	while (!( UCSR3A & (1<<UDRE3)));
 	/* Put data into buffer, sends the data */
-	UDR0 = data;
+	UDR3 = data;
 	return 0;
 }
 
@@ -134,11 +139,13 @@ unsigned char usart3_transmit(char  data ) {
  * \param data The string of characters you wish to send
  * \param length The length of the string you wish to send
  */
-unsigned char usart3_sendstring(char *data,unsigned char length) {
+unsigned char usart3_sendstring(char *data) {
 	int i;
-	for (i=0;i<length;i++)
-		usart3_transmit(*(data++));
 	
+	while(*data != 0 ) {
+		usart3_transmit(*(data++));
+		_delay_ms( 10 );
+	}
 	return 0;
 }
 
@@ -148,8 +155,10 @@ unsigned char usart3_sendstring(char *data,unsigned char length) {
  * \return The character from the RX USART buffer
  */
 unsigned char usart3_receive(void ) {
+	
 	/* Wait for data to be received */
 	while (!(UCSR3A & (1<<RXC3)));
+	
 	/* Get and return received data from buffer */
 	return UDR0;
 }
@@ -159,22 +168,22 @@ unsigned char usart3_receive(void ) {
  * need to poll the USART, it does NOT wait until a character is in the buffer.
  * \return The character from the RX USART buffer
  */
-unsigned char poll_usart3_receive(void ) {
+unsigned char poll_usart3_receive(void ) 
+{
 	/* Check if data is received */
 	return ((UCSR3A & (1<<RXC3)));
 }
 
 
-
+/*! \brief UART3 Receive Complete interrupt
+ * Purpose:  called when the UART3 has received a character
+ * echos to UART0
+ * \return none
+ */
 ISR(USART3_RX_vect)
-/*************************************************************************
-Function: UART3 Receive Complete interrupt
-Purpose:  called when the UART3 has received a character
-**************************************************************************/
 {
 	unsigned char data;
-	
-	
+
 	/* read UART data register */
 	data = UDR3;
 	
@@ -183,14 +192,14 @@ Purpose:  called when the UART3 has received a character
 	
 	/* Put data into buffer, sends the data */
 	UDR0 = data;
-
 }
 
+/*! \brief UART0 Receive Complete interrupt
+ * Purpose:  called when the UART0 has received a character
+ * echos to UART3
+ * \return none
+ */
 ISR(USART0_RX_vect)
-/*************************************************************************
-Function: UART0 Receive Complete interrupt
-Purpose:  called when the UART0 has received a character
-**************************************************************************/
 {
 	unsigned char data;
 
@@ -203,46 +212,84 @@ Purpose:  called when the UART0 has received a character
 	/* Put data into buffer, sends the data */
 	UDR3 = data;
 	
+	
+	// NO ECHO
 	/* Wait for empty transmit buffer */
-	while (!( UCSR0A & (1<<UDRE0)));
-	UDR0 = data;
+	//while (!( UCSR0A & (1<<UDRE0)));
+	//UDR0 = data;
 
 }
 
+static unsigned char pc3on = 0;
+static const char string_at_gps_inf[]="AT+CGPSINF=0\r\n";
 
 int main(void) 
 { 
+	static unsigned int counter = 0;
+	
 	usart0_init( BAUD_PRESCALE );
 
 	usart3_init( BAUD_PRESCALE ) ;
 
-
-	usart0_sendstring("SYSTEM\r\n",8);
-	usart3_sendstring("ATE1\r\n",5);
+	// say hi
+	static const char string_hi[] = "\r\n\r\n[NULL SPACE LABS] 032.la\r\n\r\nSYSTEM BOOTING\r\n\r\n";
+	usart0_sendstring(string_hi,sizeof(string_hi) );
 
 	//outputs
 	SET_BIT( DDRD, _BV(PD7) );
 	SET_BIT( PORTD, _BV(PD7) );
 	
-	CLEAR_BIT( DDRC, _BV(PC0) );
 
 	//inputs
 	CLEAR_BIT( DDRC, _BV(PC3) );
 	SET_BIT( PORTC, _BV(PC3) );
+
+	pc3on = 1;
 	
 	CLEAR_BIT( DDRC, _BV(PC0) );
   	SET_BIT( PORTC, _BV(PC0) );
 
-	//Start interrupst
+	_delay_ms(1500);
+
+	// init GPS
+	static const char gsm_init_string[] = "AT+CNUM\r\nATE1\r\n";
+	usart3_sendstring( gsm_init_string);
+
+	//Start interrupts
 	sei();
 	
 	for(;;) 
 	{ 
 
-		if( bit_is_clear( PINC, PC3 )) {
-			SET_BIT(PORTD, PD7);
-		} else {
-			CLEAR_BIT(PORTD, PD7);
+		// switch pressed?
+		if( bit_is_clear( PINC, PC3 ) ) {
+			
+			if(  pc3on == 0 ) {
+			
+				SET_BIT(PORTD, PD7);
+				usart0_sendstring("PC3 SET\r\n",9);
+				pc3on = 1;
+				
+			} else {
+				
+				CLEAR_BIT(PORTD, PD7);
+				usart0_sendstring("PC3 CLEAR\r\n",11);
+				pc3on = 0;
+			}
+			
 		}
-	}	 
-} 
+		
+		if( bit_is_clear( PINC, PC0 ) ) {
+			usart3_sendstring( string_at_gps_inf );
+		}
+					
+		_delay_ms( 500 );	
+	
+		counter++ ;
+		
+		if( counter == 10 ) {
+			//usart3_sendstring( string_at_gps_inf);
+			counter = 0;
+		}		
+	}
+}			
