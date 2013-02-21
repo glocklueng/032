@@ -11,7 +11,7 @@
 // utilities
 #include <util/delay.h>
 
-
+// include or local libs
 #include "libs/mma7455.h"
 
 // handy macros
@@ -34,7 +34,6 @@
 // Define baud rate 
 #define USART_BAUDRATE	( 57600UL )
 #define BAUD_PRESCALE	((( F_CPU / ( USART_BAUDRATE * 16UL ))) - 1 ) 
-
 
 /*! \brief Initialize the USART0 for the communication bus 
  * This function is used to initialize the USART which a baudrate
