@@ -11,6 +11,9 @@
 // utilities
 #include <util/delay.h>
 
+
+#include "libs/mma7455.h"
+
 // handy macros
 #define SET_BIT(p,m) ((p) |= (m))
 #define CLEAR_BIT(p,m) ((p) &= ~(m))
@@ -283,8 +286,8 @@ void  hibernate(void)
 
     PCICR = (1<<PCIE0) | (1<<PCIE2);          // enable interrupt on pin-change on PB0 and PD0
 
-// for atmega328
-#if 0
+
+#if defined( ATMEGA328 )
 	{
 		volatile uint8_t mcutmp;
 	    mcutmp = MCUCR | ((1<<BODS) | (1<<BODSE));
@@ -299,6 +302,40 @@ void  hibernate(void)
     sleep_disable	();                       // just woke up, disable sleep mode for safety
     PRR0 = PRR0 & ~((1<<PRTWI) | (1<<PRTIM2));// bring up the systems we need now
 
+}
+
+/////////////////////////////////////////////////////
+//
+// Timer code
+//
+/////////////////////////////////////////////////////
+
+// value from http://www.et06.dk/atmega_timers/ 16Mhz 64 Prescaler
+#define PRELOAD_TIMER		( 250 )
+
+/*! \brief setup a 1Khz timer
+ * Purpose:  interrput based timer for general timing
+ * \return none
+ */
+void setup_timer( void ) 
+{
+
+   TIMSK0 |= (1 << TOIE1);					// Enable overflow interrupt 
+   
+   TCNT1 = PRELOAD_TIMER; 					// Preload timer with precalculated value 
+
+   TCCR1B |= ((1 << CS10) | (1 << CS11)); 	// Set up timer at Fcpu/64 
+   
+}
+
+/*! \brief timer interrupt handler
+ * Purpose:  interrput based timer for general timing
+ * \return none
+ */
+
+ISR(TIMER1_OVF_vect) 
+{ 
+   TCNT1  = PRELOAD_TIMER; // Reload timer with precalculated value 
 }
 
 
@@ -355,7 +392,7 @@ int main(void)
 	// init GPS etc
 	usart3_sendstring( gsm_init_string );
 
-	//Start interrupts
+	// start interrupts
 	sei();
 	
 	// main loop
@@ -366,11 +403,13 @@ int main(void)
 			
 			if(  pc3on == 0 ) {
 			
+				// set POWERKEY
 				SET_BIT(PORTD, PD7);
 				pc3on = 1;
 				
 			} else {
 				
+				// clear POWERKEY
 				CLEAR_BIT(PORTD, PD7);
 				pc3on = 0;
 			}
