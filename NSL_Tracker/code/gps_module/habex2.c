@@ -418,7 +418,6 @@ int main(void)
 
 			// delay, simple debouncer
 			_delay_ms( 500 );	
-	
 		}
 		
 		// if button is pressed, send this gps string
