@@ -45,6 +45,7 @@ int16_t mma_read10( uint8_t address );
 void mma_calibrate_offset( int16_t x, int16_t y, int16_t z );
 void mma_wait_until_ready();
 void mma_get_average( uint8_t power_of_two, int16_t * x, int16_t * y, int16_t * z );
+void mma_get_average8( uint8_t power_of_two, signed char * x8, signed char * y8, signed char * z8 );
 
 #if defined(USE_INTERRUPT)
 void mma_get_moving_average( int16_t * x, int16_t * y, int16_t * z );
