@@ -25,6 +25,9 @@
 #define sbi(sfr, bit) (_SFR_BYTE(sfr) |= _BV(bit))
 #endif
 
+// globals
+static unsigned char runmode = 0;
+
 //////////////////////////////////////////////////////////////////
 //
 // USART code
@@ -313,13 +316,13 @@ void  hibernate(void)
 #define PRELOAD_TIMER		( 250 )
 
 /*! \brief setup a 1Khz timer
- * Purpose:  interrput based timer for general timing
+ * Purpose:  interrupt based timer for general timing
  * \return none
  */
 void setup_timer( void ) 
 {
 
-   TIMSK0 |= (1 << TOIE1);					// Enable overflow interrupt 
+   TIMSK1 |= (1 << TOIE1);					// Enable overflow interrupt 
    
    TCNT1 = PRELOAD_TIMER; 					// Preload timer with precalculated value 
 
@@ -327,13 +330,16 @@ void setup_timer( void )
    
 }
 
+
 /*! \brief timer interrupt handler
- * Purpose:  interrput based timer for general timing
+ * Purpose:  interrupt based timer for general timing
  * \return none
  */
 
 ISR(TIMER1_OVF_vect) 
 { 
+	runmode = 1;
+	
    TCNT1  = PRELOAD_TIMER; // Reload timer with precalculated value 
 }
 
@@ -345,14 +351,16 @@ ISR(TIMER1_OVF_vect)
 /////////////////////////////////////////////////////
 
 // status of PC3 line
-static unsigned char pc3on = 0;
+static unsigned char pc3on = 1;
 
 // AT CMD's
 static const char string_at_gps_inf[]	= "AT+CGPSINF=0\r\n";
-static const char gsm_init_string[]		= "AT+CNUM\r\nATE1\r\n";
+static const char gsm_init_string[]		= "AT+GSV\r\nAT+CNUM\r\nATE1\r\nAT+CGPSPWR=1\r\nAT+CGPSRST=1\r\n";
 
 // Boot string
 static const char string_hi[] = "\r\n\r\n[NULL SPACE LABS] 032.la\r\n\r\nSYSTEM BOOTING\r\n\r\n";
+
+
 
 int main(void) 
 { 
@@ -376,10 +384,16 @@ int main(void)
 
 	// first switch
 	CLEAR_BIT( DDRC,  _BV(PC3) );
-	SET_BIT  ( PORTC, _BV(PC3) );
 
 	// state of PC3
-	pc3on = 1;
+	pc3on = 0;
+
+	if( pc3on) {
+		SET_BIT  ( PORTC, _BV(PC3) );
+	} else {
+		CLEAR_BIT( PORTC, _BV(PC3) );
+	}
+		
 	
 	// second switch
 	CLEAR_BIT( DDRC,  _BV(PC0) );
@@ -393,7 +407,10 @@ int main(void)
 
 	// init GPS etc
 	usart3_sendstring( gsm_init_string );
-
+	
+	// timer on
+	setup_timer();
+	
 	// start interrupts
 	sei();
 	
@@ -421,10 +438,21 @@ int main(void)
 		}
 		
 		// if button is pressed, send this gps string
-		if( bit_is_clear( PINC, PC0 ) ) {
+		if(  bit_is_clear( PINC, PC0 ) ) {
 			usart3_sendstring( string_at_gps_inf );
+			
+			runmode = 0  ;
 		}
 						
+		{
+							
+			int16_t x,y,z;
+			char buffer[64];
+			mma_get_average( 1, &x, &y, &z );
+							
+			sprintf(buffer,"accel x=%d,y=%d,z=%d\r\n", x,y,z);
+			usart3_sendstring( buffer );
+		}
 		counter++ ;
 	}
 }			

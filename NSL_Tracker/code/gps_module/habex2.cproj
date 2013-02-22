@@ -90,5 +90,11 @@
     <Compile Include="habex2.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="mma7455.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="mma7455.h">
+      <SubType>compile</SubType>
+    </Compile>
   </ItemGroup>
 </Project>
