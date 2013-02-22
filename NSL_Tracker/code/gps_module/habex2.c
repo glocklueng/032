@@ -336,7 +336,7 @@ ISR(TIMER1_OVF_vect)
 { 
 	runmode = 1;
 	
-   TCNT1  = PRELOAD_TIMER; // Reload timer with precalculated value 
+   TCNT1  = PRELOAD_TIMER; // Reload timer with pre-calculated value 
 }
 
 /////////////////////////////////////////////////////
@@ -350,7 +350,8 @@ static unsigned char pc3on = 1;
 
 // AT CMD's
 static const char string_at_gps_inf[]	= "AT+CGPSINF=0\r\n";
-static const char gsm_init_string[]		= "AT+GSV\r\nAT+CNUM\r\nATE1\r\nAT+CGPSPWR=1\r\nAT+CGPSRST=1\r\n";
+static const char gsm_init_string[]		= "AT+GSV\r\nAT+CNUM\r\nATE1\r\nAT+CGPSPWR=1\r\n";
+static const char gsm_reset_string[]	= "AT+CGPSRST=1\r\n";
 
 // Boot string
 static const char string_hi[] = "\r\n\r\n[NULL SPACE LABS] 032.la\r\n\r\nSYSTEM BOOTING\r\n\r\n";
@@ -387,13 +388,13 @@ int main(void)
 		CLEAR_BIT( PORTC, _BV(PC3) );
 	}
 		
-	
 	// second switch
 	CLEAR_BIT( DDRC,  _BV(PC0) );
   	SET_BIT  ( PORTC, _BV(PC0) );
 
 	// setup the accelerometer
 	mma_init();
+	
 	_delay_ms(25);
 
 	uint8_t i2cad = mma_read( MMA_I2CAD );
@@ -406,12 +407,14 @@ int main(void)
 	mma_write( MMA_MCTL, 0b00000101 ); 				// 2g range; measurement mode
 
 	mma_calibrate_offset( 0, 0, 0 );
+
+	// init GPS etc
+	usart3_sendstring( gsm_init_string );
 	
 	// give everything time to warmup
 	_delay_ms( 1500 );
 
-	// init GPS etc
-	usart3_sendstring( gsm_init_string );
+	usart3_sendstring( gsm_reset_string );
 	
 	// timer on
 	setup_timer();
@@ -454,7 +457,7 @@ int main(void)
 							
 			int16_t x,y,z;
 			char buffer[64];
-			//mma_get_average( 8, &x, &y, &z );
+			//mma_get_average( 4, &x, &y, &z );
 				
 			x = mma_read( MMA_XOUT8  );
 			y = mma_read( MMA_YOUT8  );
@@ -466,6 +469,7 @@ int main(void)
 				usart3_sendstring( buffer );
 			}		
 		}
+
 		counter++ ;
 	}
 }			

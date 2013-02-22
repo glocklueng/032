@@ -134,6 +134,24 @@ void mma_get_average( uint8_t power_of_two, int16_t * x, int16_t * y, int16_t * 
     *z = ( accu_z + ( 1 << ( power_of_two - 1 ) ) ) >> power_of_two;
 }
 
+void mma_get_average8( uint8_t power_of_two, signed char * x8, signed char * y8, signed char * z8 )
+{
+	int16_t accu_x = 0;
+	int16_t accu_y = 0;
+	int16_t accu_z = 0;
+	uint8_t i;
+	for ( i = 0; i < ( 1 << power_of_two ); ++i ) {
+		mma_wait_until_ready();
+		accu_x += mma_read( MMA_XOUT8 );
+		accu_y += mma_read( MMA_YOUT8 );
+		accu_z += mma_read( MMA_ZOUT8 );
+	}
+	*x8 = ( accu_x + ( 1 << ( power_of_two - 1 ) ) ) >> power_of_two;
+	*y8 = ( accu_y + ( 1 << ( power_of_two - 1 ) ) ) >> power_of_two;
+	*z8 = ( accu_z + ( 1 << ( power_of_two - 1 ) ) ) >> power_of_two;
+}
+
+
 #define POWER_OF_TWO 		( 5 )
 
 static volatile int16_t x_array[ 1 << POWER_OF_TWO ];
