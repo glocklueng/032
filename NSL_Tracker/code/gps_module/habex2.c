@@ -19,10 +19,10 @@
 #define CLEAR_BIT(p,m) ((p) &= ~(m))
 
 #ifndef cbi
-#define cbi(sfr, bit) (_SFR_BYTE(sfr) &= ~_BV(bit))
+#	define cbi(sfr, bit) (_SFR_BYTE(sfr) &= ~_BV(bit))
 #endif
 #ifndef sbi
-#define sbi(sfr, bit) (_SFR_BYTE(sfr) |= _BV(bit))
+#	define sbi(sfr, bit) (_SFR_BYTE(sfr) |= _BV(bit))
 #endif
 
 // globals
@@ -256,7 +256,6 @@ ISR(USART0_RX_vect)
 //
 /////////////////////////////////////////////////////
 
-
 /*! \brief shutdown ADC
  * Purpose:  Save power by turning off ADC
  * \return none
@@ -269,15 +268,14 @@ void shutdown_adc(void)
     DIDR1 = 0x03;                           // disable AIN0 and AIN1
 }
 
-
 /*! \brief go into hibernation
  * Purpose:  Save power by sleeping
  * \return none
  */
 void  hibernate(void)
 {
-
     cli();                                    // quiet for just a moment
+	
     shutdown_adc();                           // prepare ADC for sleep
 
     PRR0 = (1<<PRTWI) | (1<<PRTIM0) | (1<<PRTIM1) | (1<<PRTIM2) | (1<<PRSPI) | (1<<PRADC) | (1<<PRUSART0);
@@ -287,7 +285,6 @@ void  hibernate(void)
     sei();                                    // allow interrupts to end sleep mode                                    
 
     PCICR = (1<<PCIE0) | (1<<PCIE2);          // enable interrupt on pin-change on PB0 and PD0
-
 
 #if defined( ATMEGA328 )
 	{
@@ -330,7 +327,6 @@ void setup_timer( void )
    
 }
 
-
 /*! \brief timer interrupt handler
  * Purpose:  interrupt based timer for general timing
  * \return none
@@ -342,7 +338,6 @@ ISR(TIMER1_OVF_vect)
 	
    TCNT1  = PRELOAD_TIMER; // Reload timer with precalculated value 
 }
-
 
 /////////////////////////////////////////////////////
 //
@@ -359,8 +354,6 @@ static const char gsm_init_string[]		= "AT+GSV\r\nAT+CNUM\r\nATE1\r\nAT+CGPSPWR=
 
 // Boot string
 static const char string_hi[] = "\r\n\r\n[NULL SPACE LABS] 032.la\r\n\r\nSYSTEM BOOTING\r\n\r\n";
-
-
 
 int main(void) 
 { 
