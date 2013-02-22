@@ -448,10 +448,12 @@ int main(void)
 							
 			int16_t x,y,z;
 			char buffer[64];
-			mma_get_average( 1, &x, &y, &z );
+			mma_get_average( 8, &x, &y, &z );
 							
-			sprintf(buffer,"accel x=%d,y=%d,z=%d\r\n", x,y,z);
-			usart3_sendstring( buffer );
+			if( x != -1 ) {
+				sprintf(buffer,"accel x=%d,y=%d,z=%d\r\n", x,y,z);
+				usart3_sendstring( buffer );
+			}		
 		}
 		counter++ ;
 	}
