@@ -401,7 +401,19 @@ int main(void)
 
 	// setup the accelerometer
 	mma_init();
+	_delay_ms(25);
 
+	uint8_t i2cad = mma_read( MMA_I2CAD );
+	mma_write( MMA_I2CAD, i2cad |= MMA_I2CDIS_bit ); // disable I2C
+
+	uint8_t ctl1 = mma_read( MMA_CTL1 );
+
+	mma_write( MMA_CTL1, ctl1 |= MMA_DFBW_bit ); 	// high output data rate
+
+	mma_write( MMA_MCTL, 0b00000101 ); 				// 2g range; measurement mode
+
+	mma_calibrate_offset( 0, 0, 0 );
+	
 	// give everything time to warmup
 	_delay_ms( 1500 );
 
@@ -443,13 +455,19 @@ int main(void)
 			
 			runmode = 0  ;
 		}
-						
+				
+		//test mma7455..		
 		{
 							
 			int16_t x,y,z;
 			char buffer[64];
-			mma_get_average( 8, &x, &y, &z );
-							
+			//mma_get_average( 8, &x, &y, &z );
+				
+			x = mma_read( MMA_XOUT8  );
+			y = mma_read( MMA_YOUT8  );
+			z = mma_read( MMA_ZOUT8  );
+						
+			// timed out	
 			if( x != -1 ) {
 				sprintf(buffer,"accel x=%d,y=%d,z=%d\r\n", x,y,z);
 				usart3_sendstring( buffer );
