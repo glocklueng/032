@@ -204,6 +204,9 @@ unsigned char poll_usart3_receive(void )
 	return ((UCSR3A & (1<<RXC3)));
 }
 
+#define LAST_STRING_LENGTH	( 256 )
+unsigned char lastString[ LAST_STRING_LENGTH ];
+unsigned int index = 0;
 
 /*! \brief UART3 Receive Complete interrupt
  * Purpose:  called when the UART3 has received a character
@@ -222,6 +225,13 @@ ISR(USART3_RX_vect)
 	
 	/* Put data into buffer, sends the data */
 	UDR0 = data;
+	lastString[ index ] = data; 
+	
+	index++;
+	index %= LAST_STRING_LENGTH;
+	
+	if (data == '\r' || data == '\n' ) 
+		index = 0;
 }
 
 /*! \brief UART0 Receive Complete interrupt
@@ -350,8 +360,12 @@ static unsigned char pc3on = 1;
 
 // AT CMD's
 static const char string_at_gps_inf[]	= "AT+CGPSINF=0\r\n";
+<<<<<<< .mine
+static const char gsm_init_string[]		= "AT+GSV\r\nAT+CNUM\r\nATE1\r\nAT+CGPSPWR=1\r\nAT+CGPSRST=1\r\nAT+CMGF=1\r\n";
+=======
 static const char gsm_init_string[]		= "AT+GSV\r\nAT+CNUM\r\nATE1\r\nAT+CGPSPWR=1\r\n";
 static const char gsm_reset_string[]	= "AT+CGPSRST=1\r\n";
+>>>>>>> .r1809
 
 // Boot string
 static const char string_hi[] = "\r\n\r\n[NULL SPACE LABS] 032.la\r\n\r\nSYSTEM BOOTING\r\n\r\n";
@@ -359,6 +373,8 @@ static const char string_hi[] = "\r\n\r\n[NULL SPACE LABS] 032.la\r\n\r\nSYSTEM 
 int main(void) 
 { 
 	static unsigned int counter = 0;
+	
+	index = 0;
 	
 	// initialise the two UARTS used
 	usart0_init( BAUD_PRESCALE );
@@ -447,7 +463,16 @@ int main(void)
 		
 		// if button is pressed, send this gps string
 		if(  bit_is_clear( PINC, PC0 ) ) {
+			
+			index = 0;
 			usart3_sendstring( string_at_gps_inf );
+			
+			
+			_delay_ms( 1500 );	
+			
+			usart3_sendstring("\r\n");
+			usart3_sendstring( lastString );
+			usart3_sendstring("\r\n");
 			
 			runmode = 0  ;
 		}
@@ -465,8 +490,8 @@ int main(void)
 						
 			// timed out	
 			if( x != -1 ) {
-				sprintf(buffer,"accel x=%d,y=%d,z=%d\r\n", x,y,z);
-				usart3_sendstring( buffer );
+		//		sprintf(buffer,"accel x=%d,y=%d,z=%d\r\n", x,y,z);
+		//		usart3_sendstring( buffer );
 			}		
 		}
 
