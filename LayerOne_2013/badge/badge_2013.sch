@@ -8,34 +8,34 @@
 </settings>
 <grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
-<layer number="1" name="Top" color="4" fill="1" visible="yes" active="no"/>
-<layer number="2" name="Route2" color="1" fill="3" visible="yes" active="no"/>
-<layer number="3" name="Route3" color="4" fill="3" visible="yes" active="no"/>
-<layer number="4" name="Route4" color="1" fill="4" visible="yes" active="no"/>
-<layer number="5" name="Route5" color="4" fill="4" visible="yes" active="no"/>
-<layer number="6" name="Route6" color="1" fill="8" visible="yes" active="no"/>
-<layer number="7" name="Route7" color="4" fill="8" visible="yes" active="no"/>
-<layer number="8" name="Route8" color="1" fill="2" visible="yes" active="no"/>
-<layer number="9" name="Route9" color="4" fill="2" visible="yes" active="no"/>
-<layer number="10" name="Route10" color="1" fill="7" visible="yes" active="no"/>
-<layer number="11" name="Route11" color="4" fill="7" visible="yes" active="no"/>
-<layer number="12" name="Route12" color="1" fill="5" visible="yes" active="no"/>
-<layer number="13" name="Route13" color="4" fill="5" visible="yes" active="no"/>
-<layer number="14" name="Route14" color="1" fill="6" visible="yes" active="no"/>
-<layer number="15" name="Route15" color="4" fill="6" visible="yes" active="no"/>
-<layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="no"/>
-<layer number="17" name="Pads" color="2" fill="1" visible="yes" active="no"/>
-<layer number="18" name="Vias" color="2" fill="1" visible="yes" active="no"/>
-<layer number="19" name="Unrouted" color="6" fill="1" visible="yes" active="no"/>
-<layer number="20" name="Dimension" color="15" fill="1" visible="yes" active="no"/>
-<layer number="21" name="tPlace" color="7" fill="1" visible="yes" active="no"/>
-<layer number="22" name="bPlace" color="7" fill="1" visible="yes" active="no"/>
-<layer number="23" name="tOrigins" color="15" fill="1" visible="yes" active="no"/>
-<layer number="24" name="bOrigins" color="15" fill="1" visible="yes" active="no"/>
-<layer number="25" name="tNames" color="7" fill="1" visible="yes" active="no"/>
-<layer number="26" name="bNames" color="7" fill="1" visible="yes" active="no"/>
-<layer number="27" name="tValues" color="7" fill="1" visible="yes" active="no"/>
-<layer number="28" name="bValues" color="7" fill="1" visible="yes" active="no"/>
+<layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
+<layer number="2" name="Route2" color="1" fill="3" visible="no" active="no"/>
+<layer number="3" name="Route3" color="4" fill="3" visible="no" active="no"/>
+<layer number="4" name="Route4" color="1" fill="4" visible="no" active="no"/>
+<layer number="5" name="Route5" color="4" fill="4" visible="no" active="no"/>
+<layer number="6" name="Route6" color="1" fill="8" visible="no" active="no"/>
+<layer number="7" name="Route7" color="4" fill="8" visible="no" active="no"/>
+<layer number="8" name="Route8" color="1" fill="2" visible="no" active="no"/>
+<layer number="9" name="Route9" color="4" fill="2" visible="no" active="no"/>
+<layer number="10" name="Route10" color="1" fill="7" visible="no" active="no"/>
+<layer number="11" name="Route11" color="4" fill="7" visible="no" active="no"/>
+<layer number="12" name="Route12" color="1" fill="5" visible="no" active="no"/>
+<layer number="13" name="Route13" color="4" fill="5" visible="no" active="no"/>
+<layer number="14" name="Route14" color="1" fill="6" visible="no" active="no"/>
+<layer number="15" name="Route15" color="4" fill="6" visible="no" active="no"/>
+<layer number="16" name="Bottom" color="1" fill="1" visible="no" active="no"/>
+<layer number="17" name="Pads" color="2" fill="1" visible="no" active="no"/>
+<layer number="18" name="Vias" color="2" fill="1" visible="no" active="no"/>
+<layer number="19" name="Unrouted" color="6" fill="1" visible="no" active="no"/>
+<layer number="20" name="Dimension" color="15" fill="1" visible="no" active="no"/>
+<layer number="21" name="tPlace" color="7" fill="1" visible="no" active="no"/>
+<layer number="22" name="bPlace" color="7" fill="1" visible="no" active="no"/>
+<layer number="23" name="tOrigins" color="15" fill="1" visible="no" active="no"/>
+<layer number="24" name="bOrigins" color="15" fill="1" visible="no" active="no"/>
+<layer number="25" name="tNames" color="7" fill="1" visible="no" active="no"/>
+<layer number="26" name="bNames" color="7" fill="1" visible="no" active="no"/>
+<layer number="27" name="tValues" color="7" fill="1" visible="no" active="no"/>
+<layer number="28" name="bValues" color="7" fill="1" visible="no" active="no"/>
 <layer number="29" name="tStop" color="7" fill="3" visible="no" active="no"/>
 <layer number="30" name="bStop" color="7" fill="6" visible="no" active="no"/>
 <layer number="31" name="tCream" color="7" fill="4" visible="no" active="no"/>
@@ -44,8 +44,8 @@
 <layer number="34" name="bFinish" color="6" fill="6" visible="no" active="no"/>
 <layer number="35" name="tGlue" color="7" fill="4" visible="no" active="no"/>
 <layer number="36" name="bGlue" color="7" fill="5" visible="no" active="no"/>
-<layer number="37" name="tTest" color="7" fill="1" visible="yes" active="no"/>
-<layer number="38" name="bTest" color="7" fill="1" visible="yes" active="no"/>
+<layer number="37" name="tTest" color="7" fill="1" visible="no" active="no"/>
+<layer number="38" name="bTest" color="7" fill="1" visible="no" active="no"/>
 <layer number="39" name="tKeepout" color="4" fill="11" visible="no" active="no"/>
 <layer number="40" name="bKeepout" color="1" fill="11" visible="no" active="no"/>
 <layer number="41" name="tRestrict" color="4" fill="10" visible="no" active="no"/>
@@ -53,16 +53,16 @@
 <layer number="43" name="vRestrict" color="2" fill="10" visible="no" active="no"/>
 <layer number="44" name="Drills" color="7" fill="1" visible="no" active="no"/>
 <layer number="45" name="Holes" color="7" fill="1" visible="no" active="no"/>
-<layer number="46" name="Milling" color="3" fill="1" visible="yes" active="no"/>
-<layer number="47" name="Measures" color="7" fill="1" visible="yes" active="no"/>
-<layer number="48" name="Document" color="7" fill="1" visible="yes" active="no"/>
-<layer number="49" name="Reference" color="7" fill="1" visible="yes" active="no"/>
-<layer number="50" name="dxf" color="7" fill="1" visible="yes" active="no"/>
-<layer number="51" name="tDocu" color="7" fill="1" visible="yes" active="no"/>
-<layer number="52" name="bDocu" color="7" fill="1" visible="yes" active="no"/>
-<layer number="53" name="tGND_GNDA" color="7" fill="1" visible="yes" active="no"/>
-<layer number="54" name="bGND_GNDA" color="7" fill="1" visible="yes" active="no"/>
-<layer number="56" name="wert" color="7" fill="1" visible="yes" active="no"/>
+<layer number="46" name="Milling" color="3" fill="1" visible="no" active="no"/>
+<layer number="47" name="Measures" color="7" fill="1" visible="no" active="no"/>
+<layer number="48" name="Document" color="7" fill="1" visible="no" active="no"/>
+<layer number="49" name="Reference" color="7" fill="1" visible="no" active="no"/>
+<layer number="50" name="dxf" color="7" fill="1" visible="no" active="no"/>
+<layer number="51" name="tDocu" color="7" fill="1" visible="no" active="no"/>
+<layer number="52" name="bDocu" color="7" fill="1" visible="no" active="no"/>
+<layer number="53" name="tGND_GNDA" color="7" fill="1" visible="no" active="no"/>
+<layer number="54" name="bGND_GNDA" color="7" fill="1" visible="no" active="no"/>
+<layer number="56" name="wert" color="7" fill="1" visible="no" active="no"/>
 <layer number="91" name="Nets" color="2" fill="1" visible="yes" active="yes"/>
 <layer number="92" name="Busses" color="1" fill="1" visible="yes" active="yes"/>
 <layer number="93" name="Pins" color="2" fill="1" visible="no" active="yes"/>
@@ -3860,23 +3860,6 @@ Source: http://www.murata.com .. GRM43DR72E224KW01.pdf</description>
 <text x="1.905" y="0.381" size="1.27" layer="25" ratio="10">&gt;NAME</text>
 <text x="1.905" y="-1.651" size="1.27" layer="27" ratio="10">&gt;VALUE</text>
 </package>
-<package name="LED5MM">
-<description>&lt;B&gt;LED&lt;/B&gt;&lt;p&gt;
-5 mm, round</description>
-<wire x1="2.54" y1="-1.905" x2="2.54" y2="1.905" width="0.2032" layer="21"/>
-<wire x1="2.54" y1="-1.905" x2="2.54" y2="1.905" width="0.254" layer="21" curve="-286.260205"/>
-<wire x1="-1.143" y1="0" x2="0" y2="1.143" width="0.1524" layer="51" curve="-90"/>
-<wire x1="0" y1="-1.143" x2="1.143" y2="0" width="0.1524" layer="51" curve="90"/>
-<wire x1="-1.651" y1="0" x2="0" y2="1.651" width="0.1524" layer="51" curve="-90"/>
-<wire x1="0" y1="-1.651" x2="1.651" y2="0" width="0.1524" layer="51" curve="90"/>
-<wire x1="-2.159" y1="0" x2="0" y2="2.159" width="0.1524" layer="51" curve="-90"/>
-<wire x1="0" y1="-2.159" x2="2.159" y2="0" width="0.1524" layer="51" curve="90"/>
-<circle x="0" y="0" radius="2.54" width="0.1524" layer="21"/>
-<pad name="A" x="-1.27" y="0" drill="0.8128" shape="octagon"/>
-<pad name="K" x="1.27" y="0" drill="0.8128" shape="octagon"/>
-<text x="3.175" y="0.5334" size="1.27" layer="25" ratio="10">&gt;NAME</text>
-<text x="3.2004" y="-1.8034" size="1.27" layer="27" ratio="10">&gt;VALUE</text>
-</package>
 <package name="LSU260">
 <description>&lt;B&gt;LED&lt;/B&gt;&lt;p&gt;
 1 mm, round, Siemens</description>
@@ -4801,6 +4784,23 @@ Source: http://www.ledtronics.com/ds/smd-0603/Dstr0092.pdf</description>
 <text x="-1" y="-2" size="1.27" layer="27">&gt;VALUE</text>
 <rectangle x1="-0.4" y1="0.175" x2="0" y2="0.4" layer="51"/>
 <rectangle x1="-0.25" y1="0.175" x2="0" y2="0.4" layer="21"/>
+</package>
+<package name="LED5MM">
+<description>&lt;B&gt;LED&lt;/B&gt;&lt;p&gt;
+5 mm, round</description>
+<wire x1="2.54" y1="-1.905" x2="2.54" y2="1.905" width="0.2032" layer="21"/>
+<wire x1="2.54" y1="-1.905" x2="2.54" y2="1.905" width="0.254" layer="21" curve="-286.260205"/>
+<wire x1="-1.143" y1="0" x2="0" y2="1.143" width="0.1524" layer="51" curve="-90"/>
+<wire x1="0" y1="-1.143" x2="1.143" y2="0" width="0.1524" layer="51" curve="90"/>
+<wire x1="-1.651" y1="0" x2="0" y2="1.651" width="0.1524" layer="51" curve="-90"/>
+<wire x1="0" y1="-1.651" x2="1.651" y2="0" width="0.1524" layer="51" curve="90"/>
+<wire x1="-2.159" y1="0" x2="0" y2="2.159" width="0.1524" layer="51" curve="-90"/>
+<wire x1="0" y1="-2.159" x2="2.159" y2="0" width="0.1524" layer="51" curve="90"/>
+<circle x="0" y="0" radius="2.54" width="0.1524" layer="21"/>
+<pad name="A" x="-1.27" y="0" drill="0.8128" shape="octagon"/>
+<pad name="K" x="1.27" y="0" drill="0.8128" shape="octagon"/>
+<text x="3.175" y="0.5334" size="1.27" layer="25" ratio="10">&gt;NAME</text>
+<text x="3.2004" y="-1.8034" size="1.27" layer="27" ratio="10">&gt;VALUE</text>
 </package>
 </packages>
 <symbols>
@@ -6745,54 +6745,54 @@ by exp-project-lbr.ulp</description>
 <part name="R2" library="rcl" deviceset="R-US_" device="R0805" value="20K"/>
 <part name="GND2" library="SparkFun" deviceset="GND" device=""/>
 <part name="SUPPLY5" library="supply2" deviceset="VCC" device=""/>
-<part name="LED1" library="led" deviceset="LED" device="5MM"/>
-<part name="LED2" library="led" deviceset="LED" device="5MM"/>
-<part name="LED3" library="led" deviceset="LED" device="5MM"/>
+<part name="LED1" library="led" deviceset="LED" device="3MM"/>
+<part name="LED2" library="led" deviceset="LED" device="3MM"/>
+<part name="LED3" library="led" deviceset="LED" device="3MM"/>
 <part name="LED4" library="led" deviceset="LED" device="3MM"/>
-<part name="LED5" library="led" deviceset="LED" device="5MM"/>
+<part name="LED5" library="led" deviceset="LED" device="3MM"/>
 <part name="LED6" library="led" deviceset="LED" device="3MM"/>
-<part name="LED7" library="led" deviceset="LED" device="5MM"/>
-<part name="LED8" library="led" deviceset="LED" device="5MM"/>
-<part name="LED9" library="led" deviceset="LED" device="5MM"/>
-<part name="LED10" library="led" deviceset="LED" device="5MM"/>
-<part name="LED11" library="led" deviceset="LED" device="5MM"/>
-<part name="LED12" library="led" deviceset="LED" device="5MM"/>
-<part name="LED13" library="led" deviceset="LED" device="5MM"/>
-<part name="LED14" library="led" deviceset="LED" device="5MM"/>
-<part name="LED15" library="led" deviceset="LED" device="5MM"/>
-<part name="LED16" library="led" deviceset="LED" device="5MM"/>
-<part name="LED17" library="led" deviceset="LED" device="5MM"/>
-<part name="LED18" library="led" deviceset="LED" device="5MM"/>
-<part name="LED19" library="led" deviceset="LED" device="5MM"/>
-<part name="LED20" library="led" deviceset="LED" device="5MM"/>
-<part name="LED21" library="led" deviceset="LED" device="5MM"/>
-<part name="LED22" library="led" deviceset="LED" device="5MM"/>
-<part name="LED23" library="led" deviceset="LED" device="5MM"/>
-<part name="LED24" library="led" deviceset="LED" device="5MM"/>
-<part name="LED25" library="led" deviceset="LED" device="5MM"/>
-<part name="LED26" library="led" deviceset="LED" device="5MM"/>
-<part name="LED27" library="led" deviceset="LED" device="5MM"/>
-<part name="LED28" library="led" deviceset="LED" device="5MM"/>
-<part name="LED29" library="led" deviceset="LED" device="5MM"/>
-<part name="LED30" library="led" deviceset="LED" device="5MM"/>
-<part name="LED31" library="led" deviceset="LED" device="5MM"/>
-<part name="LED32" library="led" deviceset="LED" device="5MM"/>
-<part name="LED33" library="led" deviceset="LED" device="5MM"/>
-<part name="LED34" library="led" deviceset="LED" device="5MM"/>
-<part name="LED35" library="led" deviceset="LED" device="5MM"/>
-<part name="LED36" library="led" deviceset="LED" device="5MM"/>
-<part name="LED37" library="led" deviceset="LED" device="5MM"/>
-<part name="LED38" library="led" deviceset="LED" device="5MM"/>
-<part name="LED39" library="led" deviceset="LED" device="5MM"/>
-<part name="LED40" library="led" deviceset="LED" device="5MM"/>
-<part name="LED41" library="led" deviceset="LED" device="5MM"/>
-<part name="LED42" library="led" deviceset="LED" device="5MM"/>
-<part name="LED43" library="led" deviceset="LED" device="5MM"/>
-<part name="LED44" library="led" deviceset="LED" device="5MM"/>
-<part name="LED45" library="led" deviceset="LED" device="5MM"/>
-<part name="LED46" library="led" deviceset="LED" device="5MM"/>
-<part name="LED47" library="led" deviceset="LED" device="5MM"/>
-<part name="LED48" library="led" deviceset="LED" device="5MM"/>
+<part name="LED7" library="led" deviceset="LED" device="3MM"/>
+<part name="LED8" library="led" deviceset="LED" device="3MM"/>
+<part name="LED9" library="led" deviceset="LED" device="3MM"/>
+<part name="LED10" library="led" deviceset="LED" device="3MM"/>
+<part name="LED11" library="led" deviceset="LED" device="3MM"/>
+<part name="LED12" library="led" deviceset="LED" device="3MM"/>
+<part name="LED13" library="led" deviceset="LED" device="3MM"/>
+<part name="LED14" library="led" deviceset="LED" device="3MM"/>
+<part name="LED15" library="led" deviceset="LED" device="3MM"/>
+<part name="LED16" library="led" deviceset="LED" device="3MM"/>
+<part name="LED17" library="led" deviceset="LED" device="3MM"/>
+<part name="LED18" library="led" deviceset="LED" device="3MM"/>
+<part name="LED19" library="led" deviceset="LED" device="3MM"/>
+<part name="LED20" library="led" deviceset="LED" device="3MM"/>
+<part name="LED21" library="led" deviceset="LED" device="3MM"/>
+<part name="LED22" library="led" deviceset="LED" device="3MM"/>
+<part name="LED23" library="led" deviceset="LED" device="3MM"/>
+<part name="LED24" library="led" deviceset="LED" device="3MM"/>
+<part name="LED25" library="led" deviceset="LED" device="3MM"/>
+<part name="LED26" library="led" deviceset="LED" device="3MM"/>
+<part name="LED27" library="led" deviceset="LED" device="3MM"/>
+<part name="LED28" library="led" deviceset="LED" device="3MM"/>
+<part name="LED29" library="led" deviceset="LED" device="3MM"/>
+<part name="LED30" library="led" deviceset="LED" device="3MM"/>
+<part name="LED31" library="led" deviceset="LED" device="3MM"/>
+<part name="LED32" library="led" deviceset="LED" device="3MM"/>
+<part name="LED33" library="led" deviceset="LED" device="3MM"/>
+<part name="LED34" library="led" deviceset="LED" device="3MM"/>
+<part name="LED35" library="led" deviceset="LED" device="3MM"/>
+<part name="LED36" library="led" deviceset="LED" device="3MM"/>
+<part name="LED37" library="led" deviceset="LED" device="3MM"/>
+<part name="LED38" library="led" deviceset="LED" device="3MM"/>
+<part name="LED39" library="led" deviceset="LED" device="3MM"/>
+<part name="LED40" library="led" deviceset="LED" device="3MM"/>
+<part name="LED41" library="led" deviceset="LED" device="3MM"/>
+<part name="LED42" library="led" deviceset="LED" device="3MM"/>
+<part name="LED43" library="led" deviceset="LED" device="3MM"/>
+<part name="LED44" library="led" deviceset="LED" device="3MM"/>
+<part name="LED45" library="led" deviceset="LED" device="3MM"/>
+<part name="LED46" library="led" deviceset="LED" device="3MM"/>
+<part name="LED47" library="led" deviceset="LED" device="3MM"/>
+<part name="LED48" library="led" deviceset="LED" device="3MM"/>
 <part name="U3" library="linear" deviceset="TL064" device="D"/>
 <part name="U$1" library="SparkFun" deviceset="USB-MINIB" device="-5PIN"/>
 <part name="BAT1" library="tvbgone-adj" deviceset="BATTERY" device="CR123A" value="CR123A"/>
