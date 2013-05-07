@@ -6768,11 +6768,11 @@ by exp-project-lbr.ulp</description>
 <parts>
 <part name="IC2" library="Outline" deviceset="NONOLITH_ATXMEGAXXA4U" device="-AU"/>
 <part name="IC1" library="23b_clock_noleds" deviceset="SLICE_NOSHIFT_TLC5947" device="HTSSOP32DAP" value=""/>
-<part name="R1" library="rcl" deviceset="R-US_" device="R0805" value="20K"/>
+<part name="R1T" library="rcl" deviceset="R-US_" device="R0805" value="20K"/>
 <part name="GND1" library="SparkFun" deviceset="GND" device=""/>
 <part name="SUPPLY3" library="supply2" deviceset="VCC" device=""/>
 <part name="IC3" library="23b_clock_noleds" deviceset="SLICE_NOSHIFT_TLC5947" device="HTSSOP32DAP" value=""/>
-<part name="R2" library="rcl" deviceset="R-US_" device="R0805" value="20K"/>
+<part name="R2T" library="rcl" deviceset="R-US_" device="R0805" value="20K"/>
 <part name="GND2" library="SparkFun" deviceset="GND" device=""/>
 <part name="SUPPLY5" library="supply2" deviceset="VCC" device=""/>
 <part name="LED1" library="led" deviceset="LED" device="3MM"/>
@@ -7263,11 +7263,11 @@ by exp-project-lbr.ulp</description>
 <instance part="LED47" gate="G$1" x="121.92" y="-76.2" rot="R270"/>
 <instance part="LED48" gate="G$1" x="121.92" y="-83.82" rot="R270"/>
 <instance part="IC1" gate="A" x="-63.5" y="68.58"/>
-<instance part="R1" gate="G$1" x="-96.52" y="73.66"/>
+<instance part="R1T" gate="G$1" x="-96.52" y="73.66"/>
 <instance part="GND1" gate="1" x="-102.87" y="60.96"/>
 <instance part="SUPPLY3" gate="G$1" x="-87.63" y="100.33"/>
 <instance part="IC3" gate="A" x="-63.5" y="-12.7"/>
-<instance part="R2" gate="G$1" x="-96.52" y="-7.62"/>
+<instance part="R2T" gate="G$1" x="-96.52" y="-7.62"/>
 <instance part="GND2" gate="1" x="-102.87" y="-20.32"/>
 <instance part="SUPPLY5" gate="G$1" x="-87.63" y="19.05"/>
 <instance part="BAT1" gate="G$1" x="205.74" y="91.44" smashed="yes">
@@ -8037,7 +8037,7 @@ by exp-project-lbr.ulp</description>
 <wire x1="-102.87" y1="73.66" x2="-102.87" y2="63.5" width="0.1524" layer="91"/>
 <wire x1="-86.36" y1="63.5" x2="-102.87" y2="63.5" width="0.1524" layer="91"/>
 <junction x="-102.87" y="63.5"/>
-<pinref part="R1" gate="G$1" pin="1"/>
+<pinref part="R1T" gate="G$1" pin="1"/>
 <pinref part="IC1" gate="A" pin="GND"/>
 <pinref part="GND1" gate="1" pin="GND"/>
 </segment>
@@ -8046,7 +8046,7 @@ by exp-project-lbr.ulp</description>
 <wire x1="-102.87" y1="-7.62" x2="-102.87" y2="-17.78" width="0.1524" layer="91"/>
 <wire x1="-86.36" y1="-17.78" x2="-102.87" y2="-17.78" width="0.1524" layer="91"/>
 <junction x="-102.87" y="-17.78"/>
-<pinref part="R2" gate="G$1" pin="1"/>
+<pinref part="R2T" gate="G$1" pin="1"/>
 <pinref part="IC3" gate="A" pin="GND"/>
 <pinref part="GND2" gate="1" pin="GND"/>
 </segment>
@@ -8067,7 +8067,7 @@ by exp-project-lbr.ulp</description>
 <segment>
 <wire x1="-86.36" y1="73.66" x2="-91.44" y2="73.66" width="0.1524" layer="91"/>
 <pinref part="IC1" gate="A" pin="IREF"/>
-<pinref part="R1" gate="G$1" pin="2"/>
+<pinref part="R1T" gate="G$1" pin="2"/>
 </segment>
 </net>
 <net name="SOUT" class="0">
@@ -8122,7 +8122,7 @@ by exp-project-lbr.ulp</description>
 <segment>
 <wire x1="-86.36" y1="-7.62" x2="-91.44" y2="-7.62" width="0.1524" layer="91"/>
 <pinref part="IC3" gate="A" pin="IREF"/>
-<pinref part="R2" gate="G$1" pin="2"/>
+<pinref part="R2T" gate="G$1" pin="2"/>
 </segment>
 </net>
 <net name="SOUT_2" class="0">
