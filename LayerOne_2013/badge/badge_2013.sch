@@ -436,29 +436,6 @@ by exp-project-lbr.ulp</description>
 </library>
 <library name="SparkFun">
 <packages>
-<package name="USB-MINIB">
-<description>&lt;b&gt;USB Series Mini-B Surface Mounted&lt;/b&gt;</description>
-<wire x1="-1.3" y1="3.8" x2="0.8" y2="3.8" width="0.2032" layer="21"/>
-<wire x1="3.3" y1="3.1" x2="3.3" y2="2.2" width="0.2032" layer="21"/>
-<wire x1="3.3" y1="-2.2" x2="3.3" y2="-3.1" width="0.2032" layer="21"/>
-<wire x1="0.8" y1="-3.8" x2="-1.3" y2="-3.8" width="0.2032" layer="21"/>
-<wire x1="-5.9" y1="3.8" x2="-5.9" y2="-3.8" width="0.2032" layer="51"/>
-<wire x1="-5.9" y1="-3.8" x2="-4.5" y2="-3.8" width="0.2032" layer="51"/>
-<wire x1="-5.9" y1="3.8" x2="-4.5" y2="3.8" width="0.2032" layer="51"/>
-<smd name="D+" x="2.5" y="0" dx="2.5" dy="0.5" layer="1"/>
-<smd name="D-" x="2.5" y="0.8" dx="2.5" dy="0.5" layer="1"/>
-<smd name="GND" x="2.5" y="-1.6" dx="2.5" dy="0.5" layer="1"/>
-<smd name="ID" x="2.5" y="-0.8" dx="2.5" dy="0.5" layer="1"/>
-<smd name="MTN3" x="-3" y="-4.5" dx="2.5" dy="2" layer="1"/>
-<smd name="MTN1" x="-3" y="4.5" dx="2.5" dy="2" layer="1"/>
-<smd name="MTN4" x="2.5" y="-4.5" dx="2.5" dy="2" layer="1"/>
-<smd name="MTN2" x="2.5" y="4.5" dx="2.5" dy="2" layer="1"/>
-<smd name="VBUS" x="2.5" y="1.6" dx="2.5" dy="0.5" layer="1"/>
-<text x="-3.81" y="1.27" size="0.4064" layer="25">&gt;NAME</text>
-<text x="-3.81" y="0" size="0.4064" layer="27">&gt;VALUE</text>
-<hole x="0" y="2.2" drill="0.9"/>
-<hole x="0" y="-2.2" drill="0.9"/>
-</package>
 <package name="CAP-PTH-SMALL">
 <wire x1="1.27" y1="0.635" x2="1.27" y2="-0.635" width="0.2032" layer="21"/>
 <pad name="1" x="0" y="0" drill="0.7" diameter="1.651"/>
@@ -672,21 +649,6 @@ Commonly used for small ceramic capacitors. Like our 0.1uF (http://www.sparkfun.
 <text x="-2.54" y="-2.54" size="1.778" layer="96">&gt;VALUE</text>
 <pin name="GND" x="0" y="2.54" visible="off" length="short" direction="sup" rot="R270"/>
 </symbol>
-<symbol name="USB-5PIN">
-<wire x1="7.62" y1="12.7" x2="0" y2="12.7" width="0.254" layer="94"/>
-<wire x1="0" y1="12.7" x2="0" y2="-2.54" width="0.254" layer="94"/>
-<wire x1="0" y1="-2.54" x2="7.62" y2="-2.54" width="0.254" layer="94"/>
-<text x="5.334" y="1.778" size="2.54" layer="94" rot="R90">USB</text>
-<pin name="D+" x="-2.54" y="5.08" visible="pad" length="short"/>
-<pin name="D-" x="-2.54" y="7.62" visible="pad" length="short"/>
-<pin name="VBUS" x="-2.54" y="10.16" visible="pad" length="short"/>
-<pin name="GND" x="-2.54" y="0" visible="pad" length="short"/>
-<pin name="ID" x="-2.54" y="2.54" visible="pad" length="short"/>
-<pin name="MTN1" x="2.54" y="15.24" visible="pad" length="short" rot="R270"/>
-<pin name="MTN2" x="5.08" y="15.24" visible="pad" length="short" rot="R270"/>
-<pin name="MTN3" x="2.54" y="-5.08" visible="pad" length="short" rot="R90"/>
-<pin name="MTN4" x="5.08" y="-5.08" visible="pad" length="short" rot="R90"/>
-</symbol>
 <symbol name="CAP">
 <wire x1="0" y1="2.54" x2="0" y2="2.032" width="0.1524" layer="94"/>
 <wire x1="0" y1="0" x2="0" y2="0.508" width="0.1524" layer="94"/>
@@ -719,34 +681,6 @@ Commonly used for small ceramic capacitors. Like our 0.1uF (http://www.sparkfun.
 </gates>
 <devices>
 <device name="">
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-<deviceset name="USB-MINIB">
-<description>&lt;b&gt;Mini-USB "B" connector with 5th pin broken out.&lt;/b&gt;&lt;p&gt;
-Created new symbol breaking out 5th "ID" pin in mini/micro USB connector spec.  See: http://en.wikipedia.org/wiki/Mini_usb#Cables.  Uses same footprint as 4-pin symbol.&lt;p&gt;
- 
-
-Also added pins to connect to mounting / shield pads if required (probably not generally needed as signals aren't shielded once they leave the connector).</description>
-<gates>
-<gate name="G$1" symbol="USB-5PIN" x="0" y="0"/>
-</gates>
-<devices>
-<device name="-5PIN" package="USB-MINIB">
-<connects>
-<connect gate="G$1" pin="D+" pad="D+"/>
-<connect gate="G$1" pin="D-" pad="D-"/>
-<connect gate="G$1" pin="GND" pad="GND"/>
-<connect gate="G$1" pin="ID" pad="ID"/>
-<connect gate="G$1" pin="MTN1" pad="MTN3"/>
-<connect gate="G$1" pin="MTN2" pad="MTN1"/>
-<connect gate="G$1" pin="MTN3" pad="MTN2"/>
-<connect gate="G$1" pin="MTN4" pad="MTN4"/>
-<connect gate="G$1" pin="VBUS" pad="VBUS"/>
-</connects>
 <technologies>
 <technology name=""/>
 </technologies>
@@ -6726,6 +6660,102 @@ by exp-project-lbr.ulp</description>
 </deviceset>
 </devicesets>
 </library>
+<library name="daspilker">
+<description>&lt;b&gt;Daniel Spilker's Eagle Library&lt;/b&gt;
+&lt;p&gt; The latest version of this library can be downloaded at
+&lt;a href="https://github.com/daspilker/daspilker-eagle-library"&gt;https://github.com/daspilker/daspilker-eagle-library&lt;/a&gt;.
+&lt;p&gt;
+&lt;a href="http://daniel-spilker.com/"&gt;http://daniel-spilker.com/&lt;/a&gt;</description>
+<packages>
+<package name="FCI-10103594-0001LF">
+<description>FCI 10103594-0001LF RA SMD USB Micro Type B Receptable</description>
+<wire x1="-3.75" y1="0" x2="-3.75" y2="5" width="0.127" layer="21"/>
+<wire x1="3.75" y1="5" x2="3.75" y2="0" width="0.127" layer="21"/>
+<smd name="5" x="1.3" y="4.525" dx="1.75" dy="0.4" layer="1" rot="R90"/>
+<smd name="1" x="-1.3" y="4.525" dx="1.75" dy="0.4" layer="1" rot="R90"/>
+<smd name="4" x="0.65" y="4.525" dx="1.75" dy="0.4" layer="1" rot="R90"/>
+<smd name="3" x="0" y="4.525" dx="1.75" dy="0.4" layer="1" rot="R90"/>
+<smd name="2" x="-0.65" y="4.525" dx="1.75" dy="0.4" layer="1" rot="R90"/>
+<text x="-4" y="0.1" size="0.762" layer="25" rot="R90">&gt;NAME</text>
+<text x="4" y="0.1" size="0.762" layer="27" rot="R90" align="top-left">&gt;VALUE</text>
+<pad name="P$3" x="-2.725" y="1.7" drill="1.2" diameter="2" shape="square"/>
+<pad name="P$4" x="2.725" y="1.7" drill="1.2" diameter="2" shape="square"/>
+<hole x="-2.425" y="4.73" drill="1.05"/>
+<hole x="2.425" y="4.73" drill="1.05"/>
+<wire x1="-3.75" y1="5" x2="-3.25" y2="5" width="0.127" layer="21"/>
+<wire x1="3.75" y1="5" x2="3.25" y2="5" width="0.127" layer="21"/>
+</package>
+<package name="HIROSE-ZX62-AB-5PA(11)">
+<smd name="P$3" x="0" y="4.125" dx="0.4" dy="1.35" layer="16" rot="R180"/>
+<smd name="P$2" x="0.65" y="4.125" dx="0.4" dy="1.35" layer="16" rot="R180"/>
+<smd name="P$1" x="1.3" y="4.125" dx="0.4" dy="1.35" layer="16" rot="R180"/>
+<smd name="P$4" x="-0.65" y="4.125" dx="0.4" dy="1.35" layer="16" rot="R180"/>
+<smd name="P$5" x="-1.3" y="4.125" dx="0.4" dy="1.35" layer="16" rot="R180"/>
+<rectangle x1="2.05" y1="3.2" x2="4.15" y2="4.8" layer="16" rot="R180"/>
+<rectangle x1="-4.15" y1="3.2" x2="-2.05" y2="4.8" layer="16" rot="R180"/>
+<rectangle x1="-2.15" y1="0.5" x2="-0.25" y2="2.4" layer="16" rot="R180"/>
+<rectangle x1="0.25" y1="0.5" x2="2.15" y2="2.4" layer="16" rot="R180"/>
+<rectangle x1="-4.9" y1="0.5" x2="-3.1" y2="2.4" layer="16" rot="R180"/>
+<rectangle x1="3.1" y1="0.5" x2="4.9" y2="2.4" layer="16" rot="R180"/>
+<rectangle x1="-4.15" y1="0" x2="4.15" y2="3.45" layer="42" rot="R180"/>
+<rectangle x1="-4.25" y1="3.1" x2="-1.95" y2="4.9" layer="30"/>
+<rectangle x1="1.95" y1="3.1" x2="4.3" y2="4.9" layer="30"/>
+<rectangle x1="-5" y1="0.4" x2="-3" y2="2.5" layer="30"/>
+<rectangle x1="3" y1="0.4" x2="5" y2="2.5" layer="30"/>
+<rectangle x1="-2.25" y1="0.4" x2="-0.15" y2="2.5" layer="30"/>
+<rectangle x1="0.15" y1="0.4" x2="2.25" y2="2.5" layer="30"/>
+</package>
+</packages>
+<symbols>
+<symbol name="MICROB-PLUG">
+<wire x1="-5.08" y1="7.62" x2="-5.08" y2="-7.62" width="0.508" layer="94"/>
+<wire x1="-5.08" y1="-7.62" x2="5.08" y2="-7.62" width="0.508" layer="94"/>
+<wire x1="5.08" y1="-7.62" x2="5.08" y2="7.62" width="0.508" layer="94"/>
+<wire x1="5.08" y1="7.62" x2="-5.08" y2="7.62" width="0.508" layer="94"/>
+<text x="-4.826" y="8.128" size="1.778" layer="95">&gt;NAME</text>
+<text x="-5.08" y="-9.906" size="1.778" layer="96">&gt;VALUE</text>
+<pin name="VCC" x="-7.62" y="5.08" length="short"/>
+<pin name="D-" x="-7.62" y="2.54" length="short"/>
+<pin name="D+" x="-7.62" y="0" length="short"/>
+<pin name="ID" x="-7.62" y="-2.54" length="short"/>
+<pin name="GND" x="-7.62" y="-5.08" length="short"/>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="USB-RECEPTABLE" prefix="JP">
+<description>&lt;b&gt;USB Receptable&lt;/b&gt;</description>
+<gates>
+<gate name="G$1" symbol="MICROB-PLUG" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="FCI-10103594-0001LF">
+<connects>
+<connect gate="G$1" pin="D+" pad="3"/>
+<connect gate="G$1" pin="D-" pad="2"/>
+<connect gate="G$1" pin="GND" pad="5"/>
+<connect gate="G$1" pin="ID" pad="4"/>
+<connect gate="G$1" pin="VCC" pad="1"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+<device name="-HIROSE-ZX62-AB-5PA(11)" package="HIROSE-ZX62-AB-5PA(11)">
+<connects>
+<connect gate="G$1" pin="D+" pad="P$4"/>
+<connect gate="G$1" pin="D-" pad="P$2"/>
+<connect gate="G$1" pin="GND" pad="P$5"/>
+<connect gate="G$1" pin="ID" pad="P$3"/>
+<connect gate="G$1" pin="VCC" pad="P$1"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -6794,7 +6824,6 @@ by exp-project-lbr.ulp</description>
 <part name="LED47" library="led" deviceset="LED" device="3MM"/>
 <part name="LED48" library="led" deviceset="LED" device="3MM"/>
 <part name="U3" library="linear" deviceset="TL064" device="D"/>
-<part name="U$1" library="SparkFun" deviceset="USB-MINIB" device="-5PIN"/>
 <part name="BAT1" library="tvbgone-adj" deviceset="BATTERY" device="CR123A" value="CR123A"/>
 <part name="P+5" library="supply1" deviceset="VCC" device=""/>
 <part name="GND6" library="supply1" deviceset="GND" device=""/>
@@ -6832,6 +6861,7 @@ by exp-project-lbr.ulp</description>
 <part name="GND10" library="SparkFun" deviceset="GND" device=""/>
 <part name="C12" library="SparkFun" deviceset="CAP" device="0805" value="0.1uF"/>
 <part name="GND11" library="SparkFun" deviceset="GND" device=""/>
+<part name="JP6" library="daspilker" deviceset="USB-RECEPTABLE" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -6843,7 +6873,6 @@ by exp-project-lbr.ulp</description>
 <instance part="U3" gate="B" x="271.78" y="203.2"/>
 <instance part="U3" gate="C" x="314.96" y="220.98"/>
 <instance part="U3" gate="D" x="314.96" y="203.2"/>
-<instance part="U$1" gate="G$1" x="55.88" y="99.06" rot="R180"/>
 <instance part="U1" gate="G$1" x="325.12" y="104.14"/>
 <instance part="C14" gate="G$1" x="284.48" y="139.7"/>
 <instance part="GND3" gate="1" x="297.18" y="154.94" rot="R180"/>
@@ -6878,6 +6907,7 @@ by exp-project-lbr.ulp</description>
 <instance part="GND10" gate="1" x="213.36" y="149.86" rot="R180"/>
 <instance part="C12" gate="G$1" x="213.36" y="86.36" rot="R90"/>
 <instance part="GND11" gate="1" x="226.06" y="86.36" rot="R90"/>
+<instance part="JP6" gate="G$1" x="53.34" y="93.98" rot="R180"/>
 </instances>
 <busses>
 </busses>
@@ -6912,10 +6942,10 @@ by exp-project-lbr.ulp</description>
 <junction x="226.06" y="71.12"/>
 </segment>
 <segment>
-<pinref part="U$1" gate="G$1" pin="GND"/>
-<wire x1="58.42" y1="99.06" x2="66.04" y2="99.06" width="0.1524" layer="91"/>
+<wire x1="60.96" y1="99.06" x2="66.04" y2="99.06" width="0.1524" layer="91"/>
 <wire x1="66.04" y1="99.06" x2="66.04" y2="106.68" width="0.1524" layer="91"/>
 <pinref part="GND8" gate="1" pin="GND"/>
+<pinref part="JP6" gate="G$1" pin="GND"/>
 </segment>
 <segment>
 <pinref part="U1" gate="G$1" pin="NC(GND)@1"/>
@@ -7123,9 +7153,9 @@ by exp-project-lbr.ulp</description>
 </net>
 <net name="VBUS" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="VBUS"/>
-<wire x1="58.42" y1="88.9" x2="66.04" y2="88.9" width="0.1524" layer="91"/>
+<wire x1="60.96" y1="88.9" x2="66.04" y2="88.9" width="0.1524" layer="91"/>
 <wire x1="66.04" y1="88.9" x2="66.04" y2="76.2" width="0.1524" layer="91"/>
+<pinref part="JP6" gate="G$1" pin="VCC"/>
 </segment>
 <segment>
 <pinref part="D1" gate="G$1" pin="P$4"/>
@@ -7140,8 +7170,8 @@ by exp-project-lbr.ulp</description>
 <label x="83.82" y="106.68" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="U$1" gate="G$1" pin="D-"/>
-<wire x1="58.42" y1="91.44" x2="66.04" y2="91.44" width="0.1524" layer="91"/>
+<wire x1="60.96" y1="91.44" x2="66.04" y2="91.44" width="0.1524" layer="91"/>
+<pinref part="JP6" gate="G$1" pin="D-"/>
 </segment>
 </net>
 <net name="D+" class="0">
@@ -7151,8 +7181,8 @@ by exp-project-lbr.ulp</description>
 <label x="78.74" y="106.68" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="U$1" gate="G$1" pin="D+"/>
-<wire x1="58.42" y1="93.98" x2="66.04" y2="93.98" width="0.1524" layer="91"/>
+<wire x1="60.96" y1="93.98" x2="66.04" y2="93.98" width="0.1524" layer="91"/>
+<pinref part="JP6" gate="G$1" pin="D+"/>
 </segment>
 </net>
 <net name="N$21" class="0">
