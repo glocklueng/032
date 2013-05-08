@@ -10447,7 +10447,7 @@ Source: &lt;a href="http://www.ndk.com/images/products/catalog/c_NX3225GA-STD-CR
 <part name="+3.3V" library="SparkFun" deviceset="VCC" device="" value="+3.3V"/>
 <part name="CON2" library="microbuilder" deviceset="HEADER-1X2" device="" value="EXT"/>
 <part name="C1" library="SparkFun" deviceset="CAP" device="0805" value="1uF"/>
-<part name="C3" library="SparkFun" deviceset="CAP" device="0805" value="0.1uF"/>
+<part name="C3" library="SparkFun" deviceset="CAP" device="0805" value="1uF"/>
 <part name="C4" library="SparkFun" deviceset="CAP" device="0805" value="0.1uF"/>
 <part name="JP2" library="microbuilder" deviceset="HEADER-1X2" device=""/>
 <part name="CH1" library="microbuilder" deviceset="HEADER-1X2" device="" value="CON2"/>
@@ -10456,8 +10456,8 @@ Source: &lt;a href="http://www.ndk.com/images/products/catalog/c_NX3225GA-STD-CR
 <part name="Z1" library="USBug" deviceset="PRTR5V0U2X" device=""/>
 <part name="GND7" library="SparkFun" deviceset="GND" device=""/>
 <part name="GND8" library="SparkFun" deviceset="GND" device=""/>
-<part name="D2" library="microbuilder" deviceset="LED" device="0805"/>
-<part name="D3" library="microbuilder" deviceset="LED" device="0805"/>
+<part name="D2" library="microbuilder" deviceset="LED" device="0805" value="red"/>
+<part name="D3" library="microbuilder" deviceset="LED" device="0805" value="grn"/>
 <part name="GND9" library="SparkFun" deviceset="GND" device=""/>
 <part name="GND10" library="SparkFun" deviceset="GND" device=""/>
 <part name="C12" library="SparkFun" deviceset="CAP" device="0805" value="0.1uF"/>
@@ -10474,12 +10474,12 @@ Source: &lt;a href="http://www.ndk.com/images/products/catalog/c_NX3225GA-STD-CR
 <part name="GND17" library="SparkFun" deviceset="GND" device=""/>
 <part name="C20" library="SparkFun" deviceset="CAP" device="0805" value="4.7uF"/>
 <part name="GND18" library="SparkFun" deviceset="GND" device=""/>
-<part name="C7" library="SparkFun" deviceset="CAP" device="0805" value="0.1uF"/>
+<part name="C7" library="SparkFun" deviceset="CAP" device="0805" value="1uF"/>
 <part name="GND19" library="SparkFun" deviceset="GND" device=""/>
 <part name="GND20" library="SparkFun" deviceset="GND" device=""/>
 <part name="C5" library="SparkFun" deviceset="CAP" device="0805" value="0.1uF"/>
 <part name="GND21" library="SparkFun" deviceset="GND" device=""/>
-<part name="C6" library="SparkFun" deviceset="CAP" device="0805" value="0.1uF"/>
+<part name="C6" library="SparkFun" deviceset="CAP" device="0805" value="1uF"/>
 <part name="R9" library="resistor" deviceset="R-US_" device="R0805" value="20.0K"/>
 <part name="D1" library="texas" deviceset="LM4041" device="DBZ" technology="D12" value="LM4040d20"/>
 <part name="GND22" library="SparkFun" deviceset="GND" device=""/>
