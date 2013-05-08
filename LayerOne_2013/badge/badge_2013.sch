@@ -5653,105 +5653,6 @@ Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
 </library>
 <library name="microbuilder">
 <packages>
-<package name="UG-2864HSWEG01_1.3_WRAPAROUND">
-<wire x1="-17.25" y1="15.5" x2="17.25" y2="15.5" width="0.127" layer="21"/>
-<wire x1="17.25" y1="15.5" x2="17.25" y2="-7.5" width="0.127" layer="21"/>
-<wire x1="17.25" y1="-7.5" x2="-17.25" y2="-7.5" width="0.127" layer="21"/>
-<wire x1="-17.25" y1="-7.5" x2="-17.25" y2="15.5" width="0.127" layer="21"/>
-<wire x1="-14.7" y1="13.4" x2="14.7" y2="13.4" width="0.127" layer="51" style="shortdash"/>
-<wire x1="14.7" y1="13.4" x2="14.7" y2="-1.3" width="0.127" layer="51" style="shortdash"/>
-<wire x1="14.7" y1="-1.3" x2="-14.7" y2="-1.3" width="0.127" layer="51" style="shortdash"/>
-<wire x1="-14.7" y1="-1.3" x2="-14.7" y2="13.4" width="0.127" layer="51" style="shortdash"/>
-<smd name="1" x="-10.15" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="2" x="-9.45" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="3" x="-8.75" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="4" x="-8.05" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="5" x="-7.35" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="6" x="-6.65" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="7" x="-5.95" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="8" x="-5.25" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="9" x="-4.55" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="10" x="-3.85" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="11" x="-3.15" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="12" x="-2.45" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="13" x="-1.75" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="14" x="-1.05" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="15" x="-0.35" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="16" x="0.35" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="17" x="1.05" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="18" x="1.75" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="19" x="2.45" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="20" x="3.15" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="21" x="3.85" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="22" x="4.55" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="23" x="5.25" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="24" x="5.95" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="25" x="6.65" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="26" x="7.35" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="27" x="8.05" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="28" x="8.75" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="29" x="9.45" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="30" x="10.15" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<text x="-9.95" y="1.512" size="0.8128" layer="52" font="vector" rot="R90">1</text>
-<text x="-3.65" y="1.412" size="0.8128" layer="52" font="vector" rot="R90">10</text>
-<text x="3.3" y="1.412" size="0.8128" layer="52" font="vector" rot="R90">20</text>
-<text x="10.45" y="1.412" size="0.8128" layer="52" font="vector" rot="R90">30</text>
-<text x="-16.9" y="16.9" size="0.8128" layer="25">&gt;NAME</text>
-<text x="-16.9" y="-9.1" size="0.8128" layer="27">&gt;VALUE</text>
-<text x="-2.6" y="-7" size="0.8128" layer="51">PCB EDGE</text>
-<hole x="-8" y="-4.45" drill="0.4"/>
-<hole x="8" y="-4.45" drill="0.4"/>
-</package>
-<package name="UG-2864HSWEG01_0.96IN_WRAPAROUND">
-<wire x1="-13.353" y1="14.36" x2="13.35" y2="14.36" width="0.127" layer="21"/>
-<wire x1="13.35" y1="14.36" x2="13.35" y2="-4.9" width="0.127" layer="21"/>
-<wire x1="13.35" y1="-4.9" x2="-13.35" y2="-4.9" width="0.127" layer="21"/>
-<wire x1="-13.35" y1="-4.9" x2="-13.353" y2="14.36" width="0.127" layer="21"/>
-<wire x1="-10.872" y1="12.26" x2="10.872" y2="12.26" width="0.127" layer="51" style="shortdash"/>
-<wire x1="10.872" y1="12.26" x2="10.872" y2="1.396" width="0.127" layer="51" style="shortdash"/>
-<wire x1="10.872" y1="1.396" x2="-10.872" y2="1.396" width="0.127" layer="51" style="shortdash"/>
-<wire x1="-10.872" y1="1.396" x2="-10.872" y2="12.26" width="0.127" layer="51" style="shortdash"/>
-<smd name="1" x="-10.15" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="2" x="-9.45" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="3" x="-8.75" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="4" x="-8.05" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="5" x="-7.35" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="6" x="-6.65" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="7" x="-5.95" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="8" x="-5.25" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="9" x="-4.55" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="10" x="-3.85" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="11" x="-3.15" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="12" x="-2.45" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="13" x="-1.75" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="14" x="-1.05" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="15" x="-0.35" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="16" x="0.35" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="17" x="1.05" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="18" x="1.75" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="19" x="2.45" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="20" x="3.15" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="21" x="3.85" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="22" x="4.55" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="23" x="5.25" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="24" x="5.95" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="25" x="6.65" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="26" x="7.35" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="27" x="8.05" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="28" x="8.75" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="29" x="9.45" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="30" x="10.15" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<text x="-9.95" y="0.512" size="0.8128" layer="52" font="vector" rot="R90">1</text>
-<text x="-3.65" y="0.412" size="0.8128" layer="52" font="vector" rot="R90">10</text>
-<text x="3.3" y="0.412" size="0.8128" layer="52" font="vector" rot="R90">20</text>
-<text x="10.45" y="0.412" size="0.8128" layer="52" font="vector" rot="R90">30</text>
-<text x="-13.09" y="15.69" size="0.8128" layer="25">&gt;NAME</text>
-<text x="-13.09" y="-9.1" size="0.8128" layer="27">&gt;VALUE</text>
-<text x="-5.2" y="-7" size="0.8128" layer="51">PCB EDGE (1.6mm)</text>
-<hole x="-8" y="-5.45" drill="0.4"/>
-<hole x="8" y="-5.45" drill="0.4"/>
-<wire x1="13.35" y1="-7.5" x2="-13.35" y2="-7.5" width="0.127" layer="51" style="shortdash"/>
-</package>
 <package name="1X06_OVAL">
 <description>&lt;b&gt;PIN HEADER&lt;/b&gt;</description>
 <wire x1="-7.62" y1="0.635" x2="-7.62" y2="-0.635" width="0.1524" layer="51"/>
@@ -6008,7 +5909,7 @@ Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
 <wire x1="0.254" y1="0.127" x2="0.254" y2="-0.127" width="1.27" layer="51" curve="-180" cap="flat"/>
 <smd name="1" x="-0.762" y="0" dx="1.1684" dy="1.6002" layer="1"/>
 <smd name="2" x="0.762" y="0" dx="1.1684" dy="1.6002" layer="1"/>
-<text x="-1.651" y="1.143" size="0.8128" layer="25" ratio="10">&gt;NAME</text>
+<text x="-1.651" y="1.143" size="1.27" layer="25" ratio="10">&gt;NAME</text>
 <text x="0.4001" y="0" size="0.02" layer="27">&gt;VALUE</text>
 <rectangle x1="-0.0762" y1="-0.9144" x2="0.0762" y2="0.9144" layer="29"/>
 </package>
@@ -6030,7 +5931,7 @@ Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
 <wire x1="-0.762" y1="0.762" x2="-0.762" y2="-0.762" width="0.1524" layer="51" curve="180"/>
 <smd name="1" x="-1.27" y="0" dx="1.27" dy="2.54" layer="1"/>
 <smd name="2" x="1.27" y="0" dx="1.27" dy="2.54" layer="1"/>
-<text x="-2.159" y="1.778" size="0.8128" layer="25" ratio="10">&gt;NAME</text>
+<text x="-2.159" y="1.778" size="1.27" layer="25" ratio="10">&gt;NAME</text>
 <text x="1" y="0" size="0.02" layer="27">&gt;VALUE</text>
 <rectangle x1="0.762" y1="-0.762" x2="1.016" y2="0.762" layer="51"/>
 <rectangle x1="1.016" y1="-0.635" x2="1.27" y2="0.635" layer="51"/>
@@ -6049,138 +5950,8 @@ Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
 <rectangle x1="-1.4732" y1="0.2032" x2="-1.3462" y2="0.3302" layer="51"/>
 <rectangle x1="-1.1176" y1="0.5842" x2="-0.9906" y2="0.7112" layer="51"/>
 </package>
-<package name="SOLDERJUMPER_CLOSEDWIRE">
-<wire x1="1.397" y1="-1.016" x2="-1.397" y2="-1.016" width="0.1524" layer="21"/>
-<wire x1="1.397" y1="1.016" x2="1.651" y2="0.762" width="0.1524" layer="21" curve="-90"/>
-<wire x1="-1.651" y1="0.762" x2="-1.397" y2="1.016" width="0.1524" layer="21" curve="-90"/>
-<wire x1="-1.651" y1="-0.762" x2="-1.397" y2="-1.016" width="0.1524" layer="21" curve="90"/>
-<wire x1="1.397" y1="-1.016" x2="1.651" y2="-0.762" width="0.1524" layer="21" curve="90"/>
-<wire x1="1.651" y1="-0.762" x2="1.651" y2="0.762" width="0.1524" layer="21"/>
-<wire x1="-1.651" y1="-0.762" x2="-1.651" y2="0.762" width="0.1524" layer="21"/>
-<wire x1="-1.397" y1="1.016" x2="1.397" y2="1.016" width="0.1524" layer="21"/>
-<wire x1="1.016" y1="0" x2="1.524" y2="0" width="0.1524" layer="51"/>
-<wire x1="-1.016" y1="0" x2="-1.524" y2="0" width="0.1524" layer="51"/>
-<wire x1="-0.254" y1="-0.127" x2="-0.254" y2="0.127" width="1.27" layer="51" curve="-180" cap="flat"/>
-<wire x1="0.254" y1="0.127" x2="0.254" y2="-0.127" width="1.27" layer="51" curve="-180" cap="flat"/>
-<smd name="1" x="-0.762" y="0" dx="1.1684" dy="1.6002" layer="1" cream="no"/>
-<smd name="2" x="0.762" y="0" dx="1.1684" dy="1.6002" layer="1" cream="no"/>
-<smd name="WIRE" x="0" y="0" dx="0.635" dy="0.2032" layer="1" cream="no"/>
-<text x="-1.651" y="1.143" size="0.8128" layer="25" ratio="10">&gt;NAME</text>
-<text x="-1.651" y="-2.54" size="0.8128" layer="27">&gt;VALUE</text>
-<rectangle x1="-0.0762" y1="-0.9144" x2="0.0762" y2="0.9144" layer="29"/>
-</package>
-<package name="SOLDERJUMPER_REFLOW_NOPASTE">
-<wire x1="1.397" y1="-1.016" x2="-1.397" y2="-1.016" width="0.1524" layer="21"/>
-<wire x1="1.397" y1="1.016" x2="1.651" y2="0.762" width="0.1524" layer="21" curve="-90"/>
-<wire x1="-1.651" y1="0.762" x2="-1.397" y2="1.016" width="0.1524" layer="21" curve="-90"/>
-<wire x1="-1.651" y1="-0.762" x2="-1.397" y2="-1.016" width="0.1524" layer="21" curve="90"/>
-<wire x1="1.397" y1="-1.016" x2="1.651" y2="-0.762" width="0.1524" layer="21" curve="90"/>
-<wire x1="1.651" y1="-0.762" x2="1.651" y2="0.762" width="0.1524" layer="21"/>
-<wire x1="-1.651" y1="-0.762" x2="-1.651" y2="0.762" width="0.1524" layer="21"/>
-<wire x1="-1.397" y1="1.016" x2="1.397" y2="1.016" width="0.1524" layer="21"/>
-<wire x1="1.016" y1="0" x2="1.524" y2="0" width="0.1524" layer="51"/>
-<wire x1="-1.016" y1="0" x2="-1.524" y2="0" width="0.1524" layer="51"/>
-<wire x1="-0.254" y1="-0.127" x2="-0.254" y2="0.127" width="1.27" layer="51" curve="-180" cap="flat"/>
-<wire x1="0.254" y1="0.127" x2="0.254" y2="-0.127" width="1.27" layer="51" curve="-180" cap="flat"/>
-<smd name="1" x="-0.762" y="0" dx="1.1684" dy="1.6002" layer="1" cream="no"/>
-<smd name="2" x="0.762" y="0" dx="1.1684" dy="1.6002" layer="1" cream="no"/>
-<text x="-1.651" y="1.143" size="0.8128" layer="25" ratio="10">&gt;NAME</text>
-<text x="0.4001" y="0" size="0.02" layer="27">&gt;VALUE</text>
-<rectangle x1="-0.0762" y1="-0.9144" x2="0.0762" y2="0.9144" layer="29"/>
-</package>
-<package name="SOLDERJUMPER_ARROW_NOPASTE">
-<wire x1="1.397" y1="-1.016" x2="-1.397" y2="-1.016" width="0.1524" layer="21"/>
-<wire x1="1.397" y1="1.016" x2="1.651" y2="0.762" width="0.1524" layer="21" curve="-90"/>
-<wire x1="-1.651" y1="0.762" x2="-1.397" y2="1.016" width="0.1524" layer="21" curve="-90"/>
-<wire x1="-1.651" y1="-0.762" x2="-1.397" y2="-1.016" width="0.1524" layer="21" curve="90"/>
-<wire x1="1.397" y1="-1.016" x2="1.651" y2="-0.762" width="0.1524" layer="21" curve="90"/>
-<wire x1="1.651" y1="-0.762" x2="1.651" y2="0.762" width="0.1524" layer="21"/>
-<wire x1="-1.651" y1="-0.762" x2="-1.651" y2="0.762" width="0.1524" layer="21"/>
-<wire x1="-1.397" y1="1.016" x2="1.397" y2="1.016" width="0.1524" layer="21"/>
-<smd name="1" x="-1.016" y="0" dx="0.762" dy="1.524" layer="1" roundness="50" cream="no"/>
-<smd name="2" x="1.016" y="0" dx="0.762" dy="1.524" layer="1" roundness="50" cream="no"/>
-<text x="-1.651" y="1.143" size="0.4064" layer="25">&gt;NAME</text>
-<text x="-1.651" y="-1.524" size="0.4064" layer="27">&gt;VALUE</text>
-<polygon width="0" layer="1">
-<vertex x="-1.143" y="0.762"/>
-<vertex x="-0.5715" y="0.762"/>
-<vertex x="0.1905" y="0"/>
-<vertex x="-0.5715" y="-0.762"/>
-<vertex x="-1.143" y="-0.762"/>
-</polygon>
-<polygon width="0" layer="1">
-<vertex x="-0.127" y="0.762"/>
-<vertex x="0.635" y="0"/>
-<vertex x="-0.127" y="-0.762"/>
-<vertex x="1.143" y="-0.762"/>
-<vertex x="1.143" y="0.762"/>
-</polygon>
-</package>
 </packages>
 <symbols>
-<symbol name="UG-2864HSWEG01">
-<wire x1="-22.86" y1="38.1" x2="21.59" y2="38.1" width="0.254" layer="94"/>
-<wire x1="21.59" y1="38.1" x2="21.59" y2="-40.64" width="0.254" layer="94"/>
-<wire x1="21.59" y1="-40.64" x2="-22.86" y2="-40.64" width="0.254" layer="94"/>
-<wire x1="-22.86" y1="-40.64" x2="-22.86" y2="38.1" width="0.254" layer="94"/>
-<wire x1="6.35" y1="-10.16" x2="7.62" y2="-10.16" width="0.254" layer="97" style="shortdash"/>
-<wire x1="7.62" y1="-10.16" x2="7.62" y2="-12.7" width="0.254" layer="97" style="shortdash"/>
-<wire x1="7.62" y1="-12.7" x2="-5.08" y2="-12.7" width="0.254" layer="97" style="shortdash"/>
-<wire x1="-14.605" y1="12.7" x2="-5.715" y2="12.7" width="0.254" layer="97" style="shortdash"/>
-<wire x1="-14.605" y1="10.16" x2="-5.715" y2="10.16" width="0.254" layer="97" style="shortdash"/>
-<wire x1="-14.605" y1="7.62" x2="-5.715" y2="7.62" width="0.254" layer="97" style="shortdash"/>
-<text x="-22.86" y="40.64" size="1.27" layer="95" font="vector">&gt;NAME</text>
-<text x="-22.86" y="-43.18" size="1.27" layer="96" font="vector">&gt;VALUE</text>
-<text x="-11.43" y="29.21" size="2.54" layer="94">128x64 OLED</text>
-<text x="-4.445" y="15.24" size="1.778" layer="97">I2C</text>
-<text x="3.81" y="15.24" size="1.778" layer="97">SPI3</text>
-<text x="-3.175" y="12.065" size="1.778" layer="97">0</text>
-<text x="-3.175" y="6.985" size="1.778" layer="97">0</text>
-<text x="5.08" y="9.525" size="1.778" layer="97">0</text>
-<text x="5.08" y="6.985" size="1.778" layer="97">0</text>
-<text x="5.08" y="12.065" size="1.778" layer="97">1</text>
-<text x="-3.175" y="9.525" size="1.778" layer="97">1</text>
-<text x="8.89" y="-10.795" size="1.778" layer="97">Connect</text>
-<text x="8.89" y="-13.335" size="1.778" layer="97">for I2C</text>
-<text x="-12.7" y="22.86" size="1.778" layer="97">Controller:</text>
-<text x="5.08" y="22.86" size="1.778" layer="97">SSD1306</text>
-<text x="-12.7" y="20.32" size="1.778" layer="97">VDD:</text>
-<text x="5.08" y="20.32" size="1.778" layer="97">2.8-3.3V</text>
-<text x="11.43" y="15.24" size="1.778" layer="97">SPI4</text>
-<text x="12.7" y="9.525" size="1.778" layer="97">0</text>
-<text x="12.7" y="12.065" size="1.778" layer="97">0</text>
-<text x="12.7" y="6.985" size="1.778" layer="97">0</text>
-<pin name="NC(GND)@1" x="-25.4" y="35.56" length="short" direction="in"/>
-<pin name="C2P" x="-25.4" y="33.02" length="short" direction="in"/>
-<pin name="C2N" x="-25.4" y="30.48" length="short" direction="in"/>
-<pin name="C1P" x="-25.4" y="27.94" length="short" direction="in"/>
-<pin name="C1N" x="-25.4" y="25.4" length="short" direction="in"/>
-<pin name="VBAT" x="-25.4" y="22.86" length="short" direction="in"/>
-<pin name="NC" x="-25.4" y="20.32" length="short" direction="nc"/>
-<pin name="VSS" x="-25.4" y="17.78" length="short" direction="pwr"/>
-<pin name="VDD" x="-25.4" y="15.24" length="short" direction="pwr"/>
-<pin name="BS0" x="-25.4" y="12.7" length="short" direction="in"/>
-<pin name="BS1" x="-25.4" y="10.16" length="short" direction="in"/>
-<pin name="BS2" x="-25.4" y="7.62" length="short" direction="in"/>
-<pin name="/CS" x="-25.4" y="5.08" length="short" direction="in"/>
-<pin name="/RES" x="-25.4" y="2.54" length="short" direction="in"/>
-<pin name="DC/I2C_SA0" x="-25.4" y="0" length="short" direction="in"/>
-<pin name="R/W" x="-25.4" y="-2.54" length="short" direction="in"/>
-<pin name="E/RD" x="-25.4" y="-5.08" length="short" direction="in"/>
-<pin name="D0/SPI_SCLK/I2C_SCK" x="-25.4" y="-7.62" length="short"/>
-<pin name="D1/SPI_SDIN/I2C_SDA" x="-25.4" y="-10.16" length="short"/>
-<pin name="D2/I2C_SDA" x="-25.4" y="-12.7" length="short"/>
-<pin name="D3" x="-25.4" y="-15.24" length="short"/>
-<pin name="D4" x="-25.4" y="-17.78" length="short"/>
-<pin name="D5" x="-25.4" y="-20.32" length="short"/>
-<pin name="D6" x="-25.4" y="-22.86" length="short"/>
-<pin name="D7" x="-25.4" y="-25.4" length="short"/>
-<pin name="IREF" x="-25.4" y="-27.94" length="short" direction="in"/>
-<pin name="VCOMH" x="-25.4" y="-30.48" length="short" direction="out"/>
-<pin name="VCC" x="-25.4" y="-33.02" length="short" direction="pwr"/>
-<pin name="VLSS" x="-25.4" y="-35.56" length="short" direction="pwr"/>
-<pin name="NC(GND)@2" x="-25.4" y="-38.1" length="short" direction="in"/>
-</symbol>
 <symbol name="PINHD6">
 <wire x1="-6.35" y1="-7.62" x2="1.27" y2="-7.62" width="0.4064" layer="94"/>
 <wire x1="1.27" y1="-7.62" x2="1.27" y2="10.16" width="0.4064" layer="94"/>
@@ -6269,89 +6040,6 @@ Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
 </symbol>
 </symbols>
 <devicesets>
-<deviceset name="DISP_OLED_UG-2864HSWEG01" prefix="U" uservalue="yes">
-<description>UG-2864HSWEG01 OLED display
-&lt;p&gt;Both 1.3" and 0.96" models share the same FPC tab footprint, only the screen dimensions vary.&lt;/p&gt;</description>
-<gates>
-<gate name="G$1" symbol="UG-2864HSWEG01" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="UG-2864HSWEG01_1.3_WRAPAROUND">
-<connects>
-<connect gate="G$1" pin="/CS" pad="13"/>
-<connect gate="G$1" pin="/RES" pad="14"/>
-<connect gate="G$1" pin="BS0" pad="10"/>
-<connect gate="G$1" pin="BS1" pad="11"/>
-<connect gate="G$1" pin="BS2" pad="12"/>
-<connect gate="G$1" pin="C1N" pad="5"/>
-<connect gate="G$1" pin="C1P" pad="4"/>
-<connect gate="G$1" pin="C2N" pad="3"/>
-<connect gate="G$1" pin="C2P" pad="2"/>
-<connect gate="G$1" pin="D0/SPI_SCLK/I2C_SCK" pad="18"/>
-<connect gate="G$1" pin="D1/SPI_SDIN/I2C_SDA" pad="19"/>
-<connect gate="G$1" pin="D2/I2C_SDA" pad="20"/>
-<connect gate="G$1" pin="D3" pad="21"/>
-<connect gate="G$1" pin="D4" pad="22"/>
-<connect gate="G$1" pin="D5" pad="23"/>
-<connect gate="G$1" pin="D6" pad="24"/>
-<connect gate="G$1" pin="D7" pad="25"/>
-<connect gate="G$1" pin="DC/I2C_SA0" pad="15"/>
-<connect gate="G$1" pin="E/RD" pad="17"/>
-<connect gate="G$1" pin="IREF" pad="26"/>
-<connect gate="G$1" pin="NC" pad="7"/>
-<connect gate="G$1" pin="NC(GND)@1" pad="1"/>
-<connect gate="G$1" pin="NC(GND)@2" pad="30"/>
-<connect gate="G$1" pin="R/W" pad="16"/>
-<connect gate="G$1" pin="VBAT" pad="6"/>
-<connect gate="G$1" pin="VCC" pad="28"/>
-<connect gate="G$1" pin="VCOMH" pad="27"/>
-<connect gate="G$1" pin="VDD" pad="9"/>
-<connect gate="G$1" pin="VLSS" pad="29"/>
-<connect gate="G$1" pin="VSS" pad="8"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-<device name="0.96&quot;" package="UG-2864HSWEG01_0.96IN_WRAPAROUND">
-<connects>
-<connect gate="G$1" pin="/CS" pad="13"/>
-<connect gate="G$1" pin="/RES" pad="14"/>
-<connect gate="G$1" pin="BS0" pad="10"/>
-<connect gate="G$1" pin="BS1" pad="11"/>
-<connect gate="G$1" pin="BS2" pad="12"/>
-<connect gate="G$1" pin="C1N" pad="5"/>
-<connect gate="G$1" pin="C1P" pad="4"/>
-<connect gate="G$1" pin="C2N" pad="3"/>
-<connect gate="G$1" pin="C2P" pad="2"/>
-<connect gate="G$1" pin="D0/SPI_SCLK/I2C_SCK" pad="18"/>
-<connect gate="G$1" pin="D1/SPI_SDIN/I2C_SDA" pad="19"/>
-<connect gate="G$1" pin="D2/I2C_SDA" pad="20"/>
-<connect gate="G$1" pin="D3" pad="21"/>
-<connect gate="G$1" pin="D4" pad="22"/>
-<connect gate="G$1" pin="D5" pad="23"/>
-<connect gate="G$1" pin="D6" pad="24"/>
-<connect gate="G$1" pin="D7" pad="25"/>
-<connect gate="G$1" pin="DC/I2C_SA0" pad="15"/>
-<connect gate="G$1" pin="E/RD" pad="17"/>
-<connect gate="G$1" pin="IREF" pad="26"/>
-<connect gate="G$1" pin="NC" pad="7"/>
-<connect gate="G$1" pin="NC(GND)@1" pad="1"/>
-<connect gate="G$1" pin="NC(GND)@2" pad="30"/>
-<connect gate="G$1" pin="R/W" pad="16"/>
-<connect gate="G$1" pin="VBAT" pad="6"/>
-<connect gate="G$1" pin="VCC" pad="28"/>
-<connect gate="G$1" pin="VCOMH" pad="27"/>
-<connect gate="G$1" pin="VDD" pad="9"/>
-<connect gate="G$1" pin="VLSS" pad="29"/>
-<connect gate="G$1" pin="VSS" pad="8"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
 <deviceset name="HEADER-1X6" prefix="JP" uservalue="yes">
 <description>&lt;b&gt;PIN HEADER&lt;/b&gt;</description>
 <gates>
@@ -6555,8 +6243,7 @@ Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
 <description>&lt;p&gt;&lt;b&gt;SMD Solder JUMPER&lt;/b&gt;&lt;/p&gt;
 &lt;p&gt;Solder the two pads together to create a connection, or remove the solder to break it.&lt;/p&gt;
 &lt;b&gt;REFLOW&lt;/b&gt; - Use this footprint for solder paste and reflow ovens.&lt;br/&gt;
-&lt;b&gt;WAVE&lt;/b&gt; - Use this footprint for hand-soldering (larger pads).
-&lt;p&gt;&lt;b&gt;CLOSED&lt;/b&gt; - Has a trace between the two pads to ensure it is closed by default.  The trace needs to be cut to disable the jumper, and can be closed again by creating a solder bridge between the two pads.&lt;/p&gt;</description>
+&lt;b&gt;WAVE&lt;/b&gt; - Use this footprint for hand-soldering (larger pads).</description>
 <gates>
 <gate name="1" symbol="SOLDERJUMPER" x="0" y="0"/>
 </gates>
@@ -6571,33 +6258,6 @@ Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
 </technologies>
 </device>
 <device name="WAVE" package="SOLDERJUMPER_WAVE">
-<connects>
-<connect gate="1" pin="1" pad="1"/>
-<connect gate="1" pin="2" pad="2"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-<device name="CLOSED" package="SOLDERJUMPER_CLOSEDWIRE">
-<connects>
-<connect gate="1" pin="1" pad="1"/>
-<connect gate="1" pin="2" pad="2"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-<device name="REFLOW_NOPASTE" package="SOLDERJUMPER_REFLOW_NOPASTE">
-<connects>
-<connect gate="1" pin="1" pad="1"/>
-<connect gate="1" pin="2" pad="2"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-<device name="" package="SOLDERJUMPER_ARROW_NOPASTE">
 <connects>
 <connect gate="1" pin="1" pad="1"/>
 <connect gate="1" pin="2" pad="2"/>
@@ -10364,6 +10024,261 @@ Source: &lt;a href="http://www.ndk.com/images/products/catalog/c_NX3225GA-STD-CR
 </deviceset>
 </devicesets>
 </library>
+<library name="badge.lbrbadge_2013">
+<description>Generated from &lt;b&gt;badge_2013.sch&lt;/b&gt;&lt;p&gt;
+by exp-lbrs.ulp</description>
+<packages>
+<package name="MICROBUILDER_UG-2864HSWEG01_0.96IN_WRAPAROUND">
+<wire x1="-13.353" y1="14.36" x2="13.35" y2="14.36" width="0.127" layer="21"/>
+<wire x1="13.35" y1="14.36" x2="13.35" y2="-4.9" width="0.127" layer="21"/>
+<wire x1="13.35" y1="-4.9" x2="-13.35" y2="-4.9" width="0.127" layer="21"/>
+<wire x1="-13.35" y1="-4.9" x2="-13.353" y2="14.36" width="0.127" layer="21"/>
+<wire x1="-10.872" y1="12.26" x2="10.872" y2="12.26" width="0.127" layer="51"/>
+<wire x1="10.872" y1="12.26" x2="10.872" y2="1.396" width="0.127" layer="51"/>
+<wire x1="10.872" y1="1.396" x2="-10.872" y2="1.396" width="0.127" layer="51"/>
+<wire x1="-10.872" y1="1.396" x2="-10.872" y2="12.26" width="0.127" layer="51"/>
+<wire x1="13.35" y1="-7.5" x2="-13.35" y2="-7.5" width="0.127" layer="51"/>
+<smd name="1" x="-10.15" y="-1.2" dx="3.81" dy="0.35" layer="16" rot="R90"/>
+<smd name="2" x="-9.45" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="3" x="-8.75" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="4" x="-8.05" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="5" x="-7.35" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="6" x="-6.65" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="7" x="-5.95" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="8" x="-5.25" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="9" x="-4.55" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="10" x="-3.85" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="11" x="-3.15" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="12" x="-2.45" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="13" x="-1.75" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="14" x="-1.05" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="15" x="-0.35" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="16" x="0.35" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="17" x="1.05" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="18" x="1.75" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="19" x="2.45" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="20" x="3.15" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="21" x="3.85" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="22" x="4.55" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="23" x="5.25" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="24" x="5.95" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="25" x="6.65" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="26" x="7.35" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="27" x="8.05" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="28" x="8.75" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="29" x="9.45" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="30" x="10.15" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<text x="-9.95" y="0.512" size="0.8128" layer="52" font="vector" rot="R90">1</text>
+<text x="-3.65" y="0.412" size="0.8128" layer="52" font="vector" rot="R90">10</text>
+<text x="3.3" y="0.412" size="0.8128" layer="52" font="vector" rot="R90">20</text>
+<text x="10.45" y="0.412" size="0.8128" layer="52" font="vector" rot="R90">30</text>
+<text x="-13.09" y="15.69" size="0.8128" layer="25">&gt;NAME</text>
+<text x="-13.09" y="-9.1" size="0.8128" layer="27">&gt;VALUE</text>
+<text x="-5.2" y="-7" size="0.8128" layer="51">PCB EDGE (1.6mm)</text>
+<hole x="-8" y="-5.45" drill="0.4"/>
+<hole x="8" y="-5.45" drill="0.4"/>
+</package>
+<package name="MICROBUILDER_UG-2864HSWEG01_1.3_WRAPAROUND">
+<wire x1="-17.25" y1="15.5" x2="17.25" y2="15.5" width="0.127" layer="21"/>
+<wire x1="17.25" y1="15.5" x2="17.25" y2="-7.5" width="0.127" layer="21"/>
+<wire x1="17.25" y1="-7.5" x2="-17.25" y2="-7.5" width="0.127" layer="21"/>
+<wire x1="-17.25" y1="-7.5" x2="-17.25" y2="15.5" width="0.127" layer="21"/>
+<wire x1="-14.7" y1="13.4" x2="14.7" y2="13.4" width="0.127" layer="51"/>
+<wire x1="14.7" y1="13.4" x2="14.7" y2="-1.3" width="0.127" layer="51"/>
+<wire x1="14.7" y1="-1.3" x2="-14.7" y2="-1.3" width="0.127" layer="51"/>
+<wire x1="-14.7" y1="-1.3" x2="-14.7" y2="13.4" width="0.127" layer="51"/>
+<smd name="1" x="-10.15" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="2" x="-9.45" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="3" x="-8.75" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="4" x="-8.05" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="5" x="-7.35" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="6" x="-6.65" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="7" x="-5.95" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="8" x="-5.25" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="9" x="-4.55" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="10" x="-3.85" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="11" x="-3.15" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="12" x="-2.45" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="13" x="-1.75" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="14" x="-1.05" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="15" x="-0.35" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="16" x="0.35" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="17" x="1.05" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="18" x="1.75" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="19" x="2.45" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="20" x="3.15" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="21" x="3.85" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="22" x="4.55" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="23" x="5.25" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="24" x="5.95" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="25" x="6.65" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="26" x="7.35" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="27" x="8.05" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="28" x="8.75" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="29" x="9.45" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<smd name="30" x="10.15" y="-0.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
+<text x="-9.95" y="1.512" size="0.8128" layer="52" font="vector" rot="R90">1</text>
+<text x="-3.65" y="1.412" size="0.8128" layer="52" font="vector" rot="R90">10</text>
+<text x="3.3" y="1.412" size="0.8128" layer="52" font="vector" rot="R90">20</text>
+<text x="10.45" y="1.412" size="0.8128" layer="52" font="vector" rot="R90">30</text>
+<text x="-16.9" y="16.9" size="0.8128" layer="25">&gt;NAME</text>
+<text x="-16.9" y="-9.1" size="0.8128" layer="27">&gt;VALUE</text>
+<text x="-2.6" y="-7" size="0.8128" layer="51">PCB EDGE</text>
+<hole x="-8" y="-4.45" drill="0.4"/>
+<hole x="8" y="-4.45" drill="0.4"/>
+</package>
+</packages>
+<symbols>
+<symbol name="MICROBUILDER_UG-2864HSWEG01">
+<wire x1="-22.86" y1="38.1" x2="21.59" y2="38.1" width="0.254" layer="94"/>
+<wire x1="21.59" y1="38.1" x2="21.59" y2="-40.64" width="0.254" layer="94"/>
+<wire x1="21.59" y1="-40.64" x2="-22.86" y2="-40.64" width="0.254" layer="94"/>
+<wire x1="-22.86" y1="-40.64" x2="-22.86" y2="38.1" width="0.254" layer="94"/>
+<wire x1="6.35" y1="-10.16" x2="7.62" y2="-10.16" width="0.254" layer="97"/>
+<wire x1="7.62" y1="-10.16" x2="7.62" y2="-12.7" width="0.254" layer="97"/>
+<wire x1="7.62" y1="-12.7" x2="-5.08" y2="-12.7" width="0.254" layer="97"/>
+<wire x1="-14.605" y1="12.7" x2="-5.715" y2="12.7" width="0.254" layer="97"/>
+<wire x1="-14.605" y1="10.16" x2="-5.715" y2="10.16" width="0.254" layer="97"/>
+<wire x1="-14.605" y1="7.62" x2="-5.715" y2="7.62" width="0.254" layer="97"/>
+<pin name="/CS" x="-25.4" y="5.08" length="short" direction="in"/>
+<pin name="/RES" x="-25.4" y="2.54" length="short" direction="in"/>
+<pin name="BS0" x="-25.4" y="12.7" length="short" direction="in"/>
+<pin name="BS1" x="-25.4" y="10.16" length="short" direction="in"/>
+<pin name="BS2" x="-25.4" y="7.62" length="short" direction="in"/>
+<pin name="C1N" x="-25.4" y="25.4" length="short" direction="in"/>
+<pin name="C1P" x="-25.4" y="27.94" length="short" direction="in"/>
+<pin name="C2N" x="-25.4" y="30.48" length="short" direction="in"/>
+<pin name="C2P" x="-25.4" y="33.02" length="short" direction="in"/>
+<pin name="D0/SPI_SCLK/I2C_SCK" x="-25.4" y="-7.62" length="short"/>
+<pin name="D1/SPI_SDIN/I2C_SDA" x="-25.4" y="-10.16" length="short"/>
+<pin name="D2/I2C_SDA" x="-25.4" y="-12.7" length="short"/>
+<pin name="D3" x="-25.4" y="-15.24" length="short"/>
+<pin name="D4" x="-25.4" y="-17.78" length="short"/>
+<pin name="D5" x="-25.4" y="-20.32" length="short"/>
+<pin name="D6" x="-25.4" y="-22.86" length="short"/>
+<pin name="D7" x="-25.4" y="-25.4" length="short"/>
+<pin name="DC/I2C_SA0" x="-25.4" y="0" length="short" direction="in"/>
+<pin name="E/RD" x="-25.4" y="-5.08" length="short" direction="in"/>
+<pin name="IREF" x="-25.4" y="-27.94" length="short" direction="in"/>
+<pin name="NC" x="-25.4" y="20.32" length="short" direction="nc"/>
+<pin name="NC(GND)@1" x="-25.4" y="35.56" length="short" direction="in"/>
+<pin name="NC(GND)@2" x="-25.4" y="-38.1" length="short" direction="in"/>
+<pin name="R/W" x="-25.4" y="-2.54" length="short" direction="in"/>
+<pin name="VBAT" x="-25.4" y="22.86" length="short" direction="in"/>
+<pin name="VCC" x="-25.4" y="-33.02" length="short" direction="pwr"/>
+<pin name="VCOMH" x="-25.4" y="-30.48" length="short" direction="out"/>
+<pin name="VDD" x="-25.4" y="15.24" length="short" direction="pwr"/>
+<pin name="VLSS" x="-25.4" y="-35.56" length="short" direction="pwr"/>
+<pin name="VSS" x="-25.4" y="17.78" length="short" direction="pwr"/>
+<text x="-22.86" y="40.64" size="1.27" layer="95" font="vector">&gt;NAME</text>
+<text x="-22.86" y="-43.18" size="1.27" layer="96" font="vector">&gt;VALUE</text>
+<text x="-11.43" y="29.21" size="2.54" layer="94">128x64 OLED</text>
+<text x="-4.445" y="15.24" size="1.778" layer="97">I2C</text>
+<text x="3.81" y="15.24" size="1.778" layer="97">SPI3</text>
+<text x="-3.175" y="12.065" size="1.778" layer="97">0</text>
+<text x="-3.175" y="6.985" size="1.778" layer="97">0</text>
+<text x="5.08" y="9.525" size="1.778" layer="97">0</text>
+<text x="5.08" y="6.985" size="1.778" layer="97">0</text>
+<text x="5.08" y="12.065" size="1.778" layer="97">1</text>
+<text x="-3.175" y="9.525" size="1.778" layer="97">1</text>
+<text x="8.89" y="-10.795" size="1.778" layer="97">Connect</text>
+<text x="8.89" y="-13.335" size="1.778" layer="97">for I2C</text>
+<text x="-12.7" y="22.86" size="1.778" layer="97">Controller:</text>
+<text x="5.08" y="22.86" size="1.778" layer="97">SSD1306</text>
+<text x="-12.7" y="20.32" size="1.778" layer="97">VDD:</text>
+<text x="5.08" y="20.32" size="1.778" layer="97">2.8-3.3V</text>
+<text x="11.43" y="15.24" size="1.778" layer="97">SPI4</text>
+<text x="12.7" y="9.525" size="1.778" layer="97">0</text>
+<text x="12.7" y="12.065" size="1.778" layer="97">0</text>
+<text x="12.7" y="6.985" size="1.778" layer="97">0</text>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="MICROBUILDER_DISP_OLED_UG-2864HSWEG01" prefix="U" uservalue="yes">
+<description>UG-2864HSWEG01 OLED display
+&lt;p&gt;Both 1.3" and 0.96" models share the same FPC tab footprint, only the screen dimensions vary.&lt;/p&gt;</description>
+<gates>
+<gate name="G$1" symbol="MICROBUILDER_UG-2864HSWEG01" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="MICROBUILDER_UG-2864HSWEG01_1.3_WRAPAROUND">
+<connects>
+<connect gate="G$1" pin="/CS" pad="13"/>
+<connect gate="G$1" pin="/RES" pad="14"/>
+<connect gate="G$1" pin="BS0" pad="10"/>
+<connect gate="G$1" pin="BS1" pad="11"/>
+<connect gate="G$1" pin="BS2" pad="12"/>
+<connect gate="G$1" pin="C1N" pad="5"/>
+<connect gate="G$1" pin="C1P" pad="4"/>
+<connect gate="G$1" pin="C2N" pad="3"/>
+<connect gate="G$1" pin="C2P" pad="2"/>
+<connect gate="G$1" pin="D0/SPI_SCLK/I2C_SCK" pad="18"/>
+<connect gate="G$1" pin="D1/SPI_SDIN/I2C_SDA" pad="19"/>
+<connect gate="G$1" pin="D2/I2C_SDA" pad="20"/>
+<connect gate="G$1" pin="D3" pad="21"/>
+<connect gate="G$1" pin="D4" pad="22"/>
+<connect gate="G$1" pin="D5" pad="23"/>
+<connect gate="G$1" pin="D6" pad="24"/>
+<connect gate="G$1" pin="D7" pad="25"/>
+<connect gate="G$1" pin="DC/I2C_SA0" pad="15"/>
+<connect gate="G$1" pin="E/RD" pad="17"/>
+<connect gate="G$1" pin="IREF" pad="26"/>
+<connect gate="G$1" pin="NC" pad="7"/>
+<connect gate="G$1" pin="NC(GND)@1" pad="1"/>
+<connect gate="G$1" pin="NC(GND)@2" pad="30"/>
+<connect gate="G$1" pin="R/W" pad="16"/>
+<connect gate="G$1" pin="VBAT" pad="6"/>
+<connect gate="G$1" pin="VCC" pad="28"/>
+<connect gate="G$1" pin="VCOMH" pad="27"/>
+<connect gate="G$1" pin="VDD" pad="9"/>
+<connect gate="G$1" pin="VLSS" pad="29"/>
+<connect gate="G$1" pin="VSS" pad="8"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+<device name="0.96&quot;" package="MICROBUILDER_UG-2864HSWEG01_0.96IN_WRAPAROUND">
+<connects>
+<connect gate="G$1" pin="/CS" pad="13"/>
+<connect gate="G$1" pin="/RES" pad="14"/>
+<connect gate="G$1" pin="BS0" pad="10"/>
+<connect gate="G$1" pin="BS1" pad="11"/>
+<connect gate="G$1" pin="BS2" pad="12"/>
+<connect gate="G$1" pin="C1N" pad="5"/>
+<connect gate="G$1" pin="C1P" pad="4"/>
+<connect gate="G$1" pin="C2N" pad="3"/>
+<connect gate="G$1" pin="C2P" pad="2"/>
+<connect gate="G$1" pin="D0/SPI_SCLK/I2C_SCK" pad="18"/>
+<connect gate="G$1" pin="D1/SPI_SDIN/I2C_SDA" pad="19"/>
+<connect gate="G$1" pin="D2/I2C_SDA" pad="20"/>
+<connect gate="G$1" pin="D3" pad="21"/>
+<connect gate="G$1" pin="D4" pad="22"/>
+<connect gate="G$1" pin="D5" pad="23"/>
+<connect gate="G$1" pin="D6" pad="24"/>
+<connect gate="G$1" pin="D7" pad="25"/>
+<connect gate="G$1" pin="DC/I2C_SA0" pad="15"/>
+<connect gate="G$1" pin="E/RD" pad="17"/>
+<connect gate="G$1" pin="IREF" pad="26"/>
+<connect gate="G$1" pin="NC" pad="7"/>
+<connect gate="G$1" pin="NC(GND)@1" pad="1"/>
+<connect gate="G$1" pin="NC(GND)@2" pad="30"/>
+<connect gate="G$1" pin="R/W" pad="16"/>
+<connect gate="G$1" pin="VBAT" pad="6"/>
+<connect gate="G$1" pin="VCC" pad="28"/>
+<connect gate="G$1" pin="VCOMH" pad="27"/>
+<connect gate="G$1" pin="VDD" pad="9"/>
+<connect gate="G$1" pin="VLSS" pad="29"/>
+<connect gate="G$1" pin="VSS" pad="8"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -10433,7 +10348,7 @@ Source: &lt;a href="http://www.ndk.com/images/products/catalog/c_NX3225GA-STD-CR
 <part name="LED48" library="led" deviceset="LED" device="3MM"/>
 <part name="BAT1" library="tvbgone-adj" deviceset="BATTERY" device="CR123A" value="CR123A"/>
 <part name="GND6" library="supply1" deviceset="GND" device=""/>
-<part name="U1" library="microbuilder" deviceset="DISP_OLED_UG-2864HSWEG01" device="0.96&quot;" value="UG-2864HSWEG01"/>
+<part name="U1" library="badge.lbrbadge_2013" deviceset="MICROBUILDER_DISP_OLED_UG-2864HSWEG01" device="0.96&quot;" value="UG-2864HSWEG01"/>
 <part name="C14" library="SparkFun" deviceset="CAP" device="0805" value="1uF"/>
 <part name="GND3" library="SparkFun" deviceset="GND" device=""/>
 <part name="C15" library="SparkFun" deviceset="CAP" device="0805" value="1uF"/>
@@ -10545,7 +10460,7 @@ Source: &lt;a href="http://www.ndk.com/images/products/catalog/c_NX3225GA-STD-CR
 <part name="GND46" library="SparkFun" deviceset="GND" device=""/>
 <part name="GND47" library="SparkFun" deviceset="GND" device=""/>
 <part name="JP1" library="microbuilder" deviceset="JUMPER3" device=""/>
-<part name="SJ1" library="microbuilder" deviceset="SOLDERJUMPER" device="REFLOW_NOPASTE"/>
+<part name="SJ1" library="microbuilder" deviceset="SOLDERJUMPER" device="REFLOW"/>
 <part name="R24" library="resistor" deviceset="R-US_" device="R0805" value="3K"/>
 <part name="PDI" library="microbuilder" deviceset="HEADER-1X2" device="" value="CON6"/>
 <part name="R22" library="resistor" deviceset="R-US_" device="R0805" value="180K"/>
