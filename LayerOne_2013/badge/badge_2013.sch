@@ -11431,15 +11431,6 @@ Thru-hole RA Female Mini-B USB Connector 4UConnector: 18732&lt;/p&gt;
 <label x="205.74" y="132.08" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="SCLK" class="0">
-<segment>
-<pinref part="D3" gate="G$1" pin="A"/>
-<pinref part="IC2" gate="G$1" pin="SS/PD4"/>
-<wire x1="218.44" y1="137.16" x2="218.44" y2="119.38" width="0.1524" layer="91"/>
-<wire x1="218.44" y1="119.38" x2="203.2" y2="119.38" width="0.1524" layer="91"/>
-<label x="215.9" y="132.08" size="1.778" layer="95"/>
-</segment>
-</net>
 <net name="!CS" class="0">
 <segment>
 <pinref part="U1" gate="G$1" pin="/CS"/>
@@ -11581,14 +11572,6 @@ Thru-hole RA Female Mini-B USB Connector 4UConnector: 18732&lt;/p&gt;
 <pinref part="U1" gate="G$1" pin="VCC"/>
 <pinref part="C13" gate="G$1" pin="1"/>
 <wire x1="299.72" y1="71.12" x2="274.32" y2="71.12" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="BLANK" class="0">
-<segment>
-<pinref part="IC2" gate="G$1" pin="OC0C/RXD0/PD2"/>
-<pinref part="TP2" gate="G$1" pin="1"/>
-<wire x1="203.2" y1="124.46" x2="238.76" y2="124.46" width="0.1524" layer="91"/>
-<label x="243.84" y="124.46" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="N$23" class="0">
@@ -12035,6 +12018,23 @@ Thru-hole RA Female Mini-B USB Connector 4UConnector: 18732&lt;/p&gt;
 <wire x1="81.28" y1="27.94" x2="81.28" y2="20.32" width="0.1524" layer="91"/>
 <label x="81.28" y="20.32" size="1.778" layer="95"/>
 <junction x="81.28" y="20.32"/>
+</segment>
+</net>
+<net name="BLANK" class="0">
+<segment>
+<pinref part="D3" gate="G$1" pin="A"/>
+<pinref part="IC2" gate="G$1" pin="SS/PD4"/>
+<wire x1="218.44" y1="137.16" x2="218.44" y2="119.38" width="0.1524" layer="91"/>
+<wire x1="218.44" y1="119.38" x2="203.2" y2="119.38" width="0.1524" layer="91"/>
+<label x="215.9" y="132.08" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="SCLK" class="0">
+<segment>
+<pinref part="IC2" gate="G$1" pin="OC0C/RXD0/PD2"/>
+<pinref part="TP2" gate="G$1" pin="1"/>
+<wire x1="203.2" y1="124.46" x2="238.76" y2="124.46" width="0.1524" layer="91"/>
+<label x="243.84" y="124.46" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>
