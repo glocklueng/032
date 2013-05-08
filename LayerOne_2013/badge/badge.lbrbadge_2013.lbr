@@ -2373,46 +2373,42 @@ rectangle, 5.7 x 3.2 mm</description>
 <wire x1="10.872" y1="12.26" x2="10.872" y2="1.396" width="0.127" layer="51"/>
 <wire x1="10.872" y1="1.396" x2="-10.872" y2="1.396" width="0.127" layer="51"/>
 <wire x1="-10.872" y1="1.396" x2="-10.872" y2="12.26" width="0.127" layer="51"/>
-<wire x1="13.35" y1="-7.5" x2="-13.35" y2="-7.5" width="0.127" layer="51"/>
-<smd name="1" x="-10.15" y="-1.2" dx="3.81" dy="0.35" layer="16" rot="R90"/>
-<smd name="2" x="-9.45" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="3" x="-8.75" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="4" x="-8.05" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="5" x="-7.35" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="6" x="-6.65" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="7" x="-5.95" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="8" x="-5.25" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="9" x="-4.55" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="10" x="-3.85" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="11" x="-3.15" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="12" x="-2.45" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="13" x="-1.75" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="14" x="-1.05" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="15" x="-0.35" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="16" x="0.35" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="17" x="1.05" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="18" x="1.75" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="19" x="2.45" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="20" x="3.15" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="21" x="3.85" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="22" x="4.55" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="23" x="5.25" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="24" x="5.95" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="25" x="6.65" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="26" x="7.35" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="27" x="8.05" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="28" x="8.75" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="29" x="9.45" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<smd name="30" x="10.15" y="-1.2" dx="2.2" dy="0.35" layer="16" rot="R90"/>
-<text x="-9.95" y="0.512" size="0.8128" layer="52" font="vector" rot="R90">1</text>
-<text x="-3.65" y="0.412" size="0.8128" layer="52" font="vector" rot="R90">10</text>
-<text x="3.3" y="0.412" size="0.8128" layer="52" font="vector" rot="R90">20</text>
-<text x="10.45" y="0.412" size="0.8128" layer="52" font="vector" rot="R90">30</text>
-<text x="-13.09" y="15.69" size="0.8128" layer="25">&gt;NAME</text>
-<text x="-13.09" y="-9.1" size="0.8128" layer="27">&gt;VALUE</text>
-<text x="-5.2" y="-7" size="0.8128" layer="51">PCB EDGE (1.6mm)</text>
-<hole x="-8" y="-5.45" drill="0.4"/>
-<hole x="8" y="-5.45" drill="0.4"/>
+<smd name="1" x="-10.15" y="8.96" dx="3.81" dy="0.35" layer="16" rot="R90"/>
+<smd name="2" x="-9.45" y="8.96" dx="3.81" dy="0.35" layer="16" rot="R90"/>
+<smd name="3" x="-8.75" y="8.96" dx="3.81" dy="0.35" layer="16" rot="R90"/>
+<smd name="4" x="-8.05" y="8.96" dx="3.81" dy="0.35" layer="16" rot="R90"/>
+<smd name="5" x="-7.35" y="8.96" dx="3.81" dy="0.35" layer="16" rot="R90"/>
+<smd name="6" x="-6.65" y="8.96" dx="3.81" dy="0.35" layer="16" rot="R90"/>
+<smd name="7" x="-5.95" y="8.96" dx="3.81" dy="0.35" layer="16" rot="R90"/>
+<smd name="8" x="-5.25" y="8.96" dx="3.81" dy="0.35" layer="16" rot="R90"/>
+<smd name="9" x="-4.55" y="8.96" dx="3.81" dy="0.35" layer="16" rot="R90"/>
+<smd name="10" x="-3.85" y="8.96" dx="3.81" dy="0.35" layer="16" rot="R90"/>
+<smd name="11" x="-3.15" y="8.96" dx="3.81" dy="0.35" layer="16" rot="R90"/>
+<smd name="12" x="-2.45" y="8.96" dx="3.81" dy="0.35" layer="16" rot="R90"/>
+<smd name="13" x="-1.75" y="8.96" dx="3.81" dy="0.35" layer="16" rot="R90"/>
+<smd name="14" x="-1.05" y="8.96" dx="3.81" dy="0.35" layer="16" rot="R90"/>
+<smd name="15" x="-0.35" y="8.96" dx="3.81" dy="0.35" layer="16" rot="R90"/>
+<smd name="16" x="0.35" y="8.96" dx="3.81" dy="0.35" layer="16" rot="R90"/>
+<smd name="17" x="1.05" y="8.96" dx="3.81" dy="0.35" layer="16" rot="R90"/>
+<smd name="18" x="1.75" y="8.96" dx="3.81" dy="0.35" layer="16" rot="R90"/>
+<smd name="19" x="2.45" y="8.96" dx="3.81" dy="0.35" layer="16" rot="R90"/>
+<smd name="20" x="3.15" y="8.96" dx="3.81" dy="0.35" layer="16" rot="R90"/>
+<smd name="21" x="3.85" y="8.96" dx="3.81" dy="0.35" layer="16" rot="R90"/>
+<smd name="22" x="4.55" y="8.96" dx="3.81" dy="0.35" layer="16" rot="R90"/>
+<smd name="23" x="5.25" y="8.96" dx="3.81" dy="0.35" layer="16" rot="R90"/>
+<smd name="24" x="5.95" y="8.96" dx="3.81" dy="0.35" layer="16" rot="R90"/>
+<smd name="25" x="6.65" y="8.96" dx="3.81" dy="0.35" layer="16" rot="R90"/>
+<smd name="26" x="7.35" y="8.96" dx="3.81" dy="0.35" layer="16" rot="R90"/>
+<smd name="27" x="8.05" y="8.96" dx="3.81" dy="0.35" layer="16" rot="R90"/>
+<smd name="28" x="8.75" y="8.96" dx="3.81" dy="0.35" layer="16" rot="R90"/>
+<smd name="29" x="9.45" y="8.96" dx="3.81" dy="0.35" layer="16" rot="R90"/>
+<smd name="30" x="10.15" y="8.96" dx="3.81" dy="0.35" layer="16" rot="R90"/>
+<text x="-9.95" y="10.672" size="0.8128" layer="52" font="vector" rot="R90">1</text>
+<text x="-3.65" y="11.842" size="0.8128" layer="52" font="vector" rot="R90">10</text>
+<text x="3.3" y="11.842" size="0.8128" layer="52" font="vector" rot="R90">20</text>
+<text x="10.45" y="11.842" size="0.8128" layer="52" font="vector" rot="R90">30</text>
+<text x="-13.09" y="15.055" size="0.8128" layer="25">&gt;NAME</text>
+<text x="9.77" y="15.03" size="0.8128" layer="27">&gt;VALUE</text>
 </package>
 <package name="MICROBUILDER_UG-2864HSWEG01_1.3_WRAPAROUND">
 <wire x1="-17.25" y1="15.5" x2="17.25" y2="15.5" width="0.127" layer="21"/>
