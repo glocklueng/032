@@ -2255,6 +2255,9 @@ design rules under a new name.</description>
 <element name="K4" library="switch-omron" package="B3F-5XX" value="" x="15.24" y="-25.4" rot="R90"/>
 <element name="JP1" library="microbuilder" package="JUMPER3" value="" x="16.51" y="3.81"/>
 <element name="SJ1" library="microbuilder" package="SOLDERJUMPER_REFLOW_NOPASTE" value="" x="2.54" y="34.29"/>
+<element name="R24" library="resistor" package="R0805" value="3K" x="-59.69" y="-44.45"/>
+<element name="CON1" library="microbuilder" package="1X02_OVAL" value="EXT" x="-58.42" y="-50.8"/>
+<element name="R22" library="resistor" package="R0805" value="180K" x="-59.69" y="-58.42"/>
 </elements>
 <signals>
 <signal name="GND">
@@ -2582,8 +2585,8 @@ design rules under a new name.</description>
 </signal>
 <signal name="N$19">
 <contactref element="IC2" pad="25"/>
-<contactref element="CON2" pad="1"/>
-<wire x1="13.97" y1="-13.97" x2="5.75" y2="-2.4" width="0" layer="19" extent="1-1"/>
+<contactref element="R24" pad="2"/>
+<wire x1="5.75" y1="-2.4" x2="-58.84" y2="-44.45" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="+5V">
 <contactref element="CON6" pad="3"/>
@@ -2595,6 +2598,7 @@ design rules under a new name.</description>
 <contactref element="C24" pad="2"/>
 <contactref element="IC4" pad="4"/>
 <contactref element="JP6" pad="1"/>
+<contactref element="Z1" pad="4"/>
 <wire x1="-46.09" y1="-10.16" x2="-42.86" y2="-35.29" width="0" layer="19" extent="1-1"/>
 <wire x1="-55.88" y1="1.21" x2="-46.09" y2="-10.16" width="0" layer="19" extent="1-1"/>
 <wire x1="-46.99" y1="15.16" x2="-55.88" y2="1.21" width="0" layer="19" extent="1-1"/>
@@ -2603,9 +2607,7 @@ design rules under a new name.</description>
 <wire x1="-17.41" y1="24.13" x2="-38.95" y2="25.4" width="0" layer="19" extent="1-1"/>
 <wire x1="-1.3" y1="13.255" x2="-17.41" y2="24.13" width="0" layer="19" extent="1-16"/>
 <wire x1="22.86" y1="19.05" x2="-1.3" y2="13.255" width="0" layer="19" extent="16-16"/>
-</signal>
-<signal name="VBUS">
-<contactref element="Z1" pad="4"/>
+<wire x1="24.4" y1="0.95" x2="22.86" y2="19.05" width="0" layer="19" extent="16-16"/>
 </signal>
 <signal name="D-">
 <contactref element="Z1" pad="2"/>
@@ -2924,8 +2926,8 @@ design rules under a new name.</description>
 </signal>
 <signal name="D/C">
 <contactref element="U1" pad="15"/>
-<contactref element="IC2" pad="6"/>
-<wire x1="-5.75" y1="0" x2="-0.35" y2="26.6" width="0" layer="19" extent="1-1"/>
+<contactref element="IC2" pad="7"/>
+<wire x1="-5.75" y1="-0.8" x2="-0.35" y2="26.6" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="R/W">
 <contactref element="U1" pad="16"/>
@@ -3094,9 +3096,6 @@ design rules under a new name.</description>
 <wire x1="-43.6" y1="-15.24" x2="-43.6" y2="-6.35" width="0" layer="19" extent="1-1"/>
 <wire x1="-5.75" y1="3.2" x2="-43.6" y2="-6.35" width="0" layer="19" extent="1-1"/>
 </signal>
-<signal name="RESET">
-<contactref element="IC2" pad="35"/>
-</signal>
 <signal name="PA5">
 <contactref element="C4" pad="2"/>
 <contactref element="R5" pad="2"/>
@@ -3136,6 +3135,8 @@ design rules under a new name.</description>
 <contactref element="R23" pad="2"/>
 <contactref element="IC4" pad="13"/>
 <contactref element="C23" pad="1"/>
+<contactref element="R22" pad="1"/>
+<wire x1="-56.78" y1="-17.78" x2="-60.54" y2="-58.42" width="0" layer="19" extent="1-1"/>
 <wire x1="-57.57" y1="-13.97" x2="-56.78" y2="-17.78" width="0" layer="19" extent="1-1"/>
 <wire x1="-58.42" y1="6.41" x2="-57.57" y2="-13.97" width="0" layer="19" extent="1-1"/>
 </signal>
@@ -3189,6 +3190,26 @@ design rules under a new name.</description>
 <contactref element="IC2" pad="37"/>
 <wire x1="1.44" y1="8.09" x2="-1.27" y2="7.99" width="0" layer="19" extent="1-1"/>
 <wire x1="1.6" y1="5.75" x2="1.44" y2="8.09" width="0" layer="19" extent="1-1"/>
+</signal>
+<signal name="N$6">
+<contactref element="CON2" pad="1"/>
+<contactref element="R24" pad="1"/>
+<wire x1="13.97" y1="-13.97" x2="-60.54" y2="-44.45" width="0" layer="19" extent="1-1"/>
+</signal>
+<signal name="N$38">
+<contactref element="IC2" pad="35"/>
+<contactref element="CON1" pad="2"/>
+<wire x1="3.2" y1="5.75" x2="-57.15" y2="-50.8" width="0" layer="19" extent="1-1"/>
+</signal>
+<signal name="DAT">
+<contactref element="CON1" pad="1"/>
+<contactref element="IC2" pad="34"/>
+<wire x1="4" y1="5.75" x2="-59.69" y2="-50.8" width="0" layer="19" extent="1-1"/>
+</signal>
+<signal name="DAC">
+<contactref element="IC2" pad="6"/>
+<contactref element="R22" pad="2"/>
+<wire x1="-5.75" y1="0" x2="-58.84" y2="-58.42" width="0" layer="19" extent="1-1"/>
 </signal>
 </signals>
 </board>
