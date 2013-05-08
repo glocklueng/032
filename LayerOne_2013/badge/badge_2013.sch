@@ -10547,7 +10547,7 @@ Source: &lt;a href="http://www.ndk.com/images/products/catalog/c_NX3225GA-STD-CR
 <part name="JP1" library="microbuilder" deviceset="JUMPER3" device=""/>
 <part name="SJ1" library="microbuilder" deviceset="SOLDERJUMPER" device="REFLOW_NOPASTE"/>
 <part name="R24" library="resistor" deviceset="R-US_" device="R0805" value="3K"/>
-<part name="CON1" library="microbuilder" deviceset="HEADER-1X2" device="" value="EXT"/>
+<part name="PDI" library="microbuilder" deviceset="HEADER-1X2" device="" value="CON6"/>
 <part name="R22" library="resistor" deviceset="R-US_" device="R0805" value="180K"/>
 </parts>
 <sheets>
@@ -10573,7 +10573,7 @@ Source: &lt;a href="http://www.ndk.com/images/products/catalog/c_NX3225GA-STD-CR
 <instance part="CON2" gate="G$1" x="241.3" y="137.16"/>
 <instance part="C1" gate="G$1" x="332.74" y="170.18" rot="R180"/>
 <instance part="C3" gate="G$1" x="93.98" y="226.06" rot="R270"/>
-<instance part="C4" gate="G$1" x="99.06" y="147.32" rot="R270"/>
+<instance part="C4" gate="G$1" x="96.52" y="152.4" rot="R270"/>
 <instance part="JP2" gate="G$1" x="38.1" y="63.5" rot="MR0"/>
 <instance part="CH1" gate="G$1" x="264.16" y="215.9"/>
 <instance part="TP1" gate="G$1" x="83.82" y="193.04"/>
@@ -10635,10 +10635,10 @@ Source: &lt;a href="http://www.ndk.com/images/products/catalog/c_NX3225GA-STD-CR
 <instance part="U2" gate="G$1" x="314.96" y="172.72"/>
 <instance part="GND32" gate="1" x="314.96" y="160.02"/>
 <instance part="GND33" gate="1" x="332.74" y="160.02"/>
-<instance part="R5" gate="G$1" x="101.6" y="162.56" rot="R180"/>
-<instance part="R6" gate="G$1" x="101.6" y="154.94" rot="R180"/>
-<instance part="GND34" gate="1" x="111.76" y="162.56" rot="R90"/>
-<instance part="GND35" gate="1" x="111.76" y="147.32" rot="R90"/>
+<instance part="R5" gate="G$1" x="99.06" y="167.64" rot="R180"/>
+<instance part="R6" gate="G$1" x="99.06" y="160.02" rot="R180"/>
+<instance part="GND34" gate="1" x="109.22" y="167.64" rot="R90"/>
+<instance part="GND35" gate="1" x="109.22" y="152.4" rot="R90"/>
 <instance part="U4" gate="A" x="251.46" y="33.02"/>
 <instance part="C25" gate="G$1" x="274.32" y="27.94" rot="R180"/>
 <instance part="C24" gate="G$1" x="226.06" y="33.02" rot="R180"/>
@@ -10676,17 +10676,17 @@ Source: &lt;a href="http://www.ndk.com/images/products/catalog/c_NX3225GA-STD-CR
 </instance>
 <instance part="GND42" gate="1" x="106.68" y="53.34" rot="R270"/>
 <instance part="GND44" gate="1" x="106.68" y="63.5" rot="R270"/>
-<instance part="K1" gate="G$1" x="45.72" y="167.64" rot="R270"/>
-<instance part="K2" gate="G$1" x="45.72" y="157.48" rot="R270"/>
-<instance part="K3" gate="G$1" x="45.72" y="147.32" rot="R270"/>
-<instance part="K4" gate="G$1" x="45.72" y="137.16" rot="R270"/>
-<instance part="GND43" gate="1" x="35.56" y="167.64" rot="R270"/>
-<instance part="GND45" gate="1" x="35.56" y="157.48" rot="R270"/>
-<instance part="GND46" gate="1" x="35.56" y="147.32" rot="R270"/>
-<instance part="GND47" gate="1" x="35.56" y="137.16" rot="R270"/>
+<instance part="K1" gate="G$1" x="322.58" y="218.44" rot="R270"/>
+<instance part="K2" gate="G$1" x="322.58" y="208.28" rot="R270"/>
+<instance part="K3" gate="G$1" x="322.58" y="198.12" rot="R270"/>
+<instance part="K4" gate="G$1" x="322.58" y="187.96" rot="R270"/>
+<instance part="GND43" gate="1" x="312.42" y="218.44" rot="R270"/>
+<instance part="GND45" gate="1" x="312.42" y="208.28" rot="R270"/>
+<instance part="GND46" gate="1" x="312.42" y="198.12" rot="R270"/>
+<instance part="GND47" gate="1" x="312.42" y="187.96" rot="R270"/>
 <instance part="SJ1" gate="1" x="269.24" y="91.44"/>
 <instance part="R24" gate="G$1" x="226.06" y="132.08" rot="R270"/>
-<instance part="CON1" gate="G$1" x="134.62" y="147.32" rot="R90"/>
+<instance part="PDI" gate="G$1" x="134.62" y="147.32" rot="R90"/>
 <instance part="R22" gate="G$1" x="81.28" y="33.02" rot="R270"/>
 </instances>
 <busses>
@@ -10888,12 +10888,12 @@ Source: &lt;a href="http://www.ndk.com/images/products/catalog/c_NX3225GA-STD-CR
 </segment>
 <segment>
 <pinref part="R5" gate="G$1" pin="1"/>
-<wire x1="106.68" y1="162.56" x2="109.22" y2="162.56" width="0.1524" layer="91"/>
+<wire x1="104.14" y1="167.64" x2="106.68" y2="167.64" width="0.1524" layer="91"/>
 <pinref part="GND34" gate="1" pin="GND"/>
 </segment>
 <segment>
 <pinref part="C4" gate="G$1" pin="1"/>
-<wire x1="104.14" y1="147.32" x2="109.22" y2="147.32" width="0.1524" layer="91"/>
+<wire x1="101.6" y1="152.4" x2="106.68" y2="152.4" width="0.1524" layer="91"/>
 <pinref part="GND35" gate="1" pin="GND"/>
 </segment>
 <segment>
@@ -10952,22 +10952,22 @@ Source: &lt;a href="http://www.ndk.com/images/products/catalog/c_NX3225GA-STD-CR
 <segment>
 <pinref part="K1" gate="G$1" pin="P"/>
 <pinref part="GND43" gate="1" pin="GND"/>
-<wire x1="38.1" y1="167.64" x2="40.64" y2="167.64" width="0.1524" layer="91"/>
+<wire x1="314.96" y1="218.44" x2="317.5" y2="218.44" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="K2" gate="G$1" pin="P"/>
 <pinref part="GND45" gate="1" pin="GND"/>
-<wire x1="38.1" y1="157.48" x2="40.64" y2="157.48" width="0.1524" layer="91"/>
+<wire x1="314.96" y1="208.28" x2="317.5" y2="208.28" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="K3" gate="G$1" pin="P"/>
 <pinref part="GND46" gate="1" pin="GND"/>
-<wire x1="38.1" y1="147.32" x2="40.64" y2="147.32" width="0.1524" layer="91"/>
+<wire x1="314.96" y1="198.12" x2="317.5" y2="198.12" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="K4" gate="G$1" pin="P"/>
 <pinref part="GND47" gate="1" pin="GND"/>
-<wire x1="38.1" y1="137.16" x2="40.64" y2="137.16" width="0.1524" layer="91"/>
+<wire x1="314.96" y1="187.96" x2="317.5" y2="187.96" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$2" class="0">
@@ -11205,8 +11205,9 @@ Source: &lt;a href="http://www.ndk.com/images/products/catalog/c_NX3225GA-STD-CR
 </segment>
 <segment>
 <pinref part="Z1" gate="G$1" pin="P$4"/>
-<wire x1="99.06" y1="121.92" x2="99.06" y2="132.08" width="0.1524" layer="91"/>
+<wire x1="99.06" y1="121.92" x2="99.06" y2="129.54" width="0.1524" layer="91"/>
 <label x="101.6" y="127" size="1.778" layer="95" rot="R90"/>
+<junction x="99.06" y="129.54"/>
 </segment>
 </net>
 <net name="D-" class="0">
@@ -11214,6 +11215,7 @@ Source: &lt;a href="http://www.ndk.com/images/products/catalog/c_NX3225GA-STD-CR
 <pinref part="Z1" gate="G$1" pin="P$2"/>
 <wire x1="91.44" y1="121.92" x2="91.44" y2="129.54" width="0.1524" layer="91"/>
 <label x="91.44" y="129.54" size="1.778" layer="95"/>
+<junction x="91.44" y="129.54"/>
 </segment>
 <segment>
 <wire x1="73.66" y1="111.76" x2="78.74" y2="111.76" width="0.1524" layer="91"/>
@@ -11231,6 +11233,7 @@ Source: &lt;a href="http://www.ndk.com/images/products/catalog/c_NX3225GA-STD-CR
 <pinref part="Z1" gate="G$1" pin="P$3"/>
 <wire x1="86.36" y1="121.92" x2="86.36" y2="129.54" width="0.1524" layer="91"/>
 <label x="86.36" y="129.54" size="1.778" layer="95"/>
+<junction x="86.36" y="129.54"/>
 </segment>
 <segment>
 <wire x1="73.66" y1="114.3" x2="78.74" y2="114.3" width="0.1524" layer="91"/>
@@ -11474,9 +11477,9 @@ Source: &lt;a href="http://www.ndk.com/images/products/catalog/c_NX3225GA-STD-CR
 </segment>
 <segment>
 <pinref part="R6" gate="G$1" pin="1"/>
-<wire x1="106.68" y1="154.94" x2="111.76" y2="154.94" width="0.1524" layer="91"/>
-<label x="111.76" y="154.94" size="1.778" layer="95"/>
-<junction x="111.76" y="154.94"/>
+<wire x1="104.14" y1="160.02" x2="109.22" y2="160.02" width="0.1524" layer="91"/>
+<label x="109.22" y="160.02" size="1.778" layer="95"/>
+<junction x="109.22" y="160.02"/>
 </segment>
 <segment>
 <pinref part="R25" gate="G$1" pin="1"/>
@@ -11646,18 +11649,18 @@ Source: &lt;a href="http://www.ndk.com/images/products/catalog/c_NX3225GA-STD-CR
 <net name="PA5" class="0">
 <segment>
 <pinref part="C4" gate="G$1" pin="2"/>
-<wire x1="96.52" y1="147.32" x2="93.98" y2="147.32" width="0.1524" layer="91"/>
-<wire x1="93.98" y1="147.32" x2="93.98" y2="154.94" width="0.1524" layer="91"/>
+<wire x1="93.98" y1="152.4" x2="91.44" y2="152.4" width="0.1524" layer="91"/>
+<wire x1="91.44" y1="152.4" x2="91.44" y2="160.02" width="0.1524" layer="91"/>
 <pinref part="R5" gate="G$1" pin="2"/>
-<wire x1="93.98" y1="154.94" x2="93.98" y2="162.56" width="0.1524" layer="91"/>
-<wire x1="93.98" y1="162.56" x2="88.9" y2="162.56" width="0.1524" layer="91"/>
-<wire x1="96.52" y1="162.56" x2="93.98" y2="162.56" width="0.1524" layer="91"/>
+<wire x1="91.44" y1="160.02" x2="91.44" y2="167.64" width="0.1524" layer="91"/>
+<wire x1="91.44" y1="167.64" x2="86.36" y2="167.64" width="0.1524" layer="91"/>
+<wire x1="93.98" y1="167.64" x2="91.44" y2="167.64" width="0.1524" layer="91"/>
 <pinref part="R6" gate="G$1" pin="2"/>
-<wire x1="96.52" y1="154.94" x2="93.98" y2="154.94" width="0.1524" layer="91"/>
-<junction x="93.98" y="154.94"/>
-<junction x="93.98" y="162.56"/>
-<label x="88.9" y="162.56" size="1.778" layer="95" rot="R180"/>
-<junction x="88.9" y="162.56"/>
+<wire x1="93.98" y1="160.02" x2="91.44" y2="160.02" width="0.1524" layer="91"/>
+<junction x="91.44" y="160.02"/>
+<junction x="91.44" y="167.64"/>
+<label x="86.36" y="167.64" size="1.778" layer="95" rot="R180"/>
+<junction x="86.36" y="167.64"/>
 </segment>
 <segment>
 <pinref part="IC2" gate="G$1" pin="PA5/ADC5"/>
@@ -11729,9 +11732,9 @@ Source: &lt;a href="http://www.ndk.com/images/products/catalog/c_NX3225GA-STD-CR
 <net name="PA4" class="0">
 <segment>
 <pinref part="K1" gate="G$1" pin="S"/>
-<wire x1="50.8" y1="167.64" x2="60.96" y2="167.64" width="0.1524" layer="91"/>
-<label x="60.96" y="167.64" size="1.778" layer="95"/>
-<junction x="60.96" y="167.64"/>
+<wire x1="327.66" y1="218.44" x2="337.82" y2="218.44" width="0.1524" layer="91"/>
+<label x="337.82" y="218.44" size="1.778" layer="95"/>
+<junction x="337.82" y="218.44"/>
 </segment>
 <segment>
 <pinref part="IC2" gate="G$1" pin="PA4/ADC4"/>
@@ -11743,9 +11746,9 @@ Source: &lt;a href="http://www.ndk.com/images/products/catalog/c_NX3225GA-STD-CR
 <net name="PA2" class="0">
 <segment>
 <pinref part="K3" gate="G$1" pin="S"/>
-<wire x1="50.8" y1="147.32" x2="60.96" y2="147.32" width="0.1524" layer="91"/>
-<label x="60.96" y="147.32" size="1.778" layer="95"/>
-<junction x="60.96" y="147.32"/>
+<wire x1="327.66" y1="198.12" x2="337.82" y2="198.12" width="0.1524" layer="91"/>
+<label x="337.82" y="198.12" size="1.778" layer="95"/>
+<junction x="337.82" y="198.12"/>
 </segment>
 <segment>
 <pinref part="IC2" gate="G$1" pin="PA2/ADC2"/>
@@ -11757,9 +11760,9 @@ Source: &lt;a href="http://www.ndk.com/images/products/catalog/c_NX3225GA-STD-CR
 <net name="PA1" class="0">
 <segment>
 <pinref part="K4" gate="G$1" pin="S"/>
-<wire x1="50.8" y1="137.16" x2="60.96" y2="137.16" width="0.1524" layer="91"/>
-<label x="60.96" y="137.16" size="1.778" layer="95"/>
-<junction x="60.96" y="137.16"/>
+<wire x1="327.66" y1="187.96" x2="337.82" y2="187.96" width="0.1524" layer="91"/>
+<label x="337.82" y="187.96" size="1.778" layer="95"/>
+<junction x="337.82" y="187.96"/>
 </segment>
 <segment>
 <pinref part="IC2" gate="G$1" pin="PA1/ADC1"/>
@@ -11771,9 +11774,9 @@ Source: &lt;a href="http://www.ndk.com/images/products/catalog/c_NX3225GA-STD-CR
 <net name="PA3" class="0">
 <segment>
 <pinref part="K2" gate="G$1" pin="S"/>
-<wire x1="50.8" y1="157.48" x2="60.96" y2="157.48" width="0.1524" layer="91"/>
-<label x="60.96" y="157.48" size="1.778" layer="95"/>
-<junction x="60.96" y="157.48"/>
+<wire x1="327.66" y1="208.28" x2="337.82" y2="208.28" width="0.1524" layer="91"/>
+<label x="337.82" y="208.28" size="1.778" layer="95"/>
+<junction x="337.82" y="208.28"/>
 </segment>
 <segment>
 <pinref part="IC2" gate="G$1" pin="PA3/ADC3"/>
@@ -11831,14 +11834,14 @@ Source: &lt;a href="http://www.ndk.com/images/products/catalog/c_NX3225GA-STD-CR
 <net name="N$38" class="0">
 <segment>
 <pinref part="IC2" gate="G$1" pin="RESET/PDI-CLK"/>
-<pinref part="CON1" gate="G$1" pin="2"/>
+<pinref part="PDI" gate="G$1" pin="2"/>
 <wire x1="142.24" y1="134.62" x2="134.62" y2="134.62" width="0.1524" layer="91"/>
 <wire x1="134.62" y1="134.62" x2="134.62" y2="144.78" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="DAT" class="0">
 <segment>
-<pinref part="CON1" gate="G$1" pin="1"/>
+<pinref part="PDI" gate="G$1" pin="1"/>
 <wire x1="132.08" y1="144.78" x2="132.08" y2="134.62" width="0.1524" layer="91"/>
 <junction x="132.08" y="134.62"/>
 <label x="127" y="134.62" size="1.778" layer="95"/>
@@ -11945,7 +11948,7 @@ Source: &lt;a href="http://www.ndk.com/images/products/catalog/c_NX3225GA-STD-CR
 <pinref part="LED2" gate="G$1" pin="C"/>
 </segment>
 <segment>
-<wire x1="-38.1" y1="81.28" x2="-20.32" y2="81.28" width="0.1524" layer="91"/>
+<wire x1="-38.1" y1="81.28" x2="-27.94" y2="81.28" width="0.1524" layer="91"/>
 <label x="-33.02" y="81.28" size="1.778" layer="95"/>
 <pinref part="IC1" gate="A" pin="OUT1"/>
 </segment>
@@ -11969,7 +11972,7 @@ Source: &lt;a href="http://www.ndk.com/images/products/catalog/c_NX3225GA-STD-CR
 <pinref part="LED5" gate="G$1" pin="C"/>
 </segment>
 <segment>
-<wire x1="-38.1" y1="73.66" x2="-20.32" y2="73.66" width="0.1524" layer="91"/>
+<wire x1="-38.1" y1="73.66" x2="-27.94" y2="73.66" width="0.1524" layer="91"/>
 <label x="-33.02" y="73.66" size="1.778" layer="95"/>
 <pinref part="IC1" gate="A" pin="OUT4"/>
 </segment>
@@ -11993,7 +11996,7 @@ Source: &lt;a href="http://www.ndk.com/images/products/catalog/c_NX3225GA-STD-CR
 <pinref part="LED8" gate="G$1" pin="C"/>
 </segment>
 <segment>
-<wire x1="-38.1" y1="66.04" x2="-20.32" y2="66.04" width="0.1524" layer="91"/>
+<wire x1="-38.1" y1="66.04" x2="-27.94" y2="66.04" width="0.1524" layer="91"/>
 <label x="-33.02" y="66.04" size="1.778" layer="95"/>
 <pinref part="IC1" gate="A" pin="OUT7"/>
 </segment>
@@ -12005,7 +12008,7 @@ Source: &lt;a href="http://www.ndk.com/images/products/catalog/c_NX3225GA-STD-CR
 <pinref part="LED10" gate="G$1" pin="C"/>
 </segment>
 <segment>
-<wire x1="-38.1" y1="58.42" x2="-20.32" y2="58.42" width="0.1524" layer="91"/>
+<wire x1="-38.1" y1="58.42" x2="-25.4" y2="58.42" width="0.1524" layer="91"/>
 <label x="-33.02" y="58.42" size="1.778" layer="95"/>
 <label x="-33.02" y="58.42" size="1.778" layer="95"/>
 <pinref part="IC1" gate="A" pin="OUT9"/>
@@ -12018,7 +12021,7 @@ Source: &lt;a href="http://www.ndk.com/images/products/catalog/c_NX3225GA-STD-CR
 <pinref part="LED11" gate="G$1" pin="C"/>
 </segment>
 <segment>
-<wire x1="-38.1" y1="55.88" x2="-12.7" y2="55.88" width="0.1524" layer="91"/>
+<wire x1="-38.1" y1="55.88" x2="-25.4" y2="55.88" width="0.1524" layer="91"/>
 <label x="-33.02" y="55.88" size="1.778" layer="95"/>
 <pinref part="IC1" gate="A" pin="OUT10"/>
 </segment>
@@ -12030,7 +12033,7 @@ Source: &lt;a href="http://www.ndk.com/images/products/catalog/c_NX3225GA-STD-CR
 <pinref part="LED13" gate="G$1" pin="C"/>
 </segment>
 <segment>
-<wire x1="-38.1" y1="50.8" x2="-20.32" y2="50.8" width="0.1524" layer="91"/>
+<wire x1="-38.1" y1="50.8" x2="-25.4" y2="50.8" width="0.1524" layer="91"/>
 <label x="-33.02" y="50.8" size="1.778" layer="95"/>
 <pinref part="IC1" gate="A" pin="OUT12"/>
 </segment>
@@ -12042,7 +12045,7 @@ Source: &lt;a href="http://www.ndk.com/images/products/catalog/c_NX3225GA-STD-CR
 <pinref part="LED14" gate="G$1" pin="C"/>
 </segment>
 <segment>
-<wire x1="-38.1" y1="48.26" x2="-12.7" y2="48.26" width="0.1524" layer="91"/>
+<wire x1="-38.1" y1="48.26" x2="-25.4" y2="48.26" width="0.1524" layer="91"/>
 <label x="-33.02" y="48.26" size="1.778" layer="95"/>
 <pinref part="IC1" gate="A" pin="OUT13"/>
 </segment>
@@ -12054,7 +12057,7 @@ Source: &lt;a href="http://www.ndk.com/images/products/catalog/c_NX3225GA-STD-CR
 <pinref part="LED17" gate="G$1" pin="C"/>
 </segment>
 <segment>
-<wire x1="-38.1" y1="38.1" x2="-12.7" y2="38.1" width="0.1524" layer="91"/>
+<wire x1="-38.1" y1="38.1" x2="-25.4" y2="38.1" width="0.1524" layer="91"/>
 <label x="-33.02" y="38.1" size="1.778" layer="95"/>
 <pinref part="IC1" gate="A" pin="OUT16"/>
 </segment>
@@ -12066,7 +12069,7 @@ Source: &lt;a href="http://www.ndk.com/images/products/catalog/c_NX3225GA-STD-CR
 <pinref part="LED19" gate="G$1" pin="C"/>
 </segment>
 <segment>
-<wire x1="-38.1" y1="33.02" x2="-20.32" y2="33.02" width="0.1524" layer="91"/>
+<wire x1="-38.1" y1="33.02" x2="-25.4" y2="33.02" width="0.1524" layer="91"/>
 <label x="-33.02" y="33.02" size="1.778" layer="95"/>
 <pinref part="IC1" gate="A" pin="OUT18"/>
 </segment>
@@ -12078,7 +12081,7 @@ Source: &lt;a href="http://www.ndk.com/images/products/catalog/c_NX3225GA-STD-CR
 <pinref part="LED20" gate="G$1" pin="C"/>
 </segment>
 <segment>
-<wire x1="-38.1" y1="30.48" x2="-12.7" y2="30.48" width="0.1524" layer="91"/>
+<wire x1="-38.1" y1="30.48" x2="-25.4" y2="30.48" width="0.1524" layer="91"/>
 <label x="-33.02" y="30.48" size="1.778" layer="95"/>
 <pinref part="IC1" gate="A" pin="OUT19"/>
 </segment>
@@ -12090,7 +12093,7 @@ Source: &lt;a href="http://www.ndk.com/images/products/catalog/c_NX3225GA-STD-CR
 <pinref part="LED23" gate="G$1" pin="C"/>
 </segment>
 <segment>
-<wire x1="-38.1" y1="22.86" x2="-12.7" y2="22.86" width="0.1524" layer="91"/>
+<wire x1="-38.1" y1="22.86" x2="-25.4" y2="22.86" width="0.1524" layer="91"/>
 <label x="-33.02" y="22.86" size="1.778" layer="95"/>
 <pinref part="IC1" gate="A" pin="OUT22"/>
 </segment>
@@ -12102,7 +12105,7 @@ Source: &lt;a href="http://www.ndk.com/images/products/catalog/c_NX3225GA-STD-CR
 <pinref part="LED22" gate="G$1" pin="C"/>
 </segment>
 <segment>
-<wire x1="-38.1" y1="25.4" x2="-20.32" y2="25.4" width="0.1524" layer="91"/>
+<wire x1="-38.1" y1="25.4" x2="-25.4" y2="25.4" width="0.1524" layer="91"/>
 <label x="-33.02" y="25.4" size="1.778" layer="95"/>
 <pinref part="IC1" gate="A" pin="OUT21"/>
 </segment>
@@ -12114,7 +12117,7 @@ Source: &lt;a href="http://www.ndk.com/images/products/catalog/c_NX3225GA-STD-CR
 <pinref part="LED16" gate="G$1" pin="C"/>
 </segment>
 <segment>
-<wire x1="-38.1" y1="43.18" x2="-20.32" y2="43.18" width="0.1524" layer="91"/>
+<wire x1="-38.1" y1="43.18" x2="-25.4" y2="43.18" width="0.1524" layer="91"/>
 <label x="-33.02" y="43.18" size="1.778" layer="95"/>
 <pinref part="IC1" gate="A" pin="OUT15"/>
 </segment>
@@ -12138,7 +12141,7 @@ Source: &lt;a href="http://www.ndk.com/images/products/catalog/c_NX3225GA-STD-CR
 <pinref part="LED3" gate="G$1" pin="C"/>
 </segment>
 <segment>
-<wire x1="-38.1" y1="78.74" x2="-12.7" y2="78.74" width="0.1524" layer="91"/>
+<wire x1="-38.1" y1="78.74" x2="-27.94" y2="78.74" width="0.1524" layer="91"/>
 <label x="-33.02" y="78.74" size="1.778" layer="95"/>
 <pinref part="IC1" gate="A" pin="OUT2"/>
 </segment>
@@ -12150,7 +12153,7 @@ Source: &lt;a href="http://www.ndk.com/images/products/catalog/c_NX3225GA-STD-CR
 <pinref part="LED6" gate="G$1" pin="C"/>
 </segment>
 <segment>
-<wire x1="-38.1" y1="71.12" x2="-10.16" y2="71.12" width="0.1524" layer="91"/>
+<wire x1="-38.1" y1="71.12" x2="-27.94" y2="71.12" width="0.1524" layer="91"/>
 <label x="-33.02" y="71.12" size="1.778" layer="95"/>
 <pinref part="IC1" gate="A" pin="OUT5"/>
 </segment>
@@ -12162,7 +12165,7 @@ Source: &lt;a href="http://www.ndk.com/images/products/catalog/c_NX3225GA-STD-CR
 <pinref part="LED9" gate="G$1" pin="C"/>
 </segment>
 <segment>
-<wire x1="-38.1" y1="60.96" x2="-12.7" y2="60.96" width="0.1524" layer="91"/>
+<wire x1="-38.1" y1="60.96" x2="-25.4" y2="60.96" width="0.1524" layer="91"/>
 <label x="-33.02" y="60.96" size="1.778" layer="95"/>
 <label x="-33.02" y="60.96" size="1.778" layer="95"/>
 <pinref part="IC1" gate="A" pin="OUT8"/>
@@ -12187,7 +12190,7 @@ Source: &lt;a href="http://www.ndk.com/images/products/catalog/c_NX3225GA-STD-CR
 <pinref part="LED15" gate="G$1" pin="C"/>
 </segment>
 <segment>
-<wire x1="-38.1" y1="45.72" x2="-27.94" y2="45.72" width="0.1524" layer="91"/>
+<wire x1="-38.1" y1="45.72" x2="-25.4" y2="45.72" width="0.1524" layer="91"/>
 <label x="-33.02" y="45.72" size="1.778" layer="95"/>
 <pinref part="IC1" gate="A" pin="OUT14"/>
 </segment>
@@ -12211,7 +12214,7 @@ Source: &lt;a href="http://www.ndk.com/images/products/catalog/c_NX3225GA-STD-CR
 <pinref part="LED21" gate="G$1" pin="C"/>
 </segment>
 <segment>
-<wire x1="-38.1" y1="27.94" x2="-27.94" y2="27.94" width="0.1524" layer="91"/>
+<wire x1="-38.1" y1="27.94" x2="-25.4" y2="27.94" width="0.1524" layer="91"/>
 <label x="-33.02" y="27.94" size="1.778" layer="95"/>
 <pinref part="IC1" gate="A" pin="OUT20"/>
 </segment>
