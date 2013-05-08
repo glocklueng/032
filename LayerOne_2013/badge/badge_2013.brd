@@ -2256,7 +2256,7 @@ design rules under a new name.</description>
 <element name="JP1" library="microbuilder" package="JUMPER3" value="" x="16.51" y="3.81"/>
 <element name="SJ1" library="microbuilder" package="SOLDERJUMPER_REFLOW_NOPASTE" value="" x="2.54" y="34.29"/>
 <element name="R24" library="resistor" package="R0805" value="3K" x="-59.69" y="-44.45"/>
-<element name="CON1" library="microbuilder" package="1X02_OVAL" value="EXT" x="-58.42" y="-50.8"/>
+<element name="PDI" library="microbuilder" package="1X02_OVAL" value="CON6" x="-58.42" y="-50.8"/>
 <element name="R22" library="resistor" package="R0805" value="180K" x="-59.69" y="-58.42"/>
 </elements>
 <signals>
@@ -3198,11 +3198,11 @@ design rules under a new name.</description>
 </signal>
 <signal name="N$38">
 <contactref element="IC2" pad="35"/>
-<contactref element="CON1" pad="2"/>
+<contactref element="PDI" pad="2"/>
 <wire x1="3.2" y1="5.75" x2="-57.15" y2="-50.8" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="DAT">
-<contactref element="CON1" pad="1"/>
+<contactref element="PDI" pad="1"/>
 <contactref element="IC2" pad="34"/>
 <wire x1="4" y1="5.75" x2="-59.69" y2="-50.8" width="0" layer="19" extent="1-1"/>
 </signal>
