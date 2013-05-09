@@ -428,8 +428,8 @@ UsedLibrary="badge.lbrbadge_2013.lbr"
 
 [Win_1]
 Type="Control Panel"
-Loc="652 381 1251 780"
-State=1
+Loc="927 0 1837 1161"
+State=2
 Number=0
 
 [Desktop]
