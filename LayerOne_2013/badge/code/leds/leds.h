@@ -3,7 +3,7 @@
 
 
 #define F_CPU 16*1000
-
+#define __AVR_ATxmega32A4__
 
 // includes
 
@@ -30,15 +30,17 @@ typedef unsigned int uint;
 // structures
 
 // defines
+#define LEDS_HEIGHT ( 48 )
+#define LEDS_WIDTH ( 1 )
 
 #define NUM_TLC5947 ( 2 )
 
 #define bit_set(reg, bit) reg |= 1 << bit 
 #define bit_clr(reg, bit) reg &= ~(1 << bit) 
 
-#define SWSPI_PORT PORTD
-#define SWSPI_DIR  DDRD
-#define SWSPI_IN   PIND
+#define SWSPI_PORT PORTD.DIR
+#define SWSPI_DIR  PORTD.DDRD
+#define SWSPI_IN   PORTD.IN
 
 #ifndef TWO_PI
 #define TWO_PI                 ( 6.283185307f )
@@ -56,15 +58,15 @@ typedef unsigned int uint;
 #define LATPORT PORTC
 #define DATDDR DDRC
 
-#define DATPIN PC0    //    SIN
-#define CLKPIN PC1
-#define BLANKPIN PC2
-#define LATPIN PC3
+#define DATPIN ( 1<<3 )    //    SIN
+#define CLKPIN ( 1<<2 )
+#define BLANKPIN ( 1<<4 ) 
+#define LATPIN ( 1<<5 )
 
-#define SIN_PIN        _BV( PC0 ) /// PC0
-#define SCLK_PIN    _BV( PC1 ) /// PC1
-#define BLANK_PIN    _BV( PC2 )    /// PC2
-#define XLAT_PIN    _BV( PC3 ) /// PC3a
+#define SIN_PIN     ( 1<<3 ) /// PC0
+#define SCLK_PIN	( 1<<2 ) /// PC1
+#define BLANK_PIN	( 1<<4 ) /// PC2
+#define XLAT_PIN    ( 1<<5 ) /// PC3a
 
 
 extern uint16_t LEDChannels[(NUM_TLC5947)];

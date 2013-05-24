@@ -5,12 +5,12 @@
 
 static void swspi_init()
 {
-    SWSPI_DIR |= SWSPI_SS | SWSPI_SCK | SWSPI_MOSI;
-    SWSPI_DIR &= ~SWSPI_MISO;
+    PORTD.DIR |= SWSPI_SS | SWSPI_SCK | SWSPI_MOSI;
+    PORTD.DIR &= ~SWSPI_MISO;
 
 #if defined(USE_INTERRUPT)
 
-    SWSPI_DIR &= ~SWSPI_IRQ;
+    PORTD.DIR &= ~SWSPI_IRQ;
     EICRA = ( ( 1<<ISC01 ) | ( 1<<ISC00) ); // The rising edge of INT0 generates asynchronously an interrupt request.
     EIMSK = 1<<INT0; // Enable INT0.
 
