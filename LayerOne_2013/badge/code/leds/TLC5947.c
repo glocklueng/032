@@ -2,6 +2,8 @@
 
 uint16_t LEDChannels[(NUM_TLC5947)];
 
+unsigned char brightnessShift= 0;
+
 void SetPoint( unsigned short x, unsigned short y,unsigned short val)
 {
 	LEDChannels[ (  x * LEDS_WIDTH ) + ( LEDS_HEIGHT - y ) ] = val;
@@ -27,7 +29,7 @@ void WriteLEDArray(unsigned int count) {
 
   for (unsigned int i = 0; i < (count); i++) {
 
-    tempOne = LEDChannels[i];
+    tempOne = LEDChannels[i] >> brightnessShift;
 
     for (int j = 0; j < 12; j++) {
       if ((tempOne >> (11 - j)) & 1) {
@@ -119,6 +121,39 @@ void LEDscan3(int red, float degreeoffset,unsigned int count)
     }    
 }
 
+void WriteArrayOffset(unsigned int count, unsigned int offset) 
+{
+
+	PORTD.OUT &= ~(1 << LATPIN);
+	_delay_us(30);
+
+	unsigned short tempOne = 0;
+	unsigned int 	 tempOffset = 0;
+
+	for (unsigned int i = 0; i < (count ); i++) {
+		if (i+offset>=count) tempOffset = offset-(count);
+		else tempOffset = offset;
+		tempOne = LEDChannels[i+tempOffset];
+
+		for (int j = 0; j < 12; j++) {
+			if ((tempOne >> (11 - j)) & 1) {
+				PORTD.OUT |= (1 << DATPIN);
+			}
+			else {
+				PORTD.OUT &= ~(1 << DATPIN);
+			}
+
+			PORTD.OUT |= (1 << CLKPIN);
+			PORTD.OUT &= ~(1 << CLKPIN);
+
+		}
+	}
+
+	PORTD.OUT |= (1 << LATPIN);
+
+	_delay_us(30);
+}
+
 //------------------------------------------------------------------------------------------
 // Sets up TLC5947 and MMA7455
 //------------------------------------------------------------------------------------------
@@ -129,6 +164,10 @@ void LED_Init(void)
 //	DATDDR	|= ( SIN_PIN |SCLK_PIN|BLANK_PIN | XLAT_PIN );
 //	DATPORT	|= ( SIN_PIN |SCLK_PIN|BLANK_PIN | XLAT_PIN );
 	
+	// full bright		
+	brightnessShift = 0;
+		
+		
 	PORTD.OUT &= ~(LATPIN);
 	PORTD.OUT &= ~(BLANK_PIN);
 
