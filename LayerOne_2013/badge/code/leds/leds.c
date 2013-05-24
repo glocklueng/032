@@ -5,8 +5,10 @@
  *  Author: charlie
  */ 
 
-
 #include <avr/io.h>
+
+#include "leds.h"
+
 
 int main(void)
 {

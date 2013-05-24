@@ -1,13 +1,16 @@
 #ifndef _RF_BLINKY_H_
 #define _RF_BLINKY_H_ ( 1 )
 
+
+#define F_CPU 16*1000
+
+
 // includes
 
 #include <avr/io.h>
 #include <util/delay.h>
 #include <avr/interrupt.h>
 #include <avr/sfr_defs.h>
-
 
 #include <math.h> 
 #include <avr/eeprom.h>
@@ -17,9 +20,7 @@
 
 #include <stdlib.h>
 #include <string.h>
-
 #include <math.h>
-
 
 // typedefs
 
@@ -30,10 +31,7 @@ typedef unsigned int uint;
 
 // defines
 
-#define SUPERBALL_WIDTH            (60)
-#define SUPERBALL_HEIGHT        (1)
-
-#define NUM_TLC5947 (60 )
+#define NUM_TLC5947 ( 2 )
 
 #define bit_set(reg, bit) reg |= 1 << bit 
 #define bit_clr(reg, bit) reg &= ~(1 << bit) 
@@ -96,8 +94,5 @@ void LEDscan2Add(int red, float degreeoffset,unsigned int count);
 void SWSPI_init();
 void SWSPI_write( uint8_t address, uint8_t value );
 uint8_t SWSPI_read( uint8_t address );
-
-
-
 
 #endif
