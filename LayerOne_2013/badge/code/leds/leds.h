@@ -32,7 +32,7 @@ typedef unsigned int uint;
 #define LEDS_HEIGHT ( 48 )
 #define LEDS_WIDTH ( 1 )
 
-#define NUM_TLC5947 ( 2 )
+#define NUM_TLC5947 ( 48 )
 
 #define bit_set(reg, bit) reg |= 1 << bit 
 #define bit_clr(reg, bit) reg &= ~(1 << bit) 
@@ -69,5 +69,6 @@ void LEDscan2(int red, float degreeoffset,unsigned int count);
 void LEDscan3(int red, float degreeoffset,unsigned int count);
 void LED_Init(void);
 void LEDscan2Add(int red, float degreeoffset,unsigned int count);
+void WriteArrayOffset(unsigned int count, unsigned int offset);
 
 #endif
