@@ -1,12 +1,5 @@
 #include "leds.h"
 
-
-// Modified version of Garrett's octobrite code
-
-
-// For octobrite code
-
-
 uint16_t LEDChannels[(NUM_TLC5947)];
 
 void SetPoint( unsigned short x, unsigned short y,unsigned short val)
@@ -24,10 +17,6 @@ void Clear(unsigned short val)
     }
 }
 
-unsigned char brightnessShift= 0;
-
-
-extern unsigned char chargeMode ;
 
 //------------------------------------------------------------------------------------------
 // Read all bits in the LEDChannels array and send them on the selected pins
@@ -38,12 +27,7 @@ void WriteLEDArray(unsigned int count) {
 
   for (unsigned int i = 0; i < (count); i++) {
 
-    tempOne = LEDChannels[i]>>brightnessShift;
-	
-	// this limits the current draw during charging
-	if( chargeMode ){
-		tempOne >>= 3;
-	}
+    tempOne = LEDChannels[i];
 
     for (int j = 0; j < 12; j++) {
       if ((tempOne >> (11 - j)) & 1) {
@@ -145,12 +129,8 @@ void LED_Init(void)
 //	DATDDR	|= ( SIN_PIN |SCLK_PIN|BLANK_PIN | XLAT_PIN );
 //	DATPORT	|= ( SIN_PIN |SCLK_PIN|BLANK_PIN | XLAT_PIN );
 	
-//	DATPORT &= ~(LATPIN);
-//	DATPORT &= ~(BLANK_PIN);
-
-
-	// full bright	
-	brightnessShift = 0;
+	PORTD.OUT &= ~(LATPIN);
+	PORTD.OUT &= ~(BLANK_PIN);
 
 	// clear the array
 	memset(LEDChannels,0,sizeof(LEDChannels)*sizeof(uint16_t));
