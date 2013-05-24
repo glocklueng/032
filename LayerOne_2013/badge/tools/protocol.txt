@@ -1,0 +1,186 @@
+Xprotolab Interface Protocol
+Follow the protocol to make your own applications to interface the Xprotolab, or to port the PC application to other platforms.
+
+This is a work in progress, and it may change until the PC application is complete.
+
+UART settings:
+
+Data Bits: 8
+Baud rate: 115200
+Parity: None
+Stop Bits: One
+Handshaking: None
+
+Conventions:
+
+CH1: Channel 1
+CH2: Channel 2
+CHD: Logic Analyzer
+Fast sampling rates: 512uS/div or faster
+Slow sampling rates: 1mS/div or slower
+
+Command Set:
+
+All commands sent to the Xprotolab are in ASCII format, further data sent or received is in binary.
+
+Command	Description	Xprotolab Response
+CR	Simulate KD keypress	No response
+/	Simulate KA keypress	No response
+*	Simulate KB keypress	No response
+-	Simulate KC keypress	No response
++	Auto Setup	No response
+.	Change mode	No response
+0	Stop	No response
+9	Increase sampling rate	No response
+6	Decrease sampling rate	No response
+1	Toggle CH1 on/off	No response
+2	Toggle CH2 on/off	No response
+3	Toggle CHD on/off	No response
+4	Decrease CH1 gain	No response
+5	Decrease CH2 gain	No response
+7	Increase CH1 gain	No response
+8	Increase CH2 gain	No response
+a	Request firmware version	String containing the version number followed by a line feed
+p	Disable Auto send	No response
+q	Enable Auto send	
+
+No response.
+
+When the Auto send is active, the Xprotolab will continuously send data, this is to maximize the refresh rate on the PC side.
+
+When using fast sampling rates, the Xprotolab will first fill its buffers, then send a start of frame, which is a byte containing the channels that are active, and then send the data from the channels.
+
+When using slow sampling rates, the PC app will need to keep track of time, as the samples will arrive with no time reference.
+
+r	Request CH1	CH1 data (256 bytes)
+s	Request CH2	CH2 data (256 bytes)
+t	Request CHD	CHD data (256 bytes)
+u	Request settings	CH1 settings (3 bytes),
+CH2 settings (3 bytes),
+CHD settings (5 bytes),
+General settings (10 bytes),
+AWG settings (6 bytes: bytes 1 thru 6),
+AWG Timer Period (2 bytes)
+v	Send settings	'G' character, which signals the PC that the Xprotolab is ready,
+Then the PC sends the data:
+CH1 settings (3 bytes),
+CH2 settings (3 bytes),
+CHD settings (5 bytes),
+General settings (10 bytes),
+AWG settings (9 bytes: bytes 2 thru 10)
+
+Then the Xprotolab sends a 'T' character, which signals the PC that the data was received.
+w	Request EE waveform	EE Wave data (256 bytes)
+x	Send EE waveform	'G' character, which signals the PC that the Xprotolab is ready,
+Then the PC sends the data:
+EE wave (256 bytes)
+
+Then the Xprotolab sends a 'T' character, which signals the PC that the data was received.
+C	Request BMP	128x64 Monochrome BMP using the XModem protocol
+
+CH1 and CH2 settings (3 bytes):
+
+1) Position
+
+2) Option (bitfield):
+            Bit 0: Channel on
+            Bit 1: x10 probe
+            Bit 2: x100 probe
+            Bit 3: x1000 probe
+            Bit 4: Invert channel
+            Bit 5: Average samples
+            Bit 6: Math Active (either addition or multiplication)
+            Bit 7: Math operation (addition or multiplication)
+
+3) Gain
+
+CHD settings (5 bytes):
+
+1) Position
+
+2) Input Mask
+
+3) Option (bitfield):
+            Bit 0: Channel on
+            Bit 1: Invert channel
+            Bit 2: Thick line when logic '0'
+            Bit 3: Pull input
+            Bit 4: Pull up / down
+
+4) Decode parameters (bitfield):
+            Bit 0: SPI Clock Polarity
+            Bit 1: SPI Clock Phase
+            Bit 2: Use UART parity
+            Bit 3: UART parity odd or even
+            Bit 4: UART 1 or 2 stop bits
+            Bit 5,6,7: UART Baud rate (1200, 2400, 4800, 9600, 19200, 38400, 57600, 115200)
+
+5) Decode option (bitfield):
+            Bit 0: Serial Hex Display
+            Bit 1: Parallel Hex Display
+            Bit 2: I2C decoding
+            Bit 3: RS232 decoding
+            Bit 4: SPI decoding
+            Bit 5: Use ASCII with RS232
+
+General settings (10 bytes)
+
+1) Trigger, Cursors
+           Bit 0: Free trigger *
+           Bit 1: Normal trigger *
+           Bit 2: Single trigger *
+           Bit 3: Auto trigger *
+           Bit 4: CH1 Horizontal Cursor on
+           Bit 5: CH2 Horizontal Cursor on
+           Bit 6: Vertical Cursor on
+           Bit 7: Lock Automatic Cursors
+* Only one trigger type must be set
+
+2) FFT Options (bitfield):
+          Bit 0: Hamming window
+          Bit 1: Hann window
+          Bit 2: Cosine window
+          Bit 3: unused
+          Bit 4: Apply logarithm to FFT
+          Bit 5: Calculate VDC
+          Bit 6: Calculate VPP
+
+3) MSO settings (bitfield):
+          Bit 0: AWG sweep
+          Bit 1: Trigger falling or rising
+          Bit 2: Scope stopped
+          Bit 3: unused
+          Bit 4: Mode MSO *
+          Bit 5: Mode Multimeter *
+          Bit 6: Mode FFT *
+          Bit 7: Mode X-Y *
+* Only one mode must be set
+
+4) Sampling rate
+5,6) Number of Post Trigger samples (unsigned int 16)
+7) Trigger source:
+        1: CH1
+        2: CH2
+        3-10: CHD
+        11: External Trigger
+
+8) Horizontal position
+9) Display options (bitfield):
+          Bit 0,1:Grid Type
+          Bit 2: Reference waveforms on
+          Bit 3: Persistent Display
+          Bit 4: Continuous Drawing
+          Bit 5: Show scope settings ( time/div volts/div)
+          Bit 6: Invert Display
+          Bit 7: Flip Display
+
+10) Trigger Level
+
+AWG settings (10 bytes)
+
+1) Cycles in buffer (1, 2, 4, 8, or 16)
+2) Amplitude,signed byte, range: [-127,0]
+3) Waveform type (1: Sine, 2: Square. 3: Triangle, 4: Custom)
+4,5) Duty cycle (unsigned int 16), range: [0,512]
+6) Offset (signed byte)
+7-10) Desired frequency multiplied by 100 (unsigned int 32)
