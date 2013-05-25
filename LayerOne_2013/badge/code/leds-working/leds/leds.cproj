@@ -41,17 +41,17 @@
     <avrtoolinterface>PDI</avrtoolinterface>
     <avrtool>com.atmel.avrdbg.tool.ispmk2</avrtool>
     <com_atmel_avrdbg_tool_ispmk2>
-      <ToolType xmlns="">com.atmel.avrdbg.tool.ispmk2</ToolType>
-      <ToolName xmlns="">AVRISP mkII</ToolName>
-      <ToolNumber xmlns="">000200050865</ToolNumber>
-      <StimuliFile xmlns="">
+      <ToolType>com.atmel.avrdbg.tool.ispmk2</ToolType>
+      <ToolName>AVRISP mkII</ToolName>
+      <ToolNumber>000200160703</ToolNumber>
+      <StimuliFile>
       </StimuliFile>
-      <Channel xmlns="">
+      <Channel>
         <host>127.0.0.1</host>
-        <port>11079</port>
+        <port>49834</port>
         <ssl>False</ssl>
       </Channel>
-      <ToolOptions xmlns="">
+      <ToolOptions>
         <InterfaceName>PDI</InterfaceName>
         <InterfaceProperties>
           <JtagDbgClock>249000</JtagDbgClock>
