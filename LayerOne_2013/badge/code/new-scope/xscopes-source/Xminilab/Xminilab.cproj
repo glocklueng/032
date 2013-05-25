@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>6.1</ProjectVersion>
     <ToolchainName>com.Atmel.AVRGCC8.C</ToolchainName>
-    <ProjectGuid>{fd1f7bb5-d0b3-4027-8d0d-54e077d55d08}</ProjectGuid>
+    <ProjectGuid>{e2a0bfa9-c28f-428e-9f6e-ddbc8b746be1}</ProjectGuid>
     <avrdevice>ATxmega32A4U</avrdevice>
     <avrdeviceseries>none</avrdeviceseries>
     <OutputType>Executable</OutputType>
@@ -12,48 +12,27 @@
     <OutputFileName>$(MSBuildProjectName)</OutputFileName>
     <OutputFileExtension>.elf</OutputFileExtension>
     <OutputDirectory>$(MSBuildProjectDirectory)\$(Configuration)</OutputDirectory>
-    <AssemblyName>leds</AssemblyName>
-    <Name>leds</Name>
-    <RootNamespace>leds</RootNamespace>
+    <AssemblyName>Xminilab</AssemblyName>
+    <Name>Xminilab</Name>
+    <RootNamespace>Xminilab</RootNamespace>
     <ToolchainFlavour>Native</ToolchainFlavour>
+    <AsfVersion>2.11.1</AsfVersion>
     <KeepTimersRunning>true</KeepTimersRunning>
-    <OverrideVtor>false</OverrideVtor>
-    <OverrideVtorValue>exception_table</OverrideVtorValue>
-    <eraseonlaunchrule>0</eraseonlaunchrule>
-    <ProgFlashFromRam>true</ProgFlashFromRam>
-    <RamSnippetAddress>0x20000000</RamSnippetAddress>
-    <CacheFlash>true</CacheFlash>
-    <UncachedRange />
-    <BootSegment>2</BootSegment>
-    <AsfFrameworkConfig>
-      <framework-data>
-        <options />
-        <configurations />
-        <files />
-        <documentation help="" />
-        <offline-documentation help="" />
-        <dependencies>
-          <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.3.0" />
-        </dependencies>
-      </framework-data>
-    </AsfFrameworkConfig>
-    <AsfVersion>3.5.0</AsfVersion>
-    <avrtoolinterface>
-    </avrtoolinterface>
-    <avrtool>com.atmel.avrdbg.tool.ispmk2</avrtool>
-    <com_atmel_avrdbg_tool_ispmk2>
-      <ToolType>com.atmel.avrdbg.tool.ispmk2</ToolType>
-      <ToolName>AVRISP mkII</ToolName>
-      <ToolNumber>000200160668</ToolNumber>
+    <avrtoolinterface>PDI</avrtoolinterface>
+    <avrtool>com.atmel.avrdbg.tool.jtagicemkii</avrtool>
+    <com_atmel_avrdbg_tool_jtagicemkii>
+      <ToolType>com.atmel.avrdbg.tool.jtagicemkii</ToolType>
+      <ToolName>JTAGICE mkII</ToolName>
+      <ToolNumber>0700000009DF</ToolNumber>
       <Channel>
         <host>127.0.0.1</host>
-        <port>1718</port>
+        <port>57525</port>
         <ssl>False</ssl>
       </Channel>
       <ToolOptions>
-        <InterfaceName>JTAG</InterfaceName>
+        <InterfaceName>PDI</InterfaceName>
         <InterfaceProperties>
-          <JtagDbgClock>249000</JtagDbgClock>
+          <JtagDbgClock>200000</JtagDbgClock>
           <JtagProgClock>1000000</JtagProgClock>
           <IspClock>150000</IspClock>
           <JtagInChain>false</JtagInChain>
@@ -64,37 +43,35 @@
           <JtagInstrBitsAfter>0</JtagInstrBitsAfter>
         </InterfaceProperties>
       </ToolOptions>
-    </com_atmel_avrdbg_tool_ispmk2>
+    </com_atmel_avrdbg_tool_jtagicemkii>
+    <OverrideVtor>false</OverrideVtor>
+    <OverrideVtorValue>exception_table</OverrideVtorValue>
+    <eraseonlaunchrule>0</eraseonlaunchrule>
     <preserveEEPROM>True</preserveEEPROM>
-    <com_atmel_avrdbg_tool_simulator>
-      <ToolType xmlns="">com.atmel.avrdbg.tool.simulator</ToolType>
-      <ToolName xmlns="">Simulator</ToolName>
-      <ToolNumber xmlns="">
-      </ToolNumber>
-      <StimuliFile xmlns="">
-      </StimuliFile>
-      <Channel xmlns="">
-        <host>127.0.0.1</host>
-        <port>50371</port>
-        <ssl>False</ssl>
-      </Channel>
-    </com_atmel_avrdbg_tool_simulator>
+    <AsfFrameworkConfig>
+      <framework-data>
+        <options />
+        <configurations />
+        <files />
+        <documentation help="" />
+        <dependencies>
+          <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.3.0" />
+        </dependencies>
+      </framework-data>
+    </AsfFrameworkConfig>
+    <CacheFlash>true</CacheFlash>
+    <ProgFlashFromRam>true</ProgFlashFromRam>
+    <RamSnippetAddress>0x20000000</RamSnippetAddress>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <ToolchainSettings>
-      <AvrGcc>
+      <AvrGcc xmlns="">
         <avrgcc.common.outputfiles.hex>True</avrgcc.common.outputfiles.hex>
         <avrgcc.common.outputfiles.lss>True</avrgcc.common.outputfiles.lss>
         <avrgcc.common.outputfiles.eep>True</avrgcc.common.outputfiles.eep>
         <avrgcc.common.outputfiles.srec>True</avrgcc.common.outputfiles.srec>
         <avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>True</avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>
         <avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>True</avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>
-        <avrgcc.compiler.symbols.DefSymbols>
-          <ListValues>
-            <Value>NDEBUG</Value>
-            <Value>F_CPU=32000000UL</Value>
-          </ListValues>
-        </avrgcc.compiler.symbols.DefSymbols>
         <avrgcc.compiler.optimization.level>Optimize for size (-Os)</avrgcc.compiler.optimization.level>
         <avrgcc.compiler.optimization.PackStructureMembers>True</avrgcc.compiler.optimization.PackStructureMembers>
         <avrgcc.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcc.compiler.optimization.AllocateBytesNeededForEnum>
@@ -109,7 +86,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <ToolchainSettings>
-      <AvrGcc>
+      <AvrGcc xmlns="">
         <avrgcc.common.outputfiles.hex>True</avrgcc.common.outputfiles.hex>
         <avrgcc.common.outputfiles.lss>True</avrgcc.common.outputfiles.lss>
         <avrgcc.common.outputfiles.eep>True</avrgcc.common.outputfiles.eep>
@@ -118,11 +95,16 @@
         <avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>True</avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>
         <avrgcc.compiler.symbols.DefSymbols>
           <ListValues>
-            <Value>DEBUG</Value>
             <Value>F_CPU=32000000UL</Value>
           </ListValues>
         </avrgcc.compiler.symbols.DefSymbols>
-        <avrgcc.compiler.optimization.level>Optimize (-O1)</avrgcc.compiler.optimization.level>
+        <avrgcc.compiler.directories.IncludePaths>
+          <ListValues>
+            <Value>..\Source</Value>
+            <Value>..\..\Source</Value>
+          </ListValues>
+        </avrgcc.compiler.directories.IncludePaths>
+        <avrgcc.compiler.optimization.level>Optimize for size (-Os)</avrgcc.compiler.optimization.level>
         <avrgcc.compiler.optimization.PackStructureMembers>True</avrgcc.compiler.optimization.PackStructureMembers>
         <avrgcc.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcc.compiler.optimization.AllocateBytesNeededForEnum>
         <avrgcc.compiler.optimization.DebugLevel>Default (-g2)</avrgcc.compiler.optimization.DebugLevel>
@@ -137,26 +119,53 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="display.c">
+    <Compile Include="..\Source\asmutil.S">
       <SubType>compile</SubType>
+      <Link>asmutil.S</Link>
     </Compile>
-    <Compile Include="display.h">
+    <Compile Include="..\Source\awg.c">
       <SubType>compile</SubType>
+      <Link>awg.c</Link>
     </Compile>
-    <Compile Include="leds.c">
+    <Compile Include="..\Source\data.c">
       <SubType>compile</SubType>
+      <Link>data.c</Link>
     </Compile>
-    <Compile Include="leds.h">
+    <Compile Include="..\Source\display.c">
       <SubType>compile</SubType>
+      <Link>display.c</Link>
     </Compile>
-    <Compile Include="mygccdef.h">
+    <Compile Include="..\Source\ffft.S">
       <SubType>compile</SubType>
+      <Link>ffft.S</Link>
     </Compile>
-    <Compile Include="SSD1306.c">
+    <Compile Include="..\Source\interface.c">
       <SubType>compile</SubType>
+      <Link>interface.c</Link>
     </Compile>
-    <Compile Include="TLC5947.c">
+    <Compile Include="..\Source\logic.c">
       <SubType>compile</SubType>
+      <Link>logic.c</Link>
+    </Compile>
+    <Compile Include="..\Source\main.c">
+      <SubType>compile</SubType>
+      <Link>main.c</Link>
+    </Compile>
+    <Compile Include="..\Source\mso.c">
+      <SubType>compile</SubType>
+      <Link>mso.c</Link>
+    </Compile>
+    <Compile Include="..\Source\usb\Descriptors.c">
+      <SubType>compile</SubType>
+      <Link>Descriptors.c</Link>
+    </Compile>
+    <Compile Include="..\Source\usb\usb_xmega.c">
+      <SubType>compile</SubType>
+      <Link>usb_xmega.c</Link>
+    </Compile>
+    <Compile Include="Source\SSD1305.c">
+      <SubType>compile</SubType>
+      <Link>SSD1305.c</Link>
     </Compile>
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
