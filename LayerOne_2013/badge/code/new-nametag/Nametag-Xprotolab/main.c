@@ -26,6 +26,7 @@ email me at: gabriel@gabotronics.com
 #include <stddef.h>
 #include <avr/fuse.h>
 #include "main.h"
+#include "leds.h"
 
 FUSES = {
     .FUSEBYTE1 = 0x00,  /* Watchdog Configuration */
@@ -47,10 +48,30 @@ FUSES = {
     BODLVL = 2V8    */
 
 uint8_t SP_ReadCalibrationByte(uint8_t location);
-static inline void Restore(void);
 uint8_t prandom(void);
 void Fade(void);
 void clearlines(void);
+void GLCD_DisplayPicture (const uint8_t *pointer);
+void clr_pixel(uint8_t x, uint8_t y);
+
+
+void led_loop( void )
+{
+	unsigned int offset ;
+	offset = 0;
+	float mil;
+	{
+		for(float i =1 ; i < 30 ;i+=.08){
+
+			offset = (int)( (1.0f+sinf(i)) *60.0f);
+
+			LEDscan2(4096,(offset*2),1);
+			WriteLEDArray(1);
+			_delay_ms(10);
+		}
+	}
+}
+
 
 //uint16_t readVCC(void);
 
@@ -84,9 +105,11 @@ int main(void) {
     // Initial Value PORTC.DIR       = 0x00; // LOGIC
     PORTC.INT0MASK  = 0x01; // PC0 (SDA) will be the interrupt 0 source
     PORTC.INT1MASK  = 0x80; // PC7 (SCK) will be the interrupt 1 source
-    PORTD.DIR       = 0x1F; // USB, EXT, GREEN, DAT, TP, CLK, RED
+    
+	PORTD.DIR       = 0xFF; // USB, EXT, GREEN, DAT, TP, CLK, RED
     PORTD.OUT       = 0x04; // LCD voltage off
-    PORTE.DIR       = 0x09; // TX, RX, RTS (input), CTS (power external board)
+    
+	PORTE.DIR       = 0x09; // TX, RX, RTS (input), CTS (power external board)
     PORTE.PIN1CTRL  = 0x18; // Pull up on pin PE1 (RTS)
 	PORTE.OUT       = 0x01; // Power to external board
     PORTCFG.VPCTRLA = 0x41; // VP1 Map to PORTE, VP0 Map to PORTB
@@ -149,16 +172,18 @@ int main(void) {
     // Interrupt Configuration
     PMIC.CTRL = 0x07;       // Enable High, Medium and Low level interrupts
     sei();      // Enable global interrupts
-
+	LED_Init();
+	
+	WriteLEDArray(NUM_TLC5947);
     // Initialize LCD
     GLCD_LcdInit();
 	GLCD_setting();
-    memcpy_P(display_buffer+286,  &GABOTRONICS, 69);   // Gabotronics
     lcd_putsp(VERSION);
 
     show_display();
-	_delay_ms(3000);
-    
+
+	led_loop( );
+	
 
     for(;;) {   // Show images
         switch(prandom()>>4) {
@@ -166,112 +191,112 @@ int main(void) {
                 GLCD_DisplayPicture(tian1);
                 show_display();
                  WaitDisplay();
-                _delay_ms(2000);
+                led_loop( );
                 Fade();
             break;
             case 1:
                 GLCD_DisplayPicture(tian2);
                 show_display();
                  WaitDisplay();
-                _delay_ms(2000);
+                led_loop( );
                 Fade();
             break;
             case 2:
                 GLCD_DisplayPicture(tian3);
                 show_display();
                  WaitDisplay();
-                _delay_ms(2000);
+                led_loop( );
                 Fade();
             break;
             case 3:
                 GLCD_DisplayPicture(tian4);
                 show_display();
                  WaitDisplay();
-                _delay_ms(2000);
+                led_loop( );
                 Fade();
             break;
             case 4:
                 GLCD_DisplayPicture(tian5);
                 show_display();
                 WaitDisplay();
-                _delay_ms(2000);
+                led_loop( );
                 Fade();
             break;
             case 5:
                 GLCD_DisplayPicture(tian6);
                 show_display();
                 WaitDisplay();
-                _delay_ms(2000);
+                led_loop( );
                 Fade();
             break;
             case 6:
                 GLCD_DisplayPicture(tian7);
                 show_display();
                 WaitDisplay();
-                _delay_ms(2000);
+                led_loop( );
                 Fade();
             break;
             case 7:
                 GLCD_DisplayPicture(tian8);
                 show_display();
                 WaitDisplay();
-                _delay_ms(2000);
+                led_loop( );
                 Fade();
             break;
             case 8:
                 GLCD_DisplayPicture(tian9);
                 show_display();
                 WaitDisplay();
-                _delay_ms(2000);
+                led_loop( );
                 Fade();
             break;
             case 9:
                 GLCD_DisplayPicture(tian10);
                 show_display();
                 WaitDisplay();
-                _delay_ms(2000);
+                led_loop( );
                 Fade();
             break;
             case 10:
                 GLCD_DisplayPicture(tian11);
                 show_display();
                 WaitDisplay();
-                _delay_ms(2000);
+                led_loop( );
                 Fade();
             break;
             case 11:
                 GLCD_DisplayPicture(tian12);
                 show_display();
                 WaitDisplay();
-                _delay_ms(2000);
+                led_loop( );
                 Fade();
             break;
             case 12:
                 GLCD_DisplayPicture(tian13);
                 show_display();
                 WaitDisplay();
-                _delay_ms(2000);
+                led_loop( );
                 Fade();
             break;
             case 13:
                 GLCD_DisplayPicture(tian14);
                 show_display();
                 WaitDisplay();
-                _delay_ms(2000);
+                led_loop( );
                 Fade();
             break;
             case 14:
                 GLCD_DisplayPicture(tian15);
                 show_display();
                 WaitDisplay();
-                _delay_ms(2000);
+                led_loop( );
                 Fade();
             break;
             case 15:
                 GLCD_DisplayPicture(tian16);
                 show_display();
                 WaitDisplay();
-                _delay_ms(2000);
+                led_loop( );
                 Fade();
             break;
         }

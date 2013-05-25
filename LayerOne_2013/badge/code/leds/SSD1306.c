@@ -21,6 +21,7 @@
 #include <avr/interrupt.h>
 #include <util/delay.h>
 #include <avr/pgmspace.h>
+
 #include "display.h"
 #include "mygccdef.h"
 
@@ -38,12 +39,15 @@ const char DEVICE[]    PROGMEM = "XPROTOLAB";
 LCD Initialization
 	GLCD_LcdINIT()
 -----------------------------------------------------------------------------*/
-void GLCD_LcdInit(void)	{
+void GLCD_LcdInit(void)	
+{
     // Recommended power up sequence
     clrbit(LCD_CTRL, LCD_RESET);         // Reset Low for at least 3 uS
   	_delay_us(4);
-    setbit(LCD_CTRL, LCD_RESET);         // Reset Low for at least 3 uS
+    
+	setbit(LCD_CTRL, LCD_RESET);         // Reset Low for at least 3 uS
     _delay_us(4);
+	
     // Recommended initialization sequence
     LcdInstructionWrite(LCD_DISP_OFF);
     LcdInstructionWrite(LCD_SET_RATIO_OSC);
@@ -85,19 +89,28 @@ Send instruction to the LCD
 -------------------------------------------------------------------------------*/
 void LcdInstructionWrite (uint8_t u8Instruction) {
     
+	unsigned char timeout;
+		
 	clrbit(LCD_CTRL, LCD_CS);			// Select
     cli();
     clrbit(LCD_CTRL,LCD_RS);            // Instruction mode
     
 	USARTD0.DATA= u8Instruction;
    
+	timeout = 255;
+   
     while(!testbit(USARTD0.STATUS,USART_TXCIF_bp)) {
+		timeout -- ;
+	
+		if( timeout == 0 ) 
+			break;
 		
 	}; 
 	
 	 // Wait until transmit done
    
     setbit(USARTD0.STATUS,6);
+
 	sei();
 }
 
@@ -126,7 +139,8 @@ void show_display(void)
 }
 
 // DMA done, now at most 2 bytes are left to be sent
-ISR(DMA_CH1_vect) {
+ISR(DMA_CH1_vect)
+{
     _delay_us(3);
 /*    uint8_t i=0;
     while(!testbit(USARTD0.STATUS,6)) {     // Wait until transmit done

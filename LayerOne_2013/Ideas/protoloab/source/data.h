@@ -36,7 +36,7 @@ extern const uint8_t *bnumbers[];
 extern const uint8_t np[];
 extern const uint8_t nm[];
 extern const uint8_t nc[];
-extern uint8_t avrlogo[];
-extern uint8_t waves[];
+extern const uint8_t avrlogo[];
+extern const uint8_t waves[];
 
 #endif

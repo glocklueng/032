@@ -1674,6 +1674,7 @@ ISR(TCE0_OVF_vect) {
 
 }
 
+#if 0 
 // Timer for auto trigger and auto key repeat
 ISR(TCC1_OVF_vect) {
     if (Key) setbit(Misc,keyrep);
@@ -1685,6 +1686,8 @@ ISR(TCC1_OVF_vect) {
         }
     }
 }
+
+#endif
 
 void StartDMAs(void) {
     setbit(DMA.CH0.CTRLA,6);    // reset DMA CH0
