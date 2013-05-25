@@ -166,6 +166,7 @@ void Setup_OSC( void )
 	 
 
 }
+
 // Read out calibration byte.
 uint8_t SP_ReadCalibrationByte(uint8_t location) {
 	uint8_t result;
@@ -190,101 +191,102 @@ int main(void)
 	PR.PRPF  = 0x78;        // Stop: TWI, USART0, USART1, SPI, (XMEGA bug - HIRES cannot be turned off)
 
 	// USB Clock
-	OSC.DFLLCTRL = OSC_RC32MCREF_USBSOF_gc; // Configure DFLL for 48MHz, calibrated by USB SOF
-	DFLLRC32M.CALB = SP_ReadCalibrationByte(offsetof(NVM_PROD_SIGNATURES_t, USBRCOSC));
-	DFLLRC32M.COMP1 = 0x1B; // Xmega AU manual, p41
+	OSC.DFLLCTRL	= OSC_RC32MCREF_USBSOF_gc; // Configure DFLL for 48MHz, calibrated by USB SOF
+	DFLLRC32M.CALB	= SP_ReadCalibrationByte(offsetof(NVM_PROD_SIGNATURES_t, USBRCOSC));
+	DFLLRC32M.COMP1 = 0x1B; // xMega AU manual, p41
 	DFLLRC32M.COMP2 = 0xB7;
-	DFLLRC32M.CTRL = DFLL_ENABLE_bm;
+	DFLLRC32M.CTRL	= DFLL_ENABLE_bm;
 
 	Setup_OSC();
 
-   // PORTS CONFIGURATION
-   // Initial value PORTA.DIR       = 0x00; // CH2, CH1, 1V, K1, K2, K3, K4, REF
-   PORTA.PIN1CTRL  = MENUPULL; // Pull up or pull down on pin PA1
-   PORTA.PIN2CTRL  = 0x18; // Pull up on pin PA2
-   PORTA.PIN3CTRL  = 0x18; // Pull up on pin PA3
-   PORTA.PIN4CTRL  = 0x18; // Pull up on pin PA4
-   PORTA.PIN5CTRL  = 0x07; // Input Disable on pin PA5
-   PORTA.PIN6CTRL  = 0x07; // Input Disable on pin PA6
-   PORTA.PIN7CTRL  = 0x07; // Input Disable on pin PA7
-   PORTA.INTCTRL   = 0x02; // PORTA will generate medium level interrupts
-   PORTA.INT0MASK  = 0x1E; // PA4, PA3, PA2, PA1 will be the interrupt 0 sources
-   PORTB.DIR       = 0x0B; // RES, AWG, D/C, R/W
-   // Initial Value PORTB.OUT       = 0x00; //
-   // Initial Value PORTC.DIR       = 0x00; // LOGIC
-   PORTC.INT0MASK  = 0x01; // PC0 (SDA) will be the interrupt 0 source
-   PORTC.INT1MASK  = 0x80; // PC7 (SCK) will be the interrupt 1 source
+	// PORTS CONFIGURATION
+	// Initial value PORTA.DIR       = 0x00; // CH2, CH1, 1V, K1, K2, K3, K4, REF
+	PORTA.PIN1CTRL  = MENUPULL; // Pull up or pull down on pin PA1
+	PORTA.PIN2CTRL  = 0x18; // Pull up on pin PA2
+	PORTA.PIN3CTRL  = 0x18; // Pull up on pin PA3
+	PORTA.PIN4CTRL  = 0x18; // Pull up on pin PA4
+		PORTA.PIN5CTRL  = 0x07; // Input Disable on pin PA5
+	PORTA.PIN6CTRL  = 0x07; // Input Disable on pin PA6
+	PORTA.PIN7CTRL  = 0x07; // Input Disable on pin PA7
+	PORTA.INTCTRL   = 0x02; // PORTA will generate medium level interrupts
+	PORTA.INT0MASK  = 0x1E; // PA4, PA3, PA2, PA1 will be the interrupt 0 sources
+	PORTB.DIR       = 0x0B; // RES, AWG, D/C, R/W
+   
+	// Initial Value PORTB.OUT       = 0x00; //
+	// Initial Value PORTC.DIR       = 0x00; // LOGIC
+	PORTC.INT0MASK  = 0x01; // PC0 (SDA) will be the interrupt 0 source
+	PORTC.INT1MASK  = 0x80; // PC7 (SCK) will be the interrupt 1 source
  
-	PORTD.DIR      = 0xFF;  // Leds
+	PORTD.DIR		= 0xFF;  // LEDs
 	PORTCFG.MPCMASK = 0xFF; // Configure all pins on PORTD the same way
-	PORTD.PIN0CTRL = 0x00;  // Pull up on pin PortD (Keypad and K2-K5 buttons)
-	PORTD.INTCTRL  = 0x00;  // PORTD will generate no low level interrupts
-	PORTD.INT0MASK = 0x00;
-	//PORTD.OUT      = 0x00;
-  PORTD.DIR       = 0x1F; // USB, EXT, GREEN, TX, RX, CLK, RED
-  PORTD.OUT       = 0x04; // LCD voltage off
-   PORTE.DIR       = 0x09; // TX, RX, RTS (input), CTS (power external board)
-   PORTE.PIN1CTRL  = 0x18; // Pull up on pin PE1 (RTS)
-   PORTE.OUT       = 0x01; // Power to external board
-   PORTCFG.VPCTRLA = 0x41; // VP1 Map to PORTE, VP0 Map to PORTB
-   //PORTCFG.VPCTRLB = 0x32; // VP3 Map to PORTD, VP2 Map to PORTC
+	PORTD.PIN0CTRL	= 0x00;  // Pull up on pin PortD (Keypad and K2-K5 buttons)
+	PORTD.INTCTRL	= 0x00;  // PORTD will generate no low level interrupts
+	PORTD.INT0MASK	= 0x00;
+
+	//PORTD.OUT     = 0x00;
+	PORTD.DIR       = 0x1F; // USB, EXT, GREEN, TX, RX, CLK, RED
+	PORTD.OUT       = 0x04; // LCD voltage off
+	PORTE.DIR       = 0x09; // TX, RX, RTS (input), CTS (power external board)
+	PORTE.PIN1CTRL  = 0x18; // Pull up on pin PE1 (RTS)
+	PORTE.OUT       = 0x01; // Power to external board
+	PORTCFG.VPCTRLA = 0x41; // VP1 Map to PORTE, VP0 Map to PORTB
+	//PORTCFG.VPCTRLB = 0x32; // VP3 Map to PORTD, VP2 Map to PORTC
  	
- 	Setup_OLED();
+	Setup_OLED();
 
-    // Initialize USARTE0 for External Interface Port
-    USARTE0.BAUDCTRLA = 0x17;   // BSCALE = -6, BSEL = 1047
-    USARTE0.BAUDCTRLB = 0xA4;   // ==> 115211 bps (~115.2kbps)
-    USARTE0.CTRLC     = 0x03;   // Async, No Parity, 1 stop bit, 8 data bits
-    USARTE0.CTRLB     = 0x18;   // Enable RX and TX
-    USARTE0.CTRLA     = 0x20;   // Enable RX interrupt
+	// Initialize USARTE0 for External Interface Port
+	USARTE0.BAUDCTRLA = 0x17;   // BSCALE = -6, BSEL = 1047
+	USARTE0.BAUDCTRLB = 0xA4;   // ==> 115211 bps (~115.2kbps)
+	USARTE0.CTRLC     = 0x03;   // Async, No Parity, 1 stop bit, 8 data bits
+	USARTE0.CTRLB     = 0x18;   // Enable RX and TX
+	USARTE0.CTRLA     = 0x20;   // Enable RX interrupt
 
-    // Event System
-    EVSYS.CH0MUX    = 0xE0;     // Event CH0 = TCE0 overflow used for ADC
-    EVSYS.CH1MUX    = 0x20;     // Event CH1 = ADCA CH0 conversion complete
-   // EVSYS.CH2MUX    = 0x6D;     // Event CH2 = PORTD Pin 5 (External Trigger)
-    EVSYS.CH3MUX    = 0xD8;     // Event CH3 = TCD1 overflow used for DAC
-    EVSYS.CH4MUX    = 0xC0;     // Event CH4 = TCC0 overflow used for freq. measuring
-    EVSYS.CH5MUX    = 0xC8;     // Event CH5 = TCC1 overflow used for freq. measuring
-    EVSYS.CH6MUX    = 0x8F;     // Event CH6 = CLKPER / 32768
-    EVSYS.CH7MUX    = 0xD0;     // Event CH7 = TCD0 underflow
+	// Event System
+	EVSYS.CH0MUX    = 0xE0;     // Event CH0 = TCE0 overflow used for ADC
+	EVSYS.CH1MUX    = 0x20;     // Event CH1 = ADCA CH0 conversion complete
+	//EVSYS.CH2MUX    = 0x6D;     // Event CH2 = PORTD Pin 5 (External Trigger)
+	EVSYS.CH3MUX    = 0xD8;     // Event CH3 = TCD1 overflow used for DAC
+	EVSYS.CH4MUX    = 0xC0;     // Event CH4 = TCC0 overflow used for freq. measuring
+	EVSYS.CH5MUX    = 0xC8;     // Event CH5 = TCC1 overflow used for freq. measuring
+	EVSYS.CH6MUX    = 0x8F;     // Event CH6 = CLKPER / 32768
+	EVSYS.CH7MUX    = 0xD0;     // Event CH7 = TCD0 underflow
 
-    // DAC
-    DACB.CTRLB        = 0x01;   // CH0 auto triggered by an event
-    DACB.CTRLC        = 0x11;   // Use AREFA (2.0V), data is left adjusted
-    DACB.EVCTRL       = 0x03;   // Event CH3 triggers the DAC Conversion
-    DACB.TIMCTRL      = 0x50;   // Minimum 32 CLK between conversion (1uS)
-    //DACB.CH0GAINCAL = eeprom_read_byte(&EEDACgain);      // Load DAC gain calibration
-    //DACB.CH0OFFSETCAL = eeprom_read_byte(&EEDACoffset);  // Load DAC offset calibration
-    DACB.CTRLA = 0x05;          // Enable DACB and CH0
+	// DAC
+	DACB.CTRLB        = 0x01;   // CH0 auto triggered by an event
+	DACB.CTRLC        = 0x11;   // Use AREFA (2.0V), data is left adjusted
+	DACB.EVCTRL       = 0x03;   // Event CH3 triggers the DAC Conversion
+	DACB.TIMCTRL      = 0x50;   // Minimum 32 CLK between conversion (1uS)
+	//DACB.CH0GAINCAL = eeprom_read_byte(&EEDACgain);      // Load DAC gain calibration
+	//DACB.CH0OFFSETCAL = eeprom_read_byte(&EEDACoffset);  // Load DAC offset calibration
+	DACB.CTRLA = 0x05;          // Enable DACB and CH0
 
-    // DMA for DAC
-    DMA.CH3.ADDRCTRL  = 0xD0;   // Reload after transaction, Increment source
-    DMA.CH3.TRIGSRC   = 0x25;   // Trigger source is DACB CH0
-    DMA.CH3.TRFCNT    = 256;    // AWG Buffer is 256 bytes
-    DMA.CH3.SRCADDR0  = (((uint16_t) AWGBuffer)>>0*8) & 0xFF;
-    DMA.CH3.SRCADDR1  = (((uint16_t) AWGBuffer)>>1*8) & 0xFF;
-    //	DMA.CH3.SRCADDR2  = 0;
-    DMA.CH3.DESTADDR0 = (((uint16_t)(&DACB.CH0DATAH))>>0*8) & 0xFF;
-    DMA.CH3.DESTADDR1 = (((uint16_t)(&DACB.CH0DATAH))>>1*8) & 0xFF;
-    //	DMA.CH3.DESTADDR2 = 0;
-    DMA.CH3.CTRLA     = 0b10100100;     // Enable CH3, repeat mode, 1 byte burst, single
+	// DMA for DAC
+	DMA.CH3.ADDRCTRL  = 0xD0;   // Reload after transaction, Increment source
+	DMA.CH3.TRIGSRC   = 0x25;   // Trigger source is DACB CH0
+	DMA.CH3.TRFCNT    = 256;    // AWG Buffer is 256 bytes
+	DMA.CH3.SRCADDR0  = (((uint16_t) AWGBuffer)>>0*8) & 0xFF;
+	DMA.CH3.SRCADDR1  = (((uint16_t) AWGBuffer)>>1*8) & 0xFF;
+	//	DMA.CH3.SRCADDR2  = 0;
+	DMA.CH3.DESTADDR0 = (((uint16_t)(&DACB.CH0DATAH))>>0*8) & 0xFF;
+	DMA.CH3.DESTADDR1 = (((uint16_t)(&DACB.CH0DATAH))>>1*8) & 0xFF;
+	//	DMA.CH3.DESTADDR2 = 0;
+	DMA.CH3.CTRLA     = 0b10100100;     // Enable CH3, repeat mode, 1 byte burst, single
 
-    DMA.CTRL          = 0x80;           // Enable DMA, single buffer, round robin
+	DMA.CTRL          = 0x80;           // Enable DMA, single buffer, round robin
 
-    // Interrupt Configuration
+	// Interrupt Configuration
 	
 	/* Enable HIGH level interrupts in the PMIC. */
 
-	PMIC.CTRL = PMIC_HILVLEN_bm;
+	PMIC.CTRL		= PMIC_HILVLEN_bm;
 
-	TCC0.CTRLA = TC_CLKSEL_DIV8_gc;
-	TCC0.PER = 185;
-	TCC0.CNT = 0;
+	TCC0.CTRLA		= TC_CLKSEL_DIV8_gc;
+	TCC0.PER		= 185;
+	TCC0.CNT		= 0;
 	TCC0.CTRLFSET = 0x0; /* count upwards, but don't start to interrupt yet */
 	TCC0.INTCTRLA = TC_OVFINTLVL_HI_gc; /* enable interrupts */
 
-
-   PMIC.CTRL = 0x07;       // Enable High, Medium and Low level interrupts
+	PMIC.CTRL = 0x07;       // Enable High, Medium and Low level interrupts
     
 	sei();      // Enable global interrupts
 	
@@ -292,15 +294,16 @@ int main(void)
 	// wrong baud rate?
 	
 	//GLCD_LcdInit();
-	//memcpy_P(display_buffer+286,  &LOGO, 69);
+
+//	memcpy_P(display_buffer+286,  &LOGO, 69);
 	//GLCD_setting();
 	//tiny_printp(50,7,VERSION);
 	  
 	// setup the TLC
 	LED_Init();
   
-	 // push out some data
- 	WriteLEDArray(NUM_TLC5947);
+		// push out some data
+	WriteLEDArray(NUM_TLC5947);
 
 	l = 0;
 	ld = 40;

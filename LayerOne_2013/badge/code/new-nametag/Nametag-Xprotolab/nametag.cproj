@@ -49,8 +49,7 @@
       </ToolOptions>
     </com_atmel_avrdbg_tool_jtagicemkii>
     <OverrideVtor>false</OverrideVtor>
-    <OverrideVtorValue>
-    </OverrideVtorValue>
+    <OverrideVtorValue>exception_table</OverrideVtorValue>
     <eraseonlaunchrule>0</eraseonlaunchrule>
     <preserveEEPROM>True</preserveEEPROM>
     <AsfFrameworkConfig>
@@ -68,7 +67,7 @@
     <ProgFlashFromRam>true</ProgFlashFromRam>
     <RamSnippetAddress>0x20000000</RamSnippetAddress>
     <UncachedRange />
-    <BootSegment>0</BootSegment>
+    <BootSegment>2</BootSegment>
     <com_atmel_avrdbg_tool_jtagicemk3>
       <ToolType xmlns="">com.atmel.avrdbg.tool.jtagicemk3</ToolType>
       <ToolName xmlns="">JTAGICE3</ToolName>
@@ -95,18 +94,21 @@
       </ToolOptions>
     </com_atmel_avrdbg_tool_jtagicemk3>
     <com_atmel_avrdbg_tool_ispmk2>
-      <ToolType xmlns="">com.atmel.avrdbg.tool.ispmk2</ToolType>
-      <ToolName xmlns="">AVRISP mkII</ToolName>
-      <ToolNumber xmlns="">000200160668</ToolNumber>
-      <Channel xmlns="">
+      <ToolType>com.atmel.avrdbg.tool.ispmk2</ToolType>
+      <ToolName>AVRISP mkII</ToolName>
+      <ToolNumber>000200160668</ToolNumber>
+      <StimuliFile>
+      </StimuliFile>
+      <Channel>
         <host>127.0.0.1</host>
-        <port>1929</port>
+        <port>51195</port>
         <ssl>False</ssl>
       </Channel>
-      <ToolOptions xmlns="">
-        <InterfaceName>JTAG</InterfaceName>
+      <ToolOptions>
+        <InterfaceName>PDI</InterfaceName>
         <InterfaceProperties>
           <JtagDbgClock>249000</JtagDbgClock>
+          <SwdClock>249000</SwdClock>
           <JtagProgClock>1000000</JtagProgClock>
           <IspClock>150000</IspClock>
           <JtagInChain>false</JtagInChain>
@@ -194,6 +196,9 @@
     <Compile Include="SSD1306.c">
       <SubType>compile</SubType>
       <Link>SSD1306.c</Link>
+    </Compile>
+    <Compile Include="TLC5947.c">
+      <SubType>compile</SubType>
     </Compile>
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />

@@ -3,6 +3,7 @@
 //#define INPUT_NOUSE
 //#define INPUT_IQ
 
+#include <avr/pgmspace.h>
 
 #ifndef FFFT_ASM	/* for c modules */
 
@@ -22,7 +23,7 @@ void fft_execute (complex_t *);
 void fft_output (complex_t *, unsigned char *);
 int16_t fmuls_f (int16_t, int16_t);
 
-extern const prog_int16_t tbl_window[];
+extern const PROGMEM int16_t tbl_window[];
 
 #else				/* for asm module */
 

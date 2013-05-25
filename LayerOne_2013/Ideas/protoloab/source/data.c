@@ -264,7 +264,7 @@ const uint8_t PROGMEM nc[]= {
 };
 
 // Run length encoded AVR logo
-uint8_t avrlogo[] PROGMEM = {
+const uint8_t avrlogo[] PROGMEM = {
 13,45, // width/8 , height
 '\x00','\x00','\x0C','\x38','\x00','\x00','\x0C','\x44',
 '\x00','\x03','\xFF','\x87','\xFF','\x80','\x00','\xFF',
@@ -335,7 +335,7 @@ uint8_t avrlogo[] PROGMEM = {
 '\x00','\x00','\x0C','\x80','\x00','\x00','\x07' };
 
 // Run length encoded waves menu
-uint8_t waves[] PROGMEM = {
+const uint8_t waves[] PROGMEM = {
 16,8, // width/8 , height
 '\x00','\x30','\x00','\x00','\x02','\xC7','\xC0','\x00',
 '\x00','\x02','\x10','\x00','\x00','\x02','\x60','\xE0',
