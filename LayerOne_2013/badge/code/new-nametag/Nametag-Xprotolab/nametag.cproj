@@ -18,8 +18,7 @@
     <ToolchainFlavour>Native</ToolchainFlavour>
     <AsfVersion>3.0.1</AsfVersion>
     <KeepTimersRunning>true</KeepTimersRunning>
-    <avrtoolinterface>
-    </avrtoolinterface>
+    <avrtoolinterface>PDI</avrtoolinterface>
     <avrtool>com.atmel.avrdbg.tool.ispmk2</avrtool>
     <com_atmel_avrdbg_tool_jtagicemkii>
       <ToolType>com.atmel.avrdbg.tool.jtagicemkii</ToolType>
@@ -50,7 +49,8 @@
       </ToolOptions>
     </com_atmel_avrdbg_tool_jtagicemkii>
     <OverrideVtor>false</OverrideVtor>
-    <OverrideVtorValue />
+    <OverrideVtorValue>
+    </OverrideVtorValue>
     <eraseonlaunchrule>0</eraseonlaunchrule>
     <preserveEEPROM>True</preserveEEPROM>
     <AsfFrameworkConfig>

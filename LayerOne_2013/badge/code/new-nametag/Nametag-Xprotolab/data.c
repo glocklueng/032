@@ -18,7 +18,7 @@ email me at: gabriel@gabotronics.com
 #include "main.h"
 
 // Commonly used text
-const char VERSION[]    PROGMEM = " NAMETAG";
+const char VERSION[]    PROGMEM = " LAYERONE 2013";
 
 const unsigned char GABOTRONICS[] PROGMEM = {
     '\x7e','\xff','\x81','\x91','\x91','\xf1','\x60','\x00', // 0x0008
