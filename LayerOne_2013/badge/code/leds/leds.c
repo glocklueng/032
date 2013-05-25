@@ -291,7 +291,7 @@ int main(void)
 	// Initialize LCD
 	// wrong baud rate?
 	
-	GLCD_LcdInit();
+	//GLCD_LcdInit();
 	//memcpy_P(display_buffer+286,  &LOGO, 69);
 	//GLCD_setting();
 	//tiny_printp(50,7,VERSION);
