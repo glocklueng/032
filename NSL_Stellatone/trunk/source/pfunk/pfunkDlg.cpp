@@ -421,18 +421,45 @@ BOOL CpfunkDlg::OnEraseBkgnd(CDC* pDC)
 
 void CpfunkDlg::OnTimer(UINT nIDEvent) 
 {
+	static int e1_last=0;
+	static int e2_last=0;
+	static int e3_last=0;
+	static int e4_last=0;
+	static int ev_last=0;
+
+	int e1_diff=0;
+	int e2_diff=0;
+	int e3_diff=0;
+	int e4_diff=0;
+	int ev_diff=0;
+
 	if( ok && nIDEvent == 1 ) {
 
 	}
 	
 	FMOD_System_Update( fsystem );
 
+	e1_diff = e1_last - m_EncoderEdit1.GetPos();
+	e1_last = m_EncoderEdit1.GetPos();
 	
-	set_encoder( 0, m_EncoderEdit1.GetPos());
-	set_encoder( 1, m_EncoderEdit2.GetPos());
-	set_encoder( 2, m_EncoderEdit3.GetPos());
-	set_encoder( 3, m_EncoderEdit4.GetPos());
-	set_encoder( 4, m_EncoderVolume.GetPos());
+	e2_diff = e2_last - m_EncoderEdit2.GetPos();
+	e2_last = m_EncoderEdit2.GetPos();
+	
+	e3_diff = e3_last - m_EncoderEdit3.GetPos();
+	e3_last = m_EncoderEdit3.GetPos();
+	
+	e4_diff = e4_last - m_EncoderEdit4.GetPos();
+	e4_last = m_EncoderEdit4.GetPos();
+
+	ev_diff = ev_last - m_EncoderVolume.GetPos();
+	ev_last = m_EncoderVolume.GetPos();
+
+	set_encoder( 0, e1_diff);
+	set_encoder( 1, e2_diff);
+	set_encoder( 2, e3_diff);
+	set_encoder( 3, e4_diff);
+
+	set_encoder( 4, ev_diff);
 
 
 	CDialogEx::OnTimer(nIDEvent);
@@ -541,7 +568,7 @@ unsigned char __cdecl digitalRead(int port)
 { 
 	int ret  = 0;
 
-	return ;
+	return 0;
 
 	if( port == HC165_DATA )  {
 
