@@ -95,6 +95,7 @@ signed short getrb(void)
 }
 void set_encoder( int enc, int ticks )
 {
+	synthState.encoderTurned( enc,ticks);
 }
 
 void press_button( int button)
