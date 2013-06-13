@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <report-views version="2.0" >
  <header>
-  <DateModified>2013-06-12T14:25:18</DateModified>
+  <DateModified>2013-06-07T07:28:52</DateModified>
   <ModuleName>fpga</ModuleName>
   <SummaryTimeStamp>Unknown</SummaryTimeStamp>
-  <SavedFilePath>D:/032/032/LayerOne_2014/badge/code/proxmark3/fpga/iseconfig/fpga.xreport</SavedFilePath>
-  <ImplementationReportsDirectory>D:/032/032/LayerOne_2014/badge/code/proxmark3/fpga</ImplementationReportsDirectory>
+  <SavedFilePath>/home/arko/Desktop/LayerOne_2014/badge/code/proxmark3/fpga/iseconfig/fpga.xreport</SavedFilePath>
+  <ImplementationReportsDirectory>/home/arko/Desktop/LayerOne_2014/badge/code/proxmark3/fpga/</ImplementationReportsDirectory>
   <DateInitialized>2013-06-12T14:25:18</DateInitialized>
   <EnableMessageFiltering>false</EnableMessageFiltering>
  </header>
