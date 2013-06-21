@@ -22,6 +22,7 @@
 `include "util.v"
 
 module fpga(
+	uart_rx, uart_tx, uart_io1, uart_io2,
 	spcki, miso, mosi, ncs,
 	pck0i, ck_1356meg, ck_1356megb,
 	pwr_lo, pwr_hi, pwr_oe1, pwr_oe2, pwr_oe3, pwr_oe4,
@@ -30,6 +31,8 @@ module fpga(
 	cross_hi, cross_lo,
 	dbg
 );
+	input uart_rx, uart_io1;
+	output uart_tx, uart_io2;
 	input spcki, mosi, ncs;
 	output miso;
 	input pck0i, ck_1356meg, ck_1356megb;
@@ -190,6 +193,29 @@ hi_iso14443a hisn(
 	hi_simulate_mod_type
 );
 
+/* START OF UART */
+reg        reset           = 0;
+reg        txclk           = 0;
+reg        ld_tx_data      = 0;
+reg  [7:0] tx_data         = 0;
+reg        tx_enable       = 0;
+wire       tx_out         ;
+wire       tx_empty       ;
+reg        rxclk           = 0;
+reg        uld_rx_data     = 0;
+wire [7:0] rx_data        ;
+reg        rx_enable       = 0;
+reg        rx_in           = 0;
+wire       rx_empty       ;
+
+uart uart_rxtx(.reset(reset),
+					.txclk(txclk), .ld_tx_data(ld_tx_data), .tx_data(tx_data), .tx_enable(tx_enable), .tx_out(uart_tx), .tx_empty(tx_empty),
+					.rxclk(rxclk), .uld_rx_data(uld_rx_data), .rx_data(rx_data), .rx_enable(rx_enable), .rx_in(uart_rx), .rx_empty(rx_empty)
+);
+
+assign uart_io2 = ~uart_io1;
+/* END OF UART */
+ 
 // Major modes:
 //   000 --  LF reader (generic)
 //   001 --  LF simulated tag (generic)
