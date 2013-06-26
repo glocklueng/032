@@ -2158,7 +2158,7 @@ Standard 1-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <classes>
 <class number="0" name="default" width="0" drill="0">
 </class>
-<class number="1" name="power" width="0.3048" drill="0">
+<class number="1" name="power" width="0" drill="0">
 </class>
 </classes>
 <parts>
@@ -2575,8 +2575,8 @@ Standard 1-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 </segment>
 <segment>
 <wire x1="73.66" y1="10.16" x2="63.5" y2="10.16" width="0.1524" layer="91"/>
-<wire x1="63.5" y1="10.16" x2="50.8" y2="10.16" width="0.1524" layer="91"/>
 <label x="58.42" y="10.16" size="1.778" layer="95"/>
+<wire x1="63.5" y1="10.16" x2="58.42" y2="10.16" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="CROSS_HI" class="0">
@@ -2954,7 +2954,7 @@ Standard 1-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <pinref part="C2" gate="G$1" pin="1"/>
 </segment>
 </net>
-<net name="13.56MHZ_CLK" class="0">
+<net name="1356_CRYSTAL" class="0">
 <segment>
 <wire x1="48.26" y1="63.5" x2="53.34" y2="63.5" width="0.1524" layer="91"/>
 <wire x1="53.34" y1="63.5" x2="53.34" y2="55.88" width="0.1524" layer="91"/>
