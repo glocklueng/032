@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.05" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
 <layer number="2" name="Route2" color="1" fill="3" visible="no" active="no"/>
@@ -3205,68 +3205,68 @@ Standard 4-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <description>Generated from &lt;b&gt;DP_eDP_Adapter.sch&lt;/b&gt;&lt;p&gt;
 by exp-lbrs.ulp</description>
 <packages>
-<package name="EDP_MOLEX">
-<smd name="P$1" x="-7.5" y="-1.08" dx="0.26" dy="0.8" layer="1"/>
-<smd name="P$2" x="-7.2" y="0.87" dx="0.3" dy="0.65" layer="1"/>
-<smd name="P$3" x="-6.9" y="-1.08" dx="0.26" dy="0.8" layer="1"/>
-<smd name="P$4" x="-6.6" y="0.87" dx="0.3" dy="0.65" layer="1"/>
-<smd name="P$5" x="-6.3" y="-1.08" dx="0.26" dy="0.8" layer="1"/>
-<smd name="P$6" x="-6" y="0.87" dx="0.3" dy="0.65" layer="1"/>
-<smd name="P$7" x="-5.7" y="-1.08" dx="0.26" dy="0.8" layer="1"/>
-<smd name="P$8" x="-5.4" y="0.87" dx="0.3" dy="0.65" layer="1"/>
-<smd name="P$9" x="-5.1" y="-1.08" dx="0.26" dy="0.8" layer="1"/>
-<smd name="P$10" x="-4.8" y="0.87" dx="0.3" dy="0.65" layer="1"/>
-<smd name="P$11" x="-4.5" y="-1.08" dx="0.26" dy="0.8" layer="1"/>
-<smd name="P$12" x="-4.2" y="0.87" dx="0.3" dy="0.65" layer="1"/>
-<smd name="P$13" x="-3.9" y="-1.08" dx="0.26" dy="0.8" layer="1"/>
-<smd name="P$14" x="-3.6" y="0.87" dx="0.3" dy="0.65" layer="1"/>
-<smd name="P$15" x="-3.3" y="-1.08" dx="0.26" dy="0.8" layer="1"/>
-<smd name="P$16" x="-3" y="0.87" dx="0.3" dy="0.65" layer="1"/>
-<smd name="P$17" x="-2.7" y="-1.08" dx="0.26" dy="0.8" layer="1"/>
-<smd name="P$18" x="-2.4" y="0.87" dx="0.3" dy="0.65" layer="1"/>
-<smd name="P$19" x="-2.1" y="-1.08" dx="0.26" dy="0.8" layer="1"/>
-<smd name="P$20" x="-1.8" y="0.87" dx="0.3" dy="0.65" layer="1"/>
-<smd name="P$21" x="-1.5" y="-1.08" dx="0.26" dy="0.8" layer="1"/>
-<smd name="P$22" x="-1.2" y="0.87" dx="0.3" dy="0.65" layer="1"/>
-<smd name="P$23" x="-0.9" y="-1.08" dx="0.26" dy="0.8" layer="1"/>
-<smd name="P$24" x="-0.6" y="0.87" dx="0.3" dy="0.65" layer="1"/>
-<smd name="P$25" x="-0.3" y="-1.08" dx="0.26" dy="0.8" layer="1"/>
-<smd name="P$26" x="0" y="0.87" dx="0.3" dy="0.65" layer="1"/>
-<smd name="P$27" x="0.3" y="-1.08" dx="0.26" dy="0.8" layer="1"/>
-<smd name="P$28" x="0.6" y="0.87" dx="0.3" dy="0.65" layer="1"/>
-<smd name="P$29" x="0.9" y="-1.08" dx="0.26" dy="0.8" layer="1"/>
-<smd name="P$30" x="1.2" y="0.87" dx="0.3" dy="0.65" layer="1"/>
-<smd name="P$31" x="1.5" y="-1.08" dx="0.26" dy="0.8" layer="1"/>
-<smd name="P$32" x="1.8" y="0.87" dx="0.3" dy="0.65" layer="1"/>
-<smd name="P$33" x="2.1" y="-1.08" dx="0.26" dy="0.8" layer="1"/>
-<smd name="P$34" x="2.4" y="0.87" dx="0.3" dy="0.65" layer="1"/>
-<smd name="P$35" x="2.7" y="-1.08" dx="0.26" dy="0.8" layer="1"/>
-<smd name="P$36" x="3" y="0.87" dx="0.3" dy="0.65" layer="1"/>
-<smd name="P$37" x="3.3" y="-1.08" dx="0.26" dy="0.8" layer="1"/>
-<smd name="P$38" x="3.6" y="0.87" dx="0.3" dy="0.65" layer="1"/>
-<smd name="P$39" x="3.9" y="-1.08" dx="0.26" dy="0.8" layer="1"/>
-<smd name="P$40" x="4.2" y="0.87" dx="0.3" dy="0.65" layer="1"/>
-<smd name="P$41" x="4.5" y="-1.08" dx="0.26" dy="0.8" layer="1"/>
-<smd name="P$42" x="4.8" y="0.87" dx="0.3" dy="0.65" layer="1"/>
-<smd name="P$43" x="5.1" y="-1.08" dx="0.26" dy="0.8" layer="1"/>
-<smd name="P$44" x="5.4" y="0.87" dx="0.3" dy="0.65" layer="1"/>
-<smd name="P$45" x="5.7" y="-1.08" dx="0.26" dy="0.8" layer="1"/>
-<smd name="P$46" x="6" y="0.87" dx="0.3" dy="0.65" layer="1"/>
-<smd name="P$47" x="6.3" y="-1.08" dx="0.26" dy="0.8" layer="1"/>
-<smd name="P$48" x="6.6" y="0.87" dx="0.3" dy="0.65" layer="1"/>
-<smd name="P$49" x="6.9" y="-1.08" dx="0.26" dy="0.8" layer="1"/>
-<smd name="P$50" x="7.2" y="0.87" dx="0.3" dy="0.65" layer="1"/>
-<smd name="P$51" x="7.5" y="-1.08" dx="0.26" dy="0.8" layer="1"/>
+<package name="DP_EDP_ADAPTER_EDP_MOLEX">
+<wire x1="-9" y1="-1.62" x2="9" y2="-1.62" width="0.127" layer="21"/>
+<wire x1="9" y1="-1.62" x2="9" y2="2.28" width="0.127" layer="21"/>
+<wire x1="9" y1="2.28" x2="-9" y2="2.28" width="0.127" layer="21"/>
+<wire x1="-9" y1="2.28" x2="-9" y2="-1.62" width="0.127" layer="21"/>
+<smd name="P$51" x="-7.5" y="-1.08" dx="0.26" dy="0.8" layer="1"/>
+<smd name="P$50" x="-7.2" y="1.77" dx="0.3" dy="0.65" layer="1"/>
+<smd name="P$49" x="-6.9" y="-1.08" dx="0.26" dy="0.8" layer="1"/>
+<smd name="P$48" x="-6.6" y="1.77" dx="0.3" dy="0.65" layer="1"/>
+<smd name="P$47" x="-6.3" y="-1.08" dx="0.26" dy="0.8" layer="1"/>
+<smd name="P$46" x="-6" y="1.77" dx="0.3" dy="0.65" layer="1"/>
+<smd name="P$45" x="-5.7" y="-1.08" dx="0.26" dy="0.8" layer="1"/>
+<smd name="P$44" x="-5.4" y="1.77" dx="0.3" dy="0.65" layer="1"/>
+<smd name="P$43" x="-5.1" y="-1.08" dx="0.26" dy="0.8" layer="1"/>
+<smd name="P$42" x="-4.8" y="1.77" dx="0.3" dy="0.65" layer="1"/>
+<smd name="P$41" x="-4.5" y="-1.08" dx="0.26" dy="0.8" layer="1"/>
+<smd name="P$40" x="-4.2" y="1.77" dx="0.3" dy="0.65" layer="1"/>
+<smd name="P$39" x="-3.9" y="-1.08" dx="0.26" dy="0.8" layer="1"/>
+<smd name="P$38" x="-3.6" y="1.77" dx="0.3" dy="0.65" layer="1"/>
+<smd name="P$37" x="-3.3" y="-1.08" dx="0.26" dy="0.8" layer="1"/>
+<smd name="P$36" x="-3" y="1.77" dx="0.3" dy="0.65" layer="1"/>
+<smd name="P$35" x="-2.7" y="-1.08" dx="0.26" dy="0.8" layer="1"/>
+<smd name="P$34" x="-2.4" y="1.77" dx="0.3" dy="0.65" layer="1"/>
+<smd name="P$33" x="-2.1" y="-1.08" dx="0.26" dy="0.8" layer="1"/>
+<smd name="P$32" x="-1.8" y="1.77" dx="0.3" dy="0.65" layer="1"/>
+<smd name="P$31" x="-1.5" y="-1.08" dx="0.26" dy="0.8" layer="1"/>
+<smd name="P$30" x="-1.2" y="1.77" dx="0.3" dy="0.65" layer="1"/>
+<smd name="P$29" x="-0.9" y="-1.08" dx="0.26" dy="0.8" layer="1"/>
+<smd name="P$28" x="-0.6" y="1.77" dx="0.3" dy="0.65" layer="1"/>
+<smd name="P$27" x="-0.3" y="-1.08" dx="0.26" dy="0.8" layer="1"/>
+<smd name="P$26" x="0" y="1.77" dx="0.3" dy="0.65" layer="1"/>
+<smd name="P$25" x="0.3" y="-1.08" dx="0.26" dy="0.8" layer="1"/>
+<smd name="P$24" x="0.6" y="1.77" dx="0.3" dy="0.65" layer="1"/>
+<smd name="P$23" x="0.9" y="-1.08" dx="0.26" dy="0.8" layer="1"/>
+<smd name="P$22" x="1.2" y="1.77" dx="0.3" dy="0.65" layer="1"/>
+<smd name="P$21" x="1.5" y="-1.08" dx="0.26" dy="0.8" layer="1"/>
+<smd name="P$20" x="1.8" y="1.77" dx="0.3" dy="0.65" layer="1"/>
+<smd name="P$19" x="2.1" y="-1.08" dx="0.26" dy="0.8" layer="1"/>
+<smd name="P$18" x="2.4" y="1.77" dx="0.3" dy="0.65" layer="1"/>
+<smd name="P$17" x="2.7" y="-1.08" dx="0.26" dy="0.8" layer="1"/>
+<smd name="P$16" x="3" y="1.77" dx="0.3" dy="0.65" layer="1"/>
+<smd name="P$15" x="3.3" y="-1.08" dx="0.26" dy="0.8" layer="1"/>
+<smd name="P$14" x="3.6" y="1.77" dx="0.3" dy="0.65" layer="1"/>
+<smd name="P$13" x="3.9" y="-1.08" dx="0.26" dy="0.8" layer="1"/>
+<smd name="P$12" x="4.2" y="1.77" dx="0.3" dy="0.65" layer="1"/>
+<smd name="P$11" x="4.5" y="-1.08" dx="0.26" dy="0.8" layer="1"/>
+<smd name="P$10" x="4.8" y="1.77" dx="0.3" dy="0.65" layer="1"/>
+<smd name="P$9" x="5.1" y="-1.08" dx="0.26" dy="0.8" layer="1"/>
+<smd name="P$8" x="5.4" y="1.77" dx="0.3" dy="0.65" layer="1"/>
+<smd name="P$7" x="5.7" y="-1.08" dx="0.26" dy="0.8" layer="1"/>
+<smd name="P$6" x="6" y="1.77" dx="0.3" dy="0.65" layer="1"/>
+<smd name="P$5" x="6.3" y="-1.08" dx="0.26" dy="0.8" layer="1"/>
+<smd name="P$4" x="6.6" y="1.77" dx="0.3" dy="0.65" layer="1"/>
+<smd name="P$3" x="6.9" y="-1.08" dx="0.26" dy="0.8" layer="1"/>
+<smd name="P$2" x="7.2" y="1.77" dx="0.3" dy="0.65" layer="1"/>
+<smd name="P$1" x="7.5" y="-1.08" dx="0.26" dy="0.8" layer="1"/>
 <smd name="P$52" x="8.35" y="-0.75" dx="0.4" dy="0.85" layer="1"/>
 <smd name="P$53" x="-8.35" y="-0.75" dx="0.4" dy="0.85" layer="1"/>
-<wire x1="-9" y1="-1.92" x2="9" y2="-1.92" width="0.127" layer="21"/>
-<wire x1="9" y1="-1.92" x2="9" y2="1.68" width="0.127" layer="21"/>
-<wire x1="9" y1="1.68" x2="-9" y2="1.68" width="0.127" layer="21"/>
-<wire x1="-9" y1="1.68" x2="-9" y2="-1.92" width="0.127" layer="21"/>
-<text x="-8.685" y="3.81" size="1.27" layer="25" font="vector">&gt;NAME</text>
-<text x="-8.685" y="2.01" size="1.27" layer="27" font="vector">&gt;VALUE</text>
-<text x="-8.3" y="-3.5" size="1.27" layer="21" font="vector">1</text>
-<text x="7" y="-3.5" size="1.27" layer="21" font="vector">51</text>
+<text x="-8.685" y="4.41" size="1.27" layer="25" font="vector">&gt;NAME</text>
+<text x="-8.765" y="2.66" size="1.27" layer="27" font="vector">&gt;VALUE</text>
+<text x="8.21" y="-3.2" size="1.27" layer="21" font="vector">1</text>
+<text x="-8.24" y="-3.2" size="1.27" layer="21" font="vector">51</text>
 </package>
 <package name="DP_REVERSE_JAE">
 <smd name="P$1" x="-5.5" y="0" dx="0.28" dy="2.4" layer="1"/>
@@ -3547,62 +3547,62 @@ Commonly used for small ceramic capacitors. Like our 0.1uF (http://www.sparkfun.
 </package>
 </packages>
 <symbols>
-<symbol name="EDP_CONNECTOR">
-<pin name="GND@1" x="12.7" y="-45.72" visible="pin" rot="R90"/>
-<pin name="HPD" x="35.56" y="25.4" visible="pin" rot="R180"/>
-<pin name="GND@3" x="10.16" y="-45.72" visible="pin" rot="R90"/>
-<pin name="VIN@4" x="35.56" y="20.32" visible="pin" rot="R180"/>
-<pin name="VIN@5" x="35.56" y="17.78" visible="pin" rot="R180"/>
-<pin name="VIN@6" x="35.56" y="15.24" visible="pin" rot="R180"/>
-<pin name="VIN@7" x="35.56" y="12.7" visible="pin" rot="R180"/>
-<pin name="GND@8" x="7.62" y="-45.72" visible="pin" rot="R90"/>
-<pin name="AXU_P" x="35.56" y="7.62" visible="pin" rot="R180"/>
-<pin name="AUX_N" x="35.56" y="5.08" visible="pin" rot="R180"/>
-<pin name="GND@11" x="5.08" y="-45.72" visible="pin" rot="R90"/>
-<pin name="LANE0_N" x="35.56" y="0" visible="pin" rot="R180"/>
-<pin name="NC@13" x="35.56" y="-2.54" visible="pin" rot="R180"/>
-<pin name="LANE0_P" x="35.56" y="-5.08" visible="pin" rot="R180"/>
-<pin name="GND@15" x="2.54" y="-45.72" visible="pin" rot="R90"/>
-<pin name="LANE1_N" x="35.56" y="-10.16" visible="pin" rot="R180"/>
-<pin name="NC@17" x="35.56" y="-12.7" visible="pin" rot="R180"/>
-<pin name="LANE1_P" x="35.56" y="-15.24" visible="pin" rot="R180"/>
-<pin name="GND@19" x="0" y="-45.72" visible="pin" rot="R90"/>
-<pin name="LANE2_N" x="35.56" y="-20.32" visible="pin" rot="R180"/>
-<pin name="NC@21" x="35.56" y="-22.86" visible="pin" rot="R180"/>
-<pin name="LANE2_P" x="35.56" y="-25.4" visible="pin" rot="R180"/>
-<pin name="GND@23" x="-2.54" y="-45.72" visible="pin" rot="R90"/>
-<pin name="LANE3_N" x="35.56" y="-30.48" visible="pin" rot="R180"/>
-<pin name="NC@25" x="35.56" y="-33.02" visible="pin" rot="R180"/>
-<pin name="LANE3_P" x="35.56" y="-35.56" visible="pin" rot="R180"/>
-<pin name="GND@27" x="-5.08" y="-45.72" visible="pin" rot="R90"/>
-<pin name="GND@28" x="-7.62" y="-45.72" visible="pin" rot="R90"/>
-<pin name="GND@29" x="-10.16" y="-45.72" visible="pin" rot="R90"/>
-<pin name="LED_NEG_6B" x="-35.56" y="-25.4" visible="pin"/>
-<pin name="LED_NEG_5B" x="-35.56" y="-22.86" visible="pin"/>
-<pin name="LED_NEG_4B" x="-35.56" y="-20.32" visible="pin"/>
-<pin name="LED_NEG_3B" x="-35.56" y="-17.78" visible="pin"/>
-<pin name="LED_NEG_2B" x="-35.56" y="-15.24" visible="pin"/>
-<pin name="LED_NEG_1B" x="-35.56" y="-12.7" visible="pin"/>
-<pin name="GND@36" x="-12.7" y="-45.72" visible="pin" rot="R90"/>
-<pin name="LED_NEG_6A" x="-35.56" y="-7.62" visible="pin"/>
-<pin name="LED_NEG_5A" x="-35.56" y="-5.08" visible="pin"/>
-<pin name="LED_NEG_4A" x="-35.56" y="-2.54" visible="pin"/>
-<pin name="LED_NEG_3A" x="-35.56" y="0" visible="pin"/>
-<pin name="LED_NEG_2A" x="-35.56" y="2.54" visible="pin"/>
-<pin name="LED_NEG_1A" x="-35.56" y="5.08" visible="pin"/>
-<pin name="GND@43" x="-15.24" y="-45.72" visible="pin" rot="R90"/>
-<pin name="NC@44" x="-35.56" y="10.16" visible="pin"/>
-<pin name="LED_POS_2@45" x="-35.56" y="12.7" visible="pin"/>
-<pin name="LED_POS_2@46" x="-35.56" y="15.24" visible="pin"/>
-<pin name="NC@47" x="-35.56" y="17.78" visible="pin"/>
-<pin name="LED_POS_1@48" x="-35.56" y="20.32" visible="pin"/>
-<pin name="LED_POS_1@49" x="-35.56" y="22.86" visible="pin"/>
-<pin name="NC@50" x="-35.56" y="25.4" visible="pin"/>
-<pin name="GND@51" x="-17.78" y="-45.72" visible="pin" rot="R90"/>
+<symbol name="DP_EDP_ADAPTER_EDP_CONNECTOR">
 <wire x1="27.94" y1="27.94" x2="27.94" y2="-38.1" width="1.27" layer="94"/>
 <wire x1="27.94" y1="-38.1" x2="-27.94" y2="-38.1" width="1.27" layer="94"/>
 <wire x1="-27.94" y1="-38.1" x2="-27.94" y2="27.94" width="1.27" layer="94"/>
 <wire x1="-27.94" y1="27.94" x2="27.94" y2="27.94" width="1.27" layer="94"/>
+<pin name="AUX_N" x="35.56" y="5.08" visible="pin" rot="R180"/>
+<pin name="AXU_P" x="35.56" y="7.62" visible="pin" rot="R180"/>
+<pin name="GND@1" x="12.7" y="-45.72" visible="pin" rot="R90"/>
+<pin name="GND@3" x="10.16" y="-45.72" visible="pin" rot="R90"/>
+<pin name="GND@8" x="7.62" y="-45.72" visible="pin" rot="R90"/>
+<pin name="GND@11" x="5.08" y="-45.72" visible="pin" rot="R90"/>
+<pin name="GND@15" x="2.54" y="-45.72" visible="pin" rot="R90"/>
+<pin name="GND@19" x="0" y="-45.72" visible="pin" rot="R90"/>
+<pin name="GND@23" x="-2.54" y="-45.72" visible="pin" rot="R90"/>
+<pin name="GND@27" x="-5.08" y="-45.72" visible="pin" rot="R90"/>
+<pin name="GND@28" x="-7.62" y="-45.72" visible="pin" rot="R90"/>
+<pin name="GND@29" x="-10.16" y="-45.72" visible="pin" rot="R90"/>
+<pin name="GND@36" x="-12.7" y="-45.72" visible="pin" rot="R90"/>
+<pin name="GND@43" x="-15.24" y="-45.72" visible="pin" rot="R90"/>
+<pin name="GND@51" x="-17.78" y="-45.72" visible="pin" rot="R90"/>
+<pin name="HPD" x="35.56" y="25.4" visible="pin" rot="R180"/>
+<pin name="LANE0_N" x="35.56" y="0" visible="pin" rot="R180"/>
+<pin name="LANE0_P" x="35.56" y="-5.08" visible="pin" rot="R180"/>
+<pin name="LANE1_N" x="35.56" y="-10.16" visible="pin" rot="R180"/>
+<pin name="LANE1_P" x="35.56" y="-15.24" visible="pin" rot="R180"/>
+<pin name="LANE2_N" x="35.56" y="-20.32" visible="pin" rot="R180"/>
+<pin name="LANE2_P" x="35.56" y="-25.4" visible="pin" rot="R180"/>
+<pin name="LANE3_N" x="35.56" y="-30.48" visible="pin" rot="R180"/>
+<pin name="LANE3_P" x="35.56" y="-35.56" visible="pin" rot="R180"/>
+<pin name="LED_NEG_1A" x="-35.56" y="5.08" visible="pin"/>
+<pin name="LED_NEG_1B" x="-35.56" y="-12.7" visible="pin"/>
+<pin name="LED_NEG_2A" x="-35.56" y="2.54" visible="pin"/>
+<pin name="LED_NEG_2B" x="-35.56" y="-15.24" visible="pin"/>
+<pin name="LED_NEG_3A" x="-35.56" y="0" visible="pin"/>
+<pin name="LED_NEG_3B" x="-35.56" y="-17.78" visible="pin"/>
+<pin name="LED_NEG_4A" x="-35.56" y="-2.54" visible="pin"/>
+<pin name="LED_NEG_4B" x="-35.56" y="-20.32" visible="pin"/>
+<pin name="LED_NEG_5A" x="-35.56" y="-5.08" visible="pin"/>
+<pin name="LED_NEG_5B" x="-35.56" y="-22.86" visible="pin"/>
+<pin name="LED_NEG_6A" x="-35.56" y="-7.62" visible="pin"/>
+<pin name="LED_NEG_6B" x="-35.56" y="-25.4" visible="pin"/>
+<pin name="LED_POS_1@48" x="-35.56" y="20.32" visible="pin"/>
+<pin name="LED_POS_1@49" x="-35.56" y="22.86" visible="pin"/>
+<pin name="LED_POS_2@45" x="-35.56" y="12.7" visible="pin"/>
+<pin name="LED_POS_2@46" x="-35.56" y="15.24" visible="pin"/>
+<pin name="NC@13" x="35.56" y="-2.54" visible="pin" rot="R180"/>
+<pin name="NC@17" x="35.56" y="-12.7" visible="pin" rot="R180"/>
+<pin name="NC@21" x="35.56" y="-22.86" visible="pin" rot="R180"/>
+<pin name="NC@25" x="35.56" y="-33.02" visible="pin" rot="R180"/>
+<pin name="NC@44" x="-35.56" y="10.16" visible="pin"/>
+<pin name="NC@47" x="-35.56" y="17.78" visible="pin"/>
+<pin name="NC@50" x="-35.56" y="25.4" visible="pin"/>
+<pin name="VIN@4" x="35.56" y="20.32" visible="pin" rot="R180"/>
+<pin name="VIN@5" x="35.56" y="17.78" visible="pin" rot="R180"/>
+<pin name="VIN@6" x="35.56" y="15.24" visible="pin" rot="R180"/>
+<pin name="VIN@7" x="35.56" y="12.7" visible="pin" rot="R180"/>
 <text x="-27.94" y="30.48" size="2.54" layer="95">&gt;NAME</text>
 </symbol>
 <symbol name="DP1RD20JQ2R400">
@@ -3659,12 +3659,12 @@ Commonly used for small ceramic capacitors. Like our 0.1uF (http://www.sparkfun.
 </symbol>
 </symbols>
 <devicesets>
-<deviceset name="EDP_CONNECTOR">
+<deviceset name="DP_EDP_ADAPTER_EDP_CONNECTOR">
 <gates>
-<gate name="1" symbol="EDP_CONNECTOR" x="0" y="0"/>
+<gate name="1" symbol="DP_EDP_ADAPTER_EDP_CONNECTOR" x="0" y="0"/>
 </gates>
 <devices>
-<device name="" package="EDP_MOLEX">
+<device name="" package="DP_EDP_ADAPTER_EDP_MOLEX">
 <connects>
 <connect gate="1" pin="AUX_N" pad="P$10"/>
 <connect gate="1" pin="AXU_P" pad="P$9"/>
@@ -10760,7 +10760,7 @@ Source: www.kingbright.com</description>
 <part name="+3V2" library="supply1" deviceset="+3V3" device=""/>
 <part name="+3V3" library="supply1" deviceset="+3V3" device=""/>
 <part name="SIG_OUT" library="SparkFun-Connectors" deviceset="M04" device="PTH"/>
-<part name="SV2" library="DP_eDP_Adapter" deviceset="EDP_CONNECTOR" device=""/>
+<part name="SV2" library="DP_eDP_Adapter" deviceset="DP_EDP_ADAPTER_EDP_CONNECTOR" device=""/>
 <part name="GND4" library="supply1" deviceset="GND" device=""/>
 <part name="JP3" library="SparkFun-Connectors" deviceset="M05" device="PTH"/>
 <part name="SV3" library="DP_eDP_Adapter" deviceset="DP1RD20JQ2R400" device=""/>
