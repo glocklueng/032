@@ -11508,88 +11508,17 @@ Source: www.kingbright.com</description>
 <pinref part="SV1" gate="1" pin="4"/>
 </segment>
 </net>
-<net name="LED_NEG_1A" class="0">
-<segment>
-<pinref part="IC2" gate="A" pin="OUT22"/>
-<wire x1="-101.6" y1="63.5" x2="-83.82" y2="63.5" width="0.1524" layer="91"/>
-<pinref part="IC2" gate="A" pin="OUT23"/>
-<wire x1="-101.6" y1="60.96" x2="-83.82" y2="60.96" width="0.1524" layer="91"/>
-<wire x1="-83.82" y1="60.96" x2="-83.82" y2="63.5" width="0.1524" layer="91"/>
-<label x="-81.28" y="60.96" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="LED_NEG_5B" class="0">
-<segment>
-<pinref part="IC2" gate="A" pin="OUT2"/>
-<wire x1="-101.6" y1="119.38" x2="-83.82" y2="119.38" width="0.1524" layer="91"/>
-<pinref part="IC2" gate="A" pin="OUT3"/>
-<wire x1="-101.6" y1="116.84" x2="-83.82" y2="116.84" width="0.1524" layer="91"/>
-<wire x1="-83.82" y1="119.38" x2="-83.82" y2="116.84" width="0.1524" layer="91"/>
-<label x="-81.28" y="116.84" size="1.778" layer="95"/>
-</segment>
-</net>
 <net name="LED_NEG_4B" class="0">
 <segment>
-<pinref part="IC2" gate="A" pin="OUT4"/>
-<wire x1="-101.6" y1="114.3" x2="-83.82" y2="114.3" width="0.1524" layer="91"/>
-<pinref part="IC2" gate="A" pin="OUT5"/>
-<wire x1="-101.6" y1="111.76" x2="-83.82" y2="111.76" width="0.1524" layer="91"/>
-<wire x1="-83.82" y1="114.3" x2="-83.82" y2="111.76" width="0.1524" layer="91"/>
-<wire x1="-83.82" y1="111.76" x2="-83.82" y2="114.3" width="0.1524" layer="91"/>
-<label x="-81.28" y="111.76" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="LED_NEG_3B" class="0">
-<segment>
-<pinref part="IC2" gate="A" pin="OUT6"/>
-<wire x1="-101.6" y1="109.22" x2="-83.82" y2="109.22" width="0.1524" layer="91"/>
-<pinref part="IC2" gate="A" pin="OUT7"/>
-<wire x1="-101.6" y1="106.68" x2="-83.82" y2="106.68" width="0.1524" layer="91"/>
-<wire x1="-83.82" y1="109.22" x2="-83.82" y2="106.68" width="0.1524" layer="91"/>
-<label x="-81.28" y="106.68" size="1.778" layer="95"/>
+<pinref part="IC2" gate="A" pin="OUT20"/>
+<wire x1="-101.6" y1="68.58" x2="-83.82" y2="68.58" width="0.1524" layer="91"/>
+<pinref part="IC2" gate="A" pin="OUT21"/>
+<wire x1="-101.6" y1="66.04" x2="-83.82" y2="66.04" width="0.1524" layer="91"/>
+<wire x1="-83.82" y1="68.58" x2="-83.82" y2="66.04" width="0.1524" layer="91"/>
+<label x="-81.28" y="66.04" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="LED_NEG_2B" class="0">
-<segment>
-<pinref part="IC2" gate="A" pin="OUT8"/>
-<wire x1="-101.6" y1="101.6" x2="-83.82" y2="101.6" width="0.1524" layer="91"/>
-<pinref part="IC2" gate="A" pin="OUT9"/>
-<wire x1="-101.6" y1="99.06" x2="-83.82" y2="99.06" width="0.1524" layer="91"/>
-<wire x1="-83.82" y1="101.6" x2="-83.82" y2="99.06" width="0.1524" layer="91"/>
-<label x="-81.28" y="99.06" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="LED_NEG_1B" class="0">
-<segment>
-<pinref part="IC2" gate="A" pin="OUT10"/>
-<wire x1="-101.6" y1="96.52" x2="-83.82" y2="96.52" width="0.1524" layer="91"/>
-<pinref part="IC2" gate="A" pin="OUT11"/>
-<wire x1="-101.6" y1="93.98" x2="-83.82" y2="93.98" width="0.1524" layer="91"/>
-<wire x1="-83.82" y1="96.52" x2="-83.82" y2="93.98" width="0.1524" layer="91"/>
-<label x="-81.28" y="93.98" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="LED_NEG_6A" class="0">
-<segment>
-<pinref part="IC2" gate="A" pin="OUT12"/>
-<wire x1="-101.6" y1="91.44" x2="-83.82" y2="91.44" width="0.1524" layer="91"/>
-<pinref part="IC2" gate="A" pin="OUT13"/>
-<wire x1="-101.6" y1="88.9" x2="-83.82" y2="88.9" width="0.1524" layer="91"/>
-<wire x1="-83.82" y1="91.44" x2="-83.82" y2="88.9" width="0.1524" layer="91"/>
-<label x="-81.28" y="88.9" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="LED_NEG_4A" class="0">
-<segment>
-<pinref part="IC2" gate="A" pin="OUT16"/>
-<wire x1="-101.6" y1="78.74" x2="-83.82" y2="78.74" width="0.1524" layer="91"/>
-<pinref part="IC2" gate="A" pin="OUT17"/>
-<wire x1="-101.6" y1="76.2" x2="-83.82" y2="76.2" width="0.1524" layer="91"/>
-<wire x1="-83.82" y1="78.74" x2="-83.82" y2="76.2" width="0.1524" layer="91"/>
-<label x="-81.28" y="76.2" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="LED_NEG_3A" class="0">
 <segment>
 <pinref part="IC2" gate="A" pin="OUT18"/>
 <wire x1="-101.6" y1="73.66" x2="-83.82" y2="73.66" width="0.1524" layer="91"/>
@@ -11601,32 +11530,32 @@ Source: www.kingbright.com</description>
 </net>
 <net name="LED_NEG_2A" class="0">
 <segment>
-<pinref part="IC2" gate="A" pin="OUT20"/>
-<wire x1="-101.6" y1="68.58" x2="-83.82" y2="68.58" width="0.1524" layer="91"/>
-<pinref part="IC2" gate="A" pin="OUT21"/>
-<wire x1="-101.6" y1="66.04" x2="-83.82" y2="66.04" width="0.1524" layer="91"/>
-<wire x1="-83.82" y1="68.58" x2="-83.82" y2="66.04" width="0.1524" layer="91"/>
-<label x="-81.28" y="66.04" size="1.778" layer="95"/>
+<pinref part="IC2" gate="A" pin="OUT10"/>
+<wire x1="-101.6" y1="96.52" x2="-83.82" y2="96.52" width="0.1524" layer="91"/>
+<pinref part="IC2" gate="A" pin="OUT11"/>
+<wire x1="-101.6" y1="93.98" x2="-83.82" y2="93.98" width="0.1524" layer="91"/>
+<wire x1="-83.82" y1="96.52" x2="-83.82" y2="93.98" width="0.1524" layer="91"/>
+<label x="-81.28" y="93.98" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="LED_NEG_6B" class="0">
 <segment>
-<pinref part="IC2" gate="A" pin="OUT0"/>
-<wire x1="-101.6" y1="124.46" x2="-83.82" y2="124.46" width="0.1524" layer="91"/>
-<pinref part="IC2" gate="A" pin="OUT1"/>
-<wire x1="-101.6" y1="121.92" x2="-83.82" y2="121.92" width="0.1524" layer="91"/>
-<wire x1="-83.82" y1="124.46" x2="-83.82" y2="121.92" width="0.1524" layer="91"/>
-<label x="-81.28" y="121.92" size="1.778" layer="95"/>
+<pinref part="IC2" gate="A" pin="OUT22"/>
+<wire x1="-101.6" y1="63.5" x2="-83.82" y2="63.5" width="0.1524" layer="91"/>
+<pinref part="IC2" gate="A" pin="OUT23"/>
+<wire x1="-101.6" y1="60.96" x2="-83.82" y2="60.96" width="0.1524" layer="91"/>
+<wire x1="-83.82" y1="60.96" x2="-83.82" y2="63.5" width="0.1524" layer="91"/>
+<label x="-81.28" y="60.96" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="LED_NEG_5A" class="0">
 <segment>
-<pinref part="IC2" gate="A" pin="OUT14"/>
-<wire x1="-101.6" y1="86.36" x2="-83.82" y2="86.36" width="0.1524" layer="91"/>
-<pinref part="IC2" gate="A" pin="OUT15"/>
-<wire x1="-101.6" y1="83.82" x2="-83.82" y2="83.82" width="0.1524" layer="91"/>
-<wire x1="-83.82" y1="86.36" x2="-83.82" y2="83.82" width="0.1524" layer="91"/>
-<label x="-81.28" y="83.82" size="1.778" layer="95"/>
+<pinref part="IC2" gate="A" pin="OUT16"/>
+<wire x1="-101.6" y1="78.74" x2="-83.82" y2="78.74" width="0.1524" layer="91"/>
+<pinref part="IC2" gate="A" pin="OUT17"/>
+<wire x1="-101.6" y1="76.2" x2="-83.82" y2="76.2" width="0.1524" layer="91"/>
+<wire x1="-83.82" y1="78.74" x2="-83.82" y2="76.2" width="0.1524" layer="91"/>
+<label x="-81.28" y="76.2" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="BUTTON_1" class="0">
@@ -11675,6 +11604,77 @@ Source: www.kingbright.com</description>
 <pinref part="S5" gate="G$1" pin="1"/>
 <wire x1="-210.82" y1="45.72" x2="-220.98" y2="45.72" width="0.1524" layer="91"/>
 <label x="-226.06" y="45.72" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="LED_NEG_1A" class="0">
+<segment>
+<pinref part="IC2" gate="A" pin="OUT12"/>
+<wire x1="-101.6" y1="91.44" x2="-83.82" y2="91.44" width="0.1524" layer="91"/>
+<pinref part="IC2" gate="A" pin="OUT13"/>
+<wire x1="-101.6" y1="88.9" x2="-83.82" y2="88.9" width="0.1524" layer="91"/>
+<wire x1="-83.82" y1="91.44" x2="-83.82" y2="88.9" width="0.1524" layer="91"/>
+<label x="-81.28" y="88.9" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="LED_NEG_3A" class="0">
+<segment>
+<pinref part="IC2" gate="A" pin="OUT14"/>
+<wire x1="-101.6" y1="86.36" x2="-83.82" y2="86.36" width="0.1524" layer="91"/>
+<pinref part="IC2" gate="A" pin="OUT15"/>
+<wire x1="-101.6" y1="83.82" x2="-83.82" y2="83.82" width="0.1524" layer="91"/>
+<wire x1="-83.82" y1="86.36" x2="-83.82" y2="83.82" width="0.1524" layer="91"/>
+<label x="-81.28" y="83.82" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="LED_NEG_1B" class="0">
+<segment>
+<pinref part="IC2" gate="A" pin="OUT4"/>
+<wire x1="-101.6" y1="114.3" x2="-83.82" y2="114.3" width="0.1524" layer="91"/>
+<pinref part="IC2" gate="A" pin="OUT5"/>
+<wire x1="-101.6" y1="111.76" x2="-83.82" y2="111.76" width="0.1524" layer="91"/>
+<wire x1="-83.82" y1="114.3" x2="-83.82" y2="111.76" width="0.1524" layer="91"/>
+<wire x1="-83.82" y1="111.76" x2="-83.82" y2="114.3" width="0.1524" layer="91"/>
+<label x="-81.28" y="111.76" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="LED_NEG_4A" class="0">
+<segment>
+<pinref part="IC2" gate="A" pin="OUT8"/>
+<wire x1="-101.6" y1="101.6" x2="-83.82" y2="101.6" width="0.1524" layer="91"/>
+<pinref part="IC2" gate="A" pin="OUT9"/>
+<wire x1="-101.6" y1="99.06" x2="-83.82" y2="99.06" width="0.1524" layer="91"/>
+<wire x1="-83.82" y1="101.6" x2="-83.82" y2="99.06" width="0.1524" layer="91"/>
+<label x="-81.28" y="99.06" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="LED_NEG_6A" class="0">
+<segment>
+<pinref part="IC2" gate="A" pin="OUT6"/>
+<wire x1="-101.6" y1="109.22" x2="-83.82" y2="109.22" width="0.1524" layer="91"/>
+<pinref part="IC2" gate="A" pin="OUT7"/>
+<wire x1="-101.6" y1="106.68" x2="-83.82" y2="106.68" width="0.1524" layer="91"/>
+<wire x1="-83.82" y1="109.22" x2="-83.82" y2="106.68" width="0.1524" layer="91"/>
+<label x="-81.28" y="106.68" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="LED_NEG_3B" class="0">
+<segment>
+<pinref part="IC2" gate="A" pin="OUT2"/>
+<wire x1="-101.6" y1="119.38" x2="-83.82" y2="119.38" width="0.1524" layer="91"/>
+<pinref part="IC2" gate="A" pin="OUT3"/>
+<wire x1="-101.6" y1="116.84" x2="-83.82" y2="116.84" width="0.1524" layer="91"/>
+<wire x1="-83.82" y1="119.38" x2="-83.82" y2="116.84" width="0.1524" layer="91"/>
+<label x="-81.28" y="116.84" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="LED_NEG_5B" class="0">
+<segment>
+<pinref part="IC2" gate="A" pin="OUT0"/>
+<wire x1="-101.6" y1="124.46" x2="-83.82" y2="124.46" width="0.1524" layer="91"/>
+<pinref part="IC2" gate="A" pin="OUT1"/>
+<wire x1="-101.6" y1="121.92" x2="-83.82" y2="121.92" width="0.1524" layer="91"/>
+<wire x1="-83.82" y1="124.46" x2="-83.82" y2="121.92" width="0.1524" layer="91"/>
+<label x="-81.28" y="121.92" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>
