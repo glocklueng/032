@@ -10784,8 +10784,8 @@ Source: www.kingbright.com</description>
 <part name="L1" library="rcl" deviceset="L-US" device="" value="240ohm-300ma"/>
 <part name="C10" library="SparkFun-Passives" deviceset="CAP" device="0402-CAP" value="820pF 50V"/>
 <part name="GND8" library="supply1" deviceset="GND" device=""/>
-<part name="C1" library="SparkFun-Passives" deviceset="CAP" device="0402-CAP" value=".1uf"/>
-<part name="C2" library="SparkFun-Passives" deviceset="CAP" device="0402-CAP" value="0.1uF"/>
+<part name="C1" library="SparkFun-Passives" deviceset="CAP" device="0402-CAP" value="0.1uf"/>
+<part name="C2" library="SparkFun-Passives" deviceset="CAP" device="0402-CAP" value="1uF"/>
 <part name="R2" library="SparkFun-Passives" deviceset="RESISTOR" device="0402-RES" value="47K"/>
 <part name="C6" library="SparkFun-Passives" deviceset="CAP" device="0402-CAP" value="82pF"/>
 <part name="C4" library="SparkFun-Passives" deviceset="CAP" device="0402-CAP" value="820pF 50V"/>
