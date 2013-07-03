@@ -2584,10 +2584,6 @@ by exp-project-lbr.ulp</description>
 <wire x1="50.8" y1="50.8" x2="50.8" y2="25.4" width="0.254" layer="94"/>
 <wire x1="50.8" y1="25.4" x2="50.8" y2="-25.4" width="0.254" layer="94"/>
 <wire x1="50.8" y1="-25.4" x2="50.8" y2="-50.8" width="0.254" layer="94"/>
-<wire x1="-50.8" y1="-25.4" x2="50.8" y2="-25.4" width="0.254" layer="94"/>
-<wire x1="-50.8" y1="25.4" x2="50.8" y2="25.4" width="0.254" layer="94"/>
-<wire x1="-25.4" y1="50.8" x2="-25.4" y2="-50.8" width="0.254" layer="94"/>
-<wire x1="25.4" y1="50.8" x2="25.4" y2="-50.8" width="0.254" layer="94"/>
 <pin name="IO0_3" x="55.88" y="-17.78" length="middle" rot="R180"/>
 <pin name="IO0_6" x="-55.88" y="-15.24" length="middle"/>
 <pin name="IO1_3" x="55.88" y="-15.24" length="middle" rot="R180"/>
