@@ -5734,6 +5734,13 @@ by exp-project-lbr.ulp</description>
 <text x="-12.7" y="16.002" size="1.778" layer="95">&gt;PART</text>
 <text x="-12.7" y="13.462" size="1.778" layer="96">&gt;VALUE</text>
 </symbol>
+<symbol name="GND">
+<wire x1="-1.27" y1="0" x2="1.27" y2="0" width="0.254" layer="94"/>
+<wire x1="1.27" y1="0" x2="0" y2="-1.27" width="0.254" layer="94"/>
+<wire x1="0" y1="-1.27" x2="-1.27" y2="0" width="0.254" layer="94"/>
+<pin name="GND" x="0" y="2.54" visible="off" length="short" direction="sup" rot="R270"/>
+<text x="-1.905" y="-3.175" size="1.778" layer="96">&gt;VALUE</text>
+</symbol>
 </symbols>
 <devicesets>
 <deviceset name="XC3S50" prefix="U">
@@ -5846,6 +5853,19 @@ by exp-project-lbr.ulp</description>
 <connect gate="G$3" pin="VCCO_6" pad="19"/>
 <connect gate="G$3" pin="VCCO_7" pad="6"/>
 </connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="GND" prefix="SUPPLY">
+<description>&lt;b&gt;SUPPLY SYMBOL&lt;/b&gt;</description>
+<gates>
+<gate name="GND" symbol="GND" x="0" y="0"/>
+</gates>
+<devices>
+<device name="">
 <technologies>
 <technology name=""/>
 </technologies>
@@ -6055,6 +6075,7 @@ by exp-project-lbr.ulp</description>
 <part name="R57" library="  merged" deviceset="RESISTOR" device="0603" value="10k"/>
 <part name="R58" library="  merged" deviceset="RESISTOR" device="0603" value="dnp"/>
 <part name="U2" library="STM32-PROX" deviceset="XC3S50" device=""/>
+<part name="SUPPLY1" library="STM32-PROX" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -6638,9 +6659,10 @@ by exp-project-lbr.ulp</description>
 <instance part="R54" gate="G$1" x="203.2" y="40.64" rot="R90"/>
 <instance part="V55" gate="GND" x="203.2" y="27.94"/>
 <instance part="R59" gate="G$1" x="129.54" y="-2.54"/>
-<instance part="U2" gate="G$1" x="-104.14" y="71.12"/>
-<instance part="U2" gate="G$2" x="-139.7" y="-10.16"/>
+<instance part="U2" gate="G$1" x="-116.84" y="86.36"/>
+<instance part="U2" gate="G$2" x="-147.32" y="-17.78"/>
 <instance part="U2" gate="G$3" x="-76.2" y="-12.7"/>
+<instance part="SUPPLY1" gate="GND" x="-53.34" y="-45.72"/>
 </instances>
 <busses>
 <bus name="NCS,SPCK,MISO,MOSI">
@@ -6756,6 +6778,49 @@ by exp-project-lbr.ulp</description>
 <pinref part="V55" gate="GND" pin="GND"/>
 <pinref part="C19" gate="G$1" pin="2"/>
 <pinref part="C18" gate="G$1" pin="2"/>
+</segment>
+<segment>
+<pinref part="U2" gate="G$3" pin="GND@10"/>
+<wire x1="-58.42" y1="-2.54" x2="-53.34" y2="-2.54" width="0.1524" layer="91"/>
+<wire x1="-53.34" y1="-2.54" x2="-53.34" y2="-5.08" width="0.1524" layer="91"/>
+<pinref part="U2" gate="G$3" pin="GND@9"/>
+<wire x1="-53.34" y1="-5.08" x2="-53.34" y2="-7.62" width="0.1524" layer="91"/>
+<wire x1="-53.34" y1="-7.62" x2="-53.34" y2="-10.16" width="0.1524" layer="91"/>
+<wire x1="-53.34" y1="-10.16" x2="-53.34" y2="-12.7" width="0.1524" layer="91"/>
+<wire x1="-53.34" y1="-12.7" x2="-53.34" y2="-15.24" width="0.1524" layer="91"/>
+<wire x1="-53.34" y1="-15.24" x2="-53.34" y2="-17.78" width="0.1524" layer="91"/>
+<wire x1="-53.34" y1="-17.78" x2="-53.34" y2="-20.32" width="0.1524" layer="91"/>
+<wire x1="-53.34" y1="-20.32" x2="-53.34" y2="-22.86" width="0.1524" layer="91"/>
+<wire x1="-53.34" y1="-22.86" x2="-53.34" y2="-25.4" width="0.1524" layer="91"/>
+<wire x1="-53.34" y1="-25.4" x2="-53.34" y2="-43.18" width="0.1524" layer="91"/>
+<wire x1="-58.42" y1="-5.08" x2="-53.34" y2="-5.08" width="0.1524" layer="91"/>
+<pinref part="U2" gate="G$3" pin="GND@8"/>
+<wire x1="-58.42" y1="-7.62" x2="-53.34" y2="-7.62" width="0.1524" layer="91"/>
+<pinref part="U2" gate="G$3" pin="GND@7"/>
+<wire x1="-58.42" y1="-10.16" x2="-53.34" y2="-10.16" width="0.1524" layer="91"/>
+<pinref part="U2" gate="G$3" pin="GND@6"/>
+<wire x1="-58.42" y1="-12.7" x2="-53.34" y2="-12.7" width="0.1524" layer="91"/>
+<pinref part="U2" gate="G$3" pin="GND@5"/>
+<wire x1="-58.42" y1="-15.24" x2="-53.34" y2="-15.24" width="0.1524" layer="91"/>
+<pinref part="U2" gate="G$3" pin="GND@4"/>
+<wire x1="-58.42" y1="-17.78" x2="-53.34" y2="-17.78" width="0.1524" layer="91"/>
+<pinref part="U2" gate="G$3" pin="GND@3"/>
+<wire x1="-58.42" y1="-20.32" x2="-53.34" y2="-20.32" width="0.1524" layer="91"/>
+<pinref part="U2" gate="G$3" pin="GND@2"/>
+<wire x1="-58.42" y1="-22.86" x2="-53.34" y2="-22.86" width="0.1524" layer="91"/>
+<pinref part="U2" gate="G$3" pin="GND@1"/>
+<wire x1="-58.42" y1="-25.4" x2="-53.34" y2="-25.4" width="0.1524" layer="91"/>
+<label x="-55.88" y="-50.8" size="1.778" layer="95"/>
+<junction x="-53.34" y="-5.08"/>
+<junction x="-53.34" y="-7.62"/>
+<junction x="-53.34" y="-10.16"/>
+<junction x="-53.34" y="-12.7"/>
+<junction x="-53.34" y="-15.24"/>
+<junction x="-53.34" y="-17.78"/>
+<junction x="-53.34" y="-20.32"/>
+<junction x="-53.34" y="-22.86"/>
+<junction x="-53.34" y="-25.4"/>
+<pinref part="SUPPLY1" gate="GND" pin="GND"/>
 </segment>
 </net>
 <net name="+3V3" class="0">
@@ -6945,6 +7010,11 @@ by exp-project-lbr.ulp</description>
 <label x="185.42" y="7.62" size="1.778" layer="95"/>
 <pinref part="SV5" gate="G$1" pin="2"/>
 </segment>
+<segment>
+<pinref part="U2" gate="G$2" pin="TDI"/>
+<wire x1="-129.54" y1="-12.7" x2="-124.46" y2="-12.7" width="0.1524" layer="91"/>
+<label x="-124.46" y="-12.7" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="FPGA_TDO" class="0">
 <segment>
@@ -6956,6 +7026,11 @@ by exp-project-lbr.ulp</description>
 <wire x1="185.42" y1="5.08" x2="177.8" y2="5.08" width="0.1524" layer="91"/>
 <label x="185.42" y="5.08" size="1.778" layer="95"/>
 <pinref part="SV5" gate="G$1" pin="3"/>
+</segment>
+<segment>
+<pinref part="U2" gate="G$2" pin="TDO"/>
+<wire x1="-129.54" y1="-15.24" x2="-124.46" y2="-15.24" width="0.1524" layer="91"/>
+<label x="-124.46" y="-15.24" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="FPGA_TMS" class="0">
@@ -6969,6 +7044,11 @@ by exp-project-lbr.ulp</description>
 <label x="185.42" y="10.16" size="1.778" layer="95"/>
 <pinref part="SV5" gate="G$1" pin="1"/>
 </segment>
+<segment>
+<pinref part="U2" gate="G$2" pin="TMS"/>
+<wire x1="-129.54" y1="-17.78" x2="-124.46" y2="-17.78" width="0.1524" layer="91"/>
+<label x="-124.46" y="-17.78" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="FPGA_TCK" class="0">
 <segment>
@@ -6981,12 +7061,22 @@ by exp-project-lbr.ulp</description>
 <label x="185.42" y="2.54" size="1.778" layer="95"/>
 <pinref part="SV5" gate="G$1" pin="4"/>
 </segment>
+<segment>
+<pinref part="U2" gate="G$2" pin="TCK"/>
+<wire x1="-129.54" y1="-10.16" x2="-124.46" y2="-10.16" width="0.1524" layer="91"/>
+<label x="-124.46" y="-10.16" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="FPGA_DONE" class="0">
 <segment>
 <wire x1="38.1" y1="60.96" x2="43.18" y2="60.96" width="0.1524" layer="91"/>
 <label x="38.1" y="60.96" size="1.778" layer="95" rot="MR0"/>
 <pinref part="IC1" gate="G$1" pin="DONE"/>
+</segment>
+<segment>
+<pinref part="U2" gate="G$2" pin="DONE"/>
+<wire x1="-165.1" y1="-12.7" x2="-170.18" y2="-12.7" width="0.1524" layer="91"/>
+<label x="-182.88" y="-12.7" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="FPGA_NPROGRAM" class="0">
@@ -6995,12 +7085,22 @@ by exp-project-lbr.ulp</description>
 <label x="38.1" y="58.42" size="1.778" layer="95" rot="MR0"/>
 <pinref part="IC1" gate="G$1" pin="/PROGRAM"/>
 </segment>
+<segment>
+<pinref part="U2" gate="G$2" pin="PROG_B"/>
+<wire x1="-165.1" y1="-15.24" x2="-170.18" y2="-15.24" width="0.1524" layer="91"/>
+<label x="-190.5" y="-15.24" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="FPGA_CCLK" class="0">
 <segment>
 <wire x1="38.1" y1="55.88" x2="43.18" y2="55.88" width="0.1524" layer="91"/>
 <label x="38.1" y="55.88" size="1.778" layer="95" rot="MR0"/>
 <pinref part="IC1" gate="G$1" pin="CCLK"/>
+</segment>
+<segment>
+<pinref part="U2" gate="G$2" pin="CCLK"/>
+<wire x1="-165.1" y1="-10.16" x2="-170.18" y2="-10.16" width="0.1524" layer="91"/>
+<label x="-182.88" y="-10.16" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="FPGA_DIN" class="0">
@@ -7354,6 +7454,79 @@ by exp-project-lbr.ulp</description>
 <label x="127" y="7.62" size="1.778" layer="95"/>
 <pinref part="IC1" gate="G$1" pin="P52_IO3"/>
 <pinref part="R59" gate="G$1" pin="1"/>
+</segment>
+</net>
+<net name="N$1" class="0">
+<segment>
+<pinref part="U2" gate="G$3" pin="VCCO_0"/>
+<wire x1="-93.98" y1="-33.02" x2="-99.06" y2="-33.02" width="0.1524" layer="91"/>
+<wire x1="-99.06" y1="-33.02" x2="-99.06" y2="-35.56" width="0.1524" layer="91"/>
+<pinref part="U2" gate="G$3" pin="VCCO_1"/>
+<wire x1="-99.06" y1="-35.56" x2="-99.06" y2="-38.1" width="0.1524" layer="91"/>
+<wire x1="-99.06" y1="-38.1" x2="-99.06" y2="-40.64" width="0.1524" layer="91"/>
+<wire x1="-99.06" y1="-40.64" x2="-99.06" y2="-43.18" width="0.1524" layer="91"/>
+<wire x1="-99.06" y1="-43.18" x2="-99.06" y2="-45.72" width="0.1524" layer="91"/>
+<wire x1="-99.06" y1="-45.72" x2="-99.06" y2="-48.26" width="0.1524" layer="91"/>
+<wire x1="-99.06" y1="-48.26" x2="-99.06" y2="-50.8" width="0.1524" layer="91"/>
+<wire x1="-99.06" y1="-50.8" x2="-99.06" y2="-55.88" width="0.1524" layer="91"/>
+<wire x1="-93.98" y1="-35.56" x2="-99.06" y2="-35.56" width="0.1524" layer="91"/>
+<pinref part="U2" gate="G$3" pin="VCCO_2"/>
+<wire x1="-93.98" y1="-38.1" x2="-99.06" y2="-38.1" width="0.1524" layer="91"/>
+<pinref part="U2" gate="G$3" pin="VCCO_3"/>
+<wire x1="-93.98" y1="-40.64" x2="-99.06" y2="-40.64" width="0.1524" layer="91"/>
+<pinref part="U2" gate="G$3" pin="VCCO_4"/>
+<wire x1="-93.98" y1="-43.18" x2="-99.06" y2="-43.18" width="0.1524" layer="91"/>
+<pinref part="U2" gate="G$3" pin="VCCO_5"/>
+<wire x1="-93.98" y1="-45.72" x2="-99.06" y2="-45.72" width="0.1524" layer="91"/>
+<pinref part="U2" gate="G$3" pin="VCCO_6"/>
+<wire x1="-93.98" y1="-48.26" x2="-99.06" y2="-48.26" width="0.1524" layer="91"/>
+<pinref part="U2" gate="G$3" pin="VCCO_7"/>
+<wire x1="-93.98" y1="-50.8" x2="-99.06" y2="-50.8" width="0.1524" layer="91"/>
+<junction x="-99.06" y="-50.8"/>
+<junction x="-99.06" y="-48.26"/>
+<junction x="-99.06" y="-45.72"/>
+<junction x="-99.06" y="-43.18"/>
+<junction x="-99.06" y="-40.64"/>
+<junction x="-99.06" y="-38.1"/>
+<junction x="-99.06" y="-35.56"/>
+</segment>
+</net>
+<net name="N$7" class="0">
+<segment>
+<pinref part="U2" gate="G$3" pin="VCCINT@1"/>
+<wire x1="-93.98" y1="-17.78" x2="-99.06" y2="-17.78" width="0.1524" layer="91"/>
+<wire x1="-99.06" y1="-17.78" x2="-99.06" y2="-20.32" width="0.1524" layer="91"/>
+<pinref part="U2" gate="G$3" pin="VCCINT@2"/>
+<wire x1="-99.06" y1="-20.32" x2="-99.06" y2="-22.86" width="0.1524" layer="91"/>
+<wire x1="-99.06" y1="-22.86" x2="-99.06" y2="-25.4" width="0.1524" layer="91"/>
+<wire x1="-99.06" y1="-25.4" x2="-99.06" y2="-30.48" width="0.1524" layer="91"/>
+<wire x1="-93.98" y1="-20.32" x2="-99.06" y2="-20.32" width="0.1524" layer="91"/>
+<pinref part="U2" gate="G$3" pin="VCCINT@3"/>
+<wire x1="-93.98" y1="-22.86" x2="-99.06" y2="-22.86" width="0.1524" layer="91"/>
+<pinref part="U2" gate="G$3" pin="VCCINT@4"/>
+<wire x1="-93.98" y1="-25.4" x2="-99.06" y2="-25.4" width="0.1524" layer="91"/>
+<junction x="-99.06" y="-25.4"/>
+<junction x="-99.06" y="-22.86"/>
+<junction x="-99.06" y="-20.32"/>
+</segment>
+</net>
+<net name="N$8" class="0">
+<segment>
+<pinref part="U2" gate="G$3" pin="VCCAUX@1"/>
+<wire x1="-93.98" y1="-2.54" x2="-99.06" y2="-2.54" width="0.1524" layer="91"/>
+<wire x1="-99.06" y1="-2.54" x2="-99.06" y2="-5.08" width="0.1524" layer="91"/>
+<pinref part="U2" gate="G$3" pin="VCCAUX@4"/>
+<wire x1="-99.06" y1="-5.08" x2="-99.06" y2="-7.62" width="0.1524" layer="91"/>
+<wire x1="-99.06" y1="-7.62" x2="-99.06" y2="-10.16" width="0.1524" layer="91"/>
+<wire x1="-99.06" y1="-10.16" x2="-99.06" y2="-12.7" width="0.1524" layer="91"/>
+<wire x1="-93.98" y1="-10.16" x2="-99.06" y2="-10.16" width="0.1524" layer="91"/>
+<pinref part="U2" gate="G$3" pin="VCCAUX@3"/>
+<wire x1="-93.98" y1="-7.62" x2="-99.06" y2="-7.62" width="0.1524" layer="91"/>
+<pinref part="U2" gate="G$3" pin="VCCAUX@2"/>
+<wire x1="-93.98" y1="-5.08" x2="-99.06" y2="-5.08" width="0.1524" layer="91"/>
+<junction x="-99.06" y="-5.08"/>
+<junction x="-99.06" y="-7.62"/>
+<junction x="-99.06" y="-10.16"/>
 </segment>
 </net>
 </nets>
