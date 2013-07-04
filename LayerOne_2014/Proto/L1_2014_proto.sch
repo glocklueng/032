@@ -4329,6 +4329,14 @@ Standard 8-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 </sheet>
 <sheet>
 <plain>
+<text x="-55.88" y="-20.32" size="6.4516" layer="104">THIS IS WRONG</text>
+<text x="-55.88" y="60.96" size="6.4516" layer="104">THIS IS WRONG</text>
+<text x="-53.34" y="106.68" size="6.4516" layer="104">THIS IS WRONG</text>
+<text x="-58.42" y="-111.76" size="6.4516" layer="104">THIS IS WRONG</text>
+<text x="-58.42" y="-66.04" size="6.4516" layer="104">THIS IS WRONG</text>
+<text x="-60.96" y="-139.7" size="6.4516" layer="104">THIS IS WRONG</text>
+<text x="-68.58" y="-170.18" size="6.4516" layer="104" rot="R90">THIS IS USING THE SPARTAN-3A, THE CORRECT EBAY CHIP IS THE SPARTAN-3 XC3S50-5VQ100</text>
+<text x="76.2" y="-170.18" size="6.4516" layer="104" rot="R90">THIS IS USING THE SPARTAN-3A, THE CORRECT EBAY CHIP IS THE SPARTAN-3 XC3S50-5VQ100</text>
 </plain>
 <instances>
 <instance part="U1" gate="B0" x="-15.24" y="137.16"/>
