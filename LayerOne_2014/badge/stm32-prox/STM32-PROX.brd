@@ -2876,7 +2876,7 @@ design rules under a new name.</description>
 <element name="K3" library="switch-omron" package="B3F-5XX" value="" x="83.82" y="17.78" rot="R270">
 <attribute name="PARTNO" value="*" x="83.82" y="17.78" size="1.778" layer="27" rot="R270" display="off"/>
 </element>
-<element name="R4" library="resistor" package="R0805" value="100K" x="63.5" y="7.62">
+<element name="R4" library="resistor" package="R0805" value="10K" x="63.5" y="7.62">
 <attribute name="PARTNO" value="*" x="63.5" y="7.62" size="1.778" layer="27" display="off"/>
 </element>
 <element name="JP1" library="microbuilder" package="JUMPER3" value="boot0 select" x="59.69" y="5.08">
@@ -2933,9 +2933,12 @@ design rules under a new name.</description>
 <attribute name="PARTNO" value="MMBT2222" x="95.25" y="0" size="1.778" layer="27" display="off"/>
 </element>
 <element name="SV301" library="proxmark" package="HEADER-1X6" value="HEADER-1X6" x="60.96" y="1.27"/>
-<element name="R320" library="proxmark" package="0603" value="10k" x="54.61" y="-2.54" rot="R270"/>
-<element name="R321" library="proxmark" package="0603" value="10k" x="57.15" y="-2.54" rot="R270"/>
-<element name="R322" library="proxmark" package="0603" value="10k" x="59.69" y="-2.54" rot="R270"/>
+<element name="R6" library="resistor" package="R0805" value="390" x="1.27" y="-7.62">
+<attribute name="PARTNO" value="*" x="1.27" y="-7.62" size="1.778" layer="27" display="off"/>
+</element>
+<element name="C56" library="SparkFun" package="0805" value="100nF" x="-2.54" y="-7.62">
+<attribute name="PARTNO" value="*" x="-2.54" y="-7.62" size="1.778" layer="27" display="off"/>
+</element>
 </elements>
 <signals>
 <signal name="GND" airwireshidden="yes">
@@ -3053,6 +3056,7 @@ design rules under a new name.</description>
 <contactref element="C55" pad="C"/>
 <contactref element="Q3" pad="2"/>
 <contactref element="SV301" pad="5"/>
+<contactref element="C56" pad="2"/>
 <wire x1="80.57" y1="47.06" x2="81.27" y2="47.06" width="0" layer="19" extent="16-16"/>
 <wire x1="80.391" y1="42.28" x2="80.57" y2="47.06" width="0" layer="19" extent="1-16"/>
 <wire x1="82.042" y1="42.28" x2="80.391" y2="42.28" width="0" layer="19" extent="1-1"/>
@@ -3135,12 +3139,12 @@ design rules under a new name.</description>
 <wire x1="78.7106" y1="21.2812" x2="73.471" y2="19.42" width="0" layer="19" extent="1-1"/>
 <wire x1="81.3094" y1="24.4388" x2="78.7106" y2="21.2812" width="0" layer="19" extent="1-1"/>
 <wire x1="83.7906" y1="21.2812" x2="81.3094" y2="24.4388" width="0" layer="19" extent="1-1"/>
-<wire x1="88.9" y1="16.13" x2="83.7906" y2="21.2812" width="0" layer="19" extent="1-1"/>
-<wire x1="88" y1="22.86" x2="88.9" y2="16.13" width="0" layer="19" extent="1-1"/>
+<wire x1="88" y1="22.86" x2="83.7906" y2="21.2812" width="0" layer="19" extent="1-1"/>
 <wire x1="91.81" y1="22.86" x2="88" y2="22.86" width="0" layer="19" extent="1-1"/>
 <wire x1="91.81" y1="20.32" x2="91.81" y2="22.86" width="0" layer="19" extent="1-1"/>
 <wire x1="91.81" y1="17.78" x2="91.81" y2="20.32" width="0" layer="19" extent="1-1"/>
 <wire x1="91.81" y1="15.24" x2="91.81" y2="17.78" width="0" layer="19" extent="1-1"/>
+<wire x1="88.9" y1="16.13" x2="91.81" y2="15.24" width="0" layer="19" extent="1-1"/>
 <wire x1="95.62" y1="22.86" x2="91.81" y2="22.86" width="0" layer="19" extent="1-1"/>
 <wire x1="95.62" y1="20.32" x2="95.62" y2="22.86" width="0" layer="19" extent="1-1"/>
 <wire x1="32.893" y1="47.879" x2="38.608" y2="42.374" width="0" layer="19" extent="1-1"/>
@@ -3166,6 +3170,7 @@ design rules under a new name.</description>
 <wire x1="3.923" y1="48.858" x2="8.423" y2="48.858" width="0" layer="19" extent="1-1"/>
 <wire x1="19.685" y1="49.911" x2="14.605" y2="49.911" width="0" layer="19" extent="1-1"/>
 <wire x1="96.2" y1="-1.1" x2="91.81" y2="15.24" width="0" layer="19" extent="1-1"/>
+<wire x1="-1.64" y1="-7.62" x2="18.9992" y2="1.524" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$6">
 <contactref element="C1" pad="1"/>
@@ -3204,9 +3209,6 @@ design rules under a new name.</description>
 <contactref element="R5" pad="1"/>
 <contactref element="BUZ1" pad="1"/>
 <contactref element="SV301" pad="6"/>
-<contactref element="R322" pad="2"/>
-<contactref element="R320" pad="2"/>
-<contactref element="R321" pad="2"/>
 <wire x1="93.56" y1="25.4" x2="93.56" y2="27.94" width="0" layer="19" extent="1-1"/>
 <wire x1="93.61" y1="22.86" x2="93.56" y2="25.4" width="0" layer="19" extent="1-1"/>
 <wire x1="93.61" y1="20.32" x2="93.61" y2="22.86" width="0" layer="19" extent="1-1"/>
@@ -3219,9 +3221,6 @@ design rules under a new name.</description>
 <wire x1="62.23" y1="5.08" x2="66.587" y2="6.731" width="0" layer="19" extent="1-1"/>
 <wire x1="67.31" y1="1.27" x2="66.587" y2="6.731" width="0" layer="19" extent="1-1"/>
 <wire x1="59.371" y1="12.27" x2="62.23" y2="5.08" width="0" layer="19" extent="1-1"/>
-<wire x1="59.69" y1="-3.39" x2="62.23" y2="5.08" width="0" layer="19" extent="1-1"/>
-<wire x1="57.15" y1="-3.39" x2="59.69" y2="-3.39" width="0" layer="19" extent="1-1"/>
-<wire x1="54.61" y1="-3.39" x2="57.15" y2="-3.39" width="0" layer="19" extent="1-1"/>
 <wire x1="61.546" y1="24.195" x2="59.371" y2="12.27" width="0" layer="19" extent="1-1"/>
 <wire x1="67.31" y1="25.947" x2="61.546" y2="24.195" width="0" layer="19" extent="1-1"/>
 <wire x1="69.996" y1="24.195" x2="67.31" y2="25.947" width="0" layer="19" extent="1-1"/>
@@ -3955,7 +3954,9 @@ design rules under a new name.</description>
 <signal name="NRST">
 <contactref element="IC2" pad="7"/>
 <contactref element="R5" pad="2"/>
+<contactref element="C56" pad="1"/>
 <wire x1="73.471" y1="16.17" x2="91.86" y2="27.94" width="0" layer="19" extent="1-1"/>
+<wire x1="-3.44" y1="-7.62" x2="73.471" y2="16.17" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$1">
 <contactref element="U2" pad="94"/>
@@ -4152,10 +4153,8 @@ design rules under a new name.</description>
 </signal>
 <signal name="JTAG_TMS">
 <contactref element="SV301" pad="1"/>
-<contactref element="R320" pad="1"/>
 <contactref element="IC2" pad="46"/>
 <wire x1="54.61" y1="1.27" x2="59.371" y2="13.57" width="0" layer="19" extent="1-1"/>
-<wire x1="54.61" y1="-1.69" x2="54.61" y2="1.27" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="JTAG_TCK">
 <contactref element="SV301" pad="4"/>
@@ -4164,17 +4163,21 @@ design rules under a new name.</description>
 </signal>
 <signal name="JTAG_TDO">
 <contactref element="SV301" pad="3"/>
-<contactref element="R322" pad="1"/>
 <contactref element="IC2" pad="55"/>
 <wire x1="59.69" y1="1.27" x2="65.446" y2="10.095" width="0" layer="19" extent="1-1"/>
-<wire x1="59.69" y1="-1.69" x2="59.69" y2="1.27" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="JTAG_TDI">
 <contactref element="SV301" pad="2"/>
-<contactref element="R321" pad="1"/>
 <contactref element="IC2" pad="50"/>
 <wire x1="57.15" y1="1.27" x2="62.196" y2="10.095" width="0" layer="19" extent="1-1"/>
-<wire x1="57.15" y1="-1.69" x2="57.15" y2="1.27" width="0" layer="19" extent="1-1"/>
+</signal>
+<signal name="N$61">
+<contactref element="IC2" pad="6"/>
+<contactref element="R6" pad="2"/>
+<wire x1="2.12" y1="-7.62" x2="73.471" y2="15.52" width="0" layer="19" extent="1-1"/>
+</signal>
+<signal name="N$62">
+<contactref element="R6" pad="1"/>
 </signal>
 </signals>
 </board>

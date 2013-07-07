@@ -8415,7 +8415,7 @@ Digikey part: 102-1265-1-ND</description>
 <part name="GND43" library="SparkFun" deviceset="GND" device=""/>
 <part name="GND45" library="SparkFun" deviceset="GND" device=""/>
 <part name="GND46" library="SparkFun" deviceset="GND" device=""/>
-<part name="R4" library="resistor" deviceset="R-US_" device="R0805" value="100K">
+<part name="R4" library="resistor" deviceset="R-US_" device="R0805" value="10K">
 <attribute name="PARTNO" value="*"/>
 </part>
 <part name="JP1" library="microbuilder" deviceset="JUMPER3" device="" value="boot0 select">
@@ -8480,14 +8480,20 @@ Digikey part: 102-1265-1-ND</description>
 </part>
 <part name="V5" library="proxmark" deviceset="AGND" device=""/>
 <part name="SV301" library="proxmark" deviceset="HEADER-1X6" device=""/>
-<part name="R320" library="proxmark" deviceset="R-US" device="" value="10k"/>
-<part name="R321" library="proxmark" deviceset="R-US" device="" value="10k"/>
-<part name="R322" library="proxmark" deviceset="R-US" device="" value="10k"/>
+<part name="R6" library="resistor" deviceset="R-US_" device="R0805" value="390">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="C56" library="SparkFun" deviceset="CAP" device="0805" value="100nF">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="GND8" library="SparkFun" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
 <plain>
 <text x="-53.34" y="88.9" size="1.778" layer="91">do we need trst?</text>
+<text x="-62.23" y="105.41" size="1.778" layer="91">internal pullups</text>
+<text x="-57.15" y="85.09" size="1.778" layer="91">stm docs seem to say no</text>
 </plain>
 <instances>
 <instance part="IC2" gate="G$1" x="73.66" y="43.18">
@@ -8562,19 +8568,19 @@ Digikey part: 102-1265-1-ND</description>
 <instance part="L1" gate="G$1" x="93.98" y="109.22" rot="R180">
 <attribute name="PARTNO" x="93.98" y="109.22" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="C53" gate="G$1" x="-5.08" y="22.86" smashed="yes" rot="R180">
-<attribute name="NAME" x="-4.191" y="19.812" size="1.778" layer="95" rot="R270"/>
-<attribute name="VALUE" x="-4.699" y="31.496" size="1.778" layer="96" rot="R270"/>
-<attribute name="PARTNO" x="-5.08" y="22.86" size="1.778" layer="96" display="off"/>
+<instance part="C53" gate="G$1" x="-7.62" y="11.43" smashed="yes" rot="R180">
+<attribute name="NAME" x="-6.731" y="8.382" size="1.778" layer="95" rot="R270"/>
+<attribute name="VALUE" x="-7.239" y="20.066" size="1.778" layer="96" rot="R270"/>
+<attribute name="PARTNO" x="-7.62" y="11.43" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="C54" gate="G$1" x="5.08" y="22.86" smashed="yes" rot="R180">
-<attribute name="NAME" x="5.969" y="19.812" size="1.778" layer="95" rot="R270"/>
-<attribute name="VALUE" x="5.461" y="31.496" size="1.778" layer="96" rot="R270"/>
-<attribute name="PARTNO" x="5.08" y="22.86" size="1.778" layer="96" display="off"/>
+<instance part="C54" gate="G$1" x="5.08" y="11.43" smashed="yes" rot="R180">
+<attribute name="NAME" x="5.969" y="8.382" size="1.778" layer="95" rot="R270"/>
+<attribute name="VALUE" x="5.461" y="20.066" size="1.778" layer="96" rot="R270"/>
+<attribute name="PARTNO" x="5.08" y="11.43" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="GND7" gate="1" x="0" y="7.62"/>
-<instance part="R5" gate="G$1" x="5.08" y="45.72">
-<attribute name="PARTNO" x="5.08" y="45.72" size="1.778" layer="96" display="off"/>
+<instance part="GND7" gate="1" x="0" y="-3.81"/>
+<instance part="R5" gate="G$1" x="-11.43" y="45.72">
+<attribute name="PARTNO" x="-11.43" y="45.72" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="C55" gate="G$1" x="81.28" y="104.14" smashed="yes">
 <attribute name="NAME" x="78.105" y="102.616" size="1.778" layer="95" rot="R90"/>
@@ -8589,9 +8595,15 @@ Digikey part: 102-1265-1-ND</description>
 </instance>
 <instance part="V5" gate="GND" x="-64.77" y="81.28" rot="MR0"/>
 <instance part="SV301" gate="G$1" x="-77.47" y="86.36"/>
-<instance part="R320" gate="G$1" x="-62.23" y="109.22" rot="R90"/>
-<instance part="R321" gate="G$1" x="-54.61" y="109.22" rot="R90"/>
-<instance part="R322" gate="G$1" x="-46.99" y="109.22" rot="R90"/>
+<instance part="R6" gate="G$1" x="20.32" y="40.64">
+<attribute name="PARTNO" x="20.32" y="40.64" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="C56" gate="G$1" x="0" y="38.1" smashed="yes">
+<attribute name="NAME" x="5.842" y="42.291" size="1.778" layer="95" rot="R180"/>
+<attribute name="VALUE" x="9.906" y="37.719" size="1.778" layer="96" rot="R180"/>
+<attribute name="PARTNO" x="0" y="38.1" size="1.778" layer="96" rot="R180" display="off"/>
+</instance>
+<instance part="GND8" gate="1" x="0" y="31.75"/>
 </instances>
 <busses>
 </busses>
@@ -8655,9 +8667,9 @@ Digikey part: 102-1265-1-ND</description>
 </segment>
 <segment>
 <pinref part="R5" gate="G$1" pin="1"/>
-<wire x1="0" y1="45.72" x2="-6.35" y2="45.72" width="0.1524" layer="91"/>
-<label x="-6.35" y="44.45" size="1.778" layer="95" rot="R180"/>
-<junction x="-6.35" y="45.72"/>
+<wire x1="-16.51" y1="45.72" x2="-19.05" y2="45.72" width="0.1524" layer="91"/>
+<label x="-19.05" y="45.72" size="1.778" layer="95" rot="R180"/>
+<junction x="-19.05" y="45.72"/>
 </segment>
 <segment>
 <wire x1="-31.75" y1="30.48" x2="-29.21" y2="30.48" width="0.1524" layer="91"/>
@@ -8671,23 +8683,10 @@ Digikey part: 102-1265-1-ND</description>
 <wire x1="-69.85" y1="88.9" x2="-67.31" y2="88.9" width="0.1524" layer="91"/>
 <wire x1="-69.85" y1="121.92" x2="-67.31" y2="121.92" width="0.1524" layer="91"/>
 <wire x1="-67.31" y1="121.92" x2="-64.77" y2="121.92" width="0.1524" layer="91"/>
-<wire x1="-67.31" y1="88.9" x2="-67.31" y2="116.84" width="0.1524" layer="91"/>
-<wire x1="-67.31" y1="116.84" x2="-67.31" y2="121.92" width="0.1524" layer="91"/>
-<wire x1="-46.99" y1="114.3" x2="-46.99" y2="116.84" width="0.1524" layer="91"/>
-<wire x1="-46.99" y1="116.84" x2="-54.61" y2="116.84" width="0.1524" layer="91"/>
-<wire x1="-54.61" y1="116.84" x2="-62.23" y2="116.84" width="0.1524" layer="91"/>
-<wire x1="-62.23" y1="116.84" x2="-67.31" y2="116.84" width="0.1524" layer="91"/>
-<wire x1="-62.23" y1="114.3" x2="-62.23" y2="116.84" width="0.1524" layer="91"/>
-<wire x1="-54.61" y1="114.3" x2="-54.61" y2="116.84" width="0.1524" layer="91"/>
+<wire x1="-67.31" y1="88.9" x2="-67.31" y2="121.92" width="0.1524" layer="91"/>
 <junction x="-67.31" y="121.92"/>
-<junction x="-67.31" y="116.84"/>
-<junction x="-62.23" y="116.84"/>
-<junction x="-54.61" y="116.84"/>
 <label x="-59.69" y="124.46" size="1.778" layer="95" rot="R180"/>
 <pinref part="SV301" gate="G$1" pin="6"/>
-<pinref part="R322" gate="G$1" pin="2"/>
-<pinref part="R320" gate="G$1" pin="2"/>
-<pinref part="R321" gate="G$1" pin="2"/>
 </segment>
 </net>
 <net name="JTRST" class="0">
@@ -8702,7 +8701,13 @@ Digikey part: 102-1265-1-ND</description>
 <pinref part="IC2" gate="G$1" pin="NRST"/>
 <label x="17.78" y="45.72" size="1.778" layer="95"/>
 <pinref part="R5" gate="G$1" pin="2"/>
-<wire x1="30.48" y1="45.72" x2="10.16" y2="45.72" width="0.1524" layer="91"/>
+<wire x1="30.48" y1="45.72" x2="-6.35" y2="45.72" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="C56" gate="G$1" pin="1"/>
+<wire x1="0" y1="43.18" x2="0" y2="45.72" width="0.1524" layer="91"/>
+<label x="-34.29" y="55.88" size="1.778" layer="95"/>
+<junction x="0" y="45.72"/>
 </segment>
 </net>
 <net name="GND" class="0">
@@ -8792,13 +8797,13 @@ Digikey part: 102-1265-1-ND</description>
 </segment>
 <segment>
 <pinref part="C53" gate="G$1" pin="1"/>
-<wire x1="-5.08" y1="17.78" x2="-5.08" y2="15.24" width="0.1524" layer="91"/>
-<wire x1="-5.08" y1="15.24" x2="0" y2="15.24" width="0.1524" layer="91"/>
+<wire x1="-7.62" y1="6.35" x2="-7.62" y2="3.81" width="0.1524" layer="91"/>
+<wire x1="-7.62" y1="3.81" x2="0" y2="3.81" width="0.1524" layer="91"/>
 <pinref part="C54" gate="G$1" pin="1"/>
-<wire x1="0" y1="15.24" x2="5.08" y2="15.24" width="0.1524" layer="91"/>
-<wire x1="5.08" y1="15.24" x2="5.08" y2="17.78" width="0.1524" layer="91"/>
-<wire x1="0" y1="15.24" x2="0" y2="10.16" width="0.1524" layer="91"/>
-<junction x="0" y="15.24"/>
+<wire x1="0" y1="3.81" x2="5.08" y2="3.81" width="0.1524" layer="91"/>
+<wire x1="5.08" y1="3.81" x2="5.08" y2="6.35" width="0.1524" layer="91"/>
+<wire x1="0" y1="3.81" x2="0" y2="-1.27" width="0.1524" layer="91"/>
+<junction x="0" y="3.81"/>
 <pinref part="GND7" gate="1" pin="GND"/>
 </segment>
 <segment>
@@ -8811,6 +8816,11 @@ Digikey part: 102-1265-1-ND</description>
 <wire x1="-64.77" y1="91.44" x2="-64.77" y2="83.82" width="0.1524" layer="91"/>
 <pinref part="V5" gate="GND" pin="GND"/>
 <pinref part="SV301" gate="G$1" pin="5"/>
+</segment>
+<segment>
+<pinref part="C56" gate="G$1" pin="2"/>
+<pinref part="GND8" gate="1" pin="GND"/>
+<wire x1="0" y1="35.56" x2="0" y2="34.29" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="PA4" class="0">
@@ -8935,13 +8945,9 @@ Digikey part: 102-1265-1-ND</description>
 </net>
 <net name="JTAG_TMS" class="0">
 <segment>
-<wire x1="-69.85" y1="101.6" x2="-62.23" y2="101.6" width="0.1524" layer="91"/>
-<wire x1="-62.23" y1="101.6" x2="-41.91" y2="101.6" width="0.1524" layer="91"/>
-<wire x1="-62.23" y1="104.14" x2="-62.23" y2="101.6" width="0.1524" layer="91"/>
-<junction x="-62.23" y="101.6"/>
+<wire x1="-69.85" y1="101.6" x2="-41.91" y2="101.6" width="0.1524" layer="91"/>
 <label x="-41.91" y="101.6" size="1.778" layer="95"/>
 <pinref part="SV301" gate="G$1" pin="1"/>
-<pinref part="R320" gate="G$1" pin="1"/>
 </segment>
 <segment>
 <pinref part="IC2" gate="G$1" pin="PA13/JTMS/SWDIO"/>
@@ -8963,13 +8969,9 @@ Digikey part: 102-1265-1-ND</description>
 </net>
 <net name="JTAG_TDO" class="0">
 <segment>
-<wire x1="-69.85" y1="96.52" x2="-46.99" y2="96.52" width="0.1524" layer="91"/>
-<wire x1="-46.99" y1="96.52" x2="-41.91" y2="96.52" width="0.1524" layer="91"/>
-<wire x1="-46.99" y1="104.14" x2="-46.99" y2="96.52" width="0.1524" layer="91"/>
-<junction x="-46.99" y="96.52"/>
+<wire x1="-69.85" y1="96.52" x2="-41.91" y2="96.52" width="0.1524" layer="91"/>
 <label x="-41.91" y="96.52" size="1.778" layer="95"/>
 <pinref part="SV301" gate="G$1" pin="3"/>
-<pinref part="R322" gate="G$1" pin="1"/>
 </segment>
 <segment>
 <pinref part="IC2" gate="G$1" pin="PB3/JTDO/TIM2_CH2/SPI1_SCK"/>
@@ -8979,18 +8981,28 @@ Digikey part: 102-1265-1-ND</description>
 </net>
 <net name="JTAG_TDI" class="0">
 <segment>
-<wire x1="-41.91" y1="99.06" x2="-54.61" y2="99.06" width="0.1524" layer="91"/>
-<wire x1="-54.61" y1="99.06" x2="-69.85" y2="99.06" width="0.1524" layer="91"/>
-<wire x1="-54.61" y1="104.14" x2="-54.61" y2="99.06" width="0.1524" layer="91"/>
-<junction x="-54.61" y="99.06"/>
+<wire x1="-41.91" y1="99.06" x2="-69.85" y2="99.06" width="0.1524" layer="91"/>
 <label x="-41.91" y="99.06" size="1.778" layer="95"/>
 <pinref part="SV301" gate="G$1" pin="2"/>
-<pinref part="R321" gate="G$1" pin="1"/>
 </segment>
 <segment>
 <pinref part="IC2" gate="G$1" pin="PA15/JTDI/TIM2_CH1/SPI1_NSS"/>
 <wire x1="30.48" y1="58.42" x2="22.86" y2="58.42" width="0.1524" layer="91"/>
 <label x="11.43" y="58.42" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="N$61" class="0">
+<segment>
+<pinref part="IC2" gate="G$1" pin="OSC_OUT_PD1"/>
+<pinref part="R6" gate="G$1" pin="2"/>
+<wire x1="25.4" y1="40.64" x2="30.48" y2="40.64" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$62" class="0">
+<segment>
+<pinref part="R6" gate="G$1" pin="1"/>
+<wire x1="15.24" y1="40.64" x2="12.7" y2="40.64" width="0.1524" layer="91"/>
+<wire x1="12.7" y1="40.64" x2="12.7" y2="30.48" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>
