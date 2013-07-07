@@ -412,8 +412,8 @@ UsedLibrary="STM32-PROX.lbr"
 
 [Win_1]
 Type="Control Panel"
-Loc="0 0 1263 1521"
-State=2
+Loc="0 654 1263 1521"
+State=1
 Number=0
 
 [Desktop]
