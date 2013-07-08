@@ -10243,6 +10243,7 @@ This is the "EZ" version, which has limited top masking for improved ease of ass
 <junction x="71.12" y="5.08"/>
 <wire x1="71.12" y1="5.08" x2="66.04" y2="5.08" width="0.1524" layer="91"/>
 <pinref part="IC105" gate="G$1" pin="EN"/>
+<junction x="66.04" y="5.08"/>
 </segment>
 </net>
 </nets>
