@@ -1648,21 +1648,6 @@ DIN A4, landscape with location and doc. field</description>
 <pin name="S" x="2.54" y="0" visible="off" length="short" direction="pas"/>
 <pin name="D" x="2.54" y="2.54" visible="off" length="short" direction="pas"/>
 </symbol>
-<symbol name="LP2989-LDO">
-<wire x1="0" y1="2.54" x2="-22.86" y2="2.54" width="0.254" layer="94"/>
-<wire x1="-22.86" y1="2.54" x2="-22.86" y2="-15.24" width="0.254" layer="94"/>
-<wire x1="-22.86" y1="-15.24" x2="0" y2="-15.24" width="0.254" layer="94"/>
-<wire x1="0" y1="-15.24" x2="0" y2="2.54" width="0.254" layer="94"/>
-<text x="-22.098" y="3.048" size="1.778" layer="95">&gt;NAME</text>
-<text x="-0.508" y="-15.748" size="1.778" layer="95" rot="R180">&gt;VALUE</text>
-<pin name="OUT" x="5.08" y="0" length="middle" direction="pas" rot="R180"/>
-<pin name="/ERROR" x="5.08" y="-10.16" length="middle" direction="pas" rot="R180"/>
-<pin name="SENSE" x="5.08" y="-2.54" length="middle" direction="pas" rot="R180"/>
-<pin name="IN" x="-27.94" y="0" length="middle" direction="pas"/>
-<pin name="GND" x="-27.94" y="-12.7" length="middle" direction="pas"/>
-<pin name="/SHDN" x="-27.94" y="-5.08" length="middle" direction="pas"/>
-<pin name="BYP" x="-27.94" y="-10.16" length="middle" direction="pas"/>
-</symbol>
 <symbol name="DUAL-TVS-COMMON-ANODE">
 <wire x1="-3.81" y1="5.08" x2="-2.54" y2="5.08" width="0.1524" layer="94"/>
 <wire x1="-2.54" y1="5.08" x2="-1.27" y2="5.08" width="0.1524" layer="94"/>
@@ -2256,27 +2241,6 @@ DIN A4, landscape with location and doc. field</description>
 <connect gate="P" pin="D" pad="6"/>
 <connect gate="P" pin="G" pad="4"/>
 <connect gate="P" pin="S" pad="3"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-<deviceset name="LP2989-LDO" prefix="IC" uservalue="yes">
-<gates>
-<gate name="G$1" symbol="LP2989-LDO" x="0" y="-2.54"/>
-</gates>
-<devices>
-<device name="SOIC" package="SOIC-8">
-<connects>
-<connect gate="G$1" pin="/ERROR" pad="7"/>
-<connect gate="G$1" pin="/SHDN" pad="8"/>
-<connect gate="G$1" pin="BYP" pad="1"/>
-<connect gate="G$1" pin="GND" pad="3"/>
-<connect gate="G$1" pin="IN" pad="4"/>
-<connect gate="G$1" pin="OUT" pad="5"/>
-<connect gate="G$1" pin="SENSE" pad="6"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -8925,9 +8889,6 @@ This is the "EZ" version, which has limited top masking for improved ease of ass
 <attribute name="PARTNO" value="*"/>
 </part>
 <part name="V32" library="supply2" deviceset="GND" device=""/>
-<part name="IC12" library="  merged" deviceset="LP2989-LDO" device="SOIC" value="LP2989AIM-2.5">
-<attribute name="PARTNO" value="LP2989AIM-2.5"/>
-</part>
 <part name="V35" library="supply2" deviceset="GND" device=""/>
 <part name="R23" library="  merged" deviceset="RESISTOR" device="0603" value="1k">
 <attribute name="PARTNO" value="*"/>
@@ -9124,6 +9085,7 @@ This is the "EZ" version, which has limited top masking for improved ease of ass
 <part name="IC106" library="proxmark" deviceset="TPS799*" device="" technology="12" value="MCP1824T-120"/>
 <part name="V76" library="proxmark" deviceset="AGND" device=""/>
 <part name="VDD12" library="supply1" deviceset="VDD" device=""/>
+<part name="IC105" library="proxmark" deviceset="TPS799*" device="" technology="25" value="MCP1824T-250"/>
 </parts>
 <sheets>
 <sheet>
@@ -9731,10 +9693,7 @@ This is the "EZ" version, which has limited top masking for improved ease of ass
 <attribute name="PARTNO" x="160.02" y="91.44" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="V32" gate="GND" x="170.18" y="81.28"/>
-<instance part="IC12" gate="G$1" x="124.46" y="10.16">
-<attribute name="PARTNO" x="124.46" y="10.16" size="1.778" layer="96" display="off"/>
-</instance>
-<instance part="V35" gate="GND" x="93.98" y="-7.62" rot="MR0"/>
+<instance part="V35" gate="GND" x="96.52" y="-2.54" rot="MR0"/>
 <instance part="R23" gate="G$1" x="78.74" y="-2.54" rot="R90">
 <attribute name="PARTNO" x="78.74" y="-2.54" size="1.778" layer="96" display="off"/>
 </instance>
@@ -9810,6 +9769,7 @@ This is the "EZ" version, which has limited top masking for improved ease of ass
 <instance part="IC106" gate="G$1" x="101.6" y="-25.4"/>
 <instance part="V76" gate="GND" x="93.98" y="-43.18" rot="MR0"/>
 <instance part="VDD12" gate="G$1" x="86.36" y="-5.08" rot="MR0"/>
+<instance part="IC105" gate="G$1" x="104.14" y="2.54"/>
 </instances>
 <busses>
 </busses>
@@ -9875,10 +9835,10 @@ This is the "EZ" version, which has limited top masking for improved ease of ass
 <pinref part="C33" gate="G$1" pin="2"/>
 </segment>
 <segment>
-<wire x1="96.52" y1="-2.54" x2="93.98" y2="-2.54" width="0.1524" layer="91"/>
-<wire x1="93.98" y1="-2.54" x2="93.98" y2="-5.08" width="0.1524" layer="91"/>
-<pinref part="IC12" gate="G$1" pin="GND"/>
+<wire x1="96.52" y1="7.62" x2="96.52" y2="0" width="0.1524" layer="91"/>
 <pinref part="V35" gate="GND" pin="GND"/>
+<pinref part="IC105" gate="G$1" pin="GND"/>
+<wire x1="96.52" y1="7.62" x2="101.6" y2="7.62" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <wire x1="78.74" y1="-10.16" x2="78.74" y2="-7.62" width="0.1524" layer="91"/>
@@ -10099,7 +10059,6 @@ This is the "EZ" version, which has limited top masking for improved ease of ass
 <wire x1="88.9" y1="30.48" x2="88.9" y2="33.02" width="0.1524" layer="91"/>
 <wire x1="88.9" y1="33.02" x2="88.9" y2="38.1" width="0.1524" layer="91"/>
 <wire x1="99.06" y1="30.48" x2="88.9" y2="30.48" width="0.1524" layer="91"/>
-<wire x1="96.52" y1="10.16" x2="88.9" y2="10.16" width="0.1524" layer="91"/>
 <wire x1="88.9" y1="10.16" x2="88.9" y2="30.48" width="0.1524" layer="91"/>
 <wire x1="73.66" y1="33.02" x2="78.74" y2="33.02" width="0.1524" layer="91"/>
 <wire x1="78.74" y1="33.02" x2="88.9" y2="33.02" width="0.1524" layer="91"/>
@@ -10110,9 +10069,10 @@ This is the "EZ" version, which has limited top masking for improved ease of ass
 <junction x="78.74" y="33.02"/>
 <pinref part="VDD1" gate="G$1" pin="VDD"/>
 <pinref part="IC13" gate="G$1" pin="VIN"/>
-<pinref part="IC12" gate="G$1" pin="IN"/>
 <pinref part="Q2" gate="P" pin="D"/>
 <pinref part="R58" gate="G$1" pin="1"/>
+<pinref part="IC105" gate="G$1" pin="VIN"/>
+<wire x1="101.6" y1="10.16" x2="88.9" y2="10.16" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <wire x1="99.06" y1="-17.78" x2="86.36" y2="-17.78" width="0.1524" layer="91"/>
@@ -10141,14 +10101,10 @@ This is the "EZ" version, which has limited top masking for improved ease of ass
 <pinref part="C33" gate="G$1" pin="1"/>
 </segment>
 <segment>
-<wire x1="129.54" y1="7.62" x2="137.16" y2="7.62" width="0.1524" layer="91"/>
-<wire x1="137.16" y1="7.62" x2="137.16" y2="10.16" width="0.1524" layer="91"/>
 <wire x1="137.16" y1="10.16" x2="137.16" y2="12.7" width="0.1524" layer="91"/>
-<wire x1="129.54" y1="10.16" x2="137.16" y2="10.16" width="0.1524" layer="91"/>
-<junction x="137.16" y="10.16"/>
-<pinref part="IC12" gate="G$1" pin="SENSE"/>
+<wire x1="124.46" y1="10.16" x2="137.16" y2="10.16" width="0.1524" layer="91"/>
 <pinref part="V37" gate="G$1" pin="+2V5"/>
-<pinref part="IC12" gate="G$1" pin="OUT"/>
+<pinref part="IC105" gate="G$1" pin="VOUT"/>
 </segment>
 </net>
 <net name="+3V3-FPGA" class="0">
@@ -10255,18 +10211,9 @@ This is the "EZ" version, which has limited top masking for improved ease of ass
 <pinref part="C206" gate="G$1" pin="1"/>
 </segment>
 <segment>
-<wire x1="121.92" y1="-17.78" x2="127" y2="-17.78" width="0.1524" layer="91"/>
-<wire x1="124.46" y1="-12.7" x2="127" y2="-12.7" width="0.1524" layer="91"/>
-<wire x1="127" y1="-12.7" x2="129.54" y2="-12.7" width="0.1524" layer="91"/>
-<wire x1="127" y1="-17.78" x2="127" y2="-12.7" width="0.1524" layer="91"/>
-<junction x="127" y="-12.7"/>
+<wire x1="121.92" y1="-17.78" x2="132.08" y2="-17.78" width="0.1524" layer="91"/>
 <pinref part="IC106" gate="G$1" pin="VOUT"/>
-<label x="129.54" y="-12.7" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="+2V1" class="0">
-<segment>
-<wire x1="0" y1="-15.24" x2="2.54" y2="-15.24" width="0.1524" layer="91"/>
+<label x="132.08" y="-17.78" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="FPGA_ON" class="0">
@@ -10284,7 +10231,7 @@ This is the "EZ" version, which has limited top masking for improved ease of ass
 <wire x1="99.06" y1="25.4" x2="81.28" y2="25.4" width="0.1524" layer="91"/>
 <wire x1="78.74" y1="2.54" x2="78.74" y2="5.08" width="0.1524" layer="91"/>
 <wire x1="78.74" y1="5.08" x2="81.28" y2="5.08" width="0.1524" layer="91"/>
-<wire x1="81.28" y1="5.08" x2="96.52" y2="5.08" width="0.1524" layer="91"/>
+<wire x1="81.28" y1="5.08" x2="101.6" y2="5.08" width="0.1524" layer="91"/>
 <wire x1="71.12" y1="5.08" x2="78.74" y2="5.08" width="0.1524" layer="91"/>
 <wire x1="81.28" y1="25.4" x2="81.28" y2="5.08" width="0.1524" layer="91"/>
 <junction x="78.74" y="5.08"/>
@@ -10292,10 +10239,10 @@ This is the "EZ" version, which has limited top masking for improved ease of ass
 <label x="66.04" y="5.08" size="1.778" layer="95" rot="MR0"/>
 <pinref part="IC13" gate="G$1" pin="VC"/>
 <pinref part="R23" gate="G$1" pin="2"/>
-<pinref part="IC12" gate="G$1" pin="/SHDN"/>
 <wire x1="71.12" y1="-22.86" x2="71.12" y2="5.08" width="0.1524" layer="91"/>
 <junction x="71.12" y="5.08"/>
 <wire x1="71.12" y1="5.08" x2="66.04" y2="5.08" width="0.1524" layer="91"/>
+<pinref part="IC105" gate="G$1" pin="EN"/>
 </segment>
 </net>
 </nets>
