@@ -2402,7 +2402,7 @@ design rules under a new name.</description>
 <via x="-22.8473" y="18.3896" extent="1-16" drill="0.3048"/>
 <via x="-11.3919" y="12.827" extent="1-16" drill="0.3048"/>
 <via x="-11.8999" y="8.0772" extent="1-16" drill="0.3048"/>
-<via x="-12.4079" y="3.6576" extent="1-16" drill="0.3048"/>
+<via x="-12.2809" y="5.5118" extent="1-16" drill="0.3048"/>
 <via x="-15.0368" y="5.9055" extent="1-16" drill="0.3048"/>
 <via x="-10.6045" y="9.7028" extent="1-16" drill="0.3048"/>
 <via x="-9.1567" y="-9.8679" extent="1-16" drill="0.3048"/>
