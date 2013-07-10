@@ -6,36 +6,36 @@
 <setting alwaysvectorfont="yes"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="yes" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
-<layer number="1" name="Top" color="4" fill="1" visible="yes" active="no"/>
-<layer number="2" name="Route2" color="1" fill="3" visible="yes" active="no"/>
-<layer number="3" name="Route3" color="4" fill="3" visible="yes" active="no"/>
-<layer number="4" name="Route4" color="1" fill="4" visible="yes" active="no"/>
-<layer number="5" name="Route5" color="4" fill="4" visible="yes" active="no"/>
-<layer number="6" name="Route6" color="1" fill="8" visible="yes" active="no"/>
-<layer number="7" name="Route7" color="4" fill="8" visible="yes" active="no"/>
-<layer number="8" name="Route8" color="1" fill="2" visible="yes" active="no"/>
-<layer number="9" name="Route9" color="4" fill="2" visible="yes" active="no"/>
-<layer number="10" name="Route10" color="1" fill="7" visible="yes" active="no"/>
-<layer number="11" name="Route11" color="4" fill="7" visible="yes" active="no"/>
-<layer number="12" name="Route12" color="1" fill="5" visible="yes" active="no"/>
-<layer number="13" name="Route13" color="4" fill="5" visible="yes" active="no"/>
-<layer number="14" name="Route14" color="1" fill="6" visible="yes" active="no"/>
-<layer number="15" name="Route15" color="4" fill="6" visible="yes" active="no"/>
-<layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="no"/>
-<layer number="17" name="Pads" color="2" fill="1" visible="yes" active="no"/>
-<layer number="18" name="Vias" color="2" fill="1" visible="yes" active="no"/>
-<layer number="19" name="Unrouted" color="6" fill="1" visible="yes" active="no"/>
-<layer number="20" name="Dimension" color="15" fill="1" visible="yes" active="no"/>
-<layer number="21" name="tPlace" color="7" fill="1" visible="yes" active="no"/>
-<layer number="22" name="bPlace" color="7" fill="1" visible="yes" active="no"/>
-<layer number="23" name="tOrigins" color="15" fill="1" visible="yes" active="no"/>
-<layer number="24" name="bOrigins" color="15" fill="1" visible="yes" active="no"/>
-<layer number="25" name="tNames" color="7" fill="1" visible="yes" active="no"/>
-<layer number="26" name="bNames" color="7" fill="1" visible="yes" active="no"/>
-<layer number="27" name="tValues" color="7" fill="1" visible="yes" active="no"/>
-<layer number="28" name="bValues" color="7" fill="1" visible="yes" active="no"/>
+<layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
+<layer number="2" name="Route2" color="1" fill="3" visible="no" active="no"/>
+<layer number="3" name="Route3" color="4" fill="3" visible="no" active="no"/>
+<layer number="4" name="Route4" color="1" fill="4" visible="no" active="no"/>
+<layer number="5" name="Route5" color="4" fill="4" visible="no" active="no"/>
+<layer number="6" name="Route6" color="1" fill="8" visible="no" active="no"/>
+<layer number="7" name="Route7" color="4" fill="8" visible="no" active="no"/>
+<layer number="8" name="Route8" color="1" fill="2" visible="no" active="no"/>
+<layer number="9" name="Route9" color="4" fill="2" visible="no" active="no"/>
+<layer number="10" name="Route10" color="1" fill="7" visible="no" active="no"/>
+<layer number="11" name="Route11" color="4" fill="7" visible="no" active="no"/>
+<layer number="12" name="Route12" color="1" fill="5" visible="no" active="no"/>
+<layer number="13" name="Route13" color="4" fill="5" visible="no" active="no"/>
+<layer number="14" name="Route14" color="1" fill="6" visible="no" active="no"/>
+<layer number="15" name="Route15" color="4" fill="6" visible="no" active="no"/>
+<layer number="16" name="Bottom" color="1" fill="1" visible="no" active="no"/>
+<layer number="17" name="Pads" color="2" fill="1" visible="no" active="no"/>
+<layer number="18" name="Vias" color="2" fill="1" visible="no" active="no"/>
+<layer number="19" name="Unrouted" color="6" fill="1" visible="no" active="no"/>
+<layer number="20" name="Dimension" color="15" fill="1" visible="no" active="no"/>
+<layer number="21" name="tPlace" color="7" fill="1" visible="no" active="no"/>
+<layer number="22" name="bPlace" color="7" fill="1" visible="no" active="no"/>
+<layer number="23" name="tOrigins" color="15" fill="1" visible="no" active="no"/>
+<layer number="24" name="bOrigins" color="15" fill="1" visible="no" active="no"/>
+<layer number="25" name="tNames" color="7" fill="1" visible="no" active="no"/>
+<layer number="26" name="bNames" color="7" fill="1" visible="no" active="no"/>
+<layer number="27" name="tValues" color="7" fill="1" visible="no" active="no"/>
+<layer number="28" name="bValues" color="7" fill="1" visible="no" active="no"/>
 <layer number="29" name="tStop" color="7" fill="3" visible="no" active="no"/>
 <layer number="30" name="bStop" color="7" fill="6" visible="no" active="no"/>
 <layer number="31" name="tCream" color="7" fill="4" visible="no" active="no"/>
@@ -44,8 +44,8 @@
 <layer number="34" name="bFinish" color="6" fill="6" visible="no" active="no"/>
 <layer number="35" name="tGlue" color="7" fill="4" visible="no" active="no"/>
 <layer number="36" name="bGlue" color="7" fill="5" visible="no" active="no"/>
-<layer number="37" name="tTest" color="7" fill="1" visible="yes" active="no"/>
-<layer number="38" name="bTest" color="7" fill="1" visible="yes" active="no"/>
+<layer number="37" name="tTest" color="7" fill="1" visible="no" active="no"/>
+<layer number="38" name="bTest" color="7" fill="1" visible="no" active="no"/>
 <layer number="39" name="tKeepout" color="4" fill="11" visible="no" active="no"/>
 <layer number="40" name="bKeepout" color="1" fill="11" visible="no" active="no"/>
 <layer number="41" name="tRestrict" color="4" fill="10" visible="no" active="no"/>
@@ -53,16 +53,16 @@
 <layer number="43" name="vRestrict" color="2" fill="10" visible="no" active="no"/>
 <layer number="44" name="Drills" color="7" fill="1" visible="no" active="no"/>
 <layer number="45" name="Holes" color="7" fill="1" visible="no" active="no"/>
-<layer number="46" name="Milling" color="3" fill="1" visible="yes" active="no"/>
-<layer number="47" name="Measures" color="7" fill="1" visible="yes" active="no"/>
-<layer number="48" name="Document" color="7" fill="1" visible="yes" active="no"/>
-<layer number="49" name="Reference" color="7" fill="1" visible="yes" active="no"/>
-<layer number="50" name="dxf" color="7" fill="1" visible="yes" active="no"/>
-<layer number="51" name="tDocu" color="7" fill="1" visible="yes" active="no"/>
-<layer number="52" name="bDocu" color="7" fill="1" visible="yes" active="no"/>
-<layer number="53" name="tGND_GNDA" color="7" fill="1" visible="yes" active="no"/>
-<layer number="54" name="bGND_GNDA" color="7" fill="1" visible="yes" active="no"/>
-<layer number="56" name="wert" color="7" fill="1" visible="yes" active="no"/>
+<layer number="46" name="Milling" color="3" fill="1" visible="no" active="no"/>
+<layer number="47" name="Measures" color="7" fill="1" visible="no" active="no"/>
+<layer number="48" name="Document" color="7" fill="1" visible="no" active="no"/>
+<layer number="49" name="Reference" color="7" fill="1" visible="no" active="no"/>
+<layer number="50" name="dxf" color="7" fill="1" visible="no" active="no"/>
+<layer number="51" name="tDocu" color="7" fill="1" visible="no" active="no"/>
+<layer number="52" name="bDocu" color="7" fill="1" visible="no" active="no"/>
+<layer number="53" name="tGND_GNDA" color="7" fill="1" visible="no" active="no"/>
+<layer number="54" name="bGND_GNDA" color="7" fill="1" visible="no" active="no"/>
+<layer number="56" name="wert" color="7" fill="1" visible="no" active="no"/>
 <layer number="91" name="Nets" color="2" fill="1" visible="yes" active="yes"/>
 <layer number="92" name="Busses" color="1" fill="1" visible="yes" active="yes"/>
 <layer number="93" name="Pins" color="2" fill="1" visible="no" active="yes"/>
@@ -15844,20 +15844,6 @@ This is the "EZ" version, which has limited top masking for improved ease of ass
 <label x="-4.826" y="141.732" size="1.778" layer="95" rot="R90"/>
 </segment>
 </net>
-<net name="MISO" class="0">
-<segment>
-<pinref part="U2" gate="G$1" pin="L21N_2"/>
-<wire x1="41.91" y1="92.71" x2="56.134" y2="92.71" width="0.1524" layer="91"/>
-<label x="56.134" y="93.472" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="MOSI" class="0">
-<segment>
-<pinref part="U2" gate="G$1" pin="L21P_2"/>
-<wire x1="41.91" y1="90.17" x2="56.134" y2="90.17" width="0.1524" layer="91"/>
-<label x="56.134" y="90.932" size="1.778" layer="95"/>
-</segment>
-</net>
 <net name="NCS" class="0">
 <segment>
 <pinref part="U2" gate="G$1" pin="L32N_4/GCLK1"/>
@@ -16155,8 +16141,8 @@ This is the "EZ" version, which has limited top masking for improved ease of ass
 </segment>
 <segment>
 <pinref part="U2" gate="G$1" pin="L01N_6/VRP_6"/>
-<wire x1="-69.85" y1="52.07" x2="-93.726" y2="52.07" width="0.1524" layer="91"/>
-<label x="-93.726" y="52.832" size="1.778" layer="95"/>
+<wire x1="-69.85" y1="52.07" x2="-93.98" y2="52.07" width="0.1524" layer="91"/>
+<label x="-93.98" y="52.07" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="ADC8" class="1">
@@ -16168,8 +16154,8 @@ This is the "EZ" version, which has limited top masking for improved ease of ass
 </segment>
 <segment>
 <pinref part="U2" gate="G$1" pin="L01P_6/VRN_6"/>
-<wire x1="-69.85" y1="54.61" x2="-92.71" y2="54.61" width="0.1524" layer="91"/>
-<label x="-93.726" y="55.372" size="1.778" layer="95"/>
+<wire x1="-69.85" y1="54.61" x2="-93.98" y2="54.61" width="0.1524" layer="91"/>
+<label x="-93.98" y="54.61" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="ADC_NOE" class="0">
@@ -16183,9 +16169,9 @@ This is the "EZ" version, which has limited top masking for improved ease of ass
 <pinref part="R47" gate="G$1" pin="2"/>
 </segment>
 <segment>
-<pinref part="U2" gate="G$1" pin="L21N_7"/>
-<wire x1="-69.85" y1="90.17" x2="-92.71" y2="90.17" width="0.1524" layer="91"/>
-<label x="-93.726" y="90.932" size="1.778" layer="95"/>
+<pinref part="U2" gate="G$1" pin="IO1_3"/>
+<wire x1="41.91" y1="59.69" x2="60.96" y2="59.69" width="0.1524" layer="91"/>
+<label x="56.642" y="59.69" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="ADC_CLK" class="1">
@@ -16195,23 +16181,9 @@ This is the "EZ" version, which has limited top masking for improved ease of ass
 <pinref part="IC8" gate="G$1" pin="CLK"/>
 </segment>
 <segment>
-<pinref part="U2" gate="G$1" pin="L21P_7"/>
-<wire x1="-69.85" y1="92.71" x2="-92.71" y2="92.71" width="0.1524" layer="91"/>
-<label x="-93.726" y="93.472" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="SSP_DIN" class="0">
-<segment>
-<pinref part="U2" gate="G$1" pin="L24N_3"/>
-<wire x1="41.91" y1="64.77" x2="56.134" y2="64.77" width="0.1524" layer="91"/>
-<label x="56.134" y="65.532" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="SSP_DOUT" class="0">
-<segment>
-<pinref part="U2" gate="G$1" pin="L24P_3"/>
-<wire x1="41.91" y1="62.23" x2="56.134" y2="62.23" width="0.1524" layer="91"/>
-<label x="56.134" y="62.992" size="1.778" layer="95"/>
+<pinref part="U2" gate="G$1" pin="IO0_3"/>
+<wire x1="41.91" y1="57.15" x2="60.96" y2="57.15" width="0.1524" layer="91"/>
+<label x="56.642" y="57.15" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="ADC_IN" class="0">
@@ -16219,41 +16191,6 @@ This is the "EZ" version, which has limited top masking for improved ease of ass
 <wire x1="147.32" y1="59.69" x2="144.78" y2="59.69" width="0.1524" layer="91"/>
 <label x="147.32" y="59.69" size="1.778" layer="95"/>
 <pinref part="IC8" gate="G$1" pin="ANALOGIN"/>
-</segment>
-</net>
-<net name="PWR_HI" class="0">
-<segment>
-<pinref part="U2" gate="G$1" pin="L23P_7"/>
-<wire x1="-69.85" y1="87.63" x2="-92.71" y2="87.63" width="0.1524" layer="91"/>
-<label x="-93.726" y="88.392" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="PWR_LO" class="0">
-<segment>
-<pinref part="U2" gate="G$1" pin="L23N_7"/>
-<wire x1="-69.85" y1="85.09" x2="-92.71" y2="85.09" width="0.1524" layer="91"/>
-<label x="-93.726" y="85.852" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="PWR_OE1" class="0">
-<segment>
-<pinref part="U2" gate="G$1" pin="L40N_6"/>
-<wire x1="-69.85" y1="67.31" x2="-92.71" y2="67.31" width="0.1524" layer="91"/>
-<label x="-93.726" y="68.072" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="PWR_OE2" class="0">
-<segment>
-<pinref part="U2" gate="G$1" pin="L24P_6"/>
-<wire x1="-69.85" y1="64.77" x2="-93.726" y2="64.77" width="0.1524" layer="91"/>
-<label x="-93.726" y="65.532" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="SSP_FRAME" class="0">
-<segment>
-<pinref part="U2" gate="G$1" pin="IO1_3"/>
-<wire x1="41.91" y1="59.69" x2="56.134" y2="59.69" width="0.1524" layer="91"/>
-<label x="56.134" y="60.452" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="N$27" class="0">
@@ -16284,28 +16221,6 @@ This is the "EZ" version, which has limited top masking for improved ease of ass
 <pinref part="R44" gate="G$1" pin="1"/>
 </segment>
 </net>
-<net name="PWR_OE3" class="0">
-<segment>
-<pinref part="U2" gate="G$1" pin="IO0_6"/>
-<wire x1="-69.85" y1="59.69" x2="-92.71" y2="59.69" width="0.1524" layer="91"/>
-<label x="-93.726" y="60.452" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="PWR_OE4" class="0">
-<segment>
-<pinref part="U2" gate="G$1" pin="IO1_6"/>
-<wire x1="-69.85" y1="57.15" x2="-92.71" y2="57.15" width="0.1524" layer="91"/>
-<label x="-93.726" y="57.912" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="N$55" class="0">
-<segment>
-<pinref part="U2" gate="G$1" pin="L24P_2"/>
-<pinref part="TP7" gate="G$1" pin="P$1"/>
-<wire x1="41.91" y1="85.09" x2="71.12" y2="85.09" width="0.1524" layer="91"/>
-<wire x1="71.12" y1="85.09" x2="71.12" y2="88.9" width="0.1524" layer="91"/>
-</segment>
-</net>
 <net name="N$48" class="0">
 <segment>
 <wire x1="167.64" y1="52.07" x2="167.64" y2="49.53" width="0.1524" layer="91"/>
@@ -16319,13 +16234,6 @@ This is the "EZ" version, which has limited top masking for improved ease of ass
 <pinref part="R53" gate="G$1" pin="2"/>
 <pinref part="IC8" gate="G$1" pin="REFT"/>
 <pinref part="C19" gate="G$1" pin="1"/>
-</segment>
-</net>
-<net name="SSP_CLK" class="0">
-<segment>
-<pinref part="U2" gate="G$1" pin="L40P_3"/>
-<wire x1="41.91" y1="67.31" x2="56.134" y2="67.31" width="0.1524" layer="91"/>
-<label x="56.134" y="68.072" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="PCK0" class="0">
@@ -16384,13 +16292,6 @@ This is the "EZ" version, which has limited top masking for improved ease of ass
 <label x="0.254" y="4.572" size="1.778" layer="95" rot="R90"/>
 </segment>
 </net>
-<net name="UART_IO2" class="0">
-<segment>
-<pinref part="U2" gate="G$1" pin="IO0_3"/>
-<wire x1="41.91" y1="57.15" x2="55.88" y2="57.15" width="0.1524" layer="91"/>
-<label x="56.134" y="57.912" size="1.778" layer="95"/>
-</segment>
-</net>
 <net name="1356_CRYSTAL" class="0">
 <segment>
 <pinref part="U2" gate="G$1" pin="L32P_0/GCLK6"/>
@@ -16419,6 +16320,106 @@ This is the "EZ" version, which has limited top masking for improved ease of ass
 <pinref part="U2" gate="G$1" pin="L32N_0/GCLK7"/>
 <wire x1="-26.67" y1="130.81" x2="-26.67" y2="138.43" width="0.1524" layer="91"/>
 <label x="-27.686" y="136.652" size="1.778" layer="95" rot="R90"/>
+</segment>
+</net>
+<net name="DBG" class="0">
+<segment>
+<pinref part="U2" gate="G$1" pin="L40N_2"/>
+<pinref part="TP7" gate="G$1" pin="P$1"/>
+<wire x1="41.91" y1="82.55" x2="71.12" y2="82.55" width="0.1524" layer="91"/>
+<wire x1="71.12" y1="82.55" x2="71.12" y2="88.9" width="0.1524" layer="91"/>
+<label x="71.12" y="83.82" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="MISO" class="0">
+<segment>
+<pinref part="U2" gate="G$1" pin="L24P_6"/>
+<wire x1="-69.85" y1="64.77" x2="-93.726" y2="64.77" width="0.1524" layer="91"/>
+<label x="-93.726" y="64.77" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="MOSI" class="0">
+<segment>
+<pinref part="U2" gate="G$1" pin="L40N_6"/>
+<wire x1="-69.85" y1="67.31" x2="-93.726" y2="67.31" width="0.1524" layer="91"/>
+<label x="-93.726" y="67.31" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="PWR_HI" class="0">
+<segment>
+<pinref part="U2" gate="G$1" pin="L24N_3"/>
+<wire x1="41.91" y1="64.77" x2="60.96" y2="64.77" width="0.1524" layer="91"/>
+<label x="56.642" y="64.77" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="PWR_LO" class="0">
+<segment>
+<pinref part="U2" gate="G$1" pin="L40P_3"/>
+<wire x1="41.91" y1="67.31" x2="60.96" y2="67.31" width="0.1524" layer="91"/>
+<label x="56.642" y="67.31" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="PWR_OE1" class="0">
+<segment>
+<pinref part="U2" gate="G$1" pin="L24P_2"/>
+<wire x1="41.91" y1="85.09" x2="60.96" y2="85.09" width="0.1524" layer="91"/>
+<label x="56.642" y="85.09" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="PWR_OE2" class="0">
+<segment>
+<pinref part="U2" gate="G$1" pin="L24N_2"/>
+<wire x1="41.91" y1="87.63" x2="60.96" y2="87.63" width="0.1524" layer="91"/>
+<label x="56.642" y="87.63" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="PWR_OE3" class="0">
+<segment>
+<pinref part="U2" gate="G$1" pin="L21P_2"/>
+<wire x1="41.91" y1="90.17" x2="60.96" y2="90.17" width="0.1524" layer="91"/>
+<label x="56.642" y="90.17" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="PWR_OE4" class="0">
+<segment>
+<pinref part="U2" gate="G$1" pin="L21N_2"/>
+<wire x1="41.91" y1="92.71" x2="60.96" y2="92.71" width="0.1524" layer="91"/>
+<label x="56.642" y="92.71" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="SSP_CLK" class="0">
+<segment>
+<pinref part="U2" gate="G$1" pin="L23N_7"/>
+<wire x1="-69.85" y1="85.09" x2="-93.98" y2="85.09" width="0.1524" layer="91"/>
+<label x="-93.98" y="85.09" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="SSP_DIN" class="0">
+<segment>
+<pinref part="U2" gate="G$1" pin="L23P_7"/>
+<wire x1="-69.85" y1="87.63" x2="-93.98" y2="87.63" width="0.1524" layer="91"/>
+<label x="-93.98" y="87.63" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="SSP_DOUT" class="0">
+<segment>
+<pinref part="U2" gate="G$1" pin="L21N_7"/>
+<wire x1="-69.85" y1="90.17" x2="-93.98" y2="90.17" width="0.1524" layer="91"/>
+<label x="-93.98" y="90.17" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="SSP_FRAME" class="0">
+<segment>
+<pinref part="U2" gate="G$1" pin="L21P_7"/>
+<wire x1="-69.85" y1="92.71" x2="-93.98" y2="92.71" width="0.1524" layer="91"/>
+<label x="-93.98" y="92.71" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="UART_IO2" class="0">
+<segment>
+<pinref part="U2" gate="G$1" pin="IO1_6"/>
+<wire x1="-69.85" y1="57.15" x2="-93.98" y2="57.15" width="0.1524" layer="91"/>
+<label x="-93.98" y="57.15" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>
