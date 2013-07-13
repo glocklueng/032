@@ -412,12 +412,6 @@ UsedLibrary="C:/eagle/lbr/zilog.lbr"
 UsedLibrary="STM32-PROX.lbr"
 
 [Win_1]
-Type="Control Panel"
-Loc="-1290 160 -332 1281"
-State=0
-Number=0
-
-[Win_2]
 Type="Schematic Editor"
 Loc="972 581 1571 980"
 State=1
@@ -464,6 +458,12 @@ PadsSameType=0
 Layer=91
 Views=" 1: -83.3218 -49.0698 124.112 94.303"
 Sheet=1
+
+[Win_2]
+Type="Control Panel"
+Loc="581 225 1539 1346"
+State=2
+Number=0
 
 [Desktop]
 Screen="6400 1600"
