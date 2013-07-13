@@ -8,34 +8,34 @@
 </settings>
 <grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
-<layer number="1" name="Top" color="4" fill="1" visible="yes" active="no"/>
-<layer number="2" name="Route2" color="1" fill="3" visible="yes" active="no"/>
-<layer number="3" name="Route3" color="4" fill="3" visible="yes" active="no"/>
-<layer number="4" name="Route4" color="1" fill="4" visible="yes" active="no"/>
-<layer number="5" name="Route5" color="4" fill="4" visible="yes" active="no"/>
-<layer number="6" name="Route6" color="1" fill="8" visible="yes" active="no"/>
-<layer number="7" name="Route7" color="4" fill="8" visible="yes" active="no"/>
-<layer number="8" name="Route8" color="1" fill="2" visible="yes" active="no"/>
-<layer number="9" name="Route9" color="4" fill="2" visible="yes" active="no"/>
-<layer number="10" name="Route10" color="1" fill="7" visible="yes" active="no"/>
-<layer number="11" name="Route11" color="4" fill="7" visible="yes" active="no"/>
-<layer number="12" name="Route12" color="1" fill="5" visible="yes" active="no"/>
-<layer number="13" name="Route13" color="4" fill="5" visible="yes" active="no"/>
-<layer number="14" name="Route14" color="1" fill="6" visible="yes" active="no"/>
-<layer number="15" name="Route15" color="4" fill="6" visible="yes" active="no"/>
-<layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="no"/>
-<layer number="17" name="Pads" color="2" fill="1" visible="yes" active="no"/>
-<layer number="18" name="Vias" color="2" fill="1" visible="yes" active="no"/>
-<layer number="19" name="Unrouted" color="6" fill="1" visible="yes" active="no"/>
-<layer number="20" name="Dimension" color="15" fill="1" visible="yes" active="no"/>
-<layer number="21" name="tPlace" color="7" fill="1" visible="yes" active="no"/>
-<layer number="22" name="bPlace" color="7" fill="1" visible="yes" active="no"/>
-<layer number="23" name="tOrigins" color="15" fill="1" visible="yes" active="no"/>
-<layer number="24" name="bOrigins" color="15" fill="1" visible="yes" active="no"/>
-<layer number="25" name="tNames" color="7" fill="1" visible="yes" active="no"/>
-<layer number="26" name="bNames" color="7" fill="1" visible="yes" active="no"/>
-<layer number="27" name="tValues" color="7" fill="1" visible="yes" active="no"/>
-<layer number="28" name="bValues" color="7" fill="1" visible="yes" active="no"/>
+<layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
+<layer number="2" name="Route2" color="1" fill="3" visible="no" active="no"/>
+<layer number="3" name="Route3" color="4" fill="3" visible="no" active="no"/>
+<layer number="4" name="Route4" color="1" fill="4" visible="no" active="no"/>
+<layer number="5" name="Route5" color="4" fill="4" visible="no" active="no"/>
+<layer number="6" name="Route6" color="1" fill="8" visible="no" active="no"/>
+<layer number="7" name="Route7" color="4" fill="8" visible="no" active="no"/>
+<layer number="8" name="Route8" color="1" fill="2" visible="no" active="no"/>
+<layer number="9" name="Route9" color="4" fill="2" visible="no" active="no"/>
+<layer number="10" name="Route10" color="1" fill="7" visible="no" active="no"/>
+<layer number="11" name="Route11" color="4" fill="7" visible="no" active="no"/>
+<layer number="12" name="Route12" color="1" fill="5" visible="no" active="no"/>
+<layer number="13" name="Route13" color="4" fill="5" visible="no" active="no"/>
+<layer number="14" name="Route14" color="1" fill="6" visible="no" active="no"/>
+<layer number="15" name="Route15" color="4" fill="6" visible="no" active="no"/>
+<layer number="16" name="Bottom" color="1" fill="1" visible="no" active="no"/>
+<layer number="17" name="Pads" color="2" fill="1" visible="no" active="no"/>
+<layer number="18" name="Vias" color="2" fill="1" visible="no" active="no"/>
+<layer number="19" name="Unrouted" color="6" fill="1" visible="no" active="no"/>
+<layer number="20" name="Dimension" color="15" fill="1" visible="no" active="no"/>
+<layer number="21" name="tPlace" color="7" fill="1" visible="no" active="no"/>
+<layer number="22" name="bPlace" color="7" fill="1" visible="no" active="no"/>
+<layer number="23" name="tOrigins" color="15" fill="1" visible="no" active="no"/>
+<layer number="24" name="bOrigins" color="15" fill="1" visible="no" active="no"/>
+<layer number="25" name="tNames" color="7" fill="1" visible="no" active="no"/>
+<layer number="26" name="bNames" color="7" fill="1" visible="no" active="no"/>
+<layer number="27" name="tValues" color="7" fill="1" visible="no" active="no"/>
+<layer number="28" name="bValues" color="7" fill="1" visible="no" active="no"/>
 <layer number="29" name="tStop" color="7" fill="3" visible="no" active="no"/>
 <layer number="30" name="bStop" color="7" fill="6" visible="no" active="no"/>
 <layer number="31" name="tCream" color="7" fill="4" visible="no" active="no"/>
@@ -44,8 +44,8 @@
 <layer number="34" name="bFinish" color="6" fill="6" visible="no" active="no"/>
 <layer number="35" name="tGlue" color="7" fill="4" visible="no" active="no"/>
 <layer number="36" name="bGlue" color="7" fill="5" visible="no" active="no"/>
-<layer number="37" name="tTest" color="7" fill="1" visible="yes" active="no"/>
-<layer number="38" name="bTest" color="7" fill="1" visible="yes" active="no"/>
+<layer number="37" name="tTest" color="7" fill="1" visible="no" active="no"/>
+<layer number="38" name="bTest" color="7" fill="1" visible="no" active="no"/>
 <layer number="39" name="tKeepout" color="4" fill="11" visible="no" active="no"/>
 <layer number="40" name="bKeepout" color="1" fill="11" visible="no" active="no"/>
 <layer number="41" name="tRestrict" color="4" fill="10" visible="no" active="no"/>
@@ -53,16 +53,16 @@
 <layer number="43" name="vRestrict" color="2" fill="10" visible="no" active="no"/>
 <layer number="44" name="Drills" color="7" fill="1" visible="no" active="no"/>
 <layer number="45" name="Holes" color="7" fill="1" visible="no" active="no"/>
-<layer number="46" name="Milling" color="3" fill="1" visible="yes" active="no"/>
-<layer number="47" name="Measures" color="7" fill="1" visible="yes" active="no"/>
-<layer number="48" name="Document" color="7" fill="1" visible="yes" active="no"/>
-<layer number="49" name="Reference" color="7" fill="1" visible="yes" active="no"/>
-<layer number="50" name="dxf" color="7" fill="1" visible="yes" active="no"/>
-<layer number="51" name="tDocu" color="7" fill="1" visible="yes" active="no"/>
-<layer number="52" name="bDocu" color="7" fill="1" visible="yes" active="no"/>
-<layer number="53" name="tGND_GNDA" color="7" fill="1" visible="yes" active="no"/>
-<layer number="54" name="bGND_GNDA" color="7" fill="1" visible="yes" active="no"/>
-<layer number="56" name="wert" color="7" fill="1" visible="yes" active="no"/>
+<layer number="46" name="Milling" color="3" fill="1" visible="no" active="no"/>
+<layer number="47" name="Measures" color="7" fill="1" visible="no" active="no"/>
+<layer number="48" name="Document" color="7" fill="1" visible="no" active="no"/>
+<layer number="49" name="Reference" color="7" fill="1" visible="no" active="no"/>
+<layer number="50" name="dxf" color="7" fill="1" visible="no" active="no"/>
+<layer number="51" name="tDocu" color="7" fill="1" visible="no" active="no"/>
+<layer number="52" name="bDocu" color="7" fill="1" visible="no" active="no"/>
+<layer number="53" name="tGND_GNDA" color="7" fill="1" visible="no" active="no"/>
+<layer number="54" name="bGND_GNDA" color="7" fill="1" visible="no" active="no"/>
+<layer number="56" name="wert" color="7" fill="1" visible="no" active="no"/>
 <layer number="91" name="Nets" color="2" fill="1" visible="yes" active="yes"/>
 <layer number="92" name="Busses" color="1" fill="1" visible="yes" active="yes"/>
 <layer number="93" name="Pins" color="2" fill="1" visible="no" active="yes"/>
@@ -10869,7 +10869,7 @@ Source: &lt;a href="http://www.cooperbussmann.com/pdf/c73e479f-f867-4c64-ae26-9c
 <part name="S1" library="SparkFun-Electromechanical" deviceset="SWITCH-MOMENTARY-2" device="-SMD-1101NE"/>
 <part name="GND7" library="supply1" deviceset="GND" device=""/>
 <part name="C7" library="SparkFun-Passives" deviceset="CAP" device="0402-CAP" value="100pF  50V"/>
-<part name="L1" library="rcl" deviceset="L-US" device="" value="240ohm-300ma"/>
+<part name="FB1" library="rcl" deviceset="L-US" device="" value="240ohm-300ma"/>
 <part name="C10" library="SparkFun-Passives" deviceset="CAP" device="0402-CAP" value="820pF 50V"/>
 <part name="GND8" library="supply1" deviceset="GND" device=""/>
 <part name="C1" library="SparkFun-Passives" deviceset="CAP" device="0402-CAP" value="0.1uf"/>
@@ -10879,12 +10879,12 @@ Source: &lt;a href="http://www.cooperbussmann.com/pdf/c73e479f-f867-4c64-ae26-9c
 <part name="C4" library="SparkFun-Passives" deviceset="CAP" device="0402-CAP" value="820pF 50V"/>
 <part name="C3" library="SparkFun-Passives" deviceset="CAP_POL" device="6032" value="100uF 50V"/>
 <part name="C8" library="SparkFun-Passives" deviceset="CAP" device="0402-CAP" value="100pF  50V"/>
-<part name="L2" library="rcl" deviceset="L-US" device="" value="240ohm-300ma"/>
+<part name="FB2" library="rcl" deviceset="L-US" device="" value="240ohm-300ma"/>
 <part name="C11" library="SparkFun-Passives" deviceset="CAP" device="0402-CAP" value="820pF 50V"/>
 <part name="GND9" library="supply1" deviceset="GND" device=""/>
 <part name="C5" library="SparkFun-Passives" deviceset="CAP" device="0402-CAP" value="820pF 50V"/>
 <part name="+3V4" library="supply1" deviceset="+3V3" device=""/>
-<part name="L3" library="rcl" deviceset="L-US" device="" value="240ohm-300ma"/>
+<part name="FB3" library="rcl" deviceset="L-US" device="" value="120ohm-1.5A"/>
 <part name="C9" library="SparkFun-Passives" deviceset="CAP" device="0402-CAP" value="82pF"/>
 <part name="C12" library="SparkFun-Passives" deviceset="CAP" device="0402-CAP" value="1000pF"/>
 <part name="GND10" library="supply1" deviceset="GND" device=""/>
@@ -10928,7 +10928,7 @@ Source: &lt;a href="http://www.cooperbussmann.com/pdf/c73e479f-f867-4c64-ae26-9c
 <attribute name="NAME" x="29.464" y="10.541" size="1.778" layer="95"/>
 <attribute name="VALUE" x="21.844" y="2.921" size="1.778" layer="96"/>
 </instance>
-<instance part="L1" gate="G$1" x="15.24" y="12.7" smashed="yes" rot="R90">
+<instance part="FB1" gate="G$1" x="15.24" y="12.7" smashed="yes" rot="R90">
 <attribute name="NAME" x="17.78" y="11.43" size="1.778" layer="95" rot="R180"/>
 <attribute name="VALUE" x="22.86" y="16.51" size="1.778" layer="96" rot="R180"/>
 </instance>
@@ -10947,7 +10947,7 @@ Source: &lt;a href="http://www.cooperbussmann.com/pdf/c73e479f-f867-4c64-ae26-9c
 <attribute name="NAME" x="29.464" y="-25.019" size="1.778" layer="95"/>
 <attribute name="VALUE" x="21.844" y="-32.639" size="1.778" layer="96"/>
 </instance>
-<instance part="L2" gate="G$1" x="15.24" y="-22.86" smashed="yes" rot="R90">
+<instance part="FB2" gate="G$1" x="15.24" y="-22.86" smashed="yes" rot="R90">
 <attribute name="NAME" x="17.78" y="-24.13" size="1.778" layer="95" rot="R180"/>
 <attribute name="VALUE" x="22.86" y="-19.05" size="1.778" layer="96" rot="R180"/>
 </instance>
@@ -10958,7 +10958,7 @@ Source: &lt;a href="http://www.cooperbussmann.com/pdf/c73e479f-f867-4c64-ae26-9c
 <instance part="GND9" gate="1" x="15.24" y="-45.72"/>
 <instance part="C5" gate="G$1" x="-2.54" y="-27.94"/>
 <instance part="+3V4" gate="G$1" x="-35.56" y="52.07"/>
-<instance part="L3" gate="G$1" x="16.51" y="43.18" smashed="yes" rot="R90">
+<instance part="FB3" gate="G$1" x="16.51" y="43.18" smashed="yes" rot="R90">
 <attribute name="NAME" x="19.05" y="41.91" size="1.778" layer="95" rot="R180"/>
 <attribute name="VALUE" x="24.13" y="46.99" size="1.778" layer="96" rot="R180"/>
 </instance>
@@ -11146,7 +11146,7 @@ Source: &lt;a href="http://www.cooperbussmann.com/pdf/c73e479f-f867-4c64-ae26-9c
 <wire x1="-17.78" y1="12.7" x2="-15.24" y2="12.7" width="0.1524" layer="91"/>
 <wire x1="-15.24" y1="12.7" x2="-5.08" y2="12.7" width="0.1524" layer="91"/>
 <wire x1="-5.08" y1="12.7" x2="-2.54" y2="12.7" width="0.1524" layer="91"/>
-<pinref part="L1" gate="G$1" pin="1"/>
+<pinref part="FB1" gate="G$1" pin="1"/>
 <wire x1="-2.54" y1="12.7" x2="2.54" y2="12.7" width="0.1524" layer="91"/>
 <wire x1="2.54" y1="12.7" x2="7.62" y2="12.7" width="0.1524" layer="91"/>
 <pinref part="C4" gate="G$1" pin="1"/>
@@ -11162,7 +11162,7 @@ Source: &lt;a href="http://www.cooperbussmann.com/pdf/c73e479f-f867-4c64-ae26-9c
 <wire x1="-17.78" y1="-22.86" x2="-15.24" y2="-22.86" width="0.1524" layer="91"/>
 <wire x1="-15.24" y1="-22.86" x2="-5.08" y2="-22.86" width="0.1524" layer="91"/>
 <wire x1="-5.08" y1="-22.86" x2="-2.54" y2="-22.86" width="0.1524" layer="91"/>
-<pinref part="L2" gate="G$1" pin="1"/>
+<pinref part="FB2" gate="G$1" pin="1"/>
 <wire x1="-2.54" y1="-22.86" x2="2.54" y2="-22.86" width="0.1524" layer="91"/>
 <wire x1="2.54" y1="-22.86" x2="7.62" y2="-22.86" width="0.1524" layer="91"/>
 <pinref part="C5" gate="G$1" pin="1"/>
@@ -11213,7 +11213,7 @@ Source: &lt;a href="http://www.cooperbussmann.com/pdf/c73e479f-f867-4c64-ae26-9c
 <pinref part="+3V4" gate="G$1" pin="+3V3"/>
 <wire x1="-35.56" y1="49.53" x2="-35.56" y2="48.26" width="0.1524" layer="91"/>
 <wire x1="-35.56" y1="48.26" x2="-35.56" y2="49.53" width="0.1524" layer="91"/>
-<pinref part="L3" gate="G$1" pin="1"/>
+<pinref part="FB3" gate="G$1" pin="1"/>
 <wire x1="5.08" y1="43.18" x2="8.89" y2="43.18" width="0.1524" layer="91"/>
 </segment>
 <segment>
@@ -11224,7 +11224,7 @@ Source: &lt;a href="http://www.cooperbussmann.com/pdf/c73e479f-f867-4c64-ae26-9c
 </net>
 <net name="LED_POS_1" class="0">
 <segment>
-<pinref part="L1" gate="G$1" pin="2"/>
+<pinref part="FB1" gate="G$1" pin="2"/>
 <pinref part="C7" gate="G$1" pin="1"/>
 <wire x1="22.86" y1="12.7" x2="27.94" y2="12.7" width="0.1524" layer="91"/>
 <pinref part="C10" gate="G$1" pin="1"/>
@@ -11235,7 +11235,7 @@ Source: &lt;a href="http://www.cooperbussmann.com/pdf/c73e479f-f867-4c64-ae26-9c
 </net>
 <net name="LED_POS_2" class="0">
 <segment>
-<pinref part="L2" gate="G$1" pin="2"/>
+<pinref part="FB2" gate="G$1" pin="2"/>
 <pinref part="C8" gate="G$1" pin="1"/>
 <wire x1="22.86" y1="-22.86" x2="27.94" y2="-22.86" width="0.1524" layer="91"/>
 <pinref part="C11" gate="G$1" pin="1"/>
@@ -11246,7 +11246,7 @@ Source: &lt;a href="http://www.cooperbussmann.com/pdf/c73e479f-f867-4c64-ae26-9c
 </net>
 <net name="VIN" class="0">
 <segment>
-<pinref part="L3" gate="G$1" pin="2"/>
+<pinref part="FB3" gate="G$1" pin="2"/>
 <pinref part="C9" gate="G$1" pin="1"/>
 <wire x1="24.13" y1="43.18" x2="30.48" y2="43.18" width="0.1524" layer="91"/>
 <pinref part="C12" gate="G$1" pin="1"/>
