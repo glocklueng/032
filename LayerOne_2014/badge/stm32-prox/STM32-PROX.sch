@@ -20434,6 +20434,9 @@ We've spent an enormous amount of time creating and checking these footprints an
 <text x="-62.23" y="105.41" size="1.778" layer="91">internal pullups</text>
 <text x="-62.23" y="87.63" size="1.778" layer="91">stm docs seem to say no</text>
 <text x="101.6" y="104.14" size="1.778" layer="91">l1 isn't needed</text>
+<text x="137.16" y="124.46" size="1.778" layer="91">OLED</text>
+<text x="121.92" y="93.98" size="1.778" layer="91">PWR</text>
+<text x="139.7" y="81.28" size="1.778" layer="91">FPGA</text>
 </plain>
 <instances>
 <instance part="IC2" gate="G$1" x="73.66" y="43.18">
@@ -21010,50 +21013,60 @@ We've spent an enormous amount of time creating and checking these footprints an
 </net>
 <net name="PWR_OE1" class="0">
 <segment>
-<wire x1="118.11" y1="67.31" x2="137.16" y2="67.31" width="0.1524" layer="91"/>
-<label x="132.842" y="67.31" size="1.778" layer="95"/>
+<pinref part="IC2" gate="G$1" pin="PB12"/>
+<wire x1="114.3" y1="22.86" x2="124.46" y2="22.86" width="0.1524" layer="91"/>
+<label x="124.46" y="22.86" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="PWR_OE2" class="0">
 <segment>
-<wire x1="118.11" y1="69.85" x2="137.16" y2="69.85" width="0.1524" layer="91"/>
-<label x="132.842" y="69.85" size="1.778" layer="95"/>
+<pinref part="IC2" gate="G$1" pin="PB13"/>
+<wire x1="114.3" y1="25.4" x2="124.46" y2="25.4" width="0.1524" layer="91"/>
+<label x="124.46" y="25.4" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="PWR_OE3" class="0">
 <segment>
-<wire x1="118.11" y1="72.39" x2="137.16" y2="72.39" width="0.1524" layer="91"/>
-<label x="132.842" y="72.39" size="1.778" layer="95"/>
+<pinref part="IC2" gate="G$1" pin="PB14"/>
+<wire x1="114.3" y1="27.94" x2="124.46" y2="27.94" width="0.1524" layer="91"/>
+<label x="124.46" y="27.94" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="PWR_OE4" class="0">
 <segment>
-<wire x1="118.11" y1="74.93" x2="137.16" y2="74.93" width="0.1524" layer="91"/>
-<label x="132.842" y="74.93" size="1.778" layer="95"/>
+<pinref part="IC2" gate="G$1" pin="PB15"/>
+<wire x1="114.3" y1="30.48" x2="124.46" y2="30.48" width="0.1524" layer="91"/>
+<label x="124.46" y="30.48" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="!CS" class="0">
 <segment>
-<wire x1="124.46" y1="60.96" x2="132.08" y2="60.96" width="0.1524" layer="91"/>
-<label x="132.08" y="60.96" size="1.778" layer="95"/>
+<wire x1="134.62" y1="119.38" x2="139.7" y2="119.38" width="0.1524" layer="91"/>
+<label x="139.7" y="119.38" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="!RES" class="0">
 <segment>
-<wire x1="124.46" y1="58.42" x2="132.08" y2="58.42" width="0.1524" layer="91"/>
-<label x="132.08" y="58.42" size="1.778" layer="95"/>
+<wire x1="134.62" y1="116.84" x2="139.7" y2="116.84" width="0.1524" layer="91"/>
+<label x="139.7" y="116.84" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="D/C" class="0">
 <segment>
-<wire x1="124.46" y1="55.88" x2="132.08" y2="55.88" width="0.1524" layer="91"/>
-<label x="132.08" y="55.88" size="1.778" layer="95"/>
+<wire x1="134.62" y1="114.3" x2="139.7" y2="114.3" width="0.1524" layer="91"/>
+<label x="139.7" y="114.3" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="SCLK/DB0" class="0">
 <segment>
-<wire x1="124.46" y1="53.34" x2="132.08" y2="53.34" width="0.1524" layer="91"/>
-<label x="132.08" y="53.34" size="1.778" layer="95"/>
+<wire x1="134.62" y1="111.76" x2="139.7" y2="111.76" width="0.1524" layer="91"/>
+<label x="139.7" y="111.76" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="SDIN/DB1" class="0">
+<segment>
+<wire x1="134.62" y1="109.22" x2="139.7" y2="109.22" width="0.1524" layer="91"/>
+<label x="139.7" y="109.22" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>
