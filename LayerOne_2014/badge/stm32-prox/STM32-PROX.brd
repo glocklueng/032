@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="yes"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.05" unitdist="inch" unit="inch" style="lines" multiple="1" display="yes" altdistance="0.005" altunitdist="inch" altunit="inch"/>
+<grid distance="0.05" unitdist="inch" unit="mm" style="lines" multiple="1" display="yes" altdistance="0.005" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="2" name="Route2" color="1" fill="3" visible="no" active="no"/>
@@ -32,7 +32,7 @@
 <layer number="22" name="bPlace" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="23" name="tOrigins" color="15" fill="1" visible="yes" active="yes"/>
 <layer number="24" name="bOrigins" color="15" fill="1" visible="yes" active="yes"/>
-<layer number="25" name="tNames" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="25" name="tNames" color="7" fill="1" visible="no" active="yes"/>
 <layer number="26" name="bNames" color="7" fill="1" visible="no" active="yes"/>
 <layer number="27" name="tValues" color="7" fill="1" visible="no" active="yes"/>
 <layer number="28" name="bValues" color="7" fill="1" visible="no" active="yes"/>
@@ -59,7 +59,7 @@
 <layer number="49" name="Reference" color="7" fill="1" visible="no" active="yes"/>
 <layer number="50" name="dxf" color="7" fill="1" visible="no" active="no"/>
 <layer number="51" name="tDocu" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="52" name="bDocu" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="52" name="bDocu" color="7" fill="1" visible="no" active="yes"/>
 <layer number="53" name="tGND_GNDA" color="7" fill="1" visible="no" active="no"/>
 <layer number="54" name="bGND_GNDA" color="7" fill="1" visible="no" active="no"/>
 <layer number="56" name="wert" color="7" fill="1" visible="no" active="no"/>
@@ -152,7 +152,7 @@
 <layer number="219" name="219bmp" color="7" fill="1" visible="no" active="yes"/>
 <layer number="220" name="220bmp" color="7" fill="1" visible="no" active="yes"/>
 <layer number="221" name="221bmp" color="7" fill="1" visible="no" active="yes"/>
-<layer number="222" name="222bmp" color="7" fill="1" visible="no" active="yes"/>
+<layer number="222" name="222bmp" color="23" fill="1" visible="no" active="no"/>
 <layer number="223" name="223bmp" color="7" fill="1" visible="no" active="yes"/>
 <layer number="224" name="224bmp" color="7" fill="1" visible="no" active="yes"/>
 <layer number="248" name="Housing" color="7" fill="1" visible="no" active="yes"/>
@@ -3423,11 +3423,17 @@ design rules under a new name.</description>
 <contactref element="C62" pad="2"/>
 <contactref element="S1" pad="1"/>
 <contactref element="JP2" pad="1"/>
+<contactref element="U4" pad="GND1"/>
+<contactref element="U4" pad="GND3"/>
+<contactref element="U4" pad="6"/>
 <wire x1="79.3" y1="47.06" x2="80" y2="47.06" width="0" layer="19" extent="16-16"/>
+<wire x1="76.78" y1="50.43" x2="79.3" y2="47.06" width="0" layer="19" extent="1-16"/>
 <wire x1="79.502" y1="41.01" x2="79.3" y2="47.06" width="0" layer="19" extent="16-16"/>
 <wire x1="77.851" y1="41.01" x2="79.502" y2="41.01" width="0" layer="19" extent="16-16"/>
 <wire x1="76.073" y1="41.06" x2="77.851" y2="41.01" width="0" layer="19" extent="16-16"/>
-<wire x1="66.294" y1="41.645" x2="76.073" y2="41.06" width="0" layer="19" extent="16-16"/>
+<wire x1="73.13" y1="40.27" x2="76.073" y2="41.06" width="0" layer="19" extent="1-16"/>
+<wire x1="75.78" y1="37.28" x2="76.073" y2="41.06" width="0" layer="19" extent="1-16"/>
+<wire x1="66.294" y1="41.645" x2="73.13" y2="40.27" width="0" layer="19" extent="1-16"/>
 <wire x1="66" y1="47.06" x2="66.294" y2="41.645" width="0" layer="19" extent="16-16"/>
 <wire x1="66.7" y1="47.06" x2="66" y2="47.06" width="0" layer="19" extent="16-16"/>
 <wire x1="67.4" y1="47.06" x2="66.7" y2="47.06" width="0" layer="19" extent="16-16"/>
@@ -3605,6 +3611,9 @@ design rules under a new name.</description>
 <contactref element="R5" pad="1"/>
 <contactref element="BUZ1" pad="1"/>
 <contactref element="SV301" pad="6"/>
+<contactref element="U3" pad="6"/>
+<contactref element="U3" pad="9"/>
+<contactref element="C7" pad="1"/>
 <wire x1="81.65" y1="30.48" x2="81.65" y2="31.75" width="0" layer="19" extent="1-1"/>
 <wire x1="81.65" y1="29.21" x2="81.65" y2="30.48" width="0" layer="19" extent="1-1"/>
 <wire x1="81.65" y1="27.94" x2="81.65" y2="29.21" width="0" layer="19" extent="1-1"/>
@@ -3621,7 +3630,10 @@ design rules under a new name.</description>
 <wire x1="72.185" y1="13.27" x2="66.587" y2="6.731" width="0" layer="19" extent="1-1"/>
 <wire x1="80.28" y1="9.84" x2="72.185" y2="13.27" width="0" layer="19" extent="1-1"/>
 <wire x1="52.07" y1="1.27" x2="62.23" y2="5.08" width="0" layer="19" extent="1-1"/>
-<wire x1="23.114" y1="46.839" x2="59.69" y2="27.94" width="0" layer="19" extent="1-16"/>
+<wire x1="66.294" y1="43.445" x2="66.04" y2="29.757" width="0" layer="19" extent="1-16"/>
+<wire x1="65.3" y1="47.06" x2="66.294" y2="43.445" width="0" layer="19" extent="16-16"/>
+<wire x1="63.2" y1="47.06" x2="65.3" y2="47.06" width="0" layer="19" extent="16-16"/>
+<wire x1="23.114" y1="46.839" x2="63.2" y2="47.06" width="0" layer="19" extent="1-16"/>
 <wire x1="20.3506" y1="44.5008" x2="23.114" y2="46.839" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="VDD">
@@ -4390,13 +4402,6 @@ design rules under a new name.</description>
 <contactref element="C5" pad="2"/>
 <wire x1="64.654" y1="43.18" x2="62.5" y2="47.06" width="0" layer="19" extent="16-16"/>
 </signal>
-<signal name="+3.3V">
-<contactref element="U3" pad="6"/>
-<contactref element="U3" pad="9"/>
-<contactref element="C7" pad="1"/>
-<wire x1="63.2" y1="47.06" x2="65.3" y2="47.06" width="0" layer="19" extent="16-16"/>
-<wire x1="66.294" y1="43.445" x2="65.3" y2="47.06" width="0" layer="19" extent="16-16"/>
-</signal>
 <signal name="!CS">
 <contactref element="U3" pad="13"/>
 </signal>
@@ -4722,6 +4727,24 @@ design rules under a new name.</description>
 <contactref element="IC1" pad="8"/>
 <contactref element="JP2" pad="2"/>
 <wire x1="12.7" y1="49.53" x2="44.45" y2="51.075" width="0" layer="19" extent="1-16"/>
+</signal>
+<signal name="N$70">
+<contactref element="U4" pad="2"/>
+</signal>
+<signal name="N$71">
+<contactref element="U4" pad="3"/>
+</signal>
+<signal name="N$72">
+<contactref element="U4" pad="4"/>
+</signal>
+<signal name="N$73">
+<contactref element="U4" pad="5"/>
+</signal>
+<signal name="N$75">
+<contactref element="U4" pad="7"/>
+</signal>
+<signal name="N$76">
+<contactref element="U4" pad="8"/>
 </signal>
 </signals>
 </board>
