@@ -196,6 +196,9 @@ mmca</text>
 Adapter V1.1</text>
 <text x="8.9662" y="5.334" size="0.762" layer="21" font="vector" ratio="12">C4</text>
 <text x="-10.8839" y="-23.8633" size="0.762" layer="21" font="vector" ratio="12" rot="R90">C2</text>
+<text x="-22.5552" y="28.321" size="5.08" layer="20">DO NOT USE</text>
+<text x="-21.844" y="0.9017" size="5.08" layer="20">DO NOT USE</text>
+<text x="-23.0886" y="-36.3855" size="5.08" layer="20">DO NOT USE</text>
 </plain>
 <libraries>
 <library name="slice_noshift">

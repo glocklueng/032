@@ -193,6 +193,9 @@
 <text x="-7.5946" y="-24.003" size="0.762" layer="21" font="vector" ratio="12">charliex
 mmca</text>
 <text x="-2.3368" y="-24.2824" size="0.762" layer="21" font="vector" ratio="12">DP-EDP V1.0</text>
+<text x="-20.0279" y="27.051" size="5.08" layer="20">DO NOT USE</text>
+<text x="-20.5613" y="1.3208" size="5.08" layer="20">DO NOT USE</text>
+<text x="-21.2217" y="-35.1028" size="5.08" layer="20">DO NOT USE</text>
 </plain>
 <libraries>
 <library name="slice_noshift">
