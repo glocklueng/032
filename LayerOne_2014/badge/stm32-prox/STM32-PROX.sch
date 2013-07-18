@@ -20435,8 +20435,6 @@ We've spent an enormous amount of time creating and checking these footprints an
 <text x="-62.23" y="87.63" size="1.778" layer="91">stm docs seem to say no</text>
 <text x="101.6" y="104.14" size="1.778" layer="91">l1 isn't needed</text>
 <text x="137.16" y="124.46" size="1.778" layer="91">OLED</text>
-<text x="121.92" y="93.98" size="1.778" layer="91">PWR</text>
-<text x="139.7" y="81.28" size="1.778" layer="91">FPGA</text>
 </plain>
 <instances>
 <instance part="IC2" gate="G$1" x="73.66" y="43.18">
@@ -20554,11 +20552,11 @@ We've spent an enormous amount of time creating and checking these footprints an
 <attribute name="NAME" x="6.35" y="25.146" size="1.778" layer="95"/>
 <attribute name="VALUE" x="4.826" y="18.796" size="1.778" layer="96"/>
 </instance>
-<instance part="R7" gate="G$1" x="58.42" y="-12.7">
-<attribute name="PARTNO" x="58.42" y="-12.7" size="1.778" layer="96" display="off"/>
+<instance part="R7" gate="G$1" x="63.5" y="-7.62" rot="R90">
+<attribute name="PARTNO" x="63.5" y="-7.62" size="1.778" layer="96" rot="R90" display="off"/>
 </instance>
-<instance part="R8" gate="G$1" x="71.12" y="-12.7" rot="R180">
-<attribute name="PARTNO" x="71.12" y="-12.7" size="1.778" layer="96" rot="R180" display="off"/>
+<instance part="R8" gate="G$1" x="66.04" y="-7.62" rot="R90">
+<attribute name="PARTNO" x="66.04" y="-7.62" size="1.778" layer="96" rot="R90" display="off"/>
 </instance>
 </instances>
 <busses>
@@ -20973,42 +20971,44 @@ We've spent an enormous amount of time creating and checking these footprints an
 </net>
 <net name="USB_D-" class="0">
 <segment>
-<wire x1="53.34" y1="-12.7" x2="50.8" y2="-12.7" width="0.1524" layer="91"/>
-<label x="50.8" y="-12.7" size="1.778" layer="95" rot="R180"/>
+<wire x1="63.5" y1="-12.7" x2="63.5" y2="-15.24" width="0.1524" layer="91"/>
+<label x="60.96" y="-15.24" size="1.778" layer="95" rot="R270"/>
 <pinref part="R7" gate="G$1" pin="1"/>
 </segment>
 </net>
 <net name="USB_D+" class="0">
 <segment>
-<wire x1="76.2" y1="-12.7" x2="78.74" y2="-12.7" width="0.1524" layer="91"/>
+<wire x1="66.04" y1="-12.7" x2="66.04" y2="-15.24" width="0.1524" layer="91"/>
 <pinref part="R8" gate="G$1" pin="1"/>
-<label x="78.74" y="-12.7" size="1.778" layer="95"/>
+<label x="66.04" y="-15.24" size="1.778" layer="95" rot="R270"/>
 </segment>
 </net>
 <net name="N$1" class="0">
 <segment>
 <pinref part="IC2" gate="G$1" pin="PA11/UART1CTS/CNRX/TIM1CH4/USBD-"/>
 <pinref part="R7" gate="G$1" pin="2"/>
-<wire x1="63.5" y1="-12.7" x2="63.5" y2="0" width="0.1524" layer="91"/>
+<wire x1="63.5" y1="-2.54" x2="63.5" y2="0" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$7" class="0">
 <segment>
 <pinref part="IC2" gate="G$1" pin="PA12/UART1RTS/CNTX/TIM1ETR/USBD+"/>
 <pinref part="R8" gate="G$1" pin="2"/>
-<wire x1="66.04" y1="-12.7" x2="66.04" y2="0" width="0.1524" layer="91"/>
+<wire x1="66.04" y1="-2.54" x2="66.04" y2="0" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="NVDD_ON" class="0">
 <segment>
-<wire x1="121.92" y1="91.44" x2="132.08" y2="91.44" width="0.1524" layer="91"/>
-<label x="119.38" y="88.9" size="1.778" layer="95"/>
+<pinref part="IC2" gate="G$1" pin="PB10"/>
+<wire x1="88.9" y1="0" x2="88.9" y2="-7.62" width="0.1524" layer="91"/>
+<label x="88.9" y="-17.78" size="1.778" layer="95" rot="R90"/>
 </segment>
 </net>
 <net name="FPGA_ON" class="0">
 <segment>
-<wire x1="121.92" y1="86.36" x2="132.08" y2="86.36" width="0.1524" layer="91"/>
-<label x="119.38" y="83.82" size="1.778" layer="95"/>
+<pinref part="IC2" gate="G$1" pin="PB11"/>
+<wire x1="91.44" y1="0" x2="91.44" y2="-7.62" width="0.1524" layer="91"/>
+<label x="91.44" y="-17.78" size="1.778" layer="95" rot="R90"/>
 </segment>
 </net>
 <net name="PWR_OE1" class="0">
@@ -21044,11 +21044,21 @@ We've spent an enormous amount of time creating and checking these footprints an
 <wire x1="134.62" y1="119.38" x2="139.7" y2="119.38" width="0.1524" layer="91"/>
 <label x="139.7" y="119.38" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="IC2" gate="G$1" pin="PB9"/>
+<wire x1="86.36" y1="0" x2="86.36" y2="-7.62" width="0.1524" layer="91"/>
+<label x="86.36" y="-12.7" size="1.778" layer="95" rot="R90"/>
+</segment>
 </net>
 <net name="!RES" class="0">
 <segment>
 <wire x1="134.62" y1="116.84" x2="139.7" y2="116.84" width="0.1524" layer="91"/>
 <label x="139.7" y="116.84" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="IC2" gate="G$1" pin="PB8"/>
+<wire x1="83.82" y1="0" x2="83.82" y2="-7.62" width="0.1524" layer="91"/>
+<label x="83.82" y="-12.7" size="1.778" layer="95" rot="R90"/>
 </segment>
 </net>
 <net name="D/C" class="0">
@@ -21056,17 +21066,78 @@ We've spent an enormous amount of time creating and checking these footprints an
 <wire x1="134.62" y1="114.3" x2="139.7" y2="114.3" width="0.1524" layer="91"/>
 <label x="139.7" y="114.3" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="IC2" gate="G$1" pin="PB6"/>
+<wire x1="78.74" y1="0" x2="81.28" y2="0" width="0.1524" layer="91"/>
+<wire x1="81.28" y1="0" x2="81.28" y2="-7.62" width="0.1524" layer="91"/>
+<label x="81.28" y="-12.7" size="1.778" layer="95" rot="R90"/>
+</segment>
 </net>
 <net name="SCLK/DB0" class="0">
 <segment>
 <wire x1="134.62" y1="111.76" x2="139.7" y2="111.76" width="0.1524" layer="91"/>
 <label x="139.7" y="111.76" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="IC2" gate="G$1" pin="PA5"/>
+<wire x1="30.48" y1="25.4" x2="22.86" y2="25.4" width="0.1524" layer="91"/>
+<label x="15.24" y="25.4" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="SDIN/DB1" class="0">
 <segment>
-<wire x1="134.62" y1="109.22" x2="139.7" y2="109.22" width="0.1524" layer="91"/>
-<label x="139.7" y="109.22" size="1.778" layer="95"/>
+<pinref part="IC2" gate="G$1" pin="PA6"/>
+<wire x1="30.48" y1="22.86" x2="22.86" y2="22.86" width="0.1524" layer="91"/>
+<label x="15.24" y="22.86" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="N$69" class="0">
+<segment>
+<pinref part="IC2" gate="G$1" pin="PC0"/>
+<wire x1="114.3" y1="33.02" x2="124.46" y2="33.02" width="0.1524" layer="91"/>
+<label x="124.46" y="33.02" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="N$74" class="0">
+<segment>
+<pinref part="IC2" gate="G$1" pin="PC1"/>
+<wire x1="114.3" y1="35.56" x2="124.46" y2="35.56" width="0.1524" layer="91"/>
+<label x="124.46" y="35.56" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="N$77" class="0">
+<segment>
+<pinref part="IC2" gate="G$1" pin="PC2"/>
+<wire x1="114.3" y1="38.1" x2="124.46" y2="38.1" width="0.1524" layer="91"/>
+<label x="124.46" y="38.1" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="N$78" class="0">
+<segment>
+<pinref part="IC2" gate="G$1" pin="PC3"/>
+<wire x1="114.3" y1="40.64" x2="124.46" y2="40.64" width="0.1524" layer="91"/>
+<label x="124.46" y="40.64" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="N$79" class="0">
+<segment>
+<pinref part="IC2" gate="G$1" pin="PC4"/>
+<wire x1="114.3" y1="43.18" x2="124.46" y2="43.18" width="0.1524" layer="91"/>
+<label x="124.46" y="43.18" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="N$82" class="0">
+<segment>
+<pinref part="IC2" gate="G$1" pin="PA4"/>
+<wire x1="30.48" y1="27.94" x2="22.86" y2="27.94" width="0.1524" layer="91"/>
+<label x="17.78" y="27.94" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="N$83" class="0">
+<segment>
+<pinref part="IC2" gate="G$1" pin="PA3"/>
+<wire x1="30.48" y1="30.48" x2="22.86" y2="30.48" width="0.1524" layer="91"/>
+<label x="17.78" y="30.48" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>
