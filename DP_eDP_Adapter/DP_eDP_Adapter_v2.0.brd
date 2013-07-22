@@ -196,7 +196,6 @@ mmca</text>
 Adapter V2.0</text>
 <text x="8.9662" y="5.334" size="0.762" layer="21" font="vector" ratio="12">C4</text>
 <text x="-10.8839" y="-23.8633" size="0.762" layer="21" font="vector" ratio="12" rot="R90">C2</text>
-<wire x1="-6.1087" y1="-4.064" x2="-4.699" y2="-4.064" width="0.0254" layer="21"/>
 </plain>
 <libraries>
 <library name="slice_noshift">
@@ -2279,18 +2278,21 @@ design rules under a new name.</description>
 <attribute name="VALUE" x="-12.954" y="-4.6736" size="0.4064" layer="27" rot="R180"/>
 </element>
 <element name="C15" library="SparkFun-Passives" package="1206" value="10nF" x="-22.1361" y="-0.9144" smashed="yes" rot="R270">
-<attribute name="NAME" x="-22.5171" y="1.6637" size="0.762" layer="25" font="vector" ratio="12" rot="R270"/>
+<attribute name="NAME" x="-23.114" y="1.6129" size="0.762" layer="25" font="vector" ratio="12"/>
 <attribute name="VALUE" x="-23.2791" y="0.1651" size="0.4064" layer="27" rot="R270"/>
 </element>
 <element name="C17" library="SparkFun-Passives" package="0805" value="22Uf" x="-17.0307" y="-5.0165" smashed="yes">
-<attribute name="NAME" x="-19.177" y="-4.6101" size="0.762" layer="25" font="vector" ratio="12" rot="R180"/>
+<attribute name="NAME" x="-16.0782" y="-5.9182" size="0.762" layer="25" font="vector" ratio="12" rot="R180"/>
 <attribute name="VALUE" x="-18.1102" y="-6.1595" size="0.4064" layer="27"/>
 </element>
 <element name="JP4" library="SparkFun-Connectors" package="1X05" value="" x="-19.0246" y="5.6261" rot="R90"/>
 <element name="L4" library="DP_eDP_Adapter_v1.1" package="0520C" value="" x="-20.8026" y="-2.7813" rot="MR270"/>
 <element name="U$1" library="DP_eDP_Adapter_v2.0" package="DP_EDP_ADAPTER_DP_REVERSE_JAE" value="DP_EDP_ADAPTER_DP1RD20JQ2R400_SINK" x="-0.254" y="-11.5189" rot="MR0"/>
 <element name="C30" library="SparkFun-Passives" package="EIA6032" value="100uF 50V" x="5.7277" y="3.4798" rot="MR90"/>
-<element name="C31" library="SparkFun-Passives" package="1206" value="10uF 50V" x="-22.2504" y="-5.5499" rot="R180"/>
+<element name="C31" library="SparkFun-Passives" package="1206" value="10uF 50V" x="-22.2504" y="-5.5499" smashed="yes" rot="R180">
+<attribute name="NAME" x="-21.1328" y="-3.4036" size="0.762" layer="25" font="vector" ratio="12" rot="R180"/>
+<attribute name="VALUE" x="-20.8534" y="-4.0259" size="0.4064" layer="27" rot="R180"/>
+</element>
 </elements>
 <signals>
 <signal name="GND">
