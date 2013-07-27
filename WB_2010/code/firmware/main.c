@@ -509,9 +509,11 @@ int main(void) {
   POWERON_DDR |= _BV(POWERON);
 
   usart_init(); // Init serial communication
-
+  
   DDRD |= _BV(PD1);     // USART TxD0 output
 
+  pc_puts_P(PSTR("Test 1\n"));
+  
   // LED pin output and LED on
   LEDDDR |= _BV(LED);
   LEDPORT |= _BV(LED);
@@ -535,8 +537,10 @@ int main(void) {
   POWERCTL2_PORT &= ~_BV(POWERCTL2); // turn off VCO2+gain stage
 
   init_pwm(); // Init tuning voltage generator
+  pc_puts_P(PSTR("Test 2\n"));
 
   pll_init(); // Init PLL control
+  pc_puts_P(PSTR("Test 3\n"));
 
   // Set digital potentiometer to minimum
   set_resistor(BANDWADJ1_RES, 0);
@@ -545,6 +549,7 @@ int main(void) {
   set_sawtooth_low(); // Set NE555 mode
 
   init_eeprom();  // Check EEPROM validity
+  pc_puts_P(PSTR("Test 4\n"));
 
   pc_puts_P(PSTR("Wave Bubble 2010\nFW: " __DATE__" / " __TIME__"\n\n"));
 
