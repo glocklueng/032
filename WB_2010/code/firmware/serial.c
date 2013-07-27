@@ -15,17 +15,17 @@
 #define USART_BAUDRATE ( 19200 )
 #define UBRR_VALUE (((F_CPU / (USART_BAUDRATE * 16UL))) - 1)
 
-
 /**
  * Init USART
  *
  * Initialize USART for communication with PC.
  *
 */
-void usart_init(void) {
+void usart_init(void) 
+{
   // Setup USART
-	UBRR0H = (uint8_t)(UBRR_VALUE>>8);
-	UBRR0L = (uint8_t)UBRR_VALUE;
+  UBRR0H = (uint8_t)(UBRR_VALUE>>8);
+  UBRR0L = (uint8_t)UBRR_VALUE;
 
   // enable Rx & Tx
   UCSR0B = _BV(RXEN0)|_BV(TXEN0);
