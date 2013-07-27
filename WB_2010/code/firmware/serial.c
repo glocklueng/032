@@ -12,6 +12,10 @@
 #include "main.h"
 #include "serial.h"
 
+#define USART_BAUDRATE ( 19200 )
+#define UBRR_VALUE (((F_CPU / (USART_BAUDRATE * 16UL))) - 1)
+
+
 /**
  * Init USART
  *
@@ -20,8 +24,9 @@
 */
 void usart_init(void) {
   // Setup USART
-  UBRR0H = (((F_CPU/BAUDRATE)/16)-1)>>8;      // set baud rate
-  UBRR0L = (((F_CPU/BAUDRATE)/16)-1);
+	UBRR0H = (uint8_t)(UBRR_VALUE>>8);
+	UBRR0L = (uint8_t)UBRR_VALUE;
+
   // enable Rx & Tx
   UCSR0B = _BV(RXEN0)|_BV(TXEN0);
   // config 8N1
