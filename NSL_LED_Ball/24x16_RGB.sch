@@ -124,166 +124,6 @@
 </layers>
 <schematic xreflabel="%F%N/%S.%C%R" xrefpart="/%S.%C%R">
 <libraries>
-<library name="16x16_RGB">
-<packages>
-<package name="GM1WA55311A">
-<description>&lt;b&gt;Chip LED RGB&lt;/b&gt;&lt;p&gt;
-Source: http://document.sharpsma.com/files/GM1WA55311A_SS.pdf</description>
-<wire x1="-0.75" y1="-0.75" x2="0.75" y2="-0.75" width="0.1016" layer="51"/>
-<wire x1="0.75" y1="-0.75" x2="0.75" y2="0.75" width="0.1016" layer="51"/>
-<wire x1="0.75" y1="0.75" x2="-0.75" y2="0.75" width="0.1016" layer="51"/>
-<wire x1="-0.75" y1="0.75" x2="-0.75" y2="-0.75" width="0.1016" layer="51"/>
-<wire x1="-0.55" y1="0.7" x2="-0.55" y2="-0.7" width="0.1016" layer="51"/>
-<wire x1="0.55" y1="-0.7" x2="0.55" y2="0.7" width="0.1016" layer="51"/>
-<smd name="1" x="-0.475" y="0.9" dx="0.65" dy="1.2" layer="1" stop="no" cream="no"/>
-<smd name="2" x="-0.475" y="-0.9" dx="0.65" dy="1.2" layer="1" stop="no" cream="no"/>
-<smd name="3" x="0.475" y="-0.9" dx="0.65" dy="1.2" layer="1" stop="no" cream="no"/>
-<smd name="4" x="0.475" y="0.9" dx="0.65" dy="1.2" layer="1" stop="no" cream="no"/>
-<text x="-0.762" y="1.778" size="1.27" layer="25">&gt;NAME</text>
-<text x="-0.762" y="-3.048" size="1.27" layer="27">&gt;VALUE</text>
-<rectangle x1="-0.85" y1="0.25" x2="-0.1" y2="1.55" layer="29"/>
-<rectangle x1="0.1" y1="0.25" x2="0.85" y2="1.55" layer="29"/>
-<rectangle x1="-0.85" y1="-1.55" x2="-0.1" y2="-0.25" layer="29"/>
-<rectangle x1="0.1" y1="-1.55" x2="0.85" y2="-0.25" layer="29"/>
-<rectangle x1="-0.775" y1="0.325" x2="-0.175" y2="1.45" layer="31"/>
-<rectangle x1="0.175" y1="0.325" x2="0.775" y2="1.45" layer="31"/>
-<rectangle x1="0.175" y1="-1.45" x2="0.775" y2="-0.325" layer="31" rot="R180"/>
-<rectangle x1="-0.775" y1="-1.45" x2="-0.175" y2="-0.325" layer="31" rot="R180"/>
-<rectangle x1="-0.4" y1="0.25" x2="-0.25" y2="0.65" layer="51"/>
-</package>
-<package name="LED10MM_RGB_EDGE">
-<wire x1="-5.4" y1="0.2794" x2="5.4" y2="0.2794" width="0.127" layer="21"/>
-<smd name="A" x="-0.385" y="-1.6002" dx="3.175" dy="1.25" layer="16" rot="R90"/>
-<smd name="R" x="-1.155" y="-1.6002" dx="3.175" dy="1.25" layer="1" rot="R90"/>
-<smd name="G" x="0.385" y="-1.6002" dx="3.175" dy="1.25" layer="1" rot="R90"/>
-<smd name="B" x="1.155" y="-1.6002" dx="3.175" dy="1.25" layer="16" rot="R90"/>
-<text x="2.7686" y="2.0066" size="1.27" layer="25" rot="R180">&gt;NAME</text>
-<text x="0.0508" y="-4.7244" size="1.27" layer="22" font="vector" ratio="12" rot="MR0">A</text>
-</package>
-<package name="LED5MM_RGB_EDGE">
-<wire x1="-2.6" y1="0.2794" x2="2.6" y2="0.2794" width="0.127" layer="21"/>
-<wire x1="-2.2352" y1="-1.1938" x2="-2.2352" y2="-2.0828" width="0.127" layer="21"/>
-<wire x1="1.9826" y1="-1.1924" x2="1.9949" y2="-2.1099" width="0.127" layer="21" curve="-180.01249"/>
-<smd name="A" x="-0.385" y="-1.6002" dx="3.175" dy="1" layer="16" rot="R90"/>
-<smd name="R" x="-1.155" y="-1.6002" dx="3.175" dy="1" layer="1" rot="R90"/>
-<smd name="G" x="0.385" y="-1.6002" dx="3.175" dy="1" layer="1" rot="R90"/>
-<smd name="B" x="1.155" y="-1.6002" dx="3.175" dy="1" layer="16" rot="R90"/>
-<text x="2.7686" y="2.0066" size="1.27" layer="25" rot="R180">&gt;NAME</text>
-<text x="0.0508" y="-4.7244" size="1.27" layer="22" font="vector" ratio="12" rot="MR0">A</text>
-</package>
-</packages>
-<symbols>
-<symbol name="LED-RGB-A">
-<wire x1="6.35" y1="-0.762" x2="5.08" y2="-2.794" width="0.254" layer="94"/>
-<wire x1="5.08" y1="-2.794" x2="3.81" y2="-0.762" width="0.254" layer="94"/>
-<wire x1="6.35" y1="-2.794" x2="5.08" y2="-2.794" width="0.254" layer="94"/>
-<wire x1="5.08" y1="-2.794" x2="3.81" y2="-2.794" width="0.254" layer="94"/>
-<wire x1="6.35" y1="-0.762" x2="3.81" y2="-0.762" width="0.254" layer="94"/>
-<wire x1="3.048" y1="-1.016" x2="2.159" y2="-1.905" width="0.1524" layer="94"/>
-<wire x1="3.81" y1="-1.778" x2="2.921" y2="-2.667" width="0.1524" layer="94"/>
-<wire x1="1.27" y1="-0.762" x2="0" y2="-2.794" width="0.254" layer="94"/>
-<wire x1="0" y1="-2.794" x2="-1.27" y2="-0.762" width="0.254" layer="94"/>
-<wire x1="1.27" y1="-2.794" x2="0" y2="-2.794" width="0.254" layer="94"/>
-<wire x1="0" y1="-2.794" x2="-1.27" y2="-2.794" width="0.254" layer="94"/>
-<wire x1="1.27" y1="-0.762" x2="-1.27" y2="-0.762" width="0.254" layer="94"/>
-<wire x1="-2.032" y1="-1.016" x2="-2.921" y2="-1.905" width="0.1524" layer="94"/>
-<wire x1="-1.27" y1="-1.778" x2="-2.159" y2="-2.667" width="0.1524" layer="94"/>
-<wire x1="-3.81" y1="-0.762" x2="-5.08" y2="-2.794" width="0.254" layer="94"/>
-<wire x1="-5.08" y1="-2.794" x2="-6.35" y2="-0.762" width="0.254" layer="94"/>
-<wire x1="-3.81" y1="-2.794" x2="-5.08" y2="-2.794" width="0.254" layer="94"/>
-<wire x1="-5.08" y1="-2.794" x2="-6.35" y2="-2.794" width="0.254" layer="94"/>
-<wire x1="-3.81" y1="-0.762" x2="-6.35" y2="-0.762" width="0.254" layer="94"/>
-<wire x1="-7.112" y1="-1.016" x2="-8.001" y2="-1.905" width="0.1524" layer="94"/>
-<wire x1="-6.35" y1="-1.778" x2="-7.239" y2="-2.667" width="0.1524" layer="94"/>
-<wire x1="-5.08" y1="0" x2="0" y2="0" width="0.1524" layer="94"/>
-<wire x1="0" y1="0" x2="0" y2="-2.54" width="0.1524" layer="94"/>
-<wire x1="0" y1="0" x2="5.08" y2="0" width="0.1524" layer="94"/>
-<wire x1="5.08" y1="0" x2="5.08" y2="-2.54" width="0.1524" layer="94"/>
-<circle x="-5.08" y="0" radius="0.1796" width="0.254" layer="94"/>
-<circle x="0" y="0" radius="0.1796" width="0.254" layer="94"/>
-<text x="-2.54" y="0.762" size="1.778" layer="95">&gt;NAME</text>
-<text x="-2.54" y="2.921" size="1.778" layer="96">&gt;VALUE</text>
-<pin name="A" x="-5.08" y="2.54" visible="pad" length="middle" direction="pas" rot="R270"/>
-<pin name="CBLUE" x="0" y="-5.08" visible="pad" length="short" direction="pas" rot="R90"/>
-<pin name="CGREEN" x="5.08" y="-5.08" visible="pad" length="short" direction="pas" rot="R90"/>
-<pin name="CRED" x="-5.08" y="-5.08" visible="pad" length="short" direction="pas" rot="R90"/>
-<polygon width="0.1524" layer="94">
-<vertex x="2.032" y="-1.524"/>
-<vertex x="1.778" y="-2.286"/>
-<vertex x="2.54" y="-2.032"/>
-</polygon>
-<polygon width="0.1524" layer="94">
-<vertex x="2.794" y="-2.286"/>
-<vertex x="2.54" y="-3.048"/>
-<vertex x="3.302" y="-2.794"/>
-</polygon>
-<polygon width="0.1524" layer="94">
-<vertex x="-3.048" y="-1.524"/>
-<vertex x="-3.302" y="-2.286"/>
-<vertex x="-2.54" y="-2.032"/>
-</polygon>
-<polygon width="0.1524" layer="94">
-<vertex x="-2.286" y="-2.286"/>
-<vertex x="-2.54" y="-3.048"/>
-<vertex x="-1.778" y="-2.794"/>
-</polygon>
-<polygon width="0.1524" layer="94">
-<vertex x="-8.128" y="-1.524"/>
-<vertex x="-8.382" y="-2.286"/>
-<vertex x="-7.62" y="-2.032"/>
-</polygon>
-<polygon width="0.1524" layer="94">
-<vertex x="-7.366" y="-2.286"/>
-<vertex x="-7.62" y="-3.048"/>
-<vertex x="-6.858" y="-2.794"/>
-</polygon>
-</symbol>
-</symbols>
-<devicesets>
-<deviceset name="GM1WA55311A" prefix="LED">
-<description>&lt;b&gt;Chip LED RGB&lt;/b&gt;&lt;p&gt;
-Source: http://document.sharpsma.com/files/GM1WA55311A_SS.pdf</description>
-<gates>
-<gate name="G$1" symbol="LED-RGB-A" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="GM1WA55311A">
-<connects>
-<connect gate="G$1" pin="A" pad="4"/>
-<connect gate="G$1" pin="CBLUE" pad="3"/>
-<connect gate="G$1" pin="CGREEN" pad="1"/>
-<connect gate="G$1" pin="CRED" pad="2"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-<device name="10MM_RGB_EDGE" package="LED10MM_RGB_EDGE">
-<connects>
-<connect gate="G$1" pin="A" pad="A"/>
-<connect gate="G$1" pin="CBLUE" pad="B"/>
-<connect gate="G$1" pin="CGREEN" pad="G"/>
-<connect gate="G$1" pin="CRED" pad="R"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-<device name="5MM_RGB_EDGE" package="LED5MM_RGB_EDGE">
-<connects>
-<connect gate="G$1" pin="A" pad="A"/>
-<connect gate="G$1" pin="CBLUE" pad="B"/>
-<connect gate="G$1" pin="CGREEN" pad="G"/>
-<connect gate="G$1" pin="CRED" pad="R"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-</devicesets>
-</library>
 <library name="SparkFun">
 <packages>
 <package name="MOLEX-1X2">
@@ -632,35 +472,6 @@ chip</description>
 <text x="-0.908" y="1.27" size="0.4064" layer="25">&gt;NAME</text>
 <text x="-0.908" y="-1.651" size="0.4064" layer="27">&gt;VALUE</text>
 </package>
-<package name="PTC-1206">
-<wire x1="-1.5" y1="0.75" x2="1.5" y2="0.75" width="0.127" layer="51"/>
-<wire x1="1.5" y1="0.75" x2="1.5" y2="-0.75" width="0.127" layer="51"/>
-<wire x1="1.5" y1="-0.75" x2="-1.5" y2="-0.75" width="0.127" layer="51"/>
-<wire x1="-1.5" y1="-0.75" x2="-1.5" y2="0.75" width="0.127" layer="51"/>
-<wire x1="0.635" y1="-0.762" x2="-0.635" y2="-0.762" width="0.2032" layer="21"/>
-<wire x1="-0.635" y1="0.762" x2="0.635" y2="0.762" width="0.2032" layer="21"/>
-<wire x1="-1.143" y1="-1.016" x2="0.254" y2="1.016" width="0.127" layer="51"/>
-<wire x1="0.254" y1="1.016" x2="1.143" y2="1.016" width="0.127" layer="51"/>
-<smd name="1" x="-1.4" y="0" dx="1" dy="1.8" layer="1"/>
-<smd name="2" x="1.4" y="0" dx="1" dy="1.8" layer="1"/>
-<text x="-1.524" y="1.27" size="0.4064" layer="25">&gt;Name</text>
-<text x="-1.524" y="-1.651" size="0.4064" layer="27">&gt;Value</text>
-</package>
-<package name="0603">
-<wire x1="-1.473" y1="0.983" x2="1.473" y2="0.983" width="0.0508" layer="39"/>
-<wire x1="1.473" y1="0.983" x2="1.473" y2="-0.983" width="0.0508" layer="39"/>
-<wire x1="1.473" y1="-0.983" x2="-1.473" y2="-0.983" width="0.0508" layer="39"/>
-<wire x1="-1.473" y1="-0.983" x2="-1.473" y2="0.983" width="0.0508" layer="39"/>
-<wire x1="-0.356" y1="0.432" x2="0.356" y2="0.432" width="0.1016" layer="51"/>
-<wire x1="-0.356" y1="-0.419" x2="0.356" y2="-0.419" width="0.1016" layer="51"/>
-<smd name="1" x="-0.85" y="0" dx="1.1" dy="1" layer="1"/>
-<smd name="2" x="0.85" y="0" dx="1.1" dy="1" layer="1"/>
-<text x="-0.889" y="0.762" size="0.4064" layer="25" font="vector">&gt;NAME</text>
-<text x="-1.016" y="-1.143" size="0.4064" layer="27" font="vector">&gt;VALUE</text>
-<rectangle x1="-0.8382" y1="-0.4699" x2="-0.3381" y2="0.4801" layer="51"/>
-<rectangle x1="0.3302" y1="-0.4699" x2="0.8303" y2="0.4801" layer="51"/>
-<rectangle x1="-0.1999" y1="-0.3" x2="0.1999" y2="0.3" layer="35"/>
-</package>
 <package name="AXIAL-5MM">
 <wire x1="-1.14" y1="0.762" x2="1.14" y2="0.762" width="0.2032" layer="21"/>
 <wire x1="1.14" y1="0.762" x2="1.14" y2="0" width="0.2032" layer="21"/>
@@ -897,14 +708,6 @@ chip</description>
 <text x="-0.9498" y="-1.651" size="0.4064" layer="27">&gt;VALUE</text>
 <rectangle x1="-1.2192" y1="-1.143" x2="1.2192" y2="1.143" layer="31"/>
 </package>
-<package name="PTC">
-<wire x1="-3.81" y1="1.524" x2="3.81" y2="1.524" width="0.127" layer="21"/>
-<wire x1="3.81" y1="1.524" x2="3.81" y2="-1.524" width="0.127" layer="21"/>
-<wire x1="3.81" y1="-1.524" x2="-3.81" y2="-1.524" width="0.127" layer="21"/>
-<wire x1="-3.81" y1="-1.524" x2="-3.81" y2="1.524" width="0.127" layer="21"/>
-<pad name="P$1" x="-2.54" y="0" drill="0.8"/>
-<pad name="P$2" x="2.54" y="0" drill="0.8"/>
-</package>
 <package name="CAP-PTH-LARGE">
 <wire x1="0" y1="0.635" x2="0" y2="0" width="0.2032" layer="21"/>
 <wire x1="0" y1="0" x2="0" y2="-0.635" width="0.2032" layer="21"/>
@@ -1022,18 +825,6 @@ chip</description>
 <text x="-2.54" y="2.54" size="1.778" layer="95">&gt;NAME</text>
 <pin name="2" x="5.08" y="0" visible="off" length="short" direction="pas" swaplevel="1" rot="R180"/>
 <pin name="1" x="-5.08" y="0" visible="off" length="short" direction="pas" swaplevel="1"/>
-</symbol>
-<symbol name="PTC">
-<wire x1="5.08" y1="1.27" x2="5.08" y2="-1.27" width="0.254" layer="94"/>
-<wire x1="5.08" y1="-1.27" x2="-2.54" y2="-1.27" width="0.254" layer="94"/>
-<wire x1="-2.54" y1="-1.27" x2="-2.54" y2="1.27" width="0.254" layer="94"/>
-<wire x1="-2.54" y1="1.27" x2="5.08" y2="1.27" width="0.254" layer="94"/>
-<wire x1="-1.524" y1="-2.54" x2="3.81" y2="2.54" width="0.254" layer="94"/>
-<wire x1="3.81" y1="2.54" x2="5.08" y2="2.54" width="0.254" layer="94"/>
-<text x="-2.54" y="3.048" size="1.778" layer="95">&gt;NAME</text>
-<text x="-3.302" y="-5.08" size="1.778" layer="96">&gt;VALUE</text>
-<pin name="1" x="-5.08" y="0" visible="off" length="short"/>
-<pin name="2" x="7.62" y="0" visible="off" length="short" rot="R180"/>
 </symbol>
 <symbol name="SWITCH-MOMENTARY">
 <wire x1="1.905" y1="0" x2="2.54" y2="0" width="0.254" layer="94"/>
@@ -1405,42 +1196,6 @@ Standard SMD solder jumper. Used to automate production. Two varients : Normally
 <connects>
 <connect gate="1" pin="1" pad="1"/>
 <connect gate="1" pin="2" pad="2"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-<deviceset name="PTC" prefix="F">
-<description>&lt;b&gt;Resettable Fuse PTC&lt;/b&gt;
-Resettable Fuse. Spark Fun Electronics SKU : COM-08357</description>
-<gates>
-<gate name="G$1" symbol="PTC" x="0" y="0"/>
-</gates>
-<devices>
-<device name="PTH" package="PTC">
-<connects>
-<connect gate="G$1" pin="1" pad="P$1"/>
-<connect gate="G$1" pin="2" pad="P$2"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-<device name="SMD" package="PTC-1206">
-<connects>
-<connect gate="G$1" pin="1" pad="1"/>
-<connect gate="G$1" pin="2" pad="2"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-<device name="0603" package="0603">
-<connects>
-<connect gate="G$1" pin="1" pad="1"/>
-<connect gate="G$1" pin="2" pad="2"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -8712,6 +8467,51 @@ Source: www.kingbright.com</description>
 <vertex x="0.2732" y="-0.716"/>
 </polygon>
 </package>
+<package name="LED5MM_RGB_EDGE">
+<wire x1="-2.6352" y1="-1.1938" x2="-2.6352" y2="-2.0828" width="0.127" layer="21"/>
+<wire x1="2.7986" y1="-1.1924" x2="2.8109" y2="-2.1099" width="0.127" layer="21" curve="-180.01249"/>
+<smd name="A" x="-0.585" y="-1.6002" dx="3.175" dy="1" layer="16" rot="R90"/>
+<smd name="B" x="1.971" y="-1.6002" dx="3.175" dy="1" layer="16" rot="R90"/>
+<smd name="G" x="0.693" y="-1.6002" dx="3.175" dy="1" layer="1" rot="R90"/>
+<smd name="R" x="-1.863" y="-1.6002" dx="3.175" dy="1" layer="1" rot="R90"/>
+<text x="2.7686" y="2.0066" size="1.27" layer="25" rot="R180">&gt;NAME</text>
+<text x="0.0508" y="-4.7244" size="1.27" layer="22" font="vector" ratio="12" rot="MR0">A</text>
+<wire x1="-2.5" y1="0.408" x2="2.5" y2="0.408" width="0.127" layer="21"/>
+</package>
+<package name="GM1WA55311A">
+<description>&lt;b&gt;Chip LED RGB&lt;/b&gt;&lt;p&gt;
+Source: http://document.sharpsma.com/files/GM1WA55311A_SS.pdf</description>
+<wire x1="-0.75" y1="-0.75" x2="0.75" y2="-0.75" width="0.1016" layer="51"/>
+<wire x1="0.75" y1="-0.75" x2="0.75" y2="0.75" width="0.1016" layer="51"/>
+<wire x1="0.75" y1="0.75" x2="-0.75" y2="0.75" width="0.1016" layer="51"/>
+<wire x1="-0.75" y1="0.75" x2="-0.75" y2="-0.75" width="0.1016" layer="51"/>
+<wire x1="-0.55" y1="0.7" x2="-0.55" y2="-0.7" width="0.1016" layer="51"/>
+<wire x1="0.55" y1="-0.7" x2="0.55" y2="0.7" width="0.1016" layer="51"/>
+<smd name="1" x="-0.475" y="0.9" dx="0.65" dy="1.2" layer="1" stop="no" cream="no"/>
+<smd name="2" x="-0.475" y="-0.9" dx="0.65" dy="1.2" layer="1" stop="no" cream="no"/>
+<smd name="3" x="0.475" y="-0.9" dx="0.65" dy="1.2" layer="1" stop="no" cream="no"/>
+<smd name="4" x="0.475" y="0.9" dx="0.65" dy="1.2" layer="1" stop="no" cream="no"/>
+<text x="-0.762" y="1.778" size="1.27" layer="25">&gt;NAME</text>
+<text x="-0.762" y="-3.048" size="1.27" layer="27">&gt;VALUE</text>
+<rectangle x1="-0.85" y1="0.25" x2="-0.1" y2="1.55" layer="29"/>
+<rectangle x1="0.1" y1="0.25" x2="0.85" y2="1.55" layer="29"/>
+<rectangle x1="-0.85" y1="-1.55" x2="-0.1" y2="-0.25" layer="29"/>
+<rectangle x1="0.1" y1="-1.55" x2="0.85" y2="-0.25" layer="29"/>
+<rectangle x1="-0.775" y1="0.325" x2="-0.175" y2="1.45" layer="31"/>
+<rectangle x1="0.175" y1="0.325" x2="0.775" y2="1.45" layer="31"/>
+<rectangle x1="0.175" y1="-1.45" x2="0.775" y2="-0.325" layer="31" rot="R180"/>
+<rectangle x1="-0.775" y1="-1.45" x2="-0.175" y2="-0.325" layer="31" rot="R180"/>
+<rectangle x1="-0.4" y1="0.25" x2="-0.25" y2="0.65" layer="51"/>
+</package>
+<package name="LED10MM_RGB_EDGE">
+<wire x1="-5.4" y1="0.2794" x2="5.4" y2="0.2794" width="0.127" layer="21"/>
+<smd name="A" x="-0.385" y="-1.6002" dx="3.175" dy="1.25" layer="16" rot="R90"/>
+<smd name="B" x="1.155" y="-1.6002" dx="3.175" dy="1.25" layer="16" rot="R90"/>
+<smd name="G" x="0.385" y="-1.6002" dx="3.175" dy="1.25" layer="1" rot="R90"/>
+<smd name="R" x="-1.155" y="-1.6002" dx="3.175" dy="1.25" layer="1" rot="R90"/>
+<text x="2.7686" y="2.0066" size="1.27" layer="25" rot="R180">&gt;NAME</text>
+<text x="0.0508" y="-4.7244" size="1.27" layer="22" font="vector" ratio="12" rot="MR0">A</text>
+</package>
 </packages>
 <symbols>
 <symbol name="M02">
@@ -8744,6 +8544,71 @@ Source: www.kingbright.com</description>
 <pin name="VSS@1" x="20.32" y="-5.08" length="middle" rot="R180"/>
 <pin name="VSS@2" x="20.32" y="-10.16" length="middle" rot="R180"/>
 <pin name="GND@EXP" x="0" y="-15.24" visible="off" length="short" direction="pas" rot="R90"/>
+</symbol>
+<symbol name="LED-RGB-A">
+<wire x1="6.35" y1="-0.762" x2="5.08" y2="-2.794" width="0.254" layer="94"/>
+<wire x1="5.08" y1="-2.794" x2="3.81" y2="-0.762" width="0.254" layer="94"/>
+<wire x1="6.35" y1="-2.794" x2="5.08" y2="-2.794" width="0.254" layer="94"/>
+<wire x1="5.08" y1="-2.794" x2="3.81" y2="-2.794" width="0.254" layer="94"/>
+<wire x1="6.35" y1="-0.762" x2="3.81" y2="-0.762" width="0.254" layer="94"/>
+<wire x1="3.048" y1="-1.016" x2="2.159" y2="-1.905" width="0.1524" layer="94"/>
+<wire x1="3.81" y1="-1.778" x2="2.921" y2="-2.667" width="0.1524" layer="94"/>
+<wire x1="1.27" y1="-0.762" x2="0" y2="-2.794" width="0.254" layer="94"/>
+<wire x1="0" y1="-2.794" x2="-1.27" y2="-0.762" width="0.254" layer="94"/>
+<wire x1="1.27" y1="-2.794" x2="0" y2="-2.794" width="0.254" layer="94"/>
+<wire x1="0" y1="-2.794" x2="-1.27" y2="-2.794" width="0.254" layer="94"/>
+<wire x1="1.27" y1="-0.762" x2="-1.27" y2="-0.762" width="0.254" layer="94"/>
+<wire x1="-2.032" y1="-1.016" x2="-2.921" y2="-1.905" width="0.1524" layer="94"/>
+<wire x1="-1.27" y1="-1.778" x2="-2.159" y2="-2.667" width="0.1524" layer="94"/>
+<wire x1="-3.81" y1="-0.762" x2="-5.08" y2="-2.794" width="0.254" layer="94"/>
+<wire x1="-5.08" y1="-2.794" x2="-6.35" y2="-0.762" width="0.254" layer="94"/>
+<wire x1="-3.81" y1="-2.794" x2="-5.08" y2="-2.794" width="0.254" layer="94"/>
+<wire x1="-5.08" y1="-2.794" x2="-6.35" y2="-2.794" width="0.254" layer="94"/>
+<wire x1="-3.81" y1="-0.762" x2="-6.35" y2="-0.762" width="0.254" layer="94"/>
+<wire x1="-7.112" y1="-1.016" x2="-8.001" y2="-1.905" width="0.1524" layer="94"/>
+<wire x1="-6.35" y1="-1.778" x2="-7.239" y2="-2.667" width="0.1524" layer="94"/>
+<wire x1="-5.08" y1="0" x2="0" y2="0" width="0.1524" layer="94"/>
+<wire x1="0" y1="0" x2="0" y2="-2.54" width="0.1524" layer="94"/>
+<wire x1="0" y1="0" x2="5.08" y2="0" width="0.1524" layer="94"/>
+<wire x1="5.08" y1="0" x2="5.08" y2="-2.54" width="0.1524" layer="94"/>
+<circle x="-5.08" y="0" radius="0.1796" width="0.254" layer="94"/>
+<circle x="0" y="0" radius="0.1796" width="0.254" layer="94"/>
+<text x="-2.54" y="0.762" size="1.778" layer="95">&gt;NAME</text>
+<text x="-2.54" y="2.921" size="1.778" layer="96">&gt;VALUE</text>
+<pin name="A" x="-5.08" y="2.54" visible="pad" length="middle" direction="pas" rot="R270"/>
+<pin name="CBLUE" x="0" y="-5.08" visible="pad" length="short" direction="pas" rot="R90"/>
+<pin name="CGREEN" x="5.08" y="-5.08" visible="pad" length="short" direction="pas" rot="R90"/>
+<pin name="CRED" x="-5.08" y="-5.08" visible="pad" length="short" direction="pas" rot="R90"/>
+<polygon width="0.1524" layer="94">
+<vertex x="2.032" y="-1.524"/>
+<vertex x="1.778" y="-2.286"/>
+<vertex x="2.54" y="-2.032"/>
+</polygon>
+<polygon width="0.1524" layer="94">
+<vertex x="2.794" y="-2.286"/>
+<vertex x="2.54" y="-3.048"/>
+<vertex x="3.302" y="-2.794"/>
+</polygon>
+<polygon width="0.1524" layer="94">
+<vertex x="-3.048" y="-1.524"/>
+<vertex x="-3.302" y="-2.286"/>
+<vertex x="-2.54" y="-2.032"/>
+</polygon>
+<polygon width="0.1524" layer="94">
+<vertex x="-2.286" y="-2.286"/>
+<vertex x="-2.54" y="-3.048"/>
+<vertex x="-1.778" y="-2.794"/>
+</polygon>
+<polygon width="0.1524" layer="94">
+<vertex x="-8.128" y="-1.524"/>
+<vertex x="-8.382" y="-2.286"/>
+<vertex x="-7.62" y="-2.032"/>
+</polygon>
+<polygon width="0.1524" layer="94">
+<vertex x="-7.366" y="-2.286"/>
+<vertex x="-7.62" y="-3.048"/>
+<vertex x="-6.858" y="-2.794"/>
+</polygon>
 </symbol>
 </symbols>
 <devicesets>
@@ -8963,6 +8828,48 @@ Standard 2-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <connect gate="G$1" pin="VDD@2" pad="2"/>
 <connect gate="G$1" pin="VSS@1" pad="9"/>
 <connect gate="G$1" pin="VSS@2" pad="8"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="GM1WA55311A" prefix="LED">
+<description>&lt;b&gt;Chip LED RGB&lt;/b&gt;&lt;p&gt;
+Source: http://document.sharpsma.com/files/GM1WA55311A_SS.pdf</description>
+<gates>
+<gate name="G$1" symbol="LED-RGB-A" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="GM1WA55311A">
+<connects>
+<connect gate="G$1" pin="A" pad="4"/>
+<connect gate="G$1" pin="CBLUE" pad="3"/>
+<connect gate="G$1" pin="CGREEN" pad="1"/>
+<connect gate="G$1" pin="CRED" pad="2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+<device name="5MM_RGB_EDGE" package="LED5MM_RGB_EDGE">
+<connects>
+<connect gate="G$1" pin="A" pad="A"/>
+<connect gate="G$1" pin="CBLUE" pad="B"/>
+<connect gate="G$1" pin="CGREEN" pad="G"/>
+<connect gate="G$1" pin="CRED" pad="R"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+<device name="10MM_RGB_EDGE" package="LED10MM_RGB_EDGE">
+<connects>
+<connect gate="G$1" pin="A" pad="A"/>
+<connect gate="G$1" pin="CBLUE" pad="B"/>
+<connect gate="G$1" pin="CGREEN" pad="G"/>
+<connect gate="G$1" pin="CRED" pad="R"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -9766,30 +9673,30 @@ Standard 2-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <part name="SUPPLY5" library="supply2" deviceset="VCC" device=""/>
 <part name="C15" library="slice_noshift" deviceset="CAP" device="0805" value=".1uF"/>
 <part name="GND14" library="SparkFun" deviceset="GND" device=""/>
-<part name="LED1" library="16x16_RGB" deviceset="GM1WA55311A" device="5MM_RGB_EDGE"/>
-<part name="LED2" library="16x16_RGB" deviceset="GM1WA55311A" device="5MM_RGB_EDGE"/>
-<part name="LED3" library="16x16_RGB" deviceset="GM1WA55311A" device="5MM_RGB_EDGE"/>
-<part name="LED4" library="16x16_RGB" deviceset="GM1WA55311A" device="5MM_RGB_EDGE"/>
-<part name="LED5" library="16x16_RGB" deviceset="GM1WA55311A" device="5MM_RGB_EDGE"/>
-<part name="LED6" library="16x16_RGB" deviceset="GM1WA55311A" device="5MM_RGB_EDGE"/>
-<part name="LED7" library="16x16_RGB" deviceset="GM1WA55311A" device="5MM_RGB_EDGE"/>
-<part name="LED8" library="16x16_RGB" deviceset="GM1WA55311A" device="5MM_RGB_EDGE"/>
-<part name="LED9" library="16x16_RGB" deviceset="GM1WA55311A" device="5MM_RGB_EDGE"/>
-<part name="LED10" library="16x16_RGB" deviceset="GM1WA55311A" device="5MM_RGB_EDGE"/>
-<part name="LED11" library="16x16_RGB" deviceset="GM1WA55311A" device="5MM_RGB_EDGE"/>
-<part name="LED12" library="16x16_RGB" deviceset="GM1WA55311A" device="5MM_RGB_EDGE"/>
-<part name="LED13" library="16x16_RGB" deviceset="GM1WA55311A" device="5MM_RGB_EDGE"/>
-<part name="LED14" library="16x16_RGB" deviceset="GM1WA55311A" device="5MM_RGB_EDGE"/>
-<part name="LED15" library="16x16_RGB" deviceset="GM1WA55311A" device="5MM_RGB_EDGE"/>
-<part name="LED16" library="16x16_RGB" deviceset="GM1WA55311A" device="5MM_RGB_EDGE"/>
-<part name="LED17" library="16x16_RGB" deviceset="GM1WA55311A" device="5MM_RGB_EDGE"/>
-<part name="LED18" library="16x16_RGB" deviceset="GM1WA55311A" device="5MM_RGB_EDGE"/>
-<part name="LED19" library="16x16_RGB" deviceset="GM1WA55311A" device="5MM_RGB_EDGE"/>
-<part name="LED20" library="16x16_RGB" deviceset="GM1WA55311A" device="5MM_RGB_EDGE"/>
-<part name="LED21" library="16x16_RGB" deviceset="GM1WA55311A" device="5MM_RGB_EDGE"/>
-<part name="LED22" library="16x16_RGB" deviceset="GM1WA55311A" device="5MM_RGB_EDGE"/>
-<part name="LED23" library="16x16_RGB" deviceset="GM1WA55311A" device="5MM_RGB_EDGE"/>
-<part name="LED24" library="16x16_RGB" deviceset="GM1WA55311A" device="5MM_RGB_EDGE"/>
+<part name="LED1" library="24x16_RGB" deviceset="GM1WA55311A" device="5MM_RGB_EDGE"/>
+<part name="LED2" library="24x16_RGB" deviceset="GM1WA55311A" device="5MM_RGB_EDGE"/>
+<part name="LED3" library="24x16_RGB" deviceset="GM1WA55311A" device="5MM_RGB_EDGE"/>
+<part name="LED4" library="24x16_RGB" deviceset="GM1WA55311A" device="5MM_RGB_EDGE"/>
+<part name="LED5" library="24x16_RGB" deviceset="GM1WA55311A" device="5MM_RGB_EDGE"/>
+<part name="LED6" library="24x16_RGB" deviceset="GM1WA55311A" device="5MM_RGB_EDGE"/>
+<part name="LED7" library="24x16_RGB" deviceset="GM1WA55311A" device="5MM_RGB_EDGE"/>
+<part name="LED8" library="24x16_RGB" deviceset="GM1WA55311A" device="5MM_RGB_EDGE"/>
+<part name="LED9" library="24x16_RGB" deviceset="GM1WA55311A" device="5MM_RGB_EDGE"/>
+<part name="LED10" library="24x16_RGB" deviceset="GM1WA55311A" device="5MM_RGB_EDGE"/>
+<part name="LED11" library="24x16_RGB" deviceset="GM1WA55311A" device="5MM_RGB_EDGE"/>
+<part name="LED12" library="24x16_RGB" deviceset="GM1WA55311A" device="5MM_RGB_EDGE"/>
+<part name="LED13" library="24x16_RGB" deviceset="GM1WA55311A" device="5MM_RGB_EDGE"/>
+<part name="LED14" library="24x16_RGB" deviceset="GM1WA55311A" device="5MM_RGB_EDGE"/>
+<part name="LED15" library="24x16_RGB" deviceset="GM1WA55311A" device="5MM_RGB_EDGE"/>
+<part name="LED16" library="24x16_RGB" deviceset="GM1WA55311A" device="5MM_RGB_EDGE"/>
+<part name="LED17" library="24x16_RGB" deviceset="GM1WA55311A" device="5MM_RGB_EDGE"/>
+<part name="LED18" library="24x16_RGB" deviceset="GM1WA55311A" device="5MM_RGB_EDGE"/>
+<part name="LED19" library="24x16_RGB" deviceset="GM1WA55311A" device="5MM_RGB_EDGE"/>
+<part name="LED20" library="24x16_RGB" deviceset="GM1WA55311A" device="5MM_RGB_EDGE"/>
+<part name="LED21" library="24x16_RGB" deviceset="GM1WA55311A" device="5MM_RGB_EDGE"/>
+<part name="LED22" library="24x16_RGB" deviceset="GM1WA55311A" device="5MM_RGB_EDGE"/>
+<part name="LED23" library="24x16_RGB" deviceset="GM1WA55311A" device="5MM_RGB_EDGE"/>
+<part name="LED24" library="24x16_RGB" deviceset="GM1WA55311A" device="5MM_RGB_EDGE"/>
 <part name="BATTERY" library="SparkFun" deviceset="M02" device="PTH"/>
 <part name="GND2" library="SparkFun" deviceset="GND" device=""/>
 <part name="IC5" library="24x16_RGB" deviceset="MCP73123" device=""/>
@@ -9802,7 +9709,6 @@ Standard 2-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <part name="R5" library="slice_noshift" deviceset="RESISTOR" device="0805" value="1.5K"/>
 <part name="GND8" library="SparkFun" deviceset="GND" device=""/>
 <part name="R4" library="slice_noshift" deviceset="RESISTOR" device="0805" value="1K"/>
-<part name="F1" library="SparkFun" deviceset="PTC" device="SMD" value="1206L150/12SLYR"/>
 <part name="C16" library="slice_noshift" deviceset="CAP_POL" device="3528" value="4.7uF"/>
 <part name="GND15" library="SparkFun" deviceset="GND" device=""/>
 <part name="GND16" library="SparkFun" deviceset="GND" device=""/>
@@ -11608,7 +11514,6 @@ Standard 2-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <instance part="R5" gate="G$1" x="33.02" y="-7.62" rot="R90"/>
 <instance part="GND8" gate="1" x="33.02" y="-20.32"/>
 <instance part="R4" gate="G$1" x="-30.48" y="-7.62" rot="R90"/>
-<instance part="F1" gate="G$1" x="83.82" y="0"/>
 <instance part="C16" gate="G$1" x="114.3" y="-2.54"/>
 <instance part="GND15" gate="1" x="114.3" y="-12.7"/>
 <instance part="GND16" gate="1" x="0" y="-27.94"/>
@@ -11616,26 +11521,6 @@ Standard 2-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <busses>
 </busses>
 <nets>
-<net name="VBAT" class="0">
-<segment>
-<wire x1="68.58" y1="0" x2="78.74" y2="0" width="0.1524" layer="91"/>
-<wire x1="20.32" y1="7.62" x2="27.94" y2="7.62" width="0.1524" layer="91"/>
-<wire x1="27.94" y1="7.62" x2="43.18" y2="7.62" width="0.1524" layer="91"/>
-<wire x1="20.32" y1="2.54" x2="27.94" y2="2.54" width="0.1524" layer="91"/>
-<wire x1="27.94" y1="2.54" x2="27.94" y2="7.62" width="0.1524" layer="91"/>
-<wire x1="43.18" y1="5.08" x2="43.18" y2="7.62" width="0.1524" layer="91"/>
-<wire x1="43.18" y1="7.62" x2="68.58" y2="7.62" width="0.1524" layer="91"/>
-<wire x1="68.58" y1="7.62" x2="68.58" y2="0" width="0.1524" layer="91"/>
-<junction x="27.94" y="7.62"/>
-<junction x="68.58" y="0"/>
-<junction x="43.18" y="7.62"/>
-<pinref part="BATTERY" gate="G$1" pin="2"/>
-<pinref part="IC5" gate="G$1" pin="VBAT@1"/>
-<pinref part="IC5" gate="G$1" pin="VBAT@2"/>
-<pinref part="C7" gate="G$1" pin="+"/>
-<pinref part="F1" gate="G$1" pin="1"/>
-</segment>
-</net>
 <net name="GND" class="0">
 <segment>
 <wire x1="-43.18" y1="27.94" x2="-38.1" y2="27.94" width="0.1524" layer="91"/>
@@ -11714,10 +11599,23 @@ Standard 2-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 </net>
 <net name="VCC" class="0">
 <segment>
-<wire x1="91.44" y1="0" x2="114.3" y2="0" width="0.1524" layer="91"/>
 <label x="101.6" y="0" size="1.778" layer="95"/>
-<pinref part="F1" gate="G$1" pin="2"/>
 <pinref part="C16" gate="G$1" pin="+"/>
+<wire x1="20.32" y1="7.62" x2="27.94" y2="7.62" width="0.1524" layer="91"/>
+<wire x1="27.94" y1="7.62" x2="43.18" y2="7.62" width="0.1524" layer="91"/>
+<wire x1="20.32" y1="2.54" x2="27.94" y2="2.54" width="0.1524" layer="91"/>
+<wire x1="27.94" y1="2.54" x2="27.94" y2="7.62" width="0.1524" layer="91"/>
+<wire x1="43.18" y1="5.08" x2="43.18" y2="7.62" width="0.1524" layer="91"/>
+<wire x1="43.18" y1="7.62" x2="68.58" y2="7.62" width="0.1524" layer="91"/>
+<wire x1="68.58" y1="7.62" x2="68.58" y2="0" width="0.1524" layer="91"/>
+<junction x="27.94" y="7.62"/>
+<junction x="68.58" y="0"/>
+<junction x="43.18" y="7.62"/>
+<pinref part="BATTERY" gate="G$1" pin="2"/>
+<pinref part="IC5" gate="G$1" pin="VBAT@1"/>
+<pinref part="IC5" gate="G$1" pin="VBAT@2"/>
+<pinref part="C7" gate="G$1" pin="+"/>
+<wire x1="114.3" y1="0" x2="68.58" y2="0" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$1" class="0">
