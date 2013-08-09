@@ -8,34 +8,34 @@
 </settings>
 <grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
-<layer number="1" name="Top" color="4" fill="1" visible="yes" active="no"/>
-<layer number="2" name="Route2" color="1" fill="3" visible="yes" active="no"/>
-<layer number="3" name="Route3" color="4" fill="3" visible="yes" active="no"/>
-<layer number="4" name="Route4" color="1" fill="4" visible="yes" active="no"/>
-<layer number="5" name="Route5" color="4" fill="4" visible="yes" active="no"/>
-<layer number="6" name="Route6" color="1" fill="8" visible="yes" active="no"/>
-<layer number="7" name="Route7" color="4" fill="8" visible="yes" active="no"/>
-<layer number="8" name="Route8" color="1" fill="2" visible="yes" active="no"/>
-<layer number="9" name="Route9" color="4" fill="2" visible="yes" active="no"/>
-<layer number="10" name="Route10" color="1" fill="7" visible="yes" active="no"/>
-<layer number="11" name="Route11" color="4" fill="7" visible="yes" active="no"/>
-<layer number="12" name="Route12" color="1" fill="5" visible="yes" active="no"/>
-<layer number="13" name="Route13" color="4" fill="5" visible="yes" active="no"/>
-<layer number="14" name="Route14" color="1" fill="6" visible="yes" active="no"/>
-<layer number="15" name="Route15" color="4" fill="6" visible="yes" active="no"/>
-<layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="no"/>
-<layer number="17" name="Pads" color="2" fill="1" visible="yes" active="no"/>
-<layer number="18" name="Vias" color="2" fill="1" visible="yes" active="no"/>
-<layer number="19" name="Unrouted" color="6" fill="1" visible="yes" active="no"/>
-<layer number="20" name="Dimension" color="15" fill="1" visible="yes" active="no"/>
-<layer number="21" name="tPlace" color="7" fill="1" visible="yes" active="no"/>
-<layer number="22" name="bPlace" color="7" fill="1" visible="yes" active="no"/>
-<layer number="23" name="tOrigins" color="15" fill="1" visible="yes" active="no"/>
-<layer number="24" name="bOrigins" color="15" fill="1" visible="yes" active="no"/>
-<layer number="25" name="tNames" color="7" fill="1" visible="yes" active="no"/>
-<layer number="26" name="bNames" color="7" fill="1" visible="yes" active="no"/>
-<layer number="27" name="tValues" color="7" fill="1" visible="yes" active="no"/>
-<layer number="28" name="bValues" color="7" fill="1" visible="yes" active="no"/>
+<layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
+<layer number="2" name="Route2" color="1" fill="3" visible="no" active="no"/>
+<layer number="3" name="Route3" color="4" fill="3" visible="no" active="no"/>
+<layer number="4" name="Route4" color="1" fill="4" visible="no" active="no"/>
+<layer number="5" name="Route5" color="4" fill="4" visible="no" active="no"/>
+<layer number="6" name="Route6" color="1" fill="8" visible="no" active="no"/>
+<layer number="7" name="Route7" color="4" fill="8" visible="no" active="no"/>
+<layer number="8" name="Route8" color="1" fill="2" visible="no" active="no"/>
+<layer number="9" name="Route9" color="4" fill="2" visible="no" active="no"/>
+<layer number="10" name="Route10" color="1" fill="7" visible="no" active="no"/>
+<layer number="11" name="Route11" color="4" fill="7" visible="no" active="no"/>
+<layer number="12" name="Route12" color="1" fill="5" visible="no" active="no"/>
+<layer number="13" name="Route13" color="4" fill="5" visible="no" active="no"/>
+<layer number="14" name="Route14" color="1" fill="6" visible="no" active="no"/>
+<layer number="15" name="Route15" color="4" fill="6" visible="no" active="no"/>
+<layer number="16" name="Bottom" color="1" fill="1" visible="no" active="no"/>
+<layer number="17" name="Pads" color="2" fill="1" visible="no" active="no"/>
+<layer number="18" name="Vias" color="2" fill="1" visible="no" active="no"/>
+<layer number="19" name="Unrouted" color="6" fill="1" visible="no" active="no"/>
+<layer number="20" name="Dimension" color="15" fill="1" visible="no" active="no"/>
+<layer number="21" name="tPlace" color="7" fill="1" visible="no" active="no"/>
+<layer number="22" name="bPlace" color="7" fill="1" visible="no" active="no"/>
+<layer number="23" name="tOrigins" color="15" fill="1" visible="no" active="no"/>
+<layer number="24" name="bOrigins" color="15" fill="1" visible="no" active="no"/>
+<layer number="25" name="tNames" color="7" fill="1" visible="no" active="no"/>
+<layer number="26" name="bNames" color="7" fill="1" visible="no" active="no"/>
+<layer number="27" name="tValues" color="7" fill="1" visible="no" active="no"/>
+<layer number="28" name="bValues" color="7" fill="1" visible="no" active="no"/>
 <layer number="29" name="tStop" color="7" fill="3" visible="no" active="no"/>
 <layer number="30" name="bStop" color="7" fill="6" visible="no" active="no"/>
 <layer number="31" name="tCream" color="7" fill="4" visible="no" active="no"/>
@@ -44,8 +44,8 @@
 <layer number="34" name="bFinish" color="6" fill="6" visible="no" active="no"/>
 <layer number="35" name="tGlue" color="7" fill="4" visible="no" active="no"/>
 <layer number="36" name="bGlue" color="7" fill="5" visible="no" active="no"/>
-<layer number="37" name="tTest" color="7" fill="1" visible="yes" active="no"/>
-<layer number="38" name="bTest" color="7" fill="1" visible="yes" active="no"/>
+<layer number="37" name="tTest" color="7" fill="1" visible="no" active="no"/>
+<layer number="38" name="bTest" color="7" fill="1" visible="no" active="no"/>
 <layer number="39" name="tKeepout" color="4" fill="11" visible="no" active="no"/>
 <layer number="40" name="bKeepout" color="1" fill="11" visible="no" active="no"/>
 <layer number="41" name="tRestrict" color="4" fill="10" visible="no" active="no"/>
@@ -53,16 +53,16 @@
 <layer number="43" name="vRestrict" color="2" fill="10" visible="no" active="no"/>
 <layer number="44" name="Drills" color="7" fill="1" visible="no" active="no"/>
 <layer number="45" name="Holes" color="7" fill="1" visible="no" active="no"/>
-<layer number="46" name="Milling" color="3" fill="1" visible="yes" active="no"/>
-<layer number="47" name="Measures" color="7" fill="1" visible="yes" active="no"/>
-<layer number="48" name="Document" color="7" fill="1" visible="yes" active="no"/>
-<layer number="49" name="Reference" color="7" fill="1" visible="yes" active="no"/>
-<layer number="50" name="dxf" color="7" fill="1" visible="yes" active="no"/>
-<layer number="51" name="tDocu" color="7" fill="1" visible="yes" active="no"/>
-<layer number="52" name="bDocu" color="7" fill="1" visible="yes" active="no"/>
-<layer number="53" name="tGND_GNDA" color="7" fill="9" visible="yes" active="no"/>
-<layer number="54" name="bGND_GNDA" color="1" fill="9" visible="yes" active="no"/>
-<layer number="56" name="wert" color="7" fill="1" visible="yes" active="no"/>
+<layer number="46" name="Milling" color="3" fill="1" visible="no" active="no"/>
+<layer number="47" name="Measures" color="7" fill="1" visible="no" active="no"/>
+<layer number="48" name="Document" color="7" fill="1" visible="no" active="no"/>
+<layer number="49" name="Reference" color="7" fill="1" visible="no" active="no"/>
+<layer number="50" name="dxf" color="7" fill="1" visible="no" active="no"/>
+<layer number="51" name="tDocu" color="7" fill="1" visible="no" active="no"/>
+<layer number="52" name="bDocu" color="7" fill="1" visible="no" active="no"/>
+<layer number="53" name="tGND_GNDA" color="7" fill="9" visible="no" active="no"/>
+<layer number="54" name="bGND_GNDA" color="1" fill="9" visible="no" active="no"/>
+<layer number="56" name="wert" color="7" fill="1" visible="no" active="no"/>
 <layer number="91" name="Nets" color="2" fill="1" visible="yes" active="yes"/>
 <layer number="92" name="Busses" color="1" fill="1" visible="yes" active="yes"/>
 <layer number="93" name="Pins" color="2" fill="1" visible="no" active="yes"/>
@@ -3735,28 +3735,6 @@ Source: http://www.osram.convergy.de/</description>
 </library>
 <library name="SparkFun">
 <packages>
-<package name="RESONATOR-SMD">
-<wire x1="1.8" y1="0.65" x2="1.8" y2="-0.65" width="0.2032" layer="21"/>
-<wire x1="-1.8" y1="-0.65" x2="-1.8" y2="0.65" width="0.2032" layer="21"/>
-<wire x1="-1.6" y1="0.65" x2="1.6" y2="0.65" width="0.127" layer="51"/>
-<wire x1="1.6" y1="0.65" x2="1.6" y2="-0.65" width="0.127" layer="51"/>
-<wire x1="1.6" y1="-0.65" x2="-1.6" y2="-0.65" width="0.127" layer="51"/>
-<wire x1="-1.6" y1="-0.65" x2="-1.6" y2="0.65" width="0.127" layer="51"/>
-<smd name="1" x="-1.2" y="0" dx="0.7" dy="1.7" layer="1"/>
-<smd name="2" x="0" y="0" dx="0.7" dy="1.7" layer="1"/>
-<smd name="3" x="1.2" y="0" dx="0.7" dy="1.7" layer="1"/>
-<text x="-0.889" y="1.27" size="0.4064" layer="25">&gt;Name</text>
-<text x="-0.889" y="-1.524" size="0.4064" layer="27">&gt;Value</text>
-</package>
-<package name="RESONATOR-PTH">
-<wire x1="-2.286" y1="1.778" x2="-2.286" y2="-1.778" width="0.2032" layer="21" curve="162.403081"/>
-<wire x1="2.286" y1="-1.778" x2="2.286" y2="1.778" width="0.2032" layer="21" curve="162.403081"/>
-<wire x1="-2.286" y1="-1.778" x2="2.286" y2="-1.778" width="0.2032" layer="21" curve="12.71932"/>
-<wire x1="2.286" y1="1.778" x2="-2.286" y2="1.778" width="0.2032" layer="21" curve="12.758496"/>
-<pad name="2" x="0" y="0" drill="0.8" diameter="1.8796"/>
-<pad name="1" x="-2.54" y="0" drill="0.8" diameter="1.8796"/>
-<pad name="3" x="2.54" y="0" drill="0.8" diameter="1.8796"/>
-</package>
 <package name="EIA3216">
 <wire x1="-1" y1="-1.2" x2="-2.5" y2="-1.2" width="0.2032" layer="21"/>
 <wire x1="-2.5" y1="-1.2" x2="-2.5" y2="1.2" width="0.2032" layer="21"/>
@@ -4115,38 +4093,6 @@ chip</description>
 </package>
 </packages>
 <symbols>
-<symbol name="RESONATOR">
-<wire x1="1.016" y1="0" x2="2.54" y2="0" width="0.1524" layer="94"/>
-<wire x1="-2.54" y1="0" x2="-1.016" y2="0" width="0.1524" layer="94"/>
-<wire x1="-0.381" y1="1.524" x2="-0.381" y2="-1.524" width="0.1524" layer="94"/>
-<wire x1="-0.381" y1="-1.524" x2="0.381" y2="-1.524" width="0.1524" layer="94"/>
-<wire x1="0.381" y1="-1.524" x2="0.381" y2="1.524" width="0.1524" layer="94"/>
-<wire x1="0.381" y1="1.524" x2="-0.381" y2="1.524" width="0.1524" layer="94"/>
-<wire x1="1.016" y1="1.778" x2="1.016" y2="0" width="0.1524" layer="94"/>
-<wire x1="1.016" y1="0" x2="1.016" y2="-1.778" width="0.1524" layer="94"/>
-<wire x1="-1.016" y1="1.778" x2="-1.016" y2="0" width="0.1524" layer="94"/>
-<wire x1="-1.016" y1="0" x2="-1.016" y2="-1.778" width="0.1524" layer="94"/>
-<wire x1="2.54" y1="0" x2="2.54" y2="-2.032" width="0.1524" layer="94"/>
-<wire x1="3.302" y1="-2.032" x2="2.54" y2="-2.032" width="0.1524" layer="94"/>
-<wire x1="2.54" y1="-2.032" x2="1.778" y2="-2.032" width="0.1524" layer="94"/>
-<wire x1="3.302" y1="-3.048" x2="2.54" y2="-3.048" width="0.1524" layer="94"/>
-<wire x1="2.54" y1="-3.048" x2="1.778" y2="-3.048" width="0.1524" layer="94"/>
-<wire x1="2.54" y1="-3.048" x2="2.54" y2="-5.08" width="0.1524" layer="94"/>
-<wire x1="-1.778" y1="-3.048" x2="-2.54" y2="-3.048" width="0.1524" layer="94"/>
-<wire x1="-2.54" y1="-3.048" x2="-3.302" y2="-3.048" width="0.1524" layer="94"/>
-<wire x1="-2.54" y1="-3.048" x2="-2.54" y2="-5.08" width="0.1524" layer="94"/>
-<wire x1="-1.778" y1="-2.032" x2="-2.54" y2="-2.032" width="0.1524" layer="94"/>
-<wire x1="-2.54" y1="-2.032" x2="-3.302" y2="-2.032" width="0.1524" layer="94"/>
-<wire x1="-2.54" y1="-2.032" x2="-2.54" y2="0" width="0.1524" layer="94"/>
-<wire x1="2.54" y1="-5.08" x2="0" y2="-5.08" width="0.1524" layer="94"/>
-<wire x1="0" y1="-5.08" x2="-2.54" y2="-5.08" width="0.1524" layer="94"/>
-<wire x1="0" y1="-5.08" x2="0" y2="-7.62" width="0.1524" layer="94"/>
-<text x="2.54" y="1.016" size="1.778" layer="95">&gt;NAME</text>
-<text x="2.54" y="-7.62" size="1.778" layer="96">&gt;VALUE</text>
-<pin name="3" x="2.54" y="0" visible="off" length="point" direction="pas" swaplevel="1" rot="R180"/>
-<pin name="1" x="-2.54" y="0" visible="off" length="point" direction="pas" swaplevel="1"/>
-<pin name="2" x="0" y="-7.62" visible="off" length="point" direction="pas" swaplevel="1" rot="R90"/>
-</symbol>
 <symbol name="CAP_POL">
 <wire x1="-2.54" y1="0" x2="2.54" y2="0" width="0.254" layer="94"/>
 <wire x1="0" y1="-1.016" x2="0" y2="-2.54" width="0.1524" layer="94"/>
@@ -4176,35 +4122,6 @@ chip</description>
 </symbol>
 </symbols>
 <devicesets>
-<deviceset name="RESONATOR" prefix="Y">
-<description>&lt;b&gt;Resonator&lt;/b&gt;
-Small SMD resonator. This is the itty bitty 10/20MHz resonators with built in caps. CSTCE10M0G55 and CSTCE20M0V53. Footprint has been reviewed closely but hasn't been tested yet.</description>
-<gates>
-<gate name="G$1" symbol="RESONATOR" x="0" y="0"/>
-</gates>
-<devices>
-<device name="SMD" package="RESONATOR-SMD">
-<connects>
-<connect gate="G$1" pin="1" pad="1"/>
-<connect gate="G$1" pin="2" pad="2"/>
-<connect gate="G$1" pin="3" pad="3"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-<device name="PTH" package="RESONATOR-PTH">
-<connects>
-<connect gate="G$1" pin="1" pad="1"/>
-<connect gate="G$1" pin="2" pad="2"/>
-<connect gate="G$1" pin="3" pad="3"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
 <deviceset name="CAP_POL" prefix="C" uservalue="yes">
 <description>&lt;b&gt;Capacitor Polarized&lt;/b&gt;
 These are standard SMD and PTH capacitors. Normally 10uF, 47uF, and 100uF in electrolytic and tantalum varieties. Always verify the external diameter of the through hole cap, it varies with capacity, voltage, and manufacturer. The EIA devices should be standard.</description>
@@ -6071,372 +5988,6 @@ Source: www.kingbright.com</description>
 </deviceset>
 </devicesets>
 </library>
-<library name="tvbgone-adj">
-<packages>
-<package name="BATTCON_12MM">
-<wire x1="-6.096" y1="4.318" x2="-3.81" y2="6.604" width="0.127" layer="21" curve="-90"/>
-<wire x1="-3.81" y1="6.604" x2="3.81" y2="6.604" width="0.127" layer="21"/>
-<wire x1="3.81" y1="6.604" x2="6.096" y2="4.318" width="0.127" layer="21" curve="-90"/>
-<wire x1="6.096" y1="4.318" x2="6.096" y2="-3.302" width="0.127" layer="21"/>
-<wire x1="6.096" y1="-3.302" x2="3.048" y2="-6.35" width="0.127" layer="21"/>
-<wire x1="3.048" y1="-6.35" x2="-3.048" y2="-6.35" width="0.127" layer="21"/>
-<wire x1="-3.048" y1="-6.35" x2="-6.096" y2="-3.302" width="0.127" layer="21"/>
-<wire x1="-6.096" y1="-3.302" x2="-6.096" y2="4.318" width="0.127" layer="21"/>
-<smd name="GND" x="0" y="0" dx="3.9624" dy="3.9624" layer="1"/>
-<smd name="PWR@1" x="-7.874" y="0" dx="3.175" dy="3.175" layer="1"/>
-<smd name="PWR@2" x="7.874" y="0" dx="3.175" dy="3.175" layer="1"/>
-</package>
-<package name="BATTCON_12MM_PTH">
-<wire x1="-6.35" y1="-3.81" x2="-3.81" y2="-6.35" width="0.2032" layer="21"/>
-<wire x1="-3.81" y1="-6.35" x2="3.81" y2="-6.35" width="0.2032" layer="21"/>
-<wire x1="3.81" y1="-6.35" x2="6.35" y2="-3.81" width="0.2032" layer="21"/>
-<wire x1="6.35" y1="-3.81" x2="6.35" y2="-2.54" width="0.2032" layer="21"/>
-<wire x1="-6.35" y1="-3.81" x2="-6.35" y2="-2.54" width="0.2032" layer="21"/>
-<wire x1="-6.35" y1="2.54" x2="-6.35" y2="4.064" width="0.2032" layer="21"/>
-<wire x1="6.35" y1="2.54" x2="6.35" y2="4.064" width="0.2032" layer="21"/>
-<wire x1="-3.175" y1="5.588" x2="3.175" y2="5.588" width="0.2032" layer="21" curve="102.56384"/>
-<wire x1="-6.35" y1="4.064" x2="-3.175" y2="5.588" width="0.2032" layer="21" curve="-123.398919"/>
-<wire x1="6.35" y1="4.064" x2="3.175" y2="5.588" width="0.2032" layer="21" curve="128.77667"/>
-<pad name="VCC@1" x="-6.604" y="0" drill="1.8542" shape="square"/>
-<pad name="VCC@2" x="6.604" y="0" drill="1.8542" shape="square"/>
-<smd name="GND" x="0" y="0" dx="3.9624" dy="3.9624" layer="1"/>
-<text x="-3.81" y="-3.81" size="0.4064" layer="25">&gt;NAME</text>
-<text x="-3.81" y="-5.08" size="0.4064" layer="27">&gt;VALUE</text>
-</package>
-<package name="BATTCOM_20MM_PTH">
-<wire x1="19" y1="-4" x2="19" y2="4" width="0.2032" layer="21" curve="-316.397181"/>
-<wire x1="19" y1="4" x2="22" y2="4" width="0.2032" layer="21"/>
-<wire x1="22" y1="4" x2="22" y2="-4" width="0.2032" layer="21"/>
-<wire x1="22" y1="-4" x2="19" y2="-4" width="0.2032" layer="21"/>
-<circle x="9.06" y="0.1" radius="10" width="0.2032" layer="51"/>
-<pad name="1" x="20" y="0" drill="1.3" rot="R90"/>
-<pad name="2" x="0" y="0" drill="1.3" rot="R90"/>
-<text x="-6.985" y="0.635" size="0.4064" layer="25">&gt;NAME</text>
-<text x="-6.985" y="-0.635" size="0.4064" layer="27">&gt;VALUE</text>
-<text x="17.285" y="-0.6" size="1.27" layer="51">+</text>
-<text x="1.95" y="-0.6" size="1.27" layer="51">-</text>
-</package>
-<package name="BATTERY">
-<description>&lt;B&gt;BATTERY&lt;/B&gt;&lt;p&gt;
-22 mm</description>
-<wire x1="0.635" y1="2.54" x2="0.635" y2="0" width="0.1524" layer="21"/>
-<wire x1="-2.54" y1="0" x2="-0.635" y2="0" width="0.1524" layer="21"/>
-<wire x1="0.635" y1="0" x2="2.54" y2="0" width="0.1524" layer="21"/>
-<wire x1="0.635" y1="0" x2="0.635" y2="-2.54" width="0.1524" layer="21"/>
-<wire x1="1.27" y1="-3.175" x2="2.54" y2="-3.175" width="0.1524" layer="21"/>
-<wire x1="1.905" y1="-2.54" x2="1.905" y2="-3.81" width="0.1524" layer="21"/>
-<circle x="0" y="0" radius="11.43" width="0.1524" layer="21"/>
-<circle x="0" y="0" radius="10.2362" width="0.1524" layer="21"/>
-<pad name="+" x="9.525" y="-5.08" drill="1.016" shape="long"/>
-<pad name="+@1" x="9.525" y="5.08" drill="1.016" shape="long"/>
-<pad name="-" x="-5.715" y="0" drill="1.016" shape="long"/>
-<text x="-4.1656" y="6.35" size="1.778" layer="25" ratio="10">&gt;NAME</text>
-<text x="-4.445" y="3.81" size="1.778" layer="27" ratio="10">&gt;VALUE</text>
-<rectangle x1="-0.635" y1="-1.27" x2="0" y2="1.27" layer="21"/>
-</package>
-<package name="BATTCON_20MM">
-<wire x1="-3.7" y1="-9.9" x2="3.7" y2="-9.9" width="0.2032" layer="21"/>
-<wire x1="-3.7" y1="-9.9" x2="-10.5" y2="-5.7" width="0.2032" layer="21"/>
-<wire x1="3.7" y1="-9.9" x2="10.5" y2="-5.7" width="0.2032" layer="21"/>
-<wire x1="-5.3" y1="7.3" x2="5.4" y2="7.4" width="0.2032" layer="21" curve="94.031579"/>
-<wire x1="10.5" y1="-5.7" x2="10.5" y2="-3" width="0.2032" layer="21"/>
-<wire x1="-10.5" y1="-5.7" x2="-10.5" y2="-3" width="0.2032" layer="21"/>
-<wire x1="-10.5" y1="5.3" x2="-5.3" y2="7.3" width="0.2032" layer="21" curve="-139.635474"/>
-<wire x1="10.5" y1="5.3" x2="5.3" y2="7.3" width="0.2032" layer="21" curve="136.99875"/>
-<wire x1="-10.5" y1="5.3" x2="-10.5" y2="3" width="0.2032" layer="21"/>
-<wire x1="10.5" y1="5.3" x2="10.5" y2="3" width="0.2032" layer="21"/>
-<circle x="0" y="0" radius="10" width="0.2032" layer="51"/>
-<smd name="1" x="-12.827" y="0" dx="5.08" dy="5.08" layer="1"/>
-<smd name="2" x="0" y="0" dx="4.064" dy="4.064" layer="1"/>
-<smd name="3" x="12.827" y="0" dx="5.08" dy="5.08" layer="1"/>
-<text x="-6.985" y="0.635" size="0.4064" layer="25">&gt;NAME</text>
-<text x="-6.985" y="-0.635" size="0.4064" layer="27">&gt;VALUE</text>
-</package>
-<package name="BATTCON_245MM">
-<wire x1="-6.24" y1="-12.44" x2="6.24" y2="-12.44" width="0.2032" layer="21"/>
-<wire x1="-6.24" y1="-12.44" x2="-13.04" y2="-8.24" width="0.2032" layer="21"/>
-<wire x1="6.24" y1="-12.44" x2="13.04" y2="-8.24" width="0.2032" layer="21"/>
-<wire x1="-7.84" y1="12.38" x2="7.94" y2="12.48" width="0.2032" layer="21" curve="94.032201"/>
-<wire x1="13.04" y1="-8.24" x2="13.04" y2="-3" width="0.2032" layer="21"/>
-<wire x1="-13.04" y1="-8.24" x2="-13.04" y2="-3" width="0.2032" layer="21"/>
-<wire x1="-13.04" y1="10.38" x2="-7.84" y2="12.38" width="0.2032" layer="21" curve="-139.635474"/>
-<wire x1="13.04" y1="10.38" x2="7.84" y2="12.38" width="0.2032" layer="21" curve="136.99875"/>
-<wire x1="-13.04" y1="10.38" x2="-13.04" y2="3" width="0.2032" layer="21"/>
-<wire x1="13.04" y1="10.38" x2="13.04" y2="3" width="0.2032" layer="21"/>
-<circle x="0" y="0" radius="12.25" width="0.2032" layer="51"/>
-<smd name="1" x="-15.367" y="0" dx="5.08" dy="5.08" layer="1"/>
-<smd name="2" x="0" y="0" dx="4.064" dy="4.064" layer="1"/>
-<smd name="3" x="15.367" y="0" dx="5.08" dy="5.08" layer="1"/>
-<text x="-9.525" y="0.635" size="0.4064" layer="25">&gt;NAME</text>
-<text x="-9.525" y="-0.635" size="0.4064" layer="27">&gt;VALUE</text>
-</package>
-<package name="BATTCON_245MM_PTH">
-<wire x1="-3.81" y1="-12.7" x2="3.81" y2="-12.7" width="0.2032" layer="21"/>
-<wire x1="-3.81" y1="-12.7" x2="-12.7" y2="-6.35" width="0.2032" layer="21"/>
-<wire x1="3.81" y1="-12.7" x2="12.7" y2="-6.35" width="0.2032" layer="21"/>
-<wire x1="-7.62" y1="9.779" x2="7.62" y2="9.779" width="0.2032" layer="21" curve="63.785901"/>
-<wire x1="12.7" y1="-6.35" x2="12.7" y2="-2.54" width="0.2032" layer="21"/>
-<wire x1="-12.7" y1="-6.35" x2="-12.7" y2="-2.54" width="0.2032" layer="21"/>
-<wire x1="-12.7" y1="6.35" x2="-7.62" y2="9.779" width="0.2032" layer="21" curve="-123.780121"/>
-<wire x1="12.7" y1="6.35" x2="7.62" y2="9.779" width="0.2032" layer="21" curve="123.773101"/>
-<wire x1="-12.7" y1="6.35" x2="-12.7" y2="2.54" width="0.2032" layer="21"/>
-<wire x1="12.7" y1="6.35" x2="12.7" y2="2.54" width="0.2032" layer="21"/>
-<circle x="0" y="0" radius="12.25" width="0.2032" layer="51"/>
-<pad name="1" x="-12.7" y="0" drill="1.8542" shape="square"/>
-<pad name="3" x="12.7" y="0" drill="1.8542" shape="square"/>
-<smd name="2" x="0" y="0" dx="4.064" dy="4.064" layer="1"/>
-<text x="-9.525" y="0.635" size="0.4064" layer="25">&gt;NAME</text>
-<text x="-9.525" y="-0.635" size="0.4064" layer="27">&gt;VALUE</text>
-</package>
-<package name="LIPO-1100MAH">
-<wire x1="-17" y1="-26" x2="17" y2="-26" width="0.2032" layer="51"/>
-<wire x1="17" y1="-26" x2="17" y2="26" width="0.2032" layer="51"/>
-<wire x1="17" y1="26" x2="-17" y2="26" width="0.2032" layer="51"/>
-<wire x1="-17" y1="26" x2="-17" y2="-26" width="0.2032" layer="51"/>
-<wire x1="-1" y1="34" x2="-1" y2="30" width="0.127" layer="51"/>
-<wire x1="1" y1="34" x2="1" y2="30" width="0.127" layer="51"/>
-<pad name="+" x="-5" y="32" drill="1.397"/>
-<pad name="-" x="5" y="32" drill="1.397"/>
-</package>
-<package name="BATTERY-AA">
-<wire x1="-17.526" y1="-4.826" x2="-27.051" y2="-4.826" width="0.254" layer="41"/>
-<wire x1="-27.051" y1="-4.826" x2="-27.051" y2="4.826" width="0.254" layer="41"/>
-<wire x1="-27.051" y1="4.826" x2="-17.526" y2="4.826" width="0.254" layer="41"/>
-<wire x1="27.051" y1="4.826" x2="17.526" y2="4.826" width="0.254" layer="21"/>
-<wire x1="17.526" y1="-4.826" x2="27.051" y2="-4.826" width="0.254" layer="21"/>
-<wire x1="27.051" y1="-4.826" x2="27.051" y2="4.826" width="0.254" layer="21"/>
-<wire x1="-26.67" y1="7.62" x2="26.67" y2="7.62" width="0.127" layer="51"/>
-<wire x1="26.67" y1="-7.62" x2="-26.67" y2="-7.62" width="0.127" layer="51"/>
-<wire x1="-17.526" y1="4.826" x2="-17.526" y2="-4.826" width="0.254" layer="41"/>
-<wire x1="17.526" y1="4.826" x2="17.526" y2="2.159" width="0.254" layer="21"/>
-<wire x1="17.526" y1="-2.159" x2="17.526" y2="-4.826" width="0.254" layer="21"/>
-<wire x1="-17.526" y1="-4.826" x2="-27.051" y2="-4.826" width="0.254" layer="21"/>
-<wire x1="-27.051" y1="-4.826" x2="-27.051" y2="4.826" width="0.254" layer="21"/>
-<wire x1="-27.051" y1="4.826" x2="-17.526" y2="4.826" width="0.254" layer="21"/>
-<wire x1="-17.526" y1="4.826" x2="-17.526" y2="2.159" width="0.254" layer="21"/>
-<wire x1="-17.526" y1="-2.159" x2="-17.526" y2="-4.826" width="0.254" layer="21"/>
-<wire x1="17.526" y1="4.826" x2="27.051" y2="4.826" width="0.254" layer="41"/>
-<wire x1="27.051" y1="4.826" x2="27.051" y2="-4.826" width="0.254" layer="41"/>
-<wire x1="27.051" y1="-4.826" x2="17.526" y2="-4.826" width="0.254" layer="41"/>
-<wire x1="17.526" y1="-4.826" x2="17.526" y2="4.826" width="0.254" layer="41"/>
-<pad name="GND@1" x="25.146" y="0" drill="1.8542"/>
-<pad name="GND@2" x="17.526" y="0" drill="1.8542"/>
-<pad name="PWR@1" x="-25.146" y="0" drill="1.8542"/>
-<pad name="PWR@2" x="-17.526" y="0" drill="1.8542" rot="R90"/>
-<text x="-14.732" y="-1.27" size="2.54" layer="21" ratio="12">+</text>
-<text x="12.7" y="-1.27" size="2.54" layer="21" ratio="12">-</text>
-</package>
-<package name="BATTERY-AA-PANEL">
-<wire x1="21.2" y1="9" x2="-21.2" y2="9" width="0.127" layer="51"/>
-<wire x1="-21.2" y1="9" x2="-21.2" y2="-9" width="0.127" layer="51"/>
-<wire x1="-21.2" y1="-9" x2="21.2" y2="-9" width="0.127" layer="51"/>
-<wire x1="21.2" y1="-9" x2="21.2" y2="9" width="0.127" layer="51"/>
-<wire x1="8" y1="1" x2="8" y2="-1" width="0.25" layer="21"/>
-<wire x1="7" y1="0" x2="9" y2="0" width="0.25" layer="21"/>
-<wire x1="-8" y1="1" x2="-8" y2="-1" width="0.25" layer="21"/>
-<pad name="+" x="19" y="0" drill="0.5" diameter="2"/>
-<pad name="-" x="-19" y="0" drill="0.5" diameter="2"/>
-<text x="-20.5" y="9.5" size="0.4064" layer="25">&gt;NAME</text>
-<text x="-20.5" y="-9.9" size="0.4064" layer="27">&gt;VALUE</text>
-<text x="-6" y="7" size="0.6096" layer="49">(layout parts on top layer)</text>
-<hole x="12.1" y="0" drill="2"/>
-<hole x="-12.1" y="0" drill="2"/>
-<hole x="19.4" y="8.2" drill="1.5"/>
-</package>
-<package name="BATTERY-AAA">
-<wire x1="-13.97" y1="3.81" x2="-13.97" y2="-3.81" width="0.127" layer="51"/>
-<wire x1="-13.97" y1="-3.81" x2="-23.495" y2="-3.81" width="0.127" layer="51"/>
-<wire x1="-23.495" y1="-3.81" x2="-23.495" y2="3.81" width="0.127" layer="51"/>
-<wire x1="-23.495" y1="3.81" x2="-13.97" y2="3.81" width="0.127" layer="51"/>
-<wire x1="23.368" y1="3.81" x2="13.97" y2="3.81" width="0.127" layer="51"/>
-<wire x1="13.97" y1="3.81" x2="13.97" y2="-3.81" width="0.127" layer="51"/>
-<wire x1="13.97" y1="-3.81" x2="23.368" y2="-3.81" width="0.127" layer="51"/>
-<wire x1="23.368" y1="-3.81" x2="23.368" y2="3.81" width="0.127" layer="51"/>
-<wire x1="-12.7" y1="3.81" x2="12.7" y2="3.81" width="0.127" layer="51"/>
-<wire x1="12.7" y1="-3.81" x2="-12.7" y2="-3.81" width="0.127" layer="51"/>
-<pad name="GND@1" x="21.59" y="0" drill="1.7018"/>
-<pad name="GND@2" x="13.97" y="0" drill="1.7018"/>
-<pad name="PWR@1" x="-21.59" y="0" drill="1.7018"/>
-<pad name="PWR@2" x="-13.97" y="0" drill="1.7018"/>
-<text x="-11.43" y="-1.27" size="2.54" layer="21" ratio="12">+</text>
-<text x="8.89" y="-1.27" size="2.54" layer="21" ratio="12">-</text>
-</package>
-<package name="BATTERY_CR123A">
-<wire x1="21.2" y1="9" x2="-21.2" y2="9" width="0.127" layer="51"/>
-<wire x1="-21.2" y1="9" x2="-21.2" y2="-9" width="0.127" layer="51"/>
-<wire x1="-21.2" y1="-9" x2="21.2" y2="-9" width="0.127" layer="51"/>
-<wire x1="21.2" y1="-9" x2="21.2" y2="9" width="0.127" layer="51"/>
-<wire x1="7.5" y1="1" x2="7.5" y2="-1" width="0.25" layer="21"/>
-<wire x1="6.5" y1="0" x2="8.5" y2="0" width="0.25" layer="21"/>
-<wire x1="-8.5" y1="1" x2="-8.5" y2="-1" width="0.25" layer="21"/>
-<pad name="+" x="19" y="0" drill="1.5" diameter="2.5"/>
-<pad name="-" x="-19" y="0" drill="1.5" diameter="2.5"/>
-<text x="-21" y="9.5" size="0.4064" layer="25">&gt;NAME</text>
-<text x="-21" y="-9.9" size="0.4064" layer="27">&gt;VALUE</text>
-<text x="-6.5" y="7" size="0.6096" layer="49">(layout parts on top layer)</text>
-<hole x="19.4" y="8.2" drill="1.5748"/>
-</package>
-<package name="BATTERY_20MM_PTH_COMPACT">
-<wire x1="-3.7" y1="-9.9" x2="3.7" y2="-9.9" width="0.2032" layer="21"/>
-<wire x1="-3.7" y1="-9.9" x2="-10.5" y2="-5.7" width="0.2032" layer="21"/>
-<wire x1="3.7" y1="-9.9" x2="10.5" y2="-5.7" width="0.2032" layer="21"/>
-<wire x1="-5.3" y1="7.3" x2="5.4" y2="7.4" width="0.2032" layer="21" curve="94.031579"/>
-<wire x1="10.5" y1="-5.7" x2="10.5" y2="-3.5" width="0.2032" layer="21"/>
-<wire x1="-10.5" y1="-5.7" x2="-10.5" y2="-3.5" width="0.2032" layer="21"/>
-<wire x1="-5.3" y1="7.3" x2="-10.5" y2="5.3" width="0.2032" layer="21" curve="139.635474"/>
-<wire x1="10.5" y1="5.3" x2="5.3" y2="7.3" width="0.2032" layer="21" curve="137.002565"/>
-<wire x1="-10.5" y1="5.3" x2="-10.5" y2="3.5" width="0.2032" layer="21"/>
-<wire x1="10.5" y1="5.3" x2="10.5" y2="3.5" width="0.2032" layer="21"/>
-<circle x="0" y="0" radius="10" width="0.2032" layer="51"/>
-<pad name="1" x="-10.5" y="0" drill="1.8542" shape="long" rot="R90"/>
-<pad name="3" x="10.5" y="0" drill="1.8542" shape="long" rot="R90"/>
-<smd name="2" x="0" y="0" dx="4.064" dy="4.064" layer="1"/>
-<text x="-6.985" y="0.635" size="0.4064" layer="25">&gt;NAME</text>
-<text x="-6.985" y="-0.635" size="0.4064" layer="27">&gt;VALUE</text>
-</package>
-</packages>
-<symbols>
-<symbol name="BATTERY">
-<wire x1="-1.27" y1="3.81" x2="-1.27" y2="-3.81" width="0.4064" layer="94"/>
-<wire x1="0" y1="1.27" x2="0" y2="-1.27" width="0.4064" layer="94"/>
-<wire x1="1.27" y1="3.81" x2="1.27" y2="-3.81" width="0.4064" layer="94"/>
-<wire x1="2.54" y1="1.27" x2="2.54" y2="-1.27" width="0.4064" layer="94"/>
-<wire x1="-2.54" y1="0" x2="-1.524" y2="0" width="0.1524" layer="94"/>
-<text x="-3.81" y="5.08" size="1.778" layer="95">&gt;NAME</text>
-<text x="-3.81" y="-6.35" size="1.778" layer="96">&gt;VALUE</text>
-<pin name="+" x="-5.08" y="0" visible="off" length="short" direction="pwr"/>
-<pin name="-" x="5.08" y="0" visible="off" length="short" direction="pwr" rot="R180"/>
-</symbol>
-</symbols>
-<devicesets>
-<deviceset name="BATTERY" prefix="BAT" uservalue="yes">
-<description>&lt;b&gt;Battery Holders&lt;/b&gt;
-Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
-<gates>
-<gate name="G$1" symbol="BATTERY" x="0" y="0"/>
-</gates>
-<devices>
-<device name="12MM" package="BATTCON_12MM">
-<connects>
-<connect gate="G$1" pin="+" pad="PWR@1"/>
-<connect gate="G$1" pin="-" pad="GND"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-<device name="12PTH" package="BATTCON_12MM_PTH">
-<connects>
-<connect gate="G$1" pin="+" pad="VCC@1"/>
-<connect gate="G$1" pin="-" pad="GND"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-<device name="20PTH" package="BATTCOM_20MM_PTH">
-<connects>
-<connect gate="G$1" pin="+" pad="1"/>
-<connect gate="G$1" pin="-" pad="2"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-<device name="20PTH2" package="BATTERY">
-<connects>
-<connect gate="G$1" pin="+" pad="+"/>
-<connect gate="G$1" pin="-" pad="-"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-<device name="20SMD" package="BATTCON_20MM">
-<connects>
-<connect gate="G$1" pin="+" pad="1"/>
-<connect gate="G$1" pin="-" pad="2"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-<device name="245MM" package="BATTCON_245MM">
-<connects>
-<connect gate="G$1" pin="+" pad="1"/>
-<connect gate="G$1" pin="-" pad="2"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-<device name="245PTH" package="BATTCON_245MM_PTH">
-<connects>
-<connect gate="G$1" pin="+" pad="3"/>
-<connect gate="G$1" pin="-" pad="2"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-<device name="1100" package="LIPO-1100MAH">
-<connects>
-<connect gate="G$1" pin="+" pad="+"/>
-<connect gate="G$1" pin="-" pad="-"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-<device name="AA" package="BATTERY-AA">
-<connects>
-<connect gate="G$1" pin="+" pad="PWR@1"/>
-<connect gate="G$1" pin="-" pad="GND@1"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-<device name="AA-PANEL" package="BATTERY-AA-PANEL">
-<connects>
-<connect gate="G$1" pin="+" pad="+"/>
-<connect gate="G$1" pin="-" pad="-"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-<device name="AAA" package="BATTERY-AAA">
-<connects>
-<connect gate="G$1" pin="+" pad="PWR@1"/>
-<connect gate="G$1" pin="-" pad="GND@1"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-<device name="CR123A" package="BATTERY_CR123A">
-<connects>
-<connect gate="G$1" pin="+" pad="+"/>
-<connect gate="G$1" pin="-" pad="-"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-<device name="FOB" package="BATTERY_20MM_PTH_COMPACT">
-<connects>
-<connect gate="G$1" pin="+" pad="1"/>
-<connect gate="G$1" pin="-" pad="2"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-</devicesets>
-</library>
 <library name="SparkFun-Electromechanical">
 <description>&lt;h3&gt;SparkFun Electronics' preferred foot prints&lt;/h3&gt;
 In this library you'll find anything that moves- switches, relays, buttons, potentiometers. Also, anything that goes on a board but isn't electrical in nature- screws, standoffs, etc.&lt;br&gt;&lt;br&gt;
@@ -7306,6 +6857,249 @@ by exp-lbrs.ulp</description>
 <text x="-1.905" y="4.445" size="0.4064" layer="25">&gt;NAME</text>
 <text x="-1.905" y="-5.08" size="0.4064" layer="27">&gt;VALUE</text>
 </package>
+<package name="SPARKFUN_RESONATOR-SMD">
+<wire x1="1.8" y1="0.65" x2="1.8" y2="-0.65" width="0.2032" layer="21"/>
+<wire x1="-1.8" y1="-0.65" x2="-1.8" y2="0.65" width="0.2032" layer="21"/>
+<wire x1="-1.6" y1="0.65" x2="1.6" y2="0.65" width="0.127" layer="51"/>
+<wire x1="1.6" y1="0.65" x2="1.6" y2="-0.65" width="0.127" layer="51"/>
+<wire x1="1.6" y1="-0.65" x2="-1.6" y2="-0.65" width="0.127" layer="51"/>
+<wire x1="-1.6" y1="-0.65" x2="-1.6" y2="0.65" width="0.127" layer="51"/>
+<smd name="1" x="-1.2" y="0" dx="0.7" dy="2.2" layer="1"/>
+<smd name="2" x="0" y="0" dx="0.7" dy="2.2" layer="1"/>
+<smd name="3" x="1.2" y="0" dx="0.7" dy="2.2" layer="1"/>
+<text x="-0.889" y="1.27" size="0.4064" layer="25">&gt;Name</text>
+<text x="-0.889" y="-1.524" size="0.4064" layer="27">&gt;Value</text>
+</package>
+<package name="SPARKFUN_RESONATOR-PTH">
+<wire x1="-2.286" y1="1.778" x2="-2.286" y2="-1.778" width="0.2032" layer="21" curve="162.403081"/>
+<wire x1="2.286" y1="-1.778" x2="2.286" y2="1.778" width="0.2032" layer="21" curve="162.403081"/>
+<wire x1="-2.286" y1="-1.778" x2="2.286" y2="-1.778" width="0.2032" layer="21" curve="12.71932"/>
+<wire x1="2.286" y1="1.778" x2="-2.286" y2="1.778" width="0.2032" layer="21" curve="12.758496"/>
+<pad name="1" x="-2.54" y="0" drill="0.8" diameter="1.8796"/>
+<pad name="2" x="0" y="0" drill="0.8" diameter="1.8796"/>
+<pad name="3" x="2.54" y="0" drill="0.8" diameter="1.8796"/>
+</package>
+<package name="TVBGONE-ADJ_BATTERY_CR123A">
+<wire x1="21.2" y1="9" x2="-21.2" y2="9" width="0.127" layer="51"/>
+<wire x1="-21.2" y1="9" x2="-21.2" y2="-9" width="0.127" layer="51"/>
+<wire x1="-21.2" y1="-9" x2="21.2" y2="-9" width="0.127" layer="51"/>
+<wire x1="21.2" y1="-9" x2="21.2" y2="9" width="0.127" layer="51"/>
+<wire x1="16.39" y1="1" x2="16.39" y2="-1" width="0.25" layer="51"/>
+<wire x1="15.39" y1="0" x2="17.39" y2="0" width="0.25" layer="51"/>
+<wire x1="-16.12" y1="1" x2="-16.12" y2="-1" width="0.25" layer="51"/>
+<pad name="+" x="19" y="0" drill="1.5" diameter="2.5"/>
+<pad name="-" x="-19" y="0" drill="1.5" diameter="2.5"/>
+<text x="-21" y="9.5" size="0.4064" layer="25">&gt;NAME</text>
+<text x="-21" y="-9.9" size="0.4064" layer="27">&gt;VALUE</text>
+<text x="-6.5" y="7" size="0.6096" layer="49">(layout parts on top layer)</text>
+<hole x="19.4" y="8.2" drill="1.5748"/>
+</package>
+<package name="TVBGONE-ADJ_BATTCON_12MM">
+<wire x1="-6.096" y1="4.318" x2="-3.81" y2="6.604" width="0.127" layer="21" curve="-90"/>
+<wire x1="-3.81" y1="6.604" x2="3.81" y2="6.604" width="0.127" layer="21"/>
+<wire x1="3.81" y1="6.604" x2="6.096" y2="4.318" width="0.127" layer="21" curve="-90"/>
+<wire x1="6.096" y1="4.318" x2="6.096" y2="-3.302" width="0.127" layer="21"/>
+<wire x1="6.096" y1="-3.302" x2="3.048" y2="-6.35" width="0.127" layer="21"/>
+<wire x1="3.048" y1="-6.35" x2="-3.048" y2="-6.35" width="0.127" layer="21"/>
+<wire x1="-3.048" y1="-6.35" x2="-6.096" y2="-3.302" width="0.127" layer="21"/>
+<wire x1="-6.096" y1="-3.302" x2="-6.096" y2="4.318" width="0.127" layer="21"/>
+<smd name="GND" x="0" y="0" dx="3.9624" dy="3.9624" layer="1"/>
+<smd name="PWR@1" x="-7.874" y="0" dx="3.175" dy="3.175" layer="1"/>
+<smd name="PWR@2" x="7.874" y="0" dx="3.175" dy="3.175" layer="1"/>
+</package>
+<package name="TVBGONE-ADJ_BATTCON_12MM_PTH">
+<wire x1="-6.35" y1="-3.81" x2="-3.81" y2="-6.35" width="0.2032" layer="21"/>
+<wire x1="-3.81" y1="-6.35" x2="3.81" y2="-6.35" width="0.2032" layer="21"/>
+<wire x1="3.81" y1="-6.35" x2="6.35" y2="-3.81" width="0.2032" layer="21"/>
+<wire x1="6.35" y1="-3.81" x2="6.35" y2="-2.54" width="0.2032" layer="21"/>
+<wire x1="-6.35" y1="-3.81" x2="-6.35" y2="-2.54" width="0.2032" layer="21"/>
+<wire x1="-6.35" y1="2.54" x2="-6.35" y2="4.064" width="0.2032" layer="21"/>
+<wire x1="6.35" y1="2.54" x2="6.35" y2="4.064" width="0.2032" layer="21"/>
+<wire x1="-3.175" y1="5.588" x2="3.175" y2="5.588" width="0.2032" layer="21" curve="102.56384"/>
+<wire x1="-6.35" y1="4.064" x2="-3.175" y2="5.588" width="0.2032" layer="21" curve="-123.398919"/>
+<wire x1="6.35" y1="4.064" x2="3.175" y2="5.588" width="0.2032" layer="21" curve="128.77667"/>
+<smd name="GND" x="0" y="0" dx="3.9624" dy="3.9624" layer="1"/>
+<pad name="VCC@1" x="-6.604" y="0" drill="1.8542" shape="square"/>
+<pad name="VCC@2" x="6.604" y="0" drill="1.8542" shape="square"/>
+<text x="-3.81" y="-3.81" size="0.4064" layer="25">&gt;NAME</text>
+<text x="-3.81" y="-5.08" size="0.4064" layer="27">&gt;VALUE</text>
+</package>
+<package name="TVBGONE-ADJ_BATTCOM_20MM_PTH">
+<circle x="9.06" y="0.1" radius="10" width="0.2032" layer="51"/>
+<wire x1="19" y1="-4" x2="19" y2="4" width="0.2032" layer="21" curve="-316.397181"/>
+<wire x1="19" y1="4" x2="22" y2="4" width="0.2032" layer="21"/>
+<wire x1="22" y1="4" x2="22" y2="-4" width="0.2032" layer="21"/>
+<wire x1="22" y1="-4" x2="19" y2="-4" width="0.2032" layer="21"/>
+<pad name="1" x="20" y="0" drill="1.3" rot="R90"/>
+<pad name="2" x="0" y="0" drill="1.3" rot="R90"/>
+<text x="-6.985" y="0.635" size="0.4064" layer="25">&gt;NAME</text>
+<text x="-6.985" y="-0.635" size="0.4064" layer="27">&gt;VALUE</text>
+<text x="17.285" y="-0.6" size="1.27" layer="51">+</text>
+<text x="1.95" y="-0.6" size="1.27" layer="51">-</text>
+</package>
+<package name="TVBGONE-ADJ_BATTERY">
+<description>&lt;B&gt;BATTERY&lt;/B&gt;&lt;p&gt;
+22 mm</description>
+<circle x="0" y="0" radius="11.43" width="0.1524" layer="21"/>
+<circle x="0" y="0" radius="10.2362" width="0.1524" layer="21"/>
+<wire x1="0.635" y1="2.54" x2="0.635" y2="0" width="0.1524" layer="21"/>
+<wire x1="-2.54" y1="0" x2="-0.635" y2="0" width="0.1524" layer="21"/>
+<wire x1="0.635" y1="0" x2="2.54" y2="0" width="0.1524" layer="21"/>
+<wire x1="0.635" y1="0" x2="0.635" y2="-2.54" width="0.1524" layer="21"/>
+<wire x1="1.27" y1="-3.175" x2="2.54" y2="-3.175" width="0.1524" layer="21"/>
+<wire x1="1.905" y1="-2.54" x2="1.905" y2="-3.81" width="0.1524" layer="21"/>
+<rectangle x1="-0.635" y1="-1.27" x2="0" y2="1.27" layer="21"/>
+<pad name="+" x="9.525" y="-5.08" drill="1.016" shape="long"/>
+<pad name="+@1" x="9.525" y="5.08" drill="1.016" shape="long"/>
+<pad name="-" x="-5.715" y="0" drill="1.016" shape="long"/>
+<text x="-4.1656" y="6.35" size="1.778" layer="25" ratio="10">&gt;NAME</text>
+<text x="-4.445" y="3.81" size="1.778" layer="27" ratio="10">&gt;VALUE</text>
+</package>
+<package name="TVBGONE-ADJ_BATTCON_20MM">
+<circle x="0" y="0" radius="10" width="0.2032" layer="51"/>
+<wire x1="-3.7" y1="-9.9" x2="3.7" y2="-9.9" width="0.2032" layer="21"/>
+<wire x1="-3.7" y1="-9.9" x2="-10.5" y2="-5.7" width="0.2032" layer="21"/>
+<wire x1="3.7" y1="-9.9" x2="10.5" y2="-5.7" width="0.2032" layer="21"/>
+<wire x1="-5.3" y1="7.3" x2="5.4" y2="7.4" width="0.2032" layer="21" curve="94.031579"/>
+<wire x1="10.5" y1="-5.7" x2="10.5" y2="-3" width="0.2032" layer="21"/>
+<wire x1="-10.5" y1="-5.7" x2="-10.5" y2="-3" width="0.2032" layer="21"/>
+<wire x1="-10.5" y1="5.3" x2="-5.3" y2="7.3" width="0.2032" layer="21" curve="-139.635474"/>
+<wire x1="10.5" y1="5.3" x2="5.3" y2="7.3" width="0.2032" layer="21" curve="136.99875"/>
+<wire x1="-10.5" y1="5.3" x2="-10.5" y2="3" width="0.2032" layer="21"/>
+<wire x1="10.5" y1="5.3" x2="10.5" y2="3" width="0.2032" layer="21"/>
+<smd name="1" x="-12.827" y="0" dx="5.08" dy="5.08" layer="1"/>
+<smd name="2" x="0" y="0" dx="4.064" dy="4.064" layer="1"/>
+<smd name="3" x="12.827" y="0" dx="5.08" dy="5.08" layer="1"/>
+<text x="-6.985" y="0.635" size="0.4064" layer="25">&gt;NAME</text>
+<text x="-6.985" y="-0.635" size="0.4064" layer="27">&gt;VALUE</text>
+</package>
+<package name="TVBGONE-ADJ_BATTCON_245MM">
+<circle x="0" y="0" radius="12.25" width="0.2032" layer="51"/>
+<wire x1="-6.24" y1="-12.44" x2="6.24" y2="-12.44" width="0.2032" layer="21"/>
+<wire x1="-6.24" y1="-12.44" x2="-13.04" y2="-8.24" width="0.2032" layer="21"/>
+<wire x1="6.24" y1="-12.44" x2="13.04" y2="-8.24" width="0.2032" layer="21"/>
+<wire x1="-7.84" y1="12.38" x2="7.94" y2="12.48" width="0.2032" layer="21" curve="94.032201"/>
+<wire x1="13.04" y1="-8.24" x2="13.04" y2="-3" width="0.2032" layer="21"/>
+<wire x1="-13.04" y1="-8.24" x2="-13.04" y2="-3" width="0.2032" layer="21"/>
+<wire x1="-13.04" y1="10.38" x2="-7.84" y2="12.38" width="0.2032" layer="21" curve="-139.635474"/>
+<wire x1="13.04" y1="10.38" x2="7.84" y2="12.38" width="0.2032" layer="21" curve="136.99875"/>
+<wire x1="-13.04" y1="10.38" x2="-13.04" y2="3" width="0.2032" layer="21"/>
+<wire x1="13.04" y1="10.38" x2="13.04" y2="3" width="0.2032" layer="21"/>
+<smd name="1" x="-15.367" y="0" dx="5.08" dy="5.08" layer="1"/>
+<smd name="2" x="0" y="0" dx="4.064" dy="4.064" layer="1"/>
+<smd name="3" x="15.367" y="0" dx="5.08" dy="5.08" layer="1"/>
+<text x="-9.525" y="0.635" size="0.4064" layer="25">&gt;NAME</text>
+<text x="-9.525" y="-0.635" size="0.4064" layer="27">&gt;VALUE</text>
+</package>
+<package name="TVBGONE-ADJ_BATTCON_245MM_PTH">
+<circle x="0" y="0" radius="12.25" width="0.2032" layer="51"/>
+<wire x1="-3.81" y1="-12.7" x2="3.81" y2="-12.7" width="0.2032" layer="21"/>
+<wire x1="-3.81" y1="-12.7" x2="-12.7" y2="-6.35" width="0.2032" layer="21"/>
+<wire x1="3.81" y1="-12.7" x2="12.7" y2="-6.35" width="0.2032" layer="21"/>
+<wire x1="-7.62" y1="9.779" x2="7.62" y2="9.779" width="0.2032" layer="21" curve="63.785901"/>
+<wire x1="12.7" y1="-6.35" x2="12.7" y2="-2.54" width="0.2032" layer="21"/>
+<wire x1="-12.7" y1="-6.35" x2="-12.7" y2="-2.54" width="0.2032" layer="21"/>
+<wire x1="-12.7" y1="6.35" x2="-7.62" y2="9.779" width="0.2032" layer="21" curve="-123.780121"/>
+<wire x1="12.7" y1="6.35" x2="7.62" y2="9.779" width="0.2032" layer="21" curve="123.773101"/>
+<wire x1="-12.7" y1="6.35" x2="-12.7" y2="2.54" width="0.2032" layer="21"/>
+<wire x1="12.7" y1="6.35" x2="12.7" y2="2.54" width="0.2032" layer="21"/>
+<pad name="1" x="-12.7" y="0" drill="1.8542" shape="square"/>
+<smd name="2" x="0" y="0" dx="4.064" dy="4.064" layer="1"/>
+<pad name="3" x="12.7" y="0" drill="1.8542" shape="square"/>
+<text x="-9.525" y="0.635" size="0.4064" layer="25">&gt;NAME</text>
+<text x="-9.525" y="-0.635" size="0.4064" layer="27">&gt;VALUE</text>
+</package>
+<package name="TVBGONE-ADJ_LIPO-1100MAH">
+<wire x1="-17" y1="-26" x2="17" y2="-26" width="0.2032" layer="51"/>
+<wire x1="17" y1="-26" x2="17" y2="26" width="0.2032" layer="51"/>
+<wire x1="17" y1="26" x2="-17" y2="26" width="0.2032" layer="51"/>
+<wire x1="-17" y1="26" x2="-17" y2="-26" width="0.2032" layer="51"/>
+<wire x1="-1" y1="34" x2="-1" y2="30" width="0.127" layer="51"/>
+<wire x1="1" y1="34" x2="1" y2="30" width="0.127" layer="51"/>
+<pad name="+" x="-5" y="32" drill="1.397"/>
+<pad name="-" x="5" y="32" drill="1.397"/>
+</package>
+<package name="TVBGONE-ADJ_BATTERY-AA">
+<wire x1="-17.526" y1="-4.826" x2="-27.051" y2="-4.826" width="0.254" layer="41"/>
+<wire x1="-27.051" y1="-4.826" x2="-27.051" y2="4.826" width="0.254" layer="41"/>
+<wire x1="-27.051" y1="4.826" x2="-17.526" y2="4.826" width="0.254" layer="41"/>
+<wire x1="27.051" y1="4.826" x2="17.526" y2="4.826" width="0.254" layer="21"/>
+<wire x1="17.526" y1="-4.826" x2="27.051" y2="-4.826" width="0.254" layer="21"/>
+<wire x1="27.051" y1="-4.826" x2="27.051" y2="4.826" width="0.254" layer="21"/>
+<wire x1="-26.67" y1="7.62" x2="26.67" y2="7.62" width="0.127" layer="51"/>
+<wire x1="26.67" y1="-7.62" x2="-26.67" y2="-7.62" width="0.127" layer="51"/>
+<wire x1="-17.526" y1="4.826" x2="-17.526" y2="-4.826" width="0.254" layer="41"/>
+<wire x1="17.526" y1="4.826" x2="17.526" y2="2.159" width="0.254" layer="21"/>
+<wire x1="17.526" y1="-2.159" x2="17.526" y2="-4.826" width="0.254" layer="21"/>
+<wire x1="-17.526" y1="-4.826" x2="-27.051" y2="-4.826" width="0.254" layer="21"/>
+<wire x1="-27.051" y1="-4.826" x2="-27.051" y2="4.826" width="0.254" layer="21"/>
+<wire x1="-27.051" y1="4.826" x2="-17.526" y2="4.826" width="0.254" layer="21"/>
+<wire x1="-17.526" y1="4.826" x2="-17.526" y2="2.159" width="0.254" layer="21"/>
+<wire x1="-17.526" y1="-2.159" x2="-17.526" y2="-4.826" width="0.254" layer="21"/>
+<wire x1="17.526" y1="4.826" x2="27.051" y2="4.826" width="0.254" layer="41"/>
+<wire x1="27.051" y1="4.826" x2="27.051" y2="-4.826" width="0.254" layer="41"/>
+<wire x1="27.051" y1="-4.826" x2="17.526" y2="-4.826" width="0.254" layer="41"/>
+<wire x1="17.526" y1="-4.826" x2="17.526" y2="4.826" width="0.254" layer="41"/>
+<pad name="GND@1" x="25.146" y="0" drill="1.8542"/>
+<pad name="GND@2" x="17.526" y="0" drill="1.8542"/>
+<pad name="PWR@1" x="-25.146" y="0" drill="1.8542"/>
+<pad name="PWR@2" x="-17.526" y="0" drill="1.8542" rot="R90"/>
+<text x="-14.732" y="-1.27" size="2.54" layer="21" ratio="12">+</text>
+<text x="12.7" y="-1.27" size="2.54" layer="21" ratio="12">-</text>
+</package>
+<package name="TVBGONE-ADJ_BATTERY-AA-PANEL">
+<wire x1="21.2" y1="9" x2="-21.2" y2="9" width="0.127" layer="51"/>
+<wire x1="-21.2" y1="9" x2="-21.2" y2="-9" width="0.127" layer="51"/>
+<wire x1="-21.2" y1="-9" x2="21.2" y2="-9" width="0.127" layer="51"/>
+<wire x1="21.2" y1="-9" x2="21.2" y2="9" width="0.127" layer="51"/>
+<wire x1="8" y1="1" x2="8" y2="-1" width="0.25" layer="21"/>
+<wire x1="7" y1="0" x2="9" y2="0" width="0.25" layer="21"/>
+<wire x1="-8" y1="1" x2="-8" y2="-1" width="0.25" layer="21"/>
+<pad name="+" x="19" y="0" drill="0.5" diameter="2"/>
+<pad name="-" x="-19" y="0" drill="0.5" diameter="2"/>
+<text x="-20.5" y="9.5" size="0.4064" layer="25">&gt;NAME</text>
+<text x="-20.5" y="-9.9" size="0.4064" layer="27">&gt;VALUE</text>
+<text x="-6" y="7" size="0.6096" layer="49">(layout parts on top layer)</text>
+<hole x="12.1" y="0" drill="2"/>
+<hole x="-12.1" y="0" drill="2"/>
+<hole x="19.4" y="8.2" drill="1.5"/>
+</package>
+<package name="TVBGONE-ADJ_BATTERY-AAA">
+<wire x1="-13.97" y1="3.81" x2="-13.97" y2="-3.81" width="0.127" layer="51"/>
+<wire x1="-13.97" y1="-3.81" x2="-23.495" y2="-3.81" width="0.127" layer="51"/>
+<wire x1="-23.495" y1="-3.81" x2="-23.495" y2="3.81" width="0.127" layer="51"/>
+<wire x1="-23.495" y1="3.81" x2="-13.97" y2="3.81" width="0.127" layer="51"/>
+<wire x1="23.368" y1="3.81" x2="13.97" y2="3.81" width="0.127" layer="51"/>
+<wire x1="13.97" y1="3.81" x2="13.97" y2="-3.81" width="0.127" layer="51"/>
+<wire x1="13.97" y1="-3.81" x2="23.368" y2="-3.81" width="0.127" layer="51"/>
+<wire x1="23.368" y1="-3.81" x2="23.368" y2="3.81" width="0.127" layer="51"/>
+<wire x1="-12.7" y1="3.81" x2="12.7" y2="3.81" width="0.127" layer="51"/>
+<wire x1="12.7" y1="-3.81" x2="-12.7" y2="-3.81" width="0.127" layer="51"/>
+<pad name="GND@1" x="21.59" y="0" drill="1.7018"/>
+<pad name="GND@2" x="13.97" y="0" drill="1.7018"/>
+<pad name="PWR@1" x="-21.59" y="0" drill="1.7018"/>
+<pad name="PWR@2" x="-13.97" y="0" drill="1.7018"/>
+<text x="-11.43" y="-1.27" size="2.54" layer="21" ratio="12">+</text>
+<text x="8.89" y="-1.27" size="2.54" layer="21" ratio="12">-</text>
+</package>
+<package name="TVBGONE-ADJ_BATTERY_20MM_PTH_COMPACT">
+<circle x="0" y="0" radius="10" width="0.2032" layer="51"/>
+<wire x1="-3.7" y1="-9.9" x2="3.7" y2="-9.9" width="0.2032" layer="21"/>
+<wire x1="-3.7" y1="-9.9" x2="-10.5" y2="-5.7" width="0.2032" layer="21"/>
+<wire x1="3.7" y1="-9.9" x2="10.5" y2="-5.7" width="0.2032" layer="21"/>
+<wire x1="-5.3" y1="7.3" x2="5.4" y2="7.4" width="0.2032" layer="21" curve="94.031579"/>
+<wire x1="10.5" y1="-5.7" x2="10.5" y2="-3.5" width="0.2032" layer="21"/>
+<wire x1="-10.5" y1="-5.7" x2="-10.5" y2="-3.5" width="0.2032" layer="21"/>
+<wire x1="-5.3" y1="7.3" x2="-10.5" y2="5.3" width="0.2032" layer="21" curve="139.635474"/>
+<wire x1="10.5" y1="5.3" x2="5.3" y2="7.3" width="0.2032" layer="21" curve="137.002565"/>
+<wire x1="-10.5" y1="5.3" x2="-10.5" y2="3.5" width="0.2032" layer="21"/>
+<wire x1="10.5" y1="5.3" x2="10.5" y2="3.5" width="0.2032" layer="21"/>
+<pad name="1" x="-10.5" y="0" drill="1.8542" shape="long" rot="R90"/>
+<smd name="2" x="0" y="0" dx="4.064" dy="4.064" layer="1"/>
+<pad name="3" x="10.5" y="0" drill="1.8542" shape="long" rot="R90"/>
+<text x="-6.985" y="0.635" size="0.4064" layer="25">&gt;NAME</text>
+<text x="-6.985" y="-0.635" size="0.4064" layer="27">&gt;VALUE</text>
+</package>
 </packages>
 <symbols>
 <symbol name="FAIRCHILD-SEMIC_NPN">
@@ -7332,6 +7126,49 @@ by exp-lbrs.ulp</description>
 <pin name="-" x="0" y="-5.08" visible="off" length="short" direction="pas" swaplevel="1" rot="R90"/>
 <text x="1.016" y="0.635" size="1.778" layer="95">&gt;NAME</text>
 <text x="1.016" y="-4.191" size="1.778" layer="96">&gt;VALUE</text>
+</symbol>
+<symbol name="SPARKFUN_RESONATOR">
+<wire x1="1.016" y1="0" x2="2.54" y2="0" width="0.1524" layer="94"/>
+<wire x1="-2.54" y1="0" x2="-1.016" y2="0" width="0.1524" layer="94"/>
+<wire x1="-0.381" y1="1.524" x2="-0.381" y2="-1.524" width="0.1524" layer="94"/>
+<wire x1="-0.381" y1="-1.524" x2="0.381" y2="-1.524" width="0.1524" layer="94"/>
+<wire x1="0.381" y1="-1.524" x2="0.381" y2="1.524" width="0.1524" layer="94"/>
+<wire x1="0.381" y1="1.524" x2="-0.381" y2="1.524" width="0.1524" layer="94"/>
+<wire x1="1.016" y1="1.778" x2="1.016" y2="0" width="0.1524" layer="94"/>
+<wire x1="1.016" y1="0" x2="1.016" y2="-1.778" width="0.1524" layer="94"/>
+<wire x1="-1.016" y1="1.778" x2="-1.016" y2="0" width="0.1524" layer="94"/>
+<wire x1="-1.016" y1="0" x2="-1.016" y2="-1.778" width="0.1524" layer="94"/>
+<wire x1="2.54" y1="0" x2="2.54" y2="-2.032" width="0.1524" layer="94"/>
+<wire x1="3.302" y1="-2.032" x2="2.54" y2="-2.032" width="0.1524" layer="94"/>
+<wire x1="2.54" y1="-2.032" x2="1.778" y2="-2.032" width="0.1524" layer="94"/>
+<wire x1="3.302" y1="-3.048" x2="2.54" y2="-3.048" width="0.1524" layer="94"/>
+<wire x1="2.54" y1="-3.048" x2="1.778" y2="-3.048" width="0.1524" layer="94"/>
+<wire x1="2.54" y1="-3.048" x2="2.54" y2="-5.08" width="0.1524" layer="94"/>
+<wire x1="-1.778" y1="-3.048" x2="-2.54" y2="-3.048" width="0.1524" layer="94"/>
+<wire x1="-2.54" y1="-3.048" x2="-3.302" y2="-3.048" width="0.1524" layer="94"/>
+<wire x1="-2.54" y1="-3.048" x2="-2.54" y2="-5.08" width="0.1524" layer="94"/>
+<wire x1="-1.778" y1="-2.032" x2="-2.54" y2="-2.032" width="0.1524" layer="94"/>
+<wire x1="-2.54" y1="-2.032" x2="-3.302" y2="-2.032" width="0.1524" layer="94"/>
+<wire x1="-2.54" y1="-2.032" x2="-2.54" y2="0" width="0.1524" layer="94"/>
+<wire x1="2.54" y1="-5.08" x2="0" y2="-5.08" width="0.1524" layer="94"/>
+<wire x1="0" y1="-5.08" x2="-2.54" y2="-5.08" width="0.1524" layer="94"/>
+<wire x1="0" y1="-5.08" x2="0" y2="-7.62" width="0.1524" layer="94"/>
+<pin name="1" x="-2.54" y="0" visible="off" length="point" direction="pas" swaplevel="1"/>
+<pin name="2" x="0" y="-7.62" visible="off" length="point" direction="pas" swaplevel="1" rot="R90"/>
+<pin name="3" x="2.54" y="0" visible="off" length="point" direction="pas" swaplevel="1" rot="R180"/>
+<text x="2.54" y="1.016" size="1.778" layer="95">&gt;NAME</text>
+<text x="2.54" y="-7.62" size="1.778" layer="96">&gt;VALUE</text>
+</symbol>
+<symbol name="TVBGONE-ADJ_BATTERY">
+<wire x1="-1.27" y1="3.81" x2="-1.27" y2="-3.81" width="0.4064" layer="94"/>
+<wire x1="0" y1="1.27" x2="0" y2="-1.27" width="0.4064" layer="94"/>
+<wire x1="1.27" y1="3.81" x2="1.27" y2="-3.81" width="0.4064" layer="94"/>
+<wire x1="2.54" y1="1.27" x2="2.54" y2="-1.27" width="0.4064" layer="94"/>
+<wire x1="-2.54" y1="0" x2="-1.524" y2="0" width="0.1524" layer="94"/>
+<pin name="+" x="-5.08" y="0" visible="off" length="short" direction="pwr"/>
+<pin name="-" x="5.08" y="0" visible="off" length="short" direction="pwr" rot="R180"/>
+<text x="-3.81" y="5.08" size="1.778" layer="95">&gt;NAME</text>
+<text x="-3.81" y="-6.35" size="1.778" layer="96">&gt;VALUE</text>
 </symbol>
 </symbols>
 <devicesets>
@@ -7482,6 +7319,161 @@ These are standard SMD and PTH capacitors. Normally 10uF, 47uF, and 100uF in ele
 </device>
 </devices>
 </deviceset>
+<deviceset name="SPARKFUN_RESONATOR" prefix="Y">
+<description>&lt;b&gt;Resonator&lt;/b&gt;
+Small SMD resonator. This is the itty bitty 10/20MHz resonators with built in caps. CSTCE10M0G55 and CSTCE20M0V53. Footprint has been reviewed closely but hasn't been tested yet.</description>
+<gates>
+<gate name="G$1" symbol="SPARKFUN_RESONATOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="PTH" package="SPARKFUN_RESONATOR-PTH">
+<connects>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
+<connect gate="G$1" pin="3" pad="3"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+<device name="SMD" package="SPARKFUN_RESONATOR-SMD">
+<connects>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
+<connect gate="G$1" pin="3" pad="3"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="TVBGONE-ADJ_BATTERY" prefix="BAT" uservalue="yes">
+<description>&lt;b&gt;Battery Holders&lt;/b&gt;
+Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
+<gates>
+<gate name="G$1" symbol="TVBGONE-ADJ_BATTERY" x="0" y="0"/>
+</gates>
+<devices>
+<device name="12MM" package="TVBGONE-ADJ_BATTCON_12MM">
+<connects>
+<connect gate="G$1" pin="+" pad="PWR@1"/>
+<connect gate="G$1" pin="-" pad="GND"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+<device name="12PTH" package="TVBGONE-ADJ_BATTCON_12MM_PTH">
+<connects>
+<connect gate="G$1" pin="+" pad="VCC@1"/>
+<connect gate="G$1" pin="-" pad="GND"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+<device name="20PTH" package="TVBGONE-ADJ_BATTCOM_20MM_PTH">
+<connects>
+<connect gate="G$1" pin="+" pad="1"/>
+<connect gate="G$1" pin="-" pad="2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+<device name="20PTH2" package="TVBGONE-ADJ_BATTERY">
+<connects>
+<connect gate="G$1" pin="+" pad="+"/>
+<connect gate="G$1" pin="-" pad="-"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+<device name="20SMD" package="TVBGONE-ADJ_BATTCON_20MM">
+<connects>
+<connect gate="G$1" pin="+" pad="1"/>
+<connect gate="G$1" pin="-" pad="2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+<device name="245MM" package="TVBGONE-ADJ_BATTCON_245MM">
+<connects>
+<connect gate="G$1" pin="+" pad="1"/>
+<connect gate="G$1" pin="-" pad="2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+<device name="245PTH" package="TVBGONE-ADJ_BATTCON_245MM_PTH">
+<connects>
+<connect gate="G$1" pin="+" pad="3"/>
+<connect gate="G$1" pin="-" pad="2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+<device name="1100" package="TVBGONE-ADJ_LIPO-1100MAH">
+<connects>
+<connect gate="G$1" pin="+" pad="+"/>
+<connect gate="G$1" pin="-" pad="-"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+<device name="AA" package="TVBGONE-ADJ_BATTERY-AA">
+<connects>
+<connect gate="G$1" pin="+" pad="PWR@1"/>
+<connect gate="G$1" pin="-" pad="GND@1"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+<device name="AA-PANEL" package="TVBGONE-ADJ_BATTERY-AA-PANEL">
+<connects>
+<connect gate="G$1" pin="+" pad="+"/>
+<connect gate="G$1" pin="-" pad="-"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+<device name="AAA" package="TVBGONE-ADJ_BATTERY-AAA">
+<connects>
+<connect gate="G$1" pin="+" pad="PWR@1"/>
+<connect gate="G$1" pin="-" pad="GND@1"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+<device name="CR123A" package="TVBGONE-ADJ_BATTERY_CR123A">
+<connects>
+<connect gate="G$1" pin="+" pad="+"/>
+<connect gate="G$1" pin="-" pad="-"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+<device name="FOB" package="TVBGONE-ADJ_BATTERY_20MM_PTH_COMPACT">
+<connects>
+<connect gate="G$1" pin="+" pad="1"/>
+<connect gate="G$1" pin="-" pad="2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
 </devicesets>
 </library>
 </libraries>
@@ -7513,8 +7505,8 @@ These are standard SMD and PTH capacitors. Normally 10uF, 47uF, and 100uF in ele
 <part name="SV1" library="NSL" deviceset="CON-LSTB_MA06-1" device=""/>
 <part name="P+4" library="supply1" deviceset="VCC" device=""/>
 <part name="C2" library="SparkFun" deviceset="CAP_POL" device="1206" value="10uF"/>
-<part name="Y1_8MHZ" library="SparkFun" deviceset="RESONATOR" device="SMD" value="RESONATOR"/>
-<part name="BAT1" library="tvbgone-adj" deviceset="BATTERY" device="CR123A" value="CR123A"/>
+<part name="Y1_8MHZ" library="tvbgone-2layer" deviceset="SPARKFUN_RESONATOR" device="SMD" value="RESONATOR"/>
+<part name="BAT1" library="tvbgone-2layer" deviceset="TVBGONE-ADJ_BATTERY" device="CR123A" value="CR123A"/>
 <part name="P+5" library="supply1" deviceset="VCC" device=""/>
 <part name="GND6" library="supply1" deviceset="GND" device=""/>
 <part name="GND7" library="supply1" deviceset="GND" device=""/>
@@ -7571,11 +7563,11 @@ These are standard SMD and PTH capacitors. Normally 10uF, 47uF, and 100uF in ele
 <instance part="R1" gate="G$1" x="129.54" y="50.8" smashed="yes">
 <attribute name="NAME" x="125.73" y="52.2986" size="1.778" layer="95"/>
 </instance>
-<instance part="GND9" gate="1" x="152.4" y="78.74" smashed="yes">
-<attribute name="VALUE" x="149.86" y="76.2" size="1.778" layer="96"/>
+<instance part="GND9" gate="1" x="160.02" y="96.52" smashed="yes">
+<attribute name="VALUE" x="157.48" y="93.98" size="1.778" layer="96"/>
 </instance>
-<instance part="GND10" gate="1" x="68.58" y="152.4" smashed="yes" rot="R90">
-<attribute name="VALUE" x="71.12" y="149.86" size="1.778" layer="96" rot="R90"/>
+<instance part="GND10" gate="1" x="73.66" y="152.4" smashed="yes" rot="R90">
+<attribute name="VALUE" x="76.2" y="152.4" size="1.778" layer="96"/>
 </instance>
 <instance part="R3" gate="G$1" x="119.38" y="99.314" smashed="yes" rot="R270">
 <attribute name="NAME" x="120.8786" y="103.124" size="1.778" layer="95" rot="R270"/>
@@ -7593,7 +7585,7 @@ These are standard SMD and PTH capacitors. Normally 10uF, 47uF, and 100uF in ele
 <attribute name="VALUE" x="52.07" y="134.62" size="1.778" layer="96"/>
 </instance>
 <instance part="P+4" gate="VCC" x="76.2" y="147.32" smashed="yes" rot="R270">
-<attribute name="VALUE" x="73.66" y="149.86" size="1.778" layer="96"/>
+<attribute name="VALUE" x="76.2" y="147.32" size="1.778" layer="96"/>
 </instance>
 <instance part="C2" gate="G$1" x="73.66" y="96.52" smashed="yes">
 <attribute name="NAME" x="74.676" y="97.155" size="1.778" layer="95"/>
@@ -7607,11 +7599,11 @@ These are standard SMD and PTH capacitors. Normally 10uF, 47uF, and 100uF in ele
 <attribute name="NAME" x="31.75" y="129.54" size="1.778" layer="95"/>
 <attribute name="VALUE" x="31.75" y="118.11" size="1.778" layer="96"/>
 </instance>
-<instance part="P+5" gate="VCC" x="27.94" y="157.48" smashed="yes">
-<attribute name="VALUE" x="25.4" y="154.94" size="1.778" layer="96" rot="R90"/>
+<instance part="P+5" gate="VCC" x="22.86" y="142.24" smashed="yes">
+<attribute name="VALUE" x="20.32" y="139.7" size="1.778" layer="96" rot="R90"/>
 </instance>
-<instance part="GND6" gate="1" x="40.64" y="109.22" smashed="yes">
-<attribute name="VALUE" x="38.1" y="106.68" size="1.778" layer="96"/>
+<instance part="GND6" gate="1" x="48.26" y="116.84" smashed="yes">
+<attribute name="VALUE" x="45.72" y="114.3" size="1.778" layer="96"/>
 </instance>
 <instance part="GND7" gate="1" x="119.38" y="88.9" smashed="yes">
 <attribute name="VALUE" x="116.84" y="86.36" size="1.778" layer="96"/>
@@ -7619,8 +7611,8 @@ These are standard SMD and PTH capacitors. Normally 10uF, 47uF, and 100uF in ele
 <instance part="GND12" gate="1" x="142.24" y="116.84" smashed="yes">
 <attribute name="VALUE" x="139.7" y="114.3" size="1.778" layer="96"/>
 </instance>
-<instance part="P+3" gate="VCC" x="152.4" y="152.4" smashed="yes">
-<attribute name="VALUE" x="160.02" y="152.4" size="1.778" layer="96" rot="R180"/>
+<instance part="P+3" gate="VCC" x="160.02" y="152.4" smashed="yes">
+<attribute name="VALUE" x="160.02" y="154.94" size="1.778" layer="96"/>
 </instance>
 <instance part="Q1" gate="A" x="109.22" y="116.84" smashed="yes">
 <attribute name="NAME" x="99.06" y="124.46" size="1.778" layer="95"/>
@@ -7629,22 +7621,22 @@ These are standard SMD and PTH capacitors. Normally 10uF, 47uF, and 100uF in ele
 <instance part="P+7" gate="VCC" x="111.76" y="127" smashed="yes">
 <attribute name="VALUE" x="119.38" y="127" size="1.778" layer="96" rot="R180"/>
 </instance>
-<instance part="LED1" gate="G$1" x="142.24" y="139.7" smashed="yes">
-<attribute name="NAME" x="145.796" y="135.128" size="1.778" layer="95" rot="R90"/>
-<attribute name="VALUE" x="147.955" y="135.128" size="1.778" layer="96" rot="R90"/>
+<instance part="LED1" gate="G$1" x="142.24" y="142.24" smashed="yes">
+<attribute name="NAME" x="145.796" y="137.668" size="1.778" layer="95" rot="R90"/>
+<attribute name="VALUE" x="147.955" y="137.668" size="1.778" layer="96" rot="R90"/>
 </instance>
-<instance part="LED2" gate="G$1" x="152.4" y="139.7" smashed="yes">
-<attribute name="NAME" x="155.956" y="135.128" size="1.778" layer="95" rot="R90"/>
-<attribute name="VALUE" x="158.115" y="135.128" size="1.778" layer="96" rot="R90"/>
+<instance part="LED2" gate="G$1" x="160.02" y="139.7" smashed="yes">
+<attribute name="NAME" x="163.576" y="135.128" size="1.778" layer="95" rot="R90"/>
+<attribute name="VALUE" x="165.735" y="135.128" size="1.778" layer="96" rot="R90"/>
 </instance>
 <instance part="R4" gate="G$1" x="111.76" y="91.694" smashed="yes" rot="R270">
 <attribute name="NAME" x="113.2586" y="95.504" size="1.778" layer="95" rot="R270"/>
 <attribute name="VALUE" x="108.458" y="95.504" size="1.778" layer="96" rot="R270"/>
 </instance>
-<instance part="S2" gate="1" x="27.94" y="144.78" rot="R270"/>
+<instance part="S2" gate="1" x="22.86" y="132.08" rot="R270"/>
 <instance part="S3" gate="G$1" x="91.44" y="48.26"/>
 <instance part="Q2" gate="A" x="139.7" y="127"/>
-<instance part="Q2" gate="B" x="149.86" y="91.44"/>
+<instance part="Q2" gate="B" x="157.48" y="106.68"/>
 <instance part="C3" gate="G$1" x="66.04" y="96.52"/>
 </instances>
 <busses>
@@ -7682,20 +7674,20 @@ These are standard SMD and PTH capacitors. Normally 10uF, 47uF, and 100uF in ele
 <pinref part="Q1" gate="A" pin="E"/>
 </segment>
 <segment>
-<wire x1="152.4" y1="142.24" x2="152.4" y2="144.78" width="0.1524" layer="91"/>
-<wire x1="152.4" y1="144.78" x2="152.4" y2="147.32" width="0.1524" layer="91"/>
-<junction x="152.4" y="142.24"/>
+<wire x1="160.02" y1="142.24" x2="160.02" y2="144.78" width="0.1524" layer="91"/>
+<wire x1="160.02" y1="144.78" x2="160.02" y2="147.32" width="0.1524" layer="91"/>
+<junction x="160.02" y="142.24"/>
 <pinref part="P+3" gate="VCC" pin="VCC"/>
 <pinref part="LED2" gate="G$1" pin="A"/>
 <pinref part="LED1" gate="G$1" pin="A"/>
-<wire x1="152.4" y1="147.32" x2="152.4" y2="149.86" width="0.1524" layer="91"/>
-<wire x1="142.24" y1="142.24" x2="142.24" y2="147.32" width="0.1524" layer="91"/>
-<wire x1="142.24" y1="147.32" x2="152.4" y2="147.32" width="0.1524" layer="91"/>
+<wire x1="160.02" y1="147.32" x2="160.02" y2="149.86" width="0.1524" layer="91"/>
+<wire x1="142.24" y1="144.78" x2="142.24" y2="147.32" width="0.1524" layer="91"/>
+<wire x1="142.24" y1="147.32" x2="160.02" y2="147.32" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="P+5" gate="VCC" pin="VCC"/>
 <pinref part="S2" gate="1" pin="P"/>
-<wire x1="27.94" y1="154.94" x2="27.94" y2="147.32" width="0.1524" layer="91"/>
+<wire x1="22.86" y1="139.7" x2="22.86" y2="134.62" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="GND" class="0">
@@ -7718,7 +7710,7 @@ These are standard SMD and PTH capacitors. Normally 10uF, 47uF, and 100uF in ele
 <pinref part="GND11" gate="1" pin="GND"/>
 </segment>
 <segment>
-<wire x1="60.96" y1="152.4" x2="66.04" y2="152.4" width="0.1524" layer="91"/>
+<wire x1="60.96" y1="152.4" x2="71.12" y2="152.4" width="0.1524" layer="91"/>
 <junction x="60.96" y="152.4"/>
 <pinref part="SV1" gate="1" pin="6"/>
 <pinref part="GND10" gate="1" pin="GND"/>
@@ -7728,7 +7720,8 @@ These are standard SMD and PTH capacitors. Normally 10uF, 47uF, and 100uF in ele
 <pinref part="Y1_8MHZ" gate="G$1" pin="2"/>
 </segment>
 <segment>
-<wire x1="40.64" y1="124.46" x2="40.64" y2="111.76" width="0.1524" layer="91"/>
+<wire x1="40.64" y1="124.46" x2="48.26" y2="124.46" width="0.1524" layer="91"/>
+<wire x1="48.26" y1="124.46" x2="48.26" y2="119.38" width="0.1524" layer="91"/>
 <pinref part="BAT1" gate="G$1" pin="-"/>
 <pinref part="GND6" gate="1" pin="GND"/>
 </segment>
@@ -7738,7 +7731,7 @@ These are standard SMD and PTH capacitors. Normally 10uF, 47uF, and 100uF in ele
 <pinref part="GND7" gate="1" pin="GND"/>
 </segment>
 <segment>
-<wire x1="152.4" y1="86.36" x2="152.4" y2="81.28" width="0.1524" layer="91"/>
+<wire x1="160.02" y1="101.6" x2="160.02" y2="99.06" width="0.1524" layer="91"/>
 <pinref part="GND9" gate="1" pin="GND"/>
 <pinref part="Q2" gate="B" pin="E"/>
 </segment>
@@ -7782,7 +7775,7 @@ These are standard SMD and PTH capacitors. Normally 10uF, 47uF, and 100uF in ele
 <segment>
 <wire x1="60.96" y1="139.7" x2="73.66" y2="139.7" width="0.1524" layer="91"/>
 <junction x="60.96" y="139.7"/>
-<label x="66.04" y="137.16" size="1.778" layer="95"/>
+<label x="76.2" y="139.7" size="1.778" layer="95"/>
 <pinref part="SV1" gate="1" pin="1"/>
 </segment>
 <segment>
@@ -7796,7 +7789,7 @@ These are standard SMD and PTH capacitors. Normally 10uF, 47uF, and 100uF in ele
 <segment>
 <wire x1="73.66" y1="142.24" x2="60.96" y2="142.24" width="0.1524" layer="91"/>
 <junction x="60.96" y="142.24"/>
-<label x="66.04" y="142.24" size="1.778" layer="95"/>
+<label x="76.2" y="142.24" size="1.778" layer="95"/>
 <pinref part="SV1" gate="1" pin="2"/>
 </segment>
 <segment>
@@ -7810,7 +7803,7 @@ These are standard SMD and PTH capacitors. Normally 10uF, 47uF, and 100uF in ele
 <segment>
 <wire x1="73.66" y1="144.78" x2="60.96" y2="144.78" width="0.1524" layer="91"/>
 <junction x="60.96" y="144.78"/>
-<label x="68.58" y="144.78" size="1.778" layer="95"/>
+<label x="76.2" y="144.78" size="1.778" layer="95"/>
 <pinref part="SV1" gate="1" pin="3"/>
 </segment>
 <segment>
@@ -7834,7 +7827,7 @@ These are standard SMD and PTH capacitors. Normally 10uF, 47uF, and 100uF in ele
 <segment>
 <wire x1="60.96" y1="149.86" x2="73.66" y2="149.86" width="0.1524" layer="91"/>
 <junction x="60.96" y="149.86"/>
-<label x="60.96" y="149.86" size="1.778" layer="95"/>
+<label x="76.2" y="149.86" size="1.778" layer="95"/>
 <pinref part="SV1" gate="1" pin="5"/>
 </segment>
 </net>
@@ -7851,16 +7844,16 @@ These are standard SMD and PTH capacitors. Normally 10uF, 47uF, and 100uF in ele
 </net>
 <net name="N$4" class="0">
 <segment>
-<wire x1="142.24" y1="134.62" x2="142.24" y2="132.08" width="0.1524" layer="91"/>
-<junction x="142.24" y="134.62"/>
+<wire x1="142.24" y1="137.16" x2="142.24" y2="132.08" width="0.1524" layer="91"/>
+<junction x="142.24" y="137.16"/>
 <pinref part="LED1" gate="G$1" pin="C"/>
 <pinref part="Q2" gate="A" pin="C"/>
 </segment>
 </net>
 <net name="N$5" class="0">
 <segment>
-<wire x1="152.4" y1="134.62" x2="152.4" y2="96.52" width="0.1524" layer="91"/>
-<junction x="152.4" y="134.62"/>
+<wire x1="160.02" y1="134.62" x2="160.02" y2="111.76" width="0.1524" layer="91"/>
+<junction x="160.02" y="134.62"/>
 <pinref part="LED2" gate="G$1" pin="C"/>
 <pinref part="Q2" gate="B" pin="C"/>
 </segment>
@@ -7869,21 +7862,24 @@ These are standard SMD and PTH capacitors. Normally 10uF, 47uF, and 100uF in ele
 <segment>
 <pinref part="BAT1" gate="G$1" pin="+"/>
 <pinref part="S2" gate="1" pin="O"/>
-<wire x1="30.48" y1="124.46" x2="30.48" y2="139.7" width="0.1524" layer="91"/>
+<wire x1="30.48" y1="124.46" x2="25.4" y2="124.46" width="0.1524" layer="91"/>
+<wire x1="25.4" y1="124.46" x2="25.4" y2="127" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$9" class="0">
 <segment>
 <pinref part="Q1" gate="A" pin="C"/>
 <wire x1="111.76" y1="111.76" x2="119.38" y2="111.76" width="0.1524" layer="91"/>
-<wire x1="119.38" y1="111.76" x2="137.16" y2="111.76" width="0.1524" layer="91"/>
+<wire x1="119.38" y1="111.76" x2="132.08" y2="111.76" width="0.1524" layer="91"/>
 <wire x1="119.38" y1="104.394" x2="119.38" y2="111.76" width="0.1524" layer="91"/>
 <pinref part="R3" gate="G$1" pin="1"/>
 <pinref part="Q2" gate="A" pin="B"/>
-<wire x1="137.16" y1="127" x2="137.16" y2="111.76" width="0.1524" layer="91"/>
-<wire x1="137.16" y1="91.44" x2="147.32" y2="91.44" width="0.1524" layer="91"/>
+<wire x1="137.16" y1="127" x2="132.08" y2="127" width="0.1524" layer="91"/>
+<wire x1="132.08" y1="127" x2="132.08" y2="121.92" width="0.1524" layer="91"/>
+<wire x1="132.08" y1="121.92" x2="132.08" y2="111.76" width="0.1524" layer="91"/>
+<wire x1="132.08" y1="106.68" x2="154.94" y2="106.68" width="0.1524" layer="91"/>
 <pinref part="Q2" gate="B" pin="B"/>
-<wire x1="137.16" y1="111.76" x2="137.16" y2="91.44" width="0.1524" layer="91"/>
+<wire x1="132.08" y1="111.76" x2="132.08" y2="106.68" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>
