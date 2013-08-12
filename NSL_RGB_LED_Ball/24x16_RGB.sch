@@ -9885,6 +9885,8 @@ www.irf.com&lt;p&gt;
 <part name="R18" library="SparkFun" deviceset="RESISTOR" device="" value="10k"/>
 <part name="Q2" library="transistor-small-signal" deviceset="BSS84" device="" value="BSH201"/>
 <part name="R19" library="SparkFun" deviceset="RESISTOR" device="" value="0ohm DNP"/>
+<part name="RST" library="24x16_RGB" deviceset="M02" device="PTH"/>
+<part name="SUPPLY11" library="NSL" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -10177,13 +10179,6 @@ www.irf.com&lt;p&gt;
 <pinref part="IC4" gate="G$1" pin="PC1(ADC1)"/>
 </segment>
 </net>
-<net name="BUTTON" class="0">
-<segment>
-<wire x1="25.4" y1="-10.16" x2="45.72" y2="-10.16" width="0.1524" layer="91"/>
-<label x="38.1" y="-10.16" size="1.778" layer="95"/>
-<pinref part="IC4" gate="G$1" pin="PC5(ADC5/SCL)"/>
-</segment>
-</net>
 <net name="TX" class="0">
 <segment>
 <wire x1="25.4" y1="-22.86" x2="45.72" y2="-22.86" width="0.1524" layer="91"/>
@@ -10263,9 +10258,9 @@ www.irf.com&lt;p&gt;
 </net>
 <net name="BATTSENSE" class="0">
 <segment>
-<wire x1="25.4" y1="-27.94" x2="45.72" y2="-27.94" width="0.1524" layer="91"/>
-<label x="38.1" y="-27.94" size="1.778" layer="95"/>
-<pinref part="IC4" gate="G$1" pin="PD3(INT1)"/>
+<wire x1="25.4" y1="-10.16" x2="45.72" y2="-10.16" width="0.1524" layer="91"/>
+<label x="38.1" y="-10.16" size="1.778" layer="95"/>
+<pinref part="IC4" gate="G$1" pin="PC5(ADC5/SCL)"/>
 </segment>
 </net>
 <net name="BT_PWR" class="0">
@@ -10297,6 +10292,13 @@ www.irf.com&lt;p&gt;
 <pinref part="X1" gate="X" pin="1"/>
 <wire x1="-27.94" y1="-22.86" x2="-27.94" y2="-21.59" width="0.1524" layer="91"/>
 <junction x="-27.94" y="-22.86"/>
+</segment>
+</net>
+<net name="BUTTON" class="0">
+<segment>
+<wire x1="25.4" y1="-27.94" x2="45.72" y2="-27.94" width="0.1524" layer="91"/>
+<label x="38.1" y="-27.94" size="1.778" layer="95"/>
+<pinref part="IC4" gate="G$1" pin="PD3(INT1)"/>
 </segment>
 </net>
 </nets>
@@ -12073,6 +12075,8 @@ www.irf.com&lt;p&gt;
 <instance part="S1" gate="S" x="10.16" y="43.18"/>
 <instance part="MODE" gate="G$1" x="38.1" y="22.86"/>
 <instance part="SUPPLY9" gate="GND" x="50.8" y="17.78"/>
+<instance part="RST" gate="G$1" x="38.1" y="45.72"/>
+<instance part="SUPPLY11" gate="GND" x="50.8" y="40.64"/>
 </instances>
 <busses>
 </busses>
@@ -12152,6 +12156,12 @@ www.irf.com&lt;p&gt;
 <pinref part="SUPPLY9" gate="GND" pin="GND"/>
 <pinref part="MODE" gate="G$1" pin="1"/>
 </segment>
+<segment>
+<wire x1="50.8" y1="45.72" x2="50.8" y2="43.18" width="0.1524" layer="91"/>
+<wire x1="50.8" y1="45.72" x2="45.72" y2="45.72" width="0.1524" layer="91"/>
+<pinref part="SUPPLY11" gate="GND" pin="GND"/>
+<pinref part="RST" gate="G$1" pin="1"/>
+</segment>
 </net>
 <net name="SDA/SDI/SDO" class="0">
 <segment>
@@ -12217,6 +12227,12 @@ www.irf.com&lt;p&gt;
 <wire x1="15.24" y1="43.18" x2="25.4" y2="43.18" width="0.1524" layer="91"/>
 <label x="17.78" y="43.18" size="1.778" layer="95"/>
 <pinref part="S1" gate="S" pin="3"/>
+</segment>
+<segment>
+<wire x1="50.8" y1="48.26" x2="50.8" y2="53.34" width="0.1524" layer="91"/>
+<label x="50.8" y="53.34" size="1.778" layer="95"/>
+<pinref part="RST" gate="G$1" pin="2"/>
+<wire x1="45.72" y1="48.26" x2="50.8" y2="48.26" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="BT_RST" class="0">
