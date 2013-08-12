@@ -11648,6 +11648,7 @@ www.irf.com&lt;p&gt;
 </sheet>
 <sheet>
 <plain>
+<text x="-53.34" y="-40.64" size="1.778" layer="91">http://www.batteryspace.com/lifepo426650cell32v3300mah19.8arate10whunapproved.aspx</text>
 </plain>
 <instances>
 <instance part="BATTERY" gate="G$1" x="60.96" y="-2.54"/>
