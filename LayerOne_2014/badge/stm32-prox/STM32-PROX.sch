@@ -5562,17 +5562,6 @@ by exp-project-lbr.ulp</description>
 <smd name="1" x="0" y="0" dx="3.429" dy="1.778" layer="1"/>
 <text x="-1.8263" y="-0.5699" size="1.27" layer="51">&gt;NAME</text>
 </package>
-<package name="BATT">
-<wire x1="-3.048" y1="2.286" x2="3.048" y2="2.286" width="0.127" layer="21"/>
-<wire x1="3.048" y1="2.286" x2="3.048" y2="-2.286" width="0.127" layer="21"/>
-<wire x1="3.048" y1="-2.286" x2="-3.048" y2="-2.286" width="0.127" layer="21"/>
-<wire x1="-3.048" y1="-2.286" x2="-3.048" y2="2.286" width="0.127" layer="21"/>
-<smd name="1" x="-1.905" y="0" dx="1.27" dy="3.81" layer="1"/>
-<smd name="2" x="0" y="0" dx="1.27" dy="3.81" layer="1"/>
-<smd name="3" x="1.905" y="0" dx="1.27" dy="3.81" layer="1"/>
-<text x="1.905" y="2.54" size="1.27" layer="21">+</text>
-<text x="-2.54" y="2.54" size="1.27" layer="21">-</text>
-</package>
 <package name="QFN-10">
 <description>&lt;b&gt;10 pins Quad Flat Leadless &lt;/b&gt;
 &lt;br&gt;Size: 3 x 3 mm
@@ -5802,15 +5791,6 @@ by exp-project-lbr.ulp</description>
 <wire x1="-0.3175" y1="1.27" x2="0" y2="0.9525" width="0.1524" layer="94"/>
 <pin name="P$1" x="0" y="-2.54" visible="off" length="short" rot="R90"/>
 <text x="-1.27" y="3.4925" size="1.27" layer="95">&gt;NAME</text>
-</symbol>
-<symbol name="BATT">
-<wire x1="-2.54" y1="0" x2="2.54" y2="0" width="0.254" layer="94"/>
-<wire x1="-5.08" y1="-2.54" x2="5.08" y2="-2.54" width="0.254" layer="94"/>
-<pin name="NEG" x="0" y="2.54" visible="pad" length="short" direction="pwr" rot="R270"/>
-<pin name="NTC" x="10.16" y="-2.54" visible="pad" length="short" direction="pwr" rot="R90"/>
-<pin name="POS" x="0" y="-5.08" visible="pad" length="short" direction="pwr" rot="R90"/>
-<text x="-5.08" y="-5.08" size="1.27" layer="95" rot="R90">&gt;NAME</text>
-<text x="7.62" y="0" size="1.27" layer="95">NTC</text>
 </symbol>
 <symbol name="TPS6120X">
 <wire x1="-10.16" y1="7.62" x2="-10.16" y2="-7.62" width="0.4064" layer="94"/>
@@ -6046,23 +6026,6 @@ by exp-project-lbr.ulp</description>
 <device name="KEYSTONE-SMD" package="--MERGED_KEYSTONE-SMD-TESTPOINT-5015">
 <connects>
 <connect gate="G$1" pin="P$1" pad="1"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-<deviceset name="BATT">
-<gates>
-<gate name="G$1" symbol="BATT" x="0" y="2.54"/>
-</gates>
-<devices>
-<device name="" package="BATT">
-<connects>
-<connect gate="G$1" pin="NEG" pad="1"/>
-<connect gate="G$1" pin="NTC" pad="2"/>
-<connect gate="G$1" pin="POS" pad="3"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -18912,6 +18875,57 @@ by exp-project-lbr.ulp</description>
 </deviceset>
 </devicesets>
 </library>
+<library name="STM32-PROX-1968">
+<description>Generated from &lt;b&gt;STM32-PROX.sch&lt;/b&gt;&lt;p&gt;
+by exp-lbrs.ulp</description>
+<packages>
+<package name="BATT">
+<smd name="1" x="-1.905" y="0" dx="1.27" dy="3.81" layer="1"/>
+<smd name="2" x="0" y="0" dx="1.27" dy="3.81" layer="1"/>
+<smd name="3" x="1.905" y="0" dx="1.27" dy="3.81" layer="1"/>
+<wire x1="-3.048" y1="2.286" x2="3.048" y2="2.286" width="0.127" layer="21"/>
+<wire x1="3.048" y1="2.286" x2="3.048" y2="-2.286" width="0.127" layer="21"/>
+<wire x1="3.048" y1="-2.286" x2="-3.048" y2="-2.286" width="0.127" layer="21"/>
+<wire x1="-3.048" y1="-2.286" x2="-3.048" y2="2.286" width="0.127" layer="21"/>
+<text x="1.905" y="2.54" size="1.27" layer="21">+</text>
+<text x="-2.54" y="2.54" size="1.27" layer="21">-</text>
+<wire x1="-21.336" y1="5.08" x2="26.67" y2="5.08" width="0.254" layer="48"/>
+<wire x1="26.67" y1="5.08" x2="26.67" y2="-58.42" width="0.254" layer="48"/>
+<wire x1="26.67" y1="-58.42" x2="-21.336" y2="-58.42" width="0.254" layer="48"/>
+<wire x1="-21.336" y1="-58.42" x2="-21.336" y2="5.08" width="0.254" layer="48"/>
+</package>
+</packages>
+<symbols>
+<symbol name="BATT">
+<pin name="NEG" x="0" y="2.54" visible="pad" length="short" direction="pwr" rot="R270"/>
+<pin name="POS" x="0" y="-5.08" visible="pad" length="short" direction="pwr" rot="R90"/>
+<wire x1="-2.54" y1="0" x2="2.54" y2="0" width="0.254" layer="94"/>
+<wire x1="-5.08" y1="-2.54" x2="5.08" y2="-2.54" width="0.254" layer="94"/>
+<pin name="NTC" x="10.16" y="-2.54" visible="pad" length="short" direction="pwr" rot="R90"/>
+<text x="-5.08" y="-5.08" size="1.27" layer="95" rot="R90">&gt;NAME</text>
+<text x="7.62" y="0" size="1.27" layer="95">NTC</text>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="BATT">
+<gates>
+<gate name="G$1" symbol="BATT" x="0" y="2.54"/>
+</gates>
+<devices>
+<device name="" package="BATT">
+<connects>
+<connect gate="G$1" pin="NEG" pad="1"/>
+<connect gate="G$1" pin="NTC" pad="2"/>
+<connect gate="G$1" pin="POS" pad="3"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -19512,7 +19526,7 @@ by exp-project-lbr.ulp</description>
 <part name="GND19" library="badge.lbrbadge_2013" deviceset="SUPPLY1_GND" device=""/>
 <part name="C64" library="badge.lbrbadge_2013" deviceset="SPARKFUN_CAP" device="0603-CAP" value="10uF"/>
 <part name="L2" library="pwr_section" deviceset="CDRH2D18" device="" value="CDRH2D18/HPNP-2R2NC"/>
-<part name="U$9" library="STM32-PROX" deviceset="BATT" device=""/>
+<part name="U$9" library="STM32-PROX-1968" deviceset="BATT" device=""/>
 <part name="TP10" library="STM32-PROX" deviceset="--MERGED_TESTPAD" device="KEYSTONE-SMD" value="--MERGED_TESTPADKEYSTONE-SMD"/>
 <part name="S1" library="SparkFun-Electromechanical" deviceset="SWITCH-SPDT" device="-SMD-A"/>
 <part name="GND20" library="badge.lbrbadge_2013" deviceset="SUPPLY1_GND" device=""/>
