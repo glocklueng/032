@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="6.4">
+<eagle version="6.5.0">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.1" unitdist="mm" unit="mm" style="lines" multiple="1" display="yes" altdistance="0.025" altunitdist="inch" altunit="inch"/>
+<grid distance="0.05" unitdist="inch" unit="mm" style="lines" multiple="1" display="yes" altdistance="0.025" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="2" name="Route2" color="1" fill="3" visible="no" active="yes"/>
@@ -154,10 +154,10 @@ Source: http://document.sharpsma.com/files/GM1WA55311A_SS.pdf</description>
 <package name="LED5MM_RGB_EDGE">
 <wire x1="-2.6352" y1="-1.1938" x2="-2.6352" y2="-2.0828" width="0.127" layer="21"/>
 <wire x1="2.7986" y1="-1.1924" x2="2.8109" y2="-2.1099" width="0.127" layer="21" curve="-180.01249"/>
-<smd name="A" x="-0.585" y="-1.6002" dx="3.175" dy="1" layer="16" rot="R90"/>
-<smd name="B" x="1.971" y="-1.6002" dx="3.175" dy="1" layer="16" rot="R90"/>
-<smd name="G" x="0.693" y="-1.6002" dx="3.175" dy="1" layer="1" rot="R90"/>
-<smd name="R" x="-1.863" y="-1.6002" dx="3.175" dy="1" layer="1" rot="R90"/>
+<smd name="A" x="-0.585" y="-1.6002" dx="3.175" dy="1.75" layer="16" rot="R90"/>
+<smd name="B" x="1.971" y="-1.6002" dx="3.175" dy="1.75" layer="16" rot="R90"/>
+<smd name="G" x="0.693" y="-1.6002" dx="3.175" dy="1.75" layer="1" rot="R90"/>
+<smd name="R" x="-1.863" y="-1.6002" dx="3.175" dy="1.75" layer="1" rot="R90"/>
 <text x="2.7686" y="2.0066" size="1.27" layer="25" rot="R180">&gt;NAME</text>
 <text x="0.0508" y="-4.7244" size="1.27" layer="22" font="vector" ratio="12" rot="MR0">A</text>
 <wire x1="-2.5" y1="0.408" x2="2.5" y2="0.408" width="0.127" layer="21"/>
