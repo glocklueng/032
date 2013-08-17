@@ -3866,8 +3866,9 @@ design rules under a new name.</description>
 <vertex x="39.116" y="48.006"/>
 <vertex x="38.862" y="48.006"/>
 </polygon>
+<wire x1="35.04" y1="49.51" x2="35.04" y2="48.26" width="0.3048" layer="1"/>
+<wire x1="35.04" y1="48.26" x2="34.29" y2="48.26" width="0.3048" layer="1"/>
 <wire x1="50.292" y1="15.836" x2="50.22" y2="19.03" width="0" layer="19" extent="1-16"/>
-<wire x1="35.04" y1="49.51" x2="34.29" y2="48.26" width="0" layer="19" extent="1-1"/>
 <wire x1="74.803" y1="14.467" x2="74.51" y2="12.065" width="0" layer="19" extent="1-1"/>
 <wire x1="38.12" y1="14.93" x2="40.513" y2="14.39" width="0" layer="19" extent="1-16"/>
 <wire x1="49.22" y1="3.83" x2="47.625" y2="1.27" width="0" layer="19" extent="1-1"/>
