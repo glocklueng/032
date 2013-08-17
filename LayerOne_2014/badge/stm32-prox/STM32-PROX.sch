@@ -5520,24 +5520,6 @@ by exp-project-lbr.ulp</description>
 <text x="-6.35" y="8.89" size="1.27" layer="25">&gt;NAME</text>
 <text x="-6.35" y="-10.16" size="1.27" layer="27">&gt;VALUE</text>
 </package>
-<package name="UDFN-EP">
-<circle x="-1.3588" y="-1.2334" radius="0.1" width="0.3048" layer="21"/>
-<wire x1="-1" y1="1.5" x2="1" y2="1.5" width="0.1" layer="21"/>
-<wire x1="1" y1="1.5" x2="1" y2="-1.5" width="0.1" layer="21"/>
-<wire x1="1" y1="-1.5" x2="-1" y2="-1.5" width="0.1" layer="21"/>
-<wire x1="-1" y1="-1.5" x2="-1" y2="1.5" width="0.1" layer="21"/>
-<smd name="1" x="-0.75" y="-1.25" dx="0.3" dy="0.65" layer="1"/>
-<smd name="2" x="-0.25" y="-1.25" dx="0.3" dy="0.65" layer="1"/>
-<smd name="3" x="0.25" y="-1.25" dx="0.3" dy="0.65" layer="1"/>
-<smd name="4" x="0.75" y="-1.25" dx="0.3" dy="0.65" layer="1"/>
-<smd name="5" x="0.75" y="1.25" dx="0.3" dy="0.65" layer="1"/>
-<smd name="6" x="0.25" y="1.25" dx="0.3" dy="0.65" layer="1"/>
-<smd name="7" x="-0.25" y="1.25" dx="0.3" dy="0.65" layer="1"/>
-<smd name="8" x="-0.75" y="1.25" dx="0.3" dy="0.65" layer="1"/>
-<smd name="9" x="0" y="0" dx="1.05" dy="1.45" layer="1" roundness="20" rot="R90"/>
-<pad name="10" x="0" y="0" drill="0.3556"/>
-<text x="2.0266" y="-1.8984" size="0.8128" layer="25" rot="R90">&gt;NAME</text>
-</package>
 <package name="--MERGED_TESTPAD-PTH-0.7MM">
 <circle x="0" y="0" radius="1.2" width="0.127" layer="21"/>
 <pad name="1" x="0" y="0" drill="0.7" diameter="1.778"/>
@@ -5626,6 +5608,24 @@ by exp-project-lbr.ulp</description>
 <text x="-3.9" y="-3.9" size="1.27" layer="21" ratio="18" rot="R90">&gt;NAME</text>
 <hole x="-0.05" y="0.55" drill="0.9"/>
 <hole x="-0.05" y="-2.95" drill="0.9"/>
+</package>
+<package name="UDFN-EP">
+<circle x="-1.3588" y="-1.2334" radius="0.1" width="0.3048" layer="21"/>
+<wire x1="-1" y1="1.5" x2="1" y2="1.5" width="0.1" layer="21"/>
+<wire x1="1" y1="1.5" x2="1" y2="-1.5" width="0.1" layer="21"/>
+<wire x1="1" y1="-1.5" x2="-1" y2="-1.5" width="0.1" layer="21"/>
+<wire x1="-1" y1="-1.5" x2="-1" y2="1.5" width="0.1" layer="21"/>
+<smd name="1" x="-0.75" y="-1.25" dx="0.3" dy="0.65" layer="1"/>
+<smd name="2" x="-0.25" y="-1.25" dx="0.3" dy="0.65" layer="1"/>
+<smd name="3" x="0.25" y="-1.25" dx="0.3" dy="0.65" layer="1"/>
+<smd name="4" x="0.75" y="-1.25" dx="0.3" dy="0.65" layer="1"/>
+<smd name="5" x="0.75" y="1.25" dx="0.3" dy="0.65" layer="1"/>
+<smd name="6" x="0.25" y="1.25" dx="0.3" dy="0.65" layer="1"/>
+<smd name="7" x="-0.25" y="1.25" dx="0.3" dy="0.65" layer="1"/>
+<smd name="8" x="-0.75" y="1.25" dx="0.3" dy="0.65" layer="1"/>
+<smd name="9" x="0" y="0" dx="1.05" dy="1.45" layer="1" roundness="20" rot="R90"/>
+<pad name="V1" x="0" y="0" drill="0.3556"/>
+<text x="2.0266" y="-1.8984" size="0.8128" layer="25" rot="R90">&gt;NAME</text>
 </package>
 </packages>
 <symbols>
@@ -5760,21 +5760,6 @@ by exp-project-lbr.ulp</description>
 <pin name="GND" x="0" y="2.54" visible="off" length="short" direction="sup" rot="R270"/>
 <text x="-1.905" y="-3.175" size="1.778" layer="96">&gt;VALUE</text>
 </symbol>
-<symbol name="MC34674">
-<wire x1="-10.16" y1="12.7" x2="10.16" y2="12.7" width="0.254" layer="94"/>
-<wire x1="10.16" y1="12.7" x2="10.16" y2="-12.7" width="0.254" layer="94"/>
-<wire x1="10.16" y1="-12.7" x2="-10.16" y2="-12.7" width="0.254" layer="94"/>
-<wire x1="-10.16" y1="-12.7" x2="-10.16" y2="12.7" width="0.254" layer="94"/>
-<pin name="!EN" x="-15.24" y="-7.62" visible="pin" length="middle"/>
-<pin name="!GRN" x="-15.24" y="2.54" visible="pin" length="middle"/>
-<pin name="!RED" x="-15.24" y="-2.54" visible="pin" length="middle"/>
-<pin name="BAT" x="15.24" y="7.62" visible="pin" length="middle" rot="R180"/>
-<pin name="EP" x="0" y="-17.78" visible="pin" length="middle" rot="R90"/>
-<pin name="GND" x="15.24" y="-7.62" visible="pin" length="middle" rot="R180"/>
-<pin name="TEMP" x="15.24" y="-2.54" visible="pin" length="middle" rot="R180"/>
-<pin name="VIN" x="-15.24" y="7.62" visible="pin" length="middle"/>
-<pin name="VREF" x="15.24" y="2.54" visible="pin" length="middle" rot="R180"/>
-</symbol>
 <symbol name="--MERGED_TESTPAD">
 <wire x1="0" y1="0" x2="1.27" y2="0.635" width="0.1524" layer="94"/>
 <wire x1="1.27" y1="0.635" x2="0.635" y2="0.635" width="0.1524" layer="94"/>
@@ -5838,6 +5823,29 @@ by exp-project-lbr.ulp</description>
 <pin name="GND@5" x="12.7" y="-5.08" length="short" direction="pwr" rot="R180"/>
 <pin name="GND@6" x="12.7" y="-2.54" length="short" direction="pwr" rot="R180"/>
 <text x="-10.16" y="8.382" size="1.778" layer="95">&gt;NAME</text>
+</symbol>
+<symbol name="MC34674">
+<wire x1="-10.16" y1="12.7" x2="10.16" y2="12.7" width="0.254" layer="94"/>
+<wire x1="10.16" y1="12.7" x2="10.16" y2="-12.7" width="0.254" layer="94"/>
+<wire x1="10.16" y1="-12.7" x2="-10.16" y2="-12.7" width="0.254" layer="94"/>
+<wire x1="-10.16" y1="-12.7" x2="-10.16" y2="12.7" width="0.254" layer="94"/>
+<pin name="!EN" x="-15.24" y="-7.62" visible="pin" length="middle"/>
+<pin name="!GRN" x="-15.24" y="2.54" visible="pin" length="middle"/>
+<pin name="!RED" x="-15.24" y="-2.54" visible="pin" length="middle"/>
+<pin name="BAT" x="15.24" y="7.62" visible="pin" length="middle" rot="R180"/>
+<pin name="EP" x="0" y="-17.78" visible="pin" length="middle" direction="pwr" rot="R90"/>
+<pin name="GND" x="15.24" y="-7.62" visible="pin" length="middle" direction="pwr" rot="R180"/>
+<pin name="TEMP" x="15.24" y="-2.54" visible="pin" length="middle" rot="R180"/>
+<pin name="VIN" x="-15.24" y="7.62" visible="pin" length="middle"/>
+<pin name="VREF" x="15.24" y="2.54" visible="pin" length="middle" rot="R180"/>
+</symbol>
+<symbol name="UDFN-EP-GND">
+<pin name="V1" x="0" y="-2.54" visible="pad" length="short" direction="pwr" rot="R90"/>
+<wire x1="0" y1="0" x2="2.54" y2="0" width="0.254" layer="94"/>
+<wire x1="2.54" y1="0" x2="2.54" y2="5.08" width="0.254" layer="94"/>
+<wire x1="2.54" y1="5.08" x2="-2.54" y2="5.08" width="0.254" layer="94"/>
+<wire x1="-2.54" y1="5.08" x2="-2.54" y2="0" width="0.254" layer="94"/>
+<wire x1="-2.54" y1="0" x2="0" y2="0" width="0.254" layer="94"/>
 </symbol>
 </symbols>
 <devicesets>
@@ -5970,29 +5978,6 @@ by exp-project-lbr.ulp</description>
 </device>
 </devices>
 </deviceset>
-<deviceset name="MC34674">
-<gates>
-<gate name="G$1" symbol="MC34674" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="UDFN-EP">
-<connects>
-<connect gate="G$1" pin="!EN" pad="4"/>
-<connect gate="G$1" pin="!GRN" pad="2"/>
-<connect gate="G$1" pin="!RED" pad="3"/>
-<connect gate="G$1" pin="BAT" pad="8"/>
-<connect gate="G$1" pin="EP" pad="9"/>
-<connect gate="G$1" pin="GND" pad="5"/>
-<connect gate="G$1" pin="TEMP" pad="6"/>
-<connect gate="G$1" pin="VIN" pad="1"/>
-<connect gate="G$1" pin="VREF" pad="7"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
 <deviceset name="--MERGED_TESTPAD" prefix="TP">
 <gates>
 <gate name="G$1" symbol="--MERGED_TESTPAD" x="0" y="2.54"/>
@@ -6081,6 +6066,31 @@ by exp-project-lbr.ulp</description>
 <connect gate="G$1" pin="SHLD2" pad="TAB2"/>
 <connect gate="G$1" pin="SHLD3" pad="TAB3"/>
 <connect gate="G$1" pin="VBUS/1" pad="1"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="MC34674">
+<gates>
+<gate name="G$1" symbol="MC34674" x="0" y="0"/>
+<gate name="G$2" symbol="UDFN-EP-GND" x="-27.94" y="-5.08" addlevel="must"/>
+</gates>
+<devices>
+<device name="" package="UDFN-EP">
+<connects>
+<connect gate="G$1" pin="!EN" pad="4"/>
+<connect gate="G$1" pin="!GRN" pad="2"/>
+<connect gate="G$1" pin="!RED" pad="3"/>
+<connect gate="G$1" pin="BAT" pad="8"/>
+<connect gate="G$1" pin="EP" pad="9"/>
+<connect gate="G$1" pin="GND" pad="5"/>
+<connect gate="G$1" pin="TEMP" pad="6"/>
+<connect gate="G$1" pin="VIN" pad="1"/>
+<connect gate="G$1" pin="VREF" pad="7"/>
+<connect gate="G$2" pin="V1" pad="V1"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -19501,7 +19511,6 @@ by exp-lbrs.ulp</description>
 <attribute name="PARTNO" value="*"/>
 </part>
 <part name="IC1" library="STM32-PROX" deviceset="IC_TPS6120X" device="QFN10" value=""/>
-<part name="U$7" library="STM32-PROX" deviceset="MC34674" device=""/>
 <part name="LED1" library="badge.lbrbadge_2013" deviceset="LED_LED" device="CHIP-LED0603"/>
 <part name="LED2" library="badge.lbrbadge_2013" deviceset="LED_LED" device="CHIP-LED0603"/>
 <part name="R24" library="badge.lbrbadge_2013" deviceset="RCL_R-US_" device="R0603"/>
@@ -19560,6 +19569,7 @@ by exp-lbrs.ulp</description>
 <part name="R69" library="  merged" deviceset="RESISTOR" device="0603" value="10K"/>
 <part name="R70" library="  merged" deviceset="RESISTOR" device="0603" value="10K"/>
 <part name="R71" library="  merged" deviceset="RESISTOR" device="0603" value="10K"/>
+<part name="U$7" library="STM32-PROX" deviceset="MC34674" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -19568,7 +19578,6 @@ by exp-lbrs.ulp</description>
 </plain>
 <instances>
 <instance part="IC1" gate="IC" x="-2.54" y="7.62"/>
-<instance part="U$7" gate="G$1" x="-2.54" y="63.5" smashed="yes"/>
 <instance part="LED1" gate="G$1" x="-45.72" y="76.2"/>
 <instance part="LED2" gate="G$1" x="-35.56" y="76.2"/>
 <instance part="R24" gate="G$1" x="-25.4" y="66.04"/>
@@ -19598,6 +19607,8 @@ by exp-lbrs.ulp</description>
 <instance part="GND20" gate="1" x="-73.66" y="-33.02"/>
 <instance part="JP2" gate="G$1" x="-7.62" y="-38.1" rot="R90"/>
 <instance part="GND21" gate="1" x="7.62" y="-40.64"/>
+<instance part="U$7" gate="G$1" x="-2.54" y="63.5"/>
+<instance part="U$7" gate="G$2" x="-15.24" y="45.72"/>
 </instances>
 <busses>
 </busses>
@@ -19610,7 +19621,6 @@ by exp-lbrs.ulp</description>
 <wire x1="-45.72" y1="78.74" x2="-43.18" y2="78.74" width="0.1524" layer="91"/>
 <junction x="-45.72" y="78.74"/>
 <pinref part="LED2" gate="G$1" pin="A"/>
-<pinref part="U$7" gate="G$1" pin="VIN"/>
 <wire x1="-35.56" y1="78.74" x2="-22.86" y2="78.74" width="0.1524" layer="91"/>
 <wire x1="-22.86" y1="78.74" x2="-17.78" y2="78.74" width="0.1524" layer="91"/>
 <wire x1="-17.78" y1="78.74" x2="-17.78" y2="71.12" width="0.1524" layer="91"/>
@@ -19623,6 +19633,7 @@ by exp-lbrs.ulp</description>
 <wire x1="-22.86" y1="83.82" x2="-22.86" y2="78.74" width="0.1524" layer="91"/>
 <junction x="-22.86" y="78.74"/>
 <junction x="-55.88" y="78.74"/>
+<pinref part="U$7" gate="G$1" pin="VIN"/>
 </segment>
 </net>
 <net name="N$6" class="0">
@@ -19639,8 +19650,8 @@ by exp-lbrs.ulp</description>
 <net name="N$8" class="0">
 <segment>
 <pinref part="R24" gate="G$1" pin="2"/>
-<pinref part="U$7" gate="G$1" pin="!GRN"/>
 <wire x1="-20.32" y1="66.04" x2="-17.78" y2="66.04" width="0.1524" layer="91"/>
+<pinref part="U$7" gate="G$1" pin="!GRN"/>
 </segment>
 </net>
 <net name="N$55" class="0">
@@ -19660,13 +19671,12 @@ by exp-lbrs.ulp</description>
 <net name="N$63" class="0">
 <segment>
 <pinref part="R25" gate="G$1" pin="2"/>
-<pinref part="U$7" gate="G$1" pin="!RED"/>
 <wire x1="-20.32" y1="60.96" x2="-17.78" y2="60.96" width="0.1524" layer="91"/>
+<pinref part="U$7" gate="G$1" pin="!RED"/>
 </segment>
 </net>
 <net name="VBAT+" class="0">
 <segment>
-<pinref part="U$7" gate="G$1" pin="BAT"/>
 <wire x1="12.7" y1="71.12" x2="17.78" y2="71.12" width="0.1524" layer="91"/>
 <pinref part="C61" gate="G$1" pin="1"/>
 <wire x1="17.78" y1="71.12" x2="48.26" y2="71.12" width="0.1524" layer="91"/>
@@ -19677,6 +19687,7 @@ by exp-lbrs.ulp</description>
 <pinref part="TP9" gate="G$1" pin="P$1"/>
 <wire x1="17.78" y1="83.82" x2="17.78" y2="71.12" width="0.1524" layer="91"/>
 <junction x="17.78" y="71.12"/>
+<pinref part="U$7" gate="G$1" pin="BAT"/>
 </segment>
 <segment>
 <pinref part="IC1" gate="IC" pin="VIN"/>
@@ -19712,9 +19723,9 @@ by exp-lbrs.ulp</description>
 </net>
 <net name="N$64" class="0">
 <segment>
-<pinref part="U$7" gate="G$1" pin="VREF"/>
 <pinref part="R26" gate="G$1" pin="1"/>
 <wire x1="12.7" y1="66.04" x2="17.78" y2="66.04" width="0.1524" layer="91"/>
+<pinref part="U$7" gate="G$1" pin="VREF"/>
 </segment>
 </net>
 <net name="N$65" class="0">
@@ -19723,7 +19734,6 @@ by exp-lbrs.ulp</description>
 <pinref part="R43" gate="G$1" pin="2"/>
 <wire x1="27.94" y1="66.04" x2="33.02" y2="66.04" width="0.1524" layer="91"/>
 <wire x1="33.02" y1="66.04" x2="33.02" y2="60.96" width="0.1524" layer="91"/>
-<pinref part="U$7" gate="G$1" pin="TEMP"/>
 <pinref part="C60" gate="G$1" pin="1"/>
 <wire x1="12.7" y1="60.96" x2="22.86" y2="60.96" width="0.1524" layer="91"/>
 <wire x1="22.86" y1="58.42" x2="22.86" y2="60.96" width="0.1524" layer="91"/>
@@ -19731,6 +19741,7 @@ by exp-lbrs.ulp</description>
 <wire x1="33.02" y1="60.96" x2="33.02" y2="58.42" width="0.1524" layer="91"/>
 <junction x="22.86" y="60.96"/>
 <junction x="33.02" y="60.96"/>
+<pinref part="U$7" gate="G$1" pin="TEMP"/>
 </segment>
 </net>
 <net name="NTC" class="0">
@@ -19757,29 +19768,33 @@ by exp-lbrs.ulp</description>
 <pinref part="C58" gate="G$1" pin="2"/>
 <wire x1="-45.72" y1="43.18" x2="-35.56" y2="43.18" width="0.1524" layer="91"/>
 <wire x1="-35.56" y1="43.18" x2="-22.86" y2="43.18" width="0.1524" layer="91"/>
-<wire x1="-22.86" y1="43.18" x2="-2.54" y2="43.18" width="0.1524" layer="91"/>
+<wire x1="-22.86" y1="43.18" x2="-17.78" y2="43.18" width="0.1524" layer="91"/>
+<wire x1="-17.78" y1="43.18" x2="-15.24" y2="43.18" width="0.1524" layer="91"/>
+<wire x1="-15.24" y1="43.18" x2="-2.54" y2="43.18" width="0.1524" layer="91"/>
 <wire x1="-45.72" y1="48.26" x2="-45.72" y2="43.18" width="0.1524" layer="91"/>
 <pinref part="C57" gate="G$1" pin="2"/>
 <wire x1="-35.56" y1="48.26" x2="-35.56" y2="43.18" width="0.1524" layer="91"/>
-<pinref part="U$7" gate="G$1" pin="EP"/>
 <wire x1="-2.54" y1="45.72" x2="-2.54" y2="43.18" width="0.1524" layer="91"/>
 <pinref part="GND9" gate="1" pin="GND"/>
 <wire x1="-2.54" y1="43.18" x2="-2.54" y2="38.1" width="0.1524" layer="91"/>
 <junction x="-45.72" y="43.18"/>
 <junction x="-35.56" y="43.18"/>
 <junction x="-2.54" y="43.18"/>
-<pinref part="U$7" gate="G$1" pin="GND"/>
 <wire x1="12.7" y1="55.88" x2="15.24" y2="55.88" width="0.1524" layer="91"/>
 <wire x1="15.24" y1="55.88" x2="15.24" y2="43.18" width="0.1524" layer="91"/>
 <wire x1="15.24" y1="43.18" x2="-2.54" y2="43.18" width="0.1524" layer="91"/>
 <pinref part="C60" gate="G$1" pin="2"/>
 <wire x1="22.86" y1="50.8" x2="22.86" y2="43.18" width="0.1524" layer="91"/>
 <wire x1="22.86" y1="43.18" x2="15.24" y2="43.18" width="0.1524" layer="91"/>
-<pinref part="U$7" gate="G$1" pin="!EN"/>
 <wire x1="-17.78" y1="55.88" x2="-22.86" y2="55.88" width="0.1524" layer="91"/>
 <wire x1="-22.86" y1="55.88" x2="-22.86" y2="43.18" width="0.1524" layer="91"/>
 <junction x="-22.86" y="43.18"/>
 <junction x="15.24" y="43.18"/>
+<pinref part="U$7" gate="G$1" pin="!EN"/>
+<pinref part="U$7" gate="G$1" pin="EP"/>
+<pinref part="U$7" gate="G$1" pin="GND"/>
+<pinref part="U$7" gate="G$2" pin="V1"/>
+<junction x="-15.24" y="43.18"/>
 </segment>
 <segment>
 <pinref part="R60" gate="G$1" pin="1"/>
