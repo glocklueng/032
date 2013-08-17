@@ -5586,7 +5586,6 @@ by exp-project-lbr.ulp</description>
 <rectangle x1="-0.15" y1="1.05" x2="0.15" y2="1.55" layer="51"/>
 <rectangle x1="-0.65" y1="1.05" x2="-0.35" y2="1.55" layer="51"/>
 <rectangle x1="-1.15" y1="1.05" x2="-0.85" y2="1.55" layer="51"/>
-<rectangle x1="-1.2" y1="-0.825" x2="1.2" y2="0.825" layer="51"/>
 <rectangle x1="-1.55" y1="0.135" x2="-1.2" y2="0.365" layer="51"/>
 <rectangle x1="-1.55" y1="-0.365" x2="-1.2" y2="-0.135" layer="51"/>
 <rectangle x1="1.2" y1="0.135" x2="1.55" y2="0.365" layer="51"/>
@@ -6040,7 +6039,7 @@ by exp-project-lbr.ulp</description>
 <gate name="IC" symbol="TPS6120X" x="0" y="0"/>
 </gates>
 <devices>
-<device name="-QFN10" package="QFN-10">
+<device name="QFN10" package="QFN-10">
 <connects>
 <connect gate="GND" pin="GND@0" pad="P0"/>
 <connect gate="GND" pin="GND@1" pad="P1"/>
@@ -19501,7 +19500,7 @@ by exp-lbrs.ulp</description>
 <part name="R8" library="resistor" deviceset="R-US_" device="R0805" value="27">
 <attribute name="PARTNO" value="*"/>
 </part>
-<part name="IC1" library="STM32-PROX" deviceset="IC_TPS6120X" device="-QFN10" value=""/>
+<part name="IC1" library="STM32-PROX" deviceset="IC_TPS6120X" device="QFN10" value=""/>
 <part name="U$7" library="STM32-PROX" deviceset="MC34674" device=""/>
 <part name="LED1" library="badge.lbrbadge_2013" deviceset="LED_LED" device="CHIP-LED0603"/>
 <part name="LED2" library="badge.lbrbadge_2013" deviceset="LED_LED" device="CHIP-LED0603"/>
