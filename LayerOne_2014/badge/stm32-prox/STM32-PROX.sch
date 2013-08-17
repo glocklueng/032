@@ -6820,13 +6820,10 @@ Basic small signal diode good up to 200mA. SMB footprint. Common part #: BAS16</
 <wire x1="-14" y1="0" x2="-14" y2="13.2" width="0.2032" layer="21"/>
 <wire x1="0" y1="12.1" x2="0" y2="0" width="0.2032" layer="21"/>
 <wire x1="-11.7" y1="15.3" x2="-12.5" y2="15.3" width="0.2032" layer="21"/>
-<wire x1="-11" y1="16" x2="0" y2="16" width="0.2032" layer="51"/>
 <wire x1="-10" y1="13.6" x2="-1.6" y2="13.6" width="0.2032" layer="21"/>
 <wire x1="-14" y1="0" x2="-9.1" y2="0" width="0.2032" layer="21"/>
 <wire x1="-3.4" y1="0" x2="-6.4" y2="0" width="0.2032" layer="21"/>
 <wire x1="0" y1="0" x2="-0.7" y2="0" width="0.2032" layer="21"/>
-<wire x1="0" y1="17.6" x2="-11" y2="17.6" width="0.2032" layer="51"/>
-<wire x1="0" y1="20.7" x2="-11" y2="20.7" width="0.2032" layer="51"/>
 <wire x1="-11.7" y1="15.3" x2="-11" y2="14.6" width="0.2032" layer="21" curve="-98.797411"/>
 <wire x1="-11" y1="14.6" x2="-10" y2="13.6" width="0.2032" layer="21" curve="87.205638"/>
 <smd name="CD2" x="-7.75" y="0.4" dx="1.8" dy="1.4" layer="1"/>
