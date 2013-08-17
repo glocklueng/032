@@ -18647,7 +18647,7 @@ We've spent an enormous amount of time creating and checking these footprints an
 <wire x1="-1.27" y1="1.016" x2="1.27" y2="1.016" width="0.1524" layer="21"/>
 <smd name="1" x="-0.889" y="0" dx="0.635" dy="1.27" layer="1" cream="no"/>
 <smd name="2" x="0" y="0" dx="0.635" dy="1.27" layer="1" cream="no"/>
-<smd name="3" x="0.889" y="0" dx="0.635" dy="1.27" layer="1" cream="no"/>
+<smd name="3" x="0.9652" y="0" dx="0.635" dy="1.27" layer="1" cream="no"/>
 <text x="-1.27" y="1.27" size="0.4064" layer="25">&gt;NAME</text>
 <text x="-0.1001" y="0" size="0.02" layer="27">&gt;VALUE</text>
 <text x="-1.27" y="-1.905" size="0.4064" layer="27">&gt;VALUE</text>
@@ -18941,6 +18941,9 @@ by exp-lbrs.ulp</description>
 <class number="0" name="default" width="0.254" drill="0">
 </class>
 <class number="1" name="adc" width="0.254" drill="0">
+</class>
+<class number="2" name="power" width="0.3556" drill="0.254">
+<clearance class="2" value="0.2032"/>
 </class>
 </classes>
 <parts>
@@ -19672,7 +19675,7 @@ by exp-lbrs.ulp</description>
 <pinref part="U$7" gate="G$1" pin="!RED"/>
 </segment>
 </net>
-<net name="VBAT+" class="0">
+<net name="VBAT+" class="2">
 <segment>
 <wire x1="12.7" y1="71.12" x2="17.78" y2="71.12" width="0.1524" layer="91"/>
 <pinref part="C61" gate="G$1" pin="1"/>
@@ -19741,7 +19744,7 @@ by exp-lbrs.ulp</description>
 <pinref part="U$7" gate="G$1" pin="TEMP"/>
 </segment>
 </net>
-<net name="NTC" class="0">
+<net name="NTC" class="2">
 <segment>
 <pinref part="R43" gate="G$1" pin="1"/>
 <wire x1="33.02" y1="48.26" x2="33.02" y2="45.72" width="0.1524" layer="91"/>
@@ -19837,7 +19840,7 @@ by exp-lbrs.ulp</description>
 <junction x="30.48" y="-10.16"/>
 </segment>
 </net>
-<net name="VBAT-" class="0">
+<net name="VBAT-" class="2">
 <segment>
 <pinref part="C61" gate="G$1" pin="2"/>
 <wire x1="48.26" y1="63.5" x2="66.04" y2="63.5" width="0.1524" layer="91"/>
