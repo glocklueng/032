@@ -13401,7 +13401,7 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <attribute name="PARTNO" value="*"/>
 </part>
 <part name="C39" library="STM32-PROX" deviceset="CAPACITOR" device="RLC_0603" value="1n">
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="C1608C0G2A102J080AA"/>
 </part>
 <part name="V47" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="C20" library="STM32-PROX" deviceset="CAPACITOR" device="RLC_0603" value="dnp">
@@ -13445,7 +13445,7 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <part name="V13" library="STM32-PROX" deviceset="SUPPLY_VMID" device=""/>
 <part name="V14" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="C10" library="STM32-PROX" deviceset="CAPACITOR" device="RLC_0603" value="100n">
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="GRM188R71C333KA01D"/>
 </part>
 <part name="V15" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="D1" library="STM32-PROX" deviceset="DIODE-SMD-SOT23" device="">
@@ -13455,10 +13455,10 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <attribute name="PARTNO" value="*"/>
 </part>
 <part name="C11" library="STM32-PROX" deviceset="CAPACITOR" device="RLC_0603" value="1n">
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="C1608C0G2A102J080AA"/>
 </part>
 <part name="C12" library="STM32-PROX" deviceset="CAPACITOR" device="RLC_0603" value="1n">
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="C1608C0G2A102J080AA"/>
 </part>
 <part name="R12" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603" value="100k">
 <attribute name="PARTNO" value="*"/>
@@ -13479,14 +13479,14 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <attribute name="PARTNO" value="*"/>
 </part>
 <part name="C14" library="STM32-PROX" deviceset="CAPACITOR" device="RLC_0603" value="22p">
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="GRM1885C2A220JA01D"/>
 </part>
 <part name="D3" library="STM32-PROX" deviceset="DIODE-SMD-SOT23" device="">
 <attribute name="PARTNO" value="*"/>
 </part>
 <part name="V19" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="C15" library="STM32-PROX" deviceset="CAPACITOR" device="RLC_0603" value="130p">
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="GRM1885C2A131JA01D"/>
 </part>
 <part name="R15" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603" value="10k">
 <attribute name="PARTNO" value="*"/>
@@ -13495,7 +13495,7 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <attribute name="PARTNO" value="*"/>
 </part>
 <part name="C16" library="STM32-PROX" deviceset="CAPACITOR" device="RLC_0603" value="1n">
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="C1608C0G2A102J080AA"/>
 </part>
 <part name="R17" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603" value="10k">
 <attribute name="PARTNO" value="*"/>
@@ -13555,10 +13555,10 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 </part>
 <part name="V45" library="STM32-PROX" deviceset="SUPPLY_VMID" device=""/>
 <part name="C42" library="STM32-PROX" deviceset="CAPACITOR" device="RLC_0603" value="1n">
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="C1608C0G2A102J080AA"/>
 </part>
 <part name="C43" library="STM32-PROX" deviceset="CAPACITOR" device="RLC_0603" value="1n">
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="C1608C0G2A102J080AA"/>
 </part>
 <part name="R32" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603" value="zerohm">
 <attribute name="PARTNO" value="*"/>
@@ -13616,7 +13616,7 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 </part>
 <part name="V53" library="STM32-PROX" deviceset="SUPPLY_VMID" device=""/>
 <part name="C45" library="STM32-PROX" deviceset="CAPACITOR" device="RLC_0603" value="100n">
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="GRM188R71C333KA01D"/>
 </part>
 <part name="D10" library="STM32-PROX" deviceset="DIODE-SMD-SOT23" device="">
 <attribute name="PARTNO" value="*"/>
@@ -13635,10 +13635,10 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <attribute name="PARTNO" value="*"/>
 </part>
 <part name="C2" library="STM32-PROX" deviceset="CAPACITOR" device="RLC_0603" value="22p">
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="GRM1885C2A220JA01D"/>
 </part>
 <part name="C3" library="STM32-PROX" deviceset="CAPACITOR" device="RLC_0603" value="22p">
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="GRM1885C2A220JA01D"/>
 </part>
 <part name="R2" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603" value="100">
 <attribute name="PARTNO" value="*"/>
@@ -13650,10 +13650,10 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <part name="VDD4" library="STM32-PROX" deviceset="VDD" device=""/>
 <part name="V24" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="C18" library="STM32-PROX" deviceset="CAPACITOR" device="RLC_0603" value="33n">
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="GRM188R71C333KA01D"/>
 </part>
 <part name="C19" library="STM32-PROX" deviceset="CAPACITOR" device="RLC_0603" value="33n">
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="GRM188R71C333KA01D"/>
 </part>
 <part name="SV5" library="STM32-PROX" deviceset="HEADER-MALE-6X1" device="">
 <attribute name="PARTNO" value="*"/>
@@ -13696,7 +13696,7 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 </part>
 <part name="V1" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="C1" library="STM32-PROX" deviceset="CAPACITOR" device="RLC_0603" value="33n">
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="GRM188R71C333KA01D"/>
 </part>
 <part name="V2" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="V6" library="STM32-PROX" deviceset="GND" device=""/>
@@ -13706,36 +13706,36 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <attribute name="PARTNO" value="*"/>
 </part>
 <part name="C21" library="STM32-PROX" deviceset="CAPACITOR" device="RLC_0603" value="33n">
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="GRM188R71C333KA01D"/>
 </part>
 <part name="C22" library="STM32-PROX" deviceset="CAPACITOR" device="RLC_0603" value="33n">
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="GRM188R71C333KA01D"/>
 </part>
 <part name="C23" library="STM32-PROX" deviceset="CAPACITOR" device="RLC_0603" value="33n">
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="GRM188R71C333KA01D"/>
 </part>
 <part name="C24" library="STM32-PROX" deviceset="CAPACITOR" device="RLC_0603" value="33n">
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="GRM188R71C333KA01D"/>
 </part>
 <part name="VDD7" library="STM32-PROX" deviceset="VDD" device=""/>
 <part name="V29" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="C25" library="STM32-PROX" deviceset="CAPACITOR" device="RLC_0603" value="33n">
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="GRM188R71C333KA01D"/>
 </part>
 <part name="C26" library="STM32-PROX" deviceset="CAPACITOR" device="RLC_0603" value="33n">
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="GRM188R71C333KA01D"/>
 </part>
 <part name="U$8" library="STM32-PROX" deviceset="+3V3" device=""/>
 <part name="V30" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="V31" library="STM32-PROX" deviceset="SUPPLY_2V5" device=""/>
 <part name="C29" library="STM32-PROX" deviceset="CAPACITOR" device="RLC_0603" value="33n">
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="GRM188R71C333KA01D"/>
 </part>
 <part name="C30" library="STM32-PROX" deviceset="CAPACITOR" device="RLC_0603" value="33n">
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="GRM188R71C333KA01D"/>
 </part>
 <part name="C31" library="STM32-PROX" deviceset="CAPACITOR" device="RLC_0603" value="33n">
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="GRM188R71C333KA01D"/>
 </part>
 <part name="V32" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="V35" library="STM32-PROX" deviceset="GND" device=""/>
@@ -13745,23 +13745,23 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <part name="V36" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="V37" library="STM32-PROX" deviceset="SUPPLY_2V5" device=""/>
 <part name="C33" library="STM32-PROX" deviceset="CAPACITOR" device="1210" value="4u7">
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="EMK325B7475KN-T"/>
 </part>
 <part name="IC13" library="STM32-PROX" deviceset="PQ1X331M2ZP-3V3-LDO-SOT-23-5" device="">
 <attribute name="PARTNO" value="PQ1X331M2ZP-3V3"/>
 </part>
 <part name="C27" library="STM32-PROX" deviceset="CAPACITOR" device="1210" value="4u7">
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="EMK325B7475KN-T"/>
 </part>
 <part name="C28" library="STM32-PROX" deviceset="CAPACITOR" device="RLC_0603" value="33n">
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="GRM188R71C333KA01D"/>
 </part>
 <part name="C32" library="STM32-PROX" deviceset="CAPACITOR" device="RLC_0603" value="33n">
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="GRM188R71C333KA01D"/>
 </part>
 <part name="V38" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="C34" library="STM32-PROX" deviceset="CAPACITOR" device="1210" value="4u7">
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="EMK325B7475KN-T"/>
 </part>
 <part name="V39" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="C37" library="STM32-PROX" deviceset="CPOL-US" device="D/7343-31R" value="100u">
@@ -13775,17 +13775,17 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 </part>
 <part name="V51" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="C44" library="STM32-PROX" deviceset="CAPACITOR" device="RLC_0603" value="33n">
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="GRM188R71C333KA01D"/>
 </part>
 <part name="D8" library="STM32-PROX" deviceset="DUAL-TVS-COMMON-ANODE" device="">
 <attribute name="PARTNO" value="*"/>
 </part>
 <part name="V54" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="C46" library="STM32-PROX" deviceset="CAPACITOR" device="RLC_0603" value="33n">
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="GRM188R71C333KA01D"/>
 </part>
 <part name="C47" library="STM32-PROX" deviceset="CAPACITOR" device="RLC_0603" value="33n">
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="GRM188R71C333KA01D"/>
 </part>
 <part name="R57" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603" value="10k">
 <attribute name="PARTNO" value="*"/>
@@ -13801,25 +13801,21 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <attribute name="PARTNO" value="*"/>
 </part>
 <part name="C4" library="STM32-PROX" deviceset="CAP" device="0805" value="1uF">
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="GRM188R71C333KA01D"/>
 </part>
 <part name="GND3" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="C5" library="STM32-PROX" deviceset="CAP" device="0805" value="1uF">
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="GRM1885C1H202JA01D"/>
 </part>
 <part name="GND12" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="GND13" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="GND14" library="STM32-PROX" deviceset="GND" device=""/>
-<part name="C6" library="STM32-PROX" deviceset="CAP" device="0805" value="4.7uF">
-<attribute name="PARTNO" value="*"/>
-</part>
-<part name="C8" library="STM32-PROX" deviceset="CAP" device="0805" value="4.7uF">
-<attribute name="PARTNO" value="*"/>
-</part>
+<part name="C6" library="STM32-PROX" deviceset="CAP" device="0805" value="4.7uF"/>
+<part name="C8" library="STM32-PROX" deviceset="CAP" device="0805" value="4.7uF"/>
 <part name="GND15" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="GND16" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="C7" library="STM32-PROX" deviceset="CAP" device="0805" value="4.7uF">
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="GRM1885C2A220JA01D"/>
 </part>
 <part name="GND18" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="SJ1" library="STM32-PROX" deviceset="SOLDERJUMPER" device="REFLOW">
@@ -13859,7 +13855,7 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <attribute name="PARTNO" value="*"/>
 </part>
 <part name="C9" library="STM32-PROX" deviceset="CAP" device="0805" value="100nF">
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="EMK325B7475KN-T"/>
 </part>
 <part name="GND4" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="C48" library="STM32-PROX" deviceset="CAP" device="0805" value="100nF">
@@ -13898,14 +13894,20 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <part name="F1" library="STM32-PROX" deviceset="PTCFUSE" device="-1812">
 <attribute name="PARTNO" value="FSMD110"/>
 </part>
-<part name="BUZ1" library="STM32-PROX" deviceset="BUZZER" device=""/>
+<part name="BUZ1" library="STM32-PROX" deviceset="BUZZER" device="">
+<attribute name="PARTNO" value="*"/>
+</part>
 <part name="V3" library="STM32-PROX" deviceset="AGND" device=""/>
-<part name="R319" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603" value="100R"/>
+<part name="R319" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603" value="100R">
+<attribute name="PARTNO" value="*"/>
+</part>
 <part name="Q3" library="STM32-PROX" deviceset="TRANSISTOR_NPN" device="SOT23" value="MMBT2222">
 <attribute name="PARTNO" value="MMBT2222"/>
 </part>
 <part name="V5" library="STM32-PROX" deviceset="AGND" device=""/>
-<part name="SV301" library="STM32-PROX" deviceset="HEADER-1X6" device=""/>
+<part name="SV301" library="STM32-PROX" deviceset="HEADER-1X6" device="">
+<attribute name="PARTNO" value="*"/>
+</part>
 <part name="R6" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603" value="390">
 <attribute name="PARTNO" value="*"/>
 </part>
@@ -13915,54 +13917,123 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <part name="GND8" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="Y1" library="STM32-PROX" deviceset="CRYSTAL" device="TXC-7A" value="8Mhz">
 <attribute name="PARTDB" value="7A-8.000MAAE-T"/>
+<attribute name="PARTNO" value="*"/>
 </part>
-<part name="U4" library="STM32-PROX" deviceset="USD-SOCKET" device="NEW" value="SDCARD"/>
+<part name="U4" library="STM32-PROX" deviceset="USD-SOCKET" device="NEW" value="SDCARD">
+<attribute name="PARTNO" value="*"/>
+</part>
 <part name="V74" library="STM32-PROX" deviceset="AGND" device=""/>
-<part name="C209" library="STM32-PROX" deviceset="C-EU" device="" value="100n"/>
-<part name="C210" library="STM32-PROX" deviceset="C-EU" device="" value="100n"/>
-<part name="C211" library="STM32-PROX" deviceset="C-EU" device="" value="100n"/>
-<part name="C212" library="STM32-PROX" deviceset="C-EU" device="" value="100n"/>
-<part name="C206" library="STM32-PROX" deviceset="C-EU" device="" value="4u7"/>
-<part name="R102" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603" value="10k"/>
-<part name="IC106" library="STM32-PROX" deviceset="TPS799*" device="" technology="12" value="MCP1824T-120"/>
+<part name="C209" library="STM32-PROX" deviceset="C-EU" device="" value="100n">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="C210" library="STM32-PROX" deviceset="C-EU" device="" value="100n">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="C211" library="STM32-PROX" deviceset="C-EU" device="" value="100n">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="C212" library="STM32-PROX" deviceset="C-EU" device="" value="100n">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="C206" library="STM32-PROX" deviceset="C-EU" device="" value="4u7">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="R102" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603" value="10k">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="IC106" library="STM32-PROX" deviceset="TPS799*" device="" technology="12" value="MCP1824T-120">
+<attribute name="PARTNO" value="*"/>
+</part>
 <part name="V76" library="STM32-PROX" deviceset="AGND" device=""/>
 <part name="VDD12" library="STM32-PROX" deviceset="VDD" device=""/>
-<part name="IC105" library="STM32-PROX" deviceset="TPS799*" device="" technology="25" value="MCP1824T-250"/>
+<part name="IC105" library="STM32-PROX" deviceset="TPS799*" device="" technology="25" value="MCP1824T-250">
+<attribute name="PARTNO" value="*"/>
+</part>
 <part name="R7" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603" value="27">
 <attribute name="PARTNO" value="*"/>
 </part>
 <part name="R8" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603" value="27">
 <attribute name="PARTNO" value="*"/>
 </part>
-<part name="IC1" library="STM32-PROX" deviceset="IC_TPS6120X" device="QFN10" value=""/>
-<part name="LED1" library="STM32-PROX" deviceset="LED_LED" device="SML0603"/>
-<part name="LED2" library="STM32-PROX" deviceset="LED_LED" device="SML0603"/>
-<part name="R24" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603"/>
-<part name="R25" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603"/>
-<part name="R26" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603"/>
-<part name="R43" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603"/>
-<part name="C57" library="STM32-PROX" deviceset="SPARKFUN_CAP" device="0603-CAP" value="0.1uF"/>
-<part name="C58" library="STM32-PROX" deviceset="SPARKFUN_CAP" device="0603-CAP" value="0.1uF"/>
-<part name="C59" library="STM32-PROX" deviceset="SPARKFUN_CAP" device="0603-CAP" value="1uF"/>
-<part name="C60" library="STM32-PROX" deviceset="SPARKFUN_CAP" device="0603-CAP" value="0.1uF"/>
-<part name="C61" library="STM32-PROX" deviceset="SPARKFUN_CAP" device="0603-CAP" value="1uF"/>
+<part name="IC1" library="STM32-PROX" deviceset="IC_TPS6120X" device="QFN10" value="">
+<attribute name="PARTNO" value="TPS61202DRCT"/>
+</part>
+<part name="LED1" library="STM32-PROX" deviceset="LED_LED" device="SML0603">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="LED2" library="STM32-PROX" deviceset="LED_LED" device="SML0603">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="R24" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="R25" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="R26" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="R43" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="C57" library="STM32-PROX" deviceset="SPARKFUN_CAP" device="0603-CAP" value="0.1uF">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="C58" library="STM32-PROX" deviceset="SPARKFUN_CAP" device="0603-CAP" value="0.1uF">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="C59" library="STM32-PROX" deviceset="SPARKFUN_CAP" device="0603-CAP" value="1uF">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="C60" library="STM32-PROX" deviceset="SPARKFUN_CAP" device="0603-CAP" value="0.1uF">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="C61" library="STM32-PROX" deviceset="SPARKFUN_CAP" device="0603-CAP" value="1uF">
+<attribute name="PARTNO" value="*"/>
+</part>
 <part name="GND9" library="STM32-PROX" deviceset="SUPPLY1_GND" device=""/>
 <part name="GND10" library="STM32-PROX" deviceset="SUPPLY1_GND" device=""/>
-<part name="TP8" library="STM32-PROX" deviceset="--MERGED_TESTPAD" device="KEYSTONE-SMD" value="--MERGED_TESTPADKEYSTONE-SMD"/>
-<part name="TP9" library="STM32-PROX" deviceset="--MERGED_TESTPAD" device="KEYSTONE-SMD" value="--MERGED_TESTPADKEYSTONE-SMD"/>
-<part name="C62" library="STM32-PROX" deviceset="SPARKFUN_CAP" device="0603-CAP" value="10uF"/>
+<part name="TP8" library="STM32-PROX" deviceset="--MERGED_TESTPAD" device="KEYSTONE-SMD" value="--MERGED_TESTPADKEYSTONE-SMD">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="TP9" library="STM32-PROX" deviceset="--MERGED_TESTPAD" device="KEYSTONE-SMD" value="--MERGED_TESTPADKEYSTONE-SMD">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="C62" library="STM32-PROX" deviceset="SPARKFUN_CAP" device="0603-CAP" value="10uF">
+<attribute name="PARTNO" value="*"/>
+</part>
 <part name="GND11" library="STM32-PROX" deviceset="SUPPLY1_GND" device=""/>
-<part name="C63" library="STM32-PROX" deviceset="SPARKFUN_CAP" device="0603-CAP" value=".1uF"/>
-<part name="R55" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603" value="momove"/>
-<part name="R60" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603" value="150K 1%"/>
+<part name="C63" library="STM32-PROX" deviceset="SPARKFUN_CAP" device="0603-CAP" value=".1uF">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="R55" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603" value="1.5Mohm">
+<attribute name="PARTNO" value="*"/>
+<attribute name="TOLERANCE" value="5%"/>
+</part>
+<part name="R60" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603" value="150K 1%">
+<attribute name="PARTNO" value="*"/>
+<attribute name="TOLERANCE" value="1%"/>
+</part>
 <part name="GND19" library="STM32-PROX" deviceset="SUPPLY1_GND" device=""/>
-<part name="C64" library="STM32-PROX" deviceset="SPARKFUN_CAP" device="0603-CAP" value="10uF"/>
-<part name="L2" library="STM32-PROX" deviceset="CDRH2D18" device="" value="CDRH2D18/HPNP-2R2NC"/>
-<part name="U$9" library="STM32-PROX" deviceset="BATT" device=""/>
-<part name="TP10" library="STM32-PROX" deviceset="--MERGED_TESTPAD" device="KEYSTONE-SMD" value="--MERGED_TESTPADKEYSTONE-SMD"/>
-<part name="S1" library="STM32-PROX" deviceset="SWITCH-SPDT" device="-SMD-A"/>
+<part name="C64" library="STM32-PROX" deviceset="SPARKFUN_CAP" device="0603-CAP" value="10uF">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="L2" library="STM32-PROX" deviceset="CDRH2D18" device="" value="CDRH2D18/HPNP-2R2NC">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="U$9" library="STM32-PROX" deviceset="BATT" device="">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="TP10" library="STM32-PROX" deviceset="--MERGED_TESTPAD" device="KEYSTONE-SMD" value="--MERGED_TESTPADKEYSTONE-SMD">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="S1" library="STM32-PROX" deviceset="SWITCH-SPDT" device="-SMD-A">
+<attribute name="PARTNO" value="*"/>
+</part>
 <part name="GND20" library="STM32-PROX" deviceset="SUPPLY1_GND" device=""/>
-<part name="JP2" library="STM32-PROX" deviceset="JUMPER-3" device="SMD"/>
+<part name="JP2" library="STM32-PROX" deviceset="JUMPER-3" device="SMD">
+<attribute name="PARTNO" value="*"/>
+</part>
 <part name="GND21" library="STM32-PROX" deviceset="SUPPLY1_GND" device=""/>
 <part name="GND22" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="R61" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603" value="10K">
@@ -13979,22 +14050,40 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 </part>
 <part name="V12" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="U$10" library="STM32-PROX" deviceset="+3V3" device=""/>
-<part name="IC7" library="STM32-PROX" deviceset="MCP100" device=""/>
+<part name="IC7" library="STM32-PROX" deviceset="MCP100" device="">
+<attribute name="PARTNO" value="*"/>
+</part>
 <part name="R56" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603" value="10k">
 <attribute name="PARTNO" value="*"/>
 </part>
-<part name="LED3" library="STM32-PROX" deviceset="LED_LED" device="SML0603"/>
-<part name="R65" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603" value="330"/>
+<part name="LED3" library="STM32-PROX" deviceset="LED_LED" device="SML0603">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="R65" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603" value="330">
+<attribute name="PARTNO" value="*"/>
+</part>
 <part name="V40" library="STM32-PROX" deviceset="GND" device=""/>
-<part name="Q4" library="STM32-PROX" deviceset="MOSFET-PCHANNEL" device="SMD"/>
+<part name="Q4" library="STM32-PROX" deviceset="MOSFET-PCHANNEL" device="SMD">
+<attribute name="PARTNO" value="*"/>
+</part>
 <part name="TP11" library="STM32-PROX" deviceset="TESTPAD" device="KEYSTONE-SMD" value="TESTPADKEYSTONE-SMD">
 <attribute name="PARTNO" value="*"/>
 </part>
-<part name="R69" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603" value="10K"/>
-<part name="R70" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603" value="10K"/>
-<part name="R71" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603" value="10K"/>
-<part name="U$7" library="STM32-PROX" deviceset="MC34674" device=""/>
-<part name="IC12" library="STM32-PROX" deviceset="NLAST44599" device=""/>
+<part name="R69" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603" value="10K">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="R70" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603" value="10K">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="R71" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603" value="10K">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="U$7" library="STM32-PROX" deviceset="MC34674" device="">
+<attribute name="PARTNO" value="*"/>
+</part>
+<part name="IC12" library="STM32-PROX" deviceset="NLAST44599" device="" value="NLAST44599MNG">
+<attribute name="PARTNO" value="NLAST44599MNG"/>
+</part>
 </parts>
 <sheets>
 <sheet>
@@ -14002,37 +14091,93 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <text x="-10.16" y="-45.72" size="1.778" layer="97">DONT LEAVE FLOATING</text>
 </plain>
 <instances>
-<instance part="IC1" gate="IC" x="-2.54" y="7.62"/>
-<instance part="LED1" gate="G$1" x="-45.72" y="76.2"/>
-<instance part="LED2" gate="G$1" x="-35.56" y="76.2"/>
-<instance part="R24" gate="G$1" x="-25.4" y="66.04"/>
-<instance part="R25" gate="G$1" x="-25.4" y="60.96"/>
-<instance part="R26" gate="G$1" x="22.86" y="66.04"/>
-<instance part="R43" gate="G$1" x="33.02" y="53.34" rot="R90"/>
-<instance part="C57" gate="G$1" x="-35.56" y="50.8"/>
-<instance part="C58" gate="G$1" x="-45.72" y="50.8"/>
-<instance part="C59" gate="G$1" x="-55.88" y="63.5"/>
-<instance part="C60" gate="G$1" x="22.86" y="53.34"/>
-<instance part="C61" gate="G$1" x="48.26" y="66.04"/>
+<instance part="IC1" gate="IC" x="-2.54" y="7.62">
+<attribute name="PARTNO" x="-2.54" y="7.62" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="LED1" gate="G$1" x="-45.72" y="76.2">
+<attribute name="PARTNO" x="-45.72" y="76.2" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="LED2" gate="G$1" x="-35.56" y="76.2">
+<attribute name="PARTNO" x="-35.56" y="76.2" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="R24" gate="G$1" x="-25.4" y="66.04">
+<attribute name="PARTNO" x="-25.4" y="66.04" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="R25" gate="G$1" x="-25.4" y="60.96">
+<attribute name="PARTNO" x="-25.4" y="60.96" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="R26" gate="G$1" x="22.86" y="66.04">
+<attribute name="PARTNO" x="22.86" y="66.04" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="R43" gate="G$1" x="33.02" y="53.34" rot="R90">
+<attribute name="PARTNO" x="33.02" y="53.34" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="C57" gate="G$1" x="-35.56" y="50.8">
+<attribute name="PARTNO" x="-35.56" y="50.8" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="C58" gate="G$1" x="-45.72" y="50.8">
+<attribute name="PARTNO" x="-45.72" y="50.8" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="C59" gate="G$1" x="-55.88" y="63.5">
+<attribute name="PARTNO" x="-55.88" y="63.5" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="C60" gate="G$1" x="22.86" y="53.34">
+<attribute name="PARTNO" x="22.86" y="53.34" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="C61" gate="G$1" x="48.26" y="66.04">
+<attribute name="PARTNO" x="48.26" y="66.04" size="1.778" layer="96" display="off"/>
+</instance>
 <instance part="GND9" gate="1" x="-2.54" y="35.56"/>
 <instance part="GND10" gate="1" x="48.26" y="53.34"/>
-<instance part="TP8" gate="G$1" x="-22.86" y="86.36"/>
-<instance part="TP9" gate="G$1" x="17.78" y="86.36"/>
-<instance part="C62" gate="G$1" x="-60.96" y="7.62"/>
+<instance part="TP8" gate="G$1" x="-22.86" y="86.36">
+<attribute name="PARTNO" x="-22.86" y="86.36" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="TP9" gate="G$1" x="17.78" y="86.36">
+<attribute name="PARTNO" x="17.78" y="86.36" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="C62" gate="G$1" x="-60.96" y="7.62">
+<attribute name="PARTNO" x="-60.96" y="7.62" size="1.778" layer="96" display="off"/>
+</instance>
 <instance part="GND11" gate="1" x="-2.54" y="-15.24"/>
-<instance part="C63" gate="G$1" x="30.48" y="0"/>
-<instance part="R55" gate="G$1" x="-48.26" y="7.62" rot="R90"/>
-<instance part="R60" gate="G$1" x="-48.26" y="-2.54" rot="R90"/>
+<instance part="C63" gate="G$1" x="30.48" y="0">
+<attribute name="PARTNO" x="30.48" y="0" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="R55" gate="G$1" x="-48.26" y="7.62" smashed="yes" rot="R90">
+<attribute name="PARTNO" x="-48.26" y="7.62" size="1.778" layer="96" display="off"/>
+<attribute name="NAME" x="-49.7586" y="5.334" size="1.778" layer="95" rot="R90"/>
+<attribute name="VALUE" x="-35.814" y="8.763" size="1.778" layer="96" rot="R180"/>
+<attribute name="TOLERANCE" x="-48.26" y="7.62" size="1.778" layer="96" rot="R90" display="off"/>
+</instance>
+<instance part="R60" gate="G$1" x="-48.26" y="-2.54" smashed="yes" rot="R90">
+<attribute name="PARTNO" x="-48.26" y="-2.54" size="1.778" layer="96" display="off"/>
+<attribute name="NAME" x="-51.5874" y="-0.254" size="1.778" layer="95" rot="R270"/>
+<attribute name="VALUE" x="-46.482" y="-3.429" size="1.778" layer="96"/>
+<attribute name="TOLERANCE" x="-48.26" y="-2.54" size="1.778" layer="96" rot="R90" display="off"/>
+</instance>
 <instance part="GND19" gate="1" x="-48.26" y="-12.7"/>
-<instance part="C64" gate="G$1" x="40.64" y="0"/>
-<instance part="L2" gate="G$1" x="-2.54" y="22.86"/>
-<instance part="U$9" gate="G$1" x="99.06" y="66.04"/>
-<instance part="TP10" gate="G$1" x="40.64" y="17.78"/>
-<instance part="S1" gate="1" x="-58.42" y="-25.4" rot="R180"/>
+<instance part="C64" gate="G$1" x="40.64" y="0">
+<attribute name="PARTNO" x="40.64" y="0" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="L2" gate="G$1" x="-2.54" y="22.86">
+<attribute name="PARTNO" x="-2.54" y="22.86" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="U$9" gate="G$1" x="99.06" y="66.04">
+<attribute name="PARTNO" x="99.06" y="66.04" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="TP10" gate="G$1" x="40.64" y="17.78">
+<attribute name="PARTNO" x="40.64" y="17.78" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="S1" gate="1" x="-58.42" y="-25.4" rot="R180">
+<attribute name="PARTNO" x="-58.42" y="-25.4" size="1.778" layer="96" display="off"/>
+</instance>
 <instance part="GND20" gate="1" x="-73.66" y="-33.02"/>
-<instance part="JP2" gate="G$1" x="-7.62" y="-38.1" rot="R90"/>
+<instance part="JP2" gate="G$1" x="-7.62" y="-38.1" rot="R90">
+<attribute name="PARTNO" x="-7.62" y="-38.1" size="1.778" layer="96" display="off"/>
+</instance>
 <instance part="GND21" gate="1" x="7.62" y="-40.64"/>
-<instance part="U$7" gate="G$1" x="-2.54" y="63.5"/>
+<instance part="U$7" gate="G$1" x="-2.54" y="63.5">
+<attribute name="PARTNO" x="-2.54" y="63.5" size="1.778" layer="96" display="off"/>
+</instance>
 <instance part="U$7" gate="G$2" x="-15.24" y="45.72"/>
 </instances>
 <busses>
@@ -14345,6 +14490,7 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <pinref part="IC1" gate="IC" pin="PS"/>
 <wire x1="-15.24" y1="7.62" x2="-30.48" y2="7.62" width="0.1524" layer="91"/>
 <label x="-25.4" y="7.62" size="1.778" layer="95"/>
+<junction x="-30.48" y="7.62"/>
 </segment>
 <segment>
 <pinref part="JP2" gate="G$1" pin="2"/>
@@ -14475,20 +14621,38 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <attribute name="PARTNO" x="35.56" y="60.96" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="V74" gate="GND" x="-7.62" y="-38.1"/>
-<instance part="C209" gate="G$1" x="-38.1" y="-25.4"/>
-<instance part="C210" gate="G$1" x="-30.48" y="-25.4"/>
-<instance part="C211" gate="G$1" x="-22.86" y="-25.4"/>
-<instance part="C212" gate="G$1" x="-15.24" y="-25.4"/>
-<instance part="C206" gate="G$1" x="-7.62" y="-25.4"/>
-<instance part="R102" gate="G$1" x="88.9" y="-30.48" rot="R270"/>
-<instance part="IC106" gate="G$1" x="101.6" y="-25.4"/>
+<instance part="C209" gate="G$1" x="-38.1" y="-25.4">
+<attribute name="PARTNO" x="-38.1" y="-25.4" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="C210" gate="G$1" x="-30.48" y="-25.4">
+<attribute name="PARTNO" x="-30.48" y="-25.4" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="C211" gate="G$1" x="-22.86" y="-25.4">
+<attribute name="PARTNO" x="-22.86" y="-25.4" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="C212" gate="G$1" x="-15.24" y="-25.4">
+<attribute name="PARTNO" x="-15.24" y="-25.4" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="C206" gate="G$1" x="-7.62" y="-25.4">
+<attribute name="PARTNO" x="-7.62" y="-25.4" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="R102" gate="G$1" x="88.9" y="-30.48" rot="R270">
+<attribute name="PARTNO" x="88.9" y="-30.48" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="IC106" gate="G$1" x="101.6" y="-25.4">
+<attribute name="PARTNO" x="101.6" y="-25.4" size="1.778" layer="96" display="off"/>
+</instance>
 <instance part="V76" gate="GND" x="93.98" y="-43.18" rot="MR0"/>
 <instance part="VDD12" gate="G$1" x="86.36" y="-5.08" rot="MR0"/>
-<instance part="IC105" gate="G$1" x="104.14" y="2.54"/>
+<instance part="IC105" gate="G$1" x="104.14" y="2.54">
+<attribute name="PARTNO" x="104.14" y="2.54" size="1.778" layer="96" display="off"/>
+</instance>
 <instance part="R56" gate="G$1" x="60.96" y="50.8" rot="R90">
 <attribute name="PARTNO" x="60.96" y="50.8" size="1.778" layer="96" rot="R90" display="off"/>
 </instance>
-<instance part="Q4" gate="G$1" x="68.58" y="40.64" rot="MR180"/>
+<instance part="Q4" gate="G$1" x="68.58" y="40.64" rot="MR180">
+<attribute name="PARTNO" x="68.58" y="40.64" size="1.778" layer="96" display="off"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -15058,14 +15222,20 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <attribute name="VALUE" x="74.676" y="99.949" size="1.778" layer="96"/>
 <attribute name="PARTNO" x="81.28" y="104.14" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="BUZ1" gate="G$1" x="-41.91" y="17.78"/>
+<instance part="BUZ1" gate="G$1" x="-41.91" y="17.78">
+<attribute name="PARTNO" x="-41.91" y="17.78" size="1.778" layer="96" display="off"/>
+</instance>
 <instance part="V3" gate="GND" x="-41.91" y="-2.54"/>
-<instance part="R319" gate="G$1" x="-54.61" y="7.62" rot="MR0"/>
+<instance part="R319" gate="G$1" x="-54.61" y="7.62" rot="MR0">
+<attribute name="PARTNO" x="-54.61" y="7.62" size="1.778" layer="96" display="off"/>
+</instance>
 <instance part="Q3" gate="G$1" x="-44.45" y="7.62">
 <attribute name="PARTNO" x="-44.45" y="7.62" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="V5" gate="GND" x="-64.77" y="81.28" rot="MR0"/>
-<instance part="SV301" gate="G$1" x="-77.47" y="86.36"/>
+<instance part="SV301" gate="G$1" x="-77.47" y="86.36">
+<attribute name="PARTNO" x="-77.47" y="86.36" size="1.778" layer="96" display="off"/>
+</instance>
 <instance part="R6" gate="G$1" x="5.08" y="40.64" smashed="yes">
 <attribute name="PARTNO" x="5.08" y="40.64" size="1.778" layer="96" display="off"/>
 <attribute name="NAME" x="-0.762" y="37.3126" size="1.778" layer="95"/>
@@ -15081,6 +15251,7 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <attribute name="PARTDB" x="-12.7" y="22.86" size="1.778" layer="96" display="off"/>
 <attribute name="NAME" x="-13.97" y="25.146" size="1.778" layer="95"/>
 <attribute name="VALUE" x="-15.494" y="18.796" size="1.778" layer="96"/>
+<attribute name="PARTNO" x="-12.7" y="22.86" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="R7" gate="G$1" x="63.5" y="-33.02" rot="R90">
 <attribute name="PARTNO" x="63.5" y="-33.02" size="1.778" layer="96" rot="R90" display="off"/>
@@ -15090,9 +15261,15 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 </instance>
 <instance part="V12" gate="GND" x="-73.66" y="25.4" rot="MR0"/>
 <instance part="U$10" gate="G$1" x="-73.66" y="66.04"/>
-<instance part="IC7" gate="G$1" x="-63.5" y="53.34"/>
-<instance part="LED3" gate="G$1" x="-30.48" y="137.16" rot="R90"/>
-<instance part="R65" gate="G$1" x="-43.18" y="137.16"/>
+<instance part="IC7" gate="G$1" x="-63.5" y="53.34">
+<attribute name="PARTNO" x="-63.5" y="53.34" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="LED3" gate="G$1" x="-30.48" y="137.16" rot="R90">
+<attribute name="PARTNO" x="-30.48" y="137.16" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="R65" gate="G$1" x="-43.18" y="137.16">
+<attribute name="PARTNO" x="-43.18" y="137.16" size="1.778" layer="96" display="off"/>
+</instance>
 <instance part="V40" gate="GND" x="-22.86" y="106.68"/>
 <instance part="TP11" gate="G$1" x="-48.26" y="73.66">
 <attribute name="PARTNO" x="-48.26" y="73.66" size="1.778" layer="96" display="off"/>
@@ -15100,14 +15277,17 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <instance part="R69" gate="G$1" x="10.16" y="104.14" smashed="yes" rot="R90">
 <attribute name="NAME" x="13.7414" y="99.822" size="1.778" layer="95" rot="R90"/>
 <attribute name="VALUE" x="13.335" y="105.41" size="1.778" layer="96" rot="R90"/>
+<attribute name="PARTNO" x="10.16" y="104.14" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="R70" gate="G$1" x="0" y="104.14" smashed="yes" rot="R90">
 <attribute name="NAME" x="3.0734" y="98.552" size="1.778" layer="95" rot="R90"/>
 <attribute name="VALUE" x="3.175" y="105.41" size="1.778" layer="96" rot="R90"/>
+<attribute name="PARTNO" x="0" y="104.14" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="R71" gate="G$1" x="-10.16" y="104.14" smashed="yes" rot="R90">
 <attribute name="NAME" x="-7.0866" y="97.536" size="1.778" layer="95" rot="R90"/>
 <attribute name="VALUE" x="-6.731" y="104.394" size="1.778" layer="96" rot="R90"/>
+<attribute name="PARTNO" x="-10.16" y="104.14" size="1.778" layer="96" display="off"/>
 </instance>
 </instances>
 <busses>
@@ -17673,7 +17853,9 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <instance part="TP5" gate="G$1" x="213.36" y="101.6">
 <attribute name="PARTNO" x="213.36" y="101.6" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="IC12" gate="G$1" x="58.42" y="7.62"/>
+<instance part="IC12" gate="G$1" x="228.6" y="30.48">
+<attribute name="PARTNO" x="228.6" y="30.48" size="1.778" layer="96" display="off"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -17711,7 +17893,8 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 </segment>
 <segment>
 <pinref part="IC12" gate="G$1" pin="GND@0"/>
-<wire x1="58.42" y1="-5.08" x2="58.42" y2="-7.62" width="0.1524" layer="91"/>
+<wire x1="228.6" y1="17.78" x2="228.6" y2="15.24" width="0.1524" layer="91"/>
+<label x="228.6" y="15.24" size="1.778" layer="95" rot="R270"/>
 </segment>
 </net>
 <net name="VDD" class="0">
@@ -17727,7 +17910,8 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 </segment>
 <segment>
 <pinref part="IC12" gate="G$1" pin="VCC"/>
-<wire x1="60.96" y1="22.86" x2="60.96" y2="25.4" width="0.1524" layer="91"/>
+<wire x1="231.14" y1="45.72" x2="231.14" y2="48.26" width="0.1524" layer="91"/>
+<label x="231.14" y="48.26" size="1.778" layer="95" rot="R90"/>
 </segment>
 </net>
 <net name="N$31" class="0">
@@ -17971,6 +18155,11 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <pinref part="C35" gate="G$1" pin="1"/>
 <pinref part="TP3" gate="G$1" pin="P$1"/>
 </segment>
+<segment>
+<pinref part="IC12" gate="G$1" pin="COMC"/>
+<wire x1="233.68" y1="17.78" x2="233.68" y2="15.24" width="0.1524" layer="91"/>
+<label x="233.68" y="15.24" size="1.778" layer="95" rot="R270"/>
+</segment>
 </net>
 <net name="ANT_LO" class="0">
 <segment>
@@ -17991,6 +18180,11 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <pinref part="C39" gate="G$1" pin="1"/>
 <pinref part="C20" gate="G$1" pin="1"/>
 <pinref part="TP2" gate="G$1" pin="P$1"/>
+</segment>
+<segment>
+<pinref part="IC12" gate="G$1" pin="COMD"/>
+<wire x1="246.38" y1="35.56" x2="243.84" y2="35.56" width="0.1524" layer="91"/>
+<label x="246.38" y="35.56" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="PWR_OE3" class="0">
@@ -18024,85 +18218,85 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <net name="N$1" class="0">
 <segment>
 <pinref part="IC12" gate="G$1" pin="NCB1"/>
-<wire x1="55.88" y1="-5.08" x2="55.88" y2="-7.62" width="0.1524" layer="91"/>
+<wire x1="226.06" y1="17.78" x2="226.06" y2="15.24" width="0.1524" layer="91"/>
+<label x="226.06" y="15.24" size="1.778" layer="95" rot="R270"/>
 </segment>
 </net>
-<net name="N$71" class="0">
+<net name="N$37" class="0">
 <segment>
 <pinref part="IC12" gate="G$1" pin="NOC0"/>
-<wire x1="60.96" y1="-5.08" x2="60.96" y2="-7.62" width="0.1524" layer="91"/>
+<wire x1="231.14" y1="17.78" x2="231.14" y2="15.24" width="0.1524" layer="91"/>
+<label x="231.14" y="15.24" size="1.778" layer="95" rot="R270"/>
 </segment>
 </net>
-<net name="N$72" class="0">
-<segment>
-<pinref part="IC12" gate="G$1" pin="COMC"/>
-<wire x1="63.5" y1="-5.08" x2="63.5" y2="-7.62" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$73" class="0">
+<net name="N$36" class="0">
 <segment>
 <pinref part="IC12" gate="G$1" pin="NCC1"/>
-<wire x1="73.66" y1="5.08" x2="76.2" y2="5.08" width="0.1524" layer="91"/>
+<wire x1="243.84" y1="27.94" x2="246.38" y2="27.94" width="0.1524" layer="91"/>
+<label x="246.38" y="27.94" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="N$74" class="0">
 <segment>
 <pinref part="IC12" gate="G$1" pin="SCD"/>
-<wire x1="73.66" y1="7.62" x2="76.2" y2="7.62" width="0.1524" layer="91"/>
+<wire x1="243.84" y1="30.48" x2="246.38" y2="30.48" width="0.1524" layer="91"/>
+<label x="246.38" y="30.48" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="N$75" class="0">
+<net name="N$46" class="0">
 <segment>
 <pinref part="IC12" gate="G$1" pin="NOD0"/>
-<wire x1="73.66" y1="10.16" x2="76.2" y2="10.16" width="0.1524" layer="91"/>
+<wire x1="243.84" y1="33.02" x2="246.38" y2="33.02" width="0.1524" layer="91"/>
+<label x="246.38" y="33.02" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="N$76" class="0">
-<segment>
-<pinref part="IC12" gate="G$1" pin="COMD"/>
-<wire x1="76.2" y1="12.7" x2="73.66" y2="12.7" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$77" class="0">
+<net name="N$39" class="0">
 <segment>
 <pinref part="IC12" gate="G$1" pin="NCD1"/>
-<wire x1="63.5" y1="22.86" x2="63.5" y2="25.4" width="0.1524" layer="91"/>
+<wire x1="233.68" y1="45.72" x2="233.68" y2="48.26" width="0.1524" layer="91"/>
+<label x="233.68" y="48.26" size="1.778" layer="95" rot="R90"/>
 </segment>
 </net>
 <net name="N$79" class="0">
 <segment>
 <pinref part="IC12" gate="G$1" pin="NOA0"/>
-<wire x1="58.42" y1="22.86" x2="58.42" y2="25.4" width="0.1524" layer="91"/>
+<wire x1="228.6" y1="45.72" x2="228.6" y2="48.26" width="0.1524" layer="91"/>
+<label x="228.6" y="48.26" size="1.778" layer="95" rot="R90"/>
 </segment>
 </net>
 <net name="N$80" class="0">
 <segment>
 <pinref part="IC12" gate="G$1" pin="COMA"/>
-<wire x1="55.88" y1="22.86" x2="55.88" y2="25.4" width="0.1524" layer="91"/>
+<wire x1="226.06" y1="45.72" x2="226.06" y2="48.26" width="0.1524" layer="91"/>
+<label x="226.06" y="48.26" size="1.778" layer="95" rot="R90"/>
 </segment>
 </net>
 <net name="N$81" class="0">
 <segment>
 <pinref part="IC12" gate="G$1" pin="NCA1"/>
-<wire x1="45.72" y1="12.7" x2="43.18" y2="12.7" width="0.1524" layer="91"/>
+<wire x1="215.9" y1="35.56" x2="213.36" y2="35.56" width="0.1524" layer="91"/>
+<label x="213.36" y="35.56" size="1.778" layer="95" rot="R180"/>
 </segment>
 </net>
 <net name="N$82" class="0">
 <segment>
 <pinref part="IC12" gate="G$1" pin="SAB"/>
-<wire x1="45.72" y1="10.16" x2="43.18" y2="10.16" width="0.1524" layer="91"/>
+<wire x1="215.9" y1="33.02" x2="213.36" y2="33.02" width="0.1524" layer="91"/>
+<label x="213.36" y="33.02" size="1.778" layer="95" rot="R180"/>
 </segment>
 </net>
 <net name="N$83" class="0">
 <segment>
 <pinref part="IC12" gate="G$1" pin="NOB0"/>
-<wire x1="45.72" y1="7.62" x2="43.18" y2="7.62" width="0.1524" layer="91"/>
+<wire x1="215.9" y1="30.48" x2="213.36" y2="30.48" width="0.1524" layer="91"/>
+<label x="213.36" y="30.48" size="1.778" layer="95" rot="R180"/>
 </segment>
 </net>
-<net name="N$84" class="0">
+<net name="N$29" class="0">
 <segment>
 <pinref part="IC12" gate="G$1" pin="COMB"/>
-<wire x1="45.72" y1="5.08" x2="43.18" y2="5.08" width="0.1524" layer="91"/>
+<wire x1="215.9" y1="27.94" x2="213.36" y2="27.94" width="0.1524" layer="91"/>
+<label x="213.36" y="27.94" size="1.778" layer="95" rot="R180"/>
 </segment>
 </net>
 </nets>
@@ -18125,12 +18319,8 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <instance part="GND12" gate="GND" x="35.56" y="81.28" rot="R270"/>
 <instance part="GND13" gate="GND" x="33.02" y="73.66" rot="R270"/>
 <instance part="GND14" gate="GND" x="38.1" y="25.4" rot="R270"/>
-<instance part="C6" gate="G$1" x="22.86" y="25.4">
-<attribute name="PARTNO" x="22.86" y="25.4" size="1.778" layer="96" display="off"/>
-</instance>
-<instance part="C8" gate="G$1" x="15.24" y="25.4">
-<attribute name="PARTNO" x="15.24" y="25.4" size="1.778" layer="96" display="off"/>
-</instance>
+<instance part="C6" gate="G$1" x="22.86" y="25.4"/>
+<instance part="C8" gate="G$1" x="15.24" y="25.4"/>
 <instance part="GND15" gate="GND" x="22.86" y="15.24"/>
 <instance part="GND16" gate="GND" x="15.24" y="15.24"/>
 <instance part="C7" gate="G$1" x="20.32" y="73.66">
@@ -18332,7 +18522,9 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <plain>
 </plain>
 <instances>
-<instance part="U4" gate="G$1" x="63.5" y="71.12"/>
+<instance part="U4" gate="G$1" x="63.5" y="71.12">
+<attribute name="PARTNO" x="63.5" y="71.12" size="1.778" layer="96" display="off"/>
+</instance>
 <instance part="GND22" gate="GND" x="50.8" y="50.8"/>
 <instance part="R61" gate="G$1" x="81.28" y="68.58" rot="R90">
 <attribute name="PARTNO" x="81.28" y="68.58" size="1.778" layer="96" display="off"/>
