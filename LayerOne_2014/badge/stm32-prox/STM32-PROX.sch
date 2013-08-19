@@ -8692,6 +8692,13 @@ Basic small signal diode good up to 200mA. SMB footprint. Common part #: BAS16</
 <wire x1="-1.27" y1="0" x2="1.27" y2="0" width="0.254" layer="94"/>
 <wire x1="1.27" y1="0" x2="0" y2="-1.27" width="0.254" layer="94"/>
 <wire x1="0" y1="-1.27" x2="-1.27" y2="0" width="0.254" layer="94"/>
+<pin name="GND" x="0" y="2.54" visible="off" length="short" direction="sup" rot="R270"/>
+<text x="-1.905" y="-3.175" size="1.778" layer="96">&gt;VALUE</text>
+</symbol>
+<symbol name="GND@1">
+<wire x1="-1.27" y1="0" x2="1.27" y2="0" width="0.254" layer="94"/>
+<wire x1="1.27" y1="0" x2="0" y2="-1.27" width="0.254" layer="94"/>
+<wire x1="0" y1="-1.27" x2="-1.27" y2="0" width="0.254" layer="94"/>
 <text x="-1.905" y="-3.175" size="1.778" layer="96">&gt;VALUE</text>
 <pin name="GND" x="0" y="2.54" visible="off" length="short" direction="sup" rot="R270"/>
 </symbol>
@@ -9170,11 +9177,6 @@ two multiplexer−demultiplexers</description>
 <pin name="2" x="0" y="-2.54" visible="off" length="short" direction="pas" swaplevel="1" rot="R90"/>
 <text x="1.524" y="2.921" size="1.778" layer="95">&gt;NAME</text>
 <text x="1.524" y="-2.159" size="1.778" layer="96">&gt;VALUE</text>
-</symbol>
-<symbol name="SUPPLY1_GND">
-<wire x1="-1.905" y1="0" x2="1.905" y2="0" width="0.254" layer="94"/>
-<pin name="GND" x="0" y="2.54" visible="off" length="short" direction="sup" rot="R270"/>
-<text x="-2.54" y="-2.54" size="1.778" layer="96">&gt;VALUE</text>
 </symbol>
 <symbol name="TS">
 <wire x1="0" y1="-3.175" x2="0" y2="-2.54" width="0.254" layer="94"/>
@@ -10220,7 +10222,7 @@ DIN A4, landscape with location and doc. field</description>
 <deviceset name="GNDA" prefix="GND">
 <description>&lt;b&gt;SUPPLY SYMBOL&lt;/b&gt;</description>
 <gates>
-<gate name="1" symbol="GND" x="0" y="0"/>
+<gate name="1" symbol="GND@1" x="0" y="0"/>
 </gates>
 <devices>
 <device name="">
@@ -10539,7 +10541,7 @@ two multiplexer−demultiplexers</description>
 <deviceset name="GND1" prefix="GND">
 <description>&lt;b&gt;SUPPLY SYMBOL&lt;/b&gt;</description>
 <gates>
-<gate name="1" symbol="GND" x="0" y="0"/>
+<gate name="1" symbol="GND@1" x="0" y="0"/>
 </gates>
 <devices>
 <device name="">
@@ -11669,19 +11671,6 @@ Standard 0603 ceramic capacitor, and 0.1" leaded capacitor.</description>
 <connect gate="G$1" pin="1" pad="P$1"/>
 <connect gate="G$1" pin="2" pad="P$2"/>
 </connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-<deviceset name="SUPPLY1_GND" prefix="GND">
-<description>&lt;b&gt;SUPPLY SYMBOL&lt;/b&gt;</description>
-<gates>
-<gate name="1" symbol="SUPPLY1_GND" x="0" y="0"/>
-</gates>
-<devices>
-<device name="">
 <technologies>
 <technology name=""/>
 </technologies>
@@ -13991,8 +13980,6 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <part name="C61" library="STM32-PROX" deviceset="SPARKFUN_CAP" device="0603-CAP" value="1uF">
 <attribute name="PARTNO" value="*"/>
 </part>
-<part name="GND9" library="STM32-PROX" deviceset="SUPPLY1_GND" device=""/>
-<part name="GND10" library="STM32-PROX" deviceset="SUPPLY1_GND" device=""/>
 <part name="TP8" library="STM32-PROX" deviceset="--MERGED_TESTPAD" device="KEYSTONE-SMD" value="--MERGED_TESTPADKEYSTONE-SMD">
 <attribute name="PARTNO" value="*"/>
 </part>
@@ -14002,7 +13989,6 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <part name="C62" library="STM32-PROX" deviceset="SPARKFUN_CAP" device="0603-CAP" value="10uF">
 <attribute name="PARTNO" value="*"/>
 </part>
-<part name="GND11" library="STM32-PROX" deviceset="SUPPLY1_GND" device=""/>
 <part name="C63" library="STM32-PROX" deviceset="SPARKFUN_CAP" device="0603-CAP" value=".1uF">
 <attribute name="PARTNO" value="*"/>
 </part>
@@ -14014,7 +14000,6 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <attribute name="PARTNO" value="*"/>
 <attribute name="TOLERANCE" value="1%"/>
 </part>
-<part name="GND19" library="STM32-PROX" deviceset="SUPPLY1_GND" device=""/>
 <part name="C64" library="STM32-PROX" deviceset="SPARKFUN_CAP" device="0603-CAP" value="10uF">
 <attribute name="PARTNO" value="*"/>
 </part>
@@ -14030,11 +14015,9 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <part name="S1" library="STM32-PROX" deviceset="SWITCH-SPDT" device="-SMD-A">
 <attribute name="PARTNO" value="*"/>
 </part>
-<part name="GND20" library="STM32-PROX" deviceset="SUPPLY1_GND" device=""/>
 <part name="JP2" library="STM32-PROX" deviceset="JUMPER-3" device="SMD">
 <attribute name="PARTNO" value="*"/>
 </part>
-<part name="GND21" library="STM32-PROX" deviceset="SUPPLY1_GND" device=""/>
 <part name="GND22" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="R61" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603" value="10K">
 <attribute name="PARTNO" value="*"/>
@@ -14084,6 +14067,13 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <part name="IC12" library="STM32-PROX" deviceset="NLAST44599" device="" value="NLAST44599MNG">
 <attribute name="PARTNO" value="NLAST44599MNG"/>
 </part>
+<part name="SUPPLY1" library="STM32-PROX" deviceset="GND" device=""/>
+<part name="SUPPLY2" library="STM32-PROX" deviceset="GND" device=""/>
+<part name="SUPPLY3" library="STM32-PROX" deviceset="GND" device=""/>
+<part name="SUPPLY4" library="STM32-PROX" deviceset="GND" device=""/>
+<part name="SUPPLY5" library="STM32-PROX" deviceset="GND" device=""/>
+<part name="SUPPLY6" library="STM32-PROX" deviceset="GND" device=""/>
+<part name="SUPPLY7" library="STM32-PROX" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -14127,8 +14117,6 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <instance part="C61" gate="G$1" x="48.26" y="66.04">
 <attribute name="PARTNO" x="48.26" y="66.04" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="GND9" gate="1" x="-2.54" y="35.56"/>
-<instance part="GND10" gate="1" x="48.26" y="53.34"/>
 <instance part="TP8" gate="G$1" x="-22.86" y="86.36">
 <attribute name="PARTNO" x="-22.86" y="86.36" size="1.778" layer="96" display="off"/>
 </instance>
@@ -14138,7 +14126,6 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <instance part="C62" gate="G$1" x="-60.96" y="7.62">
 <attribute name="PARTNO" x="-60.96" y="7.62" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="GND11" gate="1" x="-2.54" y="-15.24"/>
 <instance part="C63" gate="G$1" x="30.48" y="0">
 <attribute name="PARTNO" x="30.48" y="0" size="1.778" layer="96" display="off"/>
 </instance>
@@ -14154,7 +14141,6 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <attribute name="VALUE" x="-46.482" y="-3.429" size="1.778" layer="96"/>
 <attribute name="TOLERANCE" x="-48.26" y="-2.54" size="1.778" layer="96" rot="R90" display="off"/>
 </instance>
-<instance part="GND19" gate="1" x="-48.26" y="-12.7"/>
 <instance part="C64" gate="G$1" x="40.64" y="0">
 <attribute name="PARTNO" x="40.64" y="0" size="1.778" layer="96" display="off"/>
 </instance>
@@ -14170,15 +14156,20 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <instance part="S1" gate="1" x="-58.42" y="-25.4" rot="R180">
 <attribute name="PARTNO" x="-58.42" y="-25.4" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="GND20" gate="1" x="-73.66" y="-33.02"/>
 <instance part="JP2" gate="G$1" x="-7.62" y="-38.1" rot="R90">
 <attribute name="PARTNO" x="-7.62" y="-38.1" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="GND21" gate="1" x="7.62" y="-40.64"/>
 <instance part="U$7" gate="G$1" x="-2.54" y="63.5">
 <attribute name="PARTNO" x="-2.54" y="63.5" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="U$7" gate="G$2" x="-15.24" y="45.72"/>
+<instance part="SUPPLY1" gate="GND" x="48.26" y="53.34"/>
+<instance part="SUPPLY2" gate="GND" x="-2.54" y="35.56"/>
+<instance part="SUPPLY3" gate="GND" x="-2.54" y="-15.24"/>
+<instance part="SUPPLY4" gate="GND" x="-48.26" y="-12.7"/>
+<instance part="SUPPLY5" gate="GND" x="-73.66" y="-33.02"/>
+<instance part="SUPPLY6" gate="GND" x="7.62" y="-40.64"/>
+<instance part="SUPPLY7" gate="GND" x="99.06" y="76.2" rot="R180"/>
 </instances>
 <busses>
 </busses>
@@ -14329,104 +14320,6 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <label x="114.3" y="63.5" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="GND" class="0">
-<segment>
-<pinref part="C59" gate="G$1" pin="2"/>
-<wire x1="-55.88" y1="60.96" x2="-55.88" y2="48.26" width="0.1524" layer="91"/>
-<wire x1="-55.88" y1="48.26" x2="-55.88" y2="43.18" width="0.1524" layer="91"/>
-<wire x1="-55.88" y1="43.18" x2="-45.72" y2="43.18" width="0.1524" layer="91"/>
-<pinref part="C58" gate="G$1" pin="2"/>
-<wire x1="-45.72" y1="43.18" x2="-35.56" y2="43.18" width="0.1524" layer="91"/>
-<wire x1="-35.56" y1="43.18" x2="-22.86" y2="43.18" width="0.1524" layer="91"/>
-<wire x1="-22.86" y1="43.18" x2="-17.78" y2="43.18" width="0.1524" layer="91"/>
-<wire x1="-17.78" y1="43.18" x2="-15.24" y2="43.18" width="0.1524" layer="91"/>
-<wire x1="-15.24" y1="43.18" x2="-2.54" y2="43.18" width="0.1524" layer="91"/>
-<wire x1="-45.72" y1="48.26" x2="-45.72" y2="43.18" width="0.1524" layer="91"/>
-<pinref part="C57" gate="G$1" pin="2"/>
-<wire x1="-35.56" y1="48.26" x2="-35.56" y2="43.18" width="0.1524" layer="91"/>
-<wire x1="-2.54" y1="45.72" x2="-2.54" y2="43.18" width="0.1524" layer="91"/>
-<pinref part="GND9" gate="1" pin="GND"/>
-<wire x1="-2.54" y1="43.18" x2="-2.54" y2="38.1" width="0.1524" layer="91"/>
-<junction x="-45.72" y="43.18"/>
-<junction x="-35.56" y="43.18"/>
-<junction x="-2.54" y="43.18"/>
-<wire x1="12.7" y1="55.88" x2="15.24" y2="55.88" width="0.1524" layer="91"/>
-<wire x1="15.24" y1="55.88" x2="15.24" y2="43.18" width="0.1524" layer="91"/>
-<wire x1="15.24" y1="43.18" x2="-2.54" y2="43.18" width="0.1524" layer="91"/>
-<pinref part="C60" gate="G$1" pin="2"/>
-<wire x1="22.86" y1="50.8" x2="22.86" y2="43.18" width="0.1524" layer="91"/>
-<wire x1="22.86" y1="43.18" x2="15.24" y2="43.18" width="0.1524" layer="91"/>
-<wire x1="-17.78" y1="55.88" x2="-22.86" y2="55.88" width="0.1524" layer="91"/>
-<wire x1="-22.86" y1="55.88" x2="-22.86" y2="43.18" width="0.1524" layer="91"/>
-<junction x="-22.86" y="43.18"/>
-<junction x="15.24" y="43.18"/>
-<pinref part="U$7" gate="G$1" pin="!EN"/>
-<pinref part="U$7" gate="G$1" pin="EP"/>
-<pinref part="U$7" gate="G$1" pin="GND"/>
-<pinref part="U$7" gate="G$2" pin="V1"/>
-<junction x="-15.24" y="43.18"/>
-</segment>
-<segment>
-<pinref part="R60" gate="G$1" pin="1"/>
-<pinref part="GND19" gate="1" pin="GND"/>
-<wire x1="-48.26" y1="-7.62" x2="-48.26" y2="-10.16" width="0.1524" layer="91"/>
-<pinref part="C62" gate="G$1" pin="2"/>
-<wire x1="-60.96" y1="5.08" x2="-60.96" y2="-7.62" width="0.1524" layer="91"/>
-<wire x1="-60.96" y1="-7.62" x2="-48.26" y2="-7.62" width="0.1524" layer="91"/>
-<junction x="-48.26" y="-7.62"/>
-</segment>
-<segment>
-<pinref part="S1" gate="1" pin="O"/>
-<wire x1="-63.5" y1="-27.94" x2="-73.66" y2="-27.94" width="0.1524" layer="91"/>
-<label x="-73.66" y="-27.94" size="1.778" layer="95"/>
-<pinref part="GND20" gate="1" pin="GND"/>
-<wire x1="-73.66" y1="-30.48" x2="-73.66" y2="-27.94" width="0.1524" layer="91"/>
-</segment>
-<segment>
-<pinref part="JP2" gate="G$1" pin="1"/>
-<wire x1="-5.08" y1="-38.1" x2="7.62" y2="-38.1" width="0.1524" layer="91"/>
-<label x="0" y="-38.1" size="1.778" layer="95"/>
-<pinref part="GND21" gate="1" pin="GND"/>
-</segment>
-<segment>
-<pinref part="IC1" gate="IC" pin="PGND"/>
-<wire x1="10.16" y1="2.54" x2="17.78" y2="2.54" width="0.1524" layer="91"/>
-<wire x1="17.78" y1="2.54" x2="17.78" y2="-10.16" width="0.1524" layer="91"/>
-<wire x1="-20.32" y1="2.54" x2="-20.32" y2="-10.16" width="0.1524" layer="91"/>
-<pinref part="IC1" gate="IC" pin="GND"/>
-<wire x1="-15.24" y1="2.54" x2="-20.32" y2="2.54" width="0.1524" layer="91"/>
-<pinref part="GND11" gate="1" pin="GND"/>
-<wire x1="-20.32" y1="-10.16" x2="-2.54" y2="-10.16" width="0.1524" layer="91"/>
-<wire x1="-2.54" y1="-10.16" x2="-2.54" y2="-12.7" width="0.1524" layer="91"/>
-<wire x1="17.78" y1="-10.16" x2="-2.54" y2="-10.16" width="0.1524" layer="91"/>
-<junction x="-2.54" y="-10.16"/>
-<pinref part="C63" gate="G$1" pin="2"/>
-<wire x1="17.78" y1="-10.16" x2="30.48" y2="-10.16" width="0.1524" layer="91"/>
-<wire x1="30.48" y1="-10.16" x2="30.48" y2="-2.54" width="0.1524" layer="91"/>
-<junction x="17.78" y="-10.16"/>
-<pinref part="C64" gate="G$1" pin="2"/>
-<wire x1="40.64" y1="-2.54" x2="40.64" y2="-10.16" width="0.1524" layer="91"/>
-<wire x1="40.64" y1="-10.16" x2="30.48" y2="-10.16" width="0.1524" layer="91"/>
-<junction x="30.48" y="-10.16"/>
-</segment>
-</net>
-<net name="VBAT-" class="2">
-<segment>
-<pinref part="C61" gate="G$1" pin="2"/>
-<wire x1="48.26" y1="63.5" x2="66.04" y2="63.5" width="0.1524" layer="91"/>
-<wire x1="48.26" y1="63.5" x2="48.26" y2="58.42" width="0.1524" layer="91"/>
-<junction x="48.26" y="63.5"/>
-<pinref part="GND10" gate="1" pin="GND"/>
-<wire x1="48.26" y1="58.42" x2="48.26" y2="55.88" width="0.1524" layer="91"/>
-<junction x="66.04" y="63.5"/>
-<label x="68.58" y="63.5" size="1.778" layer="95"/>
-</segment>
-<segment>
-<pinref part="U$9" gate="G$1" pin="NEG"/>
-<wire x1="99.06" y1="68.58" x2="99.06" y2="76.2" width="0.1524" layer="91"/>
-<label x="101.6" y="73.66" size="1.778" layer="95"/>
-</segment>
-</net>
 <net name="ONOFF" class="0">
 <segment>
 <pinref part="IC1" gate="IC" pin="EN"/>
@@ -14496,6 +14389,102 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <pinref part="JP2" gate="G$1" pin="2"/>
 <wire x1="-5.08" y1="-35.56" x2="7.62" y2="-35.56" width="0.1524" layer="91"/>
 <label x="0" y="-35.56" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="GND" class="0">
+<segment>
+<pinref part="C61" gate="G$1" pin="2"/>
+<wire x1="48.26" y1="63.5" x2="66.04" y2="63.5" width="0.1524" layer="91"/>
+<wire x1="48.26" y1="63.5" x2="48.26" y2="55.88" width="0.1524" layer="91"/>
+<junction x="48.26" y="63.5"/>
+<junction x="66.04" y="63.5"/>
+<label x="68.58" y="63.5" size="1.778" layer="95"/>
+<pinref part="SUPPLY1" gate="GND" pin="GND"/>
+</segment>
+<segment>
+<pinref part="C59" gate="G$1" pin="2"/>
+<wire x1="-55.88" y1="60.96" x2="-55.88" y2="43.18" width="0.1524" layer="91"/>
+<wire x1="-55.88" y1="43.18" x2="-45.72" y2="43.18" width="0.1524" layer="91"/>
+<pinref part="C58" gate="G$1" pin="2"/>
+<wire x1="-45.72" y1="43.18" x2="-35.56" y2="43.18" width="0.1524" layer="91"/>
+<wire x1="-35.56" y1="43.18" x2="-22.86" y2="43.18" width="0.1524" layer="91"/>
+<wire x1="-22.86" y1="43.18" x2="-15.24" y2="43.18" width="0.1524" layer="91"/>
+<wire x1="-15.24" y1="43.18" x2="-2.54" y2="43.18" width="0.1524" layer="91"/>
+<wire x1="-45.72" y1="48.26" x2="-45.72" y2="43.18" width="0.1524" layer="91"/>
+<pinref part="C57" gate="G$1" pin="2"/>
+<wire x1="-35.56" y1="48.26" x2="-35.56" y2="43.18" width="0.1524" layer="91"/>
+<wire x1="-2.54" y1="45.72" x2="-2.54" y2="43.18" width="0.1524" layer="91"/>
+<wire x1="-2.54" y1="43.18" x2="-2.54" y2="38.1" width="0.1524" layer="91"/>
+<junction x="-45.72" y="43.18"/>
+<junction x="-35.56" y="43.18"/>
+<junction x="-2.54" y="43.18"/>
+<wire x1="12.7" y1="55.88" x2="15.24" y2="55.88" width="0.1524" layer="91"/>
+<wire x1="15.24" y1="55.88" x2="15.24" y2="43.18" width="0.1524" layer="91"/>
+<wire x1="15.24" y1="43.18" x2="-2.54" y2="43.18" width="0.1524" layer="91"/>
+<pinref part="C60" gate="G$1" pin="2"/>
+<wire x1="22.86" y1="50.8" x2="22.86" y2="43.18" width="0.1524" layer="91"/>
+<wire x1="22.86" y1="43.18" x2="15.24" y2="43.18" width="0.1524" layer="91"/>
+<wire x1="-17.78" y1="55.88" x2="-22.86" y2="55.88" width="0.1524" layer="91"/>
+<wire x1="-22.86" y1="55.88" x2="-22.86" y2="43.18" width="0.1524" layer="91"/>
+<junction x="-22.86" y="43.18"/>
+<junction x="15.24" y="43.18"/>
+<pinref part="U$7" gate="G$1" pin="!EN"/>
+<pinref part="U$7" gate="G$1" pin="EP"/>
+<pinref part="U$7" gate="G$1" pin="GND"/>
+<pinref part="U$7" gate="G$2" pin="V1"/>
+<junction x="-15.24" y="43.18"/>
+<pinref part="SUPPLY2" gate="GND" pin="GND"/>
+</segment>
+<segment>
+<pinref part="IC1" gate="IC" pin="PGND"/>
+<wire x1="10.16" y1="2.54" x2="17.78" y2="2.54" width="0.1524" layer="91"/>
+<wire x1="17.78" y1="2.54" x2="17.78" y2="-10.16" width="0.1524" layer="91"/>
+<wire x1="-20.32" y1="2.54" x2="-20.32" y2="-10.16" width="0.1524" layer="91"/>
+<pinref part="IC1" gate="IC" pin="GND"/>
+<wire x1="-15.24" y1="2.54" x2="-20.32" y2="2.54" width="0.1524" layer="91"/>
+<wire x1="-20.32" y1="-10.16" x2="-2.54" y2="-10.16" width="0.1524" layer="91"/>
+<wire x1="-2.54" y1="-10.16" x2="-2.54" y2="-12.7" width="0.1524" layer="91"/>
+<wire x1="17.78" y1="-10.16" x2="-2.54" y2="-10.16" width="0.1524" layer="91"/>
+<junction x="-2.54" y="-10.16"/>
+<pinref part="C63" gate="G$1" pin="2"/>
+<wire x1="17.78" y1="-10.16" x2="30.48" y2="-10.16" width="0.1524" layer="91"/>
+<wire x1="30.48" y1="-10.16" x2="30.48" y2="-2.54" width="0.1524" layer="91"/>
+<junction x="17.78" y="-10.16"/>
+<pinref part="C64" gate="G$1" pin="2"/>
+<wire x1="40.64" y1="-2.54" x2="40.64" y2="-10.16" width="0.1524" layer="91"/>
+<wire x1="40.64" y1="-10.16" x2="30.48" y2="-10.16" width="0.1524" layer="91"/>
+<junction x="30.48" y="-10.16"/>
+<pinref part="SUPPLY3" gate="GND" pin="GND"/>
+</segment>
+<segment>
+<pinref part="R60" gate="G$1" pin="1"/>
+<wire x1="-48.26" y1="-7.62" x2="-48.26" y2="-10.16" width="0.1524" layer="91"/>
+<pinref part="C62" gate="G$1" pin="2"/>
+<wire x1="-60.96" y1="5.08" x2="-60.96" y2="-7.62" width="0.1524" layer="91"/>
+<wire x1="-60.96" y1="-7.62" x2="-48.26" y2="-7.62" width="0.1524" layer="91"/>
+<junction x="-48.26" y="-7.62"/>
+<pinref part="SUPPLY4" gate="GND" pin="GND"/>
+</segment>
+<segment>
+<pinref part="S1" gate="1" pin="O"/>
+<wire x1="-63.5" y1="-27.94" x2="-73.66" y2="-27.94" width="0.1524" layer="91"/>
+<label x="-73.66" y="-27.94" size="1.778" layer="95"/>
+<wire x1="-73.66" y1="-30.48" x2="-73.66" y2="-27.94" width="0.1524" layer="91"/>
+<pinref part="SUPPLY5" gate="GND" pin="GND"/>
+</segment>
+<segment>
+<pinref part="JP2" gate="G$1" pin="1"/>
+<wire x1="-5.08" y1="-38.1" x2="7.62" y2="-38.1" width="0.1524" layer="91"/>
+<label x="0" y="-38.1" size="1.778" layer="95"/>
+<pinref part="SUPPLY6" gate="GND" pin="GND"/>
+</segment>
+<segment>
+<pinref part="U$9" gate="G$1" pin="NEG"/>
+<wire x1="99.06" y1="68.58" x2="99.06" y2="73.66" width="0.1524" layer="91"/>
+<label x="101.6" y="73.66" size="1.778" layer="95"/>
+<pinref part="SUPPLY7" gate="GND" pin="GND"/>
+<wire x1="99.06" y1="73.66" x2="99.06" y2="76.2" width="0.1524" layer="91"/>
+<junction x="99.06" y="73.66"/>
 </segment>
 </net>
 </nets>
