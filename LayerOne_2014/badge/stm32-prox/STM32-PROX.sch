@@ -13890,9 +13890,9 @@ We've spent an enormous amount of time creating and checking these footprints an
 <variantdefs>
 </variantdefs>
 <classes>
-<class number="0" name="default" width="0.254" drill="0">
+<class number="0" name="default" width="0.2032" drill="0">
 </class>
-<class number="1" name="adc" width="0.254" drill="0">
+<class number="1" name="adc" width="0.2032" drill="0">
 </class>
 <class number="2" name="power" width="0.3556" drill="0.254">
 <clearance class="2" value="0.2032"/>
