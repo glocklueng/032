@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="1" unitdist="mic" unit="mic" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="2" name="Route2" color="1" fill="3" visible="no" active="yes"/>
@@ -8534,6 +8534,15 @@ diameter 11 mm, grid 5.08 mm</description>
 <hole x="0" y="2.2" drill="0.9"/>
 <hole x="0" y="-2.2" drill="0.9"/>
 </package>
+<package name="SMD-TESTPOINT">
+<wire x1="-0.815246875" y1="0.508" x2="-0.371121875" y2="0.508" width="0.127" layer="21"/>
+<wire x1="-0.815246875" y1="-0.508" x2="-0.394471875" y2="-0.508003125" width="0.127" layer="21"/>
+<wire x1="-0.815246875" y1="0.508" x2="-0.815246875" y2="-0.508" width="0.127" layer="21"/>
+<wire x1="0.835378125" y1="0.508" x2="0.508" y2="0.508" width="0.127" layer="21"/>
+<wire x1="0.835378125" y1="-0.508" x2="0.508" y2="-0.508" width="0.127" layer="21"/>
+<wire x1="0.835378125" y1="0.508" x2="0.835378125" y2="-0.508" width="0.127" layer="21"/>
+<smd name="1" x="0" y="0" dx="1.27" dy="0.635" layer="1"/>
+</package>
 </packages>
 <symbols>
 <symbol name="+3V3">
@@ -13369,6 +13378,14 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 </technologies>
 </device>
 <device name="KEYSTONE-SMD" package="KEYSTONE-SMD-TESTPOINT-5015">
+<connects>
+<connect gate="G$1" pin="P$1" pad="1"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+<device name="" package="SMD-TESTPOINT">
 <connects>
 <connect gate="G$1" pin="P$1" pad="1"/>
 </connects>
