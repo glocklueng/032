@@ -8,7 +8,7 @@
 </settings>
 <grid distance="0.05" unitdist="inch" unit="inch" style="lines" multiple="1" display="yes" altdistance="0.005" altunitdist="inch" altunit="inch"/>
 <layers>
-<layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
+<layer number="1" name="Top" color="4" fill="1" visible="no" active="yes"/>
 <layer number="2" name="Route2" color="1" fill="3" visible="no" active="no"/>
 <layer number="3" name="Route3" color="4" fill="3" visible="no" active="no"/>
 <layer number="4" name="Route4" color="1" fill="4" visible="no" active="no"/>
@@ -23,22 +23,22 @@
 <layer number="13" name="Route13" color="4" fill="5" visible="no" active="no"/>
 <layer number="14" name="Route14" color="1" fill="6" visible="no" active="no"/>
 <layer number="15" name="Route15" color="4" fill="6" visible="no" active="no"/>
-<layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="yes"/>
+<layer number="16" name="Bottom" color="1" fill="1" visible="no" active="yes"/>
 <layer number="17" name="Pads" color="2" fill="1" visible="yes" active="yes"/>
-<layer number="18" name="Vias" color="2" fill="1" visible="yes" active="yes"/>
-<layer number="19" name="Unrouted" color="6" fill="1" visible="yes" active="yes"/>
+<layer number="18" name="Vias" color="2" fill="1" visible="no" active="yes"/>
+<layer number="19" name="Unrouted" color="6" fill="1" visible="no" active="yes"/>
 <layer number="20" name="Dimension" color="15" fill="1" visible="yes" active="yes"/>
 <layer number="21" name="tPlace" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="22" name="bPlace" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="22" name="bPlace" color="7" fill="1" visible="no" active="yes"/>
 <layer number="23" name="tOrigins" color="15" fill="1" visible="yes" active="yes"/>
-<layer number="24" name="bOrigins" color="15" fill="1" visible="yes" active="yes"/>
+<layer number="24" name="bOrigins" color="15" fill="1" visible="no" active="yes"/>
 <layer number="25" name="tNames" color="7" fill="1" visible="no" active="yes"/>
 <layer number="26" name="bNames" color="7" fill="1" visible="no" active="yes"/>
-<layer number="27" name="tValues" color="7" fill="1" visible="no" active="yes"/>
+<layer number="27" name="tValues" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="28" name="bValues" color="7" fill="1" visible="no" active="yes"/>
 <layer number="29" name="tStop" color="7" fill="3" visible="no" active="yes"/>
 <layer number="30" name="bStop" color="7" fill="6" visible="no" active="yes"/>
-<layer number="31" name="tCream" color="7" fill="4" visible="no" active="yes"/>
+<layer number="31" name="tCream" color="7" fill="4" visible="yes" active="yes"/>
 <layer number="32" name="bCream" color="7" fill="5" visible="no" active="yes"/>
 <layer number="33" name="tFinish" color="6" fill="3" visible="no" active="yes"/>
 <layer number="34" name="bFinish" color="6" fill="6" visible="no" active="yes"/>
@@ -1784,27 +1784,27 @@ Please make sure your boards conform to these design rules.</description>
 </element>
 <element name="IC9" library="STM32-PROX" package="TSSOP-20" value="74XX244-OCTAL-TRISTATE-BUFFERS" x="12.7" y="34.29" smashed="yes" rot="R90">
 <attribute name="PARTNO" value="*" x="12.7" y="34.29" size="1.778" layer="27" rot="R90" display="off"/>
-<attribute name="NAME" x="13.5" y="36.29" size="1.27" layer="21" ratio="15"/>
+<attribute name="NAME" x="11.97" y="38.646" size="1.27" layer="21" ratio="15" rot="R90"/>
 </element>
 <element name="IC10" library="STM32-PROX" package="TSSOP-20" value="74XX244-OCTAL-TRISTATE-BUFFERS" x="20.32" y="34.29" smashed="yes" rot="R90">
 <attribute name="PARTNO" value="*" x="20.32" y="34.29" size="1.778" layer="27" rot="R90" display="off"/>
-<attribute name="NAME" x="21.12" y="36.29" size="1.27" layer="21" ratio="15"/>
+<attribute name="NAME" x="22.263" y="32.226" size="1.27" layer="21" ratio="15"/>
 </element>
 <element name="R22" library="STM32-PROX" package="RLC_0603" value="33" x="3.302" y="37.973" smashed="yes" rot="R180">
 <attribute name="PARTNO" value="*" x="3.302" y="37.973" size="1.778" layer="27" rot="R180" display="off"/>
-<attribute name="NAME" x="4.4958" y="38.3794" size="0.762" layer="51" rot="R180"/>
+<attribute name="NAME" x="4.4958" y="37.1094" size="0.762" layer="51" rot="R180"/>
 </element>
 <element name="R27" library="STM32-PROX" package="RLC_0603" value="33" x="6.096" y="41.275" smashed="yes" rot="R270">
 <attribute name="PARTNO" value="*" x="6.096" y="41.275" size="1.778" layer="27" rot="R270" display="off"/>
-<attribute name="NAME" x="5.6896" y="42.4688" size="0.762" layer="51" rot="R270"/>
+<attribute name="NAME" x="7.2136" y="42.2148" size="0.762" layer="51" rot="R270"/>
 </element>
 <element name="R28" library="STM32-PROX" package="RLC_0603" value="33" x="3.302" y="39.624" smashed="yes" rot="R180">
 <attribute name="PARTNO" value="*" x="3.302" y="39.624" size="1.778" layer="27" rot="R180" display="off"/>
-<attribute name="NAME" x="4.4958" y="40.0304" size="0.762" layer="51" rot="R180"/>
+<attribute name="NAME" x="0.8636" y="40.9448" size="0.762" layer="51" rot="R270"/>
 </element>
 <element name="R29" library="STM32-PROX" package="RLC_0603" value="33" x="9.525" y="38.1" smashed="yes" rot="R270">
 <attribute name="PARTNO" value="*" x="9.525" y="38.1" size="1.778" layer="27" rot="R270" display="off"/>
-<attribute name="NAME" x="9.1186" y="39.2938" size="0.762" layer="51" rot="R270"/>
+<attribute name="NAME" x="7.8486" y="39.2938" size="0.762" layer="51" rot="R270"/>
 </element>
 <element name="C39" library="STM32-PROX" package="RLC_0603" value="1n" x="10.795" y="28.194" smashed="yes" rot="MR180">
 <attribute name="PARTNO" value="C1608C0G2A102J080AA" x="10.795" y="28.194" size="1.778" layer="28" rot="MR180" display="off"/>
@@ -1824,11 +1824,11 @@ Please make sure your boards conform to these design rules.</description>
 </element>
 <element name="R45" library="STM32-PROX" package="RLC_0603" value="10k" x="11.001590625" y="36.4695625" smashed="yes" rot="R90">
 <attribute name="PARTNO" value="*" x="11.001590625" y="36.4695625" size="1.778" layer="27" rot="R90" display="off"/>
-<attribute name="NAME" x="11.407990625" y="35.2757625" size="0.762" layer="51" rot="R90"/>
+<attribute name="NAME" x="11.280990625" y="32.8627625" size="0.762" layer="51" rot="R90"/>
 </element>
 <element name="R46" library="STM32-PROX" package="RLC_0603" value="10k" x="3.302" y="41.275" smashed="yes" rot="R180">
 <attribute name="PARTNO" value="*" x="3.302" y="41.275" size="1.778" layer="27" rot="R180" display="off"/>
-<attribute name="NAME" x="4.4958" y="41.6814" size="0.762" layer="51" rot="R180"/>
+<attribute name="NAME" x="4.4958" y="42.9514" size="0.762" layer="51" rot="R180"/>
 </element>
 <element name="TP2" library="STM32-PROX" package="KEYSTONE-SMD-TESTPOINT-5015" value="TESTPADKEYSTONE-SMD" x="3.302" y="16.764" smashed="yes" rot="MR270">
 <attribute name="PARTNO" value="*" x="3.302" y="16.764" size="1.778" layer="28" rot="MR270" display="off"/>
@@ -2152,7 +2152,7 @@ Please make sure your boards conform to these design rules.</description>
 </element>
 <element name="U1" library="STM32-PROX" package="RLC_0805" value="FERRITE0805" x="6.35" y="48.768" smashed="yes" rot="R270">
 <attribute name="PARTNO" value="*" x="6.35" y="48.768" size="1.778" layer="27" rot="R270" display="off"/>
-<attribute name="NAME" x="5.715" y="50.2412" size="1.27" layer="51" rot="R270"/>
+<attribute name="NAME" x="5.3848" y="50.927" size="1.27" layer="51"/>
 </element>
 <element name="C21" library="STM32-PROX" package="RLC_0603" value="33n" x="23.622" y="11.43" smashed="yes">
 <attribute name="PARTNO" value="GRM188R71C333KA01D" x="23.622" y="11.43" size="1.778" layer="27" display="off"/>
@@ -2196,7 +2196,7 @@ Please make sure your boards conform to these design rules.</description>
 </element>
 <element name="C33" library="STM32-PROX" package="RLC_1210" value="4u7" x="29.21" y="39.878" smashed="yes" rot="R90">
 <attribute name="PARTNO" value="EMK325B7475KN-T" x="29.21" y="39.878" size="1.778" layer="27" rot="R90" display="off"/>
-<attribute name="NAME" x="29.946" y="37.6684" size="1.524" layer="51" rot="R90"/>
+<attribute name="NAME" x="30.4036" y="44.424" size="1.524" layer="51" rot="R180"/>
 </element>
 <element name="IC13" library="STM32-PROX" package="SOT-23-5" value="PQ1X331M2ZP-3V3-LDO-SOT-23-5" x="38.1" y="27.94" smashed="yes" rot="R90">
 <attribute name="PARTNO" value="PQ1X331M2ZP-3V3" x="38.1" y="27.94" size="1.778" layer="27" rot="R90" display="off"/>
@@ -2204,7 +2204,7 @@ Please make sure your boards conform to these design rules.</description>
 </element>
 <element name="C27" library="STM32-PROX" package="RLC_1210" value="4u7" x="16.891" y="51.054" smashed="yes" rot="R180">
 <attribute name="PARTNO" value="EMK325B7475KN-T" x="16.891" y="51.054" size="1.778" layer="27" rot="R180" display="off"/>
-<attribute name="NAME" x="19.1006" y="51.79" size="1.524" layer="51" rot="R180"/>
+<attribute name="NAME" x="19.4816" y="54.584" size="1.524" layer="51" rot="R180"/>
 </element>
 <element name="C28" library="STM32-PROX" package="RLC_0603" value="33n" x="40.894" y="15.24" smashed="yes" rot="MR270">
 <attribute name="PARTNO" value="GRM188R71C333KA01D" x="40.894" y="15.24" size="1.778" layer="28" rot="MR270" display="off"/>
@@ -2230,7 +2230,7 @@ Please make sure your boards conform to these design rules.</description>
 </element>
 <element name="TP6" library="STM32-PROX" package="KEYSTONE-PTH-TESTPOINT-5011" value="TESTPADKEYSTONE-PTH" x="2.54" y="46.99" smashed="yes" rot="R45">
 <attribute name="PARTNO" value="*" x="2.54" y="46.99" size="1.778" layer="27" rot="R45" display="off"/>
-<attribute name="NAME" x="3.271184375" y="43.8277625" size="0.889" layer="51" rot="R45"/>
+<attribute name="NAME" x="3.652184375" y="44.2087625" size="0.889" layer="51" rot="R45"/>
 </element>
 <element name="C44" library="STM32-PROX" package="RLC_0603" value="33n" x="50.927" y="32.512" smashed="yes" rot="MR270">
 <attribute name="PARTNO" value="GRM188R71C333KA01D" x="50.927" y="32.512" size="1.778" layer="28" rot="MR270" display="off"/>
@@ -2242,7 +2242,7 @@ Please make sure your boards conform to these design rules.</description>
 </element>
 <element name="C46" library="STM32-PROX" package="RLC_0603" value="33n" x="12.827" y="49.784" smashed="yes" rot="R90">
 <attribute name="PARTNO" value="GRM188R71C333KA01D" x="12.827" y="49.784" size="1.778" layer="27" rot="R90" display="off"/>
-<attribute name="NAME" x="13.2334" y="48.5902" size="0.762" layer="51" rot="R90"/>
+<attribute name="NAME" x="14.0208" y="52.3494" size="0.762" layer="51" rot="R180"/>
 </element>
 <element name="C47" library="STM32-PROX" package="RLC_0603" value="33n" x="72.644" y="2.667" smashed="yes" rot="R180">
 <attribute name="PARTNO" value="GRM188R71C333KA01D" x="72.644" y="2.667" size="1.778" layer="27" rot="R180" display="off"/>
@@ -2439,7 +2439,7 @@ Please make sure your boards conform to these design rules.</description>
 </element>
 <element name="U4" library="STM32-PROX" package="MICRO-SD-SOCKET-PP" value="SDCARD" x="73.66" y="38.1" smashed="yes">
 <attribute name="NAME" x="64.77" y="44.45" size="0.8128" layer="25"/>
-<attribute name="VALUE" x="64.77" y="43.18" size="0.8128" layer="27"/>
+<attribute name="VALUE" x="58.42" y="41.91" size="0.8128" layer="27" rot="R90"/>
 <attribute name="PARTNO" value="*" x="73.66" y="38.1" size="1.778" layer="27" display="off"/>
 </element>
 <element name="C209" library="STM32-PROX" package="RLC_0603" value="100n" x="50.292" y="14.986" smashed="yes" rot="MR90">
