@@ -8406,6 +8406,12 @@ Standard 4-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <part name="JP1" library="SparkFun-Connectors" deviceset="M04" device="PTH"/>
 <part name="JP2" library="SparkFun-Connectors" deviceset="USB" device="SMD"/>
 <part name="GND12" library="SparkFun" deviceset="GND" device=""/>
+<part name="GND" library="SparkFun" deviceset="M02" device="PTH">
+<attribute name="MF" value=""/>
+<attribute name="MPN" value=""/>
+<attribute name="OC_NEWARK" value="unknown"/>
+</part>
+<part name="GND13" library="SparkFun" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -10524,6 +10530,12 @@ Standard 4-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <attribute name="MF" x="114.3" y="-7.62" size="1.778" layer="96" display="off"/>
 <attribute name="MPN" x="114.3" y="-7.62" size="1.778" layer="96" display="off"/>
 </instance>
+<instance part="GND" gate="G$1" x="-50.8" y="48.26">
+<attribute name="OC_NEWARK" x="-50.8" y="48.26" size="1.778" layer="96" display="off"/>
+<attribute name="MF" x="-50.8" y="48.26" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="-50.8" y="48.26" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="GND13" gate="1" x="-38.1" y="43.18"/>
 </instances>
 <busses>
 </busses>
@@ -10587,6 +10599,16 @@ Standard 4-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <wire x1="0" y1="-17.78" x2="0" y2="-25.4" width="0.1524" layer="91"/>
 <pinref part="IC5" gate="G$1" pin="GND@EXP"/>
 <pinref part="GND16" gate="1" pin="GND"/>
+</segment>
+<segment>
+<pinref part="GND" gate="G$1" pin="2"/>
+<pinref part="GND13" gate="1" pin="GND"/>
+<wire x1="-43.18" y1="50.8" x2="-38.1" y2="50.8" width="0.1524" layer="91"/>
+<wire x1="-38.1" y1="50.8" x2="-38.1" y2="48.26" width="0.1524" layer="91"/>
+<pinref part="GND" gate="G$1" pin="1"/>
+<wire x1="-38.1" y1="48.26" x2="-38.1" y2="45.72" width="0.1524" layer="91"/>
+<wire x1="-43.18" y1="48.26" x2="-38.1" y2="48.26" width="0.1524" layer="91"/>
+<junction x="-38.1" y="48.26"/>
 </segment>
 </net>
 <net name="CHARGE" class="0">
