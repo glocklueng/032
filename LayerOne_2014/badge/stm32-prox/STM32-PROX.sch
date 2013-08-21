@@ -14503,10 +14503,10 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <part name="R25" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603">
 <attribute name="PARTNO" value="*"/>
 </part>
-<part name="R26" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603">
+<part name="R26" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603" value="215.9k">
 <attribute name="PARTNO" value="*"/>
 </part>
-<part name="R43" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603">
+<part name="R43" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603" value="74.74k">
 <attribute name="PARTNO" value="*"/>
 </part>
 <part name="C57" library="STM32-PROX" deviceset="SPARKFUN_CAP" device="0603-CAP" value="0.1uF">
