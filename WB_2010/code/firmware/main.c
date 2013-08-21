@@ -481,6 +481,48 @@ static void run_menu(void) {
   } while (c != 'q');
 }
 
+void printhex(uint8_t hex) {
+	hex &= 0xF;
+	if (hex < 10)
+		pc_putc(hex + '0');
+	else
+		pc_putc(hex + 'A' - 10);
+}
+
+void putnum_uh(uint16_t n) {
+	if (n >> 12)
+	printhex(n>>12);
+	if (n >> 8)
+	printhex(n >> 8);
+	if (n >> 4)
+	printhex(n >> 4);
+	printhex(n);
+
+	return;
+}
+void test_osccal(void) {
+	uint8_t i,j;
+	uint8_t oscc;
+
+	oscc = OSCCAL;
+
+	for(i=0xa0;i<255;i++) {
+
+		OSCCAL=i;
+		delay_ms(100);
+		for(j=0;j<10;j++) {
+			pc_puts_P(PSTR("Testing OSCAL= "));
+			putnum_uh(i);
+			pc_puts_P(PSTR("\n"));
+		}
+		
+		OSCCAL=oscc;
+		delay_ms(200);
+		pc_puts_P(PSTR("Testing in process\n"));
+	}
+	OSCCAL = oscc;
+
+}
 
 /**
  * The main function.
@@ -490,7 +532,7 @@ static void run_menu(void) {
  */
 int main(void) {
 
-  OSCCAL = 0xC0; // Calibrate internal RC oscillator
+//  OSCCAL = 0xC0; // Calibrate internal RC oscillator
 
   // setup system tick counter
   OCR0A = 125; // timer0 capture at 1ms
@@ -512,7 +554,6 @@ int main(void) {
   
   DDRD |= _BV(PD1);     // USART TxD0 output
 
-  pc_puts_P(PSTR("Test 1\n"));
   
   // LED pin output and LED on
   LEDDDR |= _BV(LED);
@@ -537,10 +578,10 @@ int main(void) {
   POWERCTL2_PORT &= ~_BV(POWERCTL2); // turn off VCO2+gain stage
 
   init_pwm(); // Init tuning voltage generator
-  pc_puts_P(PSTR("Test 2\n"));
+
 
   pll_init(); // Init PLL control
-  pc_puts_P(PSTR("Test 3\n"));
+
 
   // Set digital potentiometer to minimum
   set_resistor(BANDWADJ1_RES, 0);
@@ -549,12 +590,14 @@ int main(void) {
   set_sawtooth_low(); // Set NE555 mode
 
   init_eeprom();  // Check EEPROM validity
-  pc_puts_P(PSTR("Test 4\n"));
+
 
   pc_puts_P(PSTR("Wave Bubble 2010\nFW: " __DATE__" / " __TIME__"\n\n"));
 
   uint8_t progs, programnum;
   jammer_setting setting;
+	
+//test_osccal();
 
   progs = eeprom_read_byte(&max_programs);
   if(progs > MAX_PROGRAMS) progs = MAX_PROGRAMS;
