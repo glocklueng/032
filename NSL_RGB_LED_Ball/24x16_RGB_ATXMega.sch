@@ -10472,6 +10472,7 @@ Source: http://www.diodes.com/datasheets/ds23001.pdf</description>
 </part>
 <part name="GND13" library="SparkFun" deviceset="GND" device=""/>
 <part name="D1" library="diode" deviceset="DIODE-" device="DO214AA" value="SSB44-E3/52T"/>
+<part name="JP3" library="SparkFun-Connectors" deviceset="M04" device="1.27MM"/>
 </parts>
 <sheets>
 <sheet>
@@ -10598,6 +10599,7 @@ Source: http://www.diodes.com/datasheets/ds23001.pdf</description>
 <instance part="JP2" gate="G$1" x="-8.89" y="6.35"/>
 <instance part="GND12" gate="1" x="-21.59" y="2.54"/>
 <instance part="D1" gate="G$1" x="-24.13" y="8.89" rot="R180"/>
+<instance part="JP3" gate="G$1" x="-30.48" y="27.94"/>
 </instances>
 <busses>
 </busses>
@@ -10678,6 +10680,11 @@ Source: http://www.diodes.com/datasheets/ds23001.pdf</description>
 <pinref part="GND12" gate="1" pin="GND"/>
 <wire x1="-21.59" y1="6.35" x2="-21.59" y2="5.08" width="0.1524" layer="91"/>
 <pinref part="JP2" gate="G$1" pin="GND"/>
+</segment>
+<segment>
+<wire x1="-15.24" y1="33.02" x2="-25.4" y2="33.02" width="0.1524" layer="91"/>
+<pinref part="JP3" gate="G$1" pin="4"/>
+<label x="-20.32" y="33.02" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="VCC" class="0">
@@ -10949,6 +10956,11 @@ Source: http://www.diodes.com/datasheets/ds23001.pdf</description>
 <wire x1="-21.59" y1="11.43" x2="-11.43" y2="11.43" width="0.1524" layer="91"/>
 <pinref part="JP2" gate="G$1" pin="D-"/>
 </segment>
+<segment>
+<wire x1="-25.4" y1="30.48" x2="-15.24" y2="30.48" width="0.1524" layer="91"/>
+<label x="-20.32" y="30.48" size="1.778" layer="95"/>
+<pinref part="JP3" gate="G$1" pin="3"/>
+</segment>
 </net>
 <net name="D+" class="0">
 <segment>
@@ -10959,6 +10971,11 @@ Source: http://www.diodes.com/datasheets/ds23001.pdf</description>
 <segment>
 <wire x1="-21.59" y1="13.97" x2="-11.43" y2="13.97" width="0.1524" layer="91"/>
 <pinref part="JP2" gate="G$1" pin="D+"/>
+</segment>
+<segment>
+<wire x1="-25.4" y1="27.94" x2="-15.24" y2="27.94" width="0.1524" layer="91"/>
+<pinref part="JP3" gate="G$1" pin="2"/>
+<label x="-20.32" y="27.94" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="N$36" class="0">
@@ -11019,6 +11036,11 @@ Source: http://www.diodes.com/datasheets/ds23001.pdf</description>
 <pinref part="JP2" gate="G$1" pin="VBUS"/>
 <pinref part="D1" gate="G$1" pin="A"/>
 <wire x1="-11.43" y1="8.89" x2="-21.59" y2="8.89" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<wire x1="-15.24" y1="25.4" x2="-25.4" y2="25.4" width="0.1524" layer="91"/>
+<pinref part="JP3" gate="G$1" pin="1"/>
+<label x="-20.32" y="25.4" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>

@@ -53,7 +53,7 @@
 <layer number="43" name="vRestrict" color="2" fill="10" visible="no" active="yes"/>
 <layer number="44" name="Drills" color="7" fill="1" visible="no" active="yes"/>
 <layer number="45" name="Holes" color="7" fill="1" visible="no" active="yes"/>
-<layer number="46" name="Milling" color="3" fill="1" visible="no" active="yes"/>
+<layer number="46" name="Milling" color="3" fill="1" visible="yes" active="yes"/>
 <layer number="47" name="Measures" color="7" fill="1" visible="no" active="yes"/>
 <layer number="48" name="Document" color="7" fill="1" visible="no" active="yes"/>
 <layer number="49" name="Reference" color="7" fill="1" visible="no" active="yes"/>
@@ -601,7 +601,7 @@ design rules under a new name.</description>
 <vertex x="-26.47" y="27.08"/>
 <vertex x="-26.47" y="-27.52"/>
 <vertex x="26.7" y="-26.97"/>
-<vertex x="26.7" y="27.63"/>
+<vertex x="26.5984" y="26.9442"/>
 </polygon>
 </signal>
 <signal name="XLAT">
@@ -638,9 +638,9 @@ design rules under a new name.</description>
 <contactref element="SLOT16" pad="P$1"/>
 <contactref element="SLOT16" pad="P$2"/>
 <polygon width="0.254" layer="1">
-<vertex x="26.33" y="26.6"/>
+<vertex x="26.3808" y="25.9904"/>
 <vertex x="26.94" y="-27.15"/>
-<vertex x="-26.04" y="-26.36"/>
+<vertex x="-26.3194" y="-27.2998"/>
 <vertex x="-26.5" y="26.07"/>
 </polygon>
 </signal>
