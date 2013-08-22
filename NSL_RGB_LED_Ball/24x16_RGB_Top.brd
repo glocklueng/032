@@ -53,7 +53,7 @@
 <layer number="43" name="vRestrict" color="2" fill="10" visible="no" active="yes"/>
 <layer number="44" name="Drills" color="7" fill="1" visible="no" active="yes"/>
 <layer number="45" name="Holes" color="7" fill="1" visible="no" active="yes"/>
-<layer number="46" name="Milling" color="3" fill="1" visible="no" active="yes"/>
+<layer number="46" name="Milling" color="3" fill="1" visible="yes" active="yes"/>
 <layer number="47" name="Measures" color="7" fill="1" visible="no" active="yes"/>
 <layer number="48" name="Document" color="7" fill="1" visible="no" active="yes"/>
 <layer number="49" name="Reference" color="7" fill="1" visible="no" active="yes"/>
@@ -175,7 +175,7 @@
 <text x="4.5466" y="-8.509" size="1.27" layer="21" font="vector" rot="R90">GND</text>
 <text x="7.1628" y="-8.509" size="1.27" layer="21" font="vector" rot="R90">MODE</text>
 <text x="-0.508" y="-8.509" size="1.27" layer="21" font="vector" rot="R90">RST</text>
-<text x="0" y="-1.4732" size="2.032" layer="22" font="vector" rot="MR0" align="center">nullspacelabs.com</text>
+<text x="0" y="0" size="2.032" layer="22" font="vector" rot="MR0" align="center">nullspacelabs.com</text>
 </plain>
 <libraries>
 <library name="24x16_RGB_Bottom">
@@ -578,7 +578,7 @@ design rules under a new name.</description>
 <element name="S1" library="tvbgone-2layer" package="SPARKFUN-ELECTROMECHANICAL_TACTILE-SWITCH-1101NE" value="SPARKFUN-ELECTROMECHANICAL_SWITCH-MOMENTARY-2-SMD-1101NE" x="10" y="-5.08" rot="MR0"/>
 <element name="S2" library="tvbgone-2layer" package="SPARKFUN-ELECTROMECHANICAL_TACTILE-SWITCH-1101NE" value="SPARKFUN-ELECTROMECHANICAL_SWITCH-MOMENTARY-2-SMD-1101NE" x="-10" y="-5.08" rot="MR180"/>
 <element name="JP2" library="SparkFun-Connectors" package="1X06" value="" x="-6.1468" y="-10.3124"/>
-<element name="U$1" library="24x16_RGB_Bottom" package="USB_PANNEL" value="USB_PANNEL" x="0" y="5.842"/>
+<element name="U$1" library="24x16_RGB_Bottom" package="USB_PANNEL" value="USB_PANNEL" x="0" y="9.525"/>
 </elements>
 <signals>
 <signal name="SLOT">
@@ -662,8 +662,8 @@ design rules under a new name.</description>
 <polygon width="0.254" layer="16">
 <vertex x="-26.47" y="27.08"/>
 <vertex x="-26.47" y="-27.52"/>
-<vertex x="26.7" y="-26.97"/>
-<vertex x="26.7" y="27.63"/>
+<vertex x="25.8872" y="-27.0716"/>
+<vertex x="25.811" y="27.0204"/>
 </polygon>
 </signal>
 <signal name="BLANK">
@@ -700,8 +700,8 @@ design rules under a new name.</description>
 <contactref element="SLOT16" pad="P$1"/>
 <contactref element="SLOT16" pad="P$2"/>
 <polygon width="0.254" layer="1">
-<vertex x="26.33" y="26.6"/>
-<vertex x="26.94" y="-27.15"/>
+<vertex x="27.2698" y="26.092"/>
+<vertex x="27.2194" y="-26.2356"/>
 <vertex x="-26.04" y="-26.36"/>
 <vertex x="-26.5" y="26.07"/>
 </polygon>
