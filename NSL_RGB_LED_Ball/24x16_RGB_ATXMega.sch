@@ -10205,7 +10205,7 @@ Source: http://www.diodes.com/datasheets/ds23001.pdf</description>
 </part>
 <part name="GND6" library="SparkFun" deviceset="GND" device=""/>
 <part name="GND7" library="SparkFun" deviceset="GND" device=""/>
-<part name="R5" library="slice_noshift" deviceset="RESISTOR" device="0805" value="1.5K">
+<part name="R5" library="slice_noshift" deviceset="RESISTOR" device="0805" value="1K">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
@@ -10441,7 +10441,7 @@ Source: http://www.diodes.com/datasheets/ds23001.pdf</description>
 <attribute name="OC_NEWARK" value="73T5385"/>
 </part>
 <part name="GND11" library="SparkFun" deviceset="GND" device=""/>
-<part name="C15" library="24x16_RGB" deviceset="CAP" device="0805" value="1uF">
+<part name="C15" library="24x16_RGB" deviceset="CAP" device="0805" value="10uF">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value="08055D105KAT2A"/>
 <attribute name="OC_NEWARK" value="66M3779"/>
@@ -10855,16 +10855,14 @@ Source: http://www.diodes.com/datasheets/ds23001.pdf</description>
 </net>
 <net name="TX" class="0">
 <segment>
-<pinref part="IC1" gate="G$1" pin="PC3/OC0D/TXD0"/>
-<wire x1="-55.88" y1="-62.23" x2="-38.1" y2="-62.23" width="0.1524" layer="91"/>
-<label x="-54.61" y="-62.23" size="1.778" layer="95"/>
+<wire x1="-55.88" y1="-72.39" x2="-38.1" y2="-72.39" width="0.1524" layer="91"/>
+<pinref part="IC1" gate="G$1" pin="PC7/SCK/TXD1/CLKO/EVO"/>
 </segment>
 </net>
 <net name="RX" class="0">
 <segment>
-<pinref part="IC1" gate="G$1" pin="PC2/OC0C/RXD0"/>
-<wire x1="-55.88" y1="-59.69" x2="-38.1" y2="-59.69" width="0.1524" layer="91"/>
-<label x="-54.61" y="-59.69" size="1.778" layer="95"/>
+<wire x1="-55.88" y1="-69.85" x2="-38.1" y2="-69.85" width="0.1524" layer="91"/>
+<pinref part="IC1" gate="G$1" pin="PC6/MISO/RXD1"/>
 </segment>
 </net>
 <net name="SDA/SDI/SDO" class="0">
@@ -10937,9 +10935,8 @@ Source: http://www.diodes.com/datasheets/ds23001.pdf</description>
 </net>
 <net name="BUTTON" class="0">
 <segment>
-<wire x1="22.86" y1="-26.67" x2="50.8" y2="-26.67" width="0.1524" layer="91"/>
-<label x="44.45" y="-26.67" size="1.778" layer="95"/>
-<pinref part="IC1" gate="G$1" pin="SS/PD4"/>
+<wire x1="-60.96" y1="-62.23" x2="-38.1" y2="-62.23" width="0.1524" layer="91"/>
+<pinref part="IC1" gate="G$1" pin="PC3/OC0D/TXD0"/>
 </segment>
 </net>
 <net name="D-" class="0">
@@ -12530,6 +12527,7 @@ Source: http://www.diodes.com/datasheets/ds23001.pdf</description>
 <sheet>
 <plain>
 <text x="-53.34" y="-40.64" size="1.778" layer="91">http://www.batteryspace.com/lifepo426650cell32v3300mah19.8arate10whunapproved.aspx</text>
+<text x="-60.96" y="-45.72" size="1.778" layer="91">http://www.batteryspace.com/High-Power-LiNiMnCo-26650-Rechargeable-Cell-3.6V-3600mAh-13Wh-18A-Rate.aspx</text>
 </plain>
 <instances>
 <instance part="BATTERY" gate="G$1" x="60.96" y="-2.54">
