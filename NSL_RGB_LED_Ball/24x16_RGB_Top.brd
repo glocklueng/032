@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.01" unitdist="mm" unit="mm" style="lines" multiple="1" display="no" altdistance="0.025" altunitdist="inch" altunit="inch"/>
+<grid distance="1" unitdist="mil" unit="mil" style="lines" multiple="1" display="no" altdistance="0.025" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="2" name="Route2" color="1" fill="3" visible="no" active="no"/>
@@ -32,10 +32,10 @@
 <layer number="22" name="bPlace" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="23" name="tOrigins" color="15" fill="1" visible="yes" active="yes"/>
 <layer number="24" name="bOrigins" color="15" fill="1" visible="yes" active="yes"/>
-<layer number="25" name="tNames" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="26" name="bNames" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="27" name="tValues" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="28" name="bValues" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="25" name="tNames" color="7" fill="1" visible="no" active="yes"/>
+<layer number="26" name="bNames" color="7" fill="1" visible="no" active="yes"/>
+<layer number="27" name="tValues" color="7" fill="1" visible="no" active="yes"/>
+<layer number="28" name="bValues" color="7" fill="1" visible="no" active="yes"/>
 <layer number="29" name="tStop" color="7" fill="3" visible="no" active="yes"/>
 <layer number="30" name="bStop" color="7" fill="6" visible="no" active="yes"/>
 <layer number="31" name="tCream" color="7" fill="4" visible="no" active="yes"/>
@@ -46,20 +46,20 @@
 <layer number="36" name="bGlue" color="7" fill="5" visible="no" active="yes"/>
 <layer number="37" name="tTest" color="7" fill="1" visible="no" active="yes"/>
 <layer number="38" name="bTest" color="7" fill="1" visible="no" active="yes"/>
-<layer number="39" name="tKeepout" color="4" fill="11" visible="yes" active="yes"/>
-<layer number="40" name="bKeepout" color="1" fill="11" visible="yes" active="yes"/>
-<layer number="41" name="tRestrict" color="4" fill="10" visible="yes" active="yes"/>
-<layer number="42" name="bRestrict" color="1" fill="10" visible="yes" active="yes"/>
-<layer number="43" name="vRestrict" color="2" fill="10" visible="yes" active="yes"/>
+<layer number="39" name="tKeepout" color="4" fill="11" visible="no" active="yes"/>
+<layer number="40" name="bKeepout" color="1" fill="11" visible="no" active="yes"/>
+<layer number="41" name="tRestrict" color="4" fill="10" visible="no" active="yes"/>
+<layer number="42" name="bRestrict" color="1" fill="10" visible="no" active="yes"/>
+<layer number="43" name="vRestrict" color="2" fill="10" visible="no" active="yes"/>
 <layer number="44" name="Drills" color="7" fill="1" visible="no" active="yes"/>
 <layer number="45" name="Holes" color="7" fill="1" visible="no" active="yes"/>
-<layer number="46" name="Milling" color="3" fill="1" visible="yes" active="yes"/>
+<layer number="46" name="Milling" color="3" fill="1" visible="no" active="yes"/>
 <layer number="47" name="Measures" color="7" fill="1" visible="no" active="yes"/>
-<layer number="48" name="Document" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="49" name="Reference" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="48" name="Document" color="7" fill="1" visible="no" active="yes"/>
+<layer number="49" name="Reference" color="7" fill="1" visible="no" active="yes"/>
 <layer number="50" name="dxf" color="7" fill="1" visible="no" active="no"/>
-<layer number="51" name="tDocu" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="52" name="bDocu" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="51" name="tDocu" color="7" fill="1" visible="no" active="yes"/>
+<layer number="52" name="bDocu" color="7" fill="1" visible="no" active="yes"/>
 <layer number="53" name="tGND_GNDA" color="7" fill="1" visible="no" active="no"/>
 <layer number="54" name="bGND_GNDA" color="7" fill="1" visible="no" active="no"/>
 <layer number="56" name="wert" color="7" fill="1" visible="no" active="no"/>
@@ -82,53 +82,53 @@
 <layer number="108" name="fp8" color="7" fill="1" visible="no" active="yes"/>
 <layer number="109" name="fp9" color="7" fill="1" visible="no" active="yes"/>
 <layer number="110" name="fp0" color="7" fill="1" visible="no" active="yes"/>
-<layer number="111" name="LPC17xx" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="112" name="tSilk" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="113" name="WhiteOver" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="114" name="BlackOver" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="111" name="LPC17xx" color="7" fill="1" visible="no" active="yes"/>
+<layer number="112" name="tSilk" color="7" fill="1" visible="no" active="yes"/>
+<layer number="113" name="WhiteOver" color="7" fill="1" visible="no" active="yes"/>
+<layer number="114" name="BlackOver" color="7" fill="1" visible="no" active="yes"/>
 <layer number="116" name="Patch_BOT" color="7" fill="1" visible="no" active="yes"/>
-<layer number="117" name="mPads" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="118" name="mVias" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="119" name="mUnrouted" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="120" name="mDimension" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="117" name="mPads" color="7" fill="1" visible="no" active="yes"/>
+<layer number="118" name="mVias" color="7" fill="1" visible="no" active="yes"/>
+<layer number="119" name="mUnrouted" color="7" fill="1" visible="no" active="yes"/>
+<layer number="120" name="mDimension" color="7" fill="1" visible="no" active="yes"/>
 <layer number="121" name="_tsilk" color="7" fill="1" visible="no" active="yes"/>
 <layer number="122" name="_bsilk" color="7" fill="1" visible="no" active="yes"/>
 <layer number="123" name="tTestmark" color="7" fill="1" visible="no" active="yes"/>
 <layer number="124" name="bTestmark" color="7" fill="1" visible="no" active="yes"/>
 <layer number="125" name="_tNames" color="7" fill="1" visible="no" active="yes"/>
-<layer number="126" name="_bnames" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="127" name="_tvalues" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="128" name="_bvalues" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="129" name="mtStop" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="130" name="mbStop" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="126" name="_bnames" color="7" fill="1" visible="no" active="yes"/>
+<layer number="127" name="_tvalues" color="7" fill="1" visible="no" active="yes"/>
+<layer number="128" name="_bvalues" color="7" fill="1" visible="no" active="yes"/>
+<layer number="129" name="mtStop" color="7" fill="1" visible="no" active="yes"/>
+<layer number="130" name="mbStop" color="7" fill="1" visible="no" active="yes"/>
 <layer number="131" name="prix" color="7" fill="1" visible="no" active="yes"/>
 <layer number="132" name="test" color="7" fill="1" visible="no" active="yes"/>
-<layer number="133" name="mtFinish" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="134" name="mbFinish" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="135" name="mtGlue" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="136" name="mbGlue" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="137" name="mtTest" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="138" name="mbTest" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="139" name="mtKeepout" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="140" name="mbKeepout" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="141" name="mtRestrict" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="142" name="mbRestrict" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="143" name="mvRestrict" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="133" name="mtFinish" color="7" fill="1" visible="no" active="yes"/>
+<layer number="134" name="mbFinish" color="7" fill="1" visible="no" active="yes"/>
+<layer number="135" name="mtGlue" color="7" fill="1" visible="no" active="yes"/>
+<layer number="136" name="mbGlue" color="7" fill="1" visible="no" active="yes"/>
+<layer number="137" name="mtTest" color="7" fill="1" visible="no" active="yes"/>
+<layer number="138" name="mbTest" color="7" fill="1" visible="no" active="yes"/>
+<layer number="139" name="mtKeepout" color="7" fill="1" visible="no" active="yes"/>
+<layer number="140" name="mbKeepout" color="7" fill="1" visible="no" active="yes"/>
+<layer number="141" name="mtRestrict" color="7" fill="1" visible="no" active="yes"/>
+<layer number="142" name="mbRestrict" color="7" fill="1" visible="no" active="yes"/>
+<layer number="143" name="mvRestrict" color="7" fill="1" visible="no" active="yes"/>
 <layer number="144" name="Drill_legend" color="7" fill="1" visible="no" active="yes"/>
-<layer number="145" name="mHoles" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="146" name="mMilling" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="147" name="mMeasures" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="148" name="mDocument" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="149" name="mReference" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="150" name="Notes" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="145" name="mHoles" color="7" fill="1" visible="no" active="yes"/>
+<layer number="146" name="mMilling" color="7" fill="1" visible="no" active="yes"/>
+<layer number="147" name="mMeasures" color="7" fill="1" visible="no" active="yes"/>
+<layer number="148" name="mDocument" color="7" fill="1" visible="no" active="yes"/>
+<layer number="149" name="mReference" color="7" fill="1" visible="no" active="yes"/>
+<layer number="150" name="Notes" color="7" fill="1" visible="no" active="yes"/>
 <layer number="151" name="HeatSink" color="7" fill="1" visible="no" active="yes"/>
-<layer number="152" name="_bDocu" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="191" name="mNets" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="192" name="mBusses" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="193" name="mPins" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="194" name="mSymbols" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="195" name="mNames" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="196" name="mValues" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="152" name="_bDocu" color="7" fill="1" visible="no" active="yes"/>
+<layer number="191" name="mNets" color="7" fill="1" visible="no" active="yes"/>
+<layer number="192" name="mBusses" color="7" fill="1" visible="no" active="yes"/>
+<layer number="193" name="mPins" color="7" fill="1" visible="no" active="yes"/>
+<layer number="194" name="mSymbols" color="7" fill="1" visible="no" active="yes"/>
+<layer number="195" name="mNames" color="7" fill="1" visible="no" active="yes"/>
+<layer number="196" name="mValues" color="7" fill="1" visible="no" active="yes"/>
 <layer number="199" name="Contour" color="7" fill="1" visible="no" active="yes"/>
 <layer number="200" name="200bmp" color="7" fill="1" visible="no" active="yes"/>
 <layer number="201" name="201bmp" color="7" fill="1" visible="no" active="yes"/>
@@ -155,30 +155,157 @@
 <layer number="222" name="222bmp" color="7" fill="1" visible="no" active="yes"/>
 <layer number="223" name="223bmp" color="7" fill="1" visible="no" active="yes"/>
 <layer number="224" name="224bmp" color="7" fill="1" visible="no" active="yes"/>
-<layer number="248" name="Housing" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="249" name="Edge" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="248" name="Housing" color="7" fill="1" visible="no" active="yes"/>
+<layer number="249" name="Edge" color="7" fill="1" visible="no" active="yes"/>
 <layer number="250" name="Descript" color="7" fill="1" visible="no" active="yes"/>
 <layer number="251" name="SMDround" color="7" fill="1" visible="no" active="yes"/>
 <layer number="254" name="cooling" color="7" fill="1" visible="no" active="yes"/>
 </layers>
 <board>
 <plain>
-<text x="2.43" y="-9.99" size="1.778" layer="21" rot="R180">TOP</text>
-<text x="3.17" y="-14.13" size="1.778" layer="22" rot="MR0">INSIDE</text>
-<wire x1="22" y1="0" x2="22" y2="0.02" width="0" layer="20" curve="-359.947913"/>
+<text x="0.9432" y="-16.1506" size="1.778" layer="22" rot="MR0">A</text>
+<text x="-3.71" y="-14" size="1.778" layer="21">INSIDE</text>
+<wire x1="24" y1="0" x2="24" y2="0.01" width="0" layer="20" curve="-359.976127"/>
+<dimension x1="0" y1="-24" x2="0" y2="-21.16" x3="12.97" y3="-22.58" textsize="1.778" layer="48"/>
+<text x="-7.0612" y="-8.89" size="1.778" layer="22" font="vector" rot="MR0">Reset</text>
+<text x="13.081" y="-8.89" size="1.778" layer="22" font="vector" rot="MR0">Mode</text>
+<text x="-5.6134" y="-8.509" size="1.27" layer="21" font="vector" rot="R90">RST</text>
+<text x="-2.9972" y="-8.509" size="1.27" layer="21" font="vector" rot="R90">GND</text>
+<text x="2.032" y="-8.509" size="1.27" layer="21" font="vector" rot="R90">MODE</text>
+<text x="4.5466" y="-8.509" size="1.27" layer="21" font="vector" rot="R90">GND</text>
+<text x="7.1628" y="-8.509" size="1.27" layer="21" font="vector" rot="R90">MODE</text>
+<text x="-0.508" y="-8.509" size="1.27" layer="21" font="vector" rot="R90">RST</text>
+<text x="0" y="-1.4732" size="2.032" layer="22" font="vector" rot="MR0" align="center">nullspacelabs.com</text>
 </plain>
 <libraries>
-<library name="slice">
+<library name="24x16_RGB_Bottom">
+<description>Generated from &lt;b&gt;24x16_RGB_Bottom.sch&lt;/b&gt;&lt;p&gt;
+by exp-lbrs.ulp</description>
 <packages>
 <package name="SLOT">
 <wire x1="0" y1="-0.8382" x2="2.794" y2="-0.8382" width="0" layer="46"/>
 <wire x1="0" y1="0.8382" x2="2.794" y2="0.8382" width="0" layer="46"/>
 <wire x1="2.794" y1="0.8382" x2="2.794" y2="-0.8382" width="0" layer="46" curve="-180"/>
 <wire x1="0" y1="0.8382" x2="0" y2="-0.8382" width="0" layer="46"/>
-<smd name="P$1" x="2.032" y="1.27" dx="3.175" dy="1.27" layer="1" roundness="50" cream="no"/>
-<smd name="P$2" x="2.032" y="-1.27" dx="3.175" dy="1.27" layer="1" roundness="50" cream="no"/>
-<smd name="P$3" x="2.032" y="1.27" dx="3.175" dy="1.27" layer="16" roundness="50" cream="no"/>
-<smd name="P$4" x="2.032" y="-1.27" dx="3.175" dy="1.27" layer="16" roundness="50" cream="no"/>
+<smd name="P$1" x="2.9718" y="1.27" dx="5.08" dy="1.27" layer="1" roundness="50" cream="no"/>
+<smd name="P$2" x="2.9718" y="-1.27" dx="5.08" dy="1.27" layer="1" roundness="50" cream="no"/>
+<smd name="P$3" x="2.9718" y="1.27" dx="5.08" dy="1.27" layer="16" roundness="50" cream="no"/>
+<smd name="P$4" x="2.9718" y="-1.27" dx="5.08" dy="1.27" layer="16" roundness="50" cream="no"/>
+</package>
+<package name="USB_PANNEL">
+<wire x1="-4.925" y1="2.175" x2="-4.925" y2="-2.175" width="0" layer="20"/>
+<wire x1="-4.925" y1="-2.175" x2="-3.675" y2="-3.425" width="0" layer="20" curve="90"/>
+<wire x1="-3.675" y1="-3.425" x2="3.675" y2="-3.425" width="0" layer="20"/>
+<wire x1="3.675" y1="-3.425" x2="4.925" y2="-2.175" width="0" layer="20" curve="90"/>
+<wire x1="4.925" y1="-2.175" x2="4.925" y2="2.175" width="0" layer="20"/>
+<wire x1="4.925" y1="2.175" x2="3.675" y2="3.425" width="0" layer="20" curve="90"/>
+<wire x1="3.675" y1="3.425" x2="-3.675" y2="3.425" width="0" layer="20"/>
+<wire x1="-3.675" y1="3.425" x2="-4.925" y2="2.175" width="0" layer="20" curve="90"/>
+<hole x="-7.5" y="0" drill="2.54"/>
+<hole x="7.5" y="0" drill="2.54"/>
+<wire x1="-10" y1="4.365" x2="-10" y2="-4.365" width="0.127" layer="21"/>
+<wire x1="-10" y1="-4.365" x2="-9.365" y2="-5" width="0.127" layer="21" curve="90"/>
+<wire x1="-9.365" y1="-5" x2="9.365" y2="-5" width="0.127" layer="21"/>
+<wire x1="9.365" y1="-5" x2="10" y2="-4.365" width="0.127" layer="21" curve="90"/>
+<wire x1="10" y1="-4.365" x2="10" y2="4.365" width="0.127" layer="21"/>
+<wire x1="10" y1="4.365" x2="9.365" y2="5" width="0.127" layer="21" curve="90"/>
+<wire x1="9.365" y1="5" x2="-9.365" y2="5" width="0.127" layer="21"/>
+<wire x1="-9.365" y1="5" x2="-10" y2="4.365" width="0.127" layer="21" curve="90"/>
+</package>
+</packages>
+</library>
+<library name="tvbgone-2layer">
+<description>Generated from &lt;b&gt;tvbgone-2layer.sch&lt;/b&gt;&lt;p&gt;
+by exp-lbrs.ulp</description>
+<packages>
+<package name="SPARKFUN-ELECTROMECHANICAL_TACTILE-SWITCH-1101NE">
+<description>Sparkfun SKU# COM-08229</description>
+<wire x1="-3" y1="1.1" x2="-3" y2="-1.1" width="0.127" layer="51"/>
+<wire x1="3" y1="1.1" x2="3" y2="-1.1" width="0.127" layer="51"/>
+<wire x1="-2.75" y1="1.75" x2="-3" y2="1.5" width="0.127" layer="21" curve="90"/>
+<wire x1="-2.75" y1="1.75" x2="2.75" y2="1.75" width="0.127" layer="21"/>
+<wire x1="2.75" y1="1.75" x2="3" y2="1.5" width="0.127" layer="21" curve="-90"/>
+<wire x1="3" y1="-1.5" x2="2.65" y2="-1.75" width="0.127" layer="21" curve="-90"/>
+<wire x1="2.65" y1="-1.75" x2="-2.75" y2="-1.75" width="0.127" layer="21"/>
+<wire x1="-3" y1="-1.5" x2="-2.75" y2="-1.75" width="0.127" layer="21" curve="90"/>
+<wire x1="-3" y1="-1.5" x2="-3" y2="-1.1" width="0.127" layer="21"/>
+<wire x1="-3" y1="1.1" x2="-3" y2="1.5" width="0.127" layer="21"/>
+<wire x1="3" y1="1.1" x2="3" y2="1.5" width="0.127" layer="21"/>
+<wire x1="3" y1="-1.5" x2="3" y2="-1.1" width="0.127" layer="21"/>
+<wire x1="-1.5" y1="0.75" x2="1.5" y2="0.75" width="0.127" layer="21"/>
+<wire x1="1.5" y1="-0.75" x2="-1.5" y2="-0.75" width="0.127" layer="21"/>
+<wire x1="-1.5" y1="-0.75" x2="-1.5" y2="0.75" width="0.127" layer="21"/>
+<wire x1="1.5" y1="-0.75" x2="1.5" y2="0.75" width="0.127" layer="21"/>
+<wire x1="-2" y1="0" x2="-1" y2="0" width="0.127" layer="51"/>
+<wire x1="-1" y1="0" x2="0.1" y2="0.5" width="0.127" layer="51"/>
+<wire x1="0.3" y1="0" x2="2" y2="0" width="0.127" layer="51"/>
+<smd name="P$1" x="-3.15" y="0" dx="2.3" dy="1.6" layer="1" rot="R180"/>
+<smd name="P$2" x="3.15" y="0" dx="2.3" dy="1.6" layer="1" rot="R180"/>
+<text x="-3" y="2" size="0.762" layer="25">&gt;NAME</text>
+<text x="-3" y="-2.7" size="0.762" layer="27">&gt;VALUE</text>
+</package>
+</packages>
+</library>
+<library name="SparkFun-Connectors">
+<description>&lt;h3&gt;SparkFun Electronics' preferred foot prints&lt;/h3&gt;
+In this library you'll find connectors and sockets- basically anything that can be plugged into or onto.&lt;br&gt;&lt;br&gt;
+We've spent an enormous amount of time creating and checking these footprints and parts, but it is the end user's responsibility to ensure correctness and suitablity for a given componet or application. If you enjoy using this library, please buy one of our products at www.sparkfun.com.
+&lt;br&gt;&lt;br&gt;
+&lt;b&gt;Licensing:&lt;/b&gt; CC v3.0 Share-Alike You are welcome to use this library for commercial purposes. For attribution, we ask that when you begin to sell your device using our footprint, you email us with a link to the product being sold. We want bragging rights that we helped (in a very small part) to create your 8th world wonder. We would like the opportunity to feature your device on our homepage.</description>
+<packages>
+<package name="1X06">
+<wire x1="11.43" y1="0.635" x2="12.065" y2="1.27" width="0.2032" layer="21"/>
+<wire x1="12.065" y1="1.27" x2="13.335" y2="1.27" width="0.2032" layer="21"/>
+<wire x1="13.335" y1="1.27" x2="13.97" y2="0.635" width="0.2032" layer="21"/>
+<wire x1="13.97" y1="-0.635" x2="13.335" y2="-1.27" width="0.2032" layer="21"/>
+<wire x1="13.335" y1="-1.27" x2="12.065" y2="-1.27" width="0.2032" layer="21"/>
+<wire x1="12.065" y1="-1.27" x2="11.43" y2="-0.635" width="0.2032" layer="21"/>
+<wire x1="6.985" y1="1.27" x2="8.255" y2="1.27" width="0.2032" layer="21"/>
+<wire x1="8.255" y1="1.27" x2="8.89" y2="0.635" width="0.2032" layer="21"/>
+<wire x1="8.89" y1="-0.635" x2="8.255" y2="-1.27" width="0.2032" layer="21"/>
+<wire x1="8.89" y1="0.635" x2="9.525" y2="1.27" width="0.2032" layer="21"/>
+<wire x1="9.525" y1="1.27" x2="10.795" y2="1.27" width="0.2032" layer="21"/>
+<wire x1="10.795" y1="1.27" x2="11.43" y2="0.635" width="0.2032" layer="21"/>
+<wire x1="11.43" y1="-0.635" x2="10.795" y2="-1.27" width="0.2032" layer="21"/>
+<wire x1="10.795" y1="-1.27" x2="9.525" y2="-1.27" width="0.2032" layer="21"/>
+<wire x1="9.525" y1="-1.27" x2="8.89" y2="-0.635" width="0.2032" layer="21"/>
+<wire x1="3.81" y1="0.635" x2="4.445" y2="1.27" width="0.2032" layer="21"/>
+<wire x1="4.445" y1="1.27" x2="5.715" y2="1.27" width="0.2032" layer="21"/>
+<wire x1="5.715" y1="1.27" x2="6.35" y2="0.635" width="0.2032" layer="21"/>
+<wire x1="6.35" y1="-0.635" x2="5.715" y2="-1.27" width="0.2032" layer="21"/>
+<wire x1="5.715" y1="-1.27" x2="4.445" y2="-1.27" width="0.2032" layer="21"/>
+<wire x1="4.445" y1="-1.27" x2="3.81" y2="-0.635" width="0.2032" layer="21"/>
+<wire x1="6.985" y1="1.27" x2="6.35" y2="0.635" width="0.2032" layer="21"/>
+<wire x1="6.35" y1="-0.635" x2="6.985" y2="-1.27" width="0.2032" layer="21"/>
+<wire x1="8.255" y1="-1.27" x2="6.985" y2="-1.27" width="0.2032" layer="21"/>
+<wire x1="-0.635" y1="1.27" x2="0.635" y2="1.27" width="0.2032" layer="21"/>
+<wire x1="0.635" y1="1.27" x2="1.27" y2="0.635" width="0.2032" layer="21"/>
+<wire x1="1.27" y1="-0.635" x2="0.635" y2="-1.27" width="0.2032" layer="21"/>
+<wire x1="1.27" y1="0.635" x2="1.905" y2="1.27" width="0.2032" layer="21"/>
+<wire x1="1.905" y1="1.27" x2="3.175" y2="1.27" width="0.2032" layer="21"/>
+<wire x1="3.175" y1="1.27" x2="3.81" y2="0.635" width="0.2032" layer="21"/>
+<wire x1="3.81" y1="-0.635" x2="3.175" y2="-1.27" width="0.2032" layer="21"/>
+<wire x1="3.175" y1="-1.27" x2="1.905" y2="-1.27" width="0.2032" layer="21"/>
+<wire x1="1.905" y1="-1.27" x2="1.27" y2="-0.635" width="0.2032" layer="21"/>
+<wire x1="-1.27" y1="0.635" x2="-1.27" y2="-0.635" width="0.2032" layer="21"/>
+<wire x1="-0.635" y1="1.27" x2="-1.27" y2="0.635" width="0.2032" layer="21"/>
+<wire x1="-1.27" y1="-0.635" x2="-0.635" y2="-1.27" width="0.2032" layer="21"/>
+<wire x1="0.635" y1="-1.27" x2="-0.635" y2="-1.27" width="0.2032" layer="21"/>
+<wire x1="13.97" y1="0.635" x2="13.97" y2="-0.635" width="0.2032" layer="21"/>
+<pad name="1" x="0" y="0" drill="1.016" diameter="1.8796" rot="R90"/>
+<pad name="2" x="2.54" y="0" drill="1.016" diameter="1.8796" rot="R90"/>
+<pad name="3" x="5.08" y="0" drill="1.016" diameter="1.8796" rot="R90"/>
+<pad name="4" x="7.62" y="0" drill="1.016" diameter="1.8796" rot="R90"/>
+<pad name="5" x="10.16" y="0" drill="1.016" diameter="1.8796" rot="R90"/>
+<pad name="6" x="12.7" y="0" drill="1.016" diameter="1.8796" rot="R90"/>
+<text x="-1.3462" y="1.8288" size="1.27" layer="25" ratio="10">&gt;NAME</text>
+<text x="-1.27" y="-3.175" size="1.27" layer="27">&gt;VALUE</text>
+<rectangle x1="12.446" y1="-0.254" x2="12.954" y2="0.254" layer="51"/>
+<rectangle x1="9.906" y1="-0.254" x2="10.414" y2="0.254" layer="51"/>
+<rectangle x1="7.366" y1="-0.254" x2="7.874" y2="0.254" layer="51"/>
+<rectangle x1="4.826" y1="-0.254" x2="5.334" y2="0.254" layer="51"/>
+<rectangle x1="2.286" y1="-0.254" x2="2.794" y2="0.254" layer="51"/>
+<rectangle x1="-0.254" y1="-0.254" x2="0.254" y2="0.254" layer="51"/>
 </package>
 </packages>
 </library>
@@ -368,89 +495,138 @@ design rules under a new name.</description>
 </pass>
 </autorouter>
 <elements>
-<element name="SLOT1" library="slice" package="SLOT" value="SLOT" x="22" y="0" rot="R180">
-<attribute name="OC_NEWARK" value="unknown" x="5.49" y="2.54" size="1.778" layer="27" rot="R180" display="off"/>
-<attribute name="MPN" value="" x="5.49" y="2.54" size="1.778" layer="27" rot="R180" display="off"/>
-<attribute name="MF" value="" x="5.49" y="2.54" size="1.778" layer="27" rot="R180" display="off"/>
+<element name="SLOT1" library="24x16_RGB_Bottom" package="SLOT" value="SLOT" x="24" y="0" rot="R180">
+<attribute name="OC_NEWARK" value="unknown" x="7.49" y="2.54" size="1.778" layer="27" rot="R180" display="off"/>
+<attribute name="MPN" value="" x="7.49" y="2.54" size="1.778" layer="27" rot="R180" display="off"/>
+<attribute name="MF" value="" x="7.49" y="2.54" size="1.778" layer="27" rot="R180" display="off"/>
 </element>
-<element name="SLOT2" library="slice" package="SLOT" value="SLOT" x="20.32535" y="8.419034375" rot="R202.5">
-<attribute name="OC_NEWARK" value="unknown" x="2.15605625" y="9.140896875" size="1.778" layer="27" rot="R202.5" display="off"/>
-<attribute name="MPN" value="" x="2.15605625" y="9.140896875" size="1.778" layer="27" rot="R202.5" display="off"/>
-<attribute name="MF" value="" x="2.15605625" y="9.140896875" size="1.778" layer="27" rot="R202.5" display="off"/>
+<element name="SLOT2" library="24x16_RGB_Bottom" package="SLOT" value="SLOT" x="22.173109375" y="9.184403125" rot="R202.5">
+<attribute name="OC_NEWARK" value="unknown" x="4.0038125" y="9.9062625" size="1.778" layer="27" rot="R202.5" display="off"/>
+<attribute name="MPN" value="" x="4.0038125" y="9.9062625" size="1.778" layer="27" rot="R202.5" display="off"/>
+<attribute name="MF" value="" x="4.0038125" y="9.9062625" size="1.778" layer="27" rot="R202.5" display="off"/>
 </element>
-<element name="SLOT3" library="slice" package="SLOT" value="SLOT" x="15.55635" y="15.55635" rot="R225">
-<attribute name="OC_NEWARK" value="unknown" x="22.740559375" y="15.556353125" size="1.778" layer="27" rot="R225" display="off"/>
-<attribute name="MPN" value="" x="22.740559375" y="15.556353125" size="1.778" layer="27" rot="R225" display="off"/>
-<attribute name="MF" value="" x="22.740559375" y="15.556353125" size="1.778" layer="27" rot="R225" display="off"/>
+<element name="SLOT3" library="24x16_RGB_Bottom" package="SLOT" value="SLOT" x="16.9705625" y="16.9705625" rot="R225">
+<attribute name="OC_NEWARK" value="unknown" x="24.15476875" y="16.9705625" size="1.778" layer="27" rot="R225" display="off"/>
+<attribute name="MPN" value="" x="24.15476875" y="16.9705625" size="1.778" layer="27" rot="R225" display="off"/>
+<attribute name="MF" value="" x="24.15476875" y="16.9705625" size="1.778" layer="27" rot="R225" display="off"/>
 </element>
-<element name="SLOT4" library="slice" package="SLOT" value="SLOT" x="8.419034375" y="20.32535" rot="R247.5">
-<attribute name="OC_NEWARK" value="unknown" x="21.6937125" y="25.823903125" size="1.778" layer="27" rot="R247.5" display="off"/>
-<attribute name="MPN" value="" x="21.6937125" y="25.823903125" size="1.778" layer="27" rot="R247.5" display="off"/>
-<attribute name="MF" value="" x="21.6937125" y="25.823903125" size="1.778" layer="27" rot="R247.5" display="off"/>
+<element name="SLOT4" library="24x16_RGB_Bottom" package="SLOT" value="SLOT" x="9.184403125" y="22.173109375" rot="R247.5">
+<attribute name="OC_NEWARK" value="unknown" x="22.459084375" y="27.6716625" size="1.778" layer="27" rot="R247.5" display="off"/>
+<attribute name="MPN" value="" x="22.459084375" y="27.6716625" size="1.778" layer="27" rot="R247.5" display="off"/>
+<attribute name="MF" value="" x="22.459084375" y="27.6716625" size="1.778" layer="27" rot="R247.5" display="off"/>
 </element>
-<element name="SLOT5" library="slice" package="SLOT" value="SLOT" x="0" y="22" rot="R270">
-<attribute name="OC_NEWARK" value="unknown" x="5.08" y="27.08" size="1.778" layer="27" rot="R270" display="off"/>
-<attribute name="MPN" value="" x="5.08" y="27.08" size="1.778" layer="27" rot="R270" display="off"/>
-<attribute name="MF" value="" x="5.08" y="27.08" size="1.778" layer="27" rot="R270" display="off"/>
+<element name="SLOT5" library="24x16_RGB_Bottom" package="SLOT" value="SLOT" x="0" y="24" rot="R270">
+<attribute name="OC_NEWARK" value="unknown" x="5.08" y="29.08" size="1.778" layer="27" rot="R270" display="off"/>
+<attribute name="MPN" value="" x="5.08" y="29.08" size="1.778" layer="27" rot="R270" display="off"/>
+<attribute name="MF" value="" x="5.08" y="29.08" size="1.778" layer="27" rot="R270" display="off"/>
 </element>
-<element name="SLOT6" library="slice" package="SLOT" value="SLOT" x="-8.419034375" y="20.32535" rot="R292.5">
-<attribute name="OC_NEWARK" value="unknown" x="-2.9204875" y="33.60003125" size="1.778" layer="27" rot="R292.5" display="off"/>
-<attribute name="MPN" value="" x="-2.9204875" y="33.60003125" size="1.778" layer="27" rot="R292.5" display="off"/>
-<attribute name="MF" value="" x="-2.9204875" y="33.60003125" size="1.778" layer="27" rot="R292.5" display="off"/>
+<element name="SLOT6" library="24x16_RGB_Bottom" package="SLOT" value="SLOT" x="-9.184403125" y="22.173109375" rot="R292.5">
+<attribute name="OC_NEWARK" value="unknown" x="-3.685853125" y="35.447790625" size="1.778" layer="27" rot="R292.5" display="off"/>
+<attribute name="MPN" value="" x="-3.685853125" y="35.447790625" size="1.778" layer="27" rot="R292.5" display="off"/>
+<attribute name="MF" value="" x="-3.685853125" y="35.447790625" size="1.778" layer="27" rot="R292.5" display="off"/>
 </element>
-<element name="SLOT7" library="slice" package="SLOT" value="SLOT" x="-15.55635" y="15.55635" rot="R315">
-<attribute name="OC_NEWARK" value="unknown" x="-15.55635" y="37.1089625" size="1.778" layer="27" rot="R315" display="off"/>
-<attribute name="MPN" value="" x="-15.55635" y="37.1089625" size="1.778" layer="27" rot="R315" display="off"/>
-<attribute name="MF" value="" x="-15.55635" y="37.1089625" size="1.778" layer="27" rot="R315" display="off"/>
+<element name="SLOT7" library="24x16_RGB_Bottom" package="SLOT" value="SLOT" x="-16.9705625" y="16.9705625" rot="R315">
+<attribute name="OC_NEWARK" value="unknown" x="-16.9705625" y="38.523178125" size="1.778" layer="27" rot="R315" display="off"/>
+<attribute name="MPN" value="" x="-16.9705625" y="38.523178125" size="1.778" layer="27" rot="R315" display="off"/>
+<attribute name="MF" value="" x="-16.9705625" y="38.523178125" size="1.778" layer="27" rot="R315" display="off"/>
 </element>
-<element name="SLOT8" library="slice" package="SLOT" value="SLOT" x="-20.32535" y="8.419034375" rot="R337.5">
-<attribute name="OC_NEWARK" value="unknown" x="-31.32245625" y="34.968390625" size="1.778" layer="27" rot="R337.5" display="off"/>
-<attribute name="MPN" value="" x="-31.32245625" y="34.968390625" size="1.778" layer="27" rot="R337.5" display="off"/>
-<attribute name="MF" value="" x="-31.32245625" y="34.968390625" size="1.778" layer="27" rot="R337.5" display="off"/>
+<element name="SLOT8" library="24x16_RGB_Bottom" package="SLOT" value="SLOT" x="-22.173109375" y="9.184403125" rot="R337.5">
+<attribute name="OC_NEWARK" value="unknown" x="-33.170215625" y="35.7337625" size="1.778" layer="27" rot="R337.5" display="off"/>
+<attribute name="MPN" value="" x="-33.170215625" y="35.7337625" size="1.778" layer="27" rot="R337.5" display="off"/>
+<attribute name="MF" value="" x="-33.170215625" y="35.7337625" size="1.778" layer="27" rot="R337.5" display="off"/>
 </element>
-<element name="SLOT9" library="slice" package="SLOT" value="SLOT" x="-22" y="0">
-<attribute name="OC_NEWARK" value="unknown" x="-27.08" y="5.08" size="1.778" layer="27" display="off"/>
-<attribute name="MPN" value="" x="-27.08" y="5.08" size="1.778" layer="27" display="off"/>
-<attribute name="MF" value="" x="-27.08" y="5.08" size="1.778" layer="27" display="off"/>
+<element name="SLOT9" library="24x16_RGB_Bottom" package="SLOT" value="SLOT" x="-24" y="0">
+<attribute name="OC_NEWARK" value="unknown" x="-29.08" y="5.08" size="1.778" layer="27" display="off"/>
+<attribute name="MPN" value="" x="-29.08" y="5.08" size="1.778" layer="27" display="off"/>
+<attribute name="MF" value="" x="-29.08" y="5.08" size="1.778" layer="27" display="off"/>
 </element>
-<element name="SLOT10" library="slice" package="SLOT" value="SLOT" x="-20.32535" y="-8.419034375" rot="R22.5">
-<attribute name="OC_NEWARK" value="unknown" x="-36.349309375" y="-9.557821875" size="1.778" layer="27" rot="R22.5" display="off"/>
-<attribute name="MPN" value="" x="-36.349309375" y="-9.557821875" size="1.778" layer="27" rot="R22.5" display="off"/>
-<attribute name="MF" value="" x="-36.349309375" y="-9.557821875" size="1.778" layer="27" rot="R22.5" display="off"/>
+<element name="SLOT10" library="24x16_RGB_Bottom" package="SLOT" value="SLOT" x="-22.173109375" y="-9.184403125" rot="R22.5">
+<attribute name="OC_NEWARK" value="unknown" x="-38.197065625" y="-10.323190625" size="1.778" layer="27" rot="R22.5" display="off"/>
+<attribute name="MPN" value="" x="-38.197065625" y="-10.323190625" size="1.778" layer="27" rot="R22.5" display="off"/>
+<attribute name="MF" value="" x="-38.197065625" y="-10.323190625" size="1.778" layer="27" rot="R22.5" display="off"/>
 </element>
-<element name="SLOT11" library="slice" package="SLOT" value="SLOT" x="-15.55635" y="-15.55635" rot="R45">
-<attribute name="OC_NEWARK" value="unknown" x="-33.516859375" y="-19.148453125" size="1.778" layer="27" rot="R45" display="off"/>
-<attribute name="MPN" value="" x="-33.516859375" y="-19.148453125" size="1.778" layer="27" rot="R45" display="off"/>
-<attribute name="MF" value="" x="-33.516859375" y="-19.148453125" size="1.778" layer="27" rot="R45" display="off"/>
+<element name="SLOT11" library="24x16_RGB_Bottom" package="SLOT" value="SLOT" x="-16.9705625" y="-16.9705625" rot="R45">
+<attribute name="OC_NEWARK" value="unknown" x="-34.931075" y="-20.562665625" size="1.778" layer="27" rot="R45" display="off"/>
+<attribute name="MPN" value="" x="-34.931075" y="-20.562665625" size="1.778" layer="27" rot="R45" display="off"/>
+<attribute name="MF" value="" x="-34.931075" y="-20.562665625" size="1.778" layer="27" rot="R45" display="off"/>
 </element>
-<element name="SLOT12" library="slice" package="SLOT" value="SLOT" x="-8.419034375" y="-20.32535" rot="R67.5">
-<attribute name="OC_NEWARK" value="unknown" x="-27.525809375" y="-39.903828125" size="1.778" layer="27" rot="R67.5" display="off"/>
-<attribute name="MPN" value="" x="-27.525809375" y="-39.903828125" size="1.778" layer="27" rot="R67.5" display="off"/>
-<attribute name="MF" value="" x="-27.525809375" y="-39.903828125" size="1.778" layer="27" rot="R67.5" display="off"/>
+<element name="SLOT12" library="24x16_RGB_Bottom" package="SLOT" value="SLOT" x="-9.184403125" y="-22.173109375" rot="R67.5">
+<attribute name="OC_NEWARK" value="unknown" x="-28.291178125" y="-41.7515875" size="1.778" layer="27" rot="R67.5" display="off"/>
+<attribute name="MPN" value="" x="-28.291178125" y="-41.7515875" size="1.778" layer="27" rot="R67.5" display="off"/>
+<attribute name="MF" value="" x="-28.291178125" y="-41.7515875" size="1.778" layer="27" rot="R67.5" display="off"/>
 </element>
-<element name="SLOT13" library="slice" package="SLOT" value="SLOT" x="0" y="-22" rot="R90">
-<attribute name="OC_NEWARK" value="unknown" x="-15.24" y="-47.4" size="1.778" layer="27" rot="R90" display="off"/>
-<attribute name="MPN" value="" x="-15.24" y="-47.4" size="1.778" layer="27" rot="R90" display="off"/>
-<attribute name="MF" value="" x="-15.24" y="-47.4" size="1.778" layer="27" rot="R90" display="off"/>
+<element name="SLOT13" library="24x16_RGB_Bottom" package="SLOT" value="SLOT" x="0" y="-24" rot="R90">
+<attribute name="OC_NEWARK" value="unknown" x="-15.24" y="-49.4" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="MPN" value="" x="-15.24" y="-49.4" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="MF" value="" x="-15.24" y="-49.4" size="1.778" layer="27" rot="R90" display="off"/>
 </element>
-<element name="SLOT14" library="slice" package="SLOT" value="SLOT" x="8.419034375" y="-20.32535" rot="R112.5">
-<attribute name="OC_NEWARK" value="unknown" x="7.947334375" y="-59.0106" size="1.778" layer="27" rot="R112.5" display="off"/>
-<attribute name="MPN" value="" x="7.947334375" y="-59.0106" size="1.778" layer="27" rot="R112.5" display="off"/>
-<attribute name="MF" value="" x="7.947334375" y="-59.0106" size="1.778" layer="27" rot="R112.5" display="off"/>
+<element name="SLOT14" library="24x16_RGB_Bottom" package="SLOT" value="SLOT" x="9.184403125" y="-22.173109375" rot="R112.5">
+<attribute name="OC_NEWARK" value="unknown" x="8.712703125" y="-60.8583625" size="1.778" layer="27" rot="R112.5" display="off"/>
+<attribute name="MPN" value="" x="8.712703125" y="-60.8583625" size="1.778" layer="27" rot="R112.5" display="off"/>
+<attribute name="MF" value="" x="8.712703125" y="-60.8583625" size="1.778" layer="27" rot="R112.5" display="off"/>
 </element>
-<element name="SLOT15" library="slice" package="SLOT" value="SLOT" x="15.55635" y="-15.55635" rot="R135">
-<attribute name="OC_NEWARK" value="unknown" x="26.3326625" y="-55.069471875" size="1.778" layer="27" rot="R135" display="off"/>
-<attribute name="MPN" value="" x="26.3326625" y="-55.069471875" size="1.778" layer="27" rot="R135" display="off"/>
-<attribute name="MF" value="" x="26.3326625" y="-55.069471875" size="1.778" layer="27" rot="R135" display="off"/>
+<element name="SLOT15" library="24x16_RGB_Bottom" package="SLOT" value="SLOT" x="16.9705625" y="-16.9705625" rot="R135">
+<attribute name="OC_NEWARK" value="unknown" x="27.746871875" y="-56.4836875" size="1.778" layer="27" rot="R135" display="off"/>
+<attribute name="MPN" value="" x="27.746871875" y="-56.4836875" size="1.778" layer="27" rot="R135" display="off"/>
+<attribute name="MF" value="" x="27.746871875" y="-56.4836875" size="1.778" layer="27" rot="R135" display="off"/>
 </element>
-<element name="SLOT16" library="slice" package="SLOT" value="SLOT" x="20.32535" y="-8.419034375" rot="R157.5">
-<attribute name="OC_NEWARK" value="unknown" x="54.788996875" y="-44.688546875" size="1.778" layer="27" rot="R157.5" display="off"/>
-<attribute name="MPN" value="" x="54.788996875" y="-44.688546875" size="1.778" layer="27" rot="R157.5" display="off"/>
-<attribute name="MF" value="" x="54.788996875" y="-44.688546875" size="1.778" layer="27" rot="R157.5" display="off"/>
+<element name="SLOT16" library="24x16_RGB_Bottom" package="SLOT" value="SLOT" x="22.173109375" y="-9.184403125" rot="R157.5">
+<attribute name="OC_NEWARK" value="unknown" x="56.63675625" y="-45.45391875" size="1.778" layer="27" rot="R157.5" display="off"/>
+<attribute name="MPN" value="" x="56.63675625" y="-45.45391875" size="1.778" layer="27" rot="R157.5" display="off"/>
+<attribute name="MF" value="" x="56.63675625" y="-45.45391875" size="1.778" layer="27" rot="R157.5" display="off"/>
 </element>
+<element name="S1" library="tvbgone-2layer" package="SPARKFUN-ELECTROMECHANICAL_TACTILE-SWITCH-1101NE" value="SPARKFUN-ELECTROMECHANICAL_SWITCH-MOMENTARY-2-SMD-1101NE" x="10" y="-5.08" rot="MR0"/>
+<element name="S2" library="tvbgone-2layer" package="SPARKFUN-ELECTROMECHANICAL_TACTILE-SWITCH-1101NE" value="SPARKFUN-ELECTROMECHANICAL_SWITCH-MOMENTARY-2-SMD-1101NE" x="-10" y="-5.08" rot="MR180"/>
+<element name="JP2" library="SparkFun-Connectors" package="1X06" value="" x="-6.1468" y="-10.3124"/>
+<element name="U$1" library="24x16_RGB_Bottom" package="USB_PANNEL" value="USB_PANNEL" x="0" y="5.842"/>
 </elements>
 <signals>
-<signal name="BLANK">
+<signal name="SLOT">
+</signal>
+<signal name="MODE">
+<contactref element="S1" pad="P$1"/>
+<contactref element="JP2" pad="6"/>
+<contactref element="JP2" pad="4"/>
+<wire x1="13.15" y1="-5.08" x2="13.15" y2="-8.4908" width="1.016" layer="16"/>
+<wire x1="13.15" y1="-8.4908" x2="11.3284" y2="-10.3124" width="1.016" layer="16"/>
+<wire x1="11.3284" y1="-10.3124" x2="6.5532" y2="-10.3124" width="1.016" layer="16"/>
+<wire x1="6.5532" y1="-10.3124" x2="6.5532" y2="-12.0142" width="1.016" layer="16"/>
+<wire x1="6.5532" y1="-12.0142" x2="5.9436" y2="-12.6238" width="1.016" layer="16"/>
+<wire x1="5.9436" y1="-12.6238" x2="2.159" y2="-12.6238" width="1.016" layer="16"/>
+<wire x1="2.159" y1="-12.6238" x2="1.4732" y2="-11.938" width="1.016" layer="16"/>
+<wire x1="1.4732" y1="-11.938" x2="1.4732" y2="-10.3124" width="1.016" layer="16"/>
+</signal>
+<signal name="RST">
+<contactref element="S2" pad="P$1"/>
+<contactref element="JP2" pad="1"/>
+<contactref element="JP2" pad="3"/>
+<wire x1="-13.15" y1="-5.08" x2="-13.15" y2="-8.821" width="1.016" layer="16"/>
+<wire x1="-13.15" y1="-8.821" x2="-11.6332" y2="-10.3378" width="1.016" layer="16"/>
+<wire x1="-11.6332" y1="-10.3378" x2="-6.1722" y2="-10.3378" width="1.016" layer="16"/>
+<wire x1="-6.1722" y1="-10.3378" x2="-6.1468" y2="-10.3124" width="1.016" layer="16"/>
+<wire x1="-6.1468" y1="-10.3124" x2="-6.1468" y2="-12.065" width="1.016" layer="16"/>
+<wire x1="-6.1468" y1="-12.065" x2="-5.3848" y2="-12.827" width="1.016" layer="16"/>
+<wire x1="-5.3848" y1="-12.827" x2="-1.651" y2="-12.827" width="1.016" layer="16"/>
+<wire x1="-1.651" y1="-12.827" x2="-1.0922" y2="-12.2682" width="1.016" layer="16"/>
+<wire x1="-1.0922" y1="-12.2682" x2="-1.0922" y2="-10.3378" width="1.016" layer="16"/>
+<wire x1="-1.0922" y1="-10.3378" x2="-1.0668" y2="-10.3124" width="1.016" layer="16"/>
+</signal>
+<signal name="GND">
+<contactref element="S1" pad="P$2"/>
+<contactref element="S2" pad="P$2"/>
+<contactref element="JP2" pad="5"/>
+<contactref element="JP2" pad="2"/>
+<wire x1="6.85" y1="-5.08" x2="4.5466" y2="-5.08" width="1.016" layer="16"/>
+<wire x1="4.5466" y1="-5.08" x2="4.0132" y2="-5.6134" width="1.016" layer="16"/>
+<wire x1="4.0132" y1="-5.6134" x2="4.0132" y2="-10.3124" width="1.016" layer="16"/>
+<wire x1="-6.85" y1="-5.08" x2="-4.1656" y2="-5.08" width="1.016" layer="16"/>
+<wire x1="-4.1656" y1="-5.08" x2="-3.6068" y2="-5.6388" width="1.016" layer="16"/>
+<wire x1="-3.6068" y1="-5.6388" x2="-3.6068" y2="-10.3124" width="1.016" layer="16"/>
+<wire x1="-3.6068" y1="-10.3124" x2="-3.6068" y2="-9.2456" width="1.016" layer="1"/>
+<wire x1="-3.6068" y1="-9.2456" x2="-2.4384" y2="-8.0772" width="1.016" layer="1"/>
+<wire x1="-2.4384" y1="-8.0772" x2="2.8956" y2="-8.0772" width="1.016" layer="1"/>
+<wire x1="2.8956" y1="-8.0772" x2="4.0132" y2="-9.1948" width="1.016" layer="1"/>
+<wire x1="4.0132" y1="-9.1948" x2="4.0132" y2="-10.3124" width="1.016" layer="1"/>
 <contactref element="SLOT1" pad="P$3"/>
 <contactref element="SLOT1" pad="P$4"/>
 <contactref element="SLOT2" pad="P$3"/>
@@ -484,13 +660,13 @@ design rules under a new name.</description>
 <contactref element="SLOT16" pad="P$3"/>
 <contactref element="SLOT16" pad="P$4"/>
 <polygon width="0.254" layer="16">
-<vertex x="-46.93" y="47"/>
-<vertex x="-46.93" y="-46.34"/>
-<vertex x="48.46" y="-46.34"/>
-<vertex x="48.46" y="47"/>
+<vertex x="-26.47" y="27.08"/>
+<vertex x="-26.47" y="-27.52"/>
+<vertex x="26.7" y="-26.97"/>
+<vertex x="26.7" y="27.63"/>
 </polygon>
 </signal>
-<signal name="GND">
+<signal name="BLANK">
 <contactref element="SLOT1" pad="P$1"/>
 <contactref element="SLOT1" pad="P$2"/>
 <contactref element="SLOT2" pad="P$1"/>
@@ -524,14 +700,11 @@ design rules under a new name.</description>
 <contactref element="SLOT16" pad="P$1"/>
 <contactref element="SLOT16" pad="P$2"/>
 <polygon width="0.254" layer="1">
-<vertex x="47.72" y="46.34"/>
-<vertex x="47.59" y="-47.44"/>
-<vertex x="47.44" y="-45.91"/>
-<vertex x="-46.87" y="-45.91"/>
-<vertex x="-46.59" y="46.55"/>
+<vertex x="26.33" y="26.6"/>
+<vertex x="26.94" y="-27.15"/>
+<vertex x="-26.04" y="-26.36"/>
+<vertex x="-26.5" y="26.07"/>
 </polygon>
-</signal>
-<signal name="SLOT">
 </signal>
 </signals>
 </board>
