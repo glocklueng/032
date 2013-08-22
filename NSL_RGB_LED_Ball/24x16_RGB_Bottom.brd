@@ -1,0 +1,539 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE eagle SYSTEM "eagle.dtd">
+<eagle version="6.5.0">
+<drawing>
+<settings>
+<setting alwaysvectorfont="no"/>
+<setting verticaltext="up"/>
+</settings>
+<grid distance="0.01" unitdist="mm" unit="mm" style="lines" multiple="1" display="no" altdistance="0.025" altunitdist="inch" altunit="inch"/>
+<layers>
+<layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
+<layer number="2" name="Route2" color="1" fill="3" visible="no" active="no"/>
+<layer number="3" name="Route3" color="4" fill="3" visible="no" active="no"/>
+<layer number="4" name="Route4" color="1" fill="4" visible="no" active="no"/>
+<layer number="5" name="Route5" color="4" fill="4" visible="no" active="no"/>
+<layer number="6" name="Route6" color="1" fill="8" visible="no" active="no"/>
+<layer number="7" name="Route7" color="4" fill="8" visible="no" active="no"/>
+<layer number="8" name="Route8" color="1" fill="2" visible="no" active="no"/>
+<layer number="9" name="Route9" color="4" fill="2" visible="no" active="no"/>
+<layer number="10" name="Route10" color="1" fill="7" visible="no" active="no"/>
+<layer number="11" name="Route11" color="4" fill="7" visible="no" active="no"/>
+<layer number="12" name="Route12" color="1" fill="5" visible="no" active="no"/>
+<layer number="13" name="Route13" color="4" fill="5" visible="no" active="no"/>
+<layer number="14" name="Route14" color="1" fill="6" visible="no" active="no"/>
+<layer number="15" name="Route15" color="4" fill="6" visible="no" active="no"/>
+<layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="yes"/>
+<layer number="17" name="Pads" color="2" fill="1" visible="yes" active="yes"/>
+<layer number="18" name="Vias" color="2" fill="1" visible="yes" active="yes"/>
+<layer number="19" name="Unrouted" color="6" fill="1" visible="yes" active="yes"/>
+<layer number="20" name="Dimension" color="15" fill="1" visible="yes" active="yes"/>
+<layer number="21" name="tPlace" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="22" name="bPlace" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="23" name="tOrigins" color="15" fill="1" visible="yes" active="yes"/>
+<layer number="24" name="bOrigins" color="15" fill="1" visible="yes" active="yes"/>
+<layer number="25" name="tNames" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="26" name="bNames" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="27" name="tValues" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="28" name="bValues" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="29" name="tStop" color="7" fill="3" visible="no" active="yes"/>
+<layer number="30" name="bStop" color="7" fill="6" visible="no" active="yes"/>
+<layer number="31" name="tCream" color="7" fill="4" visible="no" active="yes"/>
+<layer number="32" name="bCream" color="7" fill="5" visible="no" active="yes"/>
+<layer number="33" name="tFinish" color="6" fill="3" visible="no" active="yes"/>
+<layer number="34" name="bFinish" color="6" fill="6" visible="no" active="yes"/>
+<layer number="35" name="tGlue" color="7" fill="4" visible="no" active="yes"/>
+<layer number="36" name="bGlue" color="7" fill="5" visible="no" active="yes"/>
+<layer number="37" name="tTest" color="7" fill="1" visible="no" active="yes"/>
+<layer number="38" name="bTest" color="7" fill="1" visible="no" active="yes"/>
+<layer number="39" name="tKeepout" color="4" fill="11" visible="yes" active="yes"/>
+<layer number="40" name="bKeepout" color="1" fill="11" visible="yes" active="yes"/>
+<layer number="41" name="tRestrict" color="4" fill="10" visible="yes" active="yes"/>
+<layer number="42" name="bRestrict" color="1" fill="10" visible="yes" active="yes"/>
+<layer number="43" name="vRestrict" color="2" fill="10" visible="yes" active="yes"/>
+<layer number="44" name="Drills" color="7" fill="1" visible="no" active="yes"/>
+<layer number="45" name="Holes" color="7" fill="1" visible="no" active="yes"/>
+<layer number="46" name="Milling" color="3" fill="1" visible="yes" active="yes"/>
+<layer number="47" name="Measures" color="7" fill="1" visible="no" active="yes"/>
+<layer number="48" name="Document" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="49" name="Reference" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="50" name="dxf" color="7" fill="1" visible="no" active="no"/>
+<layer number="51" name="tDocu" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="52" name="bDocu" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="53" name="tGND_GNDA" color="7" fill="1" visible="no" active="no"/>
+<layer number="54" name="bGND_GNDA" color="7" fill="1" visible="no" active="no"/>
+<layer number="56" name="wert" color="7" fill="1" visible="no" active="no"/>
+<layer number="91" name="Nets" color="2" fill="1" visible="no" active="no"/>
+<layer number="92" name="Busses" color="1" fill="1" visible="no" active="no"/>
+<layer number="93" name="Pins" color="2" fill="1" visible="no" active="no"/>
+<layer number="94" name="Symbols" color="4" fill="1" visible="no" active="no"/>
+<layer number="95" name="Names" color="7" fill="1" visible="no" active="no"/>
+<layer number="96" name="Values" color="7" fill="1" visible="no" active="no"/>
+<layer number="97" name="Info" color="7" fill="1" visible="no" active="no"/>
+<layer number="98" name="Guide" color="6" fill="1" visible="no" active="no"/>
+<layer number="100" name="Muster" color="7" fill="1" visible="no" active="yes"/>
+<layer number="101" name="Patch_Top" color="7" fill="1" visible="no" active="yes"/>
+<layer number="102" name="Vscore" color="7" fill="1" visible="no" active="yes"/>
+<layer number="103" name="tMap" color="7" fill="1" visible="no" active="yes"/>
+<layer number="104" name="Name" color="7" fill="1" visible="no" active="yes"/>
+<layer number="105" name="tPlate" color="7" fill="1" visible="no" active="yes"/>
+<layer number="106" name="bPlate" color="7" fill="1" visible="no" active="yes"/>
+<layer number="107" name="Crop" color="7" fill="1" visible="no" active="yes"/>
+<layer number="108" name="fp8" color="7" fill="1" visible="no" active="yes"/>
+<layer number="109" name="fp9" color="7" fill="1" visible="no" active="yes"/>
+<layer number="110" name="fp0" color="7" fill="1" visible="no" active="yes"/>
+<layer number="111" name="LPC17xx" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="112" name="tSilk" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="113" name="WhiteOver" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="114" name="BlackOver" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="116" name="Patch_BOT" color="7" fill="1" visible="no" active="yes"/>
+<layer number="117" name="mPads" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="118" name="mVias" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="119" name="mUnrouted" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="120" name="mDimension" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="121" name="_tsilk" color="7" fill="1" visible="no" active="yes"/>
+<layer number="122" name="_bsilk" color="7" fill="1" visible="no" active="yes"/>
+<layer number="123" name="tTestmark" color="7" fill="1" visible="no" active="yes"/>
+<layer number="124" name="bTestmark" color="7" fill="1" visible="no" active="yes"/>
+<layer number="125" name="_tNames" color="7" fill="1" visible="no" active="yes"/>
+<layer number="126" name="_bnames" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="127" name="_tvalues" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="128" name="_bvalues" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="129" name="mtStop" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="130" name="mbStop" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="131" name="prix" color="7" fill="1" visible="no" active="yes"/>
+<layer number="132" name="test" color="7" fill="1" visible="no" active="yes"/>
+<layer number="133" name="mtFinish" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="134" name="mbFinish" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="135" name="mtGlue" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="136" name="mbGlue" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="137" name="mtTest" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="138" name="mbTest" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="139" name="mtKeepout" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="140" name="mbKeepout" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="141" name="mtRestrict" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="142" name="mbRestrict" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="143" name="mvRestrict" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="144" name="Drill_legend" color="7" fill="1" visible="no" active="yes"/>
+<layer number="145" name="mHoles" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="146" name="mMilling" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="147" name="mMeasures" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="148" name="mDocument" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="149" name="mReference" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="150" name="Notes" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="151" name="HeatSink" color="7" fill="1" visible="no" active="yes"/>
+<layer number="152" name="_bDocu" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="191" name="mNets" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="192" name="mBusses" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="193" name="mPins" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="194" name="mSymbols" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="195" name="mNames" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="196" name="mValues" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="199" name="Contour" color="7" fill="1" visible="no" active="yes"/>
+<layer number="200" name="200bmp" color="7" fill="1" visible="no" active="yes"/>
+<layer number="201" name="201bmp" color="7" fill="1" visible="no" active="yes"/>
+<layer number="202" name="202bmp" color="7" fill="1" visible="no" active="yes"/>
+<layer number="203" name="203bmp" color="7" fill="1" visible="no" active="yes"/>
+<layer number="204" name="204bmp" color="7" fill="1" visible="no" active="yes"/>
+<layer number="205" name="205bmp" color="7" fill="1" visible="no" active="yes"/>
+<layer number="206" name="206bmp" color="7" fill="1" visible="no" active="yes"/>
+<layer number="207" name="207bmp" color="7" fill="1" visible="no" active="yes"/>
+<layer number="208" name="208bmp" color="7" fill="1" visible="no" active="yes"/>
+<layer number="209" name="209bmp" color="7" fill="1" visible="no" active="yes"/>
+<layer number="210" name="210bmp" color="7" fill="1" visible="no" active="yes"/>
+<layer number="211" name="211bmp" color="7" fill="1" visible="no" active="yes"/>
+<layer number="212" name="212bmp" color="7" fill="1" visible="no" active="yes"/>
+<layer number="213" name="213bmp" color="7" fill="1" visible="no" active="yes"/>
+<layer number="214" name="214bmp" color="7" fill="1" visible="no" active="yes"/>
+<layer number="215" name="215bmp" color="7" fill="1" visible="no" active="yes"/>
+<layer number="216" name="216bmp" color="7" fill="1" visible="no" active="yes"/>
+<layer number="217" name="217bmp" color="7" fill="1" visible="no" active="yes"/>
+<layer number="218" name="218bmp" color="7" fill="1" visible="no" active="yes"/>
+<layer number="219" name="219bmp" color="7" fill="1" visible="no" active="yes"/>
+<layer number="220" name="220bmp" color="7" fill="1" visible="no" active="yes"/>
+<layer number="221" name="221bmp" color="7" fill="1" visible="no" active="yes"/>
+<layer number="222" name="222bmp" color="7" fill="1" visible="no" active="yes"/>
+<layer number="223" name="223bmp" color="7" fill="1" visible="no" active="yes"/>
+<layer number="224" name="224bmp" color="7" fill="1" visible="no" active="yes"/>
+<layer number="248" name="Housing" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="249" name="Edge" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="250" name="Descript" color="7" fill="1" visible="no" active="yes"/>
+<layer number="251" name="SMDround" color="7" fill="1" visible="no" active="yes"/>
+<layer number="254" name="cooling" color="7" fill="1" visible="no" active="yes"/>
+</layers>
+<board>
+<plain>
+<text x="5.51" y="-16.33" size="1.778" layer="22" rot="MR0">BOTTOM</text>
+<text x="-3.71" y="-14" size="1.778" layer="21">INSIDE</text>
+<wire x1="22" y1="0" x2="22" y2="0.02" width="0" layer="20" curve="-359.947913"/>
+</plain>
+<libraries>
+<library name="slice">
+<packages>
+<package name="SLOT">
+<wire x1="0" y1="-0.8382" x2="2.794" y2="-0.8382" width="0" layer="46"/>
+<wire x1="0" y1="0.8382" x2="2.794" y2="0.8382" width="0" layer="46"/>
+<wire x1="2.794" y1="0.8382" x2="2.794" y2="-0.8382" width="0" layer="46" curve="-180"/>
+<wire x1="0" y1="0.8382" x2="0" y2="-0.8382" width="0" layer="46"/>
+<smd name="P$1" x="2.032" y="1.27" dx="3.175" dy="1.27" layer="1" roundness="50" cream="no"/>
+<smd name="P$2" x="2.032" y="-1.27" dx="3.175" dy="1.27" layer="1" roundness="50" cream="no"/>
+<smd name="P$3" x="2.032" y="1.27" dx="3.175" dy="1.27" layer="16" roundness="50" cream="no"/>
+<smd name="P$4" x="2.032" y="-1.27" dx="3.175" dy="1.27" layer="16" roundness="50" cream="no"/>
+</package>
+</packages>
+</library>
+</libraries>
+<attributes>
+</attributes>
+<variantdefs>
+</variantdefs>
+<classes>
+<class number="0" name="default" width="0" drill="0">
+</class>
+</classes>
+<designrules name="default">
+<description language="de">&lt;b&gt;EAGLE Design Rules&lt;/b&gt;
+&lt;p&gt;
+Die Standard-Design-Rules sind so gewählt, dass sie für 
+die meisten Anwendungen passen. Sollte ihre Platine 
+besondere Anforderungen haben, treffen Sie die erforderlichen
+Einstellungen hier und speichern die Design Rules unter 
+einem neuen Namen ab.</description>
+<description language="en">&lt;b&gt;EAGLE Design Rules&lt;/b&gt;
+&lt;p&gt;
+The default Design Rules have been set to cover
+a wide range of applications. Your particular design
+may have different requirements, so please make the
+necessary adjustments and save your customized
+design rules under a new name.</description>
+<param name="layerSetup" value="(1*16)"/>
+<param name="mtCopper" value="0.035mm 0.035mm 0.035mm 0.035mm 0.035mm 0.035mm 0.035mm 0.035mm 0.035mm 0.035mm 0.035mm 0.035mm 0.035mm 0.035mm 0.035mm 0.035mm"/>
+<param name="mtIsolate" value="1.5mm 0.15mm 0.2mm 0.15mm 0.2mm 0.15mm 0.2mm 0.15mm 0.2mm 0.15mm 0.2mm 0.15mm 0.2mm 0.15mm 0.2mm"/>
+<param name="mdWireWire" value="8mil"/>
+<param name="mdWirePad" value="8mil"/>
+<param name="mdWireVia" value="8mil"/>
+<param name="mdPadPad" value="8mil"/>
+<param name="mdPadVia" value="8mil"/>
+<param name="mdViaVia" value="8mil"/>
+<param name="mdSmdPad" value="8mil"/>
+<param name="mdSmdVia" value="8mil"/>
+<param name="mdSmdSmd" value="8mil"/>
+<param name="mdViaViaSameLayer" value="8mil"/>
+<param name="mnLayersViaInSmd" value="2"/>
+<param name="mdCopperDimension" value="40mil"/>
+<param name="mdDrill" value="8mil"/>
+<param name="mdSmdStop" value="0mil"/>
+<param name="msWidth" value="10mil"/>
+<param name="msDrill" value="24mil"/>
+<param name="msMicroVia" value="9.99mm"/>
+<param name="msBlindViaRatio" value="0.5"/>
+<param name="rvPadTop" value="0.25"/>
+<param name="rvPadInner" value="0.25"/>
+<param name="rvPadBottom" value="0.25"/>
+<param name="rvViaOuter" value="0.25"/>
+<param name="rvViaInner" value="0.25"/>
+<param name="rvMicroViaOuter" value="0.25"/>
+<param name="rvMicroViaInner" value="0.25"/>
+<param name="rlMinPadTop" value="10mil"/>
+<param name="rlMaxPadTop" value="20mil"/>
+<param name="rlMinPadInner" value="10mil"/>
+<param name="rlMaxPadInner" value="20mil"/>
+<param name="rlMinPadBottom" value="10mil"/>
+<param name="rlMaxPadBottom" value="20mil"/>
+<param name="rlMinViaOuter" value="8mil"/>
+<param name="rlMaxViaOuter" value="20mil"/>
+<param name="rlMinViaInner" value="8mil"/>
+<param name="rlMaxViaInner" value="20mil"/>
+<param name="rlMinMicroViaOuter" value="4mil"/>
+<param name="rlMaxMicroViaOuter" value="20mil"/>
+<param name="rlMinMicroViaInner" value="4mil"/>
+<param name="rlMaxMicroViaInner" value="20mil"/>
+<param name="psTop" value="-1"/>
+<param name="psBottom" value="-1"/>
+<param name="psFirst" value="-1"/>
+<param name="psElongationLong" value="100"/>
+<param name="psElongationOffset" value="100"/>
+<param name="mvStopFrame" value="1"/>
+<param name="mvCreamFrame" value="0"/>
+<param name="mlMinStopFrame" value="4mil"/>
+<param name="mlMaxStopFrame" value="4mil"/>
+<param name="mlMinCreamFrame" value="0mil"/>
+<param name="mlMaxCreamFrame" value="0mil"/>
+<param name="mlViaStopLimit" value="0mil"/>
+<param name="srRoundness" value="0"/>
+<param name="srMinRoundness" value="0mil"/>
+<param name="srMaxRoundness" value="0mil"/>
+<param name="slThermalIsolate" value="10mil"/>
+<param name="slThermalsForVias" value="0"/>
+<param name="dpMaxLengthDifference" value="10mm"/>
+<param name="dpGapFactor" value="2.5"/>
+<param name="checkGrid" value="0"/>
+<param name="checkAngle" value="0"/>
+<param name="checkFont" value="1"/>
+<param name="checkRestrict" value="1"/>
+<param name="useDiameter" value="13"/>
+<param name="maxErrors" value="50"/>
+</designrules>
+<autorouter>
+<pass name="Default">
+<param name="RoutingGrid" value="50mil"/>
+<param name="tpViaShape" value="round"/>
+<param name="PrefDir.1" value="|"/>
+<param name="PrefDir.2" value="0"/>
+<param name="PrefDir.3" value="0"/>
+<param name="PrefDir.4" value="0"/>
+<param name="PrefDir.5" value="0"/>
+<param name="PrefDir.6" value="0"/>
+<param name="PrefDir.7" value="0"/>
+<param name="PrefDir.8" value="0"/>
+<param name="PrefDir.9" value="0"/>
+<param name="PrefDir.10" value="0"/>
+<param name="PrefDir.11" value="0"/>
+<param name="PrefDir.12" value="0"/>
+<param name="PrefDir.13" value="0"/>
+<param name="PrefDir.14" value="0"/>
+<param name="PrefDir.15" value="0"/>
+<param name="PrefDir.16" value="-"/>
+<param name="cfVia" value="8"/>
+<param name="cfNonPref" value="5"/>
+<param name="cfChangeDir" value="2"/>
+<param name="cfOrthStep" value="2"/>
+<param name="cfDiagStep" value="3"/>
+<param name="cfExtdStep" value="0"/>
+<param name="cfBonusStep" value="1"/>
+<param name="cfMalusStep" value="1"/>
+<param name="cfPadImpact" value="4"/>
+<param name="cfSmdImpact" value="4"/>
+<param name="cfBusImpact" value="0"/>
+<param name="cfHugging" value="3"/>
+<param name="cfAvoid" value="4"/>
+<param name="cfPolygon" value="10"/>
+<param name="cfBase.1" value="0"/>
+<param name="cfBase.2" value="1"/>
+<param name="cfBase.3" value="1"/>
+<param name="cfBase.4" value="1"/>
+<param name="cfBase.5" value="1"/>
+<param name="cfBase.6" value="1"/>
+<param name="cfBase.7" value="1"/>
+<param name="cfBase.8" value="1"/>
+<param name="cfBase.9" value="1"/>
+<param name="cfBase.10" value="1"/>
+<param name="cfBase.11" value="1"/>
+<param name="cfBase.12" value="1"/>
+<param name="cfBase.13" value="1"/>
+<param name="cfBase.14" value="1"/>
+<param name="cfBase.15" value="1"/>
+<param name="cfBase.16" value="0"/>
+<param name="mnVias" value="20"/>
+<param name="mnSegments" value="9999"/>
+<param name="mnExtdSteps" value="9999"/>
+<param name="mnRipupLevel" value="10"/>
+<param name="mnRipupSteps" value="100"/>
+<param name="mnRipupTotal" value="100"/>
+</pass>
+<pass name="Follow-me" refer="Default" active="yes">
+</pass>
+<pass name="Busses" refer="Default" active="yes">
+<param name="cfNonPref" value="4"/>
+<param name="cfBusImpact" value="4"/>
+<param name="cfHugging" value="0"/>
+<param name="mnVias" value="0"/>
+</pass>
+<pass name="Route" refer="Default" active="yes">
+</pass>
+<pass name="Optimize1" refer="Default" active="yes">
+<param name="cfVia" value="99"/>
+<param name="cfExtdStep" value="10"/>
+<param name="cfHugging" value="1"/>
+<param name="mnExtdSteps" value="1"/>
+<param name="mnRipupLevel" value="0"/>
+</pass>
+<pass name="Optimize2" refer="Optimize1" active="yes">
+<param name="cfNonPref" value="0"/>
+<param name="cfChangeDir" value="6"/>
+<param name="cfExtdStep" value="0"/>
+<param name="cfBonusStep" value="2"/>
+<param name="cfMalusStep" value="2"/>
+<param name="cfPadImpact" value="2"/>
+<param name="cfSmdImpact" value="2"/>
+<param name="cfHugging" value="0"/>
+</pass>
+<pass name="Optimize3" refer="Optimize2" active="yes">
+<param name="cfChangeDir" value="8"/>
+<param name="cfPadImpact" value="0"/>
+<param name="cfSmdImpact" value="0"/>
+</pass>
+<pass name="Optimize4" refer="Optimize3" active="yes">
+<param name="cfChangeDir" value="25"/>
+</pass>
+</autorouter>
+<elements>
+<element name="SLOT1" library="slice" package="SLOT" value="SLOT" x="22" y="0" rot="R180">
+<attribute name="OC_NEWARK" value="unknown" x="5.49" y="2.54" size="1.778" layer="27" rot="R180" display="off"/>
+<attribute name="MPN" value="" x="5.49" y="2.54" size="1.778" layer="27" rot="R180" display="off"/>
+<attribute name="MF" value="" x="5.49" y="2.54" size="1.778" layer="27" rot="R180" display="off"/>
+</element>
+<element name="SLOT2" library="slice" package="SLOT" value="SLOT" x="20.32535" y="8.419034375" rot="R202.5">
+<attribute name="OC_NEWARK" value="unknown" x="2.156053125" y="9.14089375" size="1.778" layer="27" rot="R202.5" display="off"/>
+<attribute name="MPN" value="" x="2.156053125" y="9.14089375" size="1.778" layer="27" rot="R202.5" display="off"/>
+<attribute name="MF" value="" x="2.156053125" y="9.14089375" size="1.778" layer="27" rot="R202.5" display="off"/>
+</element>
+<element name="SLOT3" library="slice" package="SLOT" value="SLOT" x="15.55635" y="15.55635" rot="R225">
+<attribute name="OC_NEWARK" value="unknown" x="22.74055625" y="15.55635" size="1.778" layer="27" rot="R225" display="off"/>
+<attribute name="MPN" value="" x="22.74055625" y="15.55635" size="1.778" layer="27" rot="R225" display="off"/>
+<attribute name="MF" value="" x="22.74055625" y="15.55635" size="1.778" layer="27" rot="R225" display="off"/>
+</element>
+<element name="SLOT4" library="slice" package="SLOT" value="SLOT" x="8.419034375" y="20.32535" rot="R247.5">
+<attribute name="OC_NEWARK" value="unknown" x="21.693715625" y="25.823903125" size="1.778" layer="27" rot="R247.5" display="off"/>
+<attribute name="MPN" value="" x="21.693715625" y="25.823903125" size="1.778" layer="27" rot="R247.5" display="off"/>
+<attribute name="MF" value="" x="21.693715625" y="25.823903125" size="1.778" layer="27" rot="R247.5" display="off"/>
+</element>
+<element name="SLOT5" library="slice" package="SLOT" value="SLOT" x="0" y="22" rot="R270">
+<attribute name="OC_NEWARK" value="unknown" x="5.08" y="27.08" size="1.778" layer="27" rot="R270" display="off"/>
+<attribute name="MPN" value="" x="5.08" y="27.08" size="1.778" layer="27" rot="R270" display="off"/>
+<attribute name="MF" value="" x="5.08" y="27.08" size="1.778" layer="27" rot="R270" display="off"/>
+</element>
+<element name="SLOT6" library="slice" package="SLOT" value="SLOT" x="-8.419034375" y="20.32535" rot="R292.5">
+<attribute name="OC_NEWARK" value="unknown" x="-2.920484375" y="33.60003125" size="1.778" layer="27" rot="R292.5" display="off"/>
+<attribute name="MPN" value="" x="-2.920484375" y="33.60003125" size="1.778" layer="27" rot="R292.5" display="off"/>
+<attribute name="MF" value="" x="-2.920484375" y="33.60003125" size="1.778" layer="27" rot="R292.5" display="off"/>
+</element>
+<element name="SLOT7" library="slice" package="SLOT" value="SLOT" x="-15.55635" y="15.55635" rot="R315">
+<attribute name="OC_NEWARK" value="unknown" x="-15.55635" y="37.108965625" size="1.778" layer="27" rot="R315" display="off"/>
+<attribute name="MPN" value="" x="-15.55635" y="37.108965625" size="1.778" layer="27" rot="R315" display="off"/>
+<attribute name="MF" value="" x="-15.55635" y="37.108965625" size="1.778" layer="27" rot="R315" display="off"/>
+</element>
+<element name="SLOT8" library="slice" package="SLOT" value="SLOT" x="-20.32535" y="8.419034375" rot="R337.5">
+<attribute name="OC_NEWARK" value="unknown" x="-31.32245625" y="34.96839375" size="1.778" layer="27" rot="R337.5" display="off"/>
+<attribute name="MPN" value="" x="-31.32245625" y="34.96839375" size="1.778" layer="27" rot="R337.5" display="off"/>
+<attribute name="MF" value="" x="-31.32245625" y="34.96839375" size="1.778" layer="27" rot="R337.5" display="off"/>
+</element>
+<element name="SLOT9" library="slice" package="SLOT" value="SLOT" x="-22" y="0">
+<attribute name="OC_NEWARK" value="unknown" x="-27.08" y="5.08" size="1.778" layer="27" display="off"/>
+<attribute name="MPN" value="" x="-27.08" y="5.08" size="1.778" layer="27" display="off"/>
+<attribute name="MF" value="" x="-27.08" y="5.08" size="1.778" layer="27" display="off"/>
+</element>
+<element name="SLOT10" library="slice" package="SLOT" value="SLOT" x="-20.32535" y="-8.419034375" rot="R22.5">
+<attribute name="OC_NEWARK" value="unknown" x="-36.34930625" y="-9.557821875" size="1.778" layer="27" rot="R22.5" display="off"/>
+<attribute name="MPN" value="" x="-36.34930625" y="-9.557821875" size="1.778" layer="27" rot="R22.5" display="off"/>
+<attribute name="MF" value="" x="-36.34930625" y="-9.557821875" size="1.778" layer="27" rot="R22.5" display="off"/>
+</element>
+<element name="SLOT11" library="slice" package="SLOT" value="SLOT" x="-15.55635" y="-15.55635" rot="R45">
+<attribute name="OC_NEWARK" value="unknown" x="-33.5168625" y="-19.148453125" size="1.778" layer="27" rot="R45" display="off"/>
+<attribute name="MPN" value="" x="-33.5168625" y="-19.148453125" size="1.778" layer="27" rot="R45" display="off"/>
+<attribute name="MF" value="" x="-33.5168625" y="-19.148453125" size="1.778" layer="27" rot="R45" display="off"/>
+</element>
+<element name="SLOT12" library="slice" package="SLOT" value="SLOT" x="-8.419034375" y="-20.32535" rot="R67.5">
+<attribute name="OC_NEWARK" value="unknown" x="-27.525809375" y="-39.903828125" size="1.778" layer="27" rot="R67.5" display="off"/>
+<attribute name="MPN" value="" x="-27.525809375" y="-39.903828125" size="1.778" layer="27" rot="R67.5" display="off"/>
+<attribute name="MF" value="" x="-27.525809375" y="-39.903828125" size="1.778" layer="27" rot="R67.5" display="off"/>
+</element>
+<element name="SLOT13" library="slice" package="SLOT" value="SLOT" x="0" y="-22" rot="R90">
+<attribute name="OC_NEWARK" value="unknown" x="-15.24" y="-47.4" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="MPN" value="" x="-15.24" y="-47.4" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="MF" value="" x="-15.24" y="-47.4" size="1.778" layer="27" rot="R90" display="off"/>
+</element>
+<element name="SLOT14" library="slice" package="SLOT" value="SLOT" x="8.419034375" y="-20.32535" rot="R112.5">
+<attribute name="OC_NEWARK" value="unknown" x="7.947334375" y="-59.010603125" size="1.778" layer="27" rot="R112.5" display="off"/>
+<attribute name="MPN" value="" x="7.947334375" y="-59.010603125" size="1.778" layer="27" rot="R112.5" display="off"/>
+<attribute name="MF" value="" x="7.947334375" y="-59.010603125" size="1.778" layer="27" rot="R112.5" display="off"/>
+</element>
+<element name="SLOT15" library="slice" package="SLOT" value="SLOT" x="15.55635" y="-15.55635" rot="R135">
+<attribute name="OC_NEWARK" value="unknown" x="26.332659375" y="-55.069475" size="1.778" layer="27" rot="R135" display="off"/>
+<attribute name="MPN" value="" x="26.332659375" y="-55.069475" size="1.778" layer="27" rot="R135" display="off"/>
+<attribute name="MF" value="" x="26.332659375" y="-55.069475" size="1.778" layer="27" rot="R135" display="off"/>
+</element>
+<element name="SLOT16" library="slice" package="SLOT" value="SLOT" x="20.32535" y="-8.419034375" rot="R157.5">
+<attribute name="OC_NEWARK" value="unknown" x="54.788996875" y="-44.68855" size="1.778" layer="27" rot="R157.5" display="off"/>
+<attribute name="MPN" value="" x="54.788996875" y="-44.68855" size="1.778" layer="27" rot="R157.5" display="off"/>
+<attribute name="MF" value="" x="54.788996875" y="-44.68855" size="1.778" layer="27" rot="R157.5" display="off"/>
+</element>
+</elements>
+<signals>
+<signal name="VCC">
+<contactref element="SLOT1" pad="P$3"/>
+<contactref element="SLOT1" pad="P$4"/>
+<contactref element="SLOT2" pad="P$3"/>
+<contactref element="SLOT2" pad="P$4"/>
+<contactref element="SLOT3" pad="P$3"/>
+<contactref element="SLOT3" pad="P$4"/>
+<contactref element="SLOT4" pad="P$3"/>
+<contactref element="SLOT4" pad="P$4"/>
+<contactref element="SLOT5" pad="P$3"/>
+<contactref element="SLOT5" pad="P$4"/>
+<contactref element="SLOT6" pad="P$3"/>
+<contactref element="SLOT6" pad="P$4"/>
+<contactref element="SLOT7" pad="P$3"/>
+<contactref element="SLOT7" pad="P$4"/>
+<contactref element="SLOT8" pad="P$3"/>
+<contactref element="SLOT8" pad="P$4"/>
+<contactref element="SLOT9" pad="P$3"/>
+<contactref element="SLOT9" pad="P$4"/>
+<contactref element="SLOT10" pad="P$3"/>
+<contactref element="SLOT10" pad="P$4"/>
+<contactref element="SLOT11" pad="P$3"/>
+<contactref element="SLOT11" pad="P$4"/>
+<contactref element="SLOT12" pad="P$3"/>
+<contactref element="SLOT12" pad="P$4"/>
+<contactref element="SLOT13" pad="P$3"/>
+<contactref element="SLOT13" pad="P$4"/>
+<contactref element="SLOT14" pad="P$3"/>
+<contactref element="SLOT14" pad="P$4"/>
+<contactref element="SLOT15" pad="P$3"/>
+<contactref element="SLOT15" pad="P$4"/>
+<contactref element="SLOT16" pad="P$3"/>
+<contactref element="SLOT16" pad="P$4"/>
+<polygon width="0.254" layer="16">
+<vertex x="-46.93" y="47"/>
+<vertex x="-46.93" y="-46.34"/>
+<vertex x="48.46" y="-46.34"/>
+<vertex x="48.46" y="47"/>
+</polygon>
+</signal>
+<signal name="XLAT">
+<contactref element="SLOT1" pad="P$1"/>
+<contactref element="SLOT1" pad="P$2"/>
+<contactref element="SLOT2" pad="P$1"/>
+<contactref element="SLOT2" pad="P$2"/>
+<contactref element="SLOT3" pad="P$1"/>
+<contactref element="SLOT3" pad="P$2"/>
+<contactref element="SLOT4" pad="P$1"/>
+<contactref element="SLOT4" pad="P$2"/>
+<contactref element="SLOT5" pad="P$1"/>
+<contactref element="SLOT5" pad="P$2"/>
+<contactref element="SLOT6" pad="P$1"/>
+<contactref element="SLOT6" pad="P$2"/>
+<contactref element="SLOT7" pad="P$1"/>
+<contactref element="SLOT7" pad="P$2"/>
+<contactref element="SLOT8" pad="P$1"/>
+<contactref element="SLOT8" pad="P$2"/>
+<contactref element="SLOT9" pad="P$1"/>
+<contactref element="SLOT9" pad="P$2"/>
+<contactref element="SLOT10" pad="P$1"/>
+<contactref element="SLOT10" pad="P$2"/>
+<contactref element="SLOT11" pad="P$1"/>
+<contactref element="SLOT11" pad="P$2"/>
+<contactref element="SLOT12" pad="P$1"/>
+<contactref element="SLOT12" pad="P$2"/>
+<contactref element="SLOT13" pad="P$1"/>
+<contactref element="SLOT13" pad="P$2"/>
+<contactref element="SLOT14" pad="P$1"/>
+<contactref element="SLOT14" pad="P$2"/>
+<contactref element="SLOT15" pad="P$1"/>
+<contactref element="SLOT15" pad="P$2"/>
+<contactref element="SLOT16" pad="P$1"/>
+<contactref element="SLOT16" pad="P$2"/>
+<polygon width="0.254" layer="1">
+<vertex x="47.72" y="46.34"/>
+<vertex x="47.59" y="-47.44"/>
+<vertex x="47.44" y="-45.91"/>
+<vertex x="-46.87" y="-45.91"/>
+<vertex x="-46.59" y="46.55"/>
+</polygon>
+</signal>
+<signal name="SLOT">
+</signal>
+</signals>
+</board>
+</drawing>
+</eagle>
