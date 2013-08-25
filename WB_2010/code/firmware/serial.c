@@ -12,9 +12,6 @@
 #include "main.h"
 #include "serial.h"
 
-#define USART_BAUDRATE ( 19200 )
-#define UBRR_VALUE (((F_CPU / (USART_BAUDRATE * 16UL))) - 1)
-
 /**
  * Init USART
  *
@@ -23,14 +20,24 @@
 */
 void usart_init(void) 
 {
-  // Setup USART
-  UBRR0H = (uint8_t)(UBRR_VALUE>>8);
-  UBRR0L = (uint8_t)UBRR_VALUE;
+	#undef BAUD
+	  #define BAUD 19200
+	  #include <util/setbaud.h>
+	  UBRR0H = UBRRH_VALUE;
+	  UBRR0L = UBRRL_VALUE;
+
+#if USE_2X
+	UCSR0A |= _BV(U2X0);
+#else
+	UCSR0A &= ~(_BV(U2X0));	
+#endif
+
+  // config 8N1
+  UCSR0C = _BV(UCSZ01)|_BV(UCSZ00);
 
   // enable Rx & Tx
   UCSR0B = _BV(RXEN0)|_BV(TXEN0);
-  // config 8N1
-  UCSR0C = _BV(UCSZ01)|_BV(UCSZ00);
+  
 }
 
 
@@ -42,7 +49,7 @@ void usart_init(void)
 */
 int pc_putc(char data) {
   // wait for USART to become available
-  while ( (UCSR0A & _BV(UDRE0)) != _BV(UDRE0));
+	loop_until_bit_is_set(UCSR0A, UDRE0); /* Wait until data register empty. */
   UDR0 = data;    // send character
   return 0;
 }
@@ -76,11 +83,22 @@ void pc_puts_P(const char *s) {
  * \return      Received byte
  *
 */
-char pc_getc(void)
+int16_t pc_getc_timeout(uint16_t max_delay)
 {
-  // wait for complete receive
-  while ( (UCSR0A & _BV(RXC0)) != _BV(RXC0) );
-  return UDR0;            // return character
+	// poll for data available, with timeout
+	while ( (UCSR0A & _BV(RXC0)) == 0  && max_delay != 0) {
+		max_delay--;
+	}
+	if ( (UCSR0A & _BV(RXC0)) == 0  ) {
+		return -1;
+	}
+	return UDR0;
+}
+
+int16_t pc_getc(void)
+{
+	loop_until_bit_is_set(UCSR0A, RXC0); /* Wait until data exists. */
+	return UDR0;
 }
 
 /**

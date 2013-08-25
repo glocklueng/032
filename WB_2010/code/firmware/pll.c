@@ -34,9 +34,9 @@ void pll_init(void) {
 
   // setup 1MHz reference clock
   out = 3; out <<= 19; out |= (10&0x7FFF);
-  pll_tx(out, 0x3); // no otherbits set: defaults
+  pll_tx(out, 0x3); // no other bits set: defaults
   out = 3; out <<= 19; out |= (10&0x7FFF);
-  pll_tx(out, 0x0); // no otherbits set: defaults
+  pll_tx(out, 0x0); // no other bits set: defaults
 }
 
 /**
@@ -136,7 +136,7 @@ void pll_set_freq(uint16_t rf_freq, uint8_t prescaler, uint8_t reg) {
  * Find PWM value for specific frequency.
  *
  * \param       freq    Frequency to tune
- * \return      OCR1 PWM value for given frequeny.
+ * \return      OCR1 PWM value for given frequency.
  *
  */
 uint8_t tune_rf(uint16_t freq) {
@@ -152,21 +152,21 @@ uint8_t tune_rf(uint16_t freq) {
 
   if (PLL_RFIN_PIN & _BV(PLL_RFIN)) {	// we cant tune any lower...???
     pc_puts_P(PSTR("RF VCO range is too high!\n"));
-    return 0;
+    //return 0;
   }
   OCR1A = 4095;
   delay_ms(500);
 
   if (! (PLL_RFIN_PIN & _BV(PLL_RFIN))) {	// we cant tune any higher...???
     pc_puts_P(PSTR("RF VCO range is too low!\n"));
-    return 0;
+    //return 0;
   }
 
   pc_puts_P(PSTR("midpoint @ "));
   low = 0;
   high = 4095;
   while ((low + 2) <= high) {
-    //putnum_ud(low); uart_putchar('/'); putnum_ud(high); uart_putchar('\t');
+    putnum_ud(low); pc_putc('/'); putnum_ud(high); pc_putc('\t');
     i = ((uint16_t)low+(uint16_t)high)/2;
     OCR1A = i;
     //putnum_ud(OCR1A); pc_puts(", ");
@@ -206,7 +206,7 @@ uint8_t tune_if(uint16_t freq) {
 
   if (PLL_IFIN_PIN & _BV(PLL_IFIN)) {	// we cant tune any lower...???
     pc_puts_P(PSTR("IF VCO range is too high!\n"));
-    return 0;
+    //return 0;
   }
 
   OCR1B = 4095;
@@ -214,7 +214,7 @@ uint8_t tune_if(uint16_t freq) {
 
   if (! (PLL_IFIN_PIN & _BV(PLL_IFIN))) {	// we cant tune any higher...???
     pc_puts_P(PSTR("IF VCO range is too low!\n"));
-    return 0;
+    //return 0;
   }
 
   pc_puts_P(PSTR("midpoint @ "));
