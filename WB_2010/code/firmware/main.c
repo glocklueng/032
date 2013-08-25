@@ -563,14 +563,12 @@ int main(void) {
   progs = eeprom_read_byte(&max_programs);
   if(progs > MAX_PROGRAMS) progs = MAX_PROGRAMS;
 	
-	pc_putc('1');
 	
   if  (progs != 0) {
     pc_puts_P(PSTR("Press key to enter menu..."));
     delay_ms(2000);
   }
 
-	pc_putc('2');
 no_progs:       // Go here in case 'q' is pressed and no programs are stored
 
   if ( (UCSR0A & _BV(RXC0)) && isascii(pc_getc()) ) 
@@ -580,7 +578,6 @@ no_progs:       // Go here in case 'q' is pressed and no programs are stored
   } else if (progs == 0)
     run_menu();
 
-	pc_putc('3');
 
 run_prog:       // Go here when program key is pressed, switch to next program
 
