@@ -9718,6 +9718,8 @@ Single endded antenna. Common with smaller chip antennas. CHIP4 package is the G
 <part name="U$1" library="8x8" deviceset="GND" device=""/>
 <part name="SJ3" library="SparkFun" deviceset="SOLDERJUMPER" device="NO"/>
 <part name="ANT" library="24x16_RGB_ATXMega_Wifi" deviceset="ANTENNA2" device="" value="AT8010"/>
+<part name="C25" library="SparkFun" deviceset="CAP" device="0805" value="1uF"/>
+<part name="GND19" library="supply1" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -12106,6 +12108,11 @@ Single endded antenna. Common with smaller chip antennas. CHIP4 package is the G
 <instance part="SJ2" gate="1" x="2.54" y="-55.88" rot="R180"/>
 <instance part="SJ3" gate="1" x="-132.08" y="-81.28" rot="R90"/>
 <instance part="ANT" gate="G$1" x="-121.92" y="20.32"/>
+<instance part="C25" gate="G$1" x="17.78" y="-86.36" smashed="yes" rot="R180">
+<attribute name="NAME" x="18.796" y="-86.233" size="1.778" layer="95"/>
+<attribute name="VALUE" x="18.796" y="-90.551" size="1.778" layer="96"/>
+</instance>
+<instance part="GND19" gate="1" x="17.78" y="-96.52"/>
 </instances>
 <busses>
 </busses>
@@ -12242,6 +12249,11 @@ Single endded antenna. Common with smaller chip antennas. CHIP4 package is the G
 <pinref part="L2" gate="G$1" pin="1"/>
 <pinref part="GND38" gate="1" pin="GND"/>
 <wire x1="-109.22" y1="-15.24" x2="-109.22" y2="-12.7" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="C25" gate="G$1" pin="1"/>
+<pinref part="GND19" gate="1" pin="GND"/>
+<wire x1="17.78" y1="-91.44" x2="17.78" y2="-93.98" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="VCC" class="0">
@@ -12385,9 +12397,12 @@ Single endded antenna. Common with smaller chip antennas. CHIP4 package is the G
 <net name="VIO" class="0">
 <segment>
 <pinref part="IC6" gate="G$1" pin="VIO_HOST"/>
-<wire x1="-7.62" y1="-81.28" x2="20.32" y2="-81.28" width="0.1524" layer="91"/>
+<wire x1="-7.62" y1="-81.28" x2="17.78" y2="-81.28" width="0.1524" layer="91"/>
+<wire x1="17.78" y1="-81.28" x2="20.32" y2="-81.28" width="0.1524" layer="91"/>
 <wire x1="20.32" y1="-81.28" x2="25.4" y2="-81.28" width="0.1524" layer="91"/>
 <label x="27.94" y="-81.28" size="1.778" layer="95"/>
+<pinref part="C25" gate="G$1" pin="2"/>
+<wire x1="17.78" y1="-81.28" x2="17.78" y2="-83.82" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>
