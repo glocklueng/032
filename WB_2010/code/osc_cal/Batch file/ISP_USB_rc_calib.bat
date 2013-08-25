@@ -6,7 +6,7 @@ cls
 
 	@ECHO  - The internal RC is calibrated to value and accuracy 
 	@ECHO    given in RC_Calibration.asm (fuses set for 8 MHz)
-	@ECHO  - Programming FLASH and Fuses is performed initially.
+	@ECHO  - Programming FLASH and Fuses is performed initially. 	
 	@ECHO  - stk500.exe -h / AVR Studio help for more options
 	@ECHO  
 	@ECHO  $Name$
@@ -23,13 +23,13 @@ cls
 
 
 @REM Fill in your cpu type and full path to the programming tool
-@SET CPU=atmega16
-@SET TOOL="C:\Program Files\Atmel\AVR Tools\STK500\stk500.exe"
-@SET CAL_FUSES=99e4
+@SET CPU=atmega168
+@SET TOOL="C:\Program Files (x86)\Atmel\AVR Tools\STK500\stk500.exe"
+@SET CAL_FUSES=DDC2
 @SET CUSTOMERCODE="test.hex"
 
 
-%TOOL% -cUSB -I125000 -d%CPU% -s -f%CAL_FUSES% -e -pf -if"..\rc_calib.hex"
+%TOOL% -cUSB -I125000 -d%CPU% -s -f%CAL_FUSES% -EF8 -e -pf -if"..\rc_calib.hex"
 
 
 
@@ -51,7 +51,6 @@ cls
 	@ECHO an error.
 
 %TOOL% -cUSB -I125000 -d%CPU% -ae0,0 -ve -ie0xFF_byte.hex
-
 
 @IF ERRORLEVEL ==1 GOTO continue
 
