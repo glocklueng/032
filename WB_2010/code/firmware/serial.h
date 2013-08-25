@@ -7,8 +7,7 @@
 
 #ifndef SERIAL_H_
 #define SERIAL_H_
-
-#define BAUDRATE        19200
+#include <ctype.h>
 
 #if !defined(F_CPU)
         #error "No MCU crystal speed defined!"
@@ -16,7 +15,7 @@
 
 extern void usart_init(void);
 extern int pc_putc(char data);
-extern char pc_getc(void);
+extern int16_t pc_getc(void);
 extern void pc_puts(char *s);
 extern void pc_puts_P(const char *s);
 extern void putnum_ud(uint16_t n);
