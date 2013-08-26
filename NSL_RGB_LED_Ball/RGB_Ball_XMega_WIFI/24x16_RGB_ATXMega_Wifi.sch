@@ -10490,25 +10490,28 @@ by exp-project-lbr.ulp</description>
 <label x="-60.706" y="-54.356" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="N$4" class="0">
+<net name="UP" class="0">
 <segment>
 <pinref part="IC1" gate="G$1" pin="PB1/ADC9"/>
 <wire x1="-40.64" y1="-44.45" x2="-71.12" y2="-44.45" width="0.1524" layer="91"/>
 <pinref part="JP4" gate="G$1" pin="4"/>
+<label x="-60.96" y="-44.196" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="N$5" class="0">
+<net name="SELECT" class="0">
 <segment>
 <pinref part="IC1" gate="G$1" pin="PB2/ADC10/DAC0"/>
 <wire x1="-40.64" y1="-46.99" x2="-71.12" y2="-46.99" width="0.1524" layer="91"/>
 <pinref part="JP4" gate="G$1" pin="3"/>
+<label x="-61.214" y="-46.736" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="N$18" class="0">
+<net name="DOWN" class="0">
 <segment>
 <pinref part="IC1" gate="G$1" pin="PB3/ADC11/DAC1"/>
 <wire x1="-40.64" y1="-49.53" x2="-71.12" y2="-49.53" width="0.1524" layer="91"/>
 <pinref part="JP4" gate="G$1" pin="2"/>
+<label x="-61.214" y="-49.53" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>
