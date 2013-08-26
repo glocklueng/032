@@ -163,7 +163,7 @@
 </layers>
 <board>
 <plain>
-<text x="0.9432" y="-16.1506" size="1.778" layer="22" rot="MR0">A</text>
+<text x="0" y="-15.2108" size="1.778" layer="22" rot="MR0" align="center">A</text>
 <text x="-3.71" y="-14" size="1.778" layer="21">INSIDE</text>
 <wire x1="24" y1="0" x2="24" y2="0.01" width="0" layer="20" curve="-359.976127"/>
 <dimension x1="0" y1="-24" x2="0" y2="-21.16" x3="12.97" y3="-22.58" textsize="1.778" layer="48"/>
@@ -177,16 +177,6 @@
 <description>Generated from &lt;b&gt;24x16_RGB_Bottom.sch&lt;/b&gt;&lt;p&gt;
 by exp-lbrs.ulp</description>
 <packages>
-<package name="SLOT">
-<wire x1="0" y1="-0.8382" x2="2.794" y2="-0.8382" width="0" layer="46"/>
-<wire x1="0" y1="0.8382" x2="2.794" y2="0.8382" width="0" layer="46"/>
-<wire x1="2.794" y1="0.8382" x2="2.794" y2="-0.8382" width="0" layer="46" curve="-180"/>
-<wire x1="0" y1="0.8382" x2="0" y2="-0.8382" width="0" layer="46"/>
-<smd name="P$1" x="2.9718" y="1.27" dx="5.08" dy="1.27" layer="1" roundness="50" cream="no"/>
-<smd name="P$2" x="2.9718" y="-1.27" dx="5.08" dy="1.27" layer="1" roundness="50" cream="no"/>
-<smd name="P$3" x="2.9718" y="1.27" dx="5.08" dy="1.27" layer="16" roundness="50" cream="no"/>
-<smd name="P$4" x="2.9718" y="-1.27" dx="5.08" dy="1.27" layer="16" roundness="50" cream="no"/>
-</package>
 <package name="USB_PANNEL">
 <wire x1="-4.925" y1="2.175" x2="-4.925" y2="-2.175" width="0" layer="20"/>
 <wire x1="-4.925" y1="-2.175" x2="-3.675" y2="-3.425" width="0" layer="20" curve="90"/>
@@ -288,6 +278,22 @@ We've spent an enormous amount of time creating and checking these footprints an
 </package>
 </packages>
 </library>
+<library name="24x16_RGB_Top">
+<description>Generated from &lt;b&gt;24x16_RGB_Top.sch&lt;/b&gt;&lt;p&gt;
+by exp-lbrs.ulp</description>
+<packages>
+<package name="SLOT">
+<wire x1="0" y1="-0.8382" x2="2.794" y2="-0.8382" width="0" layer="46"/>
+<wire x1="0" y1="0.8382" x2="2.794" y2="0.8382" width="0" layer="46"/>
+<wire x1="2.794" y1="0.8382" x2="2.794" y2="-0.8382" width="0" layer="46" curve="-180"/>
+<wire x1="0" y1="0.8382" x2="0" y2="-0.8382" width="0" layer="46"/>
+<smd name="P$1" x="3.6068" y="1.27" dx="6.35" dy="1.27" layer="1" roundness="50" cream="no"/>
+<smd name="P$2" x="3.6068" y="-1.27" dx="6.35" dy="1.27" layer="1" roundness="50" cream="no"/>
+<smd name="P$3" x="3.6068" y="1.27" dx="6.35" dy="1.27" layer="16" roundness="50" cream="no"/>
+<smd name="P$4" x="3.6068" y="-1.27" dx="6.35" dy="1.27" layer="16" roundness="50" cream="no"/>
+</package>
+</packages>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -297,7 +303,7 @@ We've spent an enormous amount of time creating and checking these footprints an
 <class number="0" name="default" width="0" drill="0">
 </class>
 </classes>
-<designrules name="default">
+<designrules name="ITEADstudio_DRC">
 <description language="de">&lt;b&gt;EAGLE Design Rules&lt;/b&gt;
 &lt;p&gt;
 Die Standard-Design-Rules sind so gewählt, dass sie für 
@@ -312,26 +318,28 @@ a wide range of applications. Your particular design
 may have different requirements, so please make the
 necessary adjustments and save your customized
 design rules under a new name.</description>
+<description language="zh">&lt;b&gt;Seeed Studio EAGLE Design Rules&lt;/b&gt;
+</description>
 <param name="layerSetup" value="(1*16)"/>
 <param name="mtCopper" value="0.035mm 0.035mm 0.035mm 0.035mm 0.035mm 0.035mm 0.035mm 0.035mm 0.035mm 0.035mm 0.035mm 0.035mm 0.035mm 0.035mm 0.035mm 0.035mm"/>
 <param name="mtIsolate" value="1.5mm 0.15mm 0.2mm 0.15mm 0.2mm 0.15mm 0.2mm 0.15mm 0.2mm 0.15mm 0.2mm 0.15mm 0.2mm 0.15mm 0.2mm"/>
-<param name="mdWireWire" value="8mil"/>
-<param name="mdWirePad" value="8mil"/>
-<param name="mdWireVia" value="8mil"/>
-<param name="mdPadPad" value="8mil"/>
-<param name="mdPadVia" value="8mil"/>
-<param name="mdViaVia" value="8mil"/>
-<param name="mdSmdPad" value="8mil"/>
-<param name="mdSmdVia" value="8mil"/>
-<param name="mdSmdSmd" value="8mil"/>
+<param name="mdWireWire" value="6mil"/>
+<param name="mdWirePad" value="6mil"/>
+<param name="mdWireVia" value="6mil"/>
+<param name="mdPadPad" value="6mil"/>
+<param name="mdPadVia" value="6mil"/>
+<param name="mdViaVia" value="6mil"/>
+<param name="mdSmdPad" value="0mil"/>
+<param name="mdSmdVia" value="0mil"/>
+<param name="mdSmdSmd" value="0mil"/>
 <param name="mdViaViaSameLayer" value="8mil"/>
 <param name="mnLayersViaInSmd" value="2"/>
-<param name="mdCopperDimension" value="40mil"/>
-<param name="mdDrill" value="8mil"/>
+<param name="mdCopperDimension" value="10mil"/>
+<param name="mdDrill" value="10mil"/>
 <param name="mdSmdStop" value="0mil"/>
-<param name="msWidth" value="10mil"/>
-<param name="msDrill" value="24mil"/>
-<param name="msMicroVia" value="9.99mm"/>
+<param name="msWidth" value="6mil"/>
+<param name="msDrill" value="12mil"/>
+<param name="msMicroVia" value="12mil"/>
 <param name="msBlindViaRatio" value="0.5"/>
 <param name="rvPadTop" value="0.25"/>
 <param name="rvPadInner" value="0.25"/>
@@ -346,9 +354,9 @@ design rules under a new name.</description>
 <param name="rlMaxPadInner" value="20mil"/>
 <param name="rlMinPadBottom" value="10mil"/>
 <param name="rlMaxPadBottom" value="20mil"/>
-<param name="rlMinViaOuter" value="8mil"/>
+<param name="rlMinViaOuter" value="6mil"/>
 <param name="rlMaxViaOuter" value="20mil"/>
-<param name="rlMinViaInner" value="8mil"/>
+<param name="rlMinViaInner" value="6mil"/>
 <param name="rlMaxViaInner" value="20mil"/>
 <param name="rlMinMicroViaOuter" value="4mil"/>
 <param name="rlMaxMicroViaOuter" value="20mil"/>
@@ -356,16 +364,16 @@ design rules under a new name.</description>
 <param name="rlMaxMicroViaInner" value="20mil"/>
 <param name="psTop" value="-1"/>
 <param name="psBottom" value="-1"/>
-<param name="psFirst" value="-1"/>
+<param name="psFirst" value="0"/>
 <param name="psElongationLong" value="100"/>
 <param name="psElongationOffset" value="100"/>
 <param name="mvStopFrame" value="1"/>
 <param name="mvCreamFrame" value="0"/>
-<param name="mlMinStopFrame" value="4mil"/>
-<param name="mlMaxStopFrame" value="4mil"/>
+<param name="mlMinStopFrame" value="2mil"/>
+<param name="mlMaxStopFrame" value="2mil"/>
 <param name="mlMinCreamFrame" value="0mil"/>
 <param name="mlMaxCreamFrame" value="0mil"/>
-<param name="mlViaStopLimit" value="0mil"/>
+<param name="mlViaStopLimit" value="100mil"/>
 <param name="srRoundness" value="0"/>
 <param name="srMinRoundness" value="0mil"/>
 <param name="srMaxRoundness" value="0mil"/>
@@ -376,7 +384,7 @@ design rules under a new name.</description>
 <param name="checkGrid" value="0"/>
 <param name="checkAngle" value="0"/>
 <param name="checkFont" value="1"/>
-<param name="checkRestrict" value="1"/>
+<param name="checkRestrict" value="0"/>
 <param name="useDiameter" value="13"/>
 <param name="maxErrors" value="50"/>
 </designrules>
@@ -474,91 +482,97 @@ design rules under a new name.</description>
 </pass>
 </autorouter>
 <elements>
-<element name="SLOT1" library="24x16_RGB_Bottom" package="SLOT" value="SLOT" x="24" y="0" rot="R180">
+<element name="SLOT1" library="24x16_RGB_Top" package="SLOT" value="SLOT" x="24" y="0" rot="R180">
 <attribute name="OC_NEWARK" value="unknown" x="7.49" y="2.54" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="MPN" value="" x="7.49" y="2.54" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="MF" value="" x="7.49" y="2.54" size="1.778" layer="27" rot="R180" display="off"/>
 </element>
-<element name="SLOT2" library="24x16_RGB_Bottom" package="SLOT" value="SLOT" x="22.173109375" y="9.184403125" rot="R202.5">
+<element name="SLOT2" library="24x16_RGB_Top" package="SLOT" value="SLOT" x="22.173109375" y="9.184403125" rot="R202.5">
 <attribute name="OC_NEWARK" value="unknown" x="4.0038125" y="9.9062625" size="1.778" layer="27" rot="R202.5" display="off"/>
 <attribute name="MPN" value="" x="4.0038125" y="9.9062625" size="1.778" layer="27" rot="R202.5" display="off"/>
 <attribute name="MF" value="" x="4.0038125" y="9.9062625" size="1.778" layer="27" rot="R202.5" display="off"/>
 </element>
-<element name="SLOT3" library="24x16_RGB_Bottom" package="SLOT" value="SLOT" x="16.9705625" y="16.9705625" rot="R225">
+<element name="SLOT3" library="24x16_RGB_Top" package="SLOT" value="SLOT" x="16.9705625" y="16.9705625" rot="R225">
 <attribute name="OC_NEWARK" value="unknown" x="24.15476875" y="16.9705625" size="1.778" layer="27" rot="R225" display="off"/>
 <attribute name="MPN" value="" x="24.15476875" y="16.9705625" size="1.778" layer="27" rot="R225" display="off"/>
 <attribute name="MF" value="" x="24.15476875" y="16.9705625" size="1.778" layer="27" rot="R225" display="off"/>
 </element>
-<element name="SLOT4" library="24x16_RGB_Bottom" package="SLOT" value="SLOT" x="9.184403125" y="22.173109375" rot="R247.5">
+<element name="SLOT4" library="24x16_RGB_Top" package="SLOT" value="SLOT" x="9.184403125" y="22.173109375" rot="R247.5">
 <attribute name="OC_NEWARK" value="unknown" x="22.459084375" y="27.6716625" size="1.778" layer="27" rot="R247.5" display="off"/>
 <attribute name="MPN" value="" x="22.459084375" y="27.6716625" size="1.778" layer="27" rot="R247.5" display="off"/>
 <attribute name="MF" value="" x="22.459084375" y="27.6716625" size="1.778" layer="27" rot="R247.5" display="off"/>
 </element>
-<element name="SLOT5" library="24x16_RGB_Bottom" package="SLOT" value="SLOT" x="0" y="24" rot="R270">
+<element name="SLOT5" library="24x16_RGB_Top" package="SLOT" value="SLOT" x="0" y="24" rot="R270">
 <attribute name="OC_NEWARK" value="unknown" x="5.08" y="29.08" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="MPN" value="" x="5.08" y="29.08" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="MF" value="" x="5.08" y="29.08" size="1.778" layer="27" rot="R270" display="off"/>
 </element>
-<element name="SLOT6" library="24x16_RGB_Bottom" package="SLOT" value="SLOT" x="-9.184403125" y="22.173109375" rot="R292.5">
+<element name="SLOT6" library="24x16_RGB_Top" package="SLOT" value="SLOT" x="-9.184403125" y="22.173109375" rot="R292.5">
 <attribute name="OC_NEWARK" value="unknown" x="-3.685853125" y="35.447790625" size="1.778" layer="27" rot="R292.5" display="off"/>
 <attribute name="MPN" value="" x="-3.685853125" y="35.447790625" size="1.778" layer="27" rot="R292.5" display="off"/>
 <attribute name="MF" value="" x="-3.685853125" y="35.447790625" size="1.778" layer="27" rot="R292.5" display="off"/>
 </element>
-<element name="SLOT7" library="24x16_RGB_Bottom" package="SLOT" value="SLOT" x="-16.9705625" y="16.9705625" rot="R315">
+<element name="SLOT7" library="24x16_RGB_Top" package="SLOT" value="SLOT" x="-16.9705625" y="16.9705625" rot="R315">
 <attribute name="OC_NEWARK" value="unknown" x="-16.9705625" y="38.523178125" size="1.778" layer="27" rot="R315" display="off"/>
 <attribute name="MPN" value="" x="-16.9705625" y="38.523178125" size="1.778" layer="27" rot="R315" display="off"/>
 <attribute name="MF" value="" x="-16.9705625" y="38.523178125" size="1.778" layer="27" rot="R315" display="off"/>
 </element>
-<element name="SLOT8" library="24x16_RGB_Bottom" package="SLOT" value="SLOT" x="-22.173109375" y="9.184403125" rot="R337.5">
+<element name="SLOT8" library="24x16_RGB_Top" package="SLOT" value="SLOT" x="-22.173109375" y="9.184403125" rot="R337.5">
 <attribute name="OC_NEWARK" value="unknown" x="-33.170215625" y="35.7337625" size="1.778" layer="27" rot="R337.5" display="off"/>
 <attribute name="MPN" value="" x="-33.170215625" y="35.7337625" size="1.778" layer="27" rot="R337.5" display="off"/>
 <attribute name="MF" value="" x="-33.170215625" y="35.7337625" size="1.778" layer="27" rot="R337.5" display="off"/>
 </element>
-<element name="SLOT9" library="24x16_RGB_Bottom" package="SLOT" value="SLOT" x="-24" y="0">
+<element name="SLOT9" library="24x16_RGB_Top" package="SLOT" value="SLOT" x="-24" y="0">
 <attribute name="OC_NEWARK" value="unknown" x="-29.08" y="5.08" size="1.778" layer="27" display="off"/>
 <attribute name="MPN" value="" x="-29.08" y="5.08" size="1.778" layer="27" display="off"/>
 <attribute name="MF" value="" x="-29.08" y="5.08" size="1.778" layer="27" display="off"/>
 </element>
-<element name="SLOT10" library="24x16_RGB_Bottom" package="SLOT" value="SLOT" x="-22.173109375" y="-9.184403125" rot="R22.5">
+<element name="SLOT10" library="24x16_RGB_Top" package="SLOT" value="SLOT" x="-22.173109375" y="-9.184403125" rot="R22.5">
 <attribute name="OC_NEWARK" value="unknown" x="-38.197065625" y="-10.323190625" size="1.778" layer="27" rot="R22.5" display="off"/>
 <attribute name="MPN" value="" x="-38.197065625" y="-10.323190625" size="1.778" layer="27" rot="R22.5" display="off"/>
 <attribute name="MF" value="" x="-38.197065625" y="-10.323190625" size="1.778" layer="27" rot="R22.5" display="off"/>
 </element>
-<element name="SLOT11" library="24x16_RGB_Bottom" package="SLOT" value="SLOT" x="-16.9705625" y="-16.9705625" rot="R45">
+<element name="SLOT11" library="24x16_RGB_Top" package="SLOT" value="SLOT" x="-16.9705625" y="-16.9705625" rot="R45">
 <attribute name="OC_NEWARK" value="unknown" x="-34.931075" y="-20.562665625" size="1.778" layer="27" rot="R45" display="off"/>
 <attribute name="MPN" value="" x="-34.931075" y="-20.562665625" size="1.778" layer="27" rot="R45" display="off"/>
 <attribute name="MF" value="" x="-34.931075" y="-20.562665625" size="1.778" layer="27" rot="R45" display="off"/>
 </element>
-<element name="SLOT12" library="24x16_RGB_Bottom" package="SLOT" value="SLOT" x="-9.184403125" y="-22.173109375" rot="R67.5">
+<element name="SLOT12" library="24x16_RGB_Top" package="SLOT" value="SLOT" x="-9.184403125" y="-22.173109375" rot="R67.5">
 <attribute name="OC_NEWARK" value="unknown" x="-28.291178125" y="-41.7515875" size="1.778" layer="27" rot="R67.5" display="off"/>
 <attribute name="MPN" value="" x="-28.291178125" y="-41.7515875" size="1.778" layer="27" rot="R67.5" display="off"/>
 <attribute name="MF" value="" x="-28.291178125" y="-41.7515875" size="1.778" layer="27" rot="R67.5" display="off"/>
 </element>
-<element name="SLOT13" library="24x16_RGB_Bottom" package="SLOT" value="SLOT" x="0" y="-24" rot="R90">
+<element name="SLOT13" library="24x16_RGB_Top" package="SLOT" value="SLOT" x="0" y="-24" rot="R90">
 <attribute name="OC_NEWARK" value="unknown" x="-15.24" y="-49.4" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="MPN" value="" x="-15.24" y="-49.4" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="MF" value="" x="-15.24" y="-49.4" size="1.778" layer="27" rot="R90" display="off"/>
 </element>
-<element name="SLOT14" library="24x16_RGB_Bottom" package="SLOT" value="SLOT" x="9.184403125" y="-22.173109375" rot="R112.5">
+<element name="SLOT14" library="24x16_RGB_Top" package="SLOT" value="SLOT" x="9.184403125" y="-22.173109375" rot="R112.5">
 <attribute name="OC_NEWARK" value="unknown" x="8.712703125" y="-60.8583625" size="1.778" layer="27" rot="R112.5" display="off"/>
 <attribute name="MPN" value="" x="8.712703125" y="-60.8583625" size="1.778" layer="27" rot="R112.5" display="off"/>
 <attribute name="MF" value="" x="8.712703125" y="-60.8583625" size="1.778" layer="27" rot="R112.5" display="off"/>
 </element>
-<element name="SLOT15" library="24x16_RGB_Bottom" package="SLOT" value="SLOT" x="16.9705625" y="-16.9705625" rot="R135">
+<element name="SLOT15" library="24x16_RGB_Top" package="SLOT" value="SLOT" x="16.9705625" y="-16.9705625" rot="R135">
 <attribute name="OC_NEWARK" value="unknown" x="27.746871875" y="-56.4836875" size="1.778" layer="27" rot="R135" display="off"/>
 <attribute name="MPN" value="" x="27.746871875" y="-56.4836875" size="1.778" layer="27" rot="R135" display="off"/>
 <attribute name="MF" value="" x="27.746871875" y="-56.4836875" size="1.778" layer="27" rot="R135" display="off"/>
 </element>
-<element name="SLOT16" library="24x16_RGB_Bottom" package="SLOT" value="SLOT" x="22.173109375" y="-9.184403125" rot="R157.5">
+<element name="SLOT16" library="24x16_RGB_Top" package="SLOT" value="SLOT" x="22.173109375" y="-9.184403125" rot="R157.5">
 <attribute name="OC_NEWARK" value="unknown" x="56.63675625" y="-45.45391875" size="1.778" layer="27" rot="R157.5" display="off"/>
 <attribute name="MPN" value="" x="56.63675625" y="-45.45391875" size="1.778" layer="27" rot="R157.5" display="off"/>
 <attribute name="MF" value="" x="56.63675625" y="-45.45391875" size="1.778" layer="27" rot="R157.5" display="off"/>
 </element>
-<element name="S1" library="tvbgone-2layer" package="SPARKFUN-ELECTROMECHANICAL_TACTILE-SWITCH-1101NE" value="SPARKFUN-ELECTROMECHANICAL_SWITCH-MOMENTARY-2-SMD-1101NE" x="0" y="-5.08" rot="MR0"/>
-<element name="S2" library="tvbgone-2layer" package="SPARKFUN-ELECTROMECHANICAL_TACTILE-SWITCH-1101NE" value="SPARKFUN-ELECTROMECHANICAL_SWITCH-MOMENTARY-2-SMD-1101NE" x="-10.16" y="-5.08" rot="MR180"/>
-<element name="U$1" library="24x16_RGB_Bottom" package="USB_PANNEL" value="USB_PANNEL" x="0" y="9.525"/>
+<element name="S1" library="tvbgone-2layer" package="SPARKFUN-ELECTROMECHANICAL_TACTILE-SWITCH-1101NE" value="SPARKFUN-ELECTROMECHANICAL_SWITCH-MOMENTARY-2-SMD-1101NE" x="0" y="-5.08" smashed="yes" rot="MR0">
+<attribute name="NAME" x="3" y="-3.08" size="0.762" layer="26" rot="MR0"/>
+</element>
+<element name="S2" library="tvbgone-2layer" package="SPARKFUN-ELECTROMECHANICAL_TACTILE-SWITCH-1101NE" value="SPARKFUN-ELECTROMECHANICAL_SWITCH-MOMENTARY-2-SMD-1101NE" x="-10.16" y="-5.08" smashed="yes" rot="MR0">
+<attribute name="NAME" x="-7.16" y="-3.08" size="0.762" layer="26" rot="MR0"/>
+</element>
+<element name="U$1" library="24x16_RGB_Bottom" package="USB_PANNEL" value="USB_PANNEL" x="0" y="8.255"/>
 <element name="JP1" library="SparkFun-Connectors" package="1X04" value="" x="-3.7592" y="-10.7696"/>
-<element name="S3" library="tvbgone-2layer" package="SPARKFUN-ELECTROMECHANICAL_TACTILE-SWITCH-1101NE" value="SPARKFUN-ELECTROMECHANICAL_SWITCH-MOMENTARY-2-SMD-1101NE" x="10.16" y="-5.08" rot="MR0"/>
+<element name="S3" library="tvbgone-2layer" package="SPARKFUN-ELECTROMECHANICAL_TACTILE-SWITCH-1101NE" value="SPARKFUN-ELECTROMECHANICAL_SWITCH-MOMENTARY-2-SMD-1101NE" x="10.16" y="-5.08" smashed="yes" rot="MR0">
+<attribute name="NAME" x="13.16" y="-3.08" size="0.762" layer="26" rot="MR0"/>
+</element>
 </elements>
 <signals>
 <signal name="SLOT">
@@ -598,7 +612,7 @@ design rules under a new name.</description>
 <contactref element="SLOT15" pad="P$4"/>
 <contactref element="SLOT16" pad="P$3"/>
 <contactref element="SLOT16" pad="P$4"/>
-<polygon width="0.254" layer="16">
+<polygon width="0.254" layer="16" thermals="no">
 <vertex x="-26.47" y="27.08"/>
 <vertex x="-26.47" y="-27.52"/>
 <vertex x="25.8872" y="-27.0716"/>
@@ -640,7 +654,7 @@ design rules under a new name.</description>
 <contactref element="SLOT15" pad="P$2"/>
 <contactref element="SLOT16" pad="P$1"/>
 <contactref element="SLOT16" pad="P$2"/>
-<polygon width="0.254" layer="1">
+<polygon width="0.254" layer="1" thermals="no">
 <vertex x="27.2698" y="26.092"/>
 <vertex x="27.2194" y="-26.2356"/>
 <vertex x="-26.04" y="-26.36"/>
@@ -650,24 +664,26 @@ design rules under a new name.</description>
 <signal name="UP">
 <contactref element="JP1" pad="4"/>
 <contactref element="S3" pad="P$1"/>
-<wire x1="3.8608" y1="-10.7696" x2="9.9822" y2="-10.7696" width="0.4064" layer="16"/>
-<wire x1="9.9822" y1="-10.7696" x2="13.3096" y2="-7.4422" width="0.4064" layer="16"/>
-<wire x1="13.3096" y1="-7.4422" x2="13.3096" y2="-5.0804" width="0.4064" layer="16"/>
 <wire x1="13.3096" y1="-5.0804" x2="13.31" y2="-5.08" width="0.4064" layer="16"/>
+<wire x1="3.8608" y1="-10.7696" x2="3.8862" y2="-10.795" width="1.016" layer="16"/>
+<wire x1="3.8862" y1="-10.795" x2="10.0584" y2="-10.795" width="1.016" layer="16"/>
+<wire x1="10.0584" y1="-10.795" x2="13.31" y2="-7.5434" width="1.016" layer="16"/>
+<wire x1="13.31" y1="-7.5434" x2="13.31" y2="-5.08" width="1.016" layer="16"/>
 </signal>
 <signal name="SELECT">
 <contactref element="JP1" pad="3"/>
 <contactref element="S1" pad="P$1"/>
-<wire x1="1.3208" y1="-10.7696" x2="3.15" y2="-8.9404" width="0.4064" layer="16"/>
-<wire x1="3.15" y1="-8.9404" x2="3.15" y2="-5.08" width="0.4064" layer="16"/>
+<wire x1="1.3208" y1="-10.7696" x2="3.15" y2="-8.9404" width="1.016" layer="16"/>
+<wire x1="3.15" y1="-8.9404" x2="3.15" y2="-5.08" width="1.016" layer="16"/>
 </signal>
 <signal name="DOWN">
 <contactref element="JP1" pad="2"/>
 <contactref element="S2" pad="P$1"/>
-<wire x1="-1.2192" y1="-10.7696" x2="-4.1402" y2="-7.8486" width="0.4064" layer="16"/>
-<wire x1="-4.1402" y1="-7.8486" x2="-11.9888" y2="-7.8486" width="0.4064" layer="16"/>
-<wire x1="-11.9888" y1="-7.8486" x2="-13.31" y2="-6.5274" width="0.4064" layer="16"/>
-<wire x1="-13.31" y1="-6.5274" x2="-13.31" y2="-5.08" width="0.4064" layer="16"/>
+<wire x1="-1.2192" y1="-10.7696" x2="-1.2192" y2="-9.6266" width="1.016" layer="16"/>
+<wire x1="-1.2192" y1="-9.6266" x2="-2.8956" y2="-7.9502" width="1.016" layer="16"/>
+<wire x1="-2.8956" y1="-7.9502" x2="-5.9182" y2="-7.9502" width="1.016" layer="16"/>
+<wire x1="-5.9182" y1="-7.9502" x2="-7.01" y2="-6.8584" width="1.016" layer="16"/>
+<wire x1="-7.01" y1="-6.8584" x2="-7.01" y2="-5.08" width="1.016" layer="16"/>
 </signal>
 </signals>
 </board>

@@ -167,16 +167,6 @@
 <description>Generated from &lt;b&gt;24x16_RGB_Bottom.sch&lt;/b&gt;&lt;p&gt;
 by exp-lbrs.ulp</description>
 <packages>
-<package name="SLOT">
-<wire x1="0" y1="-0.8382" x2="2.794" y2="-0.8382" width="0" layer="46"/>
-<wire x1="0" y1="0.8382" x2="2.794" y2="0.8382" width="0" layer="46"/>
-<wire x1="2.794" y1="0.8382" x2="2.794" y2="-0.8382" width="0" layer="46" curve="-180"/>
-<wire x1="0" y1="0.8382" x2="0" y2="-0.8382" width="0" layer="46"/>
-<smd name="P$1" x="2.9718" y="1.27" dx="5.08" dy="1.27" layer="1" roundness="50" cream="no"/>
-<smd name="P$2" x="2.9718" y="-1.27" dx="5.08" dy="1.27" layer="1" roundness="50" cream="no"/>
-<smd name="P$3" x="2.9718" y="1.27" dx="5.08" dy="1.27" layer="16" roundness="50" cream="no"/>
-<smd name="P$4" x="2.9718" y="-1.27" dx="5.08" dy="1.27" layer="16" roundness="50" cream="no"/>
-</package>
 <package name="USB_PANNEL">
 <wire x1="-4.925" y1="2.175" x2="-4.925" y2="-2.175" width="0" layer="20"/>
 <wire x1="-4.925" y1="-2.175" x2="-3.675" y2="-3.425" width="0" layer="20" curve="90"/>
@@ -199,16 +189,6 @@ by exp-lbrs.ulp</description>
 </package>
 </packages>
 <symbols>
-<symbol name="SLOT">
-<wire x1="-5.08" y1="7.62" x2="-5.08" y2="-7.62" width="0.254" layer="94"/>
-<wire x1="-5.08" y1="-7.62" x2="7.62" y2="-7.62" width="0.254" layer="94"/>
-<wire x1="7.62" y1="-7.62" x2="7.62" y2="7.62" width="0.254" layer="94"/>
-<wire x1="7.62" y1="7.62" x2="-5.08" y2="7.62" width="0.254" layer="94"/>
-<pin name="P$1" x="-10.16" y="7.62" length="middle"/>
-<pin name="P$2" x="-10.16" y="-7.62" length="middle"/>
-<pin name="P$3" x="12.7" y="7.62" length="middle" rot="R180"/>
-<pin name="P$4" x="12.7" y="-7.62" length="middle" rot="R180"/>
-</symbol>
 <symbol name="USB_PANNEL">
 <wire x1="-2.54" y1="2.54" x2="-2.54" y2="-2.54" width="0.254" layer="94"/>
 <wire x1="-2.54" y1="-2.54" x2="2.54" y2="-2.54" width="0.254" layer="94"/>
@@ -217,24 +197,6 @@ by exp-lbrs.ulp</description>
 </symbol>
 </symbols>
 <devicesets>
-<deviceset name="SLOT">
-<gates>
-<gate name="G$1" symbol="SLOT" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="SLOT">
-<connects>
-<connect gate="G$1" pin="P$1" pad="P$1"/>
-<connect gate="G$1" pin="P$2" pad="P$2"/>
-<connect gate="G$1" pin="P$3" pad="P$3"/>
-<connect gate="G$1" pin="P$4" pad="P$4"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
 <deviceset name="USB_PANNEL">
 <gates>
 <gate name="G$1" symbol="USB_PANNEL" x="0" y="0"/>
@@ -1112,6 +1074,54 @@ Standard 4-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 </deviceset>
 </devicesets>
 </library>
+<library name="24x16_RGB_Top">
+<description>Generated from &lt;b&gt;24x16_RGB_Top.sch&lt;/b&gt;&lt;p&gt;
+by exp-lbrs.ulp</description>
+<packages>
+<package name="SLOT">
+<wire x1="0" y1="-0.8382" x2="2.794" y2="-0.8382" width="0" layer="46"/>
+<wire x1="0" y1="0.8382" x2="2.794" y2="0.8382" width="0" layer="46"/>
+<wire x1="2.794" y1="0.8382" x2="2.794" y2="-0.8382" width="0" layer="46" curve="-180"/>
+<wire x1="0" y1="0.8382" x2="0" y2="-0.8382" width="0" layer="46"/>
+<smd name="P$1" x="3.6068" y="1.27" dx="6.35" dy="1.27" layer="1" roundness="50" cream="no"/>
+<smd name="P$2" x="3.6068" y="-1.27" dx="6.35" dy="1.27" layer="1" roundness="50" cream="no"/>
+<smd name="P$3" x="3.6068" y="1.27" dx="6.35" dy="1.27" layer="16" roundness="50" cream="no"/>
+<smd name="P$4" x="3.6068" y="-1.27" dx="6.35" dy="1.27" layer="16" roundness="50" cream="no"/>
+</package>
+</packages>
+<symbols>
+<symbol name="SLOT">
+<wire x1="-5.08" y1="7.62" x2="-5.08" y2="-7.62" width="0.254" layer="94"/>
+<wire x1="-5.08" y1="-7.62" x2="7.62" y2="-7.62" width="0.254" layer="94"/>
+<wire x1="7.62" y1="-7.62" x2="7.62" y2="7.62" width="0.254" layer="94"/>
+<wire x1="7.62" y1="7.62" x2="-5.08" y2="7.62" width="0.254" layer="94"/>
+<pin name="P$1" x="-10.16" y="7.62" length="middle"/>
+<pin name="P$2" x="-10.16" y="-7.62" length="middle"/>
+<pin name="P$3" x="12.7" y="7.62" length="middle" rot="R180"/>
+<pin name="P$4" x="12.7" y="-7.62" length="middle" rot="R180"/>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="SLOT">
+<gates>
+<gate name="G$1" symbol="SLOT" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="SLOT">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+<connect gate="G$1" pin="P$3" pad="P$3"/>
+<connect gate="G$1" pin="P$4" pad="P$4"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -1122,82 +1132,82 @@ Standard 4-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 </class>
 </classes>
 <parts>
-<part name="SLOT1" library="24x16_RGB_Bottom" deviceset="SLOT" device="">
+<part name="SLOT1" library="24x16_RGB_Top" deviceset="SLOT" device="">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
 </part>
-<part name="SLOT2" library="24x16_RGB_Bottom" deviceset="SLOT" device="">
+<part name="SLOT2" library="24x16_RGB_Top" deviceset="SLOT" device="">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
 </part>
-<part name="SLOT3" library="24x16_RGB_Bottom" deviceset="SLOT" device="">
+<part name="SLOT3" library="24x16_RGB_Top" deviceset="SLOT" device="">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
 </part>
-<part name="SLOT4" library="24x16_RGB_Bottom" deviceset="SLOT" device="">
+<part name="SLOT4" library="24x16_RGB_Top" deviceset="SLOT" device="">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
 </part>
-<part name="SLOT5" library="24x16_RGB_Bottom" deviceset="SLOT" device="">
+<part name="SLOT5" library="24x16_RGB_Top" deviceset="SLOT" device="">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
 </part>
-<part name="SLOT6" library="24x16_RGB_Bottom" deviceset="SLOT" device="">
+<part name="SLOT6" library="24x16_RGB_Top" deviceset="SLOT" device="">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
 </part>
-<part name="SLOT7" library="24x16_RGB_Bottom" deviceset="SLOT" device="">
+<part name="SLOT7" library="24x16_RGB_Top" deviceset="SLOT" device="">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
 </part>
-<part name="SLOT8" library="24x16_RGB_Bottom" deviceset="SLOT" device="">
+<part name="SLOT8" library="24x16_RGB_Top" deviceset="SLOT" device="">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
 </part>
-<part name="SLOT9" library="24x16_RGB_Bottom" deviceset="SLOT" device="">
+<part name="SLOT9" library="24x16_RGB_Top" deviceset="SLOT" device="">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
 </part>
-<part name="SLOT10" library="24x16_RGB_Bottom" deviceset="SLOT" device="">
+<part name="SLOT10" library="24x16_RGB_Top" deviceset="SLOT" device="">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
 </part>
-<part name="SLOT11" library="24x16_RGB_Bottom" deviceset="SLOT" device="">
+<part name="SLOT11" library="24x16_RGB_Top" deviceset="SLOT" device="">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
 </part>
-<part name="SLOT12" library="24x16_RGB_Bottom" deviceset="SLOT" device="">
+<part name="SLOT12" library="24x16_RGB_Top" deviceset="SLOT" device="">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
 </part>
-<part name="SLOT13" library="24x16_RGB_Bottom" deviceset="SLOT" device="">
+<part name="SLOT13" library="24x16_RGB_Top" deviceset="SLOT" device="">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
 </part>
-<part name="SLOT14" library="24x16_RGB_Bottom" deviceset="SLOT" device="">
+<part name="SLOT14" library="24x16_RGB_Top" deviceset="SLOT" device="">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
 </part>
-<part name="SLOT15" library="24x16_RGB_Bottom" deviceset="SLOT" device="">
+<part name="SLOT15" library="24x16_RGB_Top" deviceset="SLOT" device="">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
 </part>
-<part name="SLOT16" library="24x16_RGB_Bottom" deviceset="SLOT" device="">
+<part name="SLOT16" library="24x16_RGB_Top" deviceset="SLOT" device="">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
