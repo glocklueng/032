@@ -2605,6 +2605,66 @@ chip</description>
 <text x="-0.762" y="1.27" size="0.4064" layer="25">&gt;Name</text>
 <text x="-1.016" y="-1.524" size="0.4064" layer="27">&gt;Value</text>
 </package>
+<package name="TACTILE_SWITCH_SMD">
+<wire x1="-1.54" y1="-2.54" x2="-2.54" y2="-1.54" width="0.2032" layer="51"/>
+<wire x1="-2.54" y1="-1.24" x2="-2.54" y2="1.27" width="0.2032" layer="21"/>
+<wire x1="-2.54" y1="1.54" x2="-1.54" y2="2.54" width="0.2032" layer="51"/>
+<wire x1="-1.54" y1="2.54" x2="1.54" y2="2.54" width="0.2032" layer="21"/>
+<wire x1="1.54" y1="2.54" x2="2.54" y2="1.54" width="0.2032" layer="51"/>
+<wire x1="2.54" y1="1.24" x2="2.54" y2="-1.24" width="0.2032" layer="21"/>
+<wire x1="2.54" y1="-1.54" x2="1.54" y2="-2.54" width="0.2032" layer="51"/>
+<wire x1="1.54" y1="-2.54" x2="-1.54" y2="-2.54" width="0.2032" layer="21"/>
+<wire x1="1.905" y1="1.27" x2="1.905" y2="0.445" width="0.127" layer="51"/>
+<wire x1="1.905" y1="0.445" x2="2.16" y2="-0.01" width="0.127" layer="51"/>
+<wire x1="1.905" y1="-0.23" x2="1.905" y2="-1.115" width="0.127" layer="51"/>
+<circle x="0" y="0" radius="1.27" width="0.2032" layer="21"/>
+<smd name="1" x="-2.54" y="1.905" dx="0.762" dy="1.524" layer="1" rot="R90"/>
+<smd name="2" x="2.54" y="1.905" dx="0.762" dy="1.524" layer="1" rot="R90"/>
+<smd name="3" x="-2.54" y="-1.905" dx="0.762" dy="1.524" layer="1" rot="R90"/>
+<smd name="4" x="2.54" y="-1.905" dx="0.762" dy="1.524" layer="1" rot="R90"/>
+<text x="-0.889" y="1.778" size="0.4064" layer="25">&gt;NAME</text>
+<text x="-0.889" y="-2.032" size="0.4064" layer="27">&gt;Value</text>
+</package>
+<package name="TACTILE-PTH">
+<description>&lt;b&gt;OMRON SWITCH&lt;/b&gt;</description>
+<wire x1="3.048" y1="1.016" x2="3.048" y2="2.54" width="0.2032" layer="51"/>
+<wire x1="3.048" y1="2.54" x2="2.54" y2="3.048" width="0.2032" layer="51"/>
+<wire x1="2.54" y1="-3.048" x2="3.048" y2="-2.54" width="0.2032" layer="51"/>
+<wire x1="3.048" y1="-2.54" x2="3.048" y2="-1.016" width="0.2032" layer="51"/>
+<wire x1="-2.54" y1="3.048" x2="-3.048" y2="2.54" width="0.2032" layer="51"/>
+<wire x1="-3.048" y1="2.54" x2="-3.048" y2="1.016" width="0.2032" layer="51"/>
+<wire x1="-2.54" y1="-3.048" x2="-3.048" y2="-2.54" width="0.2032" layer="51"/>
+<wire x1="-3.048" y1="-2.54" x2="-3.048" y2="-1.016" width="0.2032" layer="51"/>
+<wire x1="2.54" y1="-3.048" x2="2.159" y2="-3.048" width="0.2032" layer="51"/>
+<wire x1="-2.54" y1="-3.048" x2="-2.159" y2="-3.048" width="0.2032" layer="51"/>
+<wire x1="-2.54" y1="3.048" x2="-2.159" y2="3.048" width="0.2032" layer="51"/>
+<wire x1="2.54" y1="3.048" x2="2.159" y2="3.048" width="0.2032" layer="51"/>
+<wire x1="2.159" y1="3.048" x2="-2.159" y2="3.048" width="0.2032" layer="21"/>
+<wire x1="-2.159" y1="-3.048" x2="2.159" y2="-3.048" width="0.2032" layer="21"/>
+<wire x1="3.048" y1="0.998" x2="3.048" y2="-1.016" width="0.2032" layer="21"/>
+<wire x1="-3.048" y1="1.028" x2="-3.048" y2="-1.016" width="0.2032" layer="21"/>
+<wire x1="-2.54" y1="1.27" x2="-2.54" y2="0.508" width="0.2032" layer="51"/>
+<wire x1="-2.54" y1="-0.508" x2="-2.54" y2="-1.27" width="0.2032" layer="51"/>
+<wire x1="-2.54" y1="0.508" x2="-2.159" y2="-0.381" width="0.2032" layer="51"/>
+<circle x="0" y="0" radius="1.778" width="0.2032" layer="21"/>
+<pad name="1" x="-3.2512" y="2.2606" drill="1.016" diameter="1.8796"/>
+<pad name="2" x="3.2512" y="2.2606" drill="1.016" diameter="1.8796"/>
+<pad name="3" x="-3.2512" y="-2.2606" drill="1.016" diameter="1.8796"/>
+<pad name="4" x="3.2512" y="-2.2606" drill="1.016" diameter="1.8796"/>
+<text x="-2.54" y="3.81" size="1.27" layer="25" ratio="10">&gt;NAME</text>
+</package>
+<package name="KSA_SEALED_TAC_SWITCH">
+<wire x1="0" y1="1.27" x2="0" y2="-1.27" width="0.127" layer="21"/>
+<wire x1="-1.27" y1="0" x2="1.27" y2="0" width="0.127" layer="21"/>
+<wire x1="-5.08" y1="3.81" x2="5.08" y2="3.81" width="0.127" layer="21"/>
+<wire x1="5.08" y1="3.81" x2="5.08" y2="-3.81" width="0.127" layer="21"/>
+<wire x1="5.08" y1="-3.81" x2="-5.08" y2="-3.81" width="0.127" layer="21"/>
+<wire x1="-5.08" y1="-3.81" x2="-5.08" y2="3.81" width="0.127" layer="21"/>
+<pad name="P$1" x="-3.81" y="2.54" drill="1" shape="square"/>
+<pad name="P$2" x="3.81" y="2.54" drill="1" shape="square"/>
+<pad name="P$3" x="-3.81" y="-2.54" drill="1" shape="square"/>
+<pad name="P$4" x="3.81" y="-2.54" drill="1" shape="square"/>
+</package>
 </packages>
 <symbols>
 <symbol name="VCC2">
@@ -2642,6 +2702,27 @@ chip</description>
 <rectangle x1="-2.032" y1="1.524" x2="2.032" y2="2.032" layer="94"/>
 <pin name="1" x="0" y="5.08" visible="off" length="short" direction="pas" swaplevel="1" rot="R270"/>
 <pin name="2" x="0" y="-2.54" visible="off" length="short" direction="pas" swaplevel="1" rot="R90"/>
+</symbol>
+<symbol name="SWITCH-MOMENTARY">
+<wire x1="1.905" y1="0" x2="2.54" y2="0" width="0.254" layer="94"/>
+<wire x1="1.905" y1="4.445" x2="1.905" y2="3.175" width="0.254" layer="94"/>
+<wire x1="-1.905" y1="4.445" x2="-1.905" y2="3.175" width="0.254" layer="94"/>
+<wire x1="1.905" y1="4.445" x2="0" y2="4.445" width="0.254" layer="94"/>
+<wire x1="0" y1="4.445" x2="-1.905" y2="4.445" width="0.254" layer="94"/>
+<wire x1="0" y1="2.54" x2="0" y2="1.905" width="0.1524" layer="94"/>
+<wire x1="0" y1="1.27" x2="0" y2="0.635" width="0.1524" layer="94"/>
+<wire x1="0" y1="4.445" x2="0" y2="3.175" width="0.1524" layer="94"/>
+<wire x1="2.54" y1="-2.54" x2="2.54" y2="0" width="0.1524" layer="94"/>
+<wire x1="-2.54" y1="-2.54" x2="-2.54" y2="0" width="0.1524" layer="94"/>
+<wire x1="-2.54" y1="0" x2="1.905" y2="1.27" width="0.254" layer="94"/>
+<circle x="-2.54" y="0" radius="0.127" width="0.4064" layer="94"/>
+<circle x="2.54" y="0" radius="0.127" width="0.4064" layer="94"/>
+<text x="-2.54" y="6.35" size="1.778" layer="95">&gt;NAME</text>
+<text x="-2.54" y="-6.35" size="1.778" layer="96">&gt;VALUE</text>
+<pin name="1" x="-5.08" y="0" visible="pad" length="short" direction="pas" swaplevel="2"/>
+<pin name="3" x="5.08" y="0" visible="pad" length="short" direction="pas" swaplevel="1" rot="R180"/>
+<pin name="4" x="5.08" y="-2.54" visible="pad" length="short" direction="pas" swaplevel="1" rot="R180"/>
+<pin name="2" x="-5.08" y="-2.54" visible="pad" length="short" direction="pas" swaplevel="2"/>
 </symbol>
 </symbols>
 <devicesets>
@@ -2997,6 +3078,48 @@ Standard 0603 ceramic capacitor, and 0.1" leaded capacitor.</description>
 <connects>
 <connect gate="G$1" pin="1" pad="1"/>
 <connect gate="G$1" pin="2" pad="2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="TAC_SWITCH" prefix="S" uservalue="yes">
+<description>&lt;b&gt;Momentary Switch&lt;/b&gt;
+Button commonly used for reset or general input. Spark Fun Electronics SKU : COM-00097</description>
+<gates>
+<gate name="S" symbol="SWITCH-MOMENTARY" x="0" y="0"/>
+</gates>
+<devices>
+<device name="SMD" package="TACTILE_SWITCH_SMD">
+<connects>
+<connect gate="S" pin="1" pad="1"/>
+<connect gate="S" pin="2" pad="2"/>
+<connect gate="S" pin="3" pad="3"/>
+<connect gate="S" pin="4" pad="4"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+<device name="PTH" package="TACTILE-PTH">
+<connects>
+<connect gate="S" pin="1" pad="1"/>
+<connect gate="S" pin="2" pad="2"/>
+<connect gate="S" pin="3" pad="3"/>
+<connect gate="S" pin="4" pad="4"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+<device name="KSA_SEALED" package="KSA_SEALED_TAC_SWITCH">
+<connects>
+<connect gate="S" pin="1" pad="P$1"/>
+<connect gate="S" pin="2" pad="P$2"/>
+<connect gate="S" pin="3" pad="P$3"/>
+<connect gate="S" pin="4" pad="P$4"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -3638,79 +3761,81 @@ Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
 <part name="R1" library="Nullspace" deviceset="SPARKFUN_RESISTOR" device="0402-RES" value="620"/>
 <part name="Q1" library="zetex" deviceset="PNPSOT323" device="SOT416" value="BC857AT115"/>
 <part name="LED1" library="led" deviceset="LED" device="CHIPLED_1206"/>
-<part name="LED2" library="led" deviceset="LED" device="CHIPLED_1206"/>
-<part name="LED3" library="led" deviceset="LED" device="CHIPLED_1206"/>
-<part name="LED4" library="led" deviceset="LED" device="CHIPLED_1206"/>
-<part name="LED5" library="led" deviceset="LED" device="CHIPLED_1206"/>
-<part name="LED6" library="led" deviceset="LED" device="CHIPLED_1206"/>
+<part name="LED7" library="led" deviceset="LED" device="CHIPLED_1206"/>
+<part name="LED13" library="led" deviceset="LED" device="CHIPLED_1206"/>
+<part name="LED19" library="led" deviceset="LED" device="CHIPLED_1206"/>
+<part name="LED25" library="led" deviceset="LED" device="CHIPLED_1206"/>
+<part name="LED31" library="led" deviceset="LED" device="CHIPLED_1206"/>
 <part name="R2" library="Nullspace" deviceset="SPARKFUN_RESISTOR" device="0603-RES" value="620"/>
 <part name="Q2" library="zetex" deviceset="PNPSOT323" device="SOT416" value="BC857AT115"/>
-<part name="LED7" library="led" deviceset="LED" device="CHIPLED_1206"/>
+<part name="LED2" library="led" deviceset="LED" device="CHIPLED_1206"/>
 <part name="LED8" library="led" deviceset="LED" device="CHIPLED_1206"/>
-<part name="LED9" library="led" deviceset="LED" device="CHIPLED_1206"/>
-<part name="LED10" library="led" deviceset="LED" device="CHIPLED_1206"/>
-<part name="LED11" library="led" deviceset="LED" device="CHIPLED_1206"/>
-<part name="LED12" library="led" deviceset="LED" device="CHIPLED_1206"/>
+<part name="LED14" library="led" deviceset="LED" device="CHIPLED_1206"/>
+<part name="LED20" library="led" deviceset="LED" device="CHIPLED_1206"/>
+<part name="LED26" library="led" deviceset="LED" device="CHIPLED_1206"/>
+<part name="LED32" library="led" deviceset="LED" device="CHIPLED_1206"/>
 <part name="R3" library="Nullspace" deviceset="SPARKFUN_RESISTOR" device="0603-RES" value="620"/>
 <part name="Q3" library="zetex" deviceset="PNPSOT323" device="SOT416" value="BC857AT115"/>
-<part name="LED13" library="led" deviceset="LED" device="CHIPLED_1206"/>
-<part name="LED14" library="led" deviceset="LED" device="CHIPLED_1206"/>
+<part name="LED3" library="led" deviceset="LED" device="CHIPLED_1206"/>
+<part name="LED9" library="led" deviceset="LED" device="CHIPLED_1206"/>
 <part name="LED15" library="led" deviceset="LED" device="CHIPLED_1206"/>
-<part name="LED16" library="led" deviceset="LED" device="CHIPLED_1206"/>
-<part name="LED17" library="led" deviceset="LED" device="CHIPLED_1206"/>
-<part name="LED18" library="led" deviceset="LED" device="CHIPLED_1206"/>
+<part name="LED21" library="led" deviceset="LED" device="CHIPLED_1206"/>
+<part name="LED27" library="led" deviceset="LED" device="CHIPLED_1206"/>
+<part name="LED33" library="led" deviceset="LED" device="CHIPLED_1206"/>
 <part name="R4" library="Nullspace" deviceset="SPARKFUN_RESISTOR" device="0603-RES" value="620"/>
 <part name="Q4" library="zetex" deviceset="PNPSOT323" device="SOT416" value="BC857AT115"/>
-<part name="LED19" library="led" deviceset="LED" device="CHIPLED_1206"/>
-<part name="LED20" library="led" deviceset="LED" device="CHIPLED_1206"/>
-<part name="LED21" library="led" deviceset="LED" device="CHIPLED_1206"/>
+<part name="LED4" library="led" deviceset="LED" device="CHIPLED_1206"/>
+<part name="LED10" library="led" deviceset="LED" device="CHIPLED_1206"/>
+<part name="LED16" library="led" deviceset="LED" device="CHIPLED_1206"/>
 <part name="LED22" library="led" deviceset="LED" device="CHIPLED_1206"/>
-<part name="LED23" library="led" deviceset="LED" device="CHIPLED_1206"/>
-<part name="LED24" library="led" deviceset="LED" device="CHIPLED_1206"/>
+<part name="LED28" library="led" deviceset="LED" device="CHIPLED_1206"/>
+<part name="LED34" library="led" deviceset="LED" device="CHIPLED_1206"/>
 <part name="R5" library="Nullspace" deviceset="SPARKFUN_RESISTOR" device="0603-RES" value="620"/>
 <part name="Q5" library="zetex" deviceset="PNPSOT323" device="SOT416" value="BC857AT115"/>
-<part name="LED25" library="led" deviceset="LED" device="CHIPLED_1206"/>
-<part name="LED26" library="led" deviceset="LED" device="CHIPLED_1206"/>
-<part name="LED27" library="led" deviceset="LED" device="CHIPLED_1206"/>
-<part name="LED28" library="led" deviceset="LED" device="CHIPLED_1206"/>
+<part name="LED5" library="led" deviceset="LED" device="CHIPLED_1206"/>
+<part name="LED11" library="led" deviceset="LED" device="CHIPLED_1206"/>
+<part name="LED17" library="led" deviceset="LED" device="CHIPLED_1206"/>
+<part name="LED23" library="led" deviceset="LED" device="CHIPLED_1206"/>
 <part name="LED29" library="led" deviceset="LED" device="CHIPLED_1206"/>
-<part name="LED30" library="led" deviceset="LED" device="CHIPLED_1206"/>
+<part name="LED35" library="led" deviceset="LED" device="CHIPLED_1206"/>
 <part name="R6" library="Nullspace" deviceset="SPARKFUN_RESISTOR" device="0603-RES" value="620"/>
 <part name="Q6" library="zetex" deviceset="PNPSOT323" device="SOT416" value="BC857AT115"/>
-<part name="LED31" library="led" deviceset="LED" device="CHIPLED_1206"/>
-<part name="LED32" library="led" deviceset="LED" device="CHIPLED_1206"/>
-<part name="LED33" library="led" deviceset="LED" device="CHIPLED_1206"/>
-<part name="LED34" library="led" deviceset="LED" device="CHIPLED_1206"/>
-<part name="LED35" library="led" deviceset="LED" device="CHIPLED_1206"/>
+<part name="LED6" library="led" deviceset="LED" device="CHIPLED_1206"/>
+<part name="LED12" library="led" deviceset="LED" device="CHIPLED_1206"/>
+<part name="LED18" library="led" deviceset="LED" device="CHIPLED_1206"/>
+<part name="LED24" library="led" deviceset="LED" device="CHIPLED_1206"/>
+<part name="LED30" library="led" deviceset="LED" device="CHIPLED_1206"/>
 <part name="LED36" library="led" deviceset="LED" device="CHIPLED_1206"/>
 <part name="Q7" library="fairchild-semic" deviceset="DUALNPN" device="" value="FMB2222A"/>
 <part name="Q8" library="fairchild-semic" deviceset="DUALNPN" device="" value="FMB2222A"/>
 <part name="Q9" library="fairchild-semic" deviceset="DUALNPN" device="" value="FMB2222A"/>
 <part name="GND1" library="supply1" deviceset="GND" device=""/>
-<part name="R13" library="Nullspace" deviceset="SPARKFUN_RESISTOR" device="0603-RES" value="620"/>
+<part name="R8" library="Nullspace" deviceset="SPARKFUN_RESISTOR" device="0603-RES" value="620"/>
+<part name="R11" library="Nullspace" deviceset="SPARKFUN_RESISTOR" device="0603-RES" value="620"/>
 <part name="R14" library="Nullspace" deviceset="SPARKFUN_RESISTOR" device="0603-RES" value="620"/>
-<part name="R15" library="Nullspace" deviceset="SPARKFUN_RESISTOR" device="0603-RES" value="620"/>
-<part name="R16" library="Nullspace" deviceset="SPARKFUN_RESISTOR" device="0603-RES" value="620"/>
 <part name="R17" library="Nullspace" deviceset="SPARKFUN_RESISTOR" device="0603-RES" value="620"/>
-<part name="R18" library="Nullspace" deviceset="SPARKFUN_RESISTOR" device="0603-RES" value="620"/>
-<part name="R19" library="Nullspace" deviceset="SPARKFUN_RESISTOR" device="0603-RES" value="10k"/>
-<part name="R20" library="Nullspace" deviceset="SPARKFUN_RESISTOR" device="0603-RES" value="10k"/>
+<part name="R20" library="Nullspace" deviceset="SPARKFUN_RESISTOR" device="0603-RES" value="620"/>
+<part name="R23" library="Nullspace" deviceset="SPARKFUN_RESISTOR" device="0603-RES" value="620"/>
+<part name="R7" library="Nullspace" deviceset="SPARKFUN_RESISTOR" device="0603-RES" value="10k"/>
+<part name="R10" library="Nullspace" deviceset="SPARKFUN_RESISTOR" device="0603-RES" value="10k"/>
+<part name="R12" library="Nullspace" deviceset="SPARKFUN_RESISTOR" device="0603-RES" value="10k"/>
+<part name="R16" library="Nullspace" deviceset="SPARKFUN_RESISTOR" device="0603-RES" value="10k"/>
+<part name="R18" library="Nullspace" deviceset="SPARKFUN_RESISTOR" device="0603-RES" value="10k"/>
 <part name="R21" library="Nullspace" deviceset="SPARKFUN_RESISTOR" device="0603-RES" value="10k"/>
-<part name="R22" library="Nullspace" deviceset="SPARKFUN_RESISTOR" device="0603-RES" value="10k"/>
-<part name="R23" library="Nullspace" deviceset="SPARKFUN_RESISTOR" device="0603-RES" value="10k"/>
-<part name="R24" library="Nullspace" deviceset="SPARKFUN_RESISTOR" device="0603-RES" value="10k"/>
 <part name="GND2" library="supply1" deviceset="GND" device=""/>
 <part name="GND3" library="supply1" deviceset="GND" device=""/>
 <part name="GND5" library="supply1" deviceset="GND" device=""/>
 <part name="GND6" library="supply1" deviceset="GND" device=""/>
 <part name="GND7" library="supply1" deviceset="GND" device=""/>
 <part name="GND8" library="supply1" deviceset="GND" device=""/>
-<part name="R7" library="Nullspace" deviceset="SPARKFUN_RESISTOR" device="0603-RES" value="1K"/>
-<part name="R8" library="Nullspace" deviceset="SPARKFUN_RESISTOR" device="0603-RES" value="1K"/>
 <part name="R9" library="Nullspace" deviceset="SPARKFUN_RESISTOR" device="0603-RES" value="1K"/>
-<part name="R10" library="Nullspace" deviceset="SPARKFUN_RESISTOR" device="0603-RES" value="1K"/>
-<part name="R11" library="Nullspace" deviceset="SPARKFUN_RESISTOR" device="0603-RES" value="1K"/>
-<part name="R12" library="Nullspace" deviceset="SPARKFUN_RESISTOR" device="0603-RES" value="1K"/>
+<part name="R13" library="Nullspace" deviceset="SPARKFUN_RESISTOR" device="0603-RES" value="1K"/>
+<part name="R15" library="Nullspace" deviceset="SPARKFUN_RESISTOR" device="0603-RES" value="1K"/>
+<part name="R19" library="Nullspace" deviceset="SPARKFUN_RESISTOR" device="0603-RES" value="1K"/>
+<part name="R22" library="Nullspace" deviceset="SPARKFUN_RESISTOR" device="0603-RES" value="1K"/>
+<part name="R24" library="Nullspace" deviceset="SPARKFUN_RESISTOR" device="0603-RES" value="1K"/>
+<part name="S1" library="SparkFun" deviceset="TAC_SWITCH" device="SMD"/>
+<part name="GND10" library="supply1" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -3725,6 +3850,8 @@ Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
 <instance part="C1" gate="G$1" x="25.4" y="-58.42"/>
 <instance part="P+2" gate="1" x="25.4" y="-48.26"/>
 <instance part="GND9" gate="1" x="25.4" y="-68.58"/>
+<instance part="S1" gate="S" x="71.12" y="22.86"/>
+<instance part="GND10" gate="1" x="58.42" y="17.78"/>
 </instances>
 <busses>
 </busses>
@@ -3775,6 +3902,17 @@ Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
 <wire x1="25.4" y1="-60.96" x2="25.4" y2="-66.04" width="0.1524" layer="91"/>
 <pinref part="C1" gate="G$1" pin="2"/>
 <pinref part="GND9" gate="1" pin="GND"/>
+</segment>
+<segment>
+<wire x1="66.04" y1="20.32" x2="63.5" y2="20.32" width="0.1524" layer="91"/>
+<wire x1="63.5" y1="20.32" x2="60.96" y2="20.32" width="0.1524" layer="91"/>
+<wire x1="66.04" y1="22.86" x2="63.5" y2="22.86" width="0.1524" layer="91"/>
+<wire x1="63.5" y1="22.86" x2="63.5" y2="20.32" width="0.1524" layer="91"/>
+<junction x="63.5" y="20.32"/>
+<pinref part="S1" gate="S" pin="2"/>
+<pinref part="S1" gate="S" pin="1"/>
+<pinref part="GND10" gate="1" pin="GND"/>
+<wire x1="60.96" y1="20.32" x2="58.42" y2="20.32" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="MISO" class="0">
@@ -3902,6 +4040,18 @@ Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
 <pinref part="IC1" gate="G$1" pin="(AIN1)PB1"/>
 </segment>
 </net>
+<net name="PD6" class="0">
+<segment>
+<wire x1="76.2" y1="20.32" x2="81.28" y2="20.32" width="0.1524" layer="91"/>
+<label x="78.74" y="20.32" size="1.778" layer="95"/>
+<pinref part="S1" gate="S" pin="4"/>
+</segment>
+<segment>
+<pinref part="IC1" gate="G$1" pin="(ICP)PD6"/>
+<wire x1="17.78" y1="-12.7" x2="27.94" y2="-12.7" width="0.1524" layer="91"/>
+<label x="27.94" y="-12.7" size="1.778" layer="95"/>
+</segment>
+</net>
 </nets>
 </sheet>
 <sheet>
@@ -3914,65 +4064,65 @@ Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
 <attribute name="VALUE" x="2.54" y="50.8" size="1.778" layer="96"/>
 </instance>
 <instance part="LED1" gate="G$1" x="30.48" y="38.1"/>
-<instance part="LED2" gate="G$1" x="38.1" y="38.1"/>
-<instance part="LED3" gate="G$1" x="45.72" y="38.1"/>
-<instance part="LED4" gate="G$1" x="55.88" y="38.1"/>
-<instance part="LED5" gate="G$1" x="63.5" y="38.1"/>
-<instance part="LED6" gate="G$1" x="71.12" y="38.1"/>
+<instance part="LED7" gate="G$1" x="38.1" y="38.1"/>
+<instance part="LED13" gate="G$1" x="45.72" y="38.1"/>
+<instance part="LED19" gate="G$1" x="55.88" y="38.1"/>
+<instance part="LED25" gate="G$1" x="63.5" y="38.1"/>
+<instance part="LED31" gate="G$1" x="71.12" y="38.1"/>
 <instance part="R2" gate="G$1" x="-7.62" y="27.94"/>
 <instance part="Q2" gate="A" x="12.7" y="27.94" smashed="yes">
 <attribute name="NAME" x="2.54" y="35.56" size="1.778" layer="95"/>
 <attribute name="VALUE" x="2.54" y="33.02" size="1.778" layer="96"/>
 </instance>
-<instance part="LED7" gate="G$1" x="30.48" y="20.32"/>
+<instance part="LED2" gate="G$1" x="30.48" y="20.32"/>
 <instance part="LED8" gate="G$1" x="38.1" y="20.32"/>
-<instance part="LED9" gate="G$1" x="45.72" y="20.32"/>
-<instance part="LED10" gate="G$1" x="55.88" y="20.32"/>
-<instance part="LED11" gate="G$1" x="63.5" y="20.32"/>
-<instance part="LED12" gate="G$1" x="71.12" y="20.32"/>
+<instance part="LED14" gate="G$1" x="45.72" y="20.32"/>
+<instance part="LED20" gate="G$1" x="55.88" y="20.32"/>
+<instance part="LED26" gate="G$1" x="63.5" y="20.32"/>
+<instance part="LED32" gate="G$1" x="71.12" y="20.32"/>
 <instance part="R3" gate="G$1" x="-7.62" y="10.16"/>
 <instance part="Q3" gate="A" x="12.7" y="10.16" smashed="yes">
 <attribute name="NAME" x="2.54" y="17.78" size="1.778" layer="95"/>
 <attribute name="VALUE" x="2.54" y="15.24" size="1.778" layer="96"/>
 </instance>
-<instance part="LED13" gate="G$1" x="30.48" y="2.54"/>
-<instance part="LED14" gate="G$1" x="38.1" y="2.54"/>
+<instance part="LED3" gate="G$1" x="30.48" y="2.54"/>
+<instance part="LED9" gate="G$1" x="38.1" y="2.54"/>
 <instance part="LED15" gate="G$1" x="45.72" y="2.54"/>
-<instance part="LED16" gate="G$1" x="55.88" y="2.54"/>
-<instance part="LED17" gate="G$1" x="63.5" y="2.54"/>
-<instance part="LED18" gate="G$1" x="71.12" y="2.54"/>
+<instance part="LED21" gate="G$1" x="55.88" y="2.54"/>
+<instance part="LED27" gate="G$1" x="63.5" y="2.54"/>
+<instance part="LED33" gate="G$1" x="71.12" y="2.54"/>
 <instance part="R4" gate="G$1" x="-7.62" y="-7.62"/>
 <instance part="Q4" gate="A" x="12.7" y="-7.62" smashed="yes">
 <attribute name="NAME" x="2.54" y="0" size="1.778" layer="95"/>
 <attribute name="VALUE" x="2.54" y="-2.54" size="1.778" layer="96"/>
 </instance>
-<instance part="LED19" gate="G$1" x="30.48" y="-15.24"/>
-<instance part="LED20" gate="G$1" x="38.1" y="-15.24"/>
-<instance part="LED21" gate="G$1" x="45.72" y="-15.24"/>
+<instance part="LED4" gate="G$1" x="30.48" y="-15.24"/>
+<instance part="LED10" gate="G$1" x="38.1" y="-15.24"/>
+<instance part="LED16" gate="G$1" x="45.72" y="-15.24"/>
 <instance part="LED22" gate="G$1" x="55.88" y="-15.24"/>
-<instance part="LED23" gate="G$1" x="63.5" y="-15.24"/>
-<instance part="LED24" gate="G$1" x="71.12" y="-15.24"/>
+<instance part="LED28" gate="G$1" x="63.5" y="-15.24"/>
+<instance part="LED34" gate="G$1" x="71.12" y="-15.24"/>
 <instance part="R5" gate="G$1" x="-7.62" y="-25.4"/>
 <instance part="Q5" gate="A" x="12.7" y="-25.4" smashed="yes">
 <attribute name="NAME" x="2.54" y="-17.78" size="1.778" layer="95"/>
 <attribute name="VALUE" x="2.54" y="-20.32" size="1.778" layer="96"/>
 </instance>
-<instance part="LED25" gate="G$1" x="30.48" y="-33.02"/>
-<instance part="LED26" gate="G$1" x="38.1" y="-33.02"/>
-<instance part="LED27" gate="G$1" x="45.72" y="-33.02"/>
-<instance part="LED28" gate="G$1" x="55.88" y="-33.02"/>
+<instance part="LED5" gate="G$1" x="30.48" y="-33.02"/>
+<instance part="LED11" gate="G$1" x="38.1" y="-33.02"/>
+<instance part="LED17" gate="G$1" x="45.72" y="-33.02"/>
+<instance part="LED23" gate="G$1" x="55.88" y="-33.02"/>
 <instance part="LED29" gate="G$1" x="63.5" y="-33.02"/>
-<instance part="LED30" gate="G$1" x="71.12" y="-33.02"/>
+<instance part="LED35" gate="G$1" x="71.12" y="-33.02"/>
 <instance part="R6" gate="G$1" x="-7.62" y="-43.18"/>
 <instance part="Q6" gate="A" x="12.7" y="-43.18" smashed="yes">
 <attribute name="NAME" x="2.54" y="-35.56" size="1.778" layer="95"/>
 <attribute name="VALUE" x="2.54" y="-38.1" size="1.778" layer="96"/>
 </instance>
-<instance part="LED31" gate="G$1" x="30.48" y="-50.8"/>
-<instance part="LED32" gate="G$1" x="38.1" y="-50.8"/>
-<instance part="LED33" gate="G$1" x="45.72" y="-50.8"/>
-<instance part="LED34" gate="G$1" x="55.88" y="-50.8"/>
-<instance part="LED35" gate="G$1" x="63.5" y="-50.8"/>
+<instance part="LED6" gate="G$1" x="30.48" y="-50.8"/>
+<instance part="LED12" gate="G$1" x="38.1" y="-50.8"/>
+<instance part="LED18" gate="G$1" x="45.72" y="-50.8"/>
+<instance part="LED24" gate="G$1" x="55.88" y="-50.8"/>
+<instance part="LED30" gate="G$1" x="63.5" y="-50.8"/>
 <instance part="LED36" gate="G$1" x="71.12" y="-50.8"/>
 <instance part="Q7" gate="G$1" x="33.02" y="-68.58" smashed="yes">
 <attribute name="NAME" x="22.86" y="-60.96" size="1.778" layer="95"/>
@@ -3999,30 +4149,30 @@ Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
 <attribute name="VALUE" x="48.26" y="-63.5" size="1.778" layer="96"/>
 </instance>
 <instance part="GND1" gate="1" x="43.18" y="-99.06"/>
-<instance part="R13" gate="G$1" x="20.32" y="-99.06" rot="R90"/>
-<instance part="R14" gate="G$1" x="30.48" y="-99.06" rot="R90"/>
-<instance part="R15" gate="G$1" x="38.1" y="-99.06" rot="R90"/>
-<instance part="R16" gate="G$1" x="48.26" y="-99.06" rot="R90"/>
-<instance part="R17" gate="G$1" x="55.88" y="-99.06" rot="R90"/>
-<instance part="R18" gate="G$1" x="63.5" y="-99.06" rot="R90"/>
-<instance part="R19" gate="G$1" x="15.24" y="-121.92" rot="R270"/>
-<instance part="R20" gate="G$1" x="25.4" y="-121.92" rot="R270"/>
-<instance part="R21" gate="G$1" x="33.02" y="-121.92" rot="R270"/>
-<instance part="R22" gate="G$1" x="43.18" y="-121.92" rot="R270"/>
-<instance part="R23" gate="G$1" x="50.8" y="-121.92" rot="R270"/>
-<instance part="R24" gate="G$1" x="58.42" y="-121.92" rot="R270"/>
+<instance part="R8" gate="G$1" x="20.32" y="-99.06" rot="R90"/>
+<instance part="R11" gate="G$1" x="30.48" y="-99.06" rot="R90"/>
+<instance part="R14" gate="G$1" x="38.1" y="-99.06" rot="R90"/>
+<instance part="R17" gate="G$1" x="48.26" y="-99.06" rot="R90"/>
+<instance part="R20" gate="G$1" x="55.88" y="-99.06" rot="R90"/>
+<instance part="R23" gate="G$1" x="63.5" y="-99.06" rot="R90"/>
+<instance part="R7" gate="G$1" x="15.24" y="-121.92" rot="R270"/>
+<instance part="R10" gate="G$1" x="25.4" y="-121.92" rot="R270"/>
+<instance part="R12" gate="G$1" x="33.02" y="-121.92" rot="R270"/>
+<instance part="R16" gate="G$1" x="43.18" y="-121.92" rot="R270"/>
+<instance part="R18" gate="G$1" x="50.8" y="-121.92" rot="R270"/>
+<instance part="R21" gate="G$1" x="58.42" y="-121.92" rot="R270"/>
 <instance part="GND2" gate="1" x="15.24" y="-134.62"/>
 <instance part="GND3" gate="1" x="25.4" y="-134.62"/>
 <instance part="GND5" gate="1" x="33.02" y="-134.62"/>
 <instance part="GND6" gate="1" x="43.18" y="-134.62"/>
 <instance part="GND7" gate="1" x="50.8" y="-134.62"/>
 <instance part="GND8" gate="1" x="58.42" y="-134.62"/>
-<instance part="R7" gate="G$1" x="25.4" y="-81.28" rot="R90"/>
-<instance part="R8" gate="G$1" x="35.56" y="-81.28" rot="R90"/>
-<instance part="R9" gate="G$1" x="43.18" y="-81.28" rot="R90"/>
-<instance part="R10" gate="G$1" x="53.34" y="-81.28" rot="R90"/>
-<instance part="R11" gate="G$1" x="60.96" y="-81.28" rot="R90"/>
-<instance part="R12" gate="G$1" x="68.58" y="-81.28" rot="R90"/>
+<instance part="R9" gate="G$1" x="25.4" y="-81.28" rot="R90"/>
+<instance part="R13" gate="G$1" x="35.56" y="-81.28" rot="R90"/>
+<instance part="R15" gate="G$1" x="43.18" y="-81.28" rot="R90"/>
+<instance part="R19" gate="G$1" x="53.34" y="-81.28" rot="R90"/>
+<instance part="R22" gate="G$1" x="60.96" y="-81.28" rot="R90"/>
+<instance part="R24" gate="G$1" x="68.58" y="-81.28" rot="R90"/>
 </instances>
 <busses>
 </busses>
@@ -4042,11 +4192,11 @@ Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
 <junction x="63.5" y="40.64"/>
 <junction x="71.12" y="40.64"/>
 <pinref part="LED1" gate="G$1" pin="A"/>
-<pinref part="LED2" gate="G$1" pin="A"/>
-<pinref part="LED3" gate="G$1" pin="A"/>
-<pinref part="LED4" gate="G$1" pin="A"/>
-<pinref part="LED5" gate="G$1" pin="A"/>
-<pinref part="LED6" gate="G$1" pin="A"/>
+<pinref part="LED7" gate="G$1" pin="A"/>
+<pinref part="LED13" gate="G$1" pin="A"/>
+<pinref part="LED19" gate="G$1" pin="A"/>
+<pinref part="LED25" gate="G$1" pin="A"/>
+<pinref part="LED31" gate="G$1" pin="A"/>
 <pinref part="Q1" gate="A" pin="C"/>
 <junction x="30.48" y="40.64"/>
 </segment>
@@ -4107,12 +4257,12 @@ Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
 <junction x="55.88" y="22.86"/>
 <junction x="63.5" y="22.86"/>
 <junction x="71.12" y="22.86"/>
-<pinref part="LED7" gate="G$1" pin="A"/>
+<pinref part="LED2" gate="G$1" pin="A"/>
 <pinref part="LED8" gate="G$1" pin="A"/>
-<pinref part="LED9" gate="G$1" pin="A"/>
-<pinref part="LED10" gate="G$1" pin="A"/>
-<pinref part="LED11" gate="G$1" pin="A"/>
-<pinref part="LED12" gate="G$1" pin="A"/>
+<pinref part="LED14" gate="G$1" pin="A"/>
+<pinref part="LED20" gate="G$1" pin="A"/>
+<pinref part="LED26" gate="G$1" pin="A"/>
+<pinref part="LED32" gate="G$1" pin="A"/>
 <pinref part="Q2" gate="A" pin="C"/>
 <junction x="30.48" y="22.86"/>
 </segment>
@@ -4138,12 +4288,12 @@ Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
 <junction x="55.88" y="5.08"/>
 <junction x="63.5" y="5.08"/>
 <junction x="71.12" y="5.08"/>
-<pinref part="LED13" gate="G$1" pin="A"/>
-<pinref part="LED14" gate="G$1" pin="A"/>
+<pinref part="LED3" gate="G$1" pin="A"/>
+<pinref part="LED9" gate="G$1" pin="A"/>
 <pinref part="LED15" gate="G$1" pin="A"/>
-<pinref part="LED16" gate="G$1" pin="A"/>
-<pinref part="LED17" gate="G$1" pin="A"/>
-<pinref part="LED18" gate="G$1" pin="A"/>
+<pinref part="LED21" gate="G$1" pin="A"/>
+<pinref part="LED27" gate="G$1" pin="A"/>
+<pinref part="LED33" gate="G$1" pin="A"/>
 <pinref part="Q3" gate="A" pin="C"/>
 <junction x="30.48" y="5.08"/>
 </segment>
@@ -4169,12 +4319,12 @@ Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
 <junction x="55.88" y="-12.7"/>
 <junction x="63.5" y="-12.7"/>
 <junction x="71.12" y="-12.7"/>
-<pinref part="LED19" gate="G$1" pin="A"/>
-<pinref part="LED20" gate="G$1" pin="A"/>
-<pinref part="LED21" gate="G$1" pin="A"/>
+<pinref part="LED4" gate="G$1" pin="A"/>
+<pinref part="LED10" gate="G$1" pin="A"/>
+<pinref part="LED16" gate="G$1" pin="A"/>
 <pinref part="LED22" gate="G$1" pin="A"/>
-<pinref part="LED23" gate="G$1" pin="A"/>
-<pinref part="LED24" gate="G$1" pin="A"/>
+<pinref part="LED28" gate="G$1" pin="A"/>
+<pinref part="LED34" gate="G$1" pin="A"/>
 <pinref part="Q4" gate="A" pin="C"/>
 <junction x="30.48" y="-12.7"/>
 </segment>
@@ -4200,12 +4350,12 @@ Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
 <junction x="55.88" y="-30.48"/>
 <junction x="63.5" y="-30.48"/>
 <junction x="71.12" y="-30.48"/>
-<pinref part="LED25" gate="G$1" pin="A"/>
-<pinref part="LED26" gate="G$1" pin="A"/>
-<pinref part="LED27" gate="G$1" pin="A"/>
-<pinref part="LED28" gate="G$1" pin="A"/>
+<pinref part="LED5" gate="G$1" pin="A"/>
+<pinref part="LED11" gate="G$1" pin="A"/>
+<pinref part="LED17" gate="G$1" pin="A"/>
+<pinref part="LED23" gate="G$1" pin="A"/>
 <pinref part="LED29" gate="G$1" pin="A"/>
-<pinref part="LED30" gate="G$1" pin="A"/>
+<pinref part="LED35" gate="G$1" pin="A"/>
 <pinref part="Q5" gate="A" pin="C"/>
 <junction x="30.48" y="-30.48"/>
 </segment>
@@ -4231,11 +4381,11 @@ Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
 <junction x="55.88" y="-48.26"/>
 <junction x="63.5" y="-48.26"/>
 <junction x="71.12" y="-48.26"/>
-<pinref part="LED31" gate="G$1" pin="A"/>
-<pinref part="LED32" gate="G$1" pin="A"/>
-<pinref part="LED33" gate="G$1" pin="A"/>
-<pinref part="LED34" gate="G$1" pin="A"/>
-<pinref part="LED35" gate="G$1" pin="A"/>
+<pinref part="LED6" gate="G$1" pin="A"/>
+<pinref part="LED12" gate="G$1" pin="A"/>
+<pinref part="LED18" gate="G$1" pin="A"/>
+<pinref part="LED24" gate="G$1" pin="A"/>
+<pinref part="LED30" gate="G$1" pin="A"/>
 <pinref part="LED36" gate="G$1" pin="A"/>
 <pinref part="Q6" gate="A" pin="C"/>
 <junction x="30.48" y="-48.26"/>
@@ -4267,12 +4417,12 @@ Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
 <junction x="53.34" y="-20.32"/>
 <junction x="53.34" y="-38.1"/>
 <junction x="53.34" y="-55.88"/>
-<pinref part="LED4" gate="G$1" pin="C"/>
-<pinref part="LED10" gate="G$1" pin="C"/>
-<pinref part="LED16" gate="G$1" pin="C"/>
+<pinref part="LED19" gate="G$1" pin="C"/>
+<pinref part="LED20" gate="G$1" pin="C"/>
+<pinref part="LED21" gate="G$1" pin="C"/>
 <pinref part="LED22" gate="G$1" pin="C"/>
-<pinref part="LED28" gate="G$1" pin="C"/>
-<pinref part="LED34" gate="G$1" pin="C"/>
+<pinref part="LED23" gate="G$1" pin="C"/>
+<pinref part="LED24" gate="G$1" pin="C"/>
 <pinref part="Q8" gate="G$1" pin="C"/>
 </segment>
 </net>
@@ -4295,12 +4445,12 @@ Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
 <junction x="60.96" y="-20.32"/>
 <junction x="60.96" y="-38.1"/>
 <junction x="60.96" y="-55.88"/>
-<pinref part="LED5" gate="G$1" pin="C"/>
-<pinref part="LED11" gate="G$1" pin="C"/>
-<pinref part="LED17" gate="G$1" pin="C"/>
-<pinref part="LED23" gate="G$1" pin="C"/>
+<pinref part="LED25" gate="G$1" pin="C"/>
+<pinref part="LED26" gate="G$1" pin="C"/>
+<pinref part="LED27" gate="G$1" pin="C"/>
+<pinref part="LED28" gate="G$1" pin="C"/>
 <pinref part="LED29" gate="G$1" pin="C"/>
-<pinref part="LED35" gate="G$1" pin="C"/>
+<pinref part="LED30" gate="G$1" pin="C"/>
 <pinref part="Q9" gate="G$2" pin="C"/>
 </segment>
 </net>
@@ -4324,11 +4474,11 @@ Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
 <junction x="68.58" y="-38.1"/>
 <junction x="68.58" y="-55.88"/>
 <pinref part="LED36" gate="G$1" pin="C"/>
-<pinref part="LED30" gate="G$1" pin="C"/>
-<pinref part="LED24" gate="G$1" pin="C"/>
-<pinref part="LED18" gate="G$1" pin="C"/>
-<pinref part="LED12" gate="G$1" pin="C"/>
-<pinref part="LED6" gate="G$1" pin="C"/>
+<pinref part="LED35" gate="G$1" pin="C"/>
+<pinref part="LED34" gate="G$1" pin="C"/>
+<pinref part="LED33" gate="G$1" pin="C"/>
+<pinref part="LED32" gate="G$1" pin="C"/>
+<pinref part="LED31" gate="G$1" pin="C"/>
 <pinref part="Q9" gate="G$1" pin="C"/>
 </segment>
 </net>
@@ -4351,41 +4501,41 @@ Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
 <junction x="53.34" y="-88.9"/>
 <junction x="60.96" y="-88.9"/>
 <pinref part="GND1" gate="1" pin="GND"/>
-<pinref part="R7" gate="G$1" pin="1"/>
-<pinref part="R8" gate="G$1" pin="1"/>
 <pinref part="R9" gate="G$1" pin="1"/>
-<pinref part="R10" gate="G$1" pin="1"/>
-<pinref part="R11" gate="G$1" pin="1"/>
-<pinref part="R12" gate="G$1" pin="1"/>
+<pinref part="R13" gate="G$1" pin="1"/>
+<pinref part="R15" gate="G$1" pin="1"/>
+<pinref part="R19" gate="G$1" pin="1"/>
+<pinref part="R22" gate="G$1" pin="1"/>
+<pinref part="R24" gate="G$1" pin="1"/>
 </segment>
 <segment>
 <wire x1="15.24" y1="-132.08" x2="15.24" y2="-127" width="0.1524" layer="91"/>
 <pinref part="GND2" gate="1" pin="GND"/>
-<pinref part="R19" gate="G$1" pin="2"/>
+<pinref part="R7" gate="G$1" pin="2"/>
 </segment>
 <segment>
 <wire x1="25.4" y1="-127" x2="25.4" y2="-132.08" width="0.1524" layer="91"/>
-<pinref part="R20" gate="G$1" pin="2"/>
+<pinref part="R10" gate="G$1" pin="2"/>
 <pinref part="GND3" gate="1" pin="GND"/>
 </segment>
 <segment>
 <wire x1="33.02" y1="-127" x2="33.02" y2="-132.08" width="0.1524" layer="91"/>
-<pinref part="R21" gate="G$1" pin="2"/>
+<pinref part="R12" gate="G$1" pin="2"/>
 <pinref part="GND5" gate="1" pin="GND"/>
 </segment>
 <segment>
 <wire x1="43.18" y1="-127" x2="43.18" y2="-132.08" width="0.1524" layer="91"/>
-<pinref part="R22" gate="G$1" pin="2"/>
+<pinref part="R16" gate="G$1" pin="2"/>
 <pinref part="GND6" gate="1" pin="GND"/>
 </segment>
 <segment>
 <wire x1="50.8" y1="-127" x2="50.8" y2="-132.08" width="0.1524" layer="91"/>
-<pinref part="R23" gate="G$1" pin="2"/>
+<pinref part="R18" gate="G$1" pin="2"/>
 <pinref part="GND7" gate="1" pin="GND"/>
 </segment>
 <segment>
 <wire x1="58.42" y1="-127" x2="58.42" y2="-132.08" width="0.1524" layer="91"/>
-<pinref part="R24" gate="G$1" pin="2"/>
+<pinref part="R21" gate="G$1" pin="2"/>
 <pinref part="GND8" gate="1" pin="GND"/>
 </segment>
 </net>
@@ -4444,11 +4594,11 @@ Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
 <junction x="25.4" y="-38.1"/>
 <junction x="25.4" y="-55.88"/>
 <pinref part="LED1" gate="G$1" pin="C"/>
-<pinref part="LED7" gate="G$1" pin="C"/>
-<pinref part="LED13" gate="G$1" pin="C"/>
-<pinref part="LED19" gate="G$1" pin="C"/>
-<pinref part="LED25" gate="G$1" pin="C"/>
-<pinref part="LED31" gate="G$1" pin="C"/>
+<pinref part="LED2" gate="G$1" pin="C"/>
+<pinref part="LED3" gate="G$1" pin="C"/>
+<pinref part="LED4" gate="G$1" pin="C"/>
+<pinref part="LED5" gate="G$1" pin="C"/>
+<pinref part="LED6" gate="G$1" pin="C"/>
 <pinref part="Q7" gate="G$2" pin="C"/>
 </segment>
 </net>
@@ -4471,12 +4621,12 @@ Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
 <junction x="35.56" y="-20.32"/>
 <junction x="35.56" y="-38.1"/>
 <junction x="35.56" y="-55.88"/>
-<pinref part="LED32" gate="G$1" pin="C"/>
-<pinref part="LED26" gate="G$1" pin="C"/>
-<pinref part="LED20" gate="G$1" pin="C"/>
-<pinref part="LED14" gate="G$1" pin="C"/>
+<pinref part="LED12" gate="G$1" pin="C"/>
+<pinref part="LED11" gate="G$1" pin="C"/>
+<pinref part="LED10" gate="G$1" pin="C"/>
+<pinref part="LED9" gate="G$1" pin="C"/>
 <pinref part="LED8" gate="G$1" pin="C"/>
-<pinref part="LED2" gate="G$1" pin="C"/>
+<pinref part="LED7" gate="G$1" pin="C"/>
 <pinref part="Q7" gate="G$1" pin="C"/>
 </segment>
 </net>
@@ -4495,12 +4645,12 @@ Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
 <wire x1="45.72" y1="-55.88" x2="43.18" y2="-55.88" width="0.1524" layer="91"/>
 <wire x1="43.18" y1="-63.5" x2="43.18" y2="-55.88" width="0.1524" layer="91"/>
 <junction x="43.18" y="-55.88"/>
-<pinref part="LED3" gate="G$1" pin="C"/>
-<pinref part="LED9" gate="G$1" pin="C"/>
+<pinref part="LED13" gate="G$1" pin="C"/>
+<pinref part="LED14" gate="G$1" pin="C"/>
 <pinref part="LED15" gate="G$1" pin="C"/>
-<pinref part="LED21" gate="G$1" pin="C"/>
-<pinref part="LED27" gate="G$1" pin="C"/>
-<pinref part="LED33" gate="G$1" pin="C"/>
+<pinref part="LED16" gate="G$1" pin="C"/>
+<pinref part="LED17" gate="G$1" pin="C"/>
+<pinref part="LED18" gate="G$1" pin="C"/>
 <pinref part="Q8" gate="G$2" pin="C"/>
 <junction x="43.18" y="15.24"/>
 <junction x="43.18" y="-20.32"/>
@@ -4513,7 +4663,7 @@ Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
 <wire x1="20.32" y1="-68.58" x2="20.32" y2="-93.98" width="0.1524" layer="91"/>
 <label x="20.32" y="-93.98" size="1.778" layer="95" rot="R90"/>
 <pinref part="Q7" gate="G$2" pin="B"/>
-<pinref part="R13" gate="G$1" pin="2"/>
+<pinref part="R8" gate="G$1" pin="2"/>
 </segment>
 </net>
 <net name="COL2_" class="0">
@@ -4521,7 +4671,7 @@ Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
 <wire x1="30.48" y1="-68.58" x2="30.48" y2="-93.98" width="0.1524" layer="91"/>
 <label x="30.48" y="-93.98" size="1.778" layer="95" rot="R90"/>
 <pinref part="Q7" gate="G$1" pin="B"/>
-<pinref part="R14" gate="G$1" pin="2"/>
+<pinref part="R11" gate="G$1" pin="2"/>
 </segment>
 </net>
 <net name="COL3_" class="0">
@@ -4529,7 +4679,7 @@ Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
 <wire x1="38.1" y1="-68.58" x2="38.1" y2="-93.98" width="0.1524" layer="91"/>
 <label x="38.1" y="-93.98" size="1.778" layer="95" rot="R90"/>
 <pinref part="Q8" gate="G$2" pin="B"/>
-<pinref part="R15" gate="G$1" pin="2"/>
+<pinref part="R14" gate="G$1" pin="2"/>
 </segment>
 </net>
 <net name="COL4_" class="0">
@@ -4537,7 +4687,7 @@ Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
 <wire x1="48.26" y1="-68.58" x2="48.26" y2="-93.98" width="0.1524" layer="91"/>
 <label x="48.26" y="-93.98" size="1.778" layer="95" rot="R90"/>
 <pinref part="Q8" gate="G$1" pin="B"/>
-<pinref part="R16" gate="G$1" pin="2"/>
+<pinref part="R17" gate="G$1" pin="2"/>
 </segment>
 </net>
 <net name="COL5_" class="0">
@@ -4545,7 +4695,7 @@ Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
 <wire x1="55.88" y1="-68.58" x2="55.88" y2="-93.98" width="0.1524" layer="91"/>
 <label x="55.88" y="-93.98" size="1.778" layer="95" rot="R90"/>
 <pinref part="Q9" gate="G$2" pin="B"/>
-<pinref part="R17" gate="G$1" pin="2"/>
+<pinref part="R20" gate="G$1" pin="2"/>
 </segment>
 </net>
 <net name="COL6_" class="0">
@@ -4553,7 +4703,7 @@ Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
 <wire x1="63.5" y1="-68.58" x2="63.5" y2="-93.98" width="0.1524" layer="91"/>
 <label x="63.5" y="-93.98" size="1.778" layer="95" rot="R90"/>
 <pinref part="Q9" gate="G$1" pin="B"/>
-<pinref part="R18" gate="G$1" pin="2"/>
+<pinref part="R23" gate="G$1" pin="2"/>
 </segment>
 </net>
 <net name="SCK/COL1" class="0">
@@ -4561,8 +4711,8 @@ Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
 <wire x1="20.32" y1="-104.14" x2="20.32" y2="-116.84" width="0.1524" layer="91"/>
 <wire x1="20.32" y1="-116.84" x2="20.32" y2="-132.08" width="0.1524" layer="91"/>
 <wire x1="15.24" y1="-116.84" x2="20.32" y2="-116.84" width="0.1524" layer="91"/>
-<pinref part="R13" gate="G$1" pin="1"/>
-<pinref part="R19" gate="G$1" pin="1"/>
+<pinref part="R8" gate="G$1" pin="1"/>
+<pinref part="R7" gate="G$1" pin="1"/>
 <junction x="20.32" y="-116.84"/>
 </segment>
 </net>
@@ -4571,8 +4721,8 @@ Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
 <wire x1="30.48" y1="-104.14" x2="30.48" y2="-116.84" width="0.1524" layer="91"/>
 <wire x1="30.48" y1="-116.84" x2="30.48" y2="-132.08" width="0.1524" layer="91"/>
 <wire x1="25.4" y1="-116.84" x2="30.48" y2="-116.84" width="0.1524" layer="91"/>
-<pinref part="R14" gate="G$1" pin="1"/>
-<pinref part="R20" gate="G$1" pin="1"/>
+<pinref part="R11" gate="G$1" pin="1"/>
+<pinref part="R10" gate="G$1" pin="1"/>
 <junction x="30.48" y="-116.84"/>
 </segment>
 </net>
@@ -4581,8 +4731,8 @@ Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
 <wire x1="38.1" y1="-104.14" x2="38.1" y2="-116.84" width="0.1524" layer="91"/>
 <wire x1="38.1" y1="-116.84" x2="38.1" y2="-132.08" width="0.1524" layer="91"/>
 <wire x1="33.02" y1="-116.84" x2="38.1" y2="-116.84" width="0.1524" layer="91"/>
-<pinref part="R15" gate="G$1" pin="1"/>
-<pinref part="R21" gate="G$1" pin="1"/>
+<pinref part="R14" gate="G$1" pin="1"/>
+<pinref part="R12" gate="G$1" pin="1"/>
 <junction x="38.1" y="-116.84"/>
 </segment>
 </net>
@@ -4591,8 +4741,8 @@ Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
 <wire x1="48.26" y1="-104.14" x2="48.26" y2="-116.84" width="0.1524" layer="91"/>
 <wire x1="48.26" y1="-116.84" x2="48.26" y2="-132.08" width="0.1524" layer="91"/>
 <wire x1="43.18" y1="-116.84" x2="48.26" y2="-116.84" width="0.1524" layer="91"/>
+<pinref part="R17" gate="G$1" pin="1"/>
 <pinref part="R16" gate="G$1" pin="1"/>
-<pinref part="R22" gate="G$1" pin="1"/>
 <junction x="48.26" y="-116.84"/>
 </segment>
 </net>
@@ -4601,8 +4751,8 @@ Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
 <wire x1="55.88" y1="-104.14" x2="55.88" y2="-116.84" width="0.1524" layer="91"/>
 <wire x1="55.88" y1="-116.84" x2="55.88" y2="-132.08" width="0.1524" layer="91"/>
 <wire x1="50.8" y1="-116.84" x2="55.88" y2="-116.84" width="0.1524" layer="91"/>
-<pinref part="R17" gate="G$1" pin="1"/>
-<pinref part="R23" gate="G$1" pin="1"/>
+<pinref part="R20" gate="G$1" pin="1"/>
+<pinref part="R18" gate="G$1" pin="1"/>
 <junction x="55.88" y="-116.84"/>
 </segment>
 </net>
@@ -4611,15 +4761,15 @@ Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
 <wire x1="63.5" y1="-104.14" x2="63.5" y2="-116.84" width="0.1524" layer="91"/>
 <wire x1="63.5" y1="-116.84" x2="63.5" y2="-132.08" width="0.1524" layer="91"/>
 <wire x1="58.42" y1="-116.84" x2="63.5" y2="-116.84" width="0.1524" layer="91"/>
-<pinref part="R18" gate="G$1" pin="1"/>
-<pinref part="R24" gate="G$1" pin="1"/>
+<pinref part="R23" gate="G$1" pin="1"/>
+<pinref part="R21" gate="G$1" pin="1"/>
 <junction x="63.5" y="-116.84"/>
 </segment>
 </net>
 <net name="N$10" class="0">
 <segment>
 <wire x1="25.4" y1="-76.2" x2="25.4" y2="-73.66" width="0.1524" layer="91"/>
-<pinref part="R7" gate="G$1" pin="2"/>
+<pinref part="R9" gate="G$1" pin="2"/>
 <pinref part="Q7" gate="G$2" pin="E"/>
 </segment>
 </net>
@@ -4627,35 +4777,35 @@ Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
 <segment>
 <wire x1="68.58" y1="-73.66" x2="68.58" y2="-76.2" width="0.1524" layer="91"/>
 <pinref part="Q9" gate="G$1" pin="E"/>
-<pinref part="R12" gate="G$1" pin="2"/>
+<pinref part="R24" gate="G$1" pin="2"/>
 </segment>
 </net>
 <net name="N$12" class="0">
 <segment>
 <wire x1="60.96" y1="-73.66" x2="60.96" y2="-76.2" width="0.1524" layer="91"/>
 <pinref part="Q9" gate="G$2" pin="E"/>
-<pinref part="R11" gate="G$1" pin="2"/>
+<pinref part="R22" gate="G$1" pin="2"/>
 </segment>
 </net>
 <net name="N$13" class="0">
 <segment>
 <wire x1="53.34" y1="-73.66" x2="53.34" y2="-76.2" width="0.1524" layer="91"/>
 <pinref part="Q8" gate="G$1" pin="E"/>
-<pinref part="R10" gate="G$1" pin="2"/>
+<pinref part="R19" gate="G$1" pin="2"/>
 </segment>
 </net>
 <net name="N$14" class="0">
 <segment>
 <wire x1="43.18" y1="-73.66" x2="43.18" y2="-76.2" width="0.1524" layer="91"/>
 <pinref part="Q8" gate="G$2" pin="E"/>
-<pinref part="R9" gate="G$1" pin="2"/>
+<pinref part="R15" gate="G$1" pin="2"/>
 </segment>
 </net>
 <net name="N$15" class="0">
 <segment>
 <wire x1="35.56" y1="-73.66" x2="35.56" y2="-76.2" width="0.1524" layer="91"/>
 <pinref part="Q7" gate="G$1" pin="E"/>
-<pinref part="R8" gate="G$1" pin="2"/>
+<pinref part="R13" gate="G$1" pin="2"/>
 </segment>
 </net>
 </nets>
