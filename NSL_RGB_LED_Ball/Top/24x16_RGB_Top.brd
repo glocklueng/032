@@ -164,13 +164,19 @@
 <board>
 <plain>
 <text x="0" y="-15.2108" size="1.778" layer="22" rot="MR0" align="center">A</text>
-<text x="-3.71" y="-14" size="1.778" layer="21">INSIDE</text>
+<text x="-3.6592" y="-3.1796" size="1.778" layer="21">INSIDE</text>
 <wire x1="24" y1="0" x2="24" y2="0.01" width="0" layer="20" curve="-359.976127"/>
 <dimension x1="0" y1="-24" x2="0" y2="-21.16" x3="12.97" y3="-22.58" textsize="1.778" layer="48"/>
 <text x="0" y="0" size="2.032" layer="22" font="vector" rot="MR0" align="center">nullspacelabs.com</text>
 <text x="11.3792" y="-9.144" size="1.778" layer="22" font="vector" rot="MR0">UP</text>
 <text x="4.6736" y="-9.144" size="1.778" layer="22" font="vector" rot="MR0">SELECT</text>
 <text x="-7.1628" y="-9.144" size="1.778" layer="22" font="vector" rot="MR0">DOWN</text>
+<text x="0.381" y="-12.065" size="1.778" layer="21" font="vector" rot="R270">DWN</text>
+<text x="2.9718" y="-12.065" size="1.778" layer="21" font="vector" rot="R270">SEL</text>
+<text x="5.6388" y="-12.065" size="1.778" layer="21" font="vector" rot="R270">UP</text>
+<text x="-2.1336" y="-12.065" size="1.778" layer="21" font="vector" rot="R270">GND</text>
+<text x="-4.6482" y="-12.065" size="1.778" layer="21" font="vector" rot="R270">GND</text>
+<text x="-7.2644" y="-12.065" size="1.778" layer="21" font="vector" rot="R270">GND</text>
 </plain>
 <libraries>
 <library name="24x16_RGB_Bottom">
@@ -238,10 +244,22 @@ We've spent an enormous amount of time creating and checking these footprints an
 &lt;br&gt;&lt;br&gt;
 &lt;b&gt;Licensing:&lt;/b&gt; CC v3.0 Share-Alike You are welcome to use this library for commercial purposes. For attribution, we ask that when you begin to sell your device using our footprint, you email us with a link to the product being sold. We want bragging rights that we helped (in a very small part) to create your 8th world wonder. We would like the opportunity to feature your device on our homepage.</description>
 <packages>
-<package name="1X04">
+<package name="1X06">
+<wire x1="11.43" y1="0.635" x2="12.065" y2="1.27" width="0.2032" layer="21"/>
+<wire x1="12.065" y1="1.27" x2="13.335" y2="1.27" width="0.2032" layer="21"/>
+<wire x1="13.335" y1="1.27" x2="13.97" y2="0.635" width="0.2032" layer="21"/>
+<wire x1="13.97" y1="-0.635" x2="13.335" y2="-1.27" width="0.2032" layer="21"/>
+<wire x1="13.335" y1="-1.27" x2="12.065" y2="-1.27" width="0.2032" layer="21"/>
+<wire x1="12.065" y1="-1.27" x2="11.43" y2="-0.635" width="0.2032" layer="21"/>
 <wire x1="6.985" y1="1.27" x2="8.255" y2="1.27" width="0.2032" layer="21"/>
 <wire x1="8.255" y1="1.27" x2="8.89" y2="0.635" width="0.2032" layer="21"/>
 <wire x1="8.89" y1="-0.635" x2="8.255" y2="-1.27" width="0.2032" layer="21"/>
+<wire x1="8.89" y1="0.635" x2="9.525" y2="1.27" width="0.2032" layer="21"/>
+<wire x1="9.525" y1="1.27" x2="10.795" y2="1.27" width="0.2032" layer="21"/>
+<wire x1="10.795" y1="1.27" x2="11.43" y2="0.635" width="0.2032" layer="21"/>
+<wire x1="11.43" y1="-0.635" x2="10.795" y2="-1.27" width="0.2032" layer="21"/>
+<wire x1="10.795" y1="-1.27" x2="9.525" y2="-1.27" width="0.2032" layer="21"/>
+<wire x1="9.525" y1="-1.27" x2="8.89" y2="-0.635" width="0.2032" layer="21"/>
 <wire x1="3.81" y1="0.635" x2="4.445" y2="1.27" width="0.2032" layer="21"/>
 <wire x1="4.445" y1="1.27" x2="5.715" y2="1.27" width="0.2032" layer="21"/>
 <wire x1="5.715" y1="1.27" x2="6.35" y2="0.635" width="0.2032" layer="21"/>
@@ -264,13 +282,17 @@ We've spent an enormous amount of time creating and checking these footprints an
 <wire x1="-0.635" y1="1.27" x2="-1.27" y2="0.635" width="0.2032" layer="21"/>
 <wire x1="-1.27" y1="-0.635" x2="-0.635" y2="-1.27" width="0.2032" layer="21"/>
 <wire x1="0.635" y1="-1.27" x2="-0.635" y2="-1.27" width="0.2032" layer="21"/>
-<wire x1="8.89" y1="0.635" x2="8.89" y2="-0.635" width="0.2032" layer="21"/>
-<pad name="1" x="0" y="0" drill="1.016" diameter="1.8796" shape="square" rot="R90"/>
+<wire x1="13.97" y1="0.635" x2="13.97" y2="-0.635" width="0.2032" layer="21"/>
+<pad name="1" x="0" y="0" drill="1.016" diameter="1.8796" rot="R90"/>
 <pad name="2" x="2.54" y="0" drill="1.016" diameter="1.8796" rot="R90"/>
 <pad name="3" x="5.08" y="0" drill="1.016" diameter="1.8796" rot="R90"/>
 <pad name="4" x="7.62" y="0" drill="1.016" diameter="1.8796" rot="R90"/>
+<pad name="5" x="10.16" y="0" drill="1.016" diameter="1.8796" rot="R90"/>
+<pad name="6" x="12.7" y="0" drill="1.016" diameter="1.8796" rot="R90"/>
 <text x="-1.3462" y="1.8288" size="1.27" layer="25" ratio="10">&gt;NAME</text>
 <text x="-1.27" y="-3.175" size="1.27" layer="27">&gt;VALUE</text>
+<rectangle x1="12.446" y1="-0.254" x2="12.954" y2="0.254" layer="51"/>
+<rectangle x1="9.906" y1="-0.254" x2="10.414" y2="0.254" layer="51"/>
 <rectangle x1="7.366" y1="-0.254" x2="7.874" y2="0.254" layer="51"/>
 <rectangle x1="4.826" y1="-0.254" x2="5.334" y2="0.254" layer="51"/>
 <rectangle x1="2.286" y1="-0.254" x2="2.794" y2="0.254" layer="51"/>
@@ -569,10 +591,10 @@ design rules under a new name.</description>
 <attribute name="NAME" x="-7.16" y="-3.08" size="0.762" layer="26" rot="MR0"/>
 </element>
 <element name="U$1" library="24x16_RGB_Bottom" package="USB_PANNEL" value="USB_PANNEL" x="0" y="8.255"/>
-<element name="JP1" library="SparkFun-Connectors" package="1X04" value="" x="-3.7592" y="-10.7696"/>
 <element name="S3" library="tvbgone-2layer" package="SPARKFUN-ELECTROMECHANICAL_TACTILE-SWITCH-1101NE" value="SPARKFUN-ELECTROMECHANICAL_SWITCH-MOMENTARY-2-SMD-1101NE" x="10.16" y="-5.08" smashed="yes" rot="MR0">
 <attribute name="NAME" x="13.16" y="-3.08" size="0.762" layer="26" rot="MR0"/>
 </element>
+<element name="JP2" library="SparkFun-Connectors" package="1X06" value="" x="-6.3754" y="-10.7188"/>
 </elements>
 <signals>
 <signal name="SLOT">
@@ -618,8 +640,10 @@ design rules under a new name.</description>
 <vertex x="25.8872" y="-27.0716"/>
 <vertex x="25.811" y="27.0204"/>
 </polygon>
-<contactref element="JP1" pad="1"/>
 <contactref element="S3" pad="P$2"/>
+<contactref element="JP2" pad="3"/>
+<contactref element="JP2" pad="2"/>
+<contactref element="JP2" pad="1"/>
 </signal>
 <signal name="BLANK">
 <contactref element="SLOT1" pad="P$1"/>
@@ -662,28 +686,25 @@ design rules under a new name.</description>
 </polygon>
 </signal>
 <signal name="UP">
-<contactref element="JP1" pad="4"/>
 <contactref element="S3" pad="P$1"/>
 <wire x1="13.3096" y1="-5.0804" x2="13.31" y2="-5.08" width="0.4064" layer="16"/>
-<wire x1="3.8608" y1="-10.7696" x2="3.8862" y2="-10.795" width="1.016" layer="16"/>
-<wire x1="3.8862" y1="-10.795" x2="10.0584" y2="-10.795" width="1.016" layer="16"/>
-<wire x1="10.0584" y1="-10.795" x2="13.31" y2="-7.5434" width="1.016" layer="16"/>
-<wire x1="13.31" y1="-7.5434" x2="13.31" y2="-5.08" width="1.016" layer="16"/>
+<contactref element="JP2" pad="6"/>
+<wire x1="13.31" y1="-5.08" x2="7.6712" y2="-10.7188" width="0.4064" layer="16"/>
+<wire x1="7.6712" y1="-10.7188" x2="6.3246" y2="-10.7188" width="0.4064" layer="16"/>
 </signal>
 <signal name="SELECT">
-<contactref element="JP1" pad="3"/>
 <contactref element="S1" pad="P$1"/>
-<wire x1="1.3208" y1="-10.7696" x2="3.15" y2="-8.9404" width="1.016" layer="16"/>
-<wire x1="3.15" y1="-8.9404" x2="3.15" y2="-5.08" width="1.016" layer="16"/>
+<contactref element="JP2" pad="5"/>
+<wire x1="3.15" y1="-5.08" x2="3.7846" y2="-5.7146" width="0.4064" layer="16"/>
+<wire x1="3.7846" y1="-5.7146" x2="3.7846" y2="-10.7188" width="0.4064" layer="16"/>
 </signal>
 <signal name="DOWN">
-<contactref element="JP1" pad="2"/>
 <contactref element="S2" pad="P$1"/>
-<wire x1="-1.2192" y1="-10.7696" x2="-1.2192" y2="-9.6266" width="1.016" layer="16"/>
-<wire x1="-1.2192" y1="-9.6266" x2="-2.8956" y2="-7.9502" width="1.016" layer="16"/>
-<wire x1="-2.8956" y1="-7.9502" x2="-5.9182" y2="-7.9502" width="1.016" layer="16"/>
-<wire x1="-5.9182" y1="-7.9502" x2="-7.01" y2="-6.8584" width="1.016" layer="16"/>
-<wire x1="-7.01" y1="-6.8584" x2="-7.01" y2="-5.08" width="1.016" layer="16"/>
+<contactref element="JP2" pad="4"/>
+<wire x1="-7.01" y1="-5.08" x2="-3.9112" y2="-8.1788" width="0.4064" layer="16"/>
+<wire x1="-3.9112" y1="-8.1788" x2="-0.8636" y2="-8.1788" width="0.4064" layer="16"/>
+<wire x1="-0.8636" y1="-8.1788" x2="1.2446" y2="-10.287" width="0.4064" layer="16"/>
+<wire x1="1.2446" y1="-10.287" x2="1.2446" y2="-10.7188" width="0.4064" layer="16"/>
 </signal>
 </signals>
 </board>
