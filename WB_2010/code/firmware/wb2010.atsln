@@ -1,15 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Atmel Studio Solution File, Format Version 11.00
-Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "wb2010", "wb2010.cproj", "{D0159480-C258-4ED7-9012-0C175A4E416A}"
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "wb2010", "wb2010.cproj", "{371A8125-9C27-4F29-B83F-2EC0D2199C77}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		default|AVR = default|AVR
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D0159480-C258-4ED7-9012-0C175A4E416A}.default|AVR.ActiveCfg = default|AVR
-		{D0159480-C258-4ED7-9012-0C175A4E416A}.default|AVR.Build.0 = default|AVR
+		{371A8125-9C27-4F29-B83F-2EC0D2199C77}.default|AVR.ActiveCfg = default|AVR
+		{371A8125-9C27-4F29-B83F-2EC0D2199C77}.default|AVR.Build.0 = default|AVR
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
