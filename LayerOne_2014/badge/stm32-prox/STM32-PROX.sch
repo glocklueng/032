@@ -13917,7 +13917,7 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <attribute name="OC_NEWARK" value="unknown"/>
 <attribute name="PARTNO" value="*"/>
 </part>
-<part name="IC9" library="STM32-PROX" deviceset="74XX244-OCTAL-TRISTATE-BUFFERS" device="">
+<part name="IC9" library="STM32-PROX" deviceset="74XX244-OCTAL-TRISTATE-BUFFERS" device="" value="74XX244">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
@@ -13925,7 +13925,7 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 </part>
 <part name="V26" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="VDD5" library="STM32-PROX" deviceset="VDD" device=""/>
-<part name="IC10" library="STM32-PROX" deviceset="74XX244-OCTAL-TRISTATE-BUFFERS" device="">
+<part name="IC10" library="STM32-PROX" deviceset="74XX244-OCTAL-TRISTATE-BUFFERS" device="" value="74XX244">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
@@ -14026,13 +14026,13 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <attribute name="OC_NEWARK" value="unknown"/>
 <attribute name="PARTNO" value="*"/>
 </part>
-<part name="R9" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603" value="100k">
+<part name="R9" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603" value="100K">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
 <attribute name="PARTNO" value="*"/>
 </part>
-<part name="R10" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603" value="100k">
+<part name="R10" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603" value="100K">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
@@ -14053,7 +14053,7 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <attribute name="OC_NEWARK" value="unknown"/>
 <attribute name="PARTNO" value="*"/>
 </part>
-<part name="R11" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603" value="510k">
+<part name="R11" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603" value="510K">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
@@ -14071,21 +14071,21 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <attribute name="OC_NEWARK" value="unknown"/>
 <attribute name="PARTNO" value="C1608C0G2A102J080AA"/>
 </part>
-<part name="R12" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603" value="100k">
+<part name="R12" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603" value="100K">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
 <attribute name="PARTNO" value="*"/>
 </part>
 <part name="V16" library="STM32-PROX" deviceset="SUPPLY_VMID" device=""/>
-<part name="R13" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603" value="10k">
+<part name="R13" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603" value="10K">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
 <attribute name="PARTNO" value="*"/>
 </part>
 <part name="V17" library="STM32-PROX" deviceset="SUPPLY_VMID" device=""/>
-<part name="R14" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603" value="10k">
+<part name="R14" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603" value="10K">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
@@ -14104,7 +14104,7 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <attribute name="OC_NEWARK" value="unknown"/>
 <attribute name="PARTNO" value="*"/>
 </part>
-<part name="C14" library="STM32-PROX" deviceset="CAPACITOR" device="RLC_0603" value="22p">
+<part name="C14" library="STM32-PROX" deviceset="CAPACITOR" device="RLC_0603" value="22pF">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
@@ -14117,13 +14117,13 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <attribute name="PARTNO" value="*"/>
 </part>
 <part name="V19" library="STM32-PROX" deviceset="GND" device=""/>
-<part name="C15" library="STM32-PROX" deviceset="CAPACITOR" device="RLC_0603" value="130p">
+<part name="C15" library="STM32-PROX" deviceset="CAPACITOR" device="RLC_0603" value="130pF">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
 <attribute name="PARTNO" value="GRM1885C2A131JA01D"/>
 </part>
-<part name="R15" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603" value="10k">
+<part name="R15" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603" value="10K">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
@@ -14312,7 +14312,7 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <attribute name="OC_NEWARK" value="unknown"/>
 <attribute name="PARTNO" value="*"/>
 </part>
-<part name="R41" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603" value="10M">
+<part name="R41" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603" value="10Mohm">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
@@ -14649,7 +14649,7 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <attribute name="PARTNO" value="*"/>
 </part>
 <part name="V51" library="STM32-PROX" deviceset="GND" device=""/>
-<part name="C44" library="STM32-PROX" deviceset="CAPACITOR" device="RLC_0603" value="33n">
+<part name="C44" library="STM32-PROX" deviceset="CAPACITOR" device="RLC_0603" value="33nF">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
@@ -14884,7 +14884,7 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <attribute name="OC_NEWARK" value="unknown"/>
 <attribute name="PARTNO" value="*"/>
 </part>
-<part name="R319" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603" value="100R">
+<part name="R319" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603" value="100">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
@@ -14952,13 +14952,13 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <attribute name="OC_NEWARK" value="unknown"/>
 <attribute name="PARTNO" value="*"/>
 </part>
-<part name="C206" library="STM32-PROX" deviceset="C-EU" device="" value="4u7">
+<part name="C206" library="STM32-PROX" deviceset="C-EU" device="" value="4.4uF">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
 <attribute name="PARTNO" value="*"/>
 </part>
-<part name="R102" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603" value="10k">
+<part name="R102" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603" value="10K">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
@@ -15019,7 +15019,7 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <attribute name="OC_NEWARK" value="unknown"/>
 <attribute name="PARTNO" value="*"/>
 </part>
-<part name="R26" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603" value="215.9k">
+<part name="R26" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603" value="215.9K">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
@@ -15035,13 +15035,13 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <attribute name="MF" value=""/>
 <attribute name="MPN" value="02016D104KAT2A"/>
 <attribute name="OC_NEWARK" value="85K9474"/>
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="02016D104KAT2A"/>
 </part>
 <part name="C58" library="STM32-PROX" deviceset="SPARKFUN_CAP" device="0603-CAP" value="0.1uF">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value="02016D104KAT2A"/>
 <attribute name="OC_NEWARK" value="85K9474"/>
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="02016D104KAT2A"/>
 </part>
 <part name="C59" library="STM32-PROX" deviceset="SPARKFUN_CAP" device="0603-CAP" value="1uF">
 <attribute name="MF" value=""/>
@@ -15053,7 +15053,7 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <attribute name="MF" value=""/>
 <attribute name="MPN" value="02016D104KAT2A"/>
 <attribute name="OC_NEWARK" value="85K9474"/>
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="02016D104KAT2A"/>
 </part>
 <part name="C61" library="STM32-PROX" deviceset="SPARKFUN_CAP" device="0603-CAP" value="1uF">
 <attribute name="MF" value=""/>
@@ -15079,11 +15079,11 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <attribute name="OC_NEWARK" value="unknown"/>
 <attribute name="PARTNO" value="*"/>
 </part>
-<part name="C63" library="STM32-PROX" deviceset="SPARKFUN_CAP" device="0603-CAP" value=".1uF">
+<part name="C63" library="STM32-PROX" deviceset="SPARKFUN_CAP" device="0603-CAP" value="0.1uF">
 <attribute name="MF" value=""/>
-<attribute name="MPN" value=""/>
-<attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="*"/>
+<attribute name="MPN" value="02016D104KAT2A"/>
+<attribute name="OC_NEWARK" value="85K9474"/>
+<attribute name="PARTNO" value="02016D104KAT2A"/>
 </part>
 <part name="R55" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603" value="1.5M">
 <attribute name="MF" value=""/>
