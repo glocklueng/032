@@ -135,17 +135,20 @@ void set_resistor(uint8_t rnum, uint8_t rval) {
   d |= rval;
 
   SPICS_PORT &= ~_BV(SPICS);
+  
   asm volatile ("nop");
   asm volatile ("nop");
   asm volatile ("nop");
   asm volatile ("nop");
 
   for (rnum=0; rnum < 10; rnum++) {
+	  
     if (d & 0x200) {
       SPIDO_PORT |= _BV(SPIDO);
     } else {
       SPIDO_PORT &= ~_BV(SPIDO);
     }
+	
     SPICLK_PORT |= _BV(SPICLK);
     asm volatile ("nop");
     asm volatile ("nop");
@@ -156,10 +159,12 @@ void set_resistor(uint8_t rnum, uint8_t rval) {
     SPICLK_PORT &= ~_BV(SPICLK);
     d <<= 1;
   }
+  
   asm volatile ("nop");
   asm volatile ("nop");
   asm volatile ("nop");
   asm volatile ("nop");
+  
   SPICS_PORT |= _BV(SPICS);
 }
 
@@ -169,26 +174,44 @@ void set_resistor(uint8_t rnum, uint8_t rval) {
  *
  */
 static void init_eeprom(void) {
-  uint16_t temp;
+	uint16_t temp;
 
-  uint8_t *p = 0;
+	uint8_t *p = 0;
 
-  // Read validity word
-  temp = eeprom_read_word(&validity);
+	// Read validity word
+	temp = eeprom_read_word( &validity );
 
-  // Check validity, BEEF is good here.
-  if( temp != 0xEFBE ) {
-    //Not correct? Init EEPROM.
-    for(uint16_t i = 0; i < E2END+1; i++) eeprom_write_byte(p++, 0);
-  }
-  eeprom_write_word(&validity, 0xEFBE);
+	pc_puts_P(PSTR("eeprom value is = "));
+	putnum_ud(temp);
+	pc_putc('\n');
+
+	// Check validity, BEEF is good here.
+	if( temp != 0xEFBE ) {
+		
+		//Not correct? Init EEPROM.
+		pc_puts_P(PSTR("Invalid EEPROM , resetting\n"));
+
+		for(uint16_t i = 0; i < E2END+1; i++) {
+			eeprom_write_byte(p++, 0);
+		}
+	}
+
+	eeprom_write_word(&validity, 0xEFBE);
+
+	temp = eeprom_read_word( &validity );
+	if( temp != 0xEFBE ) {
+		pc_puts_P(PSTR("Invalid EEPROM , give up\n"));
+		putnum_ud(temp);
+		pc_putc('\n');
+	}
 }
 
 /**
  * Init variable DC generation via PWM from timer 1
  *
  */
-static void init_pwm(void) {
+static void init_pwm(void) 
+{
   DDRB |= _BV(PB1);  // make OCR1A it an output
   DDRB |= _BV(PB2);  // make OCR1B it an output
   TCCR1A = _BV(COM1A1) | _BV(COM1B1) | _BV(WGM12) | _BV(WGM11) | _BV(WGM10); // 10bit FastPWM
@@ -262,9 +285,15 @@ static void display_programs(void) {
   jammer_setting setting;
 
   progs = eeprom_read_byte(&max_programs);
-  if(progs > MAX_PROGRAMS) progs = MAX_PROGRAMS;
+
+  if(progs > MAX_PROGRAMS) {
+	progs = MAX_PROGRAMS;
+  }
+  
   putnum_ud(progs);  pc_puts_P(PSTR(" of "));
-  putnum_ud(MAX_PROGRAMS);  pc_puts_P(PSTR(" programs in memory\n\r"));
+  putnum_ud(MAX_PROGRAMS);  
+  pc_puts_P(PSTR(" programs in memory\n\r"));
+  
   for (i=0; i< progs; i++) {
           eeprom_read_block(&setting,
                   &settings_ee+sizeof(jammer_setting)*i,

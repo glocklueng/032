@@ -57,7 +57,7 @@ typedef struct {
         uint8_t bandwidth2;  // values for the pot
 } __attribute__((__packed__)) jammer_setting; // 12 byte
 
-#define MAX_PROGRAMS    5       /* ((E2END+1)/sizeof(jammer_setting))-1 */
+#define MAX_PROGRAMS			(5)       /* ((E2END+1)/sizeof(jammer_setting))-1 */
 
 #define LOWBAND_VCO_LOW          345 // MHz, Low band VCO lowest frequency
 #define LOWBAND_VCO_HIGH        1350 // MHz, Low band VCO highest frequency
