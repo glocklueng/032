@@ -2150,11 +2150,6 @@ by exp-lbrs.ulp</description>
 <label x="12.7" y="81.28" size="1.778" layer="95"/>
 <pinref part="JP2" gate="G$1" pin="6"/>
 </segment>
-<segment>
-<wire x1="5.08" y1="76.2" x2="20.32" y2="76.2" width="0.1524" layer="91"/>
-<pinref part="JP2" gate="G$1" pin="4"/>
-<label x="12.7" y="76.2" size="1.778" layer="95"/>
-</segment>
 </net>
 <net name="RST" class="0">
 <segment>
@@ -2166,11 +2161,6 @@ by exp-lbrs.ulp</description>
 <wire x1="5.08" y1="68.58" x2="20.32" y2="68.58" width="0.1524" layer="91"/>
 <label x="12.7" y="68.58" size="1.778" layer="95"/>
 <pinref part="JP2" gate="G$1" pin="1"/>
-</segment>
-<segment>
-<wire x1="5.08" y1="73.66" x2="20.32" y2="73.66" width="0.1524" layer="91"/>
-<pinref part="JP2" gate="G$1" pin="3"/>
-<label x="12.7" y="73.66" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="GND" class="0">
@@ -2194,6 +2184,18 @@ by exp-lbrs.ulp</description>
 <wire x1="60.96" y1="66.04" x2="68.58" y2="66.04" width="0.1524" layer="91"/>
 <junction x="68.58" y="66.04"/>
 <pinref part="GND2" gate="1" pin="GND"/>
+</segment>
+</net>
+<net name="VCC" class="0">
+<segment>
+<pinref part="JP2" gate="G$1" pin="4"/>
+<wire x1="5.08" y1="76.2" x2="20.32" y2="76.2" width="0.1524" layer="91"/>
+<label x="12.7" y="76.2" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="JP2" gate="G$1" pin="3"/>
+<wire x1="5.08" y1="73.66" x2="20.32" y2="73.66" width="0.1524" layer="91"/>
+<label x="12.7" y="73.66" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>
