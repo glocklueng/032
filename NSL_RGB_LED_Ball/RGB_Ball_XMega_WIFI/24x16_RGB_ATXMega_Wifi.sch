@@ -5614,68 +5614,6 @@ by exp-project-lbr.ulp</description>
 </deviceset>
 </devicesets>
 </library>
-<library name="M6-RF315">
-<packages>
-<package name="NX3225GA">
-<smd name="4" x="-1.1" y="0.8" dx="1.4" dy="1.2" layer="1"/>
-<smd name="1" x="-1.1" y="-0.8" dx="1.4" dy="1.2" layer="1"/>
-<smd name="2" x="1.1" y="-0.8" dx="1.4" dy="1.2" layer="1"/>
-<smd name="3" x="1.1" y="0.8" dx="1.4" dy="1.2" layer="1"/>
-<wire x1="-1.6" y1="1.25" x2="1.6" y2="1.25" width="0.127" layer="51"/>
-<wire x1="1.6" y1="1.25" x2="1.6" y2="-1.25" width="0.127" layer="51"/>
-<wire x1="1.6" y1="-1.25" x2="-1.6" y2="-1.25" width="0.127" layer="51"/>
-<wire x1="-1.6" y1="-1.25" x2="-1.6" y2="1.25" width="0.127" layer="51"/>
-<wire x1="-1.5" y1="-2" x2="-1.25" y2="-1.75" width="0.127" layer="21"/>
-<wire x1="-1.25" y1="-1.75" x2="-1" y2="-2" width="0.127" layer="21"/>
-<wire x1="-1" y1="-2" x2="-1.5" y2="-2" width="0.127" layer="21"/>
-</package>
-</packages>
-<symbols>
-<symbol name="CRYSTAL">
-<wire x1="-1.524" y1="0" x2="0" y2="0" width="0.1524" layer="94"/>
-<wire x1="-5.08" y1="0" x2="-3.556" y2="0" width="0.1524" layer="94"/>
-<wire x1="-2.921" y1="1.524" x2="-2.921" y2="-1.524" width="0.254" layer="94"/>
-<wire x1="-2.921" y1="-1.524" x2="-2.159" y2="-1.524" width="0.254" layer="94"/>
-<wire x1="-2.159" y1="-1.524" x2="-2.159" y2="1.524" width="0.254" layer="94"/>
-<wire x1="-2.159" y1="1.524" x2="-2.921" y2="1.524" width="0.254" layer="94"/>
-<wire x1="-1.524" y1="1.778" x2="-1.524" y2="-1.778" width="0.254" layer="94"/>
-<wire x1="-3.556" y1="1.778" x2="-3.556" y2="-1.778" width="0.254" layer="94"/>
-<text x="0" y="1.016" size="1.778" layer="95">&gt;NAME</text>
-<text x="0" y="-2.54" size="1.778" layer="96">&gt;VALUE</text>
-<text x="-4.699" y="-1.143" size="0.8636" layer="93">1</text>
-<text x="-1.016" y="-1.143" size="0.8636" layer="93">2</text>
-<pin name="2" x="0" y="0" visible="off" length="point" direction="pas" swaplevel="1" rot="R180"/>
-<pin name="1" x="-5.08" y="0" visible="off" length="point" direction="pas" swaplevel="1"/>
-<pin name="DGND@1" x="-5.08" y="2.54" visible="off" length="point" direction="pwr" rot="R180"/>
-<pin name="DGND@2" x="-5.08" y="-2.54" visible="off" length="point" direction="pwr" rot="R180"/>
-</symbol>
-</symbols>
-<devicesets>
-<deviceset name="NX3225GA" prefix="X">
-<description>&lt;b&gt;NX3225GA Crystal oscillator&lt;/b&gt;
-&lt;p&gt;
-NDK NX3225GA small surface-mount type crystal unit in compact and thin 3.2 x 2.5 x 0.75 mm package.
-&lt;p&gt;
-Source: &lt;a href="http://www.ndk.com/images/products/catalog/c_NX3225GA-STD-CRG-1_e.pdf"&gt;http://www.ndk.com/images/products/catalog/c_NX3225GA-STD-CRG-1_e.pdf&lt;/a&gt;</description>
-<gates>
-<gate name="G$1" symbol="CRYSTAL" x="2.54" y="0"/>
-</gates>
-<devices>
-<device name="" package="NX3225GA">
-<connects>
-<connect gate="G$1" pin="1" pad="1"/>
-<connect gate="G$1" pin="2" pad="3"/>
-<connect gate="G$1" pin="DGND@1" pad="2"/>
-<connect gate="G$1" pin="DGND@2" pad="4"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-</devicesets>
-</library>
 <library name="SparkFun-Connectors">
 <description>&lt;h3&gt;SparkFun Electronics' preferred foot prints&lt;/h3&gt;
 In this library you'll find connectors and sockets- basically anything that can be plugged into or onto.&lt;br&gt;&lt;br&gt;
@@ -9147,6 +9085,19 @@ by exp-lbrs.ulp</description>
 <wire x1="-4.6" y1="-1" x2="-4.6" y2="1" width="0.127" layer="21"/>
 <circle x="2.54" y="0" radius="0.254" width="0.6096" layer="21"/>
 </package>
+<package name="NX3225GA">
+<wire x1="-1.6" y1="1.25" x2="1.6" y2="1.25" width="0.127" layer="51"/>
+<wire x1="1.6" y1="1.25" x2="1.6" y2="-1.25" width="0.127" layer="51"/>
+<wire x1="1.6" y1="-1.25" x2="-1.6" y2="-1.25" width="0.127" layer="51"/>
+<wire x1="-1.6" y1="-1.25" x2="-1.6" y2="1.25" width="0.127" layer="51"/>
+<wire x1="-1.5" y1="-2" x2="-1.25" y2="-1.75" width="0.127" layer="21"/>
+<wire x1="-1.25" y1="-1.75" x2="-1" y2="-2" width="0.127" layer="21"/>
+<wire x1="-1" y1="-2" x2="-1.5" y2="-2" width="0.127" layer="21"/>
+<smd name="1" x="-1.1" y="-0.8" dx="1.4" dy="1.2" layer="1"/>
+<smd name="2" x="1.1" y="-0.8" dx="1.4" dy="1.2" layer="1"/>
+<smd name="3" x="1.1" y="0.8" dx="1.4" dy="1.2" layer="1"/>
+<smd name="4" x="-1.1" y="0.8" dx="1.4" dy="1.2" layer="1"/>
+</package>
 </packages>
 <symbols>
 <symbol name="ANTENNA2">
@@ -9157,6 +9108,24 @@ by exp-lbrs.ulp</description>
 <pin name="SIGNAL" x="0" y="-5.08" visible="off" length="short" rot="R90"/>
 <text x="1.27" y="0" size="1.778" layer="95">&gt;NAME</text>
 <text x="1.27" y="-2.54" size="1.778" layer="96">&gt;VALUE</text>
+</symbol>
+<symbol name="CRYSTAL">
+<wire x1="-1.524" y1="0" x2="0" y2="0" width="0.1524" layer="94"/>
+<wire x1="-5.08" y1="0" x2="-3.556" y2="0" width="0.1524" layer="94"/>
+<wire x1="-2.921" y1="1.524" x2="-2.921" y2="-1.524" width="0.254" layer="94"/>
+<wire x1="-2.921" y1="-1.524" x2="-2.159" y2="-1.524" width="0.254" layer="94"/>
+<wire x1="-2.159" y1="-1.524" x2="-2.159" y2="1.524" width="0.254" layer="94"/>
+<wire x1="-2.159" y1="1.524" x2="-2.921" y2="1.524" width="0.254" layer="94"/>
+<wire x1="-1.524" y1="1.778" x2="-1.524" y2="-1.778" width="0.254" layer="94"/>
+<wire x1="-3.556" y1="1.778" x2="-3.556" y2="-1.778" width="0.254" layer="94"/>
+<pin name="1" x="-5.08" y="0" visible="off" length="point" direction="pas" swaplevel="1"/>
+<pin name="2" x="0" y="0" visible="off" length="point" direction="pas" swaplevel="1" rot="R180"/>
+<pin name="DGND@1" x="-5.08" y="2.54" visible="off" length="point" direction="pwr" rot="R180"/>
+<pin name="DGND@2" x="-5.08" y="-2.54" visible="off" length="point" direction="pwr" rot="R180"/>
+<text x="0" y="1.016" size="1.778" layer="95">&gt;NAME</text>
+<text x="0" y="-2.54" size="1.778" layer="96">&gt;VALUE</text>
+<text x="-4.699" y="-1.143" size="0.8636" layer="93">1</text>
+<text x="-1.016" y="-1.143" size="0.8636" layer="93">2</text>
 </symbol>
 </symbols>
 <devicesets>
@@ -9210,6 +9179,29 @@ Single endded antenna. Common with smaller chip antennas. CHIP4 package is the G
 <device name="" package="AT8010">
 <connects>
 <connect gate="G$1" pin="SIGNAL" pad="P$1"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="NX3225GA" prefix="X">
+<description>&lt;b&gt;NX3225GA Crystal oscillator&lt;/b&gt;
+&lt;p&gt;
+NDK NX3225GA small surface-mount type crystal unit in compact and thin 3.2 x 2.5 x 0.75 mm package.
+&lt;p&gt;
+Source: &lt;a href="http://www.ndk.com/images/products/catalog/c_NX3225GA-STD-CRG-1_e.pdf"&gt;http://www.ndk.com/images/products/catalog/c_NX3225GA-STD-CRG-1_e.pdf&lt;/a&gt;</description>
+<gates>
+<gate name="G$1" symbol="CRYSTAL" x="2.54" y="0"/>
+</gates>
+<devices>
+<device name="" package="NX3225GA">
+<connects>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="3"/>
+<connect gate="G$1" pin="DGND@1" pad="2"/>
+<connect gate="G$1" pin="DGND@2" pad="4"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -9339,6 +9331,63 @@ by exp-project-lbr.ulp</description>
 <connect gate="G$1" pin="P$2" pad="2"/>
 <connect gate="G$1" pin="P$3" pad="3"/>
 <connect gate="G$1" pin="P$4" pad="4"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
+<library name="badge.lbrbadge_2013">
+<description>Generated from &lt;b&gt;badge_2013.sch&lt;/b&gt;&lt;p&gt;
+by exp-lbrs.ulp</description>
+<packages>
+<package name="SPARKFUN_PAD.02X.02">
+<smd name="P$1" x="0" y="0" dx="0.508" dy="0.508" layer="1"/>
+</package>
+<package name="SPARKFUN_PAD.03X.03">
+<smd name="P$1" x="0" y="0" dx="0.762" dy="0.762" layer="1" roundness="100" cream="no"/>
+</package>
+<package name="SPARKFUN_PAD.03X.05">
+<smd name="P$1" x="0" y="0" dx="1.27" dy="1.27" layer="1" roundness="100" cream="no"/>
+</package>
+</packages>
+<symbols>
+<symbol name="SPARKFUN_TEST-POINT">
+<wire x1="2.54" y1="0" x2="0" y2="0" width="0.1524" layer="94"/>
+<wire x1="3.302" y1="0.762" x2="3.302" y2="-0.762" width="0.1524" layer="94" curve="180"/>
+<pin name="1" x="0" y="0" visible="off" length="point" rot="R180"/>
+<text x="-2.54" y="2.54" size="1.778" layer="95">&gt;Name</text>
+<text x="-2.54" y="-2.54" size="1.778" layer="96">&gt;Value</text>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="SPARKFUN_TEST-POINT" prefix="TP">
+<gates>
+<gate name="G$1" symbol="SPARKFUN_TEST-POINT" x="0" y="0"/>
+</gates>
+<devices>
+<device name="2" package="SPARKFUN_PAD.02X.02">
+<connects>
+<connect gate="G$1" pin="1" pad="P$1"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+<device name="3" package="SPARKFUN_PAD.03X.03">
+<connects>
+<connect gate="G$1" pin="1" pad="P$1"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+<device name="3X5" package="SPARKFUN_PAD.03X.05">
+<connects>
+<connect gate="G$1" pin="1" pad="P$1"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -9803,7 +9852,7 @@ by exp-project-lbr.ulp</description>
 <part name="GND18" library="SparkFun" deviceset="GND" device=""/>
 <part name="C8" library="SparkFun" deviceset="CAP" device="0805" value="0.1uF"/>
 <part name="GND23" library="SparkFun" deviceset="GND" device=""/>
-<part name="X1" library="M6-RF315" deviceset="NX3225GA" device="" value="NX3225GA XC1972CT-ND"/>
+<part name="X1" library="24x16_RGB_ATXMega_Wifi" deviceset="NX3225GA" device="" value="NX3225GA-16.000M-STD-CRG-2"/>
 <part name="C4" library="SparkFun" deviceset="CAP" device="0805" value="10pF"/>
 <part name="C3" library="SparkFun" deviceset="CAP" device="0805" value="10pF"/>
 <part name="GND42" library="SparkFun" deviceset="GND" device=""/>
@@ -9855,6 +9904,8 @@ by exp-project-lbr.ulp</description>
 <part name="Z1" library="USBug" deviceset="PRTR5V0U2X" device=""/>
 <part name="GND32" library="SparkFun" deviceset="GND" device=""/>
 <part name="SUPPLY4" library="supply2" deviceset="VCC" device=""/>
+<part name="TP13" library="badge.lbrbadge_2013" deviceset="SPARKFUN_TEST-POINT" device="3"/>
+<part name="TP14" library="badge.lbrbadge_2013" deviceset="SPARKFUN_TEST-POINT" device="3"/>
 </parts>
 <sheets>
 <sheet>
@@ -12306,6 +12357,8 @@ by exp-project-lbr.ulp</description>
 <attribute name="VALUE" x="18.796" y="-90.551" size="1.778" layer="96"/>
 </instance>
 <instance part="GND19" gate="1" x="17.78" y="-96.52"/>
+<instance part="TP13" gate="G$1" x="-109.22" y="-81.28" rot="R180"/>
+<instance part="TP14" gate="G$1" x="-109.22" y="-91.44" rot="R180"/>
 </instances>
 <busses>
 </busses>
@@ -12596,6 +12649,20 @@ by exp-project-lbr.ulp</description>
 <label x="27.94" y="-81.28" size="1.778" layer="95"/>
 <pinref part="C25" gate="G$1" pin="2"/>
 <wire x1="17.78" y1="-81.28" x2="17.78" y2="-83.82" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$21" class="0">
+<segment>
+<pinref part="TP13" gate="G$1" pin="1"/>
+<pinref part="IC6" gate="G$1" pin="WL_RS232_TX"/>
+<wire x1="-109.22" y1="-81.28" x2="-96.52" y2="-81.28" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$23" class="0">
+<segment>
+<pinref part="TP14" gate="G$1" pin="1"/>
+<pinref part="IC6" gate="G$1" pin="WL_RS232_RX"/>
+<wire x1="-109.22" y1="-91.44" x2="-96.52" y2="-91.44" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>
