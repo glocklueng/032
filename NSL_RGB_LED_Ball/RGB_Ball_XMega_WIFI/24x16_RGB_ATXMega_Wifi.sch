@@ -9656,7 +9656,7 @@ by exp-lbrs.ulp</description>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
 </part>
-<part name="BATTERY" library="SparkFun" deviceset="M02" device="PTH">
+<part name="VCC" library="SparkFun" deviceset="M02" device="PTH">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
@@ -12074,7 +12074,7 @@ by exp-lbrs.ulp</description>
 <text x="-60.96" y="-45.72" size="1.778" layer="91">http://www.batteryspace.com/High-Power-LiNiMnCo-26650-Rechargeable-Cell-3.6V-3600mAh-13Wh-18A-Rate.aspx</text>
 </plain>
 <instances>
-<instance part="BATTERY" gate="G$1" x="60.96" y="-2.54">
+<instance part="VCC" gate="G$1" x="60.96" y="-2.54">
 <attribute name="OC_NEWARK" x="60.96" y="-2.54" size="1.778" layer="96" display="off"/>
 <attribute name="MF" x="60.96" y="-2.54" size="1.778" layer="96" display="off"/>
 <attribute name="MPN" x="60.96" y="-2.54" size="1.778" layer="96" display="off"/>
@@ -12185,7 +12185,7 @@ by exp-lbrs.ulp</description>
 <pinref part="IC5" gate="G$1" pin="VSS@1"/>
 <pinref part="R5" gate="G$1" pin="1"/>
 <pinref part="GND8" gate="1" pin="GND"/>
-<pinref part="BATTERY" gate="G$1" pin="1"/>
+<pinref part="VCC" gate="G$1" pin="1"/>
 <pinref part="GND2" gate="1" pin="GND"/>
 <pinref part="BATTERY1" gate="G$1" pin="1"/>
 <wire x1="86.36" y1="-2.54" x2="73.66" y2="-2.54" width="0.1524" layer="91"/>
@@ -12264,7 +12264,7 @@ by exp-lbrs.ulp</description>
 <junction x="27.94" y="7.62"/>
 <junction x="68.58" y="0"/>
 <junction x="43.18" y="7.62"/>
-<pinref part="BATTERY" gate="G$1" pin="2"/>
+<pinref part="VCC" gate="G$1" pin="2"/>
 <pinref part="IC5" gate="G$1" pin="VBAT@1"/>
 <pinref part="IC5" gate="G$1" pin="VBAT@2"/>
 <pinref part="C13" gate="G$1" pin="+"/>
