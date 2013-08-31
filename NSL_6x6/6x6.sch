@@ -3836,6 +3836,8 @@ Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
 <part name="R24" library="Nullspace" deviceset="SPARKFUN_RESISTOR" device="0603-RES" value="1K"/>
 <part name="S1" library="SparkFun" deviceset="TAC_SWITCH" device="SMD"/>
 <part name="GND10" library="supply1" deviceset="GND" device=""/>
+<part name="S2" library="SparkFun" deviceset="TAC_SWITCH" device="SMD"/>
+<part name="GND11" library="supply1" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -3852,6 +3854,8 @@ Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
 <instance part="GND9" gate="1" x="25.4" y="-68.58"/>
 <instance part="S1" gate="S" x="71.12" y="22.86"/>
 <instance part="GND10" gate="1" x="58.42" y="17.78"/>
+<instance part="S2" gate="S" x="71.12" y="40.64"/>
+<instance part="GND11" gate="1" x="58.42" y="35.56"/>
 </instances>
 <busses>
 </busses>
@@ -3914,6 +3918,17 @@ Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
 <pinref part="GND10" gate="1" pin="GND"/>
 <wire x1="60.96" y1="20.32" x2="58.42" y2="20.32" width="0.1524" layer="91"/>
 </segment>
+<segment>
+<wire x1="66.04" y1="38.1" x2="63.5" y2="38.1" width="0.1524" layer="91"/>
+<wire x1="63.5" y1="38.1" x2="60.96" y2="38.1" width="0.1524" layer="91"/>
+<wire x1="66.04" y1="40.64" x2="63.5" y2="40.64" width="0.1524" layer="91"/>
+<wire x1="63.5" y1="40.64" x2="63.5" y2="38.1" width="0.1524" layer="91"/>
+<junction x="63.5" y="38.1"/>
+<pinref part="S2" gate="S" pin="2"/>
+<pinref part="S2" gate="S" pin="1"/>
+<pinref part="GND11" gate="1" pin="GND"/>
+<wire x1="60.96" y1="38.1" x2="58.42" y2="38.1" width="0.1524" layer="91"/>
+</segment>
 </net>
 <net name="MISO" class="0">
 <segment>
@@ -3961,6 +3976,11 @@ Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
 <wire x1="68.58" y1="-2.54" x2="76.2" y2="-2.54" width="0.2032" layer="91"/>
 <label x="73.66" y="-2.54" size="1.778" layer="95"/>
 <pinref part="JP1" gate="G$1" pin="5"/>
+</segment>
+<segment>
+<wire x1="76.2" y1="38.1" x2="81.28" y2="38.1" width="0.1524" layer="91"/>
+<label x="78.74" y="38.1" size="1.778" layer="95"/>
+<pinref part="S2" gate="S" pin="4"/>
 </segment>
 </net>
 <net name="ROW1" class="0">
