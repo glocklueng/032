@@ -542,51 +542,51 @@ design rules under a new name.</description>
 </pass>
 </autorouter>
 <elements>
-<element name="BAT2" library="tvbgone-adj" package="BATTERY_CR123A" value="" x="0" y="0" rot="R90"/>
+<element name="BAT1" library="tvbgone-adj" package="BATTERY_CR123A" value="" x="0" y="0" rot="R90"/>
 <element name="R3" library="SparkFun" package="0805" value="100R" x="0" y="5.08" smashed="yes" rot="R180">
 <attribute name="NAME" x="0.762" y="4.2037" size="0.8128" layer="21" font="vector" ratio="12" rot="R180"/>
 <attribute name="VALUE" x="1.016" y="6.477" size="0.4064" layer="27" rot="R180"/>
 </element>
 <element name="X1" library="USB_Boost" package="KSUBX-SMT-AS1N" value="USBKUSBX-SMT-AS1N" x="0" y="11.176" rot="R270"/>
-<element name="IC2" library="STM32-PROX" package="QFN-10" value="" x="0.1016" y="-1.3462" rot="R180">
+<element name="IC1" library="STM32-PROX" package="QFN-10" value="" x="0.1016" y="-1.3462" rot="R180">
 <attribute name="OC_NEWARK" value="unknown" x="6.9088" y="-8.3566" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="PARTNO" value="TPS61202DRCT" x="6.9088" y="-8.3566" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="MPN" value="" x="6.9088" y="-8.3566" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="MF" value="" x="6.9088" y="-8.3566" size="1.778" layer="27" rot="R180" display="off"/>
 </element>
-<element name="C62" library="STM32-PROX" package="SPARKFUN_0603-CAP" value="10uF" x="-8.509" y="-42.1894">
+<element name="C1" library="STM32-PROX" package="SPARKFUN_0603-CAP" value="10uF" x="-8.509" y="-42.1894">
 <attribute name="OC_NEWARK" value="unknown" x="-15.3162" y="-23.368" size="1.778" layer="27" display="off"/>
 <attribute name="PARTNO" value="*" x="-15.3162" y="-23.368" size="1.778" layer="27" display="off"/>
 <attribute name="MPN" value="" x="-15.3162" y="-23.368" size="1.778" layer="27" display="off"/>
 <attribute name="MF" value="" x="-15.3162" y="-23.368" size="1.778" layer="27" display="off"/>
 </element>
-<element name="C63" library="STM32-PROX" package="SPARKFUN_0603-CAP" value="0.1uF" x="-5.4864" y="-42.1894">
+<element name="C2" library="STM32-PROX" package="SPARKFUN_0603-CAP" value="0.1uF" x="-5.4864" y="-42.1894">
 <attribute name="OC_NEWARK" value="85K9474" x="-15.3162" y="-26.3398" size="1.778" layer="27" display="off"/>
 <attribute name="PARTNO" value="02016D104KAT2A" x="-15.3162" y="-26.3398" size="1.778" layer="27" display="off"/>
 <attribute name="MPN" value="02016D104KAT2A" x="-15.3162" y="-26.3398" size="1.778" layer="27" display="off"/>
 <attribute name="MF" value="" x="-15.3162" y="-26.3398" size="1.778" layer="27" display="off"/>
 </element>
-<element name="R55" library="STM32-PROX" package="RLC_0603" value="1.5M" x="-8.3312" y="-44.8564">
+<element name="R1" library="STM32-PROX" package="RLC_0603" value="1.5M" x="-8.3312" y="-44.8564">
 <attribute name="OC_NEWARK" value="unknown" x="-15.1384" y="-28.7782" size="1.778" layer="27" display="off"/>
 <attribute name="TOLERANCE" value="5%" x="-15.1384" y="-28.7782" size="1.778" layer="27" display="off"/>
 <attribute name="PARTNO" value="*" x="-15.1384" y="-28.7782" size="1.778" layer="27" display="off"/>
 <attribute name="MPN" value="" x="-15.1384" y="-28.7782" size="1.778" layer="27" display="off"/>
 <attribute name="MF" value="" x="-15.1384" y="-28.7782" size="1.778" layer="27" display="off"/>
 </element>
-<element name="R60" library="STM32-PROX" package="RLC_0603" value="150K 1%" x="-5.0546" y="-44.8564">
+<element name="R2" library="STM32-PROX" package="RLC_0603" value="150K 1%" x="-5.0546" y="-44.8564">
 <attribute name="OC_NEWARK" value="unknown" x="-15.1384" y="-30.5816" size="1.778" layer="27" display="off"/>
 <attribute name="TOLERANCE" value="1%" x="-15.1384" y="-30.5816" size="1.778" layer="27" display="off"/>
 <attribute name="PARTNO" value="*" x="-15.1384" y="-30.5816" size="1.778" layer="27" display="off"/>
 <attribute name="MPN" value="" x="-15.1384" y="-30.5816" size="1.778" layer="27" display="off"/>
 <attribute name="MF" value="" x="-15.1384" y="-30.5816" size="1.778" layer="27" display="off"/>
 </element>
-<element name="C64" library="STM32-PROX" package="SPARKFUN_0603-CAP" value="10uF" x="-2.4638" y="-42.1894">
+<element name="C3" library="STM32-PROX" package="SPARKFUN_0603-CAP" value="10uF" x="-2.4638" y="-42.1894">
 <attribute name="OC_NEWARK" value="unknown" x="-15.3162" y="-32.9184" size="1.778" layer="27" display="off"/>
 <attribute name="PARTNO" value="*" x="-15.3162" y="-32.9184" size="1.778" layer="27" display="off"/>
 <attribute name="MPN" value="" x="-15.3162" y="-32.9184" size="1.778" layer="27" display="off"/>
 <attribute name="MF" value="" x="-15.3162" y="-32.9184" size="1.778" layer="27" display="off"/>
 </element>
-<element name="L2" library="STM32-PROX" package="CDRH2D18" value="CDRH2D18/HPNP-2R2NC" x="-3.6322" y="1.7018" rot="R135">
+<element name="L1" library="STM32-PROX" package="CDRH2D18" value="CDRH2D18/HPNP-2R2NC" x="-3.6322" y="1.7018" rot="R135">
 <attribute name="OC_NEWARK" value="unknown" x="3.64180625" y="-6.829440625" size="1.778" layer="27" rot="R135" display="off"/>
 <attribute name="PARTNO" value="*" x="3.64180625" y="-6.829440625" size="1.778" layer="27" rot="R135" display="off"/>
 <attribute name="MPN" value="" x="3.64180625" y="-6.829440625" size="1.778" layer="27" rot="R135" display="off"/>
@@ -598,7 +598,7 @@ design rules under a new name.</description>
 <attribute name="MPN" value="" x="-16.9164" y="-39.9796" size="1.778" layer="27" display="off"/>
 <attribute name="MF" value="" x="-16.9164" y="-39.9796" size="1.778" layer="27" display="off"/>
 </element>
-<element name="JP3" library="STM32-PROX" package="SJ_3" value="JUMPER-3SMD" x="0.2794" y="-37.2872">
+<element name="JP1" library="STM32-PROX" package="SJ_3" value="JUMPER-3SMD" x="0.2794" y="-37.2872">
 <attribute name="OC_NEWARK" value="unknown" x="-22.8092" y="-40.1066" size="1.778" layer="27" display="off"/>
 <attribute name="PARTNO" value="*" x="-22.8092" y="-40.1066" size="1.778" layer="27" display="off"/>
 <attribute name="MPN" value="" x="-22.8092" y="-40.1066" size="1.778" layer="27" display="off"/>
@@ -607,7 +607,7 @@ design rules under a new name.</description>
 </elements>
 <signals>
 <signal name="VCC">
-<contactref element="BAT2" pad="+"/>
+<contactref element="BAT1" pad="+"/>
 </signal>
 <signal name="D-">
 <contactref element="R3" pad="1"/>
@@ -620,7 +620,7 @@ design rules under a new name.</description>
 <wire x1="-0.9" y1="5.08" x2="-1" y2="7.726" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="GND">
-<contactref element="BAT2" pad="-"/>
+<contactref element="BAT1" pad="-"/>
 <contactref element="X1" pad="GND"/>
 <polygon width="0.4064" layer="1">
 <vertex x="-9.398" y="8.1534"/>
@@ -634,22 +634,22 @@ design rules under a new name.</description>
 <vertex x="9.3472" y="-21.9202"/>
 <vertex x="-9.5504" y="-21.9202"/>
 </polygon>
-<contactref element="IC2" pad="P0"/>
-<contactref element="IC2" pad="P1"/>
-<contactref element="IC2" pad="P2"/>
-<contactref element="IC2" pad="P3"/>
-<contactref element="IC2" pad="P4"/>
-<contactref element="IC2" pad="V0"/>
-<contactref element="IC2" pad="V1"/>
-<contactref element="IC2" pad="9"/>
-<contactref element="IC2" pad="4"/>
-<contactref element="IC2" pad="9"/>
-<contactref element="C63" pad="2"/>
-<contactref element="C64" pad="2"/>
-<contactref element="R60" pad="1"/>
-<contactref element="C62" pad="2"/>
+<contactref element="IC1" pad="P0"/>
+<contactref element="IC1" pad="P1"/>
+<contactref element="IC1" pad="P2"/>
+<contactref element="IC1" pad="P3"/>
+<contactref element="IC1" pad="P4"/>
+<contactref element="IC1" pad="V0"/>
+<contactref element="IC1" pad="V1"/>
+<contactref element="IC1" pad="9"/>
+<contactref element="IC1" pad="4"/>
+<contactref element="IC1" pad="9"/>
+<contactref element="C2" pad="2"/>
+<contactref element="C3" pad="2"/>
+<contactref element="R2" pad="1"/>
+<contactref element="C1" pad="2"/>
 <contactref element="S1" pad="1"/>
-<contactref element="JP3" pad="1"/>
+<contactref element="JP1" pad="1"/>
 <wire x1="-4.6364" y1="-42.1894" x2="-5.9046" y2="-44.8564" width="0" layer="19" extent="1-1"/>
 <wire x1="-7.659" y1="-42.1894" x2="-4.6364" y2="-42.1894" width="0" layer="19" extent="1-1"/>
 <wire x1="-8.0158" y1="-40.0786" x2="-7.659" y2="-42.1894" width="0" layer="19" extent="1-1"/>
@@ -662,9 +662,9 @@ design rules under a new name.</description>
 </signal>
 <signal name="VOUT">
 <contactref element="X1" pad="VBUS"/>
-<contactref element="IC2" pad="2"/>
-<contactref element="IC2" pad="10"/>
-<contactref element="C64" pad="1"/>
+<contactref element="IC1" pad="2"/>
+<contactref element="IC1" pad="10"/>
+<contactref element="C3" pad="1"/>
 <wire x1="1.1016" y1="-2.8912" x2="-3.3138" y2="-42.1894" width="0" layer="19" extent="1-1"/>
 <wire x1="0.6016" y1="0.1988" x2="1.1016" y2="-2.8912" width="0" layer="19" extent="1-1"/>
 <wire x1="3.5" y1="7.726" x2="0.6016" y2="0.1988" width="0" layer="19" extent="1-1"/>
@@ -684,12 +684,12 @@ design rules under a new name.</description>
 </polygon>
 </signal>
 <signal name="VBAT+" class="2">
-<contactref element="IC2" pad="5"/>
-<contactref element="C62" pad="1"/>
-<contactref element="R55" pad="2"/>
-<contactref element="L2" pad="P$1"/>
+<contactref element="IC1" pad="5"/>
+<contactref element="C1" pad="1"/>
+<contactref element="R1" pad="2"/>
+<contactref element="L1" pad="P$1"/>
 <contactref element="S1" pad="3"/>
-<contactref element="JP3" pad="3"/>
+<contactref element="JP1" pad="3"/>
 <wire x1="-7.4812" y1="-44.8564" x2="-9.359" y2="-42.1894" width="0" layer="19" extent="1-1"/>
 <wire x1="-3.5158" y1="-40.0786" x2="-9.359" y2="-42.1894" width="0" layer="19" extent="1-1"/>
 <wire x1="1.2446" y1="-37.2872" x2="-3.5158" y2="-40.0786" width="0" layer="19" extent="1-1"/>
@@ -697,25 +697,25 @@ design rules under a new name.</description>
 <wire x1="-3.6322" y1="0.2018125" x2="-0.8984" y2="0.1988" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="ONOFF">
-<contactref element="IC2" pad="6"/>
+<contactref element="IC1" pad="6"/>
 <contactref element="S1" pad="2"/>
 <wire x1="-0.8984" y1="-2.8912" x2="-6.5158" y2="-40.0786" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$66">
-<contactref element="IC2" pad="1"/>
-<contactref element="C63" pad="1"/>
+<contactref element="IC1" pad="1"/>
+<contactref element="C2" pad="1"/>
 <wire x1="1.1016" y1="0.1988" x2="-6.3364" y2="-42.1894" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$67">
-<contactref element="IC2" pad="7"/>
-<contactref element="R55" pad="1"/>
-<contactref element="R60" pad="2"/>
+<contactref element="IC1" pad="7"/>
+<contactref element="R1" pad="1"/>
+<contactref element="R2" pad="2"/>
 <wire x1="-4.2046" y1="-44.8564" x2="-9.1812" y2="-44.8564" width="0" layer="19" extent="1-1"/>
 <wire x1="-0.3984" y1="-2.8912" x2="-4.2046" y2="-44.8564" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$68">
-<contactref element="L2" pad="P$2"/>
-<contactref element="IC2" pad="3"/>
+<contactref element="L1" pad="P$2"/>
+<contactref element="IC1" pad="3"/>
 <wire x1="-3.6322" y1="1.7272" x2="-0.4572" y2="1.7272" width="0.254" layer="1"/>
 <wire x1="-0.4572" y1="1.7272" x2="0.1016" y2="1.1684" width="0.254" layer="1"/>
 <wire x1="0.1016" y1="1.1684" x2="0.1016" y2="0.1988" width="0.254" layer="1"/>
@@ -744,8 +744,8 @@ design rules under a new name.</description>
 <wire x1="-2.513215625" y1="2.0828" x2="-3.6322" y2="3.201784375" width="0.8128" layer="1"/>
 </signal>
 <signal name="PS">
-<contactref element="IC2" pad="8"/>
-<contactref element="JP3" pad="2"/>
+<contactref element="IC1" pad="8"/>
+<contactref element="JP1" pad="2"/>
 <wire x1="0.1016" y1="-2.8912" x2="0.2794" y2="-37.2872" width="0" layer="19" extent="1-1"/>
 </signal>
 </signals>

@@ -7572,7 +7572,7 @@ by exp-lbrs.ulp</description>
 <part name="S2" library="SparkFun-Electromechanical" deviceset="SWITCH-SPDT" device="-SMD-A"/>
 <part name="S3" library="SparkFun-Electromechanical" deviceset="SWITCH-MOMENTARY-2" device="-SMD-1101NE"/>
 <part name="C3" library="tvbgone-2layer" deviceset="SPARKFUN_CAP_POL" device="3528"/>
-<part name="U$1" library="6x6" deviceset="DUALNPN" device=""/>
+<part name="Q2" library="6x6" deviceset="DUALNPN" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -7688,8 +7688,8 @@ by exp-lbrs.ulp</description>
 <instance part="S2" gate="1" x="22.86" y="132.08" rot="R270"/>
 <instance part="S3" gate="G$1" x="91.44" y="48.26"/>
 <instance part="C3" gate="G$1" x="66.04" y="96.52"/>
-<instance part="U$1" gate="G$1" x="157.48" y="106.68"/>
-<instance part="U$1" gate="G$2" x="139.7" y="127"/>
+<instance part="Q2" gate="G$1" x="157.48" y="106.68"/>
+<instance part="Q2" gate="G$2" x="139.7" y="127"/>
 </instances>
 <busses>
 </busses>
@@ -7786,12 +7786,12 @@ by exp-lbrs.ulp</description>
 <segment>
 <wire x1="160.02" y1="101.6" x2="160.02" y2="99.06" width="0.1524" layer="91"/>
 <pinref part="GND9" gate="1" pin="GND"/>
-<pinref part="U$1" gate="G$1" pin="E"/>
+<pinref part="Q2" gate="G$1" pin="E"/>
 </segment>
 <segment>
 <wire x1="142.24" y1="121.92" x2="142.24" y2="119.38" width="0.1524" layer="91"/>
 <pinref part="GND12" gate="1" pin="GND"/>
-<pinref part="U$1" gate="G$2" pin="E"/>
+<pinref part="Q2" gate="G$2" pin="E"/>
 </segment>
 <segment>
 <pinref part="S3" gate="G$1" pin="1"/>
@@ -7900,14 +7900,14 @@ by exp-lbrs.ulp</description>
 <segment>
 <wire x1="142.24" y1="137.16" x2="142.24" y2="132.08" width="0.1524" layer="91"/>
 <pinref part="LED1" gate="G$1" pin="C"/>
-<pinref part="U$1" gate="G$2" pin="C"/>
+<pinref part="Q2" gate="G$2" pin="C"/>
 </segment>
 </net>
 <net name="N$5" class="0">
 <segment>
 <wire x1="160.02" y1="137.16" x2="160.02" y2="111.76" width="0.1524" layer="91"/>
 <pinref part="LED2" gate="G$1" pin="C"/>
-<pinref part="U$1" gate="G$1" pin="C"/>
+<pinref part="Q2" gate="G$1" pin="C"/>
 </segment>
 </net>
 <net name="N$8" class="0">
@@ -7932,8 +7932,8 @@ by exp-lbrs.ulp</description>
 <wire x1="132.08" y1="111.76" x2="132.08" y2="106.68" width="0.1524" layer="91"/>
 <junction x="119.38" y="111.76"/>
 <junction x="132.08" y="111.76"/>
-<pinref part="U$1" gate="G$1" pin="B"/>
-<pinref part="U$1" gate="G$2" pin="B"/>
+<pinref part="Q2" gate="G$1" pin="B"/>
+<pinref part="Q2" gate="G$2" pin="B"/>
 </segment>
 </net>
 </nets>
