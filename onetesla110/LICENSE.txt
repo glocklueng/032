@@ -1,0 +1,16 @@
+The files contained herein are copyright 2013 oneTesla, LLC and are licensed under CC BY-NC-SA 3.0. For the complete
+license terms, please visit http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode.
+
+A word on licensing:
+--------------------
+While most of oneTesla's design is licensed under the GNU Free Documentation License, an extremely permissive
+"copyleft" license that permits content to be re-used in any circumstances so long as said derivative works are
+licensed under the same terms, these board files are licensed under the Creative Commons 
+Attribution-NonCommercial-ShareAlike license. What this means to you, the end-user is that you may NOT sell any
+works based on these files. In particular, you may not sell circuit boards, kits, or Tesla coils based on oneTesla's
+design.
+Why the restrictive license? Well, oneTesla is a fairly hazardous product. By restricting third-party sellers, we
+ensure that low-quality clones which use unreliable components or otherwise cut corners cannot exist. With that being
+said, if you want to sell something based on oneTesla's design, contact us at nikola@onetesla.com - we may be willing
+to relax the terms or license the files to you under an alternate license.
+
