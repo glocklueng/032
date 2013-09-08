@@ -9910,6 +9910,7 @@ by exp-lbrs.ulp</description>
 <sheets>
 <sheet>
 <plain>
+<text x="124.46" y="-12.7" size="1.778" layer="91">If making new board flip PWR and GND</text>
 </plain>
 <instances>
 <instance part="SLOT1" gate="G$1" x="30.48" y="40.64">
