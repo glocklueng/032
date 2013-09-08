@@ -7548,7 +7548,7 @@ by exp-lbrs.ulp</description>
 <part name="GND4" library="supply1" deviceset="GND" device=""/>
 <part name="LED3" library="minimidi" deviceset="LED" device="CHIPLED_0603"/>
 <part name="P+6" library="supply1" deviceset="VCC" device=""/>
-<part name="R3" library="SparkFun" deviceset="RESISTOR" device="" value="1.5K"/>
+<part name="R3" library="SparkFun" deviceset="RESISTOR" device="" value="1K"/>
 <part name="GND9" library="supply1" deviceset="GND" device=""/>
 <part name="GND10" library="supply1" deviceset="GND" device=""/>
 <part name="R1" library="SparkFun" deviceset="RESISTOR" device="" value="10K"/>
