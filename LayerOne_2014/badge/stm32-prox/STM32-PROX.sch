@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="6.5.0">
+<eagle version="6.4">
 <drawing>
 <settings>
 <setting alwaysvectorfont="yes"/>
@@ -14952,7 +14952,7 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <attribute name="OC_NEWARK" value="unknown"/>
 <attribute name="PARTNO" value="*"/>
 </part>
-<part name="C206" library="STM32-PROX" deviceset="C-EU" device="" value="4.4uF">
+<part name="C206" library="STM32-PROX" deviceset="C-EU" device="" value="4.7uF">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
