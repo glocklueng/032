@@ -885,39 +885,6 @@ chip</description>
 <text x="-0.9525" y="-1.651" size="0.4064" layer="27">&gt;VALUE</text>
 <rectangle x1="-1.016" y1="-1.016" x2="1.016" y2="1.016" layer="31"/>
 </package>
-<package name="CAP-PTH-SMALL-KIT">
-<wire x1="0" y1="0.635" x2="0" y2="-0.635" width="0.254" layer="21"/>
-<wire x1="-2.667" y1="1.27" x2="2.667" y2="1.27" width="0.254" layer="21"/>
-<wire x1="2.667" y1="1.27" x2="2.667" y2="-1.27" width="0.254" layer="21"/>
-<wire x1="2.667" y1="-1.27" x2="-2.667" y2="-1.27" width="0.254" layer="21"/>
-<wire x1="-2.667" y1="-1.27" x2="-2.667" y2="1.27" width="0.254" layer="21"/>
-<pad name="1" x="-1.397" y="0" drill="1.016" diameter="2.032" stop="no"/>
-<pad name="2" x="1.397" y="0" drill="1.016" diameter="2.032" stop="no"/>
-<polygon width="0.127" layer="30">
-<vertex x="-1.4021" y="-0.9475" curve="-90"/>
-<vertex x="-2.357" y="-0.0178" curve="-90.011749"/>
-<vertex x="-1.4046" y="0.9576" curve="-90"/>
-<vertex x="-0.4546" y="-0.0204" curve="-90.024193"/>
-</polygon>
-<polygon width="0.127" layer="29">
-<vertex x="-1.4046" y="-0.4395" curve="-90.012891"/>
-<vertex x="-1.8491" y="-0.0153" curve="-90"/>
-<vertex x="-1.4046" y="0.452" curve="-90"/>
-<vertex x="-0.9627" y="-0.0051" curve="-90.012967"/>
-</polygon>
-<polygon width="0.127" layer="30">
-<vertex x="1.397" y="-0.9475" curve="-90"/>
-<vertex x="0.4421" y="-0.0178" curve="-90.011749"/>
-<vertex x="1.3945" y="0.9576" curve="-90"/>
-<vertex x="2.3445" y="-0.0204" curve="-90.024193"/>
-</polygon>
-<polygon width="0.127" layer="29">
-<vertex x="1.3945" y="-0.4395" curve="-90.012891"/>
-<vertex x="0.95" y="-0.0153" curve="-90"/>
-<vertex x="1.3945" y="0.452" curve="-90"/>
-<vertex x="1.8364" y="-0.0051" curve="-90.012967"/>
-</polygon>
-</package>
 <package name="INDUCTOR-1206">
 <wire x1="-1.778" y1="2.032" x2="-3.81" y2="2.032" width="0.127" layer="21"/>
 <wire x1="-3.81" y1="2.032" x2="-3.81" y2="-2.032" width="0.127" layer="21"/>
@@ -1157,6 +1124,58 @@ chip</description>
 <text x="-2.54" y="4.01" size="0.4064" layer="25">&gt;Name</text>
 <text x="-2.7" y="-4.39" size="0.4064" layer="27">&gt;Value</text>
 </package>
+<package name="CAP-PTH-SMALL-KIT">
+<description>&lt;h3&gt;CAP-PTH-SMALL-KIT&lt;/h3&gt;
+Commonly used for small ceramic capacitors. Like our 0.1uF (http://www.sparkfun.com/products/8375) or 22pF caps (http://www.sparkfun.com/products/8571).&lt;br&gt;
+&lt;br&gt;
+&lt;b&gt;Warning:&lt;/b&gt; This is the KIT version of this package. This package has a smaller diameter top stop mask, which doesn't cover the diameter of the pad. This means only the bottom side of the pads' copper will be exposed. You'll only be able to solder to the bottom side.</description>
+<wire x1="0" y1="0.635" x2="0" y2="-0.635" width="0.254" layer="21"/>
+<wire x1="-2.667" y1="1.27" x2="2.667" y2="1.27" width="0.254" layer="21"/>
+<wire x1="2.667" y1="1.27" x2="2.667" y2="-1.27" width="0.254" layer="21"/>
+<wire x1="2.667" y1="-1.27" x2="-2.667" y2="-1.27" width="0.254" layer="21"/>
+<wire x1="-2.667" y1="-1.27" x2="-2.667" y2="1.27" width="0.254" layer="21"/>
+<pad name="1" x="-1.397" y="0" drill="1.016" diameter="2.032" stop="no"/>
+<pad name="2" x="1.397" y="0" drill="1.016" diameter="2.032" stop="no"/>
+<polygon width="0.127" layer="30">
+<vertex x="-1.4021" y="-0.9475" curve="-90"/>
+<vertex x="-2.357" y="-0.0178" curve="-90.011749"/>
+<vertex x="-1.4046" y="0.9576" curve="-90"/>
+<vertex x="-0.4546" y="-0.0204" curve="-90.024193"/>
+</polygon>
+<polygon width="0.127" layer="29">
+<vertex x="-1.4046" y="-0.4395" curve="-90.012891"/>
+<vertex x="-1.8491" y="-0.0153" curve="-90"/>
+<vertex x="-1.4046" y="0.452" curve="-90"/>
+<vertex x="-0.9627" y="-0.0051" curve="-90.012967"/>
+</polygon>
+<polygon width="0.127" layer="30">
+<vertex x="1.397" y="-0.9475" curve="-90"/>
+<vertex x="0.4421" y="-0.0178" curve="-90.011749"/>
+<vertex x="1.3945" y="0.9576" curve="-90"/>
+<vertex x="2.3445" y="-0.0204" curve="-90.024193"/>
+</polygon>
+<polygon width="0.127" layer="29">
+<vertex x="1.3945" y="-0.4395" curve="-90.012891"/>
+<vertex x="0.95" y="-0.0153" curve="-90"/>
+<vertex x="1.3945" y="0.452" curve="-90"/>
+<vertex x="1.8364" y="-0.0051" curve="-90.012967"/>
+</polygon>
+</package>
+<package name="SOT23-3">
+<wire x1="1.4224" y1="0.6604" x2="1.4224" y2="-0.6604" width="0.1524" layer="51"/>
+<wire x1="1.4224" y1="-0.6604" x2="-1.4224" y2="-0.6604" width="0.1524" layer="51"/>
+<wire x1="-1.4224" y1="-0.6604" x2="-1.4224" y2="0.6604" width="0.1524" layer="51"/>
+<wire x1="-1.4224" y1="0.6604" x2="1.4224" y2="0.6604" width="0.1524" layer="51"/>
+<wire x1="-0.8" y1="0.7" x2="-1.4" y2="0.7" width="0.2032" layer="21"/>
+<wire x1="-1.4" y1="0.7" x2="-1.4" y2="-0.1" width="0.2032" layer="21"/>
+<wire x1="0.8" y1="0.7" x2="1.4" y2="0.7" width="0.2032" layer="21"/>
+<wire x1="1.4" y1="0.7" x2="1.4" y2="-0.1" width="0.2032" layer="21"/>
+<smd name="3" x="0" y="1.1" dx="0.8" dy="0.9" layer="1"/>
+<smd name="2" x="0.95" y="-1" dx="0.8" dy="0.9" layer="1"/>
+<smd name="1" x="-0.95" y="-1" dx="0.8" dy="0.9" layer="1"/>
+<text x="-0.8255" y="1.778" size="0.4064" layer="25">&gt;NAME</text>
+<text x="-1.016" y="-0.1905" size="0.4064" layer="27">&gt;VALUE</text>
+</package>
 </packages>
 <symbols>
 <symbol name="GND">
@@ -1264,6 +1283,17 @@ chip</description>
 <text x="2.54" y="-5.08" size="1.778" layer="96">&gt;VALUE</text>
 <pin name="1" x="0" y="7.62" visible="off" length="short" direction="pas" swaplevel="1" rot="R270"/>
 <pin name="2" x="0" y="-7.62" visible="off" length="short" direction="pas" swaplevel="1" rot="R90"/>
+</symbol>
+<symbol name="AP7333-33">
+<description>AP7333-33</description>
+<wire x1="-5.08" y1="5.08" x2="-5.08" y2="-2.54" width="0.254" layer="94"/>
+<wire x1="-5.08" y1="-2.54" x2="5.08" y2="-2.54" width="0.254" layer="94"/>
+<wire x1="5.08" y1="-2.54" x2="5.08" y2="5.08" width="0.254" layer="94"/>
+<wire x1="5.08" y1="5.08" x2="-5.08" y2="5.08" width="0.254" layer="94"/>
+<pin name="OUT" x="7.62" y="2.54" length="short" direction="out" rot="R180"/>
+<pin name="GND" x="0" y="-5.08" length="short" direction="pwr" rot="R90"/>
+<pin name="IN" x="-7.62" y="2.54" length="short" direction="in"/>
+<text x="-4.826" y="5.588" size="1.778" layer="94">&gt;NAME</text>
 </symbol>
 </symbols>
 <devicesets>
@@ -1946,6 +1976,28 @@ Basic Inductor/Choke - 0603 and 1206. Footprints are not proven and vary greatly
 <connects>
 <connect gate="G$1" pin="1" pad="P$1"/>
 <connect gate="G$1" pin="2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="AP7333-33">
+<description>&lt;B&gt;AP7333-33&lt;/B&gt;
+&lt;BR&gt;
+&lt;P&gt;
+300mA, Low Quiescent Current, Fast Transient
+Low Dropout Linear Regulator</description>
+<gates>
+<gate name="G$1" symbol="AP7333-33" x="0" y="0"/>
+</gates>
+<devices>
+<device name="SOT23-3" package="SOT23-3">
+<connects>
+<connect gate="G$1" pin="GND" pad="3"/>
+<connect gate="G$1" pin="IN" pad="1"/>
+<connect gate="G$1" pin="OUT" pad="2"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -9906,6 +9958,10 @@ by exp-lbrs.ulp</description>
 <part name="SUPPLY4" library="supply2" deviceset="VCC" device=""/>
 <part name="TP13" library="badge.lbrbadge_2013" deviceset="SPARKFUN_TEST-POINT" device="3"/>
 <part name="TP14" library="badge.lbrbadge_2013" deviceset="SPARKFUN_TEST-POINT" device="3"/>
+<part name="C26" library="SparkFun" deviceset="CAP" device="0805" value="1uF"/>
+<part name="U2" library="SparkFun" deviceset="AP7333-33" device="SOT23-3"/>
+<part name="GND36" library="SparkFun" deviceset="GND" device=""/>
+<part name="GND39" library="SparkFun" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -10039,6 +10095,10 @@ by exp-lbrs.ulp</description>
 <instance part="Z1" gate="G$1" x="88.9" y="-33.02" rot="MR0"/>
 <instance part="GND32" gate="1" x="93.98" y="-48.26"/>
 <instance part="SUPPLY4" gate="G$1" x="93.98" y="-16.51"/>
+<instance part="C26" gate="G$1" x="-10.16" y="124.46" rot="R180"/>
+<instance part="U2" gate="G$1" x="-27.94" y="127"/>
+<instance part="GND36" gate="1" x="-27.94" y="114.3"/>
+<instance part="GND39" gate="1" x="-10.16" y="114.3"/>
 </instances>
 <busses>
 </busses>
@@ -10136,6 +10196,16 @@ by exp-lbrs.ulp</description>
 <wire x1="93.98" y1="-40.64" x2="93.98" y2="-45.72" width="0.1524" layer="91"/>
 <pinref part="GND32" gate="1" pin="GND"/>
 </segment>
+<segment>
+<pinref part="C26" gate="G$1" pin="1"/>
+<wire x1="-10.16" y1="119.38" x2="-10.16" y2="116.84" width="0.1524" layer="91"/>
+<pinref part="GND39" gate="1" pin="GND"/>
+</segment>
+<segment>
+<pinref part="U2" gate="G$1" pin="GND"/>
+<pinref part="GND36" gate="1" pin="GND"/>
+<wire x1="-27.94" y1="116.84" x2="-27.94" y2="121.92" width="0.1524" layer="91"/>
+</segment>
 </net>
 <net name="VCC" class="0">
 <segment>
@@ -10207,6 +10277,13 @@ by exp-lbrs.ulp</description>
 <pinref part="Z1" gate="G$1" pin="P$4"/>
 <wire x1="93.98" y1="-25.4" x2="93.98" y2="-19.05" width="0.1524" layer="91"/>
 <pinref part="SUPPLY4" gate="G$1" pin="VCC"/>
+</segment>
+<segment>
+<wire x1="-35.56" y1="129.54" x2="-38.1" y2="129.54" width="0.1524" layer="91"/>
+<wire x1="-38.1" y1="129.54" x2="-38.1" y2="134.62" width="0.1524" layer="91"/>
+<label x="-38.1" y="134.62" size="1.778" layer="95"/>
+<pinref part="U2" gate="G$1" pin="IN"/>
+<junction x="-38.1" y="134.62"/>
 </segment>
 </net>
 <net name="RST" class="0">
@@ -10564,6 +10641,18 @@ by exp-lbrs.ulp</description>
 <wire x1="-40.64" y1="-49.53" x2="-71.12" y2="-49.53" width="0.1524" layer="91"/>
 <pinref part="JP4" gate="G$1" pin="2"/>
 <label x="-61.214" y="-49.53" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="+3V3_OUT" class="0">
+<segment>
+<pinref part="U2" gate="G$1" pin="OUT"/>
+<wire x1="-20.32" y1="129.54" x2="-10.16" y2="129.54" width="0.1524" layer="91"/>
+<pinref part="C26" gate="G$1" pin="2"/>
+<wire x1="-10.16" y1="129.54" x2="0" y2="129.54" width="0.1524" layer="91"/>
+<wire x1="-10.16" y1="127" x2="-10.16" y2="129.54" width="0.1524" layer="91"/>
+<junction x="-10.16" y="129.54"/>
+<label x="0" y="129.54" size="1.778" layer="95"/>
+<junction x="0" y="129.54"/>
 </segment>
 </net>
 </nets>
