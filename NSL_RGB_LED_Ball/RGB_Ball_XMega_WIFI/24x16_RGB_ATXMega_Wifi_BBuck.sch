@@ -8,34 +8,34 @@
 </settings>
 <grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
-<layer number="1" name="Top" color="4" fill="1" visible="yes" active="no"/>
-<layer number="2" name="Route2" color="1" fill="3" visible="yes" active="no"/>
-<layer number="3" name="Route3" color="4" fill="3" visible="yes" active="no"/>
-<layer number="4" name="Route4" color="1" fill="4" visible="yes" active="no"/>
-<layer number="5" name="Route5" color="4" fill="4" visible="yes" active="no"/>
-<layer number="6" name="Route6" color="1" fill="8" visible="yes" active="no"/>
-<layer number="7" name="Route7" color="4" fill="8" visible="yes" active="no"/>
-<layer number="8" name="Route8" color="1" fill="2" visible="yes" active="no"/>
-<layer number="9" name="Route9" color="4" fill="2" visible="yes" active="no"/>
-<layer number="10" name="Route10" color="1" fill="7" visible="yes" active="no"/>
-<layer number="11" name="Route11" color="4" fill="7" visible="yes" active="no"/>
-<layer number="12" name="Route12" color="1" fill="5" visible="yes" active="no"/>
-<layer number="13" name="Route13" color="4" fill="5" visible="yes" active="no"/>
-<layer number="14" name="Route14" color="1" fill="6" visible="yes" active="no"/>
-<layer number="15" name="Route15" color="4" fill="6" visible="yes" active="no"/>
-<layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="no"/>
-<layer number="17" name="Pads" color="2" fill="1" visible="yes" active="no"/>
-<layer number="18" name="Vias" color="2" fill="1" visible="yes" active="no"/>
-<layer number="19" name="Unrouted" color="6" fill="1" visible="yes" active="no"/>
-<layer number="20" name="Dimension" color="15" fill="1" visible="yes" active="no"/>
-<layer number="21" name="tPlace" color="7" fill="1" visible="yes" active="no"/>
-<layer number="22" name="bPlace" color="7" fill="1" visible="yes" active="no"/>
-<layer number="23" name="tOrigins" color="15" fill="1" visible="yes" active="no"/>
-<layer number="24" name="bOrigins" color="15" fill="1" visible="yes" active="no"/>
-<layer number="25" name="tNames" color="7" fill="1" visible="yes" active="no"/>
-<layer number="26" name="bNames" color="7" fill="1" visible="yes" active="no"/>
-<layer number="27" name="tValues" color="7" fill="1" visible="yes" active="no"/>
-<layer number="28" name="bValues" color="7" fill="1" visible="yes" active="no"/>
+<layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
+<layer number="2" name="Route2" color="1" fill="3" visible="no" active="no"/>
+<layer number="3" name="Route3" color="4" fill="3" visible="no" active="no"/>
+<layer number="4" name="Route4" color="1" fill="4" visible="no" active="no"/>
+<layer number="5" name="Route5" color="4" fill="4" visible="no" active="no"/>
+<layer number="6" name="Route6" color="1" fill="8" visible="no" active="no"/>
+<layer number="7" name="Route7" color="4" fill="8" visible="no" active="no"/>
+<layer number="8" name="Route8" color="1" fill="2" visible="no" active="no"/>
+<layer number="9" name="Route9" color="4" fill="2" visible="no" active="no"/>
+<layer number="10" name="Route10" color="1" fill="7" visible="no" active="no"/>
+<layer number="11" name="Route11" color="4" fill="7" visible="no" active="no"/>
+<layer number="12" name="Route12" color="1" fill="5" visible="no" active="no"/>
+<layer number="13" name="Route13" color="4" fill="5" visible="no" active="no"/>
+<layer number="14" name="Route14" color="1" fill="6" visible="no" active="no"/>
+<layer number="15" name="Route15" color="4" fill="6" visible="no" active="no"/>
+<layer number="16" name="Bottom" color="1" fill="1" visible="no" active="no"/>
+<layer number="17" name="Pads" color="2" fill="1" visible="no" active="no"/>
+<layer number="18" name="Vias" color="2" fill="1" visible="no" active="no"/>
+<layer number="19" name="Unrouted" color="6" fill="1" visible="no" active="no"/>
+<layer number="20" name="Dimension" color="15" fill="1" visible="no" active="no"/>
+<layer number="21" name="tPlace" color="7" fill="1" visible="no" active="no"/>
+<layer number="22" name="bPlace" color="7" fill="1" visible="no" active="no"/>
+<layer number="23" name="tOrigins" color="15" fill="1" visible="no" active="no"/>
+<layer number="24" name="bOrigins" color="15" fill="1" visible="no" active="no"/>
+<layer number="25" name="tNames" color="7" fill="1" visible="no" active="no"/>
+<layer number="26" name="bNames" color="7" fill="1" visible="no" active="no"/>
+<layer number="27" name="tValues" color="7" fill="1" visible="no" active="no"/>
+<layer number="28" name="bValues" color="7" fill="1" visible="no" active="no"/>
 <layer number="29" name="tStop" color="7" fill="3" visible="no" active="no"/>
 <layer number="30" name="bStop" color="7" fill="6" visible="no" active="no"/>
 <layer number="31" name="tCream" color="7" fill="4" visible="no" active="no"/>
@@ -44,8 +44,8 @@
 <layer number="34" name="bFinish" color="6" fill="6" visible="no" active="no"/>
 <layer number="35" name="tGlue" color="7" fill="4" visible="no" active="no"/>
 <layer number="36" name="bGlue" color="7" fill="5" visible="no" active="no"/>
-<layer number="37" name="tTest" color="7" fill="1" visible="yes" active="no"/>
-<layer number="38" name="bTest" color="7" fill="1" visible="yes" active="no"/>
+<layer number="37" name="tTest" color="7" fill="1" visible="no" active="no"/>
+<layer number="38" name="bTest" color="7" fill="1" visible="no" active="no"/>
 <layer number="39" name="tKeepout" color="4" fill="11" visible="no" active="no"/>
 <layer number="40" name="bKeepout" color="1" fill="11" visible="no" active="no"/>
 <layer number="41" name="tRestrict" color="4" fill="10" visible="no" active="no"/>
@@ -53,16 +53,16 @@
 <layer number="43" name="vRestrict" color="2" fill="10" visible="no" active="no"/>
 <layer number="44" name="Drills" color="7" fill="1" visible="no" active="no"/>
 <layer number="45" name="Holes" color="7" fill="1" visible="no" active="no"/>
-<layer number="46" name="Milling" color="3" fill="1" visible="yes" active="no"/>
-<layer number="47" name="Measures" color="7" fill="1" visible="yes" active="no"/>
-<layer number="48" name="Document" color="7" fill="1" visible="yes" active="no"/>
-<layer number="49" name="Reference" color="7" fill="1" visible="yes" active="no"/>
-<layer number="50" name="dxf" color="7" fill="1" visible="yes" active="no"/>
-<layer number="51" name="tDocu" color="7" fill="1" visible="yes" active="no"/>
-<layer number="52" name="bDocu" color="7" fill="1" visible="yes" active="no"/>
-<layer number="53" name="tGND_GNDA" color="7" fill="1" visible="yes" active="no"/>
-<layer number="54" name="bGND_GNDA" color="7" fill="1" visible="yes" active="no"/>
-<layer number="56" name="wert" color="7" fill="1" visible="yes" active="no"/>
+<layer number="46" name="Milling" color="3" fill="1" visible="no" active="no"/>
+<layer number="47" name="Measures" color="7" fill="1" visible="no" active="no"/>
+<layer number="48" name="Document" color="7" fill="1" visible="no" active="no"/>
+<layer number="49" name="Reference" color="7" fill="1" visible="no" active="no"/>
+<layer number="50" name="dxf" color="7" fill="1" visible="no" active="no"/>
+<layer number="51" name="tDocu" color="7" fill="1" visible="no" active="no"/>
+<layer number="52" name="bDocu" color="7" fill="1" visible="no" active="no"/>
+<layer number="53" name="tGND_GNDA" color="7" fill="1" visible="no" active="no"/>
+<layer number="54" name="bGND_GNDA" color="7" fill="1" visible="no" active="no"/>
+<layer number="56" name="wert" color="7" fill="1" visible="no" active="no"/>
 <layer number="91" name="Nets" color="2" fill="1" visible="yes" active="yes"/>
 <layer number="92" name="Busses" color="1" fill="1" visible="yes" active="yes"/>
 <layer number="93" name="Pins" color="2" fill="1" visible="no" active="yes"/>
@@ -4703,12 +4703,425 @@ Standard 0603 ceramic capacitor, and 0.1" leaded capacitor.</description>
 <text x="1.27" y="-1.27" size="1.778" layer="97">&gt;TP_SIGNAL_NAME</text>
 <pin name="TP" x="0" y="-2.54" visible="off" length="short" direction="in" rot="R90"/>
 </symbol>
+<symbol name="PS">
+<wire x1="0.635" y1="-4.572" x2="-0.635" y2="-4.572" width="0.1524" layer="94"/>
+<wire x1="0.635" y1="-4.572" x2="0.635" y2="0" width="0.1524" layer="94"/>
+<wire x1="0.635" y1="0" x2="-0.635" y2="0" width="0.1524" layer="94"/>
+<wire x1="-0.635" y1="0" x2="-0.635" y2="-4.572" width="0.1524" layer="94"/>
+<wire x1="0.381" y1="-3.048" x2="-0.381" y2="-2.794" width="0.1524" layer="94"/>
+<wire x1="-0.381" y1="-2.794" x2="0.381" y2="-2.54" width="0.1524" layer="94"/>
+<wire x1="0.381" y1="-2.54" x2="-0.381" y2="-2.286" width="0.1524" layer="94"/>
+<wire x1="-0.381" y1="-2.286" x2="0.381" y2="-2.032" width="0.1524" layer="94"/>
+<wire x1="0.381" y1="-2.032" x2="-0.381" y2="-1.778" width="0.1524" layer="94"/>
+<wire x1="-0.381" y1="-1.778" x2="0.381" y2="-1.524" width="0.1524" layer="94"/>
+<wire x1="0.381" y1="-1.524" x2="-0.381" y2="-1.27" width="0.1524" layer="94"/>
+<wire x1="-0.381" y1="-1.27" x2="0.381" y2="-1.016" width="0.1524" layer="94"/>
+<wire x1="0.381" y1="-1.016" x2="-0.381" y2="-0.762" width="0.1524" layer="94"/>
+<wire x1="-0.381" y1="-0.762" x2="0.381" y2="-0.508" width="0.1524" layer="94"/>
+<wire x1="0.508" y1="-5.207" x2="-0.508" y2="-5.207" width="0.1524" layer="94"/>
+<wire x1="-0.508" y1="-5.207" x2="-0.508" y2="-5.715" width="0.1524" layer="94"/>
+<wire x1="-0.508" y1="-5.715" x2="0" y2="-6.35" width="0.1524" layer="94"/>
+<wire x1="0" y1="-6.35" x2="0.508" y2="-5.715" width="0.1524" layer="94"/>
+<wire x1="0.508" y1="-5.715" x2="0.508" y2="-5.207" width="0.1524" layer="94"/>
+<text x="-1.016" y="-6.35" size="1.778" layer="95" rot="R90">&gt;NAME</text>
+<text x="1.27" y="-2.54" size="1.778" layer="97">&gt;TP_SIGNAL_NAME</text>
+<rectangle x1="-0.381" y1="-5.207" x2="0.381" y2="-4.572" layer="94"/>
+<pin name="TP" x="0" y="2.54" visible="off" length="short" direction="in" rot="R270"/>
+</symbol>
 </symbols>
 <devicesets>
 <deviceset name="TP" prefix="TP">
 <description>&lt;b&gt;Test pad&lt;/b&gt;</description>
 <gates>
 <gate name="G$1" symbol="TP" x="0" y="0"/>
+</gates>
+<devices>
+<device name="B1,27" package="B1,27">
+<connects>
+<connect gate="G$1" pin="TP" pad="TP"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="TP_SIGNAL_NAME" value="" constant="no"/>
+</technology>
+</technologies>
+</device>
+<device name="B2,54" package="B2,54">
+<connects>
+<connect gate="G$1" pin="TP" pad="TP"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="TP_SIGNAL_NAME" value="" constant="no"/>
+</technology>
+</technologies>
+</device>
+<device name="PAD1-13" package="P1-13">
+<connects>
+<connect gate="G$1" pin="TP" pad="TP"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="TP_SIGNAL_NAME" value="" constant="no"/>
+</technology>
+</technologies>
+</device>
+<device name="PAD1-13Y" package="P1-13Y">
+<connects>
+<connect gate="G$1" pin="TP" pad="TP"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="TP_SIGNAL_NAME" value="" constant="no"/>
+</technology>
+</technologies>
+</device>
+<device name="PAD1-17" package="P1-17">
+<connects>
+<connect gate="G$1" pin="TP" pad="TP"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="TP_SIGNAL_NAME" value="" constant="no"/>
+</technology>
+</technologies>
+</device>
+<device name="PAD1-17Y" package="P1-17Y">
+<connects>
+<connect gate="G$1" pin="TP" pad="TP"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="TP_SIGNAL_NAME" value="" constant="no"/>
+</technology>
+</technologies>
+</device>
+<device name="PAD1-20" package="P1-20">
+<connects>
+<connect gate="G$1" pin="TP" pad="TP"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="TP_SIGNAL_NAME" value="" constant="no"/>
+</technology>
+</technologies>
+</device>
+<device name="PAD1-20Y" package="P1-20Y">
+<connects>
+<connect gate="G$1" pin="TP" pad="TP"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="TP_SIGNAL_NAME" value="" constant="no"/>
+</technology>
+</technologies>
+</device>
+<device name="TP06R" package="TP06R">
+<connects>
+<connect gate="G$1" pin="TP" pad="TP"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="TP_SIGNAL_NAME" value="" constant="no"/>
+</technology>
+</technologies>
+</device>
+<device name="TP06SQ" package="TP06SQ">
+<connects>
+<connect gate="G$1" pin="TP" pad="TP"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="TP_SIGNAL_NAME" value="" constant="no"/>
+</technology>
+</technologies>
+</device>
+<device name="TP07R" package="TP07R">
+<connects>
+<connect gate="G$1" pin="TP" pad="TP"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="TP_SIGNAL_NAME" value="" constant="no"/>
+</technology>
+</technologies>
+</device>
+<device name="TP07SQ" package="TP07SQ">
+<connects>
+<connect gate="G$1" pin="TP" pad="TP"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="TP_SIGNAL_NAME" value="" constant="no"/>
+</technology>
+</technologies>
+</device>
+<device name="TP08R" package="TP08R">
+<connects>
+<connect gate="G$1" pin="TP" pad="TP"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="TP_SIGNAL_NAME" value="" constant="no"/>
+</technology>
+</technologies>
+</device>
+<device name="TP08SQ" package="TP08SQ">
+<connects>
+<connect gate="G$1" pin="TP" pad="TP"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="TP_SIGNAL_NAME" value="" constant="no"/>
+</technology>
+</technologies>
+</device>
+<device name="TP09R" package="TP09R">
+<connects>
+<connect gate="G$1" pin="TP" pad="TP"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="TP_SIGNAL_NAME" value="" constant="no"/>
+</technology>
+</technologies>
+</device>
+<device name="TP09SQ" package="TP09SQ">
+<connects>
+<connect gate="G$1" pin="TP" pad="TP"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="TP_SIGNAL_NAME" value="" constant="no"/>
+</technology>
+</technologies>
+</device>
+<device name="TP10R" package="TP10R">
+<connects>
+<connect gate="G$1" pin="TP" pad="TP"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="TP_SIGNAL_NAME" value="" constant="no"/>
+</technology>
+</technologies>
+</device>
+<device name="TP10SQ" package="TP10SQ">
+<connects>
+<connect gate="G$1" pin="TP" pad="TP"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="TP_SIGNAL_NAME" value="" constant="no"/>
+</technology>
+</technologies>
+</device>
+<device name="TP11R" package="TP11R">
+<connects>
+<connect gate="G$1" pin="TP" pad="TP"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="TP_SIGNAL_NAME" value="" constant="no"/>
+</technology>
+</technologies>
+</device>
+<device name="TP11SQ" package="TP11SQ">
+<connects>
+<connect gate="G$1" pin="TP" pad="TP"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="TP_SIGNAL_NAME" value="" constant="no"/>
+</technology>
+</technologies>
+</device>
+<device name="TP12SQ" package="TP12SQ">
+<connects>
+<connect gate="G$1" pin="TP" pad="TP"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="TP_SIGNAL_NAME" value="" constant="no"/>
+</technology>
+</technologies>
+</device>
+<device name="TP12R" package="TP12R">
+<connects>
+<connect gate="G$1" pin="TP" pad="TP"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="TP_SIGNAL_NAME" value="" constant="no"/>
+</technology>
+</technologies>
+</device>
+<device name="TP13R" package="TP13R">
+<connects>
+<connect gate="G$1" pin="TP" pad="TP"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="TP_SIGNAL_NAME" value="" constant="no"/>
+</technology>
+</technologies>
+</device>
+<device name="TP14R" package="TP14R">
+<connects>
+<connect gate="G$1" pin="TP" pad="TP"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="TP_SIGNAL_NAME" value="" constant="no"/>
+</technology>
+</technologies>
+</device>
+<device name="TP15R" package="TP15R">
+<connects>
+<connect gate="G$1" pin="TP" pad="TP"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="TP_SIGNAL_NAME" value="" constant="no"/>
+</technology>
+</technologies>
+</device>
+<device name="TP16R" package="TP16R">
+<connects>
+<connect gate="G$1" pin="TP" pad="TP"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="TP_SIGNAL_NAME" value="" constant="no"/>
+</technology>
+</technologies>
+</device>
+<device name="TP17R" package="TP17R">
+<connects>
+<connect gate="G$1" pin="TP" pad="TP"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="TP_SIGNAL_NAME" value="" constant="no"/>
+</technology>
+</technologies>
+</device>
+<device name="TP18R" package="TP18R">
+<connects>
+<connect gate="G$1" pin="TP" pad="TP"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="TP_SIGNAL_NAME" value="" constant="no"/>
+</technology>
+</technologies>
+</device>
+<device name="TP19R" package="TP19R">
+<connects>
+<connect gate="G$1" pin="TP" pad="TP"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="TP_SIGNAL_NAME" value="" constant="no"/>
+</technology>
+</technologies>
+</device>
+<device name="TP20R" package="TP20R">
+<connects>
+<connect gate="G$1" pin="TP" pad="TP"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="TP_SIGNAL_NAME" value="" constant="no"/>
+</technology>
+</technologies>
+</device>
+<device name="TP13SQ" package="TP13SQ">
+<connects>
+<connect gate="G$1" pin="TP" pad="TP"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="TP_SIGNAL_NAME" value="" constant="no"/>
+</technology>
+</technologies>
+</device>
+<device name="TP14SQ" package="TP14SQ">
+<connects>
+<connect gate="G$1" pin="TP" pad="TP"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="TP_SIGNAL_NAME" value="" constant="no"/>
+</technology>
+</technologies>
+</device>
+<device name="TP15SQ" package="TP15SQ">
+<connects>
+<connect gate="G$1" pin="TP" pad="TP"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="TP_SIGNAL_NAME" value="" constant="no"/>
+</technology>
+</technologies>
+</device>
+<device name="TP16SQ" package="TP16SQ">
+<connects>
+<connect gate="G$1" pin="TP" pad="TP"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="TP_SIGNAL_NAME" value="" constant="no"/>
+</technology>
+</technologies>
+</device>
+<device name="TP17SQ" package="TP17SQ">
+<connects>
+<connect gate="G$1" pin="TP" pad="TP"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="TP_SIGNAL_NAME" value="" constant="no"/>
+</technology>
+</technologies>
+</device>
+<device name="TP18SQ" package="TP18SQ">
+<connects>
+<connect gate="G$1" pin="TP" pad="TP"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="TP_SIGNAL_NAME" value="" constant="no"/>
+</technology>
+</technologies>
+</device>
+<device name="TP19SQ" package="TP19SQ">
+<connects>
+<connect gate="G$1" pin="TP" pad="TP"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="TP_SIGNAL_NAME" value="" constant="no"/>
+</technology>
+</technologies>
+</device>
+<device name="TP20SQ" package="TP20SQ">
+<connects>
+<connect gate="G$1" pin="TP" pad="TP"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="TP_SIGNAL_NAME" value="" constant="no"/>
+</technology>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="PTR1" prefix="TP">
+<description>&lt;b&gt;TEST PIN&lt;/b&gt;</description>
+<gates>
+<gate name="G$1" symbol="PS" x="0" y="0"/>
 </gates>
 <devices>
 <device name="B1,27" package="B1,27">
@@ -9950,19 +10363,18 @@ Standard 0603 ceramic capacitor, and 0.1" leaded capacitor.</description>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
 </part>
-<part name="R1" library="24x16_RGB" deviceset="RESISTOR" device="" value="47K">
+<part name="R1" library="24x16_RGB" deviceset="RESISTOR" device="" value="20K">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
 </part>
-<part name="GND1" library="SparkFun" deviceset="GND" device=""/>
 <part name="SUPPLY3" library="supply2" deviceset="VCC" device=""/>
 <part name="IC3" library="slice_noshift" deviceset="TLC5947" device="XLP">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
 </part>
-<part name="R2" library="24x16_RGB" deviceset="RESISTOR" device="" value="47K">
+<part name="R2" library="24x16_RGB" deviceset="RESISTOR" device="" value="20K">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
@@ -9974,7 +10386,7 @@ Standard 0603 ceramic capacitor, and 0.1" leaded capacitor.</description>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
 </part>
-<part name="R3" library="24x16_RGB" deviceset="RESISTOR" device="" value="47K">
+<part name="R3" library="24x16_RGB" deviceset="RESISTOR" device="" value="20K">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
@@ -10135,7 +10547,6 @@ Standard 0603 ceramic capacitor, and 0.1" leaded capacitor.</description>
 <attribute name="OC_NEWARK" value="96M1306"/>
 </part>
 <part name="GND6" library="SparkFun" deviceset="GND" device=""/>
-<part name="GND7" library="SparkFun" deviceset="GND" device=""/>
 <part name="R5" library="slice_noshift" deviceset="RESISTOR" device="0805" value="1K">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
@@ -10152,7 +10563,6 @@ Standard 0603 ceramic capacitor, and 0.1" leaded capacitor.</description>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
 </part>
-<part name="GND15" library="SparkFun" deviceset="GND" device=""/>
 <part name="GND16" library="SparkFun" deviceset="GND" device=""/>
 <part name="SUPPLY7" library="NSL" deviceset="GND" device=""/>
 <part name="S2" library="SparkFun" deviceset="TAC_SWITCH" device="SMD">
@@ -10262,12 +10672,6 @@ Standard 0603 ceramic capacitor, and 0.1" leaded capacitor.</description>
 <attribute name="MPN" value="CRCW08054K70FKEA"/>
 <attribute name="OC_NEWARK" value="61M5491"/>
 </part>
-<part name="C23" library="SparkFun" deviceset="CAP" device="0805" value=".1uF">
-<attribute name="MF" value=""/>
-<attribute name="MPN" value="08055C105MAT2A"/>
-<attribute name="OC_NEWARK" value="73T5385"/>
-</part>
-<part name="U$4" library="8x8" deviceset="GND" device=""/>
 <part name="C10" library="slice_noshift" deviceset="CAP" device="0805" value=".1uF">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value="08055C105MAT2A"/>
@@ -10339,7 +10743,6 @@ Standard 0603 ceramic capacitor, and 0.1" leaded capacitor.</description>
 <part name="ANT" library="24x16_RGB_ATXMega_Wifi" deviceset="ANTENNA2" device="" value="AT8010"/>
 <part name="C25" library="SparkFun" deviceset="CAP" device="0805" value="1uF"/>
 <part name="GND19" library="supply1" deviceset="GND" device=""/>
-<part name="JP4" library="SparkFun-Connectors" deviceset="M04" device="1.27MM"/>
 <part name="GND20" library="SparkFun" deviceset="GND" device=""/>
 <part name="Z1" library="USBug" deviceset="PRTR5V0U2X" device=""/>
 <part name="GND32" library="SparkFun" deviceset="GND" device=""/>
@@ -10363,6 +10766,25 @@ Standard 0603 ceramic capacitor, and 0.1" leaded capacitor.</description>
 <part name="GND39" library="badge.lbrbadge_2013" deviceset="SPARKFUN_GND" device="" value="GND"/>
 <part name="C28" library="CH_passive" deviceset="CAP" device="0805" value="10uF"/>
 <part name="C30" library="CH_passive" deviceset="CAP" device="0805" value="10uF"/>
+<part name="C23" library="slice_noshift" deviceset="CAP_POL" device="3528" value="47uF">
+<attribute name="MF" value=""/>
+<attribute name="MPN" value=""/>
+<attribute name="OC_NEWARK" value="unknown"/>
+</part>
+<part name="C32" library="24x16_RGB" deviceset="CAP" device="0805" value="1uF">
+<attribute name="MF" value=""/>
+<attribute name="MPN" value="08055D105KAT2A"/>
+<attribute name="OC_NEWARK" value="66M3779"/>
+</part>
+<part name="GND1" library="SparkFun" deviceset="GND" device=""/>
+<part name="C31" library="SparkFun" deviceset="CAP" device="0805" value="12pF">
+<attribute name="MF" value="AVX CORPORATION"/>
+<attribute name="MPN" value="08055A120JAT2A"/>
+<attribute name="OC_NEWARK" value="30H0781"/>
+</part>
+<part name="TP15" library="testpad" deviceset="PTR1" device="TP12SQ" value="MIC"/>
+<part name="TP16" library="testpad" deviceset="PTR1" device="TP12SQ" value="BATT"/>
+<part name="JP4" library="SparkFun-Connectors" deviceset="M04" device="PTH"/>
 </parts>
 <sheets>
 <sheet>
@@ -10430,6 +10852,21 @@ Standard 0603 ceramic capacitor, and 0.1" leaded capacitor.</description>
 <instance part="C30" gate="G$1" x="73.66" y="0" smashed="yes">
 <attribute name="NAME" x="76.2" y="2.54" size="1.778" layer="95"/>
 <attribute name="VALUE" x="76.2" y="0" size="1.778" layer="96"/>
+</instance>
+<instance part="C23" gate="G$1" x="86.36" y="2.54">
+<attribute name="OC_NEWARK" x="86.36" y="2.54" size="1.778" layer="96" display="off"/>
+<attribute name="MF" x="86.36" y="2.54" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="86.36" y="2.54" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="C32" gate="G$1" x="96.52" y="0">
+<attribute name="OC_NEWARK" x="96.52" y="0" size="1.778" layer="96" display="off"/>
+<attribute name="MF" x="96.52" y="0" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="96.52" y="0" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="C31" gate="G$1" x="106.68" y="0">
+<attribute name="OC_NEWARK" x="106.68" y="0" size="1.778" layer="96" rot="R90" display="off"/>
+<attribute name="MF" x="106.68" y="0" size="1.778" layer="96" rot="R90" display="off"/>
+<attribute name="MPN" x="106.68" y="0" size="1.778" layer="96" rot="R90" display="off"/>
 </instance>
 </instances>
 <busses>
@@ -10502,6 +10939,18 @@ Standard 0603 ceramic capacitor, and 0.1" leaded capacitor.</description>
 <wire x1="43.18" y1="-7.62" x2="43.18" y2="-5.08" width="0.1524" layer="91"/>
 <pinref part="U1" gate="G$1" pin="FB"/>
 <wire x1="43.18" y1="5.08" x2="43.18" y2="-5.08" width="0.1524" layer="91"/>
+<pinref part="C32" gate="G$1" pin="1"/>
+<wire x1="73.66" y1="7.62" x2="86.36" y2="7.62" width="0.1524" layer="91"/>
+<wire x1="86.36" y1="7.62" x2="96.52" y2="7.62" width="0.1524" layer="91"/>
+<wire x1="96.52" y1="7.62" x2="96.52" y2="5.08" width="0.1524" layer="91"/>
+<pinref part="C23" gate="G$1" pin="+"/>
+<wire x1="86.36" y1="5.08" x2="86.36" y2="7.62" width="0.1524" layer="91"/>
+<junction x="73.66" y="7.62"/>
+<junction x="86.36" y="7.62"/>
+<pinref part="C31" gate="G$1" pin="1"/>
+<wire x1="96.52" y1="7.62" x2="106.68" y2="7.62" width="0.1524" layer="91"/>
+<wire x1="106.68" y1="7.62" x2="106.68" y2="5.08" width="0.1524" layer="91"/>
+<junction x="96.52" y="7.62"/>
 </segment>
 </net>
 <net name="PS" class="0">
@@ -10539,9 +10988,9 @@ Standard 0603 ceramic capacitor, and 0.1" leaded capacitor.</description>
 <net name="GND" class="0">
 <segment>
 <wire x1="-25.4" y1="-15.24" x2="-27.94" y2="-15.24" width="0.1524" layer="91"/>
-<wire x1="-50.8" y1="-30.48" x2="-50.8" y2="-20.32" width="0.1524" layer="91"/>
-<wire x1="-27.94" y1="-30.48" x2="-50.8" y2="-30.48" width="0.1524" layer="91"/>
-<wire x1="-27.94" y1="-15.24" x2="-27.94" y2="-30.48" width="0.1524" layer="91"/>
+<wire x1="-50.8" y1="-22.86" x2="-50.8" y2="-20.32" width="0.1524" layer="91"/>
+<wire x1="-27.94" y1="-22.86" x2="-50.8" y2="-22.86" width="0.1524" layer="91"/>
+<wire x1="-27.94" y1="-15.24" x2="-27.94" y2="-22.86" width="0.1524" layer="91"/>
 <pinref part="U1" gate="G$1" pin="GND"/>
 <pinref part="R16" gate="G$1" pin="1"/>
 </segment>
@@ -10587,13 +11036,26 @@ Standard 0603 ceramic capacitor, and 0.1" leaded capacitor.</description>
 <wire x1="73.66" y1="-2.54" x2="73.66" y2="-10.16" width="0.1524" layer="91"/>
 <wire x1="73.66" y1="-10.16" x2="60.96" y2="-10.16" width="0.1524" layer="91"/>
 <junction x="60.96" y="-10.16"/>
+<pinref part="C23" gate="G$1" pin="-"/>
+<wire x1="86.36" y1="-5.08" x2="86.36" y2="-2.54" width="0.1524" layer="91"/>
+<pinref part="C32" gate="G$1" pin="2"/>
+<wire x1="96.52" y1="-5.08" x2="96.52" y2="-2.54" width="0.1524" layer="91"/>
+<wire x1="73.66" y1="-10.16" x2="86.36" y2="-10.16" width="0.1524" layer="91"/>
+<wire x1="86.36" y1="-10.16" x2="96.52" y2="-10.16" width="0.1524" layer="91"/>
+<wire x1="96.52" y1="-10.16" x2="96.52" y2="-5.08" width="0.1524" layer="91"/>
+<wire x1="86.36" y1="-5.08" x2="86.36" y2="-10.16" width="0.1524" layer="91"/>
+<junction x="73.66" y="-10.16"/>
+<junction x="86.36" y="-10.16"/>
+<pinref part="C31" gate="G$1" pin="2"/>
+<wire x1="96.52" y1="-10.16" x2="106.68" y2="-10.16" width="0.1524" layer="91"/>
+<wire x1="106.68" y1="-10.16" x2="106.68" y2="-2.54" width="0.1524" layer="91"/>
+<junction x="96.52" y="-10.16"/>
 </segment>
 </net>
 </nets>
 </sheet>
 <sheet>
 <plain>
-<text x="124.46" y="-12.7" size="1.778" layer="91">If making new board flip PWR and GND</text>
 </plain>
 <instances>
 <instance part="SLOT1" gate="G$1" x="30.48" y="40.64">
@@ -10714,10 +11176,10 @@ Standard 0603 ceramic capacitor, and 0.1" leaded capacitor.</description>
 <instance part="GND12" gate="1" x="128.27" y="-48.26"/>
 <instance part="D1" gate="G$1" x="123.19" y="-41.91" rot="R180"/>
 <instance part="JP2" gate="G$1" x="119.38" y="-22.86"/>
-<instance part="JP4" gate="G$1" x="-76.2" y="-49.53"/>
 <instance part="GND20" gate="1" x="-69.85" y="-58.42"/>
 <instance part="Z1" gate="G$1" x="88.9" y="-33.02" rot="MR0"/>
 <instance part="GND32" gate="1" x="93.98" y="-48.26"/>
+<instance part="JP4" gate="G$1" x="-76.2" y="-49.53"/>
 </instances>
 <busses>
 </busses>
@@ -10800,10 +11262,10 @@ Standard 0603 ceramic capacitor, and 0.1" leaded capacitor.</description>
 <pinref part="JP3" gate="G$1" pin="GND"/>
 </segment>
 <segment>
-<pinref part="JP4" gate="G$1" pin="1"/>
 <pinref part="GND20" gate="1" pin="GND"/>
 <wire x1="-71.12" y1="-52.07" x2="-69.85" y2="-52.07" width="0.1524" layer="91"/>
 <wire x1="-69.85" y1="-52.07" x2="-69.85" y2="-55.88" width="0.1524" layer="91"/>
+<pinref part="JP4" gate="G$1" pin="1"/>
 </segment>
 <segment>
 <pinref part="Z1" gate="G$1" pin="P$1"/>
@@ -11165,24 +11627,24 @@ Standard 0603 ceramic capacitor, and 0.1" leaded capacitor.</description>
 <segment>
 <pinref part="IC1" gate="G$1" pin="PB1/ADC9"/>
 <wire x1="-40.64" y1="-44.45" x2="-71.12" y2="-44.45" width="0.1524" layer="91"/>
-<pinref part="JP4" gate="G$1" pin="4"/>
 <label x="-60.96" y="-44.196" size="1.778" layer="95"/>
+<pinref part="JP4" gate="G$1" pin="4"/>
 </segment>
 </net>
 <net name="SELECT" class="0">
 <segment>
 <pinref part="IC1" gate="G$1" pin="PB2/ADC10/DAC0"/>
 <wire x1="-40.64" y1="-46.99" x2="-71.12" y2="-46.99" width="0.1524" layer="91"/>
-<pinref part="JP4" gate="G$1" pin="3"/>
 <label x="-61.214" y="-46.736" size="1.778" layer="95"/>
+<pinref part="JP4" gate="G$1" pin="3"/>
 </segment>
 </net>
 <net name="DOWN" class="0">
 <segment>
 <pinref part="IC1" gate="G$1" pin="PB3/ADC11/DAC1"/>
 <wire x1="-40.64" y1="-49.53" x2="-71.12" y2="-49.53" width="0.1524" layer="91"/>
-<pinref part="JP4" gate="G$1" pin="2"/>
 <label x="-61.214" y="-49.53" size="1.778" layer="95"/>
+<pinref part="JP4" gate="G$1" pin="2"/>
 </segment>
 </net>
 <net name="+3V3" class="0">
@@ -11263,7 +11725,6 @@ Standard 0603 ceramic capacitor, and 0.1" leaded capacitor.</description>
 <attribute name="MF" x="-142.24" y="25.4" size="1.778" layer="96" display="off"/>
 <attribute name="MPN" x="-142.24" y="25.4" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="GND1" gate="1" x="-147.32" y="12.7"/>
 <instance part="SUPPLY3" gate="G$1" x="-134.62" y="68.58"/>
 <instance part="IC3" gate="A" x="-10.16" y="20.32">
 <attribute name="OC_NEWARK" x="-10.16" y="20.32" size="1.778" layer="96" display="off"/>
@@ -11307,19 +11768,12 @@ Standard 0603 ceramic capacitor, and 0.1" leaded capacitor.</description>
 <attribute name="MPN" x="38.1" y="48.26" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="GND11" gate="1" x="38.1" y="40.64"/>
+<instance part="GND1" gate="1" x="-147.32" y="12.7"/>
 </instances>
 <busses>
 </busses>
 <nets>
 <net name="GND" class="0">
-<segment>
-<wire x1="-147.32" y1="25.4" x2="-147.32" y2="15.24" width="0.1524" layer="91"/>
-<wire x1="-129.54" y1="15.24" x2="-147.32" y2="15.24" width="0.1524" layer="91"/>
-<junction x="-147.32" y="15.24"/>
-<pinref part="R1" gate="G$1" pin="1"/>
-<pinref part="IC2" gate="A" pin="GND"/>
-<pinref part="GND1" gate="1" pin="GND"/>
-</segment>
 <segment>
 <wire x1="-58.42" y1="25.4" x2="-58.42" y2="15.24" width="0.1524" layer="91"/>
 <wire x1="-33.02" y1="15.24" x2="-58.42" y2="15.24" width="0.1524" layer="91"/>
@@ -11350,6 +11804,14 @@ Standard 0603 ceramic capacitor, and 0.1" leaded capacitor.</description>
 <wire x1="38.1" y1="45.72" x2="38.1" y2="43.18" width="0.1524" layer="91"/>
 <pinref part="C11" gate="G$1" pin="2"/>
 <pinref part="GND11" gate="1" pin="GND"/>
+</segment>
+<segment>
+<wire x1="-147.32" y1="25.4" x2="-147.32" y2="15.24" width="0.1524" layer="91"/>
+<wire x1="-129.54" y1="15.24" x2="-147.32" y2="15.24" width="0.1524" layer="91"/>
+<pinref part="R1" gate="G$1" pin="1"/>
+<pinref part="IC2" gate="A" pin="GND"/>
+<pinref part="GND1" gate="1" pin="GND"/>
+<junction x="-147.32" y="15.24"/>
 </segment>
 </net>
 <net name="VCC" class="0">
@@ -12778,13 +13240,12 @@ Standard 0603 ceramic capacitor, and 0.1" leaded capacitor.</description>
 <attribute name="MF" x="-40.64" y="2.54" size="1.778" layer="96" display="off"/>
 <attribute name="MPN" x="-40.64" y="2.54" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="C13" gate="G$1" x="43.18" y="2.54">
-<attribute name="OC_NEWARK" x="43.18" y="2.54" size="1.778" layer="96" display="off"/>
-<attribute name="MF" x="43.18" y="2.54" size="1.778" layer="96" display="off"/>
-<attribute name="MPN" x="43.18" y="2.54" size="1.778" layer="96" display="off"/>
+<instance part="C13" gate="G$1" x="43.18" y="-2.54">
+<attribute name="OC_NEWARK" x="43.18" y="-2.54" size="1.778" layer="96" display="off"/>
+<attribute name="MF" x="43.18" y="-2.54" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="43.18" y="-2.54" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="GND6" gate="1" x="-40.64" y="-7.62"/>
-<instance part="GND7" gate="1" x="43.18" y="-7.62"/>
 <instance part="R5" gate="G$1" x="33.02" y="-7.62" rot="R90">
 <attribute name="OC_NEWARK" x="33.02" y="-7.62" size="1.778" layer="96" display="off"/>
 <attribute name="MF" x="33.02" y="-7.62" size="1.778" layer="96" display="off"/>
@@ -12801,7 +13262,6 @@ Standard 0603 ceramic capacitor, and 0.1" leaded capacitor.</description>
 <attribute name="MF" x="93.98" y="-5.08" size="1.778" layer="96" display="off"/>
 <attribute name="MPN" x="93.98" y="-5.08" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="GND15" gate="1" x="93.98" y="-17.78"/>
 <instance part="GND16" gate="1" x="0" y="-27.94"/>
 <instance part="R6" gate="G$1" x="86.36" y="17.78" rot="R90">
 <attribute name="OC_NEWARK" x="86.36" y="17.78" size="1.778" layer="96" display="off"/>
@@ -12830,6 +13290,7 @@ Standard 0603 ceramic capacitor, and 0.1" leaded capacitor.</description>
 <attribute name="MPN" x="99.06" y="22.86" size="1.778" layer="96" rot="R90" display="off"/>
 </instance>
 <instance part="GND36" gate="1" x="109.22" y="17.78"/>
+<instance part="TP16" gate="G$1" x="86.36" y="43.18" rot="R180"/>
 </instances>
 <busses>
 </busses>
@@ -12847,19 +13308,10 @@ Standard 0603 ceramic capacitor, and 0.1" leaded capacitor.</description>
 <pinref part="C12" gate="G$1" pin="-"/>
 </segment>
 <segment>
-<wire x1="43.18" y1="-2.54" x2="43.18" y2="-5.08" width="0.1524" layer="91"/>
-<pinref part="C13" gate="G$1" pin="-"/>
-<pinref part="GND7" gate="1" pin="GND"/>
-</segment>
-<segment>
-<pinref part="GND2" gate="1" pin="GND"/>
-<wire x1="68.58" y1="-12.7" x2="68.58" y2="-15.24" width="0.1524" layer="91"/>
-<wire x1="71.12" y1="-12.7" x2="68.58" y2="-12.7" width="0.1524" layer="91"/>
-</segment>
-<segment>
 <wire x1="20.32" y1="-12.7" x2="27.94" y2="-12.7" width="0.1524" layer="91"/>
 <wire x1="27.94" y1="-12.7" x2="33.02" y2="-12.7" width="0.1524" layer="91"/>
-<wire x1="33.02" y1="-12.7" x2="68.58" y2="-12.7" width="0.1524" layer="91"/>
+<wire x1="33.02" y1="-12.7" x2="43.18" y2="-12.7" width="0.1524" layer="91"/>
+<wire x1="43.18" y1="-12.7" x2="68.58" y2="-12.7" width="0.1524" layer="91"/>
 <wire x1="20.32" y1="-7.62" x2="27.94" y2="-7.62" width="0.1524" layer="91"/>
 <wire x1="27.94" y1="-7.62" x2="27.94" y2="-12.7" width="0.1524" layer="91"/>
 <wire x1="33.02" y1="-12.7" x2="33.02" y2="-17.78" width="0.1524" layer="91"/>
@@ -12869,11 +13321,13 @@ Standard 0603 ceramic capacitor, and 0.1" leaded capacitor.</description>
 <pinref part="IC5" gate="G$1" pin="VSS@1"/>
 <pinref part="R5" gate="G$1" pin="1"/>
 <pinref part="GND8" gate="1" pin="GND"/>
+<wire x1="43.18" y1="-7.62" x2="43.18" y2="-5.08" width="0.1524" layer="91"/>
+<pinref part="C13" gate="G$1" pin="-"/>
+<wire x1="43.18" y1="-5.08" x2="43.18" y2="-12.7" width="0.1524" layer="91"/>
+<junction x="43.18" y="-12.7"/>
 </segment>
 <segment>
 <pinref part="C14" gate="G$1" pin="-"/>
-<pinref part="GND15" gate="1" pin="GND"/>
-<wire x1="93.98" y1="-15.24" x2="93.98" y2="-12.7" width="0.1524" layer="91"/>
 <wire x1="93.98" y1="-12.7" x2="93.98" y2="-10.16" width="0.1524" layer="91"/>
 <wire x1="93.98" y1="-12.7" x2="104.14" y2="-12.7" width="0.1524" layer="91"/>
 <pinref part="C15" gate="G$1" pin="2"/>
@@ -12883,6 +13337,10 @@ Standard 0603 ceramic capacitor, and 0.1" leaded capacitor.</description>
 <pinref part="C16" gate="G$1" pin="2"/>
 <wire x1="114.3" y1="-12.7" x2="114.3" y2="-10.16" width="0.1524" layer="91"/>
 <junction x="104.14" y="-12.7"/>
+<pinref part="GND2" gate="1" pin="GND"/>
+<wire x1="68.58" y1="-12.7" x2="68.58" y2="-15.24" width="0.1524" layer="91"/>
+<wire x1="71.12" y1="-12.7" x2="68.58" y2="-12.7" width="0.1524" layer="91"/>
+<wire x1="93.98" y1="-12.7" x2="71.12" y2="-12.7" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <wire x1="0" y1="-17.78" x2="0" y2="-25.4" width="0.1524" layer="91"/>
@@ -12938,22 +13396,21 @@ Standard 0603 ceramic capacitor, and 0.1" leaded capacitor.</description>
 <segment>
 <label x="93.98" y="2.54" size="1.778" layer="95"/>
 <pinref part="C14" gate="G$1" pin="+"/>
-<wire x1="93.98" y1="-2.54" x2="93.98" y2="0" width="0.1524" layer="91"/>
-<wire x1="93.98" y1="0" x2="91.44" y2="0" width="0.1524" layer="91"/>
-<wire x1="91.44" y1="0" x2="86.36" y2="0" width="0.1524" layer="91"/>
-<wire x1="86.36" y1="0" x2="86.36" y2="7.62" width="0.1524" layer="91"/>
+<wire x1="93.98" y1="-2.54" x2="93.98" y2="7.62" width="0.1524" layer="91"/>
+<wire x1="93.98" y1="7.62" x2="91.44" y2="7.62" width="0.1524" layer="91"/>
+<wire x1="91.44" y1="7.62" x2="86.36" y2="7.62" width="0.1524" layer="91"/>
 <pinref part="R6" gate="G$1" pin="1"/>
 <wire x1="86.36" y1="7.62" x2="86.36" y2="12.7" width="0.1524" layer="91"/>
-<wire x1="93.98" y1="0" x2="104.14" y2="0" width="0.1524" layer="91"/>
+<wire x1="93.98" y1="7.62" x2="104.14" y2="7.62" width="0.1524" layer="91"/>
 <pinref part="C15" gate="G$1" pin="1"/>
-<wire x1="104.14" y1="0" x2="104.14" y2="-2.54" width="0.1524" layer="91"/>
-<junction x="93.98" y="0"/>
-<wire x1="104.14" y1="0" x2="114.3" y2="0" width="0.1524" layer="91"/>
+<wire x1="104.14" y1="7.62" x2="104.14" y2="-2.54" width="0.1524" layer="91"/>
+<junction x="93.98" y="7.62"/>
+<wire x1="104.14" y1="7.62" x2="114.3" y2="7.62" width="0.1524" layer="91"/>
 <pinref part="C16" gate="G$1" pin="1"/>
-<wire x1="114.3" y1="0" x2="114.3" y2="-2.54" width="0.1524" layer="91"/>
-<junction x="104.14" y="0"/>
+<wire x1="114.3" y1="7.62" x2="114.3" y2="-2.54" width="0.1524" layer="91"/>
+<junction x="104.14" y="7.62"/>
 <pinref part="C13" gate="G$1" pin="+"/>
-<wire x1="43.18" y1="5.08" x2="43.18" y2="7.62" width="0.1524" layer="91"/>
+<wire x1="43.18" y1="0" x2="43.18" y2="7.62" width="0.1524" layer="91"/>
 <wire x1="43.18" y1="7.62" x2="68.58" y2="7.62" width="0.1524" layer="91"/>
 <junction x="43.18" y="7.62"/>
 <pinref part="IC5" gate="G$1" pin="VBAT@1"/>
@@ -12991,6 +13448,8 @@ Standard 0603 ceramic capacitor, and 0.1" leaded capacitor.</description>
 <label x="86.36" y="25.4" size="1.778" layer="95" rot="R90"/>
 <pinref part="R17" gate="G$1" pin="2"/>
 <wire x1="86.36" y1="22.86" x2="93.98" y2="22.86" width="0.1524" layer="91"/>
+<pinref part="TP16" gate="G$1" pin="TP"/>
+<wire x1="86.36" y1="30.48" x2="86.36" y2="40.64" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>
@@ -13623,13 +14082,8 @@ Standard 0603 ceramic capacitor, and 0.1" leaded capacitor.</description>
 <attribute name="MF" x="-33.02" y="-10.16" size="1.778" layer="96" display="off"/>
 <attribute name="MPN" x="-33.02" y="-10.16" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="C23" gate="G$1" x="5.08" y="27.94" rot="R180">
-<attribute name="OC_NEWARK" x="5.08" y="27.94" size="1.778" layer="96" display="off"/>
-<attribute name="MF" x="5.08" y="27.94" size="1.778" layer="96" display="off"/>
-<attribute name="MPN" x="5.08" y="27.94" size="1.778" layer="96" display="off"/>
-</instance>
-<instance part="U$4" gate="G$1" x="5.08" y="38.1" rot="R180"/>
 <instance part="U$1" gate="G$1" x="-33.02" y="-27.94"/>
+<instance part="TP15" gate="G$1" x="60.96" y="10.16" rot="R180"/>
 </instances>
 <busses>
 </busses>
@@ -13648,11 +14102,6 @@ Standard 0603 ceramic capacitor, and 0.1" leaded capacitor.</description>
 <wire x1="20.32" y1="-5.08" x2="20.32" y2="-7.62" width="0.1524" layer="91"/>
 <pinref part="IC8" gate="G$1" pin="V-"/>
 <pinref part="U$3" gate="G$1" pin="GND"/>
-</segment>
-<segment>
-<pinref part="C23" gate="G$1" pin="2"/>
-<pinref part="U$4" gate="G$1" pin="GND"/>
-<wire x1="5.08" y1="30.48" x2="5.08" y2="35.56" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="R10" gate="G$1" pin="1"/>
@@ -13708,9 +14157,6 @@ Standard 0603 ceramic capacitor, and 0.1" leaded capacitor.</description>
 <pinref part="C24" gate="G$1" pin="2"/>
 <junction x="15.24" y="22.86"/>
 <junction x="15.24" y="15.24"/>
-<pinref part="C23" gate="G$1" pin="1"/>
-<wire x1="5.08" y1="22.86" x2="5.08" y2="15.24" width="0.1524" layer="91"/>
-<junction x="5.08" y="15.24"/>
 </segment>
 </net>
 <net name="MIC" class="0">
@@ -13727,6 +14173,10 @@ Standard 0603 ceramic capacitor, and 0.1" leaded capacitor.</description>
 <pinref part="IC8" gate="G$1" pin="OUT"/>
 <junction x="33.02" y="22.86"/>
 <junction x="33.02" y="2.54"/>
+<wire x1="45.72" y1="2.54" x2="60.96" y2="2.54" width="0.1524" layer="91"/>
+<pinref part="TP15" gate="G$1" pin="TP"/>
+<wire x1="60.96" y1="2.54" x2="68.58" y2="2.54" width="0.1524" layer="91"/>
+<wire x1="60.96" y1="2.54" x2="60.96" y2="7.62" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$20" class="0">
