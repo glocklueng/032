@@ -13292,7 +13292,6 @@ Source: www.bourns.com .. 6000_series.pdf</description>
 </part>
 <part name="GND13" library="SparkFun" deviceset="GND" device=""/>
 <part name="D1" library="diode" deviceset="DIODE-" device="DO214AA" value="SSB44-E3/52T"/>
-<part name="JP2" library="SparkFun-Connectors" deviceset="M04" device="1.27MM"/>
 <part name="IC6" library="centerblack_engineering" deviceset="CC3000" device=""/>
 <part name="GND17" library="supply1" deviceset="GND" device=""/>
 <part name="GND21" library="supply1" deviceset="GND" device=""/>
@@ -13360,6 +13359,7 @@ Source: www.bourns.com .. 6000_series.pdf</description>
 <part name="JP4" library="SparkFun-Connectors" deviceset="M04" device="PTH"/>
 <part name="IC9" library="24x16_RGB_ATXMega_Wifi_BBuck" deviceset="TPS6300X" device=""/>
 <part name="L3" library="rcl" deviceset="L-US" device="L1812"/>
+<part name="JP5" library="SparkFun-Connectors" deviceset="M04" device="PTH"/>
 </parts>
 <sheets>
 <sheet>
@@ -13684,11 +13684,11 @@ Source: www.bourns.com .. 6000_series.pdf</description>
 <instance part="JP3" gate="G$1" x="140.97" y="-44.45"/>
 <instance part="GND12" gate="1" x="128.27" y="-48.26"/>
 <instance part="D1" gate="G$1" x="123.19" y="-41.91" rot="R180"/>
-<instance part="JP2" gate="G$1" x="119.38" y="-22.86"/>
 <instance part="GND20" gate="1" x="-69.85" y="-58.42"/>
 <instance part="Z1" gate="G$1" x="88.9" y="-33.02" rot="MR0"/>
 <instance part="GND32" gate="1" x="93.98" y="-48.26"/>
 <instance part="JP4" gate="G$1" x="-76.2" y="-49.53"/>
+<instance part="JP5" gate="G$1" x="116.332" y="-22.86"/>
 </instances>
 <busses>
 </busses>
@@ -13782,9 +13782,9 @@ Source: www.bourns.com .. 6000_series.pdf</description>
 <pinref part="GND32" gate="1" pin="GND"/>
 </segment>
 <segment>
-<wire x1="134.62" y1="-25.4" x2="124.46" y2="-25.4" width="0.1524" layer="91"/>
-<pinref part="JP2" gate="G$1" pin="1"/>
+<wire x1="134.62" y1="-25.4" x2="121.412" y2="-25.4" width="0.1524" layer="91"/>
 <label x="129.54" y="-25.4" size="1.778" layer="95"/>
+<pinref part="JP5" gate="G$1" pin="1"/>
 </segment>
 </net>
 <net name="VCC" class="0">
@@ -13984,9 +13984,9 @@ Source: www.bourns.com .. 6000_series.pdf</description>
 <pinref part="JP3" gate="G$1" pin="D-"/>
 </segment>
 <segment>
-<wire x1="124.46" y1="-20.32" x2="134.62" y2="-20.32" width="0.1524" layer="91"/>
+<wire x1="121.412" y1="-20.32" x2="134.62" y2="-20.32" width="0.1524" layer="91"/>
 <label x="129.54" y="-20.32" size="1.778" layer="95"/>
-<pinref part="JP2" gate="G$1" pin="3"/>
+<pinref part="JP5" gate="G$1" pin="3"/>
 </segment>
 <segment>
 <pinref part="Z1" gate="G$1" pin="P$2"/>
@@ -14006,9 +14006,9 @@ Source: www.bourns.com .. 6000_series.pdf</description>
 <pinref part="JP3" gate="G$1" pin="D+"/>
 </segment>
 <segment>
-<wire x1="124.46" y1="-22.86" x2="134.62" y2="-22.86" width="0.1524" layer="91"/>
-<pinref part="JP2" gate="G$1" pin="2"/>
+<wire x1="121.412" y1="-22.86" x2="134.62" y2="-22.86" width="0.1524" layer="91"/>
 <label x="129.54" y="-22.86" size="1.778" layer="95"/>
+<pinref part="JP5" gate="G$1" pin="2"/>
 </segment>
 <segment>
 <pinref part="Z1" gate="G$1" pin="P$3"/>
@@ -14078,9 +14078,9 @@ Source: www.bourns.com .. 6000_series.pdf</description>
 <label x="126.238" y="-41.656" size="1.778" layer="95"/>
 </segment>
 <segment>
-<wire x1="134.62" y1="-17.78" x2="124.46" y2="-17.78" width="0.1524" layer="91"/>
+<wire x1="134.62" y1="-17.78" x2="121.412" y2="-17.78" width="0.1524" layer="91"/>
 <label x="129.54" y="-17.78" size="1.778" layer="95"/>
-<pinref part="JP2" gate="G$1" pin="4"/>
+<pinref part="JP5" gate="G$1" pin="4"/>
 </segment>
 </net>
 <net name="SCK" class="0">
@@ -15965,7 +15965,7 @@ Source: www.bourns.com .. 6000_series.pdf</description>
 </sheet>
 <sheet>
 <plain>
-<text x="-54.61" y="64.77" size="12.7" layer="97">WiFi CC3000</text>
+<text x="-82.55" y="19.05" size="12.7" layer="97">WiFi CC3000</text>
 </plain>
 <instances>
 <instance part="IC6" gate="G$1" x="-91.44" y="-119.38"/>
@@ -16164,12 +16164,6 @@ Source: www.bourns.com .. 6000_series.pdf</description>
 <wire x1="-5.08" y1="-101.6" x2="10.16" y2="-101.6" width="0.1524" layer="91"/>
 <junction x="-5.08" y="-101.6"/>
 <label x="5.08" y="-101.6" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="BT_RST" class="0">
-<segment>
-<wire x1="-193.04" y1="-5.08" x2="-200.66" y2="-5.08" width="0.1524" layer="91"/>
-<label x="-200.66" y="-5.08" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="WL_EN1" class="0">
@@ -16530,7 +16524,7 @@ Source: www.bourns.com .. 6000_series.pdf</description>
 </sheet>
 <sheet>
 <plain>
-<text x="-35.56" y="50.8" size="5.08" layer="97" font="vector">Optional MIC</text>
+<text x="-38.1" y="38.1" size="5.08" layer="97" font="vector">Optional MIC</text>
 <text x="-38.1" y="-20.32" size="1.778" layer="91" rot="R90">maybe 0 ohm</text>
 </plain>
 <instances>
@@ -16592,7 +16586,7 @@ Source: www.bourns.com .. 6000_series.pdf</description>
 <attribute name="MPN" x="-33.02" y="-10.16" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="U$1" gate="G$1" x="-33.02" y="-27.94"/>
-<instance part="TP15" gate="G$1" x="60.96" y="10.16" rot="R180"/>
+<instance part="TP15" gate="G$1" x="33.02" y="-12.7"/>
 </instances>
 <busses>
 </busses>
@@ -16671,21 +16665,19 @@ Source: www.bourns.com .. 6000_series.pdf</description>
 <net name="MIC" class="0">
 <segment>
 <wire x1="27.94" y1="35.56" x2="33.02" y2="35.56" width="0.1524" layer="91"/>
-<wire x1="33.02" y1="2.54" x2="45.72" y2="2.54" width="0.1524" layer="91"/>
 <wire x1="30.48" y1="22.86" x2="33.02" y2="22.86" width="0.1524" layer="91"/>
 <wire x1="33.02" y1="22.86" x2="33.02" y2="2.54" width="0.1524" layer="91"/>
 <wire x1="30.48" y1="2.54" x2="33.02" y2="2.54" width="0.1524" layer="91"/>
 <wire x1="33.02" y1="35.56" x2="33.02" y2="22.86" width="0.1524" layer="91"/>
-<label x="43.18" y="2.54" size="1.778" layer="95"/>
+<label x="38.1" y="2.54" size="1.778" layer="95"/>
 <pinref part="C24" gate="G$1" pin="1"/>
 <pinref part="R15" gate="G$1" pin="2"/>
 <pinref part="IC8" gate="G$1" pin="OUT"/>
 <junction x="33.02" y="22.86"/>
 <junction x="33.02" y="2.54"/>
-<wire x1="45.72" y1="2.54" x2="60.96" y2="2.54" width="0.1524" layer="91"/>
 <pinref part="TP15" gate="G$1" pin="TP"/>
-<wire x1="60.96" y1="2.54" x2="68.58" y2="2.54" width="0.1524" layer="91"/>
-<wire x1="60.96" y1="2.54" x2="60.96" y2="7.62" width="0.1524" layer="91"/>
+<wire x1="33.02" y1="2.54" x2="50.8" y2="2.54" width="0.1524" layer="91"/>
+<wire x1="33.02" y1="2.54" x2="33.02" y2="-10.16" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$20" class="0">
