@@ -28,10 +28,10 @@ typedef unsigned int uint;
 // structures
 
 // defines
-#define LEDS_HEIGHT ( 48 )
+#define LEDS_HEIGHT ( 24*3 )
 #define LEDS_WIDTH ( 1 )
 
-#define NUM_TLC5947 ( 48 )
+#define NUM_TLC5947 ( LEDS_HEIGHT)
 
 #define bit_set(reg, bit) reg |= 1 << bit 
 #define bit_clr(reg, bit) reg &= ~(1 << bit) 
@@ -41,9 +41,9 @@ typedef unsigned int uint;
 #endif
 
 #define DATPIN		( PIN0_bp )    //    SIN
-#define CLKPIN		( PIN1_bp )	   //	SCLK
+#define CLKPIN		( PIN1_bp )	   //    SCLK
 #define BLANKPIN	( PIN2_bp )		// BLANK
-#define LATPIN		( PIN3_bp )		//	XLAT
+#define LATPIN		( PIN3_bp )		// XLAT
 
 #define VIO			(PIN0_bp )
 #define VBAT_SW_EN	(PIN1_bp )
@@ -66,5 +66,8 @@ void LED_Init(void);
 void LEDscan2Add(int red, float degreeoffset,unsigned int count);
 void WriteArrayOffset(unsigned int count, unsigned int offset);
 void SetPoint( unsigned short x, unsigned short y,unsigned short val);
+
+void WriteRGBArray(void);
+void RGBscan(int red, int green, int blue, float degreeoffset);
 
 #endif

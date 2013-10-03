@@ -1,7 +1,11 @@
 #include "leds.h"
 
 uint16_t LEDChannels[(NUM_TLC5947)];
-uint16_t LEDChannels1[(NUM_TLC5947)];
+// Array storing color values
+//  BLUE: LEDChannels[x][0]   Range: {0 to 4095}
+// GREEN: LEDChannels[x][1]   Range: {0 to 4095}
+//   RED: LEDChannels[x][2]   Range: {0 to 4095}
+uint16_t RGBChannels[3*8][3] = {0};
 
 unsigned char brightnessShift= 0;
 
@@ -48,10 +52,6 @@ void SetPoint( unsigned short x, unsigned short y,unsigned short val)
 
 	offset = (  x * LEDS_WIDTH ) + ( LEDS_HEIGHT - y );
 	
-	if( offset >= NUM_TLC5947 ) {
-		offset = NUM_TLC5947-1;
-	}
-	
 	SetLEDChannel( offset,val);
 }
 
@@ -70,7 +70,7 @@ void Clear(unsigned short val)
 //------------------------------------------------------------------------------------------
 void WriteLEDArray(unsigned int count) {
 
-	unsigned short tempOne = 0;
+	unsigned int tempOne = 0;
 
 	if ( count > NUM_TLC5947 ){
 		count = NUM_TLC5947;
@@ -86,7 +86,6 @@ void WriteLEDArray(unsigned int count) {
 			else {
 				PORT_OUT &= ~(1 << DATPIN);
 			}
-
 			PORT_OUT |= (1 << CLKPIN);
 
 			PORT_OUT &= ~(1 << CLKPIN);
@@ -220,6 +219,7 @@ void LED_Init(void)
 	// Setup TLC5947 pins
 	
 	PORT_OUT &= ~(1<<LATPIN);
+	
 	PORT_OUT &= ~(1<<BLANKPIN);
 	
 	// full bright
@@ -227,9 +227,54 @@ void LED_Init(void)
 
 
 	// clear the array
-	memset(LEDChannels,0,sizeof(LEDChannels)*sizeof(uint16_t));
+	//memset(LEDChannels,0,sizeof(LEDChannels)*sizeof(uint16_t));
 
 	// push off empty, do this before the sleep setup
 	WriteLEDArray(NUM_TLC5947);
+
+}
+// Read all bits in the LEDChannels array and send them on the selected pins
+void WriteRGBArray(void)
+{
+
+	unsigned int tempOne = 0;
+
+	for (int i = 0; i < (3 * 24); i++) {
+
+		tempOne = *(&RGBChannels[0][0] + i);
+
+		for (int j = 0; j < 12; j++) {
+			if ((tempOne >> (11 - j)) & 1) {
+				PORT_OUT |= (1 << DATPIN);
+			}
+			else {
+				PORT_OUT &= ~(1 << DATPIN);
+			}
+			PORT_OUT |= (1 << CLKPIN);
+			PORT_OUT &= ~(1 << CLKPIN);
+		}
+
+	}
+	PORT_OUT |= (1 << LATPIN);
+	PORT_OUT &= ~(1 << LATPIN);
+}
+
+void RGBscan(int red, int green, int blue, float degreeoffset) 
+{
+
+	float brightnessfactor = 0;
+	
+	float scanindex = (1.0 + sin(degreeoffset*3.14159/180.0)) * ((float)(3 * 8) / 2.0);
+	
+	for(int LEDindex = 0; LEDindex < (3 * 8); LEDindex++) {
+		
+		brightnessfactor = exp(0.0 - fabs(scanindex - ((float)LEDindex + 0.5)) * 1.3);
+		
+		RGBChannels[LEDindex][0] = blue * brightnessfactor;
+		RGBChannels[LEDindex][1] = green * brightnessfactor;
+		RGBChannels[LEDindex][2] = red * brightnessfactor;
+	}
+	
+	WriteRGBArray();
 
 }
