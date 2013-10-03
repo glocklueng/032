@@ -15,6 +15,8 @@ static int britedir = 10;
 int gMode = 0;
 
 
+// Variables for sample function
+float offset = 0;
 unsigned char mode_switch( void ) 
 {
 	
@@ -75,12 +77,40 @@ ISR(TCC0_OVF_vect)
 		gMode %= 13;	
 	}
  }
+// Configure XMEGA oscillator and clock source.
+void xmega_set_cpu_clock_to_8MHz(void)
+{
+	uint8_t u8PrescalerConfig;
+	uint8_t u8ClockControl;
+	
+	/*  Enable internal 32MHz ring oscillator. */
+	OSC.CTRL |= OSC_RC32MEN_bm;
+	
+	/*  Wait until oscillator is ready. */
+	while ((OSC.STATUS & OSC_RC32MRDY_bm) == 0);
 
+	/*  Select Prescaler A divider as 4 and Prescaler B & C divider as (1,1) respectively.  */
+	/*  Overall divide by 4 i.e. A*B*C  */
+	u8PrescalerConfig = (uint8_t)(CLK_PSADIV_4_gc | CLK_PSBCDIV_1_1_gc);
+	
+	/* Disable register security for clock update */
+	CCP = CCP_IOREG_gc;
+	CLK.PSCTRL = u8PrescalerConfig;
+	
+	/*  Set the 32 MHz ring oscillator as the main clock source */
+	u8ClockControl = ( CLK.CTRL & ~CLK_SCLKSEL_gm ) | CLK_SCLKSEL_RC32M_gc;
+
+	/* Disable register security for clock update */
+	CCP = CCP_IOREG_gc;
+	CLK.CTRL = u8ClockControl;
+}
 int main(void)
 {
 	unsigned short l = 40;
 	unsigned short ld = 1;
-
+	
+	xmega_set_cpu_clock_to_8MHz();
+	
 	// Power reduction: Stop unused peripherals
 	PR.PRGEN = 0x18;        // Stop: AES, EBI
 	PR.PRPC  = 0x74;        // Stop: TWI, USART0, USART1, HIRES
@@ -122,7 +152,7 @@ int main(void)
 
 	_delay_ms(1000);
 	
-	bit_set ( PORTC.OUT, VBAT_SW_EN );
+	bit_clr( PORTC.OUT, VBAT_SW_EN );
 
 	Clear(0);  
  	WriteLEDArray(NUM_TLC5947);
@@ -132,34 +162,89 @@ int main(void)
 
 	gMode = 0;
 	
-	int tempOne = 0;
+	volatile unsigned short tempOne = 0;
+	int oldTemp;
 	
+	while(0) {
+		
+		PORT_OUT |= (1 << BLANKPIN);		
+		_delay_ms(1);
+
+		PORT_OUT &= ~(1 << BLANKPIN);
+		_delay_ms(1);
+	}
+	
+	while( 0 ) {
+	
+		Clear(1000);
+		WriteLEDArray(NUM_TLC5947);
+		
+		Clear(0);
+		WriteLEDArray(NUM_TLC5947);
+		
+	}
+	
+	Clear(0);
+	WriteLEDArray(NUM_TLC5947);
+	Clear(0);
+	WriteLEDArray(NUM_TLC5947);
+	Clear(0);
+	WriteLEDArray(NUM_TLC5947);
+  
+  while(1){
+	  for (offset = 0; offset < 360; offset += 0.5) {
+		  RGBscan(4095, 0, 0, offset);
+		  _delay_ms(1);
+	  }
+	  for (offset = 0; offset < 360; offset += 0.5) {
+		  RGBscan(0, 4095, 0, offset);
+		  _delay_ms(1);
+	  }
+	  for (offset = 0; offset < 360; offset += 0.5) {
+		  RGBscan( 0,0, 4095, offset);
+		  _delay_ms(1);
+	  }
+	  for (offset = 0; offset < 360; offset += 0.5) {
+		  RGBscan( 4095,405, 4095, offset);
+		  _delay_ms(1);
+	  }
+
+  }
+
 	/// bridged pins!
 	while( 0 ) {
-
-		tempOne ++;
-
-		 for (int j = 0; j < 12; j++) {
-			 if ((tempOne >> (11 - j)) & 1) {
-				 PORT_OUT |= (1 << DATPIN);
-			 }
-			 else {
-				 PORT_OUT &= ~(1 << DATPIN);
-			 }
-		 }
-		_delay_us(1);
-
-		PORT_OUT |= (1 << CLKPIN);
-		_delay_us(50);	
-		PORT_OUT &= ~(1 << CLKPIN);
-		_delay_us(50);
+		{
+	
 		
-		PORT_OUT |= (1 << LATPIN | 1 << BLANKPIN);
-		_delay_us(50);
-		
-		PORT_OUT &= ~(1 << LATPIN | 1 << BLANKPIN);
-		_delay_us(50);
+			for( int y = 0 ; y< (24*3) ;y++ ) {
 
+			
+				tempOne ++;
+						
+				// Number  of BITS in each shift reg
+				for ( int j = 0; j < 12; j++) {
+				
+					if ((tempOne >> (11 - j)) & 1) {
+						
+						PORT_OUT |= (1 << DATPIN);
+					} else {
+						PORT_OUT &= ~(1 << DATPIN);
+					}
+				}
+				asm("nop");		
+				PORT_OUT |= (1 << CLKPIN);
+				asm("nop");
+				PORT_OUT &= ~(1 << CLKPIN);
+			
+			}
+		
+			asm("nop");
+			PORT_OUT |= (1 << LATPIN | 1 << BLANKPIN);
+			asm("nop");
+			PORT_OUT &= ~(1 << LATPIN | 1 << BLANKPIN);
+			asm("nop");
+		
+		}
 	}
 
 	/* enable global interrupts */
