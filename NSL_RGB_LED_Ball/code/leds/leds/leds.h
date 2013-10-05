@@ -28,10 +28,9 @@ typedef unsigned int uint;
 // structures
 
 // defines
-#define LEDS_HEIGHT ( 24*3 )
-#define LEDS_WIDTH ( 1 )
 
-#define NUM_TLC5947 ( LEDS_HEIGHT)
+
+#define NUM_TLC5947 ( 3 )
 
 #define bit_set(reg, bit) reg |= 1 << bit 
 #define bit_clr(reg, bit) reg &= ~(1 << bit) 
@@ -69,5 +68,6 @@ void SetPoint( unsigned short x, unsigned short y,unsigned short val);
 
 void WriteRGBArray(void);
 void RGBscan(int red, int green, int blue, float degreeoffset);
+void SetRGB( unsigned short red, unsigned short green , unsigned short blue );
 
 #endif
