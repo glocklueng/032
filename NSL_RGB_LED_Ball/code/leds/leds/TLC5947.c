@@ -17,7 +17,7 @@ typedef struct LED_tag {
 
 
 typedef struct Slice_tag {
-	LED led[ 16 ];
+	LED led[ 24 ];
 } Slice;
 
 typedef struct Ball_Tag {

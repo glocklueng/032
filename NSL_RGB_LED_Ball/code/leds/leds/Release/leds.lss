@@ -1510,8 +1510,8 @@ Disassembly of section .text:
     103a:	38 2f       	mov	r19, r24
     103c:	4f ef       	ldi	r20, 0xFF	; 255
     103e:	5f e0       	ldi	r21, 0x0F	; 15
-    1040:	65 e9       	ldi	r22, 0x95	; 149
-    1042:	71 e0       	ldi	r23, 0x01	; 1
+    1040:	6f ef       	ldi	r22, 0xFF	; 255
+    1042:	7f e0       	ldi	r23, 0x0F	; 15
     1044:	8f ef       	ldi	r24, 0xFF	; 255
     1046:	9f e0       	ldi	r25, 0x0F	; 15
     1048:	0e 94 cd 03 	call	0x79a	; 0x79a <RGBscan>
