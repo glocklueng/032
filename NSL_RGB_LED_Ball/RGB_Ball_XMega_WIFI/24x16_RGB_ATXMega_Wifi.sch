@@ -9307,7 +9307,7 @@ by exp-lbrs.ulp</description>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
 </part>
-<part name="R1" library="24x16_RGB" deviceset="RESISTOR" device="" value="47K">
+<part name="R1" library="24x16_RGB" deviceset="RESISTOR" device="" value="11K">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
@@ -9319,7 +9319,7 @@ by exp-lbrs.ulp</description>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
 </part>
-<part name="R2" library="24x16_RGB" deviceset="RESISTOR" device="" value="47K">
+<part name="R2" library="24x16_RGB" deviceset="RESISTOR" device="" value="11K">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
@@ -9331,7 +9331,7 @@ by exp-lbrs.ulp</description>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
 </part>
-<part name="R3" library="24x16_RGB" deviceset="RESISTOR" device="" value="47K">
+<part name="R3" library="24x16_RGB" deviceset="RESISTOR" device="" value="11K">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
