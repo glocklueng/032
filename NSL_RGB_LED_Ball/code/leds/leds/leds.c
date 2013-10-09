@@ -108,8 +108,8 @@ int main(void)
 	bit_set ( PORTC.OUT, VIO );
 	bit_clr ( PORTC.PIN0CTRL, VIO );
 
-	//PORTC.OUT |= (1 << VBAT_SW_EN);
-	//PORTC.OUT |= (1 << VIO);
+	PORTC.OUT |= (1 << VBAT_SW_EN);
+	PORTC.OUT |= (1 << VIO);
 	
 	/* Enable HIGH level interrupts in the PMIC. */
 	PMIC.CTRL		= PMIC_HILVLEN_bm;
@@ -130,7 +130,7 @@ int main(void)
 	
 	volatile unsigned short tempOne = 0;
 
-	
+
 	while(1) {
 		
 		for (offset = 0; offset < 360; offset += 0.5) {
@@ -171,6 +171,8 @@ int main(void)
 	
 		_delay_ms(5000);
 		_delay_ms(5000);
+	
+	    
 	}
 
 	/// bridged pins!

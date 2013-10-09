@@ -84,7 +84,7 @@ void RGBscan(int red, int green, int blue, float degreeoffset)
 	
 	for(int LEDindex = 0; LEDindex < (NUM_TLC5947 * 8); LEDindex++) {
 		
-		brightnessfactor = expf(0.0f - fabs(scanindex - ((float)LEDindex + 0.5f)) * 1.3f);
+		brightnessfactor = expf(0.0f - fabs(scanindex - ((float)LEDindex + 0.5f)) * 2.0f);
 		
 		RGBChannels[LEDindex][0] = red * brightnessfactor;
 		RGBChannels[LEDindex][1] = green * brightnessfactor;
