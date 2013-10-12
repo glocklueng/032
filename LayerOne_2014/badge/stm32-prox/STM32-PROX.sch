@@ -14689,7 +14689,7 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="NONE"/>
 </part>
 <part name="V51" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="C44" library="STM32-PROX" deviceset="CAPACITOR" device="RLC_0603" value="33nF">
@@ -14791,7 +14791,7 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="NONE"/>
 </part>
 <part name="R3" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603" value="820K">
 <attribute name="MF" value=""/>
@@ -14905,7 +14905,7 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="NONE"/>
 </part>
 <part name="C53" library="STM32-PROX" deviceset="CAP" device="0805" value="12pF">
 <attribute name="DIGIKEY" value="1276-1120-1-ND"/>
@@ -15147,16 +15147,17 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="NONE"/>
 </part>
 <part name="TP9" library="STM32-PROX" deviceset="--MERGED_TESTPAD" device="KEYSTONE-SMD" value="TESTPADKEYSTONE-SMD">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="NONE"/>
 </part>
 <part name="C62" library="STM32-PROX" deviceset="SPARKFUN_CAP" device="0603-CAP" value="10uF">
 <attribute name="DIGIKEY" value="445-9065-1-ND"/>
+<attribute name="DIGIKEY_ALT" value="587-3238-1-ND"/>
 <attribute name="MF" value=""/>
 <attribute name="MPN" value="C1608X5R1C106M080AB"/>
 <attribute name="OC_NEWARK" value="unknown"/>
@@ -15185,6 +15186,7 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 </part>
 <part name="C64" library="STM32-PROX" deviceset="SPARKFUN_CAP" device="0603-CAP" value="10uF">
 <attribute name="DIGIKEY" value="445-9065-1-ND"/>
+<attribute name="DIGIKEY_ALT" value="587-3238-1-ND"/>
 <attribute name="MF" value=""/>
 <attribute name="MPN" value="C1608X5R1C106M080AB"/>
 <attribute name="OC_NEWARK" value="unknown"/>
@@ -15206,7 +15208,7 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="NONE"/>
 </part>
 <part name="S1" library="STM32-PROX" deviceset="SWITCH-SPDT" device="-SMD-A">
 <attribute name="MF" value=""/>
@@ -15218,7 +15220,7 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="NONE"/>
 </part>
 <part name="GND22" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="R61" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603" value="10K">
@@ -15280,16 +15282,17 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 </part>
 <part name="V40" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="Q4" library="STM32-PROX" deviceset="MOSFET-PCHANNEL" device="SMD">
-<attribute name="MF" value=""/>
-<attribute name="MPN" value=""/>
+<attribute name="DIGIKEY" value="SI2303CDS-T1-GE3CT-ND"/>
+<attribute name="MF" value="SI2303CDS-T1-GE3"/>
+<attribute name="MPN" value="SI2303CDS-T1-GE3"/>
 <attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="SI2303CDS-T1-GE3"/>
 </part>
 <part name="TP11" library="STM32-PROX" deviceset="TESTPAD" device="KEYSTONE-SMD" value="TESTPADKEYSTONE-SMD">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="NONE"/>
 </part>
 <part name="R69" library="STM32-PROX" deviceset="RESISTOR" device="RLC_0603" value="10K">
 <attribute name="DIGIKEY" value="RMCF0603JT10K0CT-ND"/>
@@ -15445,6 +15448,7 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <attribute name="MF" x="-60.96" y="7.62" size="1.778" layer="96" display="off"/>
 <attribute name="MPN" x="-60.96" y="7.62" size="1.778" layer="96" display="off"/>
 <attribute name="DIGIKEY" x="-60.96" y="7.62" size="1.778" layer="96" display="off"/>
+<attribute name="DIGIKEY_ALT" x="-60.96" y="7.62" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="C63" gate="G$1" x="30.48" y="0">
 <attribute name="PARTNO" x="30.48" y="0" size="1.778" layer="96" display="off"/>
@@ -15477,6 +15481,7 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <attribute name="MF" x="40.64" y="0" size="1.778" layer="96" display="off"/>
 <attribute name="MPN" x="40.64" y="0" size="1.778" layer="96" display="off"/>
 <attribute name="DIGIKEY" x="40.64" y="0" size="1.778" layer="96" display="off"/>
+<attribute name="DIGIKEY_ALT" x="40.64" y="0" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="L2" gate="G$1" x="-2.54" y="22.86">
 <attribute name="PARTNO" x="-2.54" y="22.86" size="1.778" layer="96" display="off"/>
@@ -16138,6 +16143,7 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <attribute name="OC_NEWARK" x="68.58" y="40.64" size="1.778" layer="96" display="off"/>
 <attribute name="MF" x="68.58" y="40.64" size="1.778" layer="96" display="off"/>
 <attribute name="MPN" x="68.58" y="40.64" size="1.778" layer="96" display="off"/>
+<attribute name="DIGIKEY" x="68.58" y="40.64" size="1.778" layer="96" rot="MR180" display="off"/>
 </instance>
 <instance part="V4" gate="GND" x="-7.62" y="-38.1"/>
 <instance part="V8" gate="GND" x="93.98" y="-43.18"/>

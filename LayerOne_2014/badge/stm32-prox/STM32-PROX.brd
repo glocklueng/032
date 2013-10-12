@@ -28,10 +28,10 @@
 <layer number="18" name="Vias" color="2" fill="1" visible="yes" active="yes"/>
 <layer number="19" name="Unrouted" color="6" fill="1" visible="yes" active="yes"/>
 <layer number="20" name="Dimension" color="15" fill="1" visible="yes" active="yes"/>
-<layer number="21" name="tPlace" color="7" fill="1" visible="no" active="yes"/>
-<layer number="22" name="bPlace" color="7" fill="1" visible="no" active="yes"/>
+<layer number="21" name="tPlace" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="22" name="bPlace" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="23" name="tOrigins" color="15" fill="1" visible="yes" active="yes"/>
-<layer number="24" name="bOrigins" color="15" fill="1" visible="no" active="yes"/>
+<layer number="24" name="bOrigins" color="15" fill="1" visible="yes" active="yes"/>
 <layer number="25" name="tNames" color="7" fill="1" visible="no" active="yes"/>
 <layer number="26" name="bNames" color="7" fill="1" visible="no" active="yes"/>
 <layer number="27" name="tValues" color="7" fill="1" visible="no" active="yes"/>
@@ -52,13 +52,13 @@
 <layer number="42" name="bRestrict" color="1" fill="10" visible="no" active="yes"/>
 <layer number="43" name="vRestrict" color="2" fill="10" visible="no" active="yes"/>
 <layer number="44" name="Drills" color="7" fill="1" visible="no" active="yes"/>
-<layer number="45" name="Holes" color="7" fill="1" visible="no" active="yes"/>
+<layer number="45" name="Holes" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="46" name="Milling" color="3" fill="1" visible="no" active="yes"/>
 <layer number="47" name="Measures" color="7" fill="1" visible="no" active="yes"/>
 <layer number="48" name="Document" color="7" fill="1" visible="no" active="yes"/>
 <layer number="49" name="Reference" color="7" fill="1" visible="no" active="yes"/>
 <layer number="50" name="dxf" color="7" fill="1" visible="no" active="no"/>
-<layer number="51" name="tDocu" color="7" fill="1" visible="no" active="yes"/>
+<layer number="51" name="tDocu" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="52" name="bDocu" color="7" fill="1" visible="no" active="yes"/>
 <layer number="53" name="tGND_GNDA" color="7" fill="1" visible="no" active="no"/>
 <layer number="54" name="bGND_GNDA" color="7" fill="1" visible="no" active="no"/>
@@ -2661,7 +2661,7 @@ design rules under a new name.</description>
 <attribute name="DIGIKEY" value="399-3769-1-ND" x="43.18" y="39.37" size="1.778" layer="28" rot="MR270" display="off"/>
 </element>
 <element name="TP6" library="STM32-PROX" package="KEYSTONE-PTH-TESTPOINT-5011" value="TESTPADKEYSTONE-PTH" x="2.54" y="46.99" smashed="yes" rot="R45">
-<attribute name="PARTNO" value="*" x="2.54" y="46.99" size="1.778" layer="27" rot="R45" display="off"/>
+<attribute name="PARTNO" value="NONE" x="2.54" y="46.99" size="1.778" layer="27" rot="R45" display="off"/>
 <attribute name="NAME" x="3.652184375" y="44.2087625" size="0.889" layer="51" rot="R45"/>
 <attribute name="OC_NEWARK" value="unknown" x="2.54" y="46.99" size="1.778" layer="27" rot="R45" display="off"/>
 <attribute name="MF" value="" x="2.54" y="46.99" size="1.778" layer="27" rot="R45" display="off"/>
@@ -2782,7 +2782,7 @@ design rules under a new name.</description>
 <attribute name="DIGIKEY" value="1276-1065-1-ND" x="66.294" y="42.545" size="1.778" layer="28" rot="MR270" display="off"/>
 </element>
 <element name="SJ1" library="STM32-PROX" package="SOLDERJUMPER_REFLOW" value="" x="72.644" y="42.164" smashed="yes" rot="MR180">
-<attribute name="PARTNO" value="*" x="72.644" y="42.164" size="1.778" layer="28" rot="MR180" display="off"/>
+<attribute name="PARTNO" value="NONE" x="72.644" y="42.164" size="1.778" layer="28" rot="MR180" display="off"/>
 <attribute name="NAME" x="70.76653125" y="40.624646875" size="1.27" layer="26" ratio="10" rot="MR180"/>
 <attribute name="VALUE" x="73.0441" y="42.164" size="0.02" layer="28" rot="MR180"/>
 <attribute name="OC_NEWARK" value="unknown" x="72.644" y="42.164" size="1.778" layer="28" rot="MR180" display="off"/>
@@ -2917,7 +2917,7 @@ design rules under a new name.</description>
 <attribute name="DIGIKEY" value="1276-1007-1-ND" x="77.47" y="25.4" size="1.778" layer="27" display="off"/>
 </element>
 <element name="L1" library="STM32-PROX" package="0603" value="" x="74.93" y="25.4" smashed="yes" rot="R270">
-<attribute name="PARTNO" value="*" x="74.93" y="25.4" size="1.778" layer="27" rot="R270" display="off"/>
+<attribute name="PARTNO" value="NONE" x="74.93" y="25.4" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="NAME" x="73.66" y="25.654" size="0.762" layer="25" font="vector" ratio="10" rot="R270"/>
 <attribute name="VALUE" x="74.295" y="23.622" size="0.4064" layer="27" font="vector" rot="R270"/>
 <attribute name="OC_NEWARK" value="unknown" x="74.93" y="25.4" size="1.778" layer="27" rot="R270" display="off"/>
@@ -3232,14 +3232,14 @@ design rules under a new name.</description>
 </element>
 <element name="TP8" library="STM32-PROX" package="--MERGED_KEYSTONE-SMD-TESTPOINT-5015" value="TESTPADKEYSTONE-SMD" x="68.072" y="31.242" smashed="yes" rot="MR180">
 <attribute name="NAME" x="70.63936875" y="31.653309375" size="1.27" layer="52" rot="MR180"/>
-<attribute name="PARTNO" value="*" x="68.072" y="31.242" size="1.778" layer="28" rot="MR180" display="off"/>
+<attribute name="PARTNO" value="NONE" x="68.072" y="31.242" size="1.778" layer="28" rot="MR180" display="off"/>
 <attribute name="OC_NEWARK" value="unknown" x="68.072" y="31.242" size="1.778" layer="28" rot="MR180" display="off"/>
 <attribute name="MF" value="" x="68.072" y="31.242" size="1.778" layer="28" rot="MR180" display="off"/>
 <attribute name="MPN" value="" x="68.072" y="31.242" size="1.778" layer="28" rot="MR180" display="off"/>
 </element>
 <element name="TP9" library="STM32-PROX" package="--MERGED_KEYSTONE-SMD-TESTPOINT-5015" value="TESTPADKEYSTONE-SMD" x="30.099" y="50.038" smashed="yes" rot="MR0">
 <attribute name="NAME" x="35.625178125" y="49.308209375" size="1.27" layer="52" rot="MR0"/>
-<attribute name="PARTNO" value="*" x="30.099" y="50.038" size="1.778" layer="28" rot="MR0" display="off"/>
+<attribute name="PARTNO" value="NONE" x="30.099" y="50.038" size="1.778" layer="28" rot="MR0" display="off"/>
 <attribute name="OC_NEWARK" value="unknown" x="30.099" y="50.038" size="1.778" layer="28" rot="MR0" display="off"/>
 <attribute name="MF" value="" x="30.099" y="50.038" size="1.778" layer="28" rot="MR0" display="off"/>
 <attribute name="MPN" value="" x="30.099" y="50.038" size="1.778" layer="28" rot="MR0" display="off"/>
@@ -3252,6 +3252,7 @@ design rules under a new name.</description>
 <attribute name="MF" value="" x="26.289" y="45.085" size="1.778" layer="28" rot="MR270" display="off"/>
 <attribute name="MPN" value="C1608X5R1C106M080AB" x="26.289" y="45.085" size="1.778" layer="28" rot="MR270" display="off"/>
 <attribute name="DIGIKEY" value="445-9065-1-ND" x="26.289" y="45.085" size="1.778" layer="28" rot="MR270" display="off"/>
+<attribute name="DIGIKEY_ALT" value="587-3238-1-ND" x="26.289" y="45.085" size="1.778" layer="28" rot="MR270" display="off"/>
 </element>
 <element name="C63" library="STM32-PROX" package="SPARKFUN_0603-CAP" value="100nF" x="41.021" y="43.942" smashed="yes">
 <attribute name="NAME" x="40.471715625" y="44.545409375" size="0.762" layer="25" font="vector" ratio="10"/>
@@ -3288,6 +3289,7 @@ design rules under a new name.</description>
 <attribute name="MF" value="" x="39.116" y="52.705" size="1.778" layer="27" display="off"/>
 <attribute name="MPN" value="C1608X5R1C106M080AB" x="39.116" y="52.705" size="1.778" layer="27" display="off"/>
 <attribute name="DIGIKEY" value="445-9065-1-ND" x="39.116" y="52.705" size="1.778" layer="27" display="off"/>
+<attribute name="DIGIKEY_ALT" value="587-3238-1-ND" x="39.116" y="52.705" size="1.778" layer="27" display="off"/>
 </element>
 <element name="L2" library="STM32-PROX" package="CDRH2D18" value="CDRH2D18/HPNP-2R2NC" x="45.847" y="48.133" smashed="yes" rot="R270">
 <attribute name="NAME" x="45.451040625" y="45.650096875" size="0.762" layer="25" ratio="10"/>
@@ -3305,7 +3307,7 @@ design rules under a new name.</description>
 </element>
 <element name="TP10" library="STM32-PROX" package="--MERGED_KEYSTONE-SMD-TESTPOINT-5015" value="TESTPADKEYSTONE-SMD" x="32.893" y="53.721" smashed="yes" rot="MR0">
 <attribute name="NAME" x="30.2081375" y="53.292209375" size="1.27" layer="52" rot="MR0"/>
-<attribute name="PARTNO" value="*" x="32.893" y="53.721" size="1.778" layer="28" rot="MR0" display="off"/>
+<attribute name="PARTNO" value="NONE" x="32.893" y="53.721" size="1.778" layer="28" rot="MR0" display="off"/>
 <attribute name="OC_NEWARK" value="unknown" x="32.893" y="53.721" size="1.778" layer="28" rot="MR0" display="off"/>
 <attribute name="MF" value="" x="32.893" y="53.721" size="1.778" layer="28" rot="MR0" display="off"/>
 <attribute name="MPN" value="" x="32.893" y="53.721" size="1.778" layer="28" rot="MR0" display="off"/>
@@ -3322,7 +3324,7 @@ design rules under a new name.</description>
 <attribute name="NAME" x="23.5486125" y="47.8986875" size="0.5" layer="26" rot="MR0"/>
 <attribute name="VALUE" x="25.2999" y="48.006" size="0.02" layer="28" rot="MR180"/>
 <attribute name="VALUE" x="24.13" y="49.911" size="0.4064" layer="28" rot="MR180"/>
-<attribute name="PARTNO" value="*" x="25.4" y="48.006" size="1.778" layer="28" rot="MR180" display="off"/>
+<attribute name="PARTNO" value="NONE" x="25.4" y="48.006" size="1.778" layer="28" rot="MR180" display="off"/>
 <attribute name="OC_NEWARK" value="unknown" x="25.4" y="48.006" size="1.778" layer="28" rot="MR180" display="off"/>
 <attribute name="MF" value="" x="25.4" y="48.006" size="1.778" layer="28" rot="MR180" display="off"/>
 <attribute name="MPN" value="" x="25.4" y="48.006" size="1.778" layer="28" rot="MR180" display="off"/>
@@ -3389,13 +3391,14 @@ design rules under a new name.</description>
 <element name="Q4" library="STM32-PROX" package="SOT23-3" value="MOSFET-PCHANNELSMD" x="12.7" y="45.974" smashed="yes">
 <attribute name="NAME" x="11.3851875" y="43.6192625" size="0.762" layer="25" ratio="10"/>
 <attribute name="VALUE" x="7.366" y="44.0055" size="1" layer="27" ratio="10"/>
-<attribute name="PARTNO" value="*" x="12.7" y="45.974" size="1.778" layer="27" display="off"/>
+<attribute name="PARTNO" value="SI2303CDS-T1-GE3" x="12.7" y="45.974" size="1.778" layer="27" display="off"/>
 <attribute name="OC_NEWARK" value="unknown" x="12.7" y="45.974" size="1.778" layer="27" display="off"/>
-<attribute name="MF" value="" x="12.7" y="45.974" size="1.778" layer="27" display="off"/>
-<attribute name="MPN" value="" x="12.7" y="45.974" size="1.778" layer="27" display="off"/>
+<attribute name="MF" value="SI2303CDS-T1-GE3" x="12.7" y="45.974" size="1.778" layer="27" display="off"/>
+<attribute name="MPN" value="SI2303CDS-T1-GE3" x="12.7" y="45.974" size="1.778" layer="27" display="off"/>
+<attribute name="DIGIKEY" value="SI2303CDS-T1-GE3CT-ND" x="12.7" y="45.974" size="1.778" layer="27" display="off"/>
 </element>
 <element name="TP11" library="STM32-PROX" package="KEYSTONE-SMD-TESTPOINT-5015" value="TESTPADKEYSTONE-SMD" x="62.139640625" y="10.08796875" smashed="yes" rot="MR90">
-<attribute name="PARTNO" value="*" x="62.139640625" y="10.08796875" size="1.778" layer="28" rot="MR90" display="off"/>
+<attribute name="PARTNO" value="NONE" x="62.139640625" y="10.08796875" size="1.778" layer="28" rot="MR90" display="off"/>
 <attribute name="NAME" x="63.802925" y="6.840365625" size="0.889" layer="52" rot="MR0"/>
 <attribute name="OC_NEWARK" value="unknown" x="62.139640625" y="10.08796875" size="1.778" layer="28" rot="MR90" display="off"/>
 <attribute name="MF" value="" x="62.139640625" y="10.08796875" size="1.778" layer="28" rot="MR90" display="off"/>
