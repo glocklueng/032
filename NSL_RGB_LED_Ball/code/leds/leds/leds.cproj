@@ -84,6 +84,11 @@
       <Value>NDEBUG</Value>
     </ListValues>
   </avrgcc.compiler.symbols.DefSymbols>
+  <avrgcc.compiler.directories.IncludePaths>
+    <ListValues>
+      <Value>cc3000</Value>
+    </ListValues>
+  </avrgcc.compiler.directories.IncludePaths>
   <avrgcc.compiler.optimization.level>Optimize most (-O3)</avrgcc.compiler.optimization.level>
   <avrgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>False</avrgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>
   <avrgcc.compiler.optimization.PrepareDataForGarbageCollection>False</avrgcc.compiler.optimization.PrepareDataForGarbageCollection>
@@ -128,6 +133,66 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="cc30000\cc3000_common.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="cc30000\cc3000_common.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="cc30000\evnt_handler.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="cc30000\evnt_handler.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="cc30000\hci.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="cc30000\hci.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="cc30000\host_driver_version.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="cc30000\netapp.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="cc30000\netapp.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="cc30000\nvmem.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="cc30000\nvmem.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="cc30000\security.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="cc30000\security.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="cc30000\socket.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="cc30000\socket.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="cc30000\spi.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="cc30000\spi.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="cc30000\spi_version.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="cc30000\wlan.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="cc30000\wlan.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="leds.c">
       <SubType>compile</SubType>
     </Compile>
@@ -137,6 +202,9 @@
     <Compile Include="TLC5947.c">
       <SubType>compile</SubType>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="cc30000" />
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
 </Project>
