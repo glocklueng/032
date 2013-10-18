@@ -73,6 +73,7 @@
 #define SPI_MOSI_bm           0x20 /*!< \brief Bit mask for the MOSI pin. */
 #define SPI_MISO_bm           0x40 /*!< \brief Bit mask for the MISO pin. */
 #define SPI_SCK_bm            0x80 /*!< \brief Bit mask for the SCK pin. */
+#define SPI_IRQ_bm			  1<<8	/*!< \brief Bit mask for the SPI_IRQ pin/PC2 */
 
 /* SPI master status code defines. */
 

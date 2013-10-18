@@ -607,57 +607,57 @@ SpiReadDataCont(void)
 	data_to_recv = 0;
 	STREAM_TO_UINT8((char *)(evnt_buff + SPI_HEADER_SIZE), HCI_PACKET_TYPE_OFFSET, type);
 	
-	switch(type)
-	{
-	case HCI_TYPE_DATA:
-		{
-			STREAM_TO_UINT16((char *)(evnt_buff + SPI_HEADER_SIZE), HCI_DATA_LENGTH_OFFSET, data_to_recv);
+	switch(type) {
+		
+		case HCI_TYPE_DATA:
+			{
+				STREAM_TO_UINT16((char *)(evnt_buff + SPI_HEADER_SIZE), HCI_DATA_LENGTH_OFFSET, data_to_recv);
 			
-			if (data_to_recv >= SPI_WINDOW_SIZE)
-			{
-				data_to_recv = eSPI_STATE_READ_FIRST_PORTION;
-				SpiReadData(evnt_buff + 10, SPI_WINDOW_SIZE);
-				sSpiInformation.ulSpiState = eSPI_STATE_READ_FIRST_PORTION;
+				if (data_to_recv >= SPI_WINDOW_SIZE)
+				{
+					data_to_recv = eSPI_STATE_READ_FIRST_PORTION;
+					SpiReadData(evnt_buff + 10, SPI_WINDOW_SIZE);
+					sSpiInformation.ulSpiState = eSPI_STATE_READ_FIRST_PORTION;
+				}
+				else
+				{
+					// We need to read the rest of data..
+					if (!((HEADERS_SIZE_EVNT + data_to_recv) & 1))
+					{	
+						data_to_recv++;
+					}
+				
+					if (data_to_recv)
+					{
+						SpiReadData(evnt_buff + 10, data_to_recv);
+					}
+				
+					sSpiInformation.ulSpiState = eSPI_STATE_READ_EOT;
+				}
+				break;
 			}
-			else
+		case HCI_TYPE_EVNT:
 			{
-				// We need to read the rest of data..
-				if (!((HEADERS_SIZE_EVNT + data_to_recv) & 1))
-				{	
+			
+				// Calculate the rest length of the data
+				STREAM_TO_UINT8((char *)(evnt_buff + SPI_HEADER_SIZE), HCI_EVENT_LENGTH_OFFSET, data_to_recv);
+				data_to_recv -= 1;
+			
+				// Add padding byte if needed
+				if ((HEADERS_SIZE_EVNT + data_to_recv) & 1)
+				{
+				
 					data_to_recv++;
 				}
-				
+			
 				if (data_to_recv)
 				{
 					SpiReadData(evnt_buff + 10, data_to_recv);
 				}
-				
+			
 				sSpiInformation.ulSpiState = eSPI_STATE_READ_EOT;
+				break;
 			}
-			break;
-		}
-	case HCI_TYPE_EVNT:
-		{
-			
-			// Calculate the rest length of the data
-			STREAM_TO_UINT8((char *)(evnt_buff + SPI_HEADER_SIZE), HCI_EVENT_LENGTH_OFFSET, data_to_recv);
-			data_to_recv -= 1;
-			
-			// Add padding byte if needed
-			if ((HEADERS_SIZE_EVNT + data_to_recv) & 1)
-			{
-				
-				data_to_recv++;
-			}
-			
-			if (data_to_recv)
-			{
-				SpiReadData(evnt_buff + 10, data_to_recv);
-			}
-			
-			sSpiInformation.ulSpiState = eSPI_STATE_READ_EOT;
-			break;
-		}
 	}
 	
 	return (data_to_recv);
