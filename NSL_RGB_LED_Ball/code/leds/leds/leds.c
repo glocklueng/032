@@ -84,6 +84,13 @@ void xmega_set_cpu_clock_to_8MHz ( void )
 	CLK.CTRL = u8ClockControl;
 }
 
+
+
+ISR( SPIC_INT_vect) {
+	SPI_MasterInterruptHandler( &spiMasterC );
+}
+
+
 int main ( void )
 {
 
