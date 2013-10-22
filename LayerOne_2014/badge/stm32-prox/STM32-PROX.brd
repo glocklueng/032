@@ -1836,8 +1836,9 @@ design rules under a new name.</description>
 <attribute name="PARTNO" value="*" x="0" y="24.13" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="NAME" x="0.495640625" y="28.403540625" size="0.762" layer="21" ratio="10"/>
 <attribute name="OC_NEWARK" value="unknown" x="0" y="24.13" size="1.778" layer="27" rot="R270" display="off"/>
-<attribute name="MF" value="" x="0" y="24.13" size="1.778" layer="27" rot="R270" display="off"/>
+<attribute name="MF" value="MQ172X-4PA(66)" x="0" y="24.13" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="MPN" value="" x="0" y="24.13" size="1.778" layer="27" rot="R270" display="off"/>
+<attribute name="DIGIKEY" value="H10488CT-ND" x="0" y="24.13" size="1.778" layer="27" rot="R270" display="off"/>
 </element>
 <element name="IC9" library="STM32-PROX" package="TSSOP-20" value="74XX244" x="12.7" y="34.29" smashed="yes" rot="R90">
 <attribute name="PARTNO" value="74AC244TTR" x="12.7" y="34.29" size="1.778" layer="27" rot="R90" display="off"/>
@@ -2396,8 +2397,9 @@ design rules under a new name.</description>
 <attribute name="PARTNO" value="*" x="77.47" y="2.54" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="NAME" x="79.334796875" y="1.89925625" size="0.762" layer="21" ratio="10" rot="R180"/>
 <attribute name="OC_NEWARK" value="unknown" x="77.47" y="2.54" size="1.778" layer="27" rot="R180" display="off"/>
-<attribute name="MF" value="" x="77.47" y="2.54" size="1.778" layer="27" rot="R180" display="off"/>
+<attribute name="MF" value="NC7SZ04M5X" x="77.47" y="2.54" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="MPN" value="" x="77.47" y="2.54" size="1.778" layer="27" rot="R180" display="off"/>
+<attribute name="DIGIKEY" value="NC7SZ04M5XCT-ND" x="77.47" y="2.54" size="1.778" layer="27" rot="R180" display="off"/>
 </element>
 <element name="R1" library="STM32-PROX" package="RLC_0603" value="1M" x="73.66" y="10.16" smashed="yes" rot="R180">
 <attribute name="PARTNO" value="RC0603JR-071ML" x="73.66" y="10.16" size="1.778" layer="27" rot="R180" display="off"/>
@@ -2552,8 +2554,9 @@ design rules under a new name.</description>
 <attribute name="PARTNO" value="*" x="6.35" y="48.768" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="NAME" x="5.3848" y="50.927" size="1.27" layer="51"/>
 <attribute name="OC_NEWARK" value="unknown" x="6.35" y="48.768" size="1.778" layer="27" rot="R270" display="off"/>
-<attribute name="MF" value="" x="6.35" y="48.768" size="1.778" layer="27" rot="R270" display="off"/>
+<attribute name="MF" value="MPZ2012S300A" x="6.35" y="48.768" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="MPN" value="" x="6.35" y="48.768" size="1.778" layer="27" rot="R270" display="off"/>
+<attribute name="DIGIKEY" value="445-1566-1-ND" x="6.35" y="48.768" size="1.778" layer="27" rot="R270" display="off"/>
 </element>
 <element name="C21" library="STM32-PROX" package="RLC_0603" value="33nF" x="23.622" y="11.43" smashed="yes">
 <attribute name="PARTNO" value="CC0603KRX7R9BB333" x="23.622" y="11.43" size="1.778" layer="27" display="off"/>
@@ -2845,24 +2848,27 @@ design rules under a new name.</description>
 <attribute name="NAME" x="55.833925" y="39.166078125" size="1.27" layer="26" ratio="10" rot="MR270"/>
 <attribute name="VALUE" x="55.777" y="42.418" size="1.27" layer="28" ratio="10" rot="MR270"/>
 <attribute name="OC_NEWARK" value="unknown" x="52.197" y="39.37" size="1.778" layer="28" rot="MR270" display="off"/>
-<attribute name="MF" value="" x="52.197" y="39.37" size="1.778" layer="28" rot="MR270" display="off"/>
+<attribute name="MF" value="PTS635SL50 LFS" x="52.197" y="39.37" size="1.778" layer="28" rot="MR270" display="off"/>
 <attribute name="MPN" value="" x="52.197" y="39.37" size="1.778" layer="28" rot="MR270" display="off"/>
+<attribute name="DIGIKEY" value="CKN9102-ND" x="52.197" y="39.37" size="1.778" layer="28" rot="MR270" display="off"/>
 </element>
 <element name="K2" library="STM32-PROX" package="B3F-5XX" value="" x="54.229" y="48.514" smashed="yes" rot="MR270">
 <attribute name="PARTNO" value="*" x="54.229" y="48.514" size="1.778" layer="28" rot="MR270" display="off"/>
 <attribute name="NAME" x="57.77194375" y="49.257203125" size="1.27" layer="26" ratio="10" rot="MR270"/>
 <attribute name="VALUE" x="57.809" y="51.562" size="1.27" layer="28" ratio="10" rot="MR270"/>
 <attribute name="OC_NEWARK" value="unknown" x="54.229" y="48.514" size="1.778" layer="28" rot="MR270" display="off"/>
-<attribute name="MF" value="" x="54.229" y="48.514" size="1.778" layer="28" rot="MR270" display="off"/>
+<attribute name="MF" value="PTS635SL50 LFS" x="54.229" y="48.514" size="1.778" layer="28" rot="MR270" display="off"/>
 <attribute name="MPN" value="" x="54.229" y="48.514" size="1.778" layer="28" rot="MR270" display="off"/>
+<attribute name="DIGIKEY" value="CKN9102-ND" x="54.229" y="48.514" size="1.778" layer="28" rot="MR270" display="off"/>
 </element>
 <element name="K3" library="STM32-PROX" package="B3F-5XX" value="" x="50.038" y="48.514" smashed="yes" rot="MR270">
 <attribute name="PARTNO" value="*" x="50.038" y="48.514" size="1.778" layer="28" rot="MR270" display="off"/>
 <attribute name="NAME" x="47.378096875" y="52.3145875" size="1.27" layer="26" ratio="10" rot="MR270"/>
 <attribute name="VALUE" x="53.618" y="51.562" size="1.27" layer="28" ratio="10" rot="MR270"/>
 <attribute name="OC_NEWARK" value="unknown" x="50.038" y="48.514" size="1.778" layer="28" rot="MR270" display="off"/>
-<attribute name="MF" value="" x="50.038" y="48.514" size="1.778" layer="28" rot="MR270" display="off"/>
+<attribute name="MF" value="PTS635SL50 LFS" x="50.038" y="48.514" size="1.778" layer="28" rot="MR270" display="off"/>
 <attribute name="MPN" value="" x="50.038" y="48.514" size="1.778" layer="28" rot="MR270" display="off"/>
+<attribute name="DIGIKEY" value="CKN9102-ND" x="50.038" y="48.514" size="1.778" layer="28" rot="MR270" display="off"/>
 </element>
 <element name="R4" library="STM32-PROX" package="RLC_0603" value="10K" x="67.31" y="10.16" smashed="yes" rot="R90">
 <attribute name="PARTNO" value="RMCF0603JT10K0" x="67.31" y="10.16" size="1.778" layer="27" rot="R90" display="off"/>
@@ -3189,16 +3195,18 @@ design rules under a new name.</description>
 <attribute name="VALUE" x="39.878" y="50.546" size="1.27" layer="28" rot="MR0"/>
 <attribute name="PARTNO" value="*" x="39.243" y="52.451" size="1.778" layer="28" rot="MR270" display="off"/>
 <attribute name="OC_NEWARK" value="unknown" x="39.243" y="52.451" size="1.778" layer="28" rot="MR270" display="off"/>
-<attribute name="MF" value="" x="39.243" y="52.451" size="1.778" layer="28" rot="MR270" display="off"/>
+<attribute name="MF" value="LG Q971-KN-1" x="39.243" y="52.451" size="1.778" layer="28" rot="MR270" display="off"/>
 <attribute name="MPN" value="" x="39.243" y="52.451" size="1.778" layer="28" rot="MR270" display="off"/>
+<attribute name="DIGIKEY" value="475-1409-1-ND" x="39.243" y="52.451" size="1.778" layer="28" rot="MR270" display="off"/>
 </element>
 <element name="LED2" library="STM32-PROX" package="LED_SML0603" value="" x="36.322" y="52.07" smashed="yes" rot="MR180">
 <attribute name="NAME" x="35.420425" y="51.3715125" size="0.5" layer="26" rot="MR180"/>
 <attribute name="VALUE" x="38.227" y="52.705" size="1.27" layer="28" rot="MR270"/>
 <attribute name="PARTNO" value="*" x="36.322" y="52.07" size="1.778" layer="28" rot="MR180" display="off"/>
 <attribute name="OC_NEWARK" value="unknown" x="36.322" y="52.07" size="1.778" layer="28" rot="MR180" display="off"/>
-<attribute name="MF" value="" x="36.322" y="52.07" size="1.778" layer="28" rot="MR180" display="off"/>
+<attribute name="MF" value="LS Q971-KN-1" x="36.322" y="52.07" size="1.778" layer="28" rot="MR180" display="off"/>
 <attribute name="MPN" value="" x="36.322" y="52.07" size="1.778" layer="28" rot="MR180" display="off"/>
+<attribute name="DIGIKEY" value="475-3016-1-ND" x="36.322" y="52.07" size="1.778" layer="28" rot="MR180" display="off"/>
 </element>
 <element name="R24" library="STM32-PROX" package="RLC_0603" value="" x="33.02" y="44.45" smashed="yes" rot="R90">
 <attribute name="NAME" x="33.526525" y="40.932959375" size="0.762" layer="25" ratio="10" rot="R90"/>
@@ -3428,8 +3436,9 @@ design rules under a new name.</description>
 <attribute name="NAME" x="82.9084375" y="10.31046875" size="0.762" layer="52" rot="MR180"/>
 <attribute name="PARTNO" value="*" x="84.147534375" y="10.96889375" size="1.778" layer="28" rot="MR180" display="off"/>
 <attribute name="OC_NEWARK" value="unknown" x="84.147534375" y="10.96889375" size="1.778" layer="28" rot="MR180" display="off"/>
-<attribute name="MF" value="" x="84.147534375" y="10.96889375" size="1.778" layer="28" rot="MR180" display="off"/>
+<attribute name="MF" value="LY Q976-P1S2-36" x="84.147534375" y="10.96889375" size="1.778" layer="28" rot="MR180" display="off"/>
 <attribute name="MPN" value="" x="84.147534375" y="10.96889375" size="1.778" layer="28" rot="MR180" display="off"/>
+<attribute name="DIGIKEY" value="475-2558-1-ND" x="84.147534375" y="10.96889375" size="1.778" layer="28" rot="MR180" display="off"/>
 </element>
 <element name="R65" library="STM32-PROX" package="RLC_0603" value="330" x="84.15475" y="13.843896875" smashed="yes" rot="MR180">
 <attribute name="NAME" x="83.14213125" y="12.93625625" size="0.762" layer="52" rot="MR180"/>
@@ -3483,8 +3492,9 @@ design rules under a new name.</description>
 <attribute name="PARTNO" value="*" x="34.29" y="48.26" size="1.778" layer="27" display="off"/>
 <attribute name="NAME" x="33.000740625" y="47.829809375" size="0.762" layer="25" ratio="10" rot="R90"/>
 <attribute name="OC_NEWARK" value="unknown" x="34.29" y="48.26" size="1.778" layer="27" display="off"/>
-<attribute name="MF" value="" x="34.29" y="48.26" size="1.778" layer="27" display="off"/>
+<attribute name="MF" value="MC34674AEPR2" x="34.29" y="48.26" size="1.778" layer="27" display="off"/>
 <attribute name="MPN" value="" x="34.29" y="48.26" size="1.778" layer="27" display="off"/>
+<attribute name="DIGIKEY" value="MC34674AEPR2TR-ND" x="34.29" y="48.26" size="1.778" layer="27" display="off"/>
 </element>
 <element name="IC12" library="STM32-PROX" package="QFN16" value="NLAST44599MNG" x="6.35" y="7.62" smashed="yes">
 <attribute name="PARTNO" value="NLAST44599MNG" x="6.35" y="7.62" size="1.778" layer="27" display="off"/>
@@ -3501,8 +3511,9 @@ design rules under a new name.</description>
 <attribute name="VALUE" x="80.3291875" y="17.90781875" size="1" layer="27" ratio="10" rot="R90"/>
 <attribute name="PARTNO" value="*" x="85.217" y="22.352" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="OC_NEWARK" value="unknown" x="85.217" y="22.352" size="1.778" layer="27" rot="R90" display="off"/>
-<attribute name="MF" value="" x="85.217" y="22.352" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="MF" value="1981568-1" x="85.217" y="22.352" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="MPN" value="" x="85.217" y="22.352" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="DIGIKEY" value="A97800CT-ND" x="85.217" y="22.352" size="1.778" layer="27" rot="R90" display="off"/>
 </element>
 <element name="U$11" library="STM32-PROX" package="L1LOGO" value="" x="11.43" y="45.72" rot="R90"/>
 </elements>
