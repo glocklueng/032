@@ -13913,7 +13913,8 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 </part>
 <part name="FRAME5" library="STM32-PROX" deviceset="A4L-LOC" device=""/>
 <part name="SV2" library="STM32-PROX" deviceset="HIROSE-MQ172-4POS" device="">
-<attribute name="MF" value=""/>
+<attribute name="DIGIKEY" value="H10488CT-ND"/>
+<attribute name="MF" value="MQ172X-4PA(66)"/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
 <attribute name="PARTNO" value="*"/>
@@ -14434,7 +14435,8 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <attribute name="PARTNO" value="ABM3-13.560MHZ-B2-T"/>
 </part>
 <part name="IC4" library="STM32-PROX" deviceset="HCU-INVERTER" device="">
-<attribute name="MF" value=""/>
+<attribute name="DIGIKEY" value="NC7SZ04M5XCT-ND"/>
+<attribute name="MF" value="NC7SZ04M5X"/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
 <attribute name="PARTNO" value="*"/>
@@ -14584,7 +14586,8 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <part name="U$3" library="STM32-PROX" deviceset="+3V3" device=""/>
 <part name="VDD1" library="STM32-PROX" deviceset="VDD" device=""/>
 <part name="U1" library="STM32-PROX" deviceset="FERRITE" device="0805">
-<attribute name="MF" value=""/>
+<attribute name="DIGIKEY" value="445-1566-1-ND"/>
+<attribute name="MF" value="MPZ2012S300A"/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
 <attribute name="PARTNO" value="*"/>
@@ -14844,19 +14847,22 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 </part>
 <part name="GND17" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="K1" library="STM32-PROX" deviceset="5-XX" device="" value="">
-<attribute name="MF" value=""/>
+<attribute name="DIGIKEY" value="CKN9102-ND"/>
+<attribute name="MF" value="PTS635SL50 LFS"/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
 <attribute name="PARTNO" value="*"/>
 </part>
 <part name="K2" library="STM32-PROX" deviceset="5-XX" device="" value="">
-<attribute name="MF" value=""/>
+<attribute name="DIGIKEY" value="CKN9102-ND"/>
+<attribute name="MF" value="PTS635SL50 LFS"/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
 <attribute name="PARTNO" value="*"/>
 </part>
 <part name="K3" library="STM32-PROX" deviceset="5-XX" device="" value="">
-<attribute name="MF" value=""/>
+<attribute name="DIGIKEY" value="CKN9102-ND"/>
+<attribute name="MF" value="PTS635SL50 LFS"/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
 <attribute name="PARTNO" value="*"/>
@@ -15120,13 +15126,15 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <attribute name="PARTNO" value="TPS61202DRCT"/>
 </part>
 <part name="LED1" library="STM32-PROX" deviceset="LED_LED" device="SML0603">
-<attribute name="MF" value=""/>
+<attribute name="DIGIKEY" value="475-1409-1-ND"/>
+<attribute name="MF" value="LG Q971-KN-1"/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
 <attribute name="PARTNO" value="*"/>
 </part>
 <part name="LED2" library="STM32-PROX" deviceset="LED_LED" device="SML0603">
-<attribute name="MF" value=""/>
+<attribute name="DIGIKEY" value="475-3016-1-ND"/>
+<attribute name="MF" value="LS Q971-KN-1"/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
 <attribute name="PARTNO" value="*"/>
@@ -15319,7 +15327,8 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <attribute name="PARTNO" value="RMCF0603JT10K0"/>
 </part>
 <part name="LED3" library="STM32-PROX" deviceset="LED_LED" device="SML0603">
-<attribute name="MF" value=""/>
+<attribute name="DIGIKEY" value="475-2558-1-ND"/>
+<attribute name="MF" value="LY Q976-P1S2-36"/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
 <attribute name="PARTNO" value="*"/>
@@ -15367,7 +15376,8 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <attribute name="PARTNO" value="RMCF0603JT10K0"/>
 </part>
 <part name="U$7" library="STM32-PROX" deviceset="MC34674" device="">
-<attribute name="MF" value=""/>
+<attribute name="DIGIKEY" value="MC34674AEPR2TR-ND"/>
+<attribute name="MF" value="MC34674AEPR2"/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
 <attribute name="PARTNO" value="*"/>
@@ -15392,7 +15402,8 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <part name="GND9" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="GND10" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="USB-MICRO" library="STM32-PROX" deviceset="USB" device="-MICROB">
-<attribute name="MF" value=""/>
+<attribute name="DIGIKEY" value="A97800CT-ND"/>
+<attribute name="MF" value="1981568-1"/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
 <attribute name="PARTNO" value="*"/>
@@ -15417,12 +15428,14 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <attribute name="OC_NEWARK" x="-45.72" y="76.2" size="1.778" layer="96" display="off"/>
 <attribute name="MF" x="-45.72" y="76.2" size="1.778" layer="96" display="off"/>
 <attribute name="MPN" x="-45.72" y="76.2" size="1.778" layer="96" display="off"/>
+<attribute name="DIGIKEY" x="-45.72" y="76.2" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="LED2" gate="G$1" x="-35.56" y="76.2">
 <attribute name="PARTNO" x="-35.56" y="76.2" size="1.778" layer="96" display="off"/>
 <attribute name="OC_NEWARK" x="-35.56" y="76.2" size="1.778" layer="96" display="off"/>
 <attribute name="MF" x="-35.56" y="76.2" size="1.778" layer="96" display="off"/>
 <attribute name="MPN" x="-35.56" y="76.2" size="1.778" layer="96" display="off"/>
+<attribute name="DIGIKEY" x="-35.56" y="76.2" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="R24" gate="G$1" x="-25.4" y="66.04">
 <attribute name="PARTNO" x="-25.4" y="66.04" size="1.778" layer="96" display="off"/>
@@ -15575,6 +15588,7 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <attribute name="OC_NEWARK" x="-2.54" y="63.5" size="1.778" layer="96" display="off"/>
 <attribute name="MF" x="-2.54" y="63.5" size="1.778" layer="96" display="off"/>
 <attribute name="MPN" x="-2.54" y="63.5" size="1.778" layer="96" display="off"/>
+<attribute name="DIGIKEY" x="-2.54" y="63.5" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="U$7" gate="G$2" x="-15.24" y="45.72"/>
 <instance part="SUPPLY1" gate="GND" x="48.26" y="53.34"/>
@@ -15944,6 +15958,7 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <attribute name="OC_NEWARK" x="45.72" y="58.42" size="1.778" layer="96" display="off"/>
 <attribute name="MF" x="45.72" y="58.42" size="1.778" layer="96" display="off"/>
 <attribute name="MPN" x="45.72" y="58.42" size="1.778" layer="96" display="off"/>
+<attribute name="DIGIKEY" x="45.72" y="58.42" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="C21" gate="G$1" x="-27.94" y="91.44">
 <attribute name="PARTNO" x="-27.94" y="91.44" size="1.778" layer="96" display="off"/>
@@ -16215,6 +16230,7 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <attribute name="OC_NEWARK" x="-38.1" y="76.2" size="1.778" layer="96" display="off"/>
 <attribute name="MF" x="-38.1" y="76.2" size="1.778" layer="96" display="off"/>
 <attribute name="MPN" x="-38.1" y="76.2" size="1.778" layer="96" display="off"/>
+<attribute name="DIGIKEY" x="-38.1" y="76.2" size="1.778" layer="96" rot="R180" display="off"/>
 </instance>
 <instance part="V3" gate="GND" x="-27.94" y="76.2" rot="R90"/>
 </instances>
@@ -16729,18 +16745,21 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <attribute name="OC_NEWARK" x="-10.16" y="91.44" size="1.778" layer="96" display="off"/>
 <attribute name="MF" x="-10.16" y="91.44" size="1.778" layer="96" display="off"/>
 <attribute name="MPN" x="-10.16" y="91.44" size="1.778" layer="96" display="off"/>
+<attribute name="DIGIKEY" x="-10.16" y="91.44" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="K2" gate="G$1" x="0" y="91.44">
 <attribute name="PARTNO" x="0" y="91.44" size="1.778" layer="96" display="off"/>
 <attribute name="OC_NEWARK" x="0" y="91.44" size="1.778" layer="96" display="off"/>
 <attribute name="MF" x="0" y="91.44" size="1.778" layer="96" display="off"/>
 <attribute name="MPN" x="0" y="91.44" size="1.778" layer="96" display="off"/>
+<attribute name="DIGIKEY" x="0" y="91.44" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="K3" gate="G$1" x="10.16" y="91.44">
 <attribute name="PARTNO" x="10.16" y="91.44" size="1.778" layer="96" display="off"/>
 <attribute name="OC_NEWARK" x="10.16" y="91.44" size="1.778" layer="96" display="off"/>
 <attribute name="MF" x="10.16" y="91.44" size="1.778" layer="96" display="off"/>
 <attribute name="MPN" x="10.16" y="91.44" size="1.778" layer="96" display="off"/>
+<attribute name="DIGIKEY" x="10.16" y="91.44" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="GND43" gate="GND" x="-10.16" y="81.28"/>
 <instance part="GND45" gate="GND" x="0" y="81.28"/>
@@ -16965,6 +16984,7 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <attribute name="OC_NEWARK" x="-30.48" y="137.16" size="1.778" layer="96" display="off"/>
 <attribute name="MF" x="-30.48" y="137.16" size="1.778" layer="96" display="off"/>
 <attribute name="MPN" x="-30.48" y="137.16" size="1.778" layer="96" display="off"/>
+<attribute name="DIGIKEY" x="-30.48" y="137.16" size="1.778" layer="96" rot="R90" display="off"/>
 </instance>
 <instance part="R65" gate="G$1" x="-43.18" y="137.16">
 <attribute name="PARTNO" x="-43.18" y="137.16" size="1.778" layer="96" display="off"/>
@@ -17802,6 +17822,7 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <attribute name="OC_NEWARK" x="127" y="118.11" size="1.778" layer="96" display="off"/>
 <attribute name="MF" x="127" y="118.11" size="1.778" layer="96" display="off"/>
 <attribute name="MPN" x="127" y="118.11" size="1.778" layer="96" display="off"/>
+<attribute name="DIGIKEY" x="127" y="118.11" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="R1" gate="G$1" x="142.24" y="135.89">
 <attribute name="PARTNO" x="142.24" y="135.89" size="1.778" layer="96" display="off"/>
@@ -19797,6 +19818,7 @@ DPDT SMT slide switch, AYZ0202, SWCH-08179</description>
 <attribute name="OC_NEWARK" x="236.22" y="96.52" size="1.778" layer="96" display="off"/>
 <attribute name="MF" x="236.22" y="96.52" size="1.778" layer="96" display="off"/>
 <attribute name="MPN" x="236.22" y="96.52" size="1.778" layer="96" display="off"/>
+<attribute name="DIGIKEY" x="236.22" y="96.52" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="IC9" gate="G$1" x="66.04" y="101.6">
 <attribute name="PARTNO" x="66.04" y="101.6" size="1.778" layer="96" display="off"/>
