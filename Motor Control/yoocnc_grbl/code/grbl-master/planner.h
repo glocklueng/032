@@ -22,6 +22,10 @@
 #ifndef planner_h
 #define planner_h
                  
+#ifndef pin_map_h
+#	include "pin_map.h"
+#endif
+				 
 // The number of linear motions that can be in the plan at any give time
 #ifndef BLOCK_BUFFER_SIZE
   #define BLOCK_BUFFER_SIZE 18

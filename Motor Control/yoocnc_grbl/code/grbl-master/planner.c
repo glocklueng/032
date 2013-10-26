@@ -24,8 +24,10 @@
 
 #include <inttypes.h>    
 #include <stdlib.h>
-#include "planner.h"
+
 #include "nuts_bolts.h"
+
+#include "planner.h"
 #include "stepper.h"
 #include "settings.h"
 #include "config.h"

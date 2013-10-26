@@ -27,13 +27,7 @@
 
 #include "nuts_bolts.h"
 
-#ifndef RX_BUFFER_SIZE
-#if defined  (__AVR_ATmega328P__ ) || defined( __AVR_ATmega2560__ )
-#define RX_BUFFER_SIZE 256
-#else
-#define RX_BUFFER_SIZE 128
-#endif
-#endif
+
 #ifndef TX_BUFFER_SIZE
   #define TX_BUFFER_SIZE 64
 #endif
