@@ -74,6 +74,8 @@ void report_status_message(uint8_t status_code)
       printPgmString(PSTR("Busy or queued")); break;
       case STATUS_ALARM_LOCK:
       printPgmString(PSTR("Alarm lock")); break;
+      case STATUS_OVERFLOW:
+      printPgmString(PSTR("Line overflow")); break;
     }
     printPgmString(PSTR("\r\n"));
   }
@@ -90,6 +92,7 @@ void report_alarm_message(int8_t alarm_code)
     printPgmString(PSTR("Abort during cycle")); break;
   }
   printPgmString(PSTR(". MPos?\r\n"));
+  delay_ms(500); // Force delay to ensure message clears serial write buffer.
 }
 
 // Prints feedback messages. This serves as a centralized method to provide additional

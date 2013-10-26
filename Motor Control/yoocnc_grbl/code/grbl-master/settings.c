@@ -20,10 +20,11 @@
 */
 
 #include <avr/io.h>
+#include "nuts_bolts.h"
+
 #include "protocol.h"
 #include "report.h"
 #include "stepper.h"
-#include "nuts_bolts.h"
 #include "settings.h"
 #include "eeprom.h"
 #include "limits.h"

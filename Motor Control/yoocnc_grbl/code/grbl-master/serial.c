@@ -28,6 +28,7 @@
 #include "config.h"
 #include "motion_control.h"
 #include "protocol.h"
+#include "pin_map.h"
 
 uint8_t rx_buffer[RX_BUFFER_SIZE];
 uint8_t rx_buffer_head = 0;
