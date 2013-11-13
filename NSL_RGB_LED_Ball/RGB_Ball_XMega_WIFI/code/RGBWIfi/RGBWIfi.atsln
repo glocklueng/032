@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Atmel Studio Solution File, Format Version 11.00
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "RGBWIfi", "RGBWIfi\RGBWIfi.cproj", "{232FB767-48FB-4C34-8D32-F21B68E857AA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AVR = Debug|AVR
+		Release|AVR = Release|AVR
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{232FB767-48FB-4C34-8D32-F21B68E857AA}.Debug|AVR.ActiveCfg = Debug|AVR
+		{232FB767-48FB-4C34-8D32-F21B68E857AA}.Debug|AVR.Build.0 = Debug|AVR
+		{232FB767-48FB-4C34-8D32-F21B68E857AA}.Release|AVR.ActiveCfg = Release|AVR
+		{232FB767-48FB-4C34-8D32-F21B68E857AA}.Release|AVR.Build.0 = Release|AVR
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
