@@ -71,6 +71,9 @@ void board_init(void)
 	PORTC.OUTCLR = VBAT_SW_EN_bm ;
 	PORTC.OUTCLR = VIO_bm;
 	PORTC.OUTCLR = WLAN_SS_bm;
+	PORTC.PIN4CTRL = PORT_OPC_WIREDANDPULL_gc;
+	
+	PORTC.OUTSET = PIN4_bm;
 
 /*
 

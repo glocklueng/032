@@ -270,7 +270,7 @@ wlan_start(unsigned short usPatchesAvailableAtHost)
 		// wait till the IRQ line goes low
 		while(tSLInformation.ReadWlanInterruptPin() != 0)
 		{
-			circular_buffer_put('l');
+			
 		}
 	}
 	else
@@ -278,12 +278,12 @@ wlan_start(unsigned short usPatchesAvailableAtHost)
 		// wait till the IRQ line goes high and than low
 		while(tSLInformation.ReadWlanInterruptPin() == 0)
 		{
-			circular_buffer_put('H');
+			
 		}
 		
 		while(tSLInformation.ReadWlanInterruptPin() != 0)
 		{
-			circular_buffer_put('L');
+		
 		}
 	}
 
@@ -314,7 +314,7 @@ wlan_start(unsigned short usPatchesAvailableAtHost)
 void
 wlan_stop(void)
 {
-		__PROLOG("wlan_stop\n");
+	__PROLOG("wlan_stop\n");
 
 
 	// ASIC 1273 chip disable
