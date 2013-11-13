@@ -252,14 +252,17 @@ wlan_start(unsigned short usPatchesAvailableAtHost)
 	
 	// Allocate the memory for the RX/TX data transactions
 	tSLInformation.pucTxCommandBuffer = (unsigned char *)wlan_tx_buffer;
-	
+
 	// init spi
 	SpiOpen(SpiReceiveHandler);
-	
-	// Check the IRQ line
+		
+	//power up
+	PORTC.OUTSET = VIO_bm;
+//	_delay_us(1);
+	// Check the IRQ line WLAN_SPI_IRQ_bm
 	ulSpiIRQState = tSLInformation.ReadWlanInterruptPin();
-	
-	// ASIC 1273 chip enable: toggle WLAN EN line
+		
+	// ASIC 1273 chip enable: toggle WLAN EN line (VBAT_SW_EN_bm)
 	tSLInformation.WriteWlanPin( WLAN_ENABLE );
 	
 	if (ulSpiIRQState)
@@ -267,6 +270,7 @@ wlan_start(unsigned short usPatchesAvailableAtHost)
 		// wait till the IRQ line goes low
 		while(tSLInformation.ReadWlanInterruptPin() != 0)
 		{
+			circular_buffer_put('l');
 		}
 	}
 	else
@@ -274,10 +278,12 @@ wlan_start(unsigned short usPatchesAvailableAtHost)
 		// wait till the IRQ line goes high and than low
 		while(tSLInformation.ReadWlanInterruptPin() == 0)
 		{
+			circular_buffer_put('H');
 		}
 		
 		while(tSLInformation.ReadWlanInterruptPin() != 0)
 		{
+			circular_buffer_put('L');
 		}
 	}
 

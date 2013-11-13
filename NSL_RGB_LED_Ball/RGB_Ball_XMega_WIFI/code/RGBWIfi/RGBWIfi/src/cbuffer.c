@@ -4,7 +4,7 @@
  * Created: 11/12/2013 11:57:16 AM
  *  Author: charlie
  */
-#define BUFSIZE     ( 128 )
+#define BUFSIZE     ( 256 )
 
 static unsigned char buf[BUFSIZE];
 static unsigned char *pIn, *pOut, *pEnd;

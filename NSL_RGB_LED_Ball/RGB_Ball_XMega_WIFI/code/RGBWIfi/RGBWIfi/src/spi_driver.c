@@ -117,7 +117,7 @@ void SPI_MasterInit ( SPI_Master_t *spi,
 	/* No assigned data packet. */
 	spi->dataPacket = NULL;
 	
-	PORTC.DIRCLR = WLAN_SPI_IRQ_bm ;	//change pin to input
+	spi->port->DIRCLR = WLAN_SPI_IRQ_bm ;	//change pin to input
 	
 	/* MOSI and SCK as output. */
 	spi->port->DIRSET  = SPI_MOSI_bm | SPI_SCK_bm;
@@ -125,6 +125,11 @@ void SPI_MasterInit ( SPI_Master_t *spi,
 	/* MISO as input */
 	spi->port->DIRCLR  = SPI_MISO_bm;
 	
+	
+	circular_buffer_put('\n');
+	circular_buffer_put('A'+ReadWlanInterruptPin());
+	circular_buffer_put('\n');
+		
 }
 
 
