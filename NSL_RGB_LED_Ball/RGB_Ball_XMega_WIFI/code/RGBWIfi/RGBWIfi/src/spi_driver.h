@@ -69,11 +69,11 @@
 
 /* Hardware defines */
 
-#define SPI_SS_bm             0x10		/*!< \brief Bit mask for the SS pin. */
-#define SPI_MOSI_bm           0x20		/*!< \brief Bit mask for the MOSI pin. */
-#define SPI_MISO_bm           0x40		/*!< \brief Bit mask for the MISO pin. */
-#define SPI_SCK_bm            (1<<7)	/*!< \brief Bit mask for the SCK pin. */
-#define SPI_IRQ_bm			  (1<<2)	/*!< \brief Bit mask for the SPI_IRQ pin/PC2 */
+#define SPI_SS_bm             WLAN_SS_bm		/*!< \brief Bit mask for the SS pin. */
+#define SPI_MOSI_bm           WLAN_MOSI_bm		/*!< \brief Bit mask for the MOSI pin. */
+#define SPI_MISO_bm           WLAN_MISO_bm		/*!< \brief Bit mask for the MISO pin. */
+#define SPI_SCK_bm            WLAN_SCK_bm	/*!< \brief Bit mask for the SCK pin. */
+#define SPI_IRQ_bm			  WLAN_SPI_IRQ_bm	/*!< \brief Bit mask for the SPI_IRQ pin/PC2 */
 
 /* SPI master status code defines. */
 

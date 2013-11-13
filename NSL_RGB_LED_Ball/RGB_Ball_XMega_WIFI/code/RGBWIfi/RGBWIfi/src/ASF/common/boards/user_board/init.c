@@ -45,11 +45,23 @@ void board_init(void)
 	PORTD.INT0MASK = 0x00;
 	PORTD.OUT      = 0x00;
 	
-	PORTC.DIR      = 0xFF;  // output
+	PORTC.DIR      = 0x00;  // output
 	PORTC.PIN0CTRL = 0x00;  // pull ups?
 	PORTC.INTCTRL  = 0x00;  // PORTC will generate no low level interrupts
 	PORTC.INT0MASK = 0x00;
 	PORTC.OUT      = 0x00;
+	
+	//outputs
+	PORTC.DIRSET = WLAN_SS_bm;
+	PORTC.DIRSET = WLAN_MOSI_bm;
+	PORTC.DIRSET = WLAN_SCK_bm;
+	PORTC.DIRSET = VIO_bm;
+	PORTC.DIRSET = VBAT_SW_EN_bm;
+
+	//Inputs
+	PORTC.DIRCLR = WLAN_MISO_bm;
+	PORTC.DIRCLR = WLAN_SPI_IRQ_bm;
+	
 	
 	// Set Pullup on SPI_IRQ
 	PORTC.PIN6CTRL = WLAN_SPI_IRQ_bm;
@@ -58,6 +70,7 @@ void board_init(void)
 	// off
 	PORTC.OUTCLR = VBAT_SW_EN_bm ;
 	PORTC.OUTCLR = VIO_bm;
+	PORTC.OUTCLR = WLAN_SS_bm;
 
 /*
 

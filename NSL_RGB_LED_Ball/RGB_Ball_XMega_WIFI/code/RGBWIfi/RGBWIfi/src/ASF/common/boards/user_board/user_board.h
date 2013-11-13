@@ -89,6 +89,7 @@ void dump_register(const unsigned char *str, register8_t port );
 int circular_buffer_put ( unsigned char c );
 int circular_buffer_puts ( const unsigned char *str );
 int init_spi(void);
+long ReadWlanInterruptPin ( void );
 
 #ifndef __PROLOG
 #define __PROLOG(X)		circular_buffer_puts(X)

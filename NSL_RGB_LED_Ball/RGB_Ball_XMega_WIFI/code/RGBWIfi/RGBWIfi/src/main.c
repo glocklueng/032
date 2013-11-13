@@ -130,8 +130,6 @@ int main ( void )
 	circular_buffer_init(); 
 	
  	//	SPI_MasterInit 
-	 
-	 
 	board_init();
 	
 	SetupHardware();
@@ -145,6 +143,22 @@ int main ( void )
 	
 	circular_buffer_puts("booting WLAN\n");	
 	
+	if ( 0 ) {
+		
+		unsigned char ch;
+		
+		PORTC.OUTSET = VIO_bm;
+
+		_delay_us(1);
+
+		WriteWlanPin(1);
+		
+		while(1) {
+			ch= 65 + ReadWlanInterruptPin();
+			circular_buffer_put(ch);
+		}
+		
+	}
 	wlan_Setup();
 	
 	volatile unsigned short tempOne = 0;	
@@ -206,12 +220,6 @@ void SendNextReport(void);
  */
 void timer(void )
 {
-	static unsigned char flag = 0 ;
-	
-	flag = 1 - flag;
-	
-	if( flag == 0 )
-		return;
 		
 	//circular_buffer_put('a');
 	

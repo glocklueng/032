@@ -33,6 +33,8 @@
 *
 *****************************************************************************/
 
+#include "user_board.h"
+
 //*****************************************************************************
 //
 //! \addtogroup hci_app
@@ -67,6 +69,8 @@ hci_command_send(unsigned short usOpcode, unsigned char *pucBuff,
                      unsigned char ucArgsLength)
 { 
 	unsigned char *stream;
+	
+	__PROLOG("hci_command_send\n");
 	
 	stream = (pucBuff + SPI_HEADER_SIZE);
 	
