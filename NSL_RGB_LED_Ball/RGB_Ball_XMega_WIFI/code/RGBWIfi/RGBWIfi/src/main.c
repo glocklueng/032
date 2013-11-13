@@ -83,6 +83,7 @@ void SetupHardware ( void )
 	XMEGACLK_StartDFLL ( CLOCK_SRC_INT_RC32MHZ, DFLL_REF_INT_USBSOF, F_USB );
 
 	PMIC.CTRL = PMIC_LOLVLEN_bm | PMIC_MEDLVLEN_bm | PMIC_HILVLEN_bm;
+	
 #endif
 
 	//outputs
@@ -138,27 +139,10 @@ int main ( void )
 
 	// Insert application code here, after the board has been initialized.
 	
-	_delay_ms(1000);
-	_delay_ms(2000);
+	_delay_ms(3000);
 	
 	circular_buffer_puts("booting WLAN\n");	
 	
-	if ( 0 ) {
-		
-		unsigned char ch;
-		
-		PORTC.OUTSET = VIO_bm;
-
-		_delay_us(1);
-
-		WriteWlanPin(1);
-		
-		while(1) {
-			ch= 65 + ReadWlanInterruptPin();
-			circular_buffer_put(ch);
-		}
-		
-	}
 	wlan_Setup();
 	
 	volatile unsigned short tempOne = 0;	
@@ -168,7 +152,7 @@ int main ( void )
 
 	///------------------------
 		
-	while ( 0 ) {
+	while ( 1 ) {
 
 		for ( offset = 0; offset < 360; offset += 0.5 ) {
 			RGBscan ( 4095, 0, 0, offset );
