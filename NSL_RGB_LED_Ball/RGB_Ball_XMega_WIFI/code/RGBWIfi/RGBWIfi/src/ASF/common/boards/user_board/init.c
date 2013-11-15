@@ -12,19 +12,20 @@
 #include "user_board.h"
 #include "spi_driver.h"
 
+void SPI_IRQ ( void );
 
 ISR(PORTC_INT0_vect)
 {
 	static int flag =0;
 	
 	circular_buffer_put('C');
-	
+		SPI_IRQ();
 	if ( flag == 0 ){
 		flag = 1;
 		PORT_OUT &= ~ ( 1 << BLANKPIN );
 	} else {
 		flag = 0 ;
-		PORT_OUT |= ( 1 << BLANKPIN )  ;
+		PORT_OUT |= ( 1 << BLANKPIN )  ; 
 	}
 	
 	PORTC.INTFLAGS |= PORT_INT0IF_bm; 
@@ -70,10 +71,11 @@ void board_init(void)
 	// off
 	PORTC.OUTCLR = VBAT_SW_EN_bm ;
 	PORTC.OUTCLR = VIO_bm;
-	PORTC.OUTCLR = WLAN_SS_bm;
+	PORTC.OUTCLR = WLAN_SS_bm;// pin4
 	PORTC.PIN4CTRL = PORT_OPC_WIREDANDPULL_gc;
 	
-	PORTC.OUTSET = PIN4_bm;
+	// Set SS output to high. (No slave addressed).
+	PORTC.OUTSET = WLAN_SS_bm;
 
 /*
 
@@ -98,12 +100,16 @@ void board_init(void)
 }
 
 unsigned char gMode = 0;
+
 void timer(void );
+void cc3k_int_poll(void);
 
 ISR ( TCC0_OVF_vect )
 {
 	static unsigned int counter = 0;
 
+
+	cc3k_int_poll();
 
 	timer();
 

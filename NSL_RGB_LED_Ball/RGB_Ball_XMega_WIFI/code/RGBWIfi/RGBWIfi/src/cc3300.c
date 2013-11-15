@@ -163,13 +163,16 @@ void WlanInterruptEnable ( void )
 	//_delay_us(100);
 	ccspi_int_enabled = 1;
 	
-	// External interrupt SPI_IRQ from CC3000 on PC2
-	PORTC.PIN2CTRL =  PORT_ISC_FALLING_gc;
 	
 	// PORTC.PIN0CTRL = PORT_OPC_PULLUP_gc | PORT_ISC_FALLING_gc;
 	
 	PORTC.INT0MASK = WLAN_SPI_IRQ_bm;
-	PORTC.INTCTRL = PORT_INT0LVL_LO_gc;
+
+	// External interrupt SPI_IRQ from CC3000 on PC2
+	PORTC.PIN2CTRL =  PORT_ISC_FALLING_gc;
+
+	PORTC.INTCTRL = PORT_INT0LVL_MED_gc;
+
 
 	//attachInterrupt(g_IRQnum, SPI_IRQ, FALLING);
 
