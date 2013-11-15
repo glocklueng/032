@@ -22,7 +22,7 @@
 
 void timer(void );
 
-#define NUM_TLC5947 ( 1 )
+#define NUM_TLC5947 ( 3 )
 
 #define bit_set(reg, bit) reg |= 1 << bit
 #define bit_clr(reg, bit) reg &= ~(1 << bit)
@@ -34,6 +34,31 @@ void timer(void );
 #define PORT_OUT	PORTD.OUT
 
 // CC3000 WLAN IRQ pin
+
+/*
+PORTC.IN
+	01234567
+	11100011
+PORTC.OUT
+	01234567
+	11000000
+PORTC.DIR
+	01234567
+	11001101
+PORTC.PIN6CTRL
+	01234567
+	00100000
+PORTC.INTCTRL
+	01234567
+	10000000
+PORTC.INT0MASK
+	01234567
+	00100000
+PORTC.INT1MASK
+	01234567
+	00000000
+*/
+
 #define VIO				(PIN0_bp )
 #define VIO_bm			(PIN0_bm )
 #define VIO_bp			(PIN0_bp )
@@ -42,8 +67,8 @@ void timer(void );
 #define VBAT_SW_EN_bm	(PIN1_bm )
 #define VBAT_SW_EN_bp	(PIN1_bp )
 
-#define WLAN_SPI_IRQ_bm		(PIN2_bm)	// SPI_IRQ (input)
-#define WLAN_SPI_IRQ_bp		(PIN2_bp)	// SPI_IRQ (input)
+#define WLAN_SPI_IRQ_bm	(PIN2_bm)	// SPI_IRQ (input)
+#define WLAN_SPI_IRQ_bp	(PIN2_bp)	// SPI_IRQ (input)
 #define WLAN_SS			(PIN4_bp)	// SPI_CS(output)
 #define WLAN_SS_bm		(PIN4_bm)	// SPI_CS (output)
 #define WLAN_MISO		(PIN6_bp)	// SPI_DOUT (input)

@@ -311,6 +311,19 @@ void CALLBACK_HID_Device_ProcessHIDReport ( USB_ClassInfo_HID_Device_t* const HI
 		case 3:
 			dump_register("PORTC.PIN6CTRL",PORTC.PIN6CTRL);
 			break;
+			
+		case 4:
+			dump_register("PORTC.INTCTRL",PORTC.INTCTRL);
+			break;
+
+		case 5:
+			dump_register("PORTC.INT0MASK",PORTC.INT0MASK);
+			break;
+
+		case 6:
+			dump_register("PORTC.INT1MASK",PORTC.INT1MASK);
+			break;
+	
 	}
 }
 

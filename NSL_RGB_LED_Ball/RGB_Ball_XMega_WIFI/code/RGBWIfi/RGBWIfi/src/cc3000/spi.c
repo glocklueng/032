@@ -179,7 +179,7 @@ void SpiClose ( void )
 /**************************************************************************/
 void SpiOpen ( gcSpiHandleRx pfRxHandler )
 {
-	__PROLOG ( "SpiOpen" );
+	__PROLOG ( "SpiOpen\n" );
 
 	sSpiInformation.ulSpiState = eSPI_STATE_POWERUP;
 
@@ -203,7 +203,6 @@ void SpiOpen ( gcSpiHandleRx pfRxHandler )
 
 /**************************************************************************/
 /*!
-
  */
 /**************************************************************************/
 int init_spi ( void )
@@ -214,12 +213,23 @@ int init_spi ( void )
 	PORTC.OUTCLR = VIO_bm;
 
 	_delay_ms ( 500 );
+/*
+	SPI_Init ( &SPIC,   SPI_SPEED_FCPU_DIV_4 |
+	SPI_ORDER_MSB_FIRST |
+	SPI_SCK_LEAD_FALLING |
+	SPI_SAMPLE_TRAILING |
+	SPI_MODE_MASTER |
+	SPI_INTLVL_LO_gc |
+	SPI_MODE_1_gc
+*/
 
-	SPI_Init ( &SPIC,
-	           SPI_SPEED_FCPU_DIV_4 | SPI_ORDER_MSB_FIRST | SPI_SCK_LEAD_FALLING |
-	           SPI_SAMPLE_TRAILING | SPI_MODE_MASTER );
+	SPI_Init ( &SPIC,   SPI_PRESCALER_DIV4_gc | 
+						SPI_MODE_1_gc 
+	);
 
 	CC3000_DEASSERT_CS;
+
+	PMIC.CTRL |= PMIC_MEDLVLEN_bm | PMIC_LOLVLEN_bm;
 
 	dump_register("SPIC.INTCTRL",SPIC.INTCTRL);
 
@@ -233,8 +243,8 @@ int init_spi ( void )
 /**************************************************************************/
 long SpiFirstWrite ( unsigned char *ucBuf, unsigned short usLength )
 {
-	__PROLOG ( "SpiWriteFirst\n" );
 
+	__PROLOG ( "SpiWriteFirst\n" );
 	/* Workaround for the first transaction */
 	CC3000_ASSERT_CS;
 
@@ -284,14 +294,17 @@ long SpiWrite ( unsigned char *pUserBuffer, unsigned short usLength )
 	 * for the purpose of overrun detection. If the magic number is overwritten - buffer overrun
 	 * occurred - and we will be stuck here forever! */
 	if ( wlan_tx_buffer[CC3000_TX_BUFFER_SIZE - 1] != CC3000_BUFFER_MAGIC_NUMBER ) {
-		__PROLOG ( "Error - No magic number found in SpiWrite\n" );
+		__PROLOG ( "Error No magic number in SpiWrite\n" );
 
 		while ( 1 );
 	}
 
 	__PROLOG("1\n");
+	// if this fails its not getting an IRQ from the CC30000
 	if ( sSpiInformation.ulSpiState == eSPI_STATE_POWERUP ) {
-		while ( sSpiInformation.ulSpiState != eSPI_STATE_INITIALIZED );
+		__PROLOG("1a\n");
+		while ( sSpiInformation.ulSpiState != eSPI_STATE_INITIALIZED ) 
+			_delay_us(1);
 	}
 	__PROLOG("2\n");
 
@@ -523,10 +536,11 @@ void SPI_IRQ ( void )
 {
 	ccspi_is_in_irq = 1;
 
-	__PROLOG ( "Entering SPI_IRQ\n" );
+	__PROLOG ( "x" );
 
 	if ( sSpiInformation.ulSpiState == eSPI_STATE_POWERUP ) {
 		/* IRQ line was low ... perform a callback on the HCI Layer */
+			__PROLOG ( "-1-" );
 		sSpiInformation.ulSpiState = eSPI_STATE_INITIALIZED;
 
 	} else if ( sSpiInformation.ulSpiState == eSPI_STATE_IDLE ) {
@@ -548,8 +562,6 @@ void SPI_IRQ ( void )
 		CC3000_DEASSERT_CS;
 	}
 
-	__PROLOG ( "Leaving SPI_IRQ\n" );
-
 	ccspi_is_in_irq = 0;
 	return;
 }
@@ -564,12 +576,13 @@ void SPI_IRQ ( void )
 //
 //*****************************************************************************
 
-void cc3k_int_poll()
+void cc3k_int_poll(void)
 {
 	if ( ( ReadWlanInterruptPin() == 0 ) && ccspi_is_in_irq == 0 && ccspi_int_enabled != 0 ) {
 		SPI_IRQ();
 	}
 }
+
 
 ISR(SPIC_INT_vect)
 {

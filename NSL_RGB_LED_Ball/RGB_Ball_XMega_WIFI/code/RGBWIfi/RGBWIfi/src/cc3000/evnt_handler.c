@@ -52,7 +52,7 @@
 #include "netapp.h"
 #include "spi.h"
 
- 
+ #include "user_board.h"
 
 //*****************************************************************************
 //                  COMMON DEFINES
@@ -801,6 +801,8 @@ update_socket_active_status(char *resp_params)
 void 
 SimpleLinkWaitEvent(unsigned short usOpcode, void *pRetParams)
 {
+	__PROLOG("SimpleLinkWaitEvent\n");
+	
 	// In the blocking implementation the control to caller will be returned only 
 	// after the end of current transaction
 	tSLInformation.usRxEventOpcode = usOpcode;
@@ -827,6 +829,8 @@ void
 SimpleLinkWaitData(unsigned char *pBuf, unsigned char *from, 
 									 unsigned char *fromlen)
 {
+	__PROLOG("SimpleLinkWaitData\n");
+
 	// In the blocking implementation the control to caller will be returned only 
 	// after the end of current transaction, i.e. only after data will be received
 	tSLInformation.usRxDataPending = 1;

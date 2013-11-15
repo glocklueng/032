@@ -170,7 +170,8 @@
 			{
 				SPI->CTRL = (SPIOptions | SPI_ENABLE_bm);
 				
-				SPI->INTCTRL = SPI_INTLVL_MED_gc;
+				SPI->INTCTRL = SPI_INTLVL_LO_gc;
+				PORTC.DIRSET  = WLAN_MOSI_bm | WLAN_SCK_bm;
 	
 			}
 
