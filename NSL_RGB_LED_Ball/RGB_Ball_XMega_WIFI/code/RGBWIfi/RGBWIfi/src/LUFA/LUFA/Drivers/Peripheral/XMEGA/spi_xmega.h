@@ -168,10 +168,38 @@
 			static inline void SPI_Init(SPI_t* const SPI,
 			                            const uint8_t SPIOptions)
 			{
-				SPI->CTRL = (SPIOptions | SPI_ENABLE_bm);
+						
+				//SPI->CTRL = (SPIOptions | SPI_ENABLE_bm);
+				//
 				
-				SPI->INTCTRL = SPI_INTLVL_LO_gc;
-				PORTC.DIRSET  = WLAN_MOSI_bm | WLAN_SCK_bm;
+				SPIC.CTRL = 0x55; // 0x51;//b01010101;
+				SPIC.INTCTRL = SPI_INTLVL_LO_gc;
+				
+				PORTC.DIRSET = PIN0_bm;
+				PORTC.DIRSET = PIN1_bm;
+
+
+				PORTC.DIRSET  = WLAN_MOSI_bm ;
+				PORTC.DIRSET  = WLAN_SCK_bm;
+				PORTC.DIRSET = WLAN_SS_bm;
+
+				PORTC.DIRCLR = WLAN_MISO_bm;
+				PORTC.DIRCLR = PIN2_bm;
+				
+//				PORTC.OUT      = 0x00;
+//				PORTC.INT0MASK = 0x00;
+//				PORTC.INTCTRL = 0x00;
+				
+				sei();				
+					while(0) {
+						CC3000_DEASSERT_CS;
+						SPIC.DATA = 0xff;
+						_delay_ms(1);
+						CC3000_ASSERT_CS;
+						//SPIC.DATA = 0x00;
+						_delay_ms(1);
+					}
+			
 	
 			}
 
@@ -209,9 +237,16 @@
 			static inline uint8_t SPI_TransferByte(SPI_t* const SPI,
 			                                       const uint8_t Byte)
 			{
-				SPI->DATA = Byte;
-				while (!(SPI->STATUS & SPI_IF_bm));
-				return SPI->DATA;
+				cli();
+				SPIC.DATA = Byte;
+				// this will be cleared by the interrupt
+				while (!(SPIC.STATUS & SPI_IF_bm)) {
+						//SPIC.DATA=0xff;
+					asm("nop");
+				}
+				sei();
+				
+				return SPIC.DATA;
 			}
 
 			/** Sends a byte through the SPI interface, blocking until the transfer is complete. The response
@@ -225,8 +260,10 @@
 			static inline void SPI_SendByte(SPI_t* const SPI,
 			                                const uint8_t Byte)
 			{
+				cli();
 				SPI->DATA = Byte;
 				while (!(SPI->STATUS & SPI_IF_bm));
+				sei();
 			}
 
 			/** Sends a dummy byte through the SPI interface, blocking until the transfer is complete. The response
@@ -239,8 +276,10 @@
 			static inline uint8_t SPI_ReceiveByte(SPI_t* const SPI) ATTR_ALWAYS_INLINE ATTR_WARN_UNUSED_RESULT ATTR_NON_NULL_PTR_ARG(1);
 			static inline uint8_t SPI_ReceiveByte(SPI_t* const SPI)
 			{
+				cli();
 				SPI->DATA = 0;
 				while (!(SPI->STATUS & SPI_IF_bm));
+				sei();
 				return SPI->DATA;
 			}
 

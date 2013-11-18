@@ -209,6 +209,7 @@ int init_spi ( void )
 {
 	__PROLOG ( "init_spi\n" );
 
+
 	/* Set POWER_EN pin to output and disable the CC3000 by default */
 	PORTC.OUTCLR = VIO_bm;
 
@@ -223,12 +224,12 @@ int init_spi ( void )
 	SPI_MODE_1_gc
 */
 
-	SPI_Init ( &SPIC,   SPI_PRESCALER_DIV4_gc | 
-						SPI_MODE_1_gc 
+	SPI_Init ( &SPIC,   SPI_PRESCALER_DIV16_gc | 
+						SPI_MODE_0_gc 
 	);
-
-	CC3000_DEASSERT_CS;
-
+	
+	PORTC.OUTSET = VIO_bm;
+	
 	PMIC.CTRL |= PMIC_MEDLVLEN_bm | PMIC_LOLVLEN_bm;
 
 	dump_register("SPIC.INTCTRL",SPIC.INTCTRL);
@@ -244,7 +245,7 @@ int init_spi ( void )
 long SpiFirstWrite ( unsigned char *ucBuf, unsigned short usLength )
 {
 
-	__PROLOG ( "SpiWriteFirst\n" );
+	__PROLOG ( "SpiFirstWrite\n" );
 	/* Workaround for the first transaction */
 	CC3000_ASSERT_CS;
 
@@ -298,15 +299,13 @@ long SpiWrite ( unsigned char *pUserBuffer, unsigned short usLength )
 
 		while ( 1 );
 	}
-
-	__PROLOG("1\n");
+	
 	// if this fails its not getting an IRQ from the CC30000
 	if ( sSpiInformation.ulSpiState == eSPI_STATE_POWERUP ) {
-		__PROLOG("1a\n");
+		
 		while ( sSpiInformation.ulSpiState != eSPI_STATE_INITIALIZED ) 
 			_delay_us(1);
 	}
-	__PROLOG("2\n");
 
 	if ( sSpiInformation.ulSpiState == eSPI_STATE_INITIALIZED ) {
 		/* This is time for first TX/RX transactions over SPI: the IRQ is down - so need to send read buffer size command */
@@ -534,17 +533,19 @@ void SSIContReadOperation ( void )
 
 void SPI_IRQ ( void )
 {
+	circular_buffer_put('s');
+
 	ccspi_is_in_irq = 1;
-
-	__PROLOG ( "x" );
-
+	
 	if ( sSpiInformation.ulSpiState == eSPI_STATE_POWERUP ) {
+		__PROLOG(" powerup\n");
 		/* IRQ line was low ... perform a callback on the HCI Layer */
-			__PROLOG ( "-1-" );
 		sSpiInformation.ulSpiState = eSPI_STATE_INITIALIZED;
 
 	} else if ( sSpiInformation.ulSpiState == eSPI_STATE_IDLE ) {
-		//__PROLOG("IDLE\n");
+	
+		__PROLOG(" IDLE\n");
+	
 		sSpiInformation.ulSpiState = eSPI_STATE_READ_IRQ;
 		/* IRQ line goes down - start reception */
 
@@ -553,13 +554,19 @@ void SPI_IRQ ( void )
 		// Wait for TX/RX Compete which will come as DMA interrupt
 		SpiReadHeader();
 		sSpiInformation.ulSpiState = eSPI_STATE_READ_EOT;
-		//__PROLOG("SSICont\n");
+		__PROLOG(" SSICont\n");
+		
 		SSIContReadOperation();
 
 	} else if ( sSpiInformation.ulSpiState == eSPI_STATE_WRITE_IRQ ) {
+		__PROLOG(" write irq\n");
 		SpiWriteDataSynchronous ( sSpiInformation.pTxPacket, sSpiInformation.usTxPacketLength );
 		sSpiInformation.ulSpiState = eSPI_STATE_IDLE;
 		CC3000_DEASSERT_CS;
+	} else{
+		
+			circular_buffer_put( 'a' + sSpiInformation.ulSpiState);
+		__PROLOG(" something else\n");
 	}
 
 	ccspi_is_in_irq = 0;
@@ -587,7 +594,6 @@ void cc3k_int_poll(void)
 ISR(SPIC_INT_vect)
 {
 	circular_buffer_put('v');
-
-	SPI_IRQ();
 	
+	SPI_IRQ();	
 }

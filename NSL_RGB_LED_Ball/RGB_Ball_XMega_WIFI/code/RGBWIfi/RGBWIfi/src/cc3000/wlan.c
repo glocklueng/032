@@ -289,10 +289,14 @@ wlan_start(unsigned short usPatchesAvailableAtHost)
 
 	circular_buffer_put('+');
 
+	_delay_ms(100);
 	SimpleLink_Init_Start(usPatchesAvailableAtHost);
 	
 	// Read Buffer's size and finish
+	_delay_ms(100);
 	hci_command_send(HCI_CMND_READ_BUFFER_SIZE, tSLInformation.pucTxCommandBuffer, 0);
+	
+	_delay_ms(100);
 	SimpleLinkWaitEvent(HCI_CMND_READ_BUFFER_SIZE, 0);
 }
 

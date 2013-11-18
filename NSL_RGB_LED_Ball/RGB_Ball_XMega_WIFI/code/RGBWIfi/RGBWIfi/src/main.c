@@ -336,10 +336,10 @@ void SendNextReport(void)
 	
 	SendReport = 0;
 	
-	memset(SerialBuffer,0,sizeof( SerialBuffer ));
+	///memset(SerialBuffer,0,sizeof( SerialBuffer ));
 	
 	// ( how big is the buffer it'll send in one msg
-	for( i = 0 ; i  < 9 ; i++ ) {
+	for( i = 0 ; i  < sizeof(SerialBuffer) ;  i++ ) {
 		
 		if( 0 == circular_buffer_get(&SerialBuffer[i]) ) {
 			break;
@@ -356,7 +356,7 @@ void SendNextReport(void)
 	if (Endpoint_IsReadWriteAllowed() && SendReport)
 	{
 		/* Write  Report Data */
-		Endpoint_Write_Stream_LE(&SerialBuffer, sizeof( SerialBuffer ), NULL);
+		Endpoint_Write_Stream_LE(&SerialBuffer, i, NULL);
 
 		/* Finalize the stream transfer to send the last packet */
 		Endpoint_ClearIN();

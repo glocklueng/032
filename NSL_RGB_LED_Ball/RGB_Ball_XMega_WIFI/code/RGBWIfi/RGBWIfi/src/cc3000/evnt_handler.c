@@ -53,7 +53,7 @@
 #include "spi.h"
 
  #include "user_board.h"
-
+ 
 //*****************************************************************************
 //                  COMMON DEFINES
 //*****************************************************************************
@@ -235,11 +235,16 @@ hci_event_handler(void *pRetParams, unsigned char *from, unsigned char *fromlen)
   unsigned char * RecvParams;
   unsigned char *RetParams;
 	
+	_delay_ms(100);
+	
+	__PROLOG("hci_event_handler\n");
 	
 	while (1)
 	{
+			
 		if (tSLInformation.usEventOrDataReceived != 0)
 		{				
+		circular_buffer_put('#');
 			pucReceivedData = (tSLInformation.pucReceivedData);
 
 			if (*pucReceivedData == HCI_TYPE_EVNT)

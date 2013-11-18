@@ -190,7 +190,7 @@ void WlanInterruptDisable(void)
 	ccspi_int_enabled = 0;
 
 	// External interrupt SPI_IRQ from CC3000 on PC2
-	PORTC.PIN0CTRL = PORT_OPC_PULLUP_gc | PORT_ISC_LEVEL_gc;
+	PORTC.PIN0CTRL = PORT_ISC_LEVEL_gc;
 	// PORTC.PIN0CTRL = PORT_OPC_PULLUP_gc | PORT_ISC_FALLING_gc;
 	
 	bit_clr( PORTC.INT0MASK , WLAN_SPI_IRQ_bp );
@@ -228,6 +228,9 @@ int wlan_Setup ( void )
 
 	// SPI_IRQ is input from CC3000
 		
+
+	return 0;
+
 	wlan_init ( CC3000_UsynchCallback,
 	            sendWLFWPatch, sendDriverPatch, sendBootLoaderPatch,
 	            ReadWlanInterruptPin,

@@ -4,7 +4,7 @@
  * Created: 11/12/2013 11:57:16 AM
  *  Author: charlie
  */
-#define BUFSIZE     ( 256 )
+#define BUFSIZE     ( 1024 )
 
 static unsigned char buf[BUFSIZE];
 static unsigned char *pIn, *pOut, *pEnd;
@@ -50,6 +50,8 @@ int  circular_buffer_puts( const unsigned char * str)
 // get a char from circular buffer
 int circular_buffer_get ( unsigned char *pc )
 {
+	//return 0;
+	
 	if ( pIn == pOut  &&  !full )
 	{ return 0; }           // Empty buffer
 
