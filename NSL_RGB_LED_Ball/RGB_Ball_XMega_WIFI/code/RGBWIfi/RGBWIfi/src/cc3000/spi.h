@@ -70,8 +70,8 @@ typedef void (*gcSpiHandleTx)(void);
 #define SPI_IRQ_PIN					GPIO_PIN_7
 #define SPI_EN_PIN					GPIO_PIN_6
 
-#define CC3000_DEASSERT_CS			{PORTC.OUTCLR = WLAN_SS_bm;}
-#define CC3000_ASSERT_CS			{PORTC.OUTSET = WLAN_SS_bm;}
+#define CC3000_DEASSERT_CS			{PORTC.OUTSET = WLAN_SS_bm;}
+#define CC3000_ASSERT_CS			{PORTC.OUTCLR = WLAN_SS_bm;} //active low
 
 extern unsigned char wlan_tx_buffer[];
 

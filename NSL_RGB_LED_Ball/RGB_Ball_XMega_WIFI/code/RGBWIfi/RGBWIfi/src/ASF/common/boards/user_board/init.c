@@ -18,8 +18,10 @@ ISR(PORTC_INT0_vect)
 {
 	static int flag =0;
 	
-	circular_buffer_put('C');
-		SPI_IRQ();
+	//circular_buffer_puts("\nC\n");
+	
+	SPI_IRQ();
+	
 	if ( flag == 0 ){
 		flag = 1;
 		PORT_OUT &= ~ ( 1 << BLANKPIN );
@@ -65,14 +67,16 @@ void board_init(void)
 	
 	
 	// Set Pullup on SPI_IRQ
-	PORTC.PIN6CTRL = WLAN_SPI_IRQ_bm;
+	//PORT_OPC_WIREDANDPULL_gc is totem pole with pull up. Page 141  http://www.atmel.com/Images/Atmel-8331-8-and-16-bit-AVR-Microcontroller-XMEGA-AU_Manual.pdf
+	//
+	PORTC.PIN2CTRL = PORT_OPC_PULLUP_gc;
 
 	//bit_clr ( PORTC.PIN0CTRL, VIO );
 	// off
 	PORTC.OUTCLR = VBAT_SW_EN_bm ;
 	PORTC.OUTCLR = VIO_bm;
 	PORTC.OUTCLR = WLAN_SS_bm;// pin4
-	PORTC.PIN4CTRL = PORT_OPC_WIREDANDPULL_gc;
+	PORTC.PIN4CTRL = PORT_OPC_PULLUP_gc;
 	
 	// Set SS output to high. (No slave addressed).
 	PORTC.OUTSET = WLAN_SS_bm;
@@ -108,15 +112,14 @@ ISR ( TCC0_OVF_vect )
 {
 	static unsigned int counter = 0;
 
-
 	cc3k_int_poll();
-
-	timer();
 
 	counter ++ ;
 
 
-	if ( counter == 1000 )	{
+	if ( counter == 50 )	{
+
+		timer();
 
 		counter = 0;
 
