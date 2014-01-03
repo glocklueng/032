@@ -3345,8 +3345,8 @@ grid 5.08 mm, diameter 9 mm</description>
 <package name="CRYSTAL-TXC-7A">
 <wire x1="-2.6" y1="1.6" x2="2.6" y2="1.6" width="0.127" layer="21"/>
 <wire x1="2.6" y1="-1.6" x2="-2.6" y2="-1.6" width="0.127" layer="21"/>
-<smd name="P$1" x="1.85" y="0" dx="1.7" dy="2.4" layer="1"/>
-<smd name="P$2" x="-1.85" y="0" dx="1.7" dy="2.4" layer="1"/>
+<smd name="P$1" x="2.485" y="0" dx="1.7" dy="2.4" layer="1"/>
+<smd name="P$2" x="-2.485" y="0" dx="1.7" dy="2.4" layer="1"/>
 <text x="-1.016" y="0.254" size="0.4064" layer="25">&gt;NAME</text>
 <text x="-1.016" y="-0.508" size="0.4064" layer="27">&gt;VALUE</text>
 </package>
@@ -15318,7 +15318,7 @@ Parts Updated:
 <attribute name="OC_NEWARK" value="unknown"/>
 <attribute name="PARTNO" value="PMEG4005ET,215"/>
 </part>
-<part name="C9" library="STM32-PROX" deviceset="CAP" device="0805" value="100nF">
+<part name="C9" library="STM32-PROX" deviceset="CAPACITOR" device="RLC_0603" value="100nF">
 <attribute name="DIGIKEY" value="1276-1007-1-ND"/>
 <attribute name="MF" value=""/>
 <attribute name="MPN" value="CL21F104ZBCNNNC"/>
@@ -15326,28 +15326,28 @@ Parts Updated:
 <attribute name="PARTNO" value="CL21F104ZBCNNNC"/>
 </part>
 <part name="GND4" library="STM32-PROX" deviceset="GND" device=""/>
-<part name="C48" library="STM32-PROX" deviceset="CAP" device="0805" value="100nF">
+<part name="C48" library="STM32-PROX" deviceset="CAPACITOR" device="RLC_0603" value="100nF">
 <attribute name="DIGIKEY" value="1276-1007-1-ND"/>
 <attribute name="MF" value=""/>
 <attribute name="MPN" value="CL21F104ZBCNNNC"/>
 <attribute name="OC_NEWARK" value="unknown"/>
 <attribute name="PARTNO" value="CL21F104ZBCNNNC"/>
 </part>
-<part name="C49" library="STM32-PROX" deviceset="CAP" device="0805" value="100nF">
+<part name="C49" library="STM32-PROX" deviceset="CAPACITOR" device="RLC_0603" value="100nF">
 <attribute name="DIGIKEY" value="1276-1007-1-ND"/>
 <attribute name="MF" value=""/>
 <attribute name="MPN" value="CL21F104ZBCNNNC"/>
 <attribute name="OC_NEWARK" value="unknown"/>
 <attribute name="PARTNO" value="CL21F104ZBCNNNC"/>
 </part>
-<part name="C50" library="STM32-PROX" deviceset="CAP" device="0805" value="100nF">
+<part name="C50" library="STM32-PROX" deviceset="CAPACITOR" device="RLC_0603" value="100nF">
 <attribute name="DIGIKEY" value="1276-1007-1-ND"/>
 <attribute name="MF" value=""/>
 <attribute name="MPN" value="CL21F104ZBCNNNC"/>
 <attribute name="OC_NEWARK" value="unknown"/>
 <attribute name="PARTNO" value="CL21F104ZBCNNNC"/>
 </part>
-<part name="C51" library="STM32-PROX" deviceset="CAP" device="0805" value="100nF">
+<part name="C51" library="STM32-PROX" deviceset="CAPACITOR" device="RLC_0603" value="100nF">
 <attribute name="DIGIKEY" value="1276-1007-1-ND"/>
 <attribute name="MF" value=""/>
 <attribute name="MPN" value="CL21F104ZBCNNNC"/>
@@ -15355,7 +15355,7 @@ Parts Updated:
 <attribute name="PARTNO" value="CL21F104ZBCNNNC"/>
 </part>
 <part name="GND5" library="STM32-PROX" deviceset="GND" device=""/>
-<part name="C52" library="STM32-PROX" deviceset="CAP" device="0805" value="100nF">
+<part name="C52" library="STM32-PROX" deviceset="CAPACITOR" device="RLC_0603" value="100nF">
 <attribute name="DIGIKEY" value="1276-1007-1-ND"/>
 <attribute name="MF" value=""/>
 <attribute name="MPN" value="CL21F104ZBCNNNC"/>
@@ -15369,14 +15369,14 @@ Parts Updated:
 <attribute name="OC_NEWARK" value="unknown"/>
 <attribute name="PARTNO" value="NONE"/>
 </part>
-<part name="C53" library="STM32-PROX" deviceset="CAP" device="0805" value="12pF">
+<part name="C53" library="STM32-PROX" deviceset="CAPACITOR" device="RLC_0603" value="12pF">
 <attribute name="DIGIKEY" value="1276-1120-1-ND"/>
 <attribute name="MF" value=""/>
 <attribute name="MPN" value="CL21C120JBANNNC"/>
 <attribute name="OC_NEWARK" value="unknown"/>
 <attribute name="PARTNO" value="CL21C120JBANNNC"/>
 </part>
-<part name="C54" library="STM32-PROX" deviceset="CAP" device="0805" value="12pF">
+<part name="C54" library="STM32-PROX" deviceset="CAPACITOR" device="RLC_0603" value="12pF">
 <attribute name="DIGIKEY" value="1276-1120-1-ND"/>
 <attribute name="MF" value=""/>
 <attribute name="MPN" value="CL21C120JBANNNC"/>
@@ -15432,7 +15432,7 @@ Parts Updated:
 <attribute name="OC_NEWARK" value="unknown"/>
 <attribute name="PARTNO" value="RMCF0603JT390R"/>
 </part>
-<part name="C56" library="STM32-PROX" deviceset="CAP" device="0805" value="100nF">
+<part name="C56" library="STM32-PROX" deviceset="CAPACITOR" device="RLC_0603" value="100nF">
 <attribute name="DIGIKEY" value="1276-1007-1-ND"/>
 <attribute name="MF" value=""/>
 <attribute name="MPN" value="CL21F104ZBCNNNC"/>
@@ -15572,7 +15572,7 @@ Parts Updated:
 <attribute name="OC_NEWARK" value="unknown"/>
 <attribute name="PARTNO" value="RMCF0603JT75K0"/>
 </part>
-<part name="C57" library="STM32-PROX" deviceset="SPARKFUN_CAP" device="0603-CAP" value="100nF">
+<part name="C57" library="STM32-PROX" deviceset="CAPACITOR" device="RLC_0603" value="100nF">
 <attribute name="DIGIKEY" value="1276-1005-1-ND"/>
 <attribute name="MF" value=""/>
 <attribute name="MPN" value="CL10B104KO8NNNC"/>
@@ -16880,14 +16880,12 @@ Parts Updated:
 </net>
 <net name="USBD_P" class="0">
 <segment>
-<wire x1="-15.24" y1="53.34" x2="-20.32" y2="53.34" width="0.1524" layer="91"/>
 <label x="-17.78" y="50.8" size="1.778" layer="95"/>
 <pinref part="SV1" gate="G$1" pin="D+/3"/>
-<pinref part="D6" gate="G$1" pin="P$4"/>
-<wire x1="-20.32" y1="53.34" x2="-30.48" y2="53.34" width="0.1524" layer="91"/>
-<wire x1="-20.32" y1="45.72" x2="-20.32" y2="53.34" width="0.1524" layer="91"/>
-<junction x="-20.32" y="53.34"/>
-<junction x="-15.24" y="53.34"/>
+<wire x1="-15.24" y1="53.34" x2="-30.48" y2="53.34" width="0.1524" layer="91"/>
+<pinref part="D6" gate="G$1" pin="P$3"/>
+<wire x1="-15.24" y1="53.34" x2="-7.62" y2="53.34" width="0.1524" layer="91"/>
+<wire x1="-7.62" y1="53.34" x2="-7.62" y2="45.72" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="USB-MICRO" gate="G$1" pin="D+"/>
@@ -17167,9 +17165,8 @@ Parts Updated:
 <wire x1="-30.48" y1="58.42" x2="-20.32" y2="58.42" width="0.1524" layer="91"/>
 <wire x1="-20.32" y1="58.42" x2="-20.32" y2="73.66" width="0.1524" layer="91"/>
 <junction x="-20.32" y="73.66"/>
-<wire x1="-20.32" y1="58.42" x2="-7.62" y2="58.42" width="0.1524" layer="91"/>
-<pinref part="D6" gate="G$1" pin="P$3"/>
-<wire x1="-7.62" y1="58.42" x2="-7.62" y2="45.72" width="0.1524" layer="91"/>
+<pinref part="D6" gate="G$1" pin="P$4"/>
+<wire x1="-20.32" y1="58.42" x2="-20.32" y2="45.72" width="0.1524" layer="91"/>
 <junction x="-20.32" y="58.42"/>
 </segment>
 </net>
