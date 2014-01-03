@@ -1435,8 +1435,8 @@ Commonly used for small ceramic capacitors. Like our 0.1uF (http://www.sparkfun.
 <package name="CRYSTAL-TXC-7A">
 <wire x1="-2.6" y1="1.6" x2="2.6" y2="1.6" width="0.127" layer="21"/>
 <wire x1="2.6" y1="-1.6" x2="-2.6" y2="-1.6" width="0.127" layer="21"/>
-<smd name="P$1" x="1.85" y="0" dx="1.7" dy="2.4" layer="1"/>
-<smd name="P$2" x="-1.85" y="0" dx="1.7" dy="2.4" layer="1"/>
+<smd name="P$1" x="2.485" y="0" dx="1.7" dy="2.4" layer="1"/>
+<smd name="P$2" x="-2.485" y="0" dx="1.7" dy="2.4" layer="1"/>
 <text x="-1.016" y="0.254" size="0.4064" layer="25">&gt;NAME</text>
 <text x="-1.016" y="-0.508" size="0.4064" layer="27">&gt;VALUE</text>
 </package>
