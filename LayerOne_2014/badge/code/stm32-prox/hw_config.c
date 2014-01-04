@@ -92,6 +92,7 @@ int Set_System(void)
     {
     }
   } else {
+	
 	  GPIO_InitTypeDef GPIO_InitStructure;
 	   
 	  // make sure peripheral is on
@@ -103,9 +104,8 @@ int Set_System(void)
 	  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
 	  
 	  GPIO_Init(LED_PORT, &GPIO_InitStructure);
-
 	  
-	  while(1) {
+	  while( 1 ) {
 
 		GPIO_WriteBit(LED_PORT,LED_PIN  ,Bit_RESET );
 		DelayuS(100000);
@@ -263,15 +263,14 @@ void GPIO_Configuration(void)
   
   RCC_APB2PeriphClockCmd(
 #ifdef RCC_APB2Periph_GPIO_DISCONNECT
-                         RCC_APB2Periph_GPIO_DISCONNECT | 
+					 RCC_APB2Periph_GPIO_DISCONNECT | 
 #endif
-						 RCC_APB2Periph_GPIOA | 
-                         RCC_APB2Periph_GPIOB | 
-                         RCC_APB2Periph_GPIOC | 
-                         RCC_APB2Periph_GPIOD, 
+					 RCC_APB2Periph_GPIOA | 
+					 RCC_APB2Periph_GPIOB | 
+					 RCC_APB2Periph_GPIOC | 
+                     RCC_APB2Periph_GPIOD, 
                 ENABLE);   
-  
- 
+
   // l1 badge doesn't currently have a disconnect feature.. maybe add in rev3?
 #ifdef USB_DISCONNECT
   /* USB_DISCONNECT used as USB pull-up */
@@ -285,8 +284,28 @@ void GPIO_Configuration(void)
   GPIO_InitStructure.GPIO_Pin = ( SW_K1_PIN | SW_K2_PIN | SW_K3_PIN );
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
   GPIO_Init(SW_PORT, &GPIO_InitStructure);
-    
-  /* Configure AMPL_LO IO as analog input -------------------------*/
+
+  /* Configure the FPGA NINIT  IO as Input Floating */
+  GPIO_InitStructure.GPIO_Pin = ( FPGA_NINIT_PIN  );
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
+  GPIO_Init(FPGA_NINIT_PORT, &GPIO_InitStructure);
+ 
+  /* Configure the FPGA  nprogram and nvdd IOs as Output PP */
+  GPIO_InitStructure.GPIO_Pin = ( FPGA_NPROGRAM_PIN | NVDD_ON );
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+  GPIO_Init(FPGAON_PORT, &GPIO_InitStructure);
+
+  // turns off power to FPGA, and leaves it in reset mode
+  GPIO_WriteBit(FPGAON_PORT,( FPGA_NPROGRAM_PIN | NVDD_ON ),Bit_RESET); 
+
+  /* Configure the FPGA DONE  IO as Input Floating */
+  /* FPGA Done wil toggle in after the bistream is loaded */
+  GPIO_InitStructure.GPIO_Pin = ( FPGA_DONE_PIN  );
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
+  GPIO_Init(FPGA_DONE_PORT, &GPIO_InitStructure);
+  
+  /* Configure AMPL_LO and AMPL_HI IO as analog input -------------------------*/
   GPIO_InitStructure.GPIO_Pin = ( AMPL_LO_PIN | AMPL_HI_PIN );
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;
   GPIO_Init(AMPL_PORT, &GPIO_InitStructure);
@@ -309,6 +328,28 @@ void GPIO_Configuration(void)
   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_2MHz;
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
   GPIO_Init(RELAY_PORT, &GPIO_InitStructure);
+  GPIO_WriteBit(RELAY_PORT,RELAY_PIN,Bit_RESET); 
+  
+  // output enables
+  GPIO_InitStructure.GPIO_Pin = OE1_PIN | OE2_PIN |OE3_PIN | OE4_PIN;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_2MHz;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+  GPIO_Init(OE_PORT, &GPIO_InitStructure);
+  GPIO_WriteBit(OE_PORT,(OE1_PIN | OE2_PIN |OE3_PIN | OE4_PIN),Bit_RESET); 
+ 
+  //OLED outputs, !RESET and !CS and D/C ( RS)
+  GPIO_InitStructure.GPIO_Pin = RES_PIN |CS_PIN | DC_PIN;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+  GPIO_Init(OLED_PORT, &GPIO_InitStructure);
+  GPIO_WriteBit(OLED_PORT, RES_PIN|CS_PIN |DC_PIN,Bit_SET); 
+ 
+  //OLED outputs, DB1/ DB0
+  GPIO_InitStructure.GPIO_Pin = SDIN_DB1_PIN | SCLK_DB0_PIN;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+  GPIO_Init(OLED2_PORT, &GPIO_InitStructure);
+  GPIO_WriteBit(OLED2_PORT, ( SDIN_DB1_PIN | SCLK_DB0_PIN ) ,Bit_RESET);  
   
 }
 /*******************************************************************************
@@ -429,7 +470,7 @@ void ADC_Configuration(void)
 * Output         : None.
 * Return         : None.
 *******************************************************************************/
-void Get_SerialNum(void)
+void Get_SerialNum( void )
 {
   u32 Device_Serial0, Device_Serial1, Device_Serial2;
   

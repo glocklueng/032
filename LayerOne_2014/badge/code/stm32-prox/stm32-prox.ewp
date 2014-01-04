@@ -963,7 +963,7 @@
         <option>
           <name>Variant</name>
           <version>20</version>
-          <state>0</state>
+          <state>38</state>
         </option>
         <option>
           <name>GEndianMode</name>
@@ -998,7 +998,7 @@
         </option>
         <option>
           <name>OGCoreOrChip</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>GRuntimeLibSelect</name>
@@ -1020,7 +1020,7 @@
         </option>
         <option>
           <name>OGLastSavedByProductVersion</name>
-          <state>6.30.1.53141</state>
+          <state>6.50.3.4744</state>
         </option>
         <option>
           <name>GeneralEnableMisra</name>
@@ -1032,7 +1032,7 @@
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
-          <state>default	None</state>
+          <state>STM32F103xE	ST STM32F103xE</state>
         </option>
         <option>
           <name>GenLowLevelInterface</name>
@@ -1040,7 +1040,7 @@
         </option>
         <option>
           <name>GEndianModeBE</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OGBufferedTerminalOutput</name>
@@ -1071,12 +1071,12 @@
         <option>
           <name>GFPUCoreSlave</name>
           <version>20</version>
-          <state>0</state>
+          <state>38</state>
         </option>
         <option>
           <name>GBECoreSlave</name>
           <version>20</version>
-          <state>0</state>
+          <state>38</state>
         </option>
         <option>
           <name>OGUseCmsis</name>
@@ -1230,7 +1230,24 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state></state>
+          <state>.\library\inc\</state>
+          <state>..\library\inc\</state>
+          <state>.\stm32\library\inc</state>
+          <state>.\stm32\library\</state>
+          <state>..\stm32\library\</state>
+          <state>..\stm32\</state>
+          <state>..\inc\</state>
+          <state>..\</state>
+          <state>..\..\</state>
+          <state>..\..\..\</state>
+          <state>stm32\</state>
+          <state>inc\</state>
+          <state>..\..\..\inc\</state>
+          <state>..\stm32\library\inc</state>
+          <state>ssd1306\</state>
+          <state>..\ssd1306\</state>
+          <state>..\..\ssd1306\</state>
+          <state>..\..\..\ssd1306\</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1242,7 +1259,7 @@
         </option>
         <option>
           <name>IInterwork2</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IProcessorMode2</name>
@@ -1285,7 +1302,7 @@
         </option>
         <option>
           <name>IccLang</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccCDialect</name>
@@ -1623,7 +1640,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>$TOOLKIT_DIR$\CONFIG\generic.icf</state>
+          <state>$TOOLKIT_DIR$\config\linker\ST\stm32f103xE.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -1683,7 +1700,7 @@
         </option>
         <option>
           <name>IlinkProgramEntryLabel</name>
-          <state></state>
+          <state>__iar_program_start</state>
         </option>
         <option>
           <name>DoFill</name>
@@ -1858,6 +1875,27 @@
     </file>
     <file>
       <name>$PROJ_DIR$\stm32\stm32f10x_vector.c</name>
+    </file>
+  </group>
+  <group>
+    <name>FPGA</name>
+    <file>
+      <name>$PROJ_DIR$\FPGA\fpgaimg.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\FPGA\fpgaloader.c</name>
+    </file>
+  </group>
+  <group>
+    <name>SDCARD</name>
+    <file>
+      <name>$PROJ_DIR$\SDCARD\diskio.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\SDCARD\integer.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\SDCARD\sdcard.c</name>
     </file>
   </group>
   <group>
