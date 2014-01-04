@@ -29,8 +29,8 @@
         </option>
         <option>
           <name>Variant</name>
-          <version>19</version>
-          <state>37</state>
+          <version>20</version>
+          <state>38</state>
         </option>
         <option>
           <name>GEndianMode</name>
@@ -87,7 +87,7 @@
         </option>
         <option>
           <name>OGLastSavedByProductVersion</name>
-          <state>6.30.6.53380</state>
+          <state>6.50.3.4744</state>
         </option>
         <option>
           <name>GeneralEnableMisra</name>
@@ -137,13 +137,13 @@
         </option>
         <option>
           <name>GFPUCoreSlave</name>
-          <version>19</version>
-          <state>37</state>
+          <version>20</version>
+          <state>38</state>
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>19</version>
-          <state>37</state>
+          <version>20</version>
+          <state>38</state>
         </option>
         <option>
           <name>OGUseCmsis</name>
@@ -162,6 +162,10 @@
         <version>28</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
+        <option>
+          <name>CCOptimizationNoSizeConstraints</name>
+          <state>0</state>
+        </option>
         <option>
           <name>CCDefines</name>
           <state></state>
@@ -293,7 +297,24 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state></state>
+          <state>.\library\inc\</state>
+          <state>..\library\inc\</state>
+          <state>.\stm32\library\inc</state>
+          <state>.\stm32\library\</state>
+          <state>..\stm32\library\</state>
+          <state>..\stm32\</state>
+          <state>..\inc\</state>
+          <state>..\</state>
+          <state>..\..\</state>
+          <state>..\..\..\</state>
+          <state>stm32\</state>
+          <state>inc\</state>
+          <state>..\..\..\inc\</state>
+          <state>..\stm32\library\inc</state>
+          <state>ssd1306\</state>
+          <state>..\ssd1306\</state>
+          <state>..\..\ssd1306\</state>
+          <state>..\..\..\ssd1306\</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -305,7 +326,7 @@
         </option>
         <option>
           <name>IInterwork2</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IProcessorMode2</name>
@@ -348,7 +369,7 @@
         </option>
         <option>
           <name>IccLang</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccCDialect</name>
@@ -605,7 +626,7 @@
       <name>ILINK</name>
       <archiveVersion>0</archiveVersion>
       <data>
-        <version>14</version>
+        <version>15</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -686,7 +707,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>$TOOLKIT_DIR$\CONFIG\generic.icf</state>
+          <state>$TOOLKIT_DIR$\config\linker\ST\stm32f103xE.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -746,7 +767,7 @@
         </option>
         <option>
           <name>IlinkProgramEntryLabel</name>
-          <state></state>
+          <state>__iar_program_start</state>
         </option>
         <option>
           <name>DoFill</name>
@@ -771,10 +792,6 @@
         </option>
         <option>
           <name>CrcAlign</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>CrcAlgo</name>
           <state>1</state>
         </option>
         <option>
@@ -879,6 +896,16 @@
           <name>IlinkStackCallGraphFile</name>
           <state></state>
         </option>
+        <option>
+          <name>CrcAlgorithm</name>
+          <version>0</version>
+          <state>1</state>
+        </option>
+        <option>
+          <name>CrcUnitSize</name>
+          <version>0</version>
+          <state>0</state>
+        </option>
       </data>
     </settings>
     <settings>
@@ -935,7 +962,7 @@
         </option>
         <option>
           <name>Variant</name>
-          <version>19</version>
+          <version>20</version>
           <state>0</state>
         </option>
         <option>
@@ -1043,12 +1070,12 @@
         </option>
         <option>
           <name>GFPUCoreSlave</name>
-          <version>19</version>
+          <version>20</version>
           <state>0</state>
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>19</version>
+          <version>20</version>
           <state>0</state>
         </option>
         <option>
@@ -1068,6 +1095,10 @@
         <version>28</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
+        <option>
+          <name>CCOptimizationNoSizeConstraints</name>
+          <state>0</state>
+        </option>
         <option>
           <name>CCDefines</name>
           <state>NDEBUG</state>
@@ -1511,7 +1542,7 @@
       <name>ILINK</name>
       <archiveVersion>0</archiveVersion>
       <data>
-        <version>14</version>
+        <version>15</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1680,10 +1711,6 @@
           <state>1</state>
         </option>
         <option>
-          <name>CrcAlgo</name>
-          <state>1</state>
-        </option>
-        <option>
           <name>CrcPoly</name>
           <state>0x11021</state>
         </option>
@@ -1785,6 +1812,16 @@
           <name>IlinkStackCallGraphFile</name>
           <state></state>
         </option>
+        <option>
+          <name>CrcAlgorithm</name>
+          <version>0</version>
+          <state>1</state>
+        </option>
+        <option>
+          <name>CrcUnitSize</name>
+          <version>0</version>
+          <state>0</state>
+        </option>
       </data>
     </settings>
     <settings>
@@ -1814,8 +1851,290 @@
       <data/>
     </settings>
   </configuration>
+  <group>
+    <name>EWARM</name>
+    <file>
+      <name>$PROJ_DIR$\stm32\cortexm3_macro.s</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\stm32\stm32f10x_vector.c</name>
+    </file>
+  </group>
+  <group>
+    <name>SSD1306</name>
+    <file>
+      <name>$PROJ_DIR$\ssd1306\ssd1306.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\ssd1306\ssd1306.h</name>
+    </file>
+  </group>
+  <group>
+    <name>stm32</name>
+    <group>
+      <name>inc</name>
+      <file>
+        <name>$PROJ_DIR$\inc\hw_config.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\l1_board.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\usb_conf.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\usb_desc.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\usb_istr.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\usb_prop.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\usb_pwr.h</name>
+      </file>
+    </group>
+    <group>
+      <name>library</name>
+      <group>
+        <name>inc</name>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\inc\cortexm3_macro.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\inc\stm32f10x_adc.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\inc\stm32f10x_bkp.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\inc\stm32f10x_can.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\inc\stm32f10x_crc.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\inc\stm32f10x_dac.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\inc\stm32f10x_dbgmcu.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\inc\stm32f10x_dma.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\inc\stm32f10x_exti.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\inc\stm32f10x_flash.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\inc\stm32f10x_fsmc.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\inc\stm32f10x_gpio.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\inc\stm32f10x_i2c.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\inc\stm32f10x_iwdg.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\inc\stm32f10x_lib.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\inc\stm32f10x_map.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\inc\stm32f10x_nvic.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\inc\stm32f10x_pwr.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\inc\stm32f10x_rcc.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\inc\stm32f10x_rtc.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\inc\stm32f10x_sdio.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\inc\stm32f10x_spi.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\inc\stm32f10x_systick.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\inc\stm32f10x_tim.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\inc\stm32f10x_type.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\inc\stm32f10x_usart.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\inc\stm32f10x_wwdg.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\inc\usb_core.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\inc\usb_def.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\inc\usb_init.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\inc\usb_int.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\inc\usb_lib.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\inc\usb_mem.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\inc\usb_regs.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\inc\usb_type.h</name>
+        </file>
+      </group>
+      <group>
+        <name>src</name>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\src\stm32f10x_adc.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\src\stm32f10x_bkp.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\src\stm32f10x_can.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\src\stm32f10x_crc.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\src\stm32f10x_dac.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\src\stm32f10x_dbgmcu.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\src\stm32f10x_dma.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\src\stm32f10x_exti.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\src\stm32f10x_flash.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\src\stm32f10x_fsmc.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\src\stm32f10x_gpio.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\src\stm32f10x_i2c.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\src\stm32f10x_iwdg.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\src\stm32f10x_lib.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\src\stm32f10x_nvic.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\src\stm32f10x_pwr.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\src\stm32f10x_rcc.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\src\stm32f10x_rtc.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\src\stm32f10x_sdio.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\src\stm32f10x_spi.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\src\stm32f10x_systick.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\src\stm32f10x_tim.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\src\stm32f10x_usart.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\src\stm32f10x_wwdg.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\src\usb_core.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\src\usb_init.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\src\usb_int.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\src\usb_mem.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\stm32\library\src\usb_regs.c</name>
+        </file>
+      </group>
+    </group>
+    <group>
+      <name>usb</name>
+      <file>
+        <name>$PROJ_DIR$\usb\usb_desc.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\usb\usb_endp.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\usb\usb_istr.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\usb\usb_prop.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\usb\usb_pwr.c</name>
+      </file>
+    </group>
+    <file>
+      <name>$PROJ_DIR$\hw_config.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\stm32\stm32f10x_conf.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\stm32\stm32f10x_it.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\stm32\stm32f10x_it.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\stm32\stm32f10x_lib.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\stm32\library\src\usb.c</name>
+    </file>
+  </group>
   <file>
-    <name>$PROJ_DIR$\main.cpp</name>
+    <name>$PROJ_DIR$\main.c</name>
   </file>
 </project>
 
