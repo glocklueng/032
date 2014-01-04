@@ -24,8 +24,15 @@
 #include "ssd1306.h"
 
 /* Exported types ------------------------------------------------------------*/
+
+typedef  unsigned short uint16_t;
+typedef  unsigned char uint8_t;
+
 /* Exported constants --------------------------------------------------------*/
 /* Exported macro ------------------------------------------------------------*/
+
+#define _BV(bit) (1 << (bit)) 
+
 /* Exported define -----------------------------------------------------------*/
 /* Exported functions ------------------------------------------------------- */
 int Set_System(void);
@@ -39,6 +46,16 @@ void EXTI_Configuration(void);
 void ADC_Configuration(void);
 void Get_SerialNum(void);
 void SetSpeaker(unsigned int delay);
+void DelayuS(vu32 nCount);	 			// 1uS Delay
+void DelaymS(vu32 nTime);				// 1mS Delay
+void GLCD_LcdInit(void);
+void OLEDDraw(void);
+void OLEDSetPixel(unsigned char x, unsigned char y, unsigned char color);
+void OLEDClear( void );
+void OLEDBigchar (unsigned char u8Char);
+void OLEDPutchar(char u8Char);
+void OLEDPutstr (const char *ptr);
+void LEDSet(unsigned char state);
 
 #endif  /*__HW_CONFIG_H*/
 

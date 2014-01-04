@@ -30,8 +30,6 @@
 int  RCC_Configuration(void);
 void NVIC_Configuration(void);
 void LEDsSet (unsigned int State);
-void DelayuS(vu32 nCount);	 			// 1uS Delay
-void DelaymS(vu32 nTime);				// 1mS Delay
 void TimingDelay_Decrement(void);
 
 // Data
@@ -74,11 +72,9 @@ void LEDSet (unsigned char State)
 
 void SetSpeaker(unsigned int delay)
 {
-  GPIO_WriteBit(LED_PORT,LED_PIN  ,Bit_SET);
   GPIO_WriteBit(SPEAKER_PORT,SPEAKER_PIN,Bit_SET); 
   DelayuS(delay );	
- GPIO_WriteBit(SPEAKER_PORT,SPEAKER_PIN,Bit_RESET);  
-  GPIO_WriteBit(LED_PORT,LED_PIN  ,Bit_RESET);
+  GPIO_WriteBit(SPEAKER_PORT,SPEAKER_PIN,Bit_RESET);  
 }
 
 /*******************************************************************************
@@ -161,7 +157,8 @@ void InitBoard( void )
 	Set_USBClock();
 	USB_Init();
 
-#if 1
+	//using a soft spi for now
+#if 0
 	// Configure SPI
 	SPI_InitStructure.SPI_Direction = SPI_Direction_2Lines_FullDuplex; 
 	SPI_InitStructure.SPI_Mode = SPI_Mode_Master; 
@@ -178,10 +175,10 @@ void InitBoard( void )
 }
 
 // starts here
-int main()
+int main(void)
 {
 #ifdef DEBUG
-  debug();
+	debug();
 #endif
 
   /* System Clocks Configuration **********************************************/
@@ -190,15 +187,16 @@ int main()
 	return -1;
   }
   
-  LEDSet(1);
+  LEDSet( 1 );
   
   /* NVIC Configuration *******************************************************/
   NVIC_Configuration();
 
+  /* note DelaymS uses this */
+
   /* SysTick end of count event each 1ms with input clock equal to 9MHz (HCLK/8, default) */
   SysTick_SetReload(9000);
 
-  
  /* Enable SysTick interrupt */
   SysTick_ITConfig(ENABLE);
 

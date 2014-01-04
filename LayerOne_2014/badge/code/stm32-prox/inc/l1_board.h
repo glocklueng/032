@@ -28,16 +28,22 @@
 
 // FPGA_NINIT
 #define FPGA_NINIT_PORT                 GPIOC
-#define FPGA_NINIT_PIN                  GPIO_Pin_7
+#define FPGA_NINIT_PIN                  GPIO_Pin_7								// input
 
 #define FPGAON_PORT                    GPIOB
 
 #define FPGAON_PIN                     GPIO_Pin_11
-#define FPGA_DOUT                      GPIO_Pin_10
-#define FPGA_DIN                       GPIO_Pin_10
-#define FPGA_CCLK                      GPIO_Pin_10
-#define FPGA_NPROGRAM                  GPIO_Pin_10
-#define FPGA_DONE                      GPIO_Pin_0
+#define NVDD_ON_PIN                    GPIO_Pin_10
+
+#define FPGA_DONE_PORT                 GPIOB
+#define FPGA_DONE_PIN                  GPIO_Pin_0
+
+
+#define FPGA_DOUT_PORT                 GPIOA
+#define FPGA_DOUT_PIN                  GPIO_Pin_10
+#define FPGA_DIN_PIN                   GPIO_Pin_9
+#define FPGA_CCLK_PIN                  GPIO_Pin_8
+#define FPGA_NPROGRAM_PIN              GPIO_Pin_7
 
 #define MISO_PORT                      GPIOC
 #define MISO_PIN                       GPIO_Pin_15
@@ -78,9 +84,12 @@
 #define NVDDON_PIN                     GPIO_Pin_10
 
 // OLED
+#define OLED_PORT                	    GPIOB
 #define CS_PIN                         GPIO_Pin_9               // inverted
 #define RES_PIN                        GPIO_Pin_8               // inverted
 #define DC_PIN                         GPIO_Pin_7
+
+#define OLED2_PORT                	   GPIOA
 #define SDIN_DB1_PIN                   GPIO_Pin_6
 #define SCLK_DB0_PIN                   GPIO_Pin_5
 
