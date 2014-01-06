@@ -162,13 +162,23 @@ void InitBoard( void )
 
 void FpgaDownloadAndGo(void );
 
-#define DEF_SPEED   0
-// 100==0 1.3923
-//10 = 12.7
-// 1 = 70khz
-// 0 = 140khz
+
+// ARM Pins that can generate a 24Mhz signal via TIMx (HW Rev2)
+//----------------------------------------------------------
+// TIM1_CH1 pin  (PA8)  - FPGA_CCLK - cant be moved, programming pins only
+// TIM1_CH1N pin (PB13) - MUX not connected to FPGA
+
+// TIM1_CH2 pin  (PA9)  - FPGA_DIN cant be moved, programming pins only
+// TIM1_CH2N pin (PB14) - MUX not connected to FPGA
+
+// TIM1_CH3 pin  (PA10) - FPGA_DOUT cant be moved (not used) can be reassigned!
+// TIM1_CH3N pin (PB15) - MUX not connected to FPGA
+
+// TIM1_CH4 pin  (PA11) - USB cant use
+
 
 // PCK0 needs to run at 24Mhz, main clock is 72MHz, so div 3
+// Moved to DOUT PA10, FPGA matches now too.
 void SetupPCK0Clock(void)
 {
   uint16_t Period;
@@ -181,7 +191,7 @@ void SetupPCK0Clock(void)
   
   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_9;
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10;
   GPIO_Init(GPIOA, &GPIO_InitStructure);
   
   // Map TIM1 OC2/OC3
@@ -207,7 +217,9 @@ void SetupPCK0Clock(void)
   TIM_OCInitStructure.TIM_Pulse = Period/2;
   TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
   
-  TIM_OC2Init(TIM1,&TIM_OCInitStructure);
+  // TI CH3 Init
+  TIM_OC3Init(TIM1,&TIM_OCInitStructure);
+  
   TIM_CtrlPWMOutputs(TIM1,ENABLE);
   
   // TIM1 counter enable
@@ -258,7 +270,6 @@ int main(void)
 
   LEDSet(0);
   
-  // SetupPCK0Clock();
   
   OLEDClear();
   OLEDPutstr("FPGA INIT\n");
@@ -281,6 +292,9 @@ int main(void)
 #endif
   
   FpgaDownloadAndGo();
+
+  
+  SetupPCK0Clock();
   
   OLEDClear();
   OLEDPutstr("SYSTEM INIT\n");
