@@ -82,11 +82,12 @@
 #define NVDD_ON_PIN                    GPIO_Pin_10								//output
 
 // OLED
-#define OLED_PORT                	    GPIOB
-#define CS_PIN                         GPIO_Pin_9               				// inverted output
-#define RES_PIN                        GPIO_Pin_8               				// inverted output
+#define OLED_PORT                	GPIOB
+#define CS_PIN                         GPIO_Pin_9               						// inverted output
+#define RES_PIN                        GPIO_Pin_8               						// inverted output
 #define DC_PIN                         GPIO_Pin_7								// output
 
+// Synchronous Serial Port FPGA<>ARM
 #define SSP_PORT						GPIOB
 #define SSP_DIN_PIN                    GPIO_Pin_6								// input(OUTPUT)	
 #define SSP_DOUT_PIN                   GPIO_Pin_5								// output

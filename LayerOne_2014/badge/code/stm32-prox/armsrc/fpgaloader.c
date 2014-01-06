@@ -339,14 +339,82 @@ void FpgaWriteConfWord(BYTE v)
 #include "util.h"
 #include "string.h"
 
+
 #define	FPGA_SCLK_HIGH() 		HIGH(GPIO_FPGA_CCLK)
-
 #define	FPGA_SCLK_LOW() 	        LOW(GPIO_FPGA_CCLK)
-
 #define	FPGA_SDIN_HIGH() 		HIGH(GPIO_FPGA_DIN)
-
 #define	FPGA_SDIN_LOW()			LOW(GPIO_FPGA_DIN)
 	
+
+// Temporarily putting my SPI routines in here til they work.
+
+//Define all SPI Pins
+#define SPI_OUT_PORT            	GPIOB
+#define SPI_OUT_PIN			GPIO_Pin_5	
+#define SPI_IN_PORT      		GPIOB
+#define SPI_IN_PIN			GPIO_Pin_6
+#define SPI_CLK_PORT			GPIOB
+#define SPI_CLK_PIN			GPIO_Pin_2
+#define SPI_CS_PORT			GPIOB
+#define SPI_CS_PIN			GPIO_Pin_1
+
+extern void __no_operation(void);
+
+/**
+ * softspi_rxtx(data) - send and receive a byte on a software SPI
+ *
+ * @param data - 8 bits to send
+ *
+ * @return 8 bits read back
+*/
+unsigned char softspi_rxtx(unsigned char data) 
+{
+  unsigned char ret;
+  unsigned char bitmask;
+  
+  LOW( SPI_CLK  );
+  
+  LOW( SPI_CS ) ;
+  
+  // delay
+  __no_operation();
+  
+  bitmask = 0x80;                			
+  ret = 0;                    			
+  
+  do  {
+    
+    LOW( SPI_OUT ); 
+    
+    if (data & bitmask) {
+      HIGH(SPI_OUT );
+    }
+    
+    HIGH( SPI_CLK );     
+    
+    if (GETBIT(SPI_IN)) {
+      ret |= bitmask;   
+    }
+  
+    // delay
+    __no_operation();                    
+    
+    LOW( SPI_CLK  );                
+    bitmask = bitmask >> 1;          
+  
+    __no_operation();                   
+  } while ( bitmask != 0);
+  
+  
+  // delay
+  __no_operation();
+  __no_operation();
+  
+  HIGH(SPI_CS);
+  
+  return ret;
+}
+
 static void FPGASpiInit(void)
 {
         FPGA_SDIN_HIGH() ;       
@@ -384,7 +452,7 @@ static void FPGASpiSendWord(unsigned short cmdword)
   
   FPGA_SCLK_HIGH( );
   
-  for(i = 0 ; i < 16 ; i++) {
+  for(i = 0 ; i <  16 ; i++) {
 	 
 	if( tbyte & 0x80 ) {            
 	  FPGA_SDIN_HIGH() ;                       
