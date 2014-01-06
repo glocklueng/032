@@ -339,17 +339,13 @@ void FpgaWriteConfWord(BYTE v)
 #include "util.h"
 #include "string.h"
 
-#define	FPGA_SCLK_HIGH() 		HIGH(LED) 
-	//GPIO_WriteBit(OLED2_PORT,SCLK_DB0_PIN,Bit_SET)
+#define	FPGA_SCLK_HIGH() 		HIGH(GPIO_FPGA_CCLK)
 
-#define	FPGA_SCLK_LOW() 		LOW(LED)
-	//GPIO_WriteBit(OLED2_PORT,SCLK_DB0_PIN,Bit_RESET)
+#define	FPGA_SCLK_LOW() 	        LOW(GPIO_FPGA_CCLK)
 
-#define	FPGA_SDIN_HIGH() 		HIGH(LED)
-	//GPIO_WriteBit(OLED2_PORT,SCLK_DB0_PIN,Bit_SET)
+#define	FPGA_SDIN_HIGH() 		HIGH(GPIO_FPGA_DIN)
 
-#define	FPGA_SDIN_LOW()			LOW(LED)
-	//GPIO_WriteBit(OLED2_PORT,SCLK_DB0_PIN,Bit_RESET)
+#define	FPGA_SDIN_LOW()			LOW(GPIO_FPGA_DIN)
 	
 static void FPGASpiInit(void)
 {
