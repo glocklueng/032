@@ -15,6 +15,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f10x_lib.h"
+#include "proxmark3.h"
 #include "usb_lib.h"
 #include "usb_conf.h"
 #include "usb_pwr.h"

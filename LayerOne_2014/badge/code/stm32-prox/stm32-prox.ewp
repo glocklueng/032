@@ -315,6 +315,10 @@
           <state>..\ssd1306\</state>
           <state>..\..\ssd1306\</state>
           <state>..\..\..\ssd1306\</state>
+          <state>armsrc</state>
+          <state>..\armsrc\</state>
+          <state>..\..\armsrc\</state>
+          <state>,,\,,\,,\armsrc</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1166,7 +1170,7 @@
         </option>
         <option>
           <name>CCDebugInfo</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IEndianMode</name>
@@ -1248,6 +1252,10 @@
           <state>..\ssd1306\</state>
           <state>..\..\ssd1306\</state>
           <state>..\..\..\ssd1306\</state>
+          <state>armsrc</state>
+          <state>..\armsrc\</state>
+          <state>..\..\armsrc\</state>
+          <state>,,\,,\,,\armsrc</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1869,6 +1877,9 @@
     </settings>
   </configuration>
   <group>
+    <name>armsrc</name>
+  </group>
+  <group>
     <name>EWARM</name>
     <file>
       <name>$PROJ_DIR$\stm32\cortexm3_macro.s</name>
@@ -1879,6 +1890,9 @@
   </group>
   <group>
     <name>FPGA</name>
+    <file>
+      <name>$PROJ_DIR$\inc\fpga.h</name>
+    </file>
     <file>
       <name>$PROJ_DIR$\FPGA\fpgaimg.c</name>
     </file>
@@ -1901,6 +1915,9 @@
   <group>
     <name>SSD1306</name>
     <file>
+      <name>$PROJ_DIR$\ssd1306\logos.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$\ssd1306\ssd1306.c</name>
     </file>
     <file>
@@ -1912,10 +1929,34 @@
     <group>
       <name>inc</name>
       <file>
+        <name>$PROJ_DIR$\inc\common.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\crc.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\hitag2.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$\inc\hw_config.h</name>
       </file>
       <file>
+        <name>$PROJ_DIR$\inc\integer.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$\inc\l1_board.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\legic_prng.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\mifare.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\proxmark3.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\usb_cmd.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$\inc\usb_conf.h</name>
