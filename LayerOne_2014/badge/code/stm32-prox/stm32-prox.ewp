@@ -1878,6 +1878,15 @@
   </configuration>
   <group>
     <name>armsrc</name>
+    <group>
+      <name>inc</name>
+      <file>
+        <name>$PROJ_DIR$\inc\fpga.h</name>
+      </file>
+    </group>
+    <file>
+      <name>$PROJ_DIR$\armsrc\fpgaloader.c</name>
+    </file>
   </group>
   <group>
     <name>EWARM</name>
@@ -1886,18 +1895,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$\stm32\stm32f10x_vector.c</name>
-    </file>
-  </group>
-  <group>
-    <name>FPGA</name>
-    <file>
-      <name>$PROJ_DIR$\inc\fpga.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\FPGA\fpgaimg.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\FPGA\fpgaloader.c</name>
     </file>
   </group>
   <group>
