@@ -15,6 +15,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f10x_lib.h"
+
 #include "l1_board.h"
 #include "hw_config.h"
 #include "usb_lib.h"
@@ -29,6 +30,8 @@
 ErrorStatus HSEStartUpStatus;
 u32 ADC_ConvertedValueX = 0;
 u32 ADC_ConvertedValueX_1 = 0;
+uint32_t SystemCoreClock = SYSCLK_FREQ_72MHz ;
+
 /* Extern variables ----------------------------------------------------------*/
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
@@ -44,12 +47,12 @@ extern void DelayuS(vu32 nCount);
 * Return         : None.
 *******************************************************************************/
 int Set_System(void)
-{
+{   
   /* SYSCLK, HCLK, PCLK2 and PCLK1 configuration -----------------------------*/   
      
   /* RCC system reset(for debug purpose) */
   RCC_DeInit();
-
+	
   /* Enable HSE */
   RCC_HSEConfig(RCC_HSE_ON);
 
@@ -74,6 +77,7 @@ int Set_System(void)
     RCC_PCLK1Config(RCC_HCLK_Div2);
 
     /* On STICE the PLL output clock is fixed to 72 MHz */
+	/*  PLL configuration: PLLCLK = HSI/1 * 9 = 72 MHz */
     RCC_PLLConfig(RCC_PLLSource_HSE_Div1, RCC_PLLMul_9);
 
     /* Enable PLL */ 
@@ -119,7 +123,8 @@ int Set_System(void)
 	   
 	  return 0 ;
   }
-  
+
+	
   /* Configure the used GPIOs*/
   GPIO_Configuration();
   
@@ -203,7 +208,7 @@ void USB_Interrupts_Config(void)
   NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
   NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
   NVIC_Init(&NVIC_InitStructure);
-  
+#if 0
   /* Enable the EXTI0 Interrupt(KEY) */
   NVIC_InitStructure.NVIC_IRQChannel = EXTI0_IRQChannel;
   NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
@@ -211,7 +216,6 @@ void USB_Interrupts_Config(void)
   NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
   NVIC_Init(&NVIC_InitStructure);
   
-    
   /* Enable the EXTI15_10 Interrupt(TAMP) */
   NVIC_InitStructure.NVIC_IRQChannel = EXTI15_10_IRQChannel;
   NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
@@ -225,6 +229,7 @@ void USB_Interrupts_Config(void)
   NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
   NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
   NVIC_Init(&NVIC_InitStructure);
+#endif
 }
 
 /*******************************************************************************
@@ -237,18 +242,26 @@ void USB_Interrupts_Config(void)
 void USB_Cable_Config (FunctionalState NewState)
 { 
 
-#ifdef USB_DISCONNECT
+#ifdef USB_DISCONNECT_PORT
   if (NewState != DISABLE)
   {
-    GPIO_ResetBits(USB_DISCONNECT, USB_DISCONNECT_PIN);
+    GPIO_SetBits(USB_DISCONNECT_PORT, USB_DISCONNECT_PIN);
   }
   else
   {
-    GPIO_SetBits(USB_DISCONNECT, USB_DISCONNECT_PIN);
+    GPIO_ResetBits(USB_DISCONNECT_PORT, USB_DISCONNECT_PIN);
   }
 #endif
   
 }
+
+/*
+	GPIO_Mode_AIN           ;Analog in
+	GPIO_Mode_IN_FLOATING   ;input floating (save more power compare to IPD or IPU - use if appropriate)
+	GPIO_Mode_IPD           ;input pulled down
+	GPIO_Mode_IPU           ;input pulled up
+
+*/
 
 /*******************************************************************************
 * Function Name  : GPIO_Configuration
@@ -271,33 +284,354 @@ void GPIO_Configuration(void)
                      RCC_APB2Periph_GPIOD, 
                 ENABLE);   
 
-  // l1 badge doesn't currently have a disconnect feature.. maybe add in rev3?
-#ifdef USB_DISCONNECT
-  /* USB_DISCONNECT used as USB pull-up */
-  GPIO_InitStructure.GPIO_Pin = USB_DISCONNECT_PIN;
-  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_OD;
-  GPIO_Init(USB_DISCONNECT, &GPIO_InitStructure); 
+
+    
+  // Disable JTRST , i want to use it for a USB D+ Pull Up (didn't work!)
+  GPIO_PinRemapConfig(GPIO_Remap_SWJ_NoJTRST, ENABLE);
+  
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+  GPIO_Init(GPIOB, &GPIO_InitStructure);
+  GPIO_WriteBit(GPIOB, GPIO_Pin_4  , Bit_RESET);
+ 
+	/* Setup INPUTs */
+  
+#ifdef GPIOA_INPUT_FLOAT_MASK
+  /* Configure GPIOA Inputs Floating */
+  GPIO_InitStructure.GPIO_Pin = GPIOA_INPUT_FLOAT_MASK;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
+  GPIO_Init(GPIOA, &GPIO_InitStructure);
+#endif
+ 
+#ifdef GPIOB_INPUT_FLOAT_MASK
+  /* Configure GPIOB Inputs Floating */
+  GPIO_InitStructure.GPIO_Pin = GPIOB_INPUT_FLOAT_MASK;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
+  GPIO_Init(GPIOB, &GPIO_InitStructure);
 #endif
   
-  /* Configure the Switches IO as Input Floating */
-  GPIO_InitStructure.GPIO_Pin = ( SW_K1_PIN | SW_K2_PIN | SW_K3_PIN );
+#ifdef GPIOC_INPUT_FLOAT_MASK
+  /* Configure GPIOC Inputs Floating */
+  GPIO_InitStructure.GPIO_Pin = GPIOC_INPUT_FLOAT_MASK;
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
-  GPIO_Init(SW_PORT, &GPIO_InitStructure);
+  GPIO_Init(GPIOC, &GPIO_InitStructure);
+#endif
 
+#ifdef GPIOD_INPUT_FLOAT_MASK
+  /* Configure GPIOD Inputs Floating */
+  GPIO_InitStructure.GPIO_Pin = GPIOD_INPUT_FLOAT_MASK;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
+  GPIO_Init(GPIOD, &GPIO_InitStructure);
+#endif
+  
+  
+  /* Inputs that are pull downs */
+  
+#ifdef GPIOA_INPUT_PULLDOWN_MASK
+  /* Configure GPIOA Inputs pulled down */
+  GPIO_InitStructure.GPIO_Pin = GPIOA_INPUT_PULLDOWN_MASK;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD;
+  GPIO_Init(GPIOA, &GPIO_InitStructure);
+#endif
+ 
+#ifdef GPIOB_INPUT_PULLDOWN_MASK
+  /* Configure GPIOB Inputs pulled down */
+  GPIO_InitStructure.GPIO_Pin = GPIOB_INPUT_PULLDOWN_MASK;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD;
+  GPIO_Init(GPIOB, &GPIO_InitStructure);
+#endif
+ 
+#ifdef GPIOC_INPUT_PULLDOWN_MASK
+  /* Configure GPIOC Inputs pulled down */
+  GPIO_InitStructure.GPIO_Pin = GPIOC_INPUT_PULLDOWN_MASK;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD;
+  GPIO_Init(GPIOC, &GPIO_InitStructure);
+#endif
+ 
+#ifdef GPIOD_INPUT_PULLDOWN_MASK
+  /* Configure GPIOD Inputs pulled down */
+  GPIO_InitStructure.GPIO_Pin = GPIOD_INPUT_PULLDOWN_MASK;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD;
+  GPIO_Init(GPIOD, &GPIO_InitStructure);
+#endif
+  
+   /* Inputs that are pull ups */
+  
+#ifdef GPIOA_INPUT_PULLUP_MASK
+  /* Configure GPIOA Inputs pulled UP */
+  GPIO_InitStructure.GPIO_Pin = GPIOA_INPUT_PULLUP_MASK;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
+  GPIO_Init(GPIOA, &GPIO_InitStructure);
+#endif
+ 
+#ifdef GPIOB_INPUT_PULLUP_MASK
+  /* Configure GPIOB Inputs pulled UP */
+  GPIO_InitStructure.GPIO_Pin = GPIOB_INPUT_PULLUP_MASK;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
+  GPIO_Init(GPIOB, &GPIO_InitStructure);
+#endif
+ 
+#ifdef GPIOC_INPUT_PULLUP_MASK
+  /* Configure GPIOC Inputs pulled UP */
+  GPIO_InitStructure.GPIO_Pin = GPIOC_INPUT_PULLUP_MASK;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
+  GPIO_Init(GPIOC, &GPIO_InitStructure);
+#endif
+ 
+#ifdef GPIOD_INPUT_PULLUP_MASK
+  /* Configure GPIOD Inputs pulled UP */
+  GPIO_InitStructure.GPIO_Pin = GPIOD_INPUT_PULLUP_MASK;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
+  GPIO_Init(GPIOD, &GPIO_InitStructure);
+#endif
+ 
+	
+  /* End INPUTs */
+
+	/* 50Mhz Outputs */
+  
+#ifdef GPIOA_OUTPUTS_50MHZ_PP_MASK
+  /* Configure GPIOA Outputs (pp) 50Mhz*/
+  GPIO_InitStructure.GPIO_Pin = GPIOA_OUTPUTS_50MHZ_PP_MASK;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+  GPIO_Init(GPIOA, &GPIO_InitStructure);
+#endif
+  
+#ifdef GPIOB_OUTPUTS_50MHZ_PP_MASK
+  /* Configure GPIOB Outputs (pp) */
+  GPIO_InitStructure.GPIO_Pin = GPIOB_OUTPUTS_50MHZ_PP_MASK;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+  GPIO_Init(GPIOB, &GPIO_InitStructure);
+#endif  
+
+#ifdef GPIOC_OUTPUTS_50MHZ_PP_MASK
+  /* Configure GPIOC Outputs (pp) */
+  GPIO_InitStructure.GPIO_Pin = GPIOC_OUTPUTS_50MHZ_PP_MASK;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+  GPIO_Init(GPIOC, &GPIO_InitStructure);
+#endif
+  
+#ifdef GPIOD_OUTPUTS_50MHZ_PP_MASK
+  /* Configure GPIOD Outputs (pp) 50MHZ*/
+  GPIO_InitStructure.GPIO_Pin = GPIOD_OUTPUTS_50MHZ_PP_MASK;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+  GPIO_Init(GPIOD, &GPIO_InitStructure);
+#endif
+
+  
+#ifdef GPIOA_OUTPUTS_50MHZ_OD_MASK
+  /* Configure GPIOA Outputs (OD) 50Mhz*/
+  GPIO_InitStructure.GPIO_Pin = GPIOA_OUTPUTS_50MHZ_OD_MASK;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_OD;
+  GPIO_Init(GPIOA, &GPIO_InitStructure);
+#endif
+  
+#ifdef GPIOB_OUTPUTS_50MHZ_OD_MASK
+  /* Configure GPIOB Outputs (OD) */
+  GPIO_InitStructure.GPIO_Pin = GPIOB_OUTPUTS_50MHZ_OD_MASK;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_OD;
+  GPIO_Init(GPIOB, &GPIO_InitStructure);
+#endif  
+
+#ifdef GPIOC_OUTPUTS_50MHZ_OD_MASK
+  /* Configure GPIOC Outputs (pp) */
+  GPIO_InitStructure.GPIO_Pin = GPIOC_OUTPUTS_50MHZ_OD_MASK;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_OD;
+  GPIO_Init(GPIOC, &GPIO_InitStructure);
+#endif
+  
+#ifdef GPIOD_OUTPUTS_50MHZ_OD_MASK
+  /* Configure GPIOD Outputs (OD) 50MHZ*/
+  GPIO_InitStructure.GPIO_Pin = GPIOD_OUTPUTS_50MHZ_OD_MASK;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_OD;
+  GPIO_Init(GPIOD, &GPIO_InitStructure);
+#endif
+
+  
+ /* 10Mhz Outputs */
+  
+#ifdef GPIOA_OUTPUTS_10MHZ_PP_MASK
+  /* Configure GPIOA Outputs (pp) 10Mhz*/
+  GPIO_InitStructure.GPIO_Pin = GPIOA_OUTPUTS_10MHZ_PP_MASK;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+  GPIO_Init(GPIOA, &GPIO_InitStructure);
+#endif
+  
+#ifdef GPIOB_OUTPUTS_10MHZ_PP_MASK
+  /* Configure GPIOB Outputs (pp) */
+  GPIO_InitStructure.GPIO_Pin = GPIOB_OUTPUTS_10MHZ_PP_MASK;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+  GPIO_Init(GPIOB, &GPIO_InitStructure);
+#endif  
+
+#ifdef GPIOC_OUTPUTS_10MHZ_PP_MASK
+  /* Configure GPIOC Outputs (pp) */
+  GPIO_InitStructure.GPIO_Pin = GPIOC_OUTPUTS_10MHZ_PP_MASK;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+  GPIO_Init(GPIOC, &GPIO_InitStructure);
+#endif
+  
+#ifdef GPIOD_OUTPUTS_10MHZ_PP_MASK
+  /* Configure GPIOD Outputs (pp) 50MHZ*/
+  GPIO_InitStructure.GPIO_Pin = GPIOD_OUTPUTS_10MHZ_PP_MASK;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+  GPIO_Init(GPIOD, &GPIO_InitStructure);
+#endif
+  
+   
+   /* 2MHZ Outputs */
+  
+#ifdef GPIOA_OUTPUTS_2MHZ_PP_MASK
+  /* Configure GPIOA Outputs (pp) 2MHZ*/
+  GPIO_InitStructure.GPIO_Pin = GPIOA_OUTPUTS_2MHZ_PP_MASK;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_2MHz;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+  GPIO_Init(GPIOA, &GPIO_InitStructure);
+#endif
+  
+#ifdef GPIOB_OUTPUTS_2MHZ_PP_MASK
+  /* Configure GPIOB Outputs (pp) */
+  GPIO_InitStructure.GPIO_Pin = GPIOB_OUTPUTS_2MHZ_PP_MASK;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_2MHz;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+  GPIO_Init(GPIOB, &GPIO_InitStructure);
+#endif  
+
+#ifdef GPIOC_OUTPUTS_2MHZ_PP_MASK
+  /* Configure GPIOC Outputs (pp) */
+  GPIO_InitStructure.GPIO_Pin = GPIOC_OUTPUTS_2MHZ_PP_MASK;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_2MHz;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+  GPIO_Init(GPIOC, &GPIO_InitStructure);
+#endif
+  
+#ifdef GPIOD_OUTPUTS_2MHZ_PP_MASK
+  /* Configure GPIOD Outputs (pp) 50MHZ*/
+  GPIO_InitStructure.GPIO_Pin = GPIOD_OUTPUTS_2MHZ_PP_MASK;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_2MHz;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+  GPIO_Init(GPIOD, &GPIO_InitStructure);
+#endif
+
+  /* End OUTPUTS */
+  
+	/* Set OUTPUTs default state */
+  
+#ifdef GPIOA_DEFAULT_LOW_MASK
+  GPIO_WriteBit(GPIOA, GPIOA_DEFAULT_LOW_MASK,Bit_RESET); 
+#endif
+
+#ifdef GPIOA_DEFAULT_HIGH_MASK
+  GPIO_WriteBit(GPIOA, GPIOA_DEFAULT_HIGH_MASK,Bit_SET); 
+#endif
+ 
+#ifdef GPIOB_DEFAULT_LOW_MASK
+  GPIO_WriteBit(GPIOB, GPIOB_DEFAULT_LOW_MASK,Bit_RESET); 
+#endif
+
+#ifdef GPIOB_DEFAULT_HIGH_MASK
+  GPIO_WriteBit(GPIOB, GPIOB_DEFAULT_HIGH_MASK,Bit_SET); 
+#endif
+
+#ifdef GPIOC_DEFAULT_LOW_MASK
+  GPIO_WriteBit(GPIOC, GPIOC_DEFAULT_LOW_MASK,Bit_RESET); 
+#endif
+
+#ifdef GPIOC_DEFAULT_HIGH_MASK
+  GPIO_WriteBit(GPIOC, GPIOC_DEFAULT_HIGH_MASK,Bit_SET); 
+#endif
+
+#ifdef GPIOD_DEFAULT_LOW_MASK
+  GPIO_WriteBit(GPIOD, GPIOD_DEFAULT_LOW_MASK,Bit_RESET); 
+#endif
+
+#ifdef GPIOD_DEFAULT_HIGH_MASK
+  GPIO_WriteBit(GPIOD, GPIOD_DEFAULT_HIGH_MASK,Bit_SET); 
+#endif
+
+  /* End Default States */
+  
+  /* ANALOG Setup */
+  
+#ifdef GPIOA_ANALOG_MASK
+  /* Configure GPIOA analog input -------------------------*/
+  GPIO_InitStructure.GPIO_Pin = GPIOA_ANALOG_MASK;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;
+  GPIO_Init(GPIOA, &GPIO_InitStructure);
+#endif  
+
+#ifdef GPIOB_ANALOG_MASK
+  /* Configure GPIOB analog input -------------------------*/
+  GPIO_InitStructure.GPIO_Pin = GPIOB_ANALOG_MASK;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;
+  GPIO_Init(GPIOB, &GPIO_InitStructure);
+#endif  
+  
+#ifdef GPIOC_ANALOG_MASK
+  /* Configure GPIOC analog input -------------------------*/
+  GPIO_InitStructure.GPIO_Pin = GPIOC_ANALOG_MASK;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;
+  GPIO_Init(GPIOC, &GPIO_InitStructure);
+#endif  
+  
+#ifdef GPIOD_ANALOG_MASK
+  /* Configure GPIOD analog input -------------------------*/
+  GPIO_InitStructure.GPIO_Pin = GPIOD_ANALOG_MASK;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;
+  GPIO_Init(GPIOD, &GPIO_InitStructure);
+#endif  
+  
+ 
+ /* End ANALOG */
+  
+ 
+  // Setup Timer 24MHz
+  
+  GPIO_InitStructure.GPIO_Pin = PCK0_PIN;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
+  //GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+  //GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+  //GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
+  GPIO_Init(PCK0_PORT, &GPIO_InitStructure);
+  
+  /* Connect TIM1 pins to AF */
+//  GPIO_PinAFConfig(PCK0_PORT, GPIO_PinSource4, GPIO_AF_TIM1);
+  
+  
+#if 0
+  
+  
   /* Configure the FPGA NINIT  IO as Input Floating */
   GPIO_InitStructure.GPIO_Pin = ( FPGA_NINIT_PIN  );
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
   GPIO_Init(FPGA_NINIT_PORT, &GPIO_InitStructure);
  
   /* Configure the FPGA  nprogram and nvdd IOs as Output PP */
-  GPIO_InitStructure.GPIO_Pin = ( FPGA_NPROGRAM_PIN | NVDD_ON );
+  GPIO_InitStructure.GPIO_Pin = ( FPGA_NPROGRAM_PIN | NVDD_ON_PIN );
   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
   GPIO_Init(FPGAON_PORT, &GPIO_InitStructure);
-
   // turns off power to FPGA, and leaves it in reset mode
-  GPIO_WriteBit(FPGAON_PORT,( FPGA_NPROGRAM_PIN | NVDD_ON ),Bit_RESET); 
+  GPIO_WriteBit(FPGAON_PORT,( FPGA_NPROGRAM_PIN | NVDD_ON_PIN ),Bit_RESET); 
+  
+  /* Configure the FPGA  DOUT and SSC IOs as Output PP */
+  GPIO_InitStructure.GPIO_Pin = ( FPGA_DOUT_PIN );
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+  GPIO_Init(FPGA_DOUT_PORT, &GPIO_InitStructure);
+  GPIO_WriteBit(FPGA_DOUT_PORT,( FPGA_DOUT_PIN ),Bit_RESET); 
 
   /* Configure the FPGA DONE  IO as Input Floating */
   /* FPGA Done wil toggle in after the bistream is loaded */
@@ -350,8 +684,12 @@ void GPIO_Configuration(void)
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
   GPIO_Init(OLED2_PORT, &GPIO_InitStructure);
   GPIO_WriteBit(OLED2_PORT, ( SDIN_DB1_PIN | SCLK_DB0_PIN ) ,Bit_RESET);  
-  
+
+#endif
 }
+
+
+
 /*******************************************************************************
 * Function Name : EXTI_Configuration.
 * Description   : Configure the EXTI lines for Key and Tamper push buttons.
@@ -496,5 +834,59 @@ void Get_SerialNum( void )
      CustomHID_StringSerial[24] = (u8)((Device_Serial2 & 0xFF000000) >> 24); 
   }   
 }
+/**************************************************************************************/
+  
+void RCC_Configuration(void)
+{
+  /* --------------------------- System Clocks Configuration -----------------*/
+  /* TIM1 clock enable */
+  RCC_APB2PeriphClockCmd(RCC_APB2Periph_TIM1, ENABLE);
+  
+  /* GPIOA clock enable */
+  //RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
+}
+  
+/**************************************************************************************/
+  
+
+/**************************************************************************************/
+  
+void TIM1_Configuration(void)
+{
+  TIM_OCInitTypeDef  TIM_OCInitStructure;
+  TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;
+  uint16_t Period;
+  
+  Period = (SystemCoreClock  / 24000000); // Must be divisable
+  
+  /* Time base configuration */
+  TIM_TimeBaseStructure.TIM_Prescaler = 0; // Dump 1X clock into timer
+  TIM_TimeBaseStructure.TIM_Period = Period - 1;
+  TIM_TimeBaseStructure.TIM_ClockDivision = 0;
+  TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
+  TIM_TimeBaseInit(TIM1, &TIM_TimeBaseStructure);
+  
+  /* Enable TIM1 Preload register on ARR */
+  TIM_ARRPreloadConfig(TIM1, ENABLE);
+  
+  /* TIM PWM1 Mode configuration */
+  TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
+  TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
+  TIM_OCInitStructure.TIM_Pulse = Period / 2; // 50%
+  TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
+  
+  /* Output Compare PWM1 Mode configuration: Channel1 PA.08 */
+  TIM_OC1Init(TIM1, &TIM_OCInitStructure);
+  TIM_OC1PreloadConfig(TIM1, TIM_OCPreload_Enable);
+  
+  /* TIM1 Main Output Enable */
+  TIM_CtrlPWMOutputs(TIM1, ENABLE);
+  
+  /* TIM1 enable counter */
+  TIM_Cmd(TIM1, ENABLE);
+}
+
+
+
 /******************* (C) COPYRIGHT 2008 STMicroelectronics *****END OF FILE****/
 

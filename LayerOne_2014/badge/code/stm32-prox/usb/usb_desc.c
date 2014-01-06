@@ -36,10 +36,10 @@ const u8 CustomHID_DeviceDescriptor[CUSTOMHID_SIZ_DEVICE_DESC] =
     0x00,                       /*bDeviceSubClass*/
     0x00,                       /*bDeviceProtocol*/
     0x40,                       /*bMaxPacketSize40*/
-    0x83,                       /*idVendor (0x0483)*/
-    0x04,
-    0x50,                       /*idProduct = 0x5750*/
-    0x57,
+    0x32,                       /*idVendor (0x0483)*/
+    0x00,
+    0x80,                       /*idProduct = 0x5750*/
+    0x80,
     0x00,                       /*bcdDevice rel. 2.00*/
     0x02,
     1,                          /*Index of string descriptor describing
@@ -248,24 +248,24 @@ const u8 CustomHID_StringVendor[CUSTOMHID_SIZ_STRING_VENDOR] =
     CUSTOMHID_SIZ_STRING_VENDOR, /* Size of Vendor string */
     USB_STRING_DESCRIPTOR_TYPE,  /* bDescriptorType*/
     /* Manufacturer: "STMicroelectronics" */
-    'S', 0, 'T', 0, 'M', 0, 'i', 0, 'c', 0, 'r', 0, 'o', 0, 'e', 0,
-    'l', 0, 'e', 0, 'c', 0, 't', 0, 'r', 0, 'o', 0, 'n', 0, 'i', 0,
-    'c', 0, 's', 0
+    '[', 0, 'N', 0, 'U', 0, 'L', 0, 'L', 0, 'L', 0, 'S', 0, 'P', 0,
+    'A', 0, 'C', 0, 'E', 0, 'L', 0, 'A', 0, 'B', 0, 'S', 0, ']', 0,
+    ' ', 0, ' ', 0
   };
 
 const u8 CustomHID_StringProduct[CUSTOMHID_SIZ_STRING_PRODUCT] =
   {
     CUSTOMHID_SIZ_STRING_PRODUCT,          /* bLength */
     USB_STRING_DESCRIPTOR_TYPE,        /* bDescriptorType */
-    'S', 0, 'T', 0, 'M', 0, '3', 0, '2', 0, ' ', 0, 'C', 0,
-    'u', 0, 's', 0, 't', 0, 'm', 0, ' ', 0, 'H', 0, 'I', 0,
-    'D', 0
+    'L', 0, 'a', 0, 'y', 0, 'e', 0, 'r', 0, 'O', 0, 'n', 0,
+    'e', 0, ' ', 0, '2', 0, '0', 0, '1', 0, '4', 0, 'c', 0,
+    'x', 0
   };
 u8 CustomHID_StringSerial[CUSTOMHID_SIZ_STRING_SERIAL] =
   {
     CUSTOMHID_SIZ_STRING_SERIAL,           /* bLength */
     USB_STRING_DESCRIPTOR_TYPE,        /* bDescriptorType */
-    'S', 0, 'T', 0, 'M', 0,'3', 0,'2', 0, '1', 0, '0', 0
+    '[', 0, 'N', 0, 'S', 0,'L', 0,']', 0, 'c', 0, 'x', 0
   };
 
 /******************* (C) COPYRIGHT 2008 STMicroelectronics *****END OF FILE****/

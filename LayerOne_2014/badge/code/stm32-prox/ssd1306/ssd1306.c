@@ -1,12 +1,12 @@
 /// SSD1306 driver
 
-#include "stm32f10x_lib.h"
 #include <stdlib.h>
+#include <string.h>
+
+#include "stm32f10x_lib.h"
 
 #include "hw_config.h"
 #include "l1_board.h"
-
-#include "string.h"
 
 #define GDISP_SCREEN_HEIGHT		(64)
 #define GDISP_SCREEN_WIDTH		(128)
@@ -26,10 +26,11 @@
 	#define SSD1306_PAGE_OFFSET		0
 #endif
 
+// Buffer for OLED
 static unsigned char sVideoRAM[GDISP_SCREEN_HEIGHT/8 * SSD1306_PAGE_WIDTH ];
 
-#define xyaddr(x, y)		(SSD1306_PAGE_OFFSET + (x) + ((y)>>3)*SSD1306_PAGE_WIDTH)
-#define xybit(y)			(1<<((y)&7))
+#define xyaddr(x, y)			(SSD1306_PAGE_OFFSET + (x) + ((y)>>3)*SSD1306_PAGE_WIDTH)
+#define xybit(y)				(1<<((y)&7))
 
 #define	LCD_SCLK_HIGH() 		GPIO_WriteBit(OLED2_PORT,SCLK_DB0_PIN,Bit_SET)
 #define	LCD_SCLK_LOW() 			GPIO_WriteBit(OLED2_PORT,SCLK_DB0_PIN,Bit_RESET)
@@ -41,7 +42,7 @@ static unsigned char sVideoRAM[GDISP_SCREEN_HEIGHT/8 * SSD1306_PAGE_WIDTH ];
 
 
 // Cursor
-static unsigned char     u8CursorX, u8CursorY;
+static unsigned char    u8CursorX, u8CursorY;
 static unsigned char	Misc = 0;
 
 #define				NEGATIVE		( 1 )
@@ -176,7 +177,7 @@ unsigned char testbit( unsigned char mask, unsigned char bit )
   return mask & _BV( bit ) ;
 }
 
-void SpiInit(void)
+static void OLEDSpiInit(void)
 {
         LCD_SDIN_HIGH() ;       
         LCD_SCLK_HIGH();
@@ -184,7 +185,7 @@ void SpiInit(void)
         DelayuS(50);
 }
 
-void SpiSendByte(unsigned char byte)
+static void OLEDSpiSendByte(unsigned char byte)
 {
   unsigned char  i ;
   unsigned char  tbyte = byte ;       
@@ -206,7 +207,6 @@ void SpiSendByte(unsigned char byte)
   }
 }
 
-
 void InitOLED( void )
 {
   
@@ -226,12 +226,16 @@ void InitOLED( void )
 			RAM(g)[i] = SSD1306_PAGE_PREFIX;
 	}
 #endif
- 
+   DelaymS(500);
 	OLEDInit();
 		
 }
 void OLEDClear( void ) 
 {
+	// Reset Cursor  
+  u8CursorX = 0;
+  u8CursorY = 0;
+  
   memset(sVideoRAM,0,sizeof(sVideoRAM));
 }
 
@@ -242,11 +246,10 @@ Send instruction to the LCD
 -------------------------------------------------------------------------------*/
 void LcdInstructionWrite (unsigned char u8Instruction)
 {
-
   GPIO_WriteBit(OLED_PORT,CS_PIN,Bit_RESET);			// Select
   GPIO_WriteBit(OLED_PORT,DC_PIN,Bit_RESET);             // Instruction mode
 	
-  SpiSendByte(u8Instruction);  
+  OLEDSpiSendByte(u8Instruction);  
 }
 
 void InvertOLED( unsigned char state ) 
@@ -262,7 +265,8 @@ void OLEDInit(void)
   unsigned short test2;
   
     // Recommended power up sequence
-    SpiInit();
+    OLEDSpiInit();
+	DelayuS(4);
 	
 	
 	GPIO_WriteBit(OLED_PORT,RES_PIN,Bit_RESET); 
@@ -374,12 +378,12 @@ void OLEDDraw(void)
   GPIO_WriteBit(OLED_PORT,CS_PIN,Bit_RESET);			// Select
   
   for ( i=0; i<(GDISP_SCREEN_WIDTH*GDISP_SCREEN_HEIGHT/8); i++) {
-	SpiSendByte(sVideoRAM[i]);
+	OLEDSpiSendByte(sVideoRAM[i]);
   }
   // i wonder why we have to do this (check datasheet)
   if (GDISP_SCREEN_HEIGHT == 32) {
 	for (unsigned short i=0; i<(GDISP_SCREEN_WIDTH*GDISP_SCREEN_HEIGHT/8); i++) {
-	  SpiSendByte(0);
+	  OLEDSpiSendByte(0);
 	}
   }
   

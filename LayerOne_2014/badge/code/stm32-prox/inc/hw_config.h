@@ -17,6 +17,16 @@
 #ifndef __HW_CONFIG_H
 #define __HW_CONFIG_H
 
+#define RAMFUNC
+#include <stdint.h>
+
+#include "stm32f10x_lib.h"
+
+#include "proxmark3.h"
+#include "l1_board.h"
+
+# define SYSCLK_FREQ_72MHz (72000000)
+
 /* Includes ------------------------------------------------------------------*/
 #include "usb_type.h"
 
@@ -24,16 +34,15 @@
 #include "ssd1306.h"
 
 /* Exported types ------------------------------------------------------------*/
-
-typedef  unsigned short uint16_t;
-typedef  unsigned char uint8_t;
-
 /* Exported constants --------------------------------------------------------*/
 /* Exported macro ------------------------------------------------------------*/
 
 #define _BV(bit) (1 << (bit)) 
 
 /* Exported define -----------------------------------------------------------*/
+
+extern uint32_t SystemCoreClock;
+
 /* Exported functions ------------------------------------------------------- */
 int Set_System(void);
 void Set_USBClock(void);
@@ -56,6 +65,8 @@ void OLEDBigchar (unsigned char u8Char);
 void OLEDPutchar(char u8Char);
 void OLEDPutstr (const char *ptr);
 void LEDSet(unsigned char state);
+void OLEDDisplayPicture (const uint8_t *pointer) ;
+void InvertOLED( unsigned char state );
 
 #endif  /*__HW_CONFIG_H*/
 
