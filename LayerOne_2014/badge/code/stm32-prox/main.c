@@ -17,6 +17,8 @@
 
 */
 
+#include <string.h>
+#include <stdarg.h>
 
 // STM32 Library
 #include "stm32f10x_lib.h"
@@ -26,8 +28,10 @@
 #include "l1_board.h"
 #include "hw_config.h"
 #include "proxmark3.h"
+#include "apps.h"
 
 #include "logos.h"
+#include "printf.h"
 
 int  RCC_Configuration(void);
 void NVIC_Configuration(void);
@@ -128,6 +132,31 @@ void TimingDelay_Decrement(void)
     TimingDelay--;
   }
 }
+//=============================================================================
+// Debug print functions, to go out over USB, to the usual PC-side client.
+//=============================================================================
+
+void DbpString(char *str)
+{
+  if (str) {
+  	OLEDPutstr(str);
+  	OLEDDraw();
+  }
+}
+
+
+void Dbprintf(const char *fmt, ...) {
+// should probably limit size here; oh well, let's just use a big buffer
+	char output_string[128];
+	va_list ap;
+
+	va_start(ap, fmt);
+	vsprintf(output_string, fmt,ap);
+	va_end(ap);
+
+	DbpString(output_string);
+}
+
 
 #ifdef  DEBUG
 /*******************************************************************************
@@ -160,8 +189,157 @@ void InitBoard( void )
 	USB_Init();
 }
 
-void FpgaDownloadAndGo(void );
+extern uint16_t  ADC_Ampl[2];
 
+//-----------------------------------------------------------------------------
+// Read an ADC channel and block till it completes, then return the result
+// in ADC units (0 to 1023). Also a routine to average 32 samples and
+// return that.
+// STM32 gives us (0..4095) 12 bit
+//-----------------------------------------------------------------------------
+static unsigned int ReadAdc(int ch)
+{
+	return ADC_Ampl[1-ch];
+}
+
+int AvgAdc(int ch) // was static - merlok
+{
+	unsigned int i;
+	unsigned int a = 0;
+
+	for(i = 0; i < 32; i++) {
+		a += ReadAdc(ch);
+	}
+
+	// convert to what the proxmark expects 0..1025 (we should change the code to allow the better resolution
+	a /= 4;
+	
+	return (a + 15) >> 5;
+}
+
+bool cmd_send(uint32_t cmd, uint32_t arg0, uint32_t arg1, uint32_t arg2, void* data, size_t len)
+{
+  return 0;
+}
+
+// The large multi-purpose buffer, typically used to hold A/D samples,
+// maybe processed in some way.
+uint32_t BigBuf[BIG_BUFFER];
+
+void MeasureAntennaTuning(void)
+{
+	uint8_t *dest = (uint8_t *)BigBuf+FREE_BUFFER_OFFSET;
+	int i, adcval = 0, peak = 0, peakv = 0, peakf = 0; //ptr = 0 
+	int vLf125 = 0, vLf134 = 0, vHf = 0;	// in mV
+
+//	UsbCommand c;
+  
+	OLEDClear();
+  
+  LED_B_ON();
+	DbpString("Measuring antenna\nPlease wait...\n");
+	memset(dest,0,sizeof(FREE_BUFFER_SIZE));
+
+/*
+ * Sweeps the useful LF range of the proxmark from
+ * 46.8kHz (divisor=255) to 600kHz (divisor=19) and
+ * read the voltage in the antenna, the result left
+ * in the buffer is a graph which should clearly show
+ * the resonating frequency of your LF antenna
+ * ( hopefully around 95 if it is tuned to 125kHz!)
+ */
+  
+	FpgaWriteConfWord(FPGA_MAJOR_MODE_LF_READER);
+	for (i=255; i>19; i--) {
+    	
+	  	WDT_HIT();
+		
+		FpgaSendCommand(FPGA_CMD_SET_DIVISOR, i);
+		SpinDelay(20);
+		// Vref = 3.3V, and a 10000:240 voltage divider on the input
+		// can measure voltages up to 137500 mV
+		adcval = ((137500 * AvgAdc(ADC_CHAN_LF)) >> 10);
+		if (i==95) 	vLf125 = adcval; // voltage at 125Khz
+		if (i==89) 	vLf134 = adcval; // voltage at 134Khz
+
+		dest[i] = adcval>>8; // scale int to fit in byte for graphing purposes
+		if(dest[i] > peak) {
+			peakv = adcval;
+			peak = dest[i];
+			peakf = i;
+			//ptr = i;
+		}
+	}
+
+  LED_A_ON();
+	// Let the FPGA drive the high-frequency antenna around 13.56 MHz.
+	FpgaWriteConfWord(FPGA_MAJOR_MODE_HF_READER_RX_XCORR);
+	SpinDelay(20);
+	// Vref = 3300mV, and an 10:1 voltage divider on the input
+	// Vref = 3340mV, and an 10:1 voltage divider on the input
+	// can measure voltages up to 33000 mV
+	vHf = (VDD_MV * AvgAdc(ADC_CHAN_HF)) >> 10;
+
+//	c.cmd = CMD_MEASURED_ANTENNA_TUNING;
+//	c.arg[0] = (vLf125 << 0) | (vLf134 << 16);
+//	c.arg[1] = vHf;
+//	c.arg[2] = peakf | (peakv << 16);
+
+  OLEDClear();
+  DbpString("Results\n");
+  Dbprintf("LF %5.2fV @ 125kHz\n",vLf125/1000.0f);
+  Dbprintf("LF %5.2fV @ 134.00kHz\n\n",vLf134/1000.0f);
+  
+  Dbprintf("LF optimal: %5.2fV @%.2f kHz\n", peakv / 1000.0, (12000.0 / (peakf + 1.0)) );
+  Dbprintf("HF antenna: %5.2fV @13.56 MHz\n", (vHf / 1000.0));
+  
+  if(  peakv < 2000 )
+    DbpString("Your LF antenna is unusable.\n");
+  else if (peakv < 10000 )
+    DbpString("Your LF antenna is marginal.\n");
+  else 
+    DbpString("Your LF antenna is good.\n");
+    
+  if ( vHf < 2000 )
+    DbpString("Your HF antenna is unusable.\n");
+  else if ( vHf < 5000  )
+    DbpString("Your HF antenna is marginal.\n");
+  else 
+    DbpString("Your HF antenna is good.\n");
+  
+	      
+  cmd_send(CMD_MEASURED_ANTENNA_TUNING,vLf125|(vLf134<<16),vHf,peakf|(peakv<<16),0,0);
+//	UsbSendPacket((uint8_t *)&c, sizeof(c));
+  FpgaWriteConfWord(FPGA_MAJOR_MODE_OFF);
+  LED_A_OFF();
+  LED_B_OFF();
+  return;
+}
+
+void MeasureAntennaTuningHf(void)
+{
+	int vHf = 0;	// in mV
+	
+	OLEDClear();
+	
+	DbpString("Measuring HF antenna\nPress button to exit\n\n");
+
+	for (;;) {
+		// Let the FPGA drive the high-frequency antenna around 13.56 MHz.
+		FpgaWriteConfWord(FPGA_MAJOR_MODE_HF_READER_RX_XCORR);
+		SpinDelay(20);
+		// Vref = 3300mV, and an 10:1 voltage divider on the input
+		// Vref = 3400mV, and an 10:1 voltage divider on the input
+		// can measure voltages up to 33000 mV
+		vHf = (VDD_MV * AvgAdc(ADC_CHAN_HF)) >> 10;
+
+		Dbprintf("\r%d mV           ",vHf);
+		
+		if (BUTTON_PRESS()) 
+		  break;
+	}
+	DbpString("\nCancelled");
+}
 
 // ARM Pins that can generate a 24Mhz signal via TIMx (HW Rev2)
 //----------------------------------------------------------
@@ -229,9 +407,8 @@ void SetupPCK0Clock(void)
 // starts here
 int main(void)
 {
-  
 #ifdef DEBUG
-  debug();
+	debug();
 #endif
   
   /* System Clocks Configuration **********************************************/
@@ -253,16 +430,6 @@ int main(void)
   /* Enable SysTick interrupt */
   SysTick_ITConfig(ENABLE);
 
-#if 0
-	DelaymS(100);
-	HIGH(FPGAON);	
-	DelaymS(100);
-	LOW(FPGAON);	
-	DelaymS(100);
-	HIGH(NVDD_ON);					// ensure everything is powered on
-	DelaymS(100);
-#endif
-	
   // USB Enable
   InitBoard();
   // Startup OLED
@@ -308,7 +475,8 @@ int main(void)
   
   DelaymS(1000);
   
-  while(1) {
+  // button test
+  while(0) {
 	
 	OLEDClear();
 	
@@ -345,8 +513,17 @@ int main(void)
 	OLEDDraw();
   }
   
-  DelaymS(25000);
+
+ OLEDClear();
   
+  MeasureAntennaTuning();
+  
+  DelaymS( 5000 );
+  
+  MeasureAntennaTuningHf();
+    
+  DelaymS(25000);
+    
   ////////////////// Shut down 
   
   LOW(FPGAON);					// ensure everything is powered off

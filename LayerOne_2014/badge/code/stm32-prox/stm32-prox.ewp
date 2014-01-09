@@ -1881,11 +1881,20 @@
     <group>
       <name>inc</name>
       <file>
+        <name>$PROJ_DIR$\armsrc\apps.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$\inc\fpga.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\armsrc\printf.h</name>
       </file>
     </group>
     <file>
       <name>$PROJ_DIR$\armsrc\fpgaloader.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\armsrc\printf.c</name>
     </file>
   </group>
   <group>

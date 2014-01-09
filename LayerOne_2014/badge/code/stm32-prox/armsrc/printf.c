@@ -34,8 +34,15 @@
  *	@(#)subr_prf.c	8.3 (Berkeley) 1/21/94
  */
 
+#include "stm32f10x_lib.h"
+// defines for hardware board
+#include "l1_board.h"
+#include "hw_config.h"
+
+
 #include <stddef.h>
 #include <stdarg.h>
+
 #include "printf.h"
 #include "util.h"
 #include "string.h"
@@ -419,12 +426,12 @@ number:
 	return retval;
 #undef PCHAR
 }
-
+/*
 int vsprintf(char *dest, const char *fmt, va_list ap)
 {
 	return kvsprintf(fmt, dest, 10, ap);
 }
-
+*/
 int
 sprintf(char *dest, const char *fmt, ...)
 {
