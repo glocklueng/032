@@ -410,7 +410,7 @@ void FlushOLED( void )
 // OR byte on display buffer
 void write_display(unsigned char data) 
 {
-    sVideoRAM[((unsigned short )(u8CursorY<<7)) + (u8CursorX++)] |= data;
+	sVideoRAM[((unsigned short )(u8CursorY<<7)) + (u8CursorX++)] = data;
 }
 
 
@@ -464,41 +464,43 @@ void OLEDBigchar (unsigned char u8Char)
 
 void OLEDPutchar(char u8Char) 
 {
-    uint8_t *pointer;
-	uint8_t data,u8CharColumn=0;
-	pointer = (uint8_t*)(Fonts)+(u8Char-22)*(3);
-	
-   	/* Draw a char */
-	while (u8CharColumn < 3)	{
-	  
-        data = (*pointer++);
-
-		if(testbit(Misc,NEGATIVE)) 
-		  data = ~(data|128);
-		
-		write_display(data);
-		
-		u8CharColumn++;
-	}
-    // Special characters
-    if(u8Char==0x1C) {       // Begin long 'd' character
-        write_display(0x30);
-    }
-    else if(u8Char==0x1D) {  // Complete long 'd' character
-        write_display(0x38);
-        u8CursorX++;
-    }
-    else if(u8Char==0x1A) {  // Complete long 'm' character
-        write_display(0x08);
-    }
-    else if(u8CursorX < 128) {  // if not then insert a space before next letter
-		data = 0;
-		if(testbit(Misc,NEGATIVE)) data = 127;
-		write_display(data);
-	}
-    if(u8CursorX>=128) {    // Next line
-        u8CursorX = 0; u8CursorY++;
-    }
+  uint8_t *pointer;
+  uint8_t data,u8CharColumn=0;
+  pointer = (uint8_t*)(Fonts)+(u8Char-22)*(3);
+  
+  /* Draw a char */
+  while (u8CharColumn < 3)	{
+    
+    data = (*pointer++);
+    
+    if(testbit(Misc,NEGATIVE)) 
+      data = ~(data|128);
+    
+    write_display(data);
+    
+    u8CharColumn++;
+  }
+  
+  // Special characters
+  if(u8Char==0x1C) {       // Begin long 'd' character
+    write_display(0x30);
+  }
+  else if(u8Char==0x1D) {  // Complete long 'd' character
+    write_display(0x38);
+    u8CursorX++;
+  }
+  else if(u8Char==0x1A) {  // Complete long 'm' character
+    write_display(0x08);
+  }
+  else if(u8CursorX < 128) {  // if not then insert a space before next letter
+    data = 0;
+    if(testbit(Misc,NEGATIVE)) data = 127;
+    write_display(data);
+  }
+  if(u8CursorX>=128) {    // Next line
+    u8CursorX = 0; 
+    u8CursorY++;
+  }
 }
 
 void OLEDPutstr (const char *ptr)
@@ -509,6 +511,9 @@ void OLEDPutstr (const char *ptr)
 	if( c == '\n' ){
 	  u8CursorX = 0;
 	  u8CursorY++;
+	}else
+	if( c == '\r' ){
+	  u8CursorX = 0;
 	}else  {
 		OLEDPutchar(c);
 	}

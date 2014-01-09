@@ -20,7 +20,10 @@
 
 // The large multi-purpose buffer, typically used to hold A/D samples,
 // maybe processed in some way.
-uint32_t BigBuf[10000];
+#define BIG_BUFFER	(8000)
+
+extern uint32_t BigBuf[BIG_BUFFER];
+
 // BIG CHANGE - UNDERSTAND THIS BEFORE WE COMMIT
 #define TRACE_OFFSET          0
 #define TRACE_SIZE         3000
@@ -199,5 +202,10 @@ bool cmd_receive(UsbCommand* cmd);
 bool cmd_send(uint32_t cmd, uint32_t arg0, uint32_t arg1, uint32_t arg2, void* data, size_t len);
 
 /// util.h
+
+// fpgaloader.h
+void FpgaDownloadAndGo(void );
+
+
 
 #endif

@@ -16,13 +16,17 @@
 #include "hw_config.h"
 #include "l1_board.h"
 
-#define WDT_HIT()								AT91C_BASE_WDTC->WDTC_WDCR = 0xa5000001
+#define WDT_HIT()						
 
 #define PWM_CH_MODE_PRESCALER(x)				((x)<<0)
 #define PWM_CHANNEL(x)							(1<<(x))
 
-#define ADC_CHAN_LF								4
-#define ADC_CHAN_HF								5
+// ADC Channels
+//ampl_lo PA0/ADC0
+#define ADC_CHAN_LF								0
+//ampl_hi PA1/ADC1
+#define ADC_CHAN_HF								1 
+
 #define ADC_MODE_PRESCALE(x)					((x)<<8)
 #define ADC_MODE_STARTUP_TIME(x)				((x)<<16)
 #define ADC_MODE_SAMPLE_HOLD_TIME(x)			((x)<<24)
@@ -82,7 +86,7 @@
 #define LED_D_INV()		INVBIT(GPIO_LED_D)
 #define RELAY_ON()		HIGH(GPIO_RELAY)
 #define RELAY_OFF()		LOW(GPIO_RELAY)
-#define BUTTON_PRESS()	!(AT91C_BASE_PIOA->PIO_PDSR & GPIO_BUTTON)
+#define BUTTON_PRESS()		!GETBIT( SW_K1 )
 
 #define VERSION_INFORMATION_MAGIC 0x56334d50
 PACKED struct version_information {

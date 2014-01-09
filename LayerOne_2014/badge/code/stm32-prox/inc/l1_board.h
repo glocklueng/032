@@ -5,6 +5,9 @@
 
 // defines
 
+// VDD voltaage in MV
+#define VDD_MV		( 33400 )
+
 // Ports and pin mapping
 
 /* GPIOA Section */
@@ -48,7 +51,6 @@
 #define AMPL_LO_PIN                    GPIO_Pin_0								// input analog
 
 #define ADC_AIN_CHANNEL                ADC_Channel_1             				// PA1
-
 #define GPIOA_OUTPUTS_2MHZ_PP_MASK		(  FPGA_NPROGRAM_PIN |SDIN_DB1_PIN | SCLK_DB0_PIN )
 #define GPIOA_OUTPUTS_50MHZ_PP_MASK		( FPGA_DOUT_PIN  | FPGA_DIN_PIN | FPGA_CCLK_PIN | USB_DISCONNECT_PIN | FPGA_CCLK_PIN  | SDIN_DB1_PIN | SCLK_DB0_PIN )
 //#define GPIOA_OUTPUTS_50MHZ_OD_MASK		( USB_DISCONNECT_PIN )
