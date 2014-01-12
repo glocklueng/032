@@ -144,6 +144,13 @@ void DbpString(char *str)
   }
 }
 
+void DbpBigString(char *str)
+{
+  if (str) {
+  	OLEDPutBigstr(str);
+  	OLEDDraw();
+  }
+}
 
 void Dbprintf(const char *fmt, ...) {
 // should probably limit size here; oh well, let's just use a big buffer
@@ -155,6 +162,19 @@ void Dbprintf(const char *fmt, ...) {
 	va_end(ap);
 
 	DbpString(output_string);
+}
+
+void DbBigprintf(const char *fmt, ...) 
+{
+// should probably limit size here; oh well, let's just use a big buffer
+	char output_string[128];
+	va_list ap;
+
+	va_start(ap, fmt);
+	vsprintf(output_string, fmt,ap);
+	va_end(ap);
+
+	DbpBigString(output_string);
 }
 
 
@@ -197,16 +217,32 @@ extern uint16_t  ADC_Ampl[2];
 // return that.
 // STM32 gives us (0..4095) 12 bit
 //-----------------------------------------------------------------------------
+#if DMA_ADC == 1
 static unsigned int ReadAdc(int ch)
 {
 	return ADC_Ampl[1-ch];
 }
+#else
+static unsigned int ReadAdc(int ch)
+{
+
+  if( ch == 0  ){
+//    ADC_SoftwareStartConv(ADC1);//Start the conversion
+ 	while(!ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC));//Processing the conversion
+	 return ADC_GetConversionValue(ADC1); //Return the converted data
+  } else {
+  //  ADC_SoftwareStartConv(ADC2);//Start the conversion
+ 	while(!ADC_GetFlagStatus(ADC2, ADC_FLAG_EOC));//Processing the conversion
+	 return ADC_GetConversionValue(ADC2); //Return the converted data
+  }
+}
+#endif
 
 int AvgAdc(int ch) // was static - merlok
 {
 	unsigned int i;
 	unsigned int a = 0;
-
+  
 	for(i = 0; i < 32; i++) {
 		a += ReadAdc(ch);
 	}
@@ -309,7 +345,7 @@ void MeasureAntennaTuning(void)
   
 	      
   cmd_send(CMD_MEASURED_ANTENNA_TUNING,vLf125|(vLf134<<16),vHf,peakf|(peakv<<16),0,0);
-//	UsbSendPacket((uint8_t *)&c, sizeof(c));
+//UsbSendPacket((uint8_t *)&c, sizeof(c));
   FpgaWriteConfWord(FPGA_MAJOR_MODE_OFF);
   LED_A_OFF();
   LED_B_OFF();
@@ -333,13 +369,36 @@ void MeasureAntennaTuningHf(void)
 		// can measure voltages up to 33000 mV
 		vHf = (VDD_MV * AvgAdc(ADC_CHAN_HF)) >> 10;
 
-		Dbprintf("\r%d mV           ",vHf);
+		Dbprintf("\r%d mV           ",vHf/10);
 		
 		if (BUTTON_PRESS()) 
 		  break;
 	}
 	DbpString("\nCancelled");
 }
+
+
+void test_fpga()
+{
+
+  return;
+  
+  int i;
+  
+      FpgaWriteConfWord(FPGA_MAJOR_MODE_LF_READER);
+      
+      for (i=255; i>19; i--) {
+      
+	      WDT_HIT();
+	      
+	      FpgaSendCommand(FPGA_CMD_SET_DIVISOR, i);
+	      
+	      DelaymS(5000);
+      }
+      
+      FpgaWriteConfWord(FPGA_MAJOR_MODE_OFF);	
+}
+
 
 // ARM Pins that can generate a 24Mhz signal via TIMx (HW Rev2)
 //----------------------------------------------------------
@@ -403,7 +462,67 @@ void SetupPCK0Clock(void)
   // TIM1 counter enable
   TIM_Cmd(TIM1,ENABLE);
 }
-
+void SimulateTagLowFrequency(int period, int gap, int ledcontrol)
+{
+	int i;
+	uint8_t *tab = (uint8_t *)BigBuf;
+      
+	OLEDClear();
+  
+      	OLEDPutstr("SimulateTagLowFrequency\n");
+	Dbprintf("Period = %d\nGap = %d\n", period, gap );
+	OLEDDraw();
+	 
+	FpgaWriteConfWord(FPGA_MAJOR_MODE_LF_EDGE_DETECT);
+    /*
+	AT91C_BASE_PIOA->PIO_PER = GPIO_SSC_DOUT | GPIO_SSC_CLK;//Pin Enable Register
+    
+	AT91C_BASE_PIOA->PIO_OER = GPIO_SSC_DOUT;//Output Enable Register
+	AT91C_BASE_PIOA->PIO_ODR = GPIO_SSC_CLK;//Output Disable Register
+    */
+	
+#define SHORT_COIL()	LOW( GPIO_SSC_DOUT )
+#define OPEN_COIL()	HIGH( GPIO_SSC_DOUT )
+    
+	i = 0;
+	for(;;) {
+		while(!(GETBIT(GPIO_SSC_CLK))) {
+			if(BUTTON_PRESS()) {
+				DbpString("Stopped");
+				return;
+			}
+			WDT_HIT();
+		}
+        
+		if (ledcontrol)
+			LED_D_ON();
+        
+		if(tab[i])
+			OPEN_COIL();
+		else
+			SHORT_COIL();
+        
+		if (ledcontrol)
+			LED_D_OFF();
+        
+		while( GETBIT( GPIO_SSC_CLK )) {
+			if(BUTTON_PRESS()) {
+				DbpString("Stopped");
+				return;
+			}
+			WDT_HIT();
+		}
+        
+		i++;
+		if(i == period) {
+			i = 0;
+			if (gap) {
+				SHORT_COIL();
+				SpinDelayUs(gap);
+			}
+		}
+	}
+}
 // starts here
 int main(void)
 {
@@ -435,21 +554,46 @@ int main(void)
   // Startup OLED
   InitOLED();
 
-  LEDSet(0);
-  
-  
-  OLEDClear();
   OLEDPutstr("FPGA INIT\n");
   OLEDDraw();
+  LEDSet(0);
+ 
+  OLEDClear();
+    
+    /* Enable ADC1 reset calibaration register */   
+  ADC_ResetCalibration(ADC1);
+  
+  /* Check the end of ADC1 reset calibration register */
+  while(ADC_GetResetCalibrationStatus(ADC1));
+
+  /* Start ADC1 calibaration */
+  ADC_StartCalibration(ADC1);
+  
+  /* Check the end of ADC1 calibration */
+  while(ADC_GetCalibrationStatus(ADC1));  
+    
+  ADC_SoftwareStartConvCmd(ADC1, ENABLE);
+
+  
+  
+  FpgaDownloadAndGo();
+
+  SetupPCK0Clock();
   
 #if 0
+  OLEDClear();
+  OLEDPutstr("FPGA TEST MODE\n");
+  OLEDDraw();
+
   HIGH(FPGAON);					// Enable VREG's
   DelaymS(100);
 	
   // about 1.3MHz
-  while(0) {
-  	LOW(GPIO_FPGA_CCLK);
-  	HIGH(GPIO_FPGA_CCLK);
+  while(1) {
+  	LOW(NCS);
+  	DelayuS(1);
+  	HIGH(NCS);
+  	DelayuS(1);
   }
 
   while(1) {
@@ -458,17 +602,13 @@ int main(void)
   }
 #endif
   
-  FpgaDownloadAndGo();
-
-  
-  SetupPCK0Clock();
-  
   OLEDClear();
   OLEDPutstr("SYSTEM INIT\n");
   OLEDPutstr("SYSTEM READY\n");
   OLEDDraw();
   
   DelaymS(1000);
+  
   
   OLEDDisplayPicture( l1logo_inv );
   OLEDDraw();
@@ -515,13 +655,16 @@ int main(void)
   
 
  OLEDClear();
-  
+
+
   MeasureAntennaTuning();
-  
   DelaymS( 5000 );
   
-  MeasureAntennaTuningHf();
-    
+  MeasureAntennaTuningHf();  
+  DelaymS( 500 );
+  
+  SimulateTagLowFrequency(1000,100,0);
+  
   DelaymS(25000);
     
   ////////////////// Shut down 

@@ -16,5 +16,6 @@
 int kvsprintf(const char *format, void *arg, int radix, va_list ap);
 int vsprintf(char *str, const char *format, va_list ap);
 int sprintf(char *str, const char *format, ...);
+void printF(uint8_t x, uint8_t y, int32_t Data,uint8_t bigfont);
 
 #endif

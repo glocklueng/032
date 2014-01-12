@@ -241,7 +241,8 @@ int bitparse_find_section(char section_name, char **section_start, unsigned int 
 // with the right parameters to download the image
 //-----------------------------------------------------------------------------
 static const char _binary_fpga_bit_start[] = {
-  #include "fpga.h"
+  //#include "fpga.h"
+  #include "fpga_test.h"
 };
 
 static const char *_binary_fpga_bit_end=_binary_fpga_bit_start+sizeof(_binary_fpga_bit_start);
@@ -340,10 +341,13 @@ void FpgaWriteConfWord(BYTE v)
 #include "string.h"
 
 
-#define	FPGA_SCLK_HIGH() 		HIGH(GPIO_FPGA_CCLK)
-#define	FPGA_SCLK_LOW() 	        LOW(GPIO_FPGA_CCLK)
-#define	FPGA_SDIN_HIGH() 		HIGH(GPIO_FPGA_DIN)
-#define	FPGA_SDIN_LOW()			LOW(GPIO_FPGA_DIN)
+#define	FPGA_SCLK_HIGH() 		HIGH(GPIO_SSC_CLK)
+#define	FPGA_SCLK_LOW() 	        LOW(GPIO_SSC_CLK)
+#define	FPGA_SDIN_HIGH() 		HIGH(GPIO_SSC_DIN)
+#define	FPGA_SDIN_LOW()			LOW(GPIO_SSC_DIN)
+
+#define	FPGA_NCS_LOW()			LOW(NCS)
+#define	FPGA_NCS_HIGH()			HIGH(NCS)
 	
 
 // Temporarily putting my SPI routines in here til they work.
@@ -453,19 +457,20 @@ static void FPGASpiSendWord(unsigned short cmdword)
   FPGA_SCLK_HIGH( );
   
   for(i = 0 ; i <  16 ; i++) {
-	 
-	if( tbyte & 0x80 ) {            
-	  FPGA_SDIN_HIGH() ;                       
-	} else {
-	  FPGA_SDIN_LOW() ;         
-	}
-	
-	FPGA_SCLK_LOW() ;                    
-	FPGA_SCLK_HIGH( );  
-	
-	tbyte  <<= 1;           
+    
+    if( tbyte & 0x80 ) {            
+      FPGA_SDIN_HIGH() ;                       
+    } else {
+      FPGA_SDIN_LOW() ;         
+    }
+    
+    FPGA_SCLK_LOW() ;                    
+    FPGA_SCLK_HIGH( );  
+    
+    tbyte  <<= 1;           
   }
 }
+
 //-----------------------------------------------------------------------------
 // Send a 16 bit command/data pair to the FPGA.
 // The bit format is:  C3 C2 C1 C0 D11 D10 D9 D8 D7 D6 D5 D4 D3 D2 D1 D0
@@ -473,11 +478,10 @@ static void FPGASpiSendWord(unsigned short cmdword)
 //-----------------------------------------------------------------------------
 void FpgaSendCommand(WORD cmd, WORD v)
 {
-
-  // SetupSpi(SPI_FPGA_MODE);
-  FPGASpiSendWord( cmd | v );
+ 	// SetupSpi(SPI_FPGA_MODE);
+	FPGASpiSendWord( cmd | v );
   
-  // no done on Software SPI
+	// no done on Software SPI
 }
 
 //-----------------------------------------------------------------------------
@@ -487,7 +491,9 @@ void FpgaSendCommand(WORD cmd, WORD v)
 //-----------------------------------------------------------------------------
 void FpgaWriteConfWord(BYTE v)
 {
-	FpgaSendCommand(FPGA_CMD_SET_CONFREG, v);
+	FPGA_NCS_LOW();
+ 	FpgaSendCommand(FPGA_CMD_SET_CONFREG, v);
+	FPGA_NCS_HIGH();
 }
 
 //-----------------------------------------------------------------------------
@@ -495,14 +501,14 @@ void FpgaWriteConfWord(BYTE v)
 // closable, but should only close one at a time. Not an FPGA thing, but
 // the samples from the ADC always flow through the FPGA.
 //-----------------------------------------------------------------------------
-void SetAdcMuxFor(uint32_t whichGpio)
+void _SetAdcMuxFor(GPIO_TypeDef *port, u16 pin)
 {
 	LOW(GPIO_MUXSEL_HIPKD);
 	LOW(GPIO_MUXSEL_HIRAW);
 	LOW(GPIO_MUXSEL_LORAW);
 	LOW(GPIO_MUXSEL_LOPKD);
 
-	//HIGH(whichGpio);
+	GPIO_WriteBit(port,pin,Bit_SET);
 }
 
 static void DownloadFPGA_byte(unsigned char w)
@@ -525,6 +531,7 @@ static void DownloadFPGA_byte(unsigned char w)
 static void DownloadFPGA(const char *FpgaImage, int FpgaImageLen, int bytereversal)
 {
 	int i=0;
+	
   	OLEDPutstr("FPGA SETUP\n");
   	OLEDDraw();
 	
@@ -588,7 +595,7 @@ static void DownloadFPGA(const char *FpgaImage, int FpgaImageLen, int byterevers
 		}
 	} else {
 	  while(FpgaImageLen-->0) {
-			DownloadFPGA_byte(*FpgaImage++);
+		DownloadFPGA_byte(*FpgaImage++);
 	  }
 	}
 
@@ -600,23 +607,30 @@ static void DownloadFPGA(const char *FpgaImage, int FpgaImageLen, int byterevers
 		i--;
 	}
 	// error indicator
-	if (i==0){
+	if ( i== 0 ) {
 
 	  	OLEDPutstr("FPGA FAILED TO ACK DONE\nCHECK FPGA\n");
 	  	OLEDDraw();
+		
 		i = 50;
+		
 		// get users attention
 		while( i-- ) {
+		  
 			InvertOLED( 1 );
 			DelaymS( 100 );
 			InvertOLED( 0 );
 			DelaymS( 100 );
 		}
+		
 		return;
 	}
 
  	OLEDPutstr("FPGA BITSTREAM LOADED\n");
   	OLEDDraw();
+	
+	FPGA_NCS_HIGH();
+	
 }
 
 static char *bitparse_headers_start;
@@ -694,6 +708,7 @@ int bitparse_find_section(char section_name, char **section_start, unsigned int 
 //-----------------------------------------------------------------------------
 static const char _binary_fpga_bit_start[] = {
   #include "fpga.h"
+  //#include "fpga_test.h"
 };
 
 static const char *_binary_fpga_bit_end=_binary_fpga_bit_start+sizeof(_binary_fpga_bit_start);
