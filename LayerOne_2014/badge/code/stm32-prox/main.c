@@ -462,6 +462,8 @@ void SetupPCK0Clock(void)
   // TIM1 counter enable
   TIM_Cmd(TIM1,ENABLE);
 }
+
+
 void SimulateTagLowFrequency(int period, int gap, int ledcontrol)
 {
 	int i;
@@ -523,6 +525,9 @@ void SimulateTagLowFrequency(int period, int gap, int ledcontrol)
 		}
 	}
 }
+
+void FPGASpiSendWord(unsigned short cmdword);
+
 // starts here
 int main(void)
 {
@@ -574,11 +579,11 @@ int main(void)
     
   ADC_SoftwareStartConvCmd(ADC1, ENABLE);
 
-  
+  // Kicks off the 24Mhz PCK0 (DOUT)
+  SetupPCK0Clock();
   
   FpgaDownloadAndGo();
-
-  SetupPCK0Clock();
+    
   
 #if 0
   OLEDClear();

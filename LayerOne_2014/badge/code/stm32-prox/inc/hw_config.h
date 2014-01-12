@@ -72,6 +72,9 @@ void OLEDPutBigstr (const char *ptr);
 
 void DbpBigString(char *str);
 
+#define __enable_irq()    asm("cpsie i")
+#define __disable_irq()   asm("cpsid i")
+
 #endif  /*__HW_CONFIG_H*/
 
 /******************* (C) COPYRIGHT 2008 STMicroelectronics *****END OF FILE****/

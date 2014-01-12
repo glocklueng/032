@@ -341,13 +341,19 @@ void FpgaWriteConfWord(BYTE v)
 #include "string.h"
 
 
+// for bitbanging the bitstream
 #define	FPGA_SCLK_HIGH() 		HIGH(GPIO_SSC_CLK)
 #define	FPGA_SCLK_LOW() 	        LOW(GPIO_SSC_CLK)
 #define	FPGA_SDIN_HIGH() 		HIGH(GPIO_SSC_DIN)
 #define	FPGA_SDIN_LOW()			LOW(GPIO_SSC_DIN)
 
+// fpga <> arm comms
 #define	FPGA_NCS_LOW()			LOW(NCS)
 #define	FPGA_NCS_HIGH()			HIGH(NCS)
+#define	FPGA_MOSI_LOW()			LOW(MOSI)
+#define	FPGA_MOSI_HIGH()		HIGH(MOSI)
+#define	FPGA_SPCK_LOW()			LOW(SPCK)
+#define	FPGA_SPCK_HIGH()		HIGH(SPCK)
 	
 
 // Temporarily putting my SPI routines in here til they work.
@@ -362,7 +368,7 @@ void FpgaWriteConfWord(BYTE v)
 #define SPI_CS_PORT			GPIOB
 #define SPI_CS_PIN			GPIO_Pin_1
 
-extern void __no_operation(void);
+#define __no_operation(void)		asm("nop")
 
 /**
  * softspi_rxtx(data) - send and receive a byte on a software SPI
@@ -406,7 +412,8 @@ unsigned char softspi_rxtx(unsigned char data)
     LOW( SPI_CLK  );                
     bitmask = bitmask >> 1;          
   
-    __no_operation();                   
+    __no_operation();                    
+    
   } while ( bitmask != 0);
   
   
@@ -433,7 +440,9 @@ static void FPGASpiSendByte(unsigned char data)
   unsigned char  tbyte = data ;       
   
   FPGA_SCLK_HIGH( );
-  
+    
+  __no_operation();
+    
   for(i = 0 ; i < 8 ; i++) {
 	 
 	if( tbyte & 0x80 ) {            
@@ -441,33 +450,42 @@ static void FPGASpiSendByte(unsigned char data)
 	} else {
 	  FPGA_SDIN_LOW() ;         
 	}
-	
-	FPGA_SCLK_LOW() ;                    
+	  __no_operation();
+	FPGA_SCLK_LOW() ;         
+	  
+	__no_operation();
 	FPGA_SCLK_HIGH( );  
 	
 	tbyte  <<= 1;           
   }
 }
 
-static void FPGASpiSendWord(unsigned short cmdword)
+//
+// NCS~~~~__________~~~
+// CLK...._~_~_~_~_~....
+// MOSI..____~___~__....
+//
+
+// NCS Is active low before we get here.
+void FPGASpiSendWord(register unsigned short cmdword)
 {
-  unsigned char  i ;
-  unsigned short  tbyte = cmdword ;       
-  
-  FPGA_SCLK_HIGH( );
+  unsigned short  i ;
+   
+  FPGA_SPCK_HIGH( );
   
   for(i = 0 ; i <  16 ; i++) {
     
-    if( tbyte & 0x80 ) {            
-      FPGA_SDIN_HIGH() ;                       
+    if( cmdword & (unsigned short)0x8000 ) {            
+      FPGA_MOSI_HIGH() ;  
     } else {
-      FPGA_SDIN_LOW() ;         
+      FPGA_MOSI_LOW() ;         
     }
     
-    FPGA_SCLK_LOW() ;                    
-    FPGA_SCLK_HIGH( );  
+    // Toggle SoftSPI CLK
+    FPGA_SPCK_LOW() ;     
+    FPGA_SPCK_HIGH( );  
     
-    tbyte  <<= 1;           
+    cmdword  <<= 1;           
   }
 }
 
@@ -489,12 +507,15 @@ void FpgaSendCommand(WORD cmd, WORD v)
 // vs. clone vs. etc.). This is now a special case of FpgaSendCommand() to
 // avoid changing this function's occurence everywhere in the source code.
 //-----------------------------------------------------------------------------
-void FpgaWriteConfWord(BYTE v)
+void FpgaWriteConfWord(uint8_t v)
 {
 	FPGA_NCS_LOW();
- 	FpgaSendCommand(FPGA_CMD_SET_CONFREG, v);
+
+	FpgaSendCommand(FPGA_CMD_SET_CONFREG, v);
+
 	FPGA_NCS_HIGH();
-}
+	FPGA_NCS_LOW();
+ }
 
 //-----------------------------------------------------------------------------
 // Set up the CMOS switches that mux the ADC: four switches, independently
@@ -630,6 +651,8 @@ static void DownloadFPGA(const char *FpgaImage, int FpgaImageLen, int byterevers
   	OLEDDraw();
 	
 	FPGA_NCS_HIGH();
+	FPGA_MOSI_HIGH();
+	FPGA_SPCK_HIGH();
 	
 }
 
