@@ -5,8 +5,10 @@
 
 // defines
 
-// VDD voltaage in MV
+// VDD voltage in MV
 #define VDD_MV		( 33400 )
+
+#define DMA_ADC		(  1 )
 
 // Ports and pin mapping
 
@@ -56,7 +58,7 @@
 //#define GPIOA_OUTPUTS_50MHZ_OD_MASK		( USB_DISCONNECT_PIN )
 //#define GPIOA_INPUT_FLOAT_MASK			(  )
 #define GPIOA_INPUT_PULLDOWN_MASK		( SW_K1_PIN | SW_K2_PIN  )
-#define GPIOA_ANALOG_MASK				( AMPL_HI_PIN | AMPL_LO_PIN  )
+#define GPIOA_ANALOG_MASK			( AMPL_HI_PIN | AMPL_LO_PIN  )
 #define GPIOA_DEFAULT_LOW_MASK			( GPIOA_OUTPUTS_2MHZ_PP_MASK | GPIOA_OUTPUTS_50MHZ_PP_MASK )
 
 /* End Section GPIOA */
@@ -65,15 +67,18 @@
 
 #define FPGAON_PORT                    GPIOB
 #define FPGA_DONE_PORT                 GPIOB
-#define	NVDD_ON_PORT					GPIOB
+#define	NVDD_ON_PORT			GPIOB
+#define SSP_CLK_PORT			GPIOB
 
 // MUXSEL's
 #define MUXSEL_PORT                   	GPIOB
-#define	MUXSEL_HIPKD_PORT				GPIOB
-#define	MUXSEL_LOPKD_PORT				GPIOB
-#define	MUXSEL_HIRAW_PORT				GPIOB
-#define	MUXSEL_LORAW_PORT				GPIOB
-	
+#define	MUXSEL_HIPKD_PORT		GPIOB
+#define	MUXSEL_LOPKD_PORT		GPIOB
+#define	MUXSEL_HIRAW_PORT		GPIOB
+#define	MUXSEL_LORAW_PORT		GPIOB
+#define SSP_DIN_PORT			GPIOB
+#define SSP_DOUT_PORT			GPIOB
+
 #define MUXSEL_HIPKD_PIN               GPIO_Pin_15								//output
 #define MUXSEL_LOPKD_PIN               GPIO_Pin_14								//output
 #define MUXSEL_HIRAW_PIN               GPIO_Pin_13								//output
@@ -93,17 +98,19 @@
 #define SSP_PORT						GPIOB
 #define SSP_DIN_PIN                    GPIO_Pin_6								// input(OUTPUT)	
 #define SSP_DOUT_PIN                   GPIO_Pin_5								// output
+
 // PB3/4 JTAG
 #define SSP_CLK_PIN                    GPIO_Pin_2								// input
 #define SSP_FRAME                      GPIO_Pin_1								// input
 
 #define FPGA_DONE_PIN                  GPIO_Pin_0								// input
 
-#define GPIOB_OUTPUTS_2MHZ_PP_MASK		(SSP_DIN_PIN | SSP_FRAME  | SSP_DOUT_PIN | DC_PIN | RES_PIN | CS_PIN | FPGAON_PIN  | NVDD_ON_PIN | MUXSEL_HIPKD_PIN | \
-											MUXSEL_LOPKD_PIN |MUXSEL_HIRAW_PIN | MUXSEL_LORAW_PIN )
+#define GPIOB_OUTPUTS_2MHZ_PP_MASK		(SSP_DIN_PIN | SSP_FRAME  | DC_PIN | RES_PIN | 	\
+						CS_PIN | FPGAON_PIN  | NVDD_ON_PIN | MUXSEL_HIPKD_PIN | 	\
+						MUXSEL_LOPKD_PIN |MUXSEL_HIRAW_PIN | MUXSEL_LORAW_PIN )
 
 //#define GPIOB_OUTPUTS_10MHZ_PP_MASK		( )
-//#define GPIOB_OUTPUTS_50MHZ_PP_MASK		( USB_DISCONNECT_PIN )
+#define GPIOB_OUTPUTS_50MHZ_PP_MASK		( SSP_DOUT_PIN )
 //#define GPIOB_OUTPUTS_50MHZ_OD_MASK		( USB_DISCONNECT_PIN )
 #define GPIOB_INPUT_FLOAT_MASK			( SSP_FRAME  | SSP_CLK_PIN )
 #define GPIOB_INPUT_PULLUP_MASK			( FPGA_DONE_PIN ) 
@@ -156,8 +163,8 @@
 #define SDCS_PIN                       GPIO_Pin_0								// output
 
 #define GPIOC_OUTPUTS_2MHZ_PP_MASK		( OE4_PIN | OE3_PIN | OE2_PIN | OE1_PIN | SPEAKER_PIN | RELAY_PIN |SDDO_PIN | SDCS_PIN)
-#define GPIOC_OUTPUTS_10MHZ_PP_MASK		( SDSCK_PIN )
-#define GPIOC_OUTPUTS_50MHZ_PP_MASK		( PCK0_PIN  )
+#define GPIOC_OUTPUTS_10MHZ_PP_MASK		( SDSCK_PIN | NCS_PIN )
+#define GPIOC_OUTPUTS_50MHZ_PP_MASK		( PCK0_PIN   )
 //#define GPIOC_OUTPUTS_50MHZ_PP_MASK	( )
 #define GPIOC_INPUT_FLOAT_MASK			(  SDDI_PIN)
 #define GPIOC_INPUT_PULLUP_MASK			( FPGA_NINIT_PIN )
@@ -201,6 +208,7 @@
 #define				GPIO_LED_B_PIN			LED_PIN
 #define				GPIO_LED_C_PIN			LED_PIN
 #define				GPIO_LED_D_PIN			LED_PIN
+
 #define				GPIO_LED_A_PORT			LED_PORT
 #define				GPIO_LED_B_PORT			LED_PORT
 #define				GPIO_LED_C_PORT			LED_PORT
@@ -218,6 +226,16 @@
 
 #define				GPIO_FPGA_DONE_PIN		FPGA_DONE_PIN
 #define				GPIO_FPGA_DONE_PORT		FPGA_DONE_PORT
+
+#define				GPIO_SSC_CLK_PIN		SSP_CLK_PIN
+#define				GPIO_SSC_CLK_PORT		SSP_CLK_PORT
+
+#define				GPIO_SSC_DIN_PIN		SSP_DIN_PIN
+#define				GPIO_SSC_DIN_PORT		SSP_DIN_PORT
+				
+				// PA17				//PB5
+#define				GPIO_SSC_DOUT_PIN		SSP_DOUT_PIN
+#define				GPIO_SSC_DOUT_PORT		SSP_DOUT_PORT
 
 
 #define				SpinDelay			DelaymS

@@ -25,9 +25,11 @@
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 #define ADC1_DR_Address    ((u32)0x4001244C)
+
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 ErrorStatus HSEStartUpStatus;
+
 // ADC values
 uint16_t   ADC_Ampl[2];
 uint32_t SystemCoreClock = SYSCLK_FREQ_72MHz ;
@@ -569,6 +571,7 @@ void GPIO_Configuration(void)
   /* Configure GPIOA analog input -------------------------*/
   GPIO_InitStructure.GPIO_Pin = GPIOA_ANALOG_MASK;
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
   GPIO_Init(GPIOA, &GPIO_InitStructure);
 #endif  
 
@@ -762,15 +765,15 @@ void ADC_Configuration(void)
   DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_HalfWord;
   DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_HalfWord;
   DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;
-  DMA_InitStructure.DMA_Priority = DMA_Priority_High;
+  DMA_InitStructure.DMA_Priority = DMA_Priority_Low;
   DMA_InitStructure.DMA_M2M = DMA_M2M_Disable;
   DMA_Init(DMA1_Channel1, &DMA_InitStructure);
   
   /* Enable DMA1 channel1 */
   DMA_Cmd(DMA1_Channel1, ENABLE);
   
-  /* Enable the DMA1 Channel1 Transfer complete interrupt */
-  DMA_ITConfig(DMA1_Channel1, DMA_IT_TC, ENABLE);
+  /* Disable the DMA1 Channel1 Transfer complete interrupt */
+  DMA_ITConfig(DMA1_Channel1, DMA_IT_TC, DISABLE);
      
   /* ADC1 configuration ------------------------------------------------------*/
   ADC_InitStructure.ADC_Mode = ADC_Mode_Independent;
@@ -782,10 +785,10 @@ void ADC_Configuration(void)
   ADC_Init(ADC1, &ADC_InitStructure);
 
   /* ADC0 regular channel configuration */ 
-  ADC_RegularChannelConfig(ADC1, ADC_Channel_0, 1, ADC_SampleTime_13Cycles5);
+  ADC_RegularChannelConfig(ADC1, ADC_Channel_0, 1, ADC_SampleTime_239Cycles5);
 
   /* ADC1 regular channel configuration */ 
-  ADC_RegularChannelConfig(ADC1, ADC_Channel_1, 1, ADC_SampleTime_13Cycles5);
+  ADC_RegularChannelConfig(ADC1, ADC_Channel_1, 1, ADC_SampleTime_239Cycles5);
 
   /* Enable ADC1 DMA */
   ADC_DMACmd(ADC1, ENABLE);
@@ -795,6 +798,7 @@ void ADC_Configuration(void)
 
   /* Enable ADC1 reset calibaration register */   
   ADC_ResetCalibration(ADC1);
+  
   /* Check the end of ADC1 reset calibration register */
   while(ADC_GetResetCalibrationStatus(ADC1));
 
@@ -804,6 +808,7 @@ void ADC_Configuration(void)
   /* Check the end of ADC1 calibration */
   while(ADC_GetCalibrationStatus(ADC1));  
 }
+
 /*******************************************************************************
 * Function Name  : Get_SerialNum.
 * Description    : Create the serial number string descriptor.

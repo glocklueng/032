@@ -214,25 +214,28 @@ void InitOLED( void )
   u8CursorY = 0;
   
   memset(sVideoRAM,0,sizeof(sVideoRAM));
- 
-	// Fill in the prefix command byte on each page line of the display buffer
-	// We can do it during initialisation as this byte is never overwritten.
+  
+  // Fill in the prefix command byte on each page line of the display buffer
+  // We can do it during initialisation as this byte is never overwritten.
   
 #ifdef SSD1306_PAGE_PREFIX
-	{
-		unsigned	i;
-
-		for(i=0; i < GDISP_SCREEN_HEIGHT/8 * SSD1306_PAGE_WIDTH; i+=SSD1306_PAGE_WIDTH)
-			RAM(g)[i] = SSD1306_PAGE_PREFIX;
-	}
+  {
+    unsigned	i;
+    
+    for(i=0; i < GDISP_SCREEN_HEIGHT/8 * SSD1306_PAGE_WIDTH; i+=SSD1306_PAGE_WIDTH)
+      RAM(g)[i] = SSD1306_PAGE_PREFIX;
+  }
 #endif
-   DelaymS(500);
-	OLEDInit();
-		
+  DelaymS(500);
+  OLEDInit();
+  
+  OLEDClear();
+  OLEDDraw();		
 }
+
 void OLEDClear( void ) 
 {
-	// Reset Cursor  
+  // Reset Cursor  
   u8CursorX = 0;
   u8CursorY = 0;
   
@@ -353,13 +356,31 @@ void OLEDInit(void)
 	
 	for( y=0;y<20;y++ ) {
 		
-	  LEDSet(0);
-		DelaymS(100);
-		
-		LEDSet(1);
+		LEDSet( 1 );
+		DelaymS(10*y);
+		LEDSet(0);		
 		DelaymS(10*y);
 	}
-	
+  	
+	OLEDPutstr("RELAY TEST\n");
+	OLEDDraw();
+
+  	LEDSet( 1 );
+  	HIGH( RELAY );
+  	DelaymS(500);
+  
+  	LEDSet( 0 );
+  	LOW ( RELAY );
+  	DelaymS( 500 );
+
+  	LEDSet( 1 );
+  	HIGH( RELAY );
+  	DelaymS(500);
+  
+  	LEDSet( 0 );
+  	LOW ( RELAY );
+  	DelaymS(700);
+  
 	OLEDPutstr("DONE\n");
 	OLEDDraw();
 		
@@ -424,7 +445,7 @@ void OLEDBigchar (unsigned char u8Char)
 {
 	
   unsigned char  i=0;
-    unsigned short *pointer;
+    uint16_t *pointer;
 	
 	if(u8Char=='.') {           // Small point to Save space
 		write_display (0x60);
@@ -442,7 +463,8 @@ void OLEDBigchar (unsigned char u8Char)
 		u8CursorX+=6;
     }
 	else {                      // Number
-		pointer = (unsigned short*)(BigFonts)+(u8Char)*20;
+	  
+		pointer = (uint16_t*)BigFonts[u8Char*20];
 		// Upper side
 		u8CursorY--;
 		
@@ -457,8 +479,11 @@ void OLEDBigchar (unsigned char u8Char)
 		// Lower Side
 		u8CursorY++;
 		u8CursorX-=10;
-		while (i < 10) { write_display((*pointer++)); i++; }
-        u8CursorX+=2;
+		while (i < 10) { 
+		  write_display(*pointer); 
+			pointer++;i++; 
+		}
+       		 u8CursorX+=2;
 	}
 }
 
@@ -520,6 +545,22 @@ void OLEDPutstr (const char *ptr)
   }
 }
 
+void OLEDPutBigstr (const char *ptr)
+{    
+  char c;
+  
+  while ((c=*(ptr++)) != 0x00) {
+	if( c == '\n' ){
+	  u8CursorX = 0;
+	  u8CursorY++;
+	}else
+	if( c == '\r' ){
+	  u8CursorX = 0;
+	}else  {
+		OLEDBigchar(c);
+	}
+  }
+}
 
 
 /*-------------------------------------------------------------------------------
@@ -564,6 +605,11 @@ void OLEDDisplayPicture (const uint8_t *pointer)
 		count--;
         *p++ = data;
 	}
+}
+
+void OLEDDrawXY( int x,int y )
+{
+  
 }
 
 

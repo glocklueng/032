@@ -86,7 +86,7 @@
 #define LED_D_INV()		INVBIT(GPIO_LED_D)
 #define RELAY_ON()		HIGH(GPIO_RELAY)
 #define RELAY_OFF()		LOW(GPIO_RELAY)
-#define BUTTON_PRESS()		!GETBIT( SW_K1 )
+#define BUTTON_PRESS()		!GETBIT( SW_K2 )
 
 #define VERSION_INFORMATION_MAGIC 0x56334d50
 PACKED struct version_information {

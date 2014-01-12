@@ -183,8 +183,8 @@ void CustomHID_SetConfiguration(void)
     /* Device configured */
     bDeviceState = CONFIGURED;
     
-    /* Start ADC1 Software Conversion */ 
-    ADC_SoftwareStartConvCmd(ADC1, ENABLE);
+//    /* Start ADC1 Software Conversion */ 
+//	ADC_SoftwareStartConvCmd(ADC1, ENABLE);
   }
 }
 /*******************************************************************************

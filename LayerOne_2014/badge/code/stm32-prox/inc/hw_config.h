@@ -18,6 +18,7 @@
 #define __HW_CONFIG_H
 
 #define RAMFUNC
+
 #include <stdint.h>
 
 #include "stm32f10x_lib.h"
@@ -67,6 +68,9 @@ void OLEDPutstr (const char *ptr);
 void LEDSet(unsigned char state);
 void OLEDDisplayPicture (const uint8_t *pointer) ;
 void InvertOLED( unsigned char state );
+void OLEDPutBigstr (const char *ptr);
+
+void DbpBigString(char *str);
 
 #endif  /*__HW_CONFIG_H*/
 
