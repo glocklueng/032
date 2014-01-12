@@ -121,16 +121,16 @@
 
 /* GPIOC Section */
 #define MISO_PORT                      GPIOC
-#define MISO_PIN                       GPIO_Pin_15
+#define MISO_PIN                       GPIO_Pin_15				// input from fpga
 
 #define MOSI_PORT                      GPIOC
-#define MOSI_PIN                       GPIO_Pin_14
+#define MOSI_PIN                       GPIO_Pin_14				// output to fpga
 
 #define SPCK_PORT                      GPIOC
-#define SPCK_PIN                       GPIO_Pin_13
+#define SPCK_PIN                       GPIO_Pin_13				// output to fpga
 
 #define NCS_PORT                       GPIOC
-#define NCS_PIN                        GPIO_Pin_12
+#define NCS_PIN                        GPIO_Pin_12				// output to fpga
 
 // Output Enables
 #define OE_PORT                         GPIOC
@@ -163,10 +163,10 @@
 #define SDCS_PIN                       GPIO_Pin_0								// output
 
 #define GPIOC_OUTPUTS_2MHZ_PP_MASK		( OE4_PIN | OE3_PIN | OE2_PIN | OE1_PIN | SPEAKER_PIN | RELAY_PIN |SDDO_PIN | SDCS_PIN)
-#define GPIOC_OUTPUTS_10MHZ_PP_MASK		( SDSCK_PIN | NCS_PIN )
+#define GPIOC_OUTPUTS_10MHZ_PP_MASK		( SDSCK_PIN | NCS_PIN | MOSI_PIN |SPCK_PIN )
 #define GPIOC_OUTPUTS_50MHZ_PP_MASK		( PCK0_PIN   )
-//#define GPIOC_OUTPUTS_50MHZ_PP_MASK	( )
-#define GPIOC_INPUT_FLOAT_MASK			(  SDDI_PIN)
+
+#define GPIOC_INPUT_FLOAT_MASK			(  SDDI_PIN | MISO_PIN )
 #define GPIOC_INPUT_PULLUP_MASK			( FPGA_NINIT_PIN )
 //#define GPIOC_ANALOG_MASK				( )
 #define	GPIOC_DEFAULT_LOW_MASK			( GPIOC_OUTPUTS_2MHZ_PP_MASK | GPIOC_OUTPUTS_10MHZ_PP_MASK )

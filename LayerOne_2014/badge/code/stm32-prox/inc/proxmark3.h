@@ -56,8 +56,12 @@
 #define UDP_CSR_BYTES_RECEIVED(x)				(((x) >> 16) & 0x7ff)
 //**************************************************************
 
-#define LOW(x)	 GPIO_WriteBit(x##_PORT,x##_PIN,Bit_RESET)
-#define HIGH(x)	 GPIO_WriteBit(x##_PORT,x##_PIN,Bit_SET)
+//#define LOW(x)	 GPIO_WriteBit(x##_PORT,x##_PIN,Bit_RESET)
+//#define HIGH(x)	 GPIO_WriteBit(x##_PORT,x##_PIN,Bit_SET)
+
+#define HIGH(x)	 x##_PORT->BSRR = x##_PIN
+#define LOW(x)	 x##_PORT->BRR = x##_PIN
+
 #define GETBIT(x) GPIO_ReadInputDataBit(x##_PORT,x##_PIN)
 #define SETBIT(x, y) (y) ? (HIGH(x)):(LOW(x))
 #define INVBIT(x) SETBIT((x), !(GETBIT(x)))
