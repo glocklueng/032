@@ -112,8 +112,8 @@
 //#define GPIOB_OUTPUTS_10MHZ_PP_MASK		( )
 #define GPIOB_OUTPUTS_50MHZ_PP_MASK		( SSP_DOUT_PIN )
 //#define GPIOB_OUTPUTS_50MHZ_OD_MASK		( USB_DISCONNECT_PIN )
-#define GPIOB_INPUT_FLOAT_MASK			( SSP_FRAME  | SSP_CLK_PIN )
-#define GPIOB_INPUT_PULLUP_MASK			( FPGA_DONE_PIN ) 
+#define GPIOB_INPUT_FLOAT_MASK			( SSP_FRAME   )
+#define GPIOB_INPUT_PULLUP_MASK			( FPGA_DONE_PIN |SSP_CLK_PIN) 
 //#define GPIOB_ANALOG_MASK				( )
 #define	GPIOB_DEFAULT_LOW_MASK			( GPIOB_OUTPUTS_2MHZ_PP_MASK )
 //#define	GPIOB_DEFAULT_HIGH_MASK		( )
@@ -132,12 +132,17 @@
 #define NCS_PORT                       GPIOC
 #define NCS_PIN                        GPIO_Pin_12				// output to fpga
 
-// Output Enables
+// Output Enables (these aren't supposed to be on the ARM) !!
 #define OE_PORT                         GPIOC
-#define OE4_PIN                         GPIO_Pin_11                             // output
-#define OE3_PIN                         GPIO_Pin_10                             // output
-#define OE2_PIN                         GPIO_Pin_9                              // output
-#define OE1_PIN                         GPIO_Pin_8                              // output
+#define OE1_PORT			GPIOC
+#define OE2_PORT			GPIOC
+#define OE3_PORT			GPIOC
+#define OE4_PORT			GPIOC
+
+#define OE4_PIN                         GPIO_Pin_11                             // input float
+#define OE3_PIN                         GPIO_Pin_10                             // input float
+#define OE2_PIN                         GPIO_Pin_9                              // input float
+#define OE1_PIN                         GPIO_Pin_8                              // input float
 
 // FPGA_NINIT
 #define FPGA_NINIT_PORT                 GPIOC
@@ -152,8 +157,8 @@
 #define RELAY_PIN                       GPIO_Pin_5
 
 // PCKO
-#define PCK0_PORT						GPIOC	
-#define PCK0_PIN						GPIO_Pin_4								// output clock for FPGA/SSP 24Mhz clock
+#define PCK0_PORT			GPIOC	
+#define PCK0_PIN			GPIO_Pin_4								// output clock for FPGA/SSP 24Mhz clock
 
 // SD-CARD
 #define SDCARD_PORT                    GPIOC
@@ -162,11 +167,11 @@
 #define SDSCK_PIN                      GPIO_Pin_1   				            // inverted output
 #define SDCS_PIN                       GPIO_Pin_0								// output
 
-#define GPIOC_OUTPUTS_2MHZ_PP_MASK		( OE4_PIN | OE3_PIN | OE2_PIN | OE1_PIN | SPEAKER_PIN | RELAY_PIN |SDDO_PIN | SDCS_PIN)
+#define GPIOC_OUTPUTS_2MHZ_PP_MASK		( SPEAKER_PIN | RELAY_PIN |SDDO_PIN | SDCS_PIN)
 #define GPIOC_OUTPUTS_10MHZ_PP_MASK		( SDSCK_PIN | NCS_PIN | MOSI_PIN |SPCK_PIN )
 #define GPIOC_OUTPUTS_50MHZ_PP_MASK		( PCK0_PIN   )
 
-#define GPIOC_INPUT_FLOAT_MASK			(  SDDI_PIN | MISO_PIN )
+#define GPIOC_INPUT_FLOAT_MASK			( OE4_PIN | OE3_PIN | OE2_PIN | OE1_PIN | SDDI_PIN | MISO_PIN )
 #define GPIOC_INPUT_PULLUP_MASK			( FPGA_NINIT_PIN )
 //#define GPIOC_ANALOG_MASK				( )
 #define	GPIOC_DEFAULT_LOW_MASK			( GPIOC_OUTPUTS_2MHZ_PP_MASK | GPIOC_OUTPUTS_10MHZ_PP_MASK )
@@ -237,9 +242,19 @@
 #define				GPIO_SSC_DOUT_PIN		SSP_DOUT_PIN
 #define				GPIO_SSC_DOUT_PORT		SSP_DOUT_PORT
 
+#define				GPIO_OE1_PORT			OE1_PORT
+#define				GPIO_OE2_PORT			OE2_PORT
+#define				GPIO_OE3_PORT			OE3_PORT
+#define				GPIO_OE4_PORT			OE4_PORT
+
+#define				GPIO_OE1_PIN			OE1_PIN
+#define				GPIO_OE2_PIN			OE2_PIN
+#define				GPIO_OE3_PIN			OE3_PIN
+#define				GPIO_OE4_PIN			OE4_PIN
 
 #define				SpinDelay			DelaymS
 #define				SpinDelayUs			DelayuS
+
 
 // JTAG
 // PORTB/PORTA

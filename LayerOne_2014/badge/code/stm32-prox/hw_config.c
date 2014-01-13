@@ -667,13 +667,6 @@ void GPIO_Configuration(void)
   GPIO_Init(RELAY_PORT, &GPIO_InitStructure);
   GPIO_WriteBit(RELAY_PORT,RELAY_PIN,Bit_RESET); 
   
-  // output enables
-  GPIO_InitStructure.GPIO_Pin = OE1_PIN | OE2_PIN |OE3_PIN | OE4_PIN;
-  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_2MHz;
-  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
-  GPIO_Init(OE_PORT, &GPIO_InitStructure);
-  GPIO_WriteBit(OE_PORT,(OE1_PIN | OE2_PIN |OE3_PIN | OE4_PIN),Bit_RESET); 
- 
   //OLED outputs, !RESET and !CS and D/C ( RS)
   GPIO_InitStructure.GPIO_Pin = RES_PIN |CS_PIN | DC_PIN;
   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;

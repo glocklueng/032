@@ -92,6 +92,7 @@ void _SetAdcMuxFor(GPIO_TypeDef *port, u16 pin);
 #define FPGA_MAJOR_MODE_HF_ISO14443A				(5<<5)
 #define FPGA_MAJOR_MODE_LF_PASSTHRU					(6<<5)
 #define FPGA_MAJOR_MODE_OFF							(7<<5)
+
 // Options for LF_EDGE_DETECT
 #define FPGA_LF_EDGE_DETECT_READER_FIELD 			(1<<0)
 // Options for the HF reader, tx to tag

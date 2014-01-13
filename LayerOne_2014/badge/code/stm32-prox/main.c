@@ -449,6 +449,8 @@ void SetupPCK0Clock(void)
   TIM_TimeBaseInit(TIM1,&TIM_TimeBaseStructure);
   
   // Channel 2 Configuration in PWM1 mode
+  // PWM1 gives a rounder pulse
+  // PWM2 gives a more pointed
   TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
   TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
   TIM_OCInitStructure.TIM_Pulse = Period/2;
@@ -463,6 +465,109 @@ void SetupPCK0Clock(void)
   TIM_Cmd(TIM1,ENABLE);
 }
 
+
+// compose fc/8 fc/10 waveform
+static void fc(int c, int *n) {
+	uint8_t *dest = (uint8_t *)BigBuf;
+	int idx;
+
+	// for when we want an fc8 pattern every 4 logical bits
+	if(c==0) {
+		dest[((*n)++)]=1;
+		dest[((*n)++)]=1;
+		dest[((*n)++)]=0;
+		dest[((*n)++)]=0;
+		dest[((*n)++)]=0;
+		dest[((*n)++)]=0;
+		dest[((*n)++)]=0;
+		dest[((*n)++)]=0;
+	}
+	//	an fc/8  encoded bit is a bit pattern of  11000000  x6 = 48 samples
+	if(c==8) {
+		for (idx=0; idx<6; idx++) {
+			dest[((*n)++)]=1;
+			dest[((*n)++)]=1;
+			dest[((*n)++)]=0;
+			dest[((*n)++)]=0;
+			dest[((*n)++)]=0;
+			dest[((*n)++)]=0;
+			dest[((*n)++)]=0;
+			dest[((*n)++)]=0;
+		}
+	}
+
+	//	an fc/10 encoded bit is a bit pattern of 1110000000 x5 = 50 samples
+	if(c==10) {
+		for (idx=0; idx<5; idx++) {
+			dest[((*n)++)]=1;
+			dest[((*n)++)]=1;
+			dest[((*n)++)]=1;
+			dest[((*n)++)]=0;
+			dest[((*n)++)]=0;
+			dest[((*n)++)]=0;
+			dest[((*n)++)]=0;
+			dest[((*n)++)]=0;
+			dest[((*n)++)]=0;
+			dest[((*n)++)]=0;
+		}
+	}
+}
+
+// prepare a waveform pattern in the buffer based on the ID given then
+// simulate a HID tag until the button is pressed
+void CmdHIDsimTAG(int hi, int lo, int ledcontrol)
+{
+	int n=0, i=0;
+	/*
+	 HID tag bitstream format
+	 The tag contains a 44bit unique code. This is sent out MSB first in sets of 4 bits
+	 A 1 bit is represented as 6 fc8 and 5 fc10 patterns
+	 A 0 bit is represented as 5 fc10 and 6 fc8 patterns
+	 A fc8 is inserted before every 4 bits
+	 A special start of frame pattern is used consisting a0b0 where a and b are neither 0
+	 nor 1 bits, they are special patterns (a = set of 12 fc8 and b = set of 10 fc10)
+	*/
+
+	if (hi>0xFFF) {
+		DbpString("Tags can only have 44 bits.");
+		return;
+	}
+	fc(0,&n);
+	// special start of frame marker containing invalid bit sequences
+	fc(8,  &n);	fc(8,  &n);	// invalid
+	fc(8,  &n);	fc(10, &n); // logical 0
+	fc(10, &n);	fc(10, &n); // invalid
+	fc(8,  &n);	fc(10, &n); // logical 0
+
+	WDT_HIT();
+	// manchester encode bits 43 to 32
+	for (i=11; i>=0; i--) {
+		if ((i%4)==3) fc(0,&n);
+		if ((hi>>i)&1) {
+			fc(10, &n);	fc(8,  &n);		// low-high transition
+		} else {
+			fc(8,  &n);	fc(10, &n);		// high-low transition
+		}
+	}
+
+	WDT_HIT();
+	// manchester encode bits 31 to 0
+	for (i=31; i>=0; i--) {
+		if ((i%4)==3) fc(0,&n);
+		if ((lo>>i)&1) {
+			fc(10, &n);	fc(8,  &n);		// low-high transition
+		} else {
+			fc(8,  &n);	fc(10, &n);		// high-low transition
+		}
+	}
+
+	if (ledcontrol)
+		LED_A_ON();
+	SimulateTagLowFrequency(n, 0, ledcontrol);
+
+	if (ledcontrol)
+		LED_A_OFF();
+}
 
 void SimulateTagLowFrequency(int period, int gap, int ledcontrol)
 {
@@ -483,11 +588,15 @@ void SimulateTagLowFrequency(int period, int gap, int ledcontrol)
 	AT91C_BASE_PIOA->PIO_ODR = GPIO_SSC_CLK;//Output Disable Register
     */
 	
+
+// SSP_DOUT(PB5)(GPIO_SSC_DOUT) -> SSP_DOUT(P5) (ssp_dout)
+	
 #define SHORT_COIL()	LOW( GPIO_SSC_DOUT )
 #define OPEN_COIL()	HIGH( GPIO_SSC_DOUT )
     
 	i = 0;
 	for(;;) {
+		// SSP_CLK(P9(ssp_clk) -> SSP_CLK_PIN GPIOB/GPIO_Pin_2(SSP_CLK) 
 		while(!(GETBIT(GPIO_SSC_CLK))) {
 			if(BUTTON_PRESS()) {
 				DbpString("Stopped");
@@ -528,17 +637,55 @@ void SimulateTagLowFrequency(int period, int gap, int ledcontrol)
 
 void FPGASpiSendWord(unsigned short cmdword);
 
+void cycleFPGAMode( void ) {
+
+  static unsigned short pFPGAMode = 0;
+  
+  // Debug FPGA modes
+  switch( pFPGAMode ) {
+  	case  0:
+       		FpgaWriteConfWord(FPGA_MAJOR_MODE_LF_READER);
+		break;
+  	case  1:
+	  	FpgaWriteConfWord(FPGA_MAJOR_MODE_LF_EDGE_DETECT);
+		break;
+  	case  2:
+  		FpgaWriteConfWord(FPGA_MAJOR_MODE_HF_READER_TX);
+		break;
+  	case  3:
+	  	FpgaWriteConfWord(FPGA_MAJOR_MODE_HF_READER_RX_XCORR);
+		break;
+  	case  4:
+  		FpgaWriteConfWord(FPGA_MAJOR_MODE_HF_SIMULATOR);
+		break;
+  	case  5:
+  		FpgaWriteConfWord(FPGA_MAJOR_MODE_HF_ISO14443A);
+		break;
+  	case  6:
+  		FpgaWriteConfWord(FPGA_MAJOR_MODE_LF_PASSTHRU);
+		break;
+  	default:
+  		FpgaWriteConfWord(FPGA_MAJOR_MODE_OFF);
+		pFPGAMode = 0;
+		return;
+
+  }
+  
+  pFPGAMode++; 
+  
+}  
+
 // starts here
 int main(void)
 {
 #ifdef DEBUG
-	debug();
+  debug();
 #endif
   
   /* System Clocks Configuration **********************************************/
   // if this fails (xtal fault ) LED will blink indefinitely short off ,long on, repeat
   if( Set_System() == 0 ) {
-	return -1;
+    return -1;
   }
   
   LEDSet( 1 );
@@ -553,57 +700,56 @@ int main(void)
   
   /* Enable SysTick interrupt */
   SysTick_ITConfig(ENABLE);
-
+  
   // USB Enable
   InitBoard();
   // Startup OLED
   InitOLED();
-
+  
   OLEDPutstr("FPGA INIT\n");
   OLEDDraw();
   LEDSet(0);
- 
+  
   OLEDClear();
-    
-    /* Enable ADC1 reset calibaration register */   
+  
+  /* Enable ADC1 reset calibaration register */   
   ADC_ResetCalibration(ADC1);
   
   /* Check the end of ADC1 reset calibration register */
   while(ADC_GetResetCalibrationStatus(ADC1));
-
+  
   /* Start ADC1 calibaration */
   ADC_StartCalibration(ADC1);
   
   /* Check the end of ADC1 calibration */
   while(ADC_GetCalibrationStatus(ADC1));  
-    
+  
   ADC_SoftwareStartConvCmd(ADC1, ENABLE);
-
-  // Kicks off the 24Mhz PCK0 (DOUT)
+  
+  // Kicks off the 24Mhz PCK0 (DOUT/PA10)
   SetupPCK0Clock();
   
   FpgaDownloadAndGo();
-    
   
 #if 0
   OLEDClear();
   OLEDPutstr("FPGA TEST MODE\n");
   OLEDDraw();
-
+  
   HIGH(FPGAON);					// Enable VREG's
   DelaymS(100);
-	
+  
   // about 1.3MHz
   while(1) {
-  	LOW(NCS);
-  	DelayuS(1);
-  	HIGH(NCS);
-  	DelayuS(1);
+    LOW(NCS);
+    DelayuS(1);
+    HIGH(NCS);
+    DelayuS(1);
   }
-
+  
   while(1) {
-  	LOW(GPIO_FPGA_DIN);
-  	HIGH(GPIO_FPGA_DIN);
+    LOW(GPIO_FPGA_DIN);
+    HIGH(GPIO_FPGA_DIN);
   }
 #endif
   
@@ -614,64 +760,77 @@ int main(void)
   
   DelaymS(1000);
   
-  
   OLEDDisplayPicture( l1logo_inv );
   OLEDDraw();
   
   DelaymS(1000);
   
   // button test
-  while(0) {
-	
-	OLEDClear();
-	
-	if( !GETBIT( SW_K1 ) ){
-	  OLEDPutstr("K1 ON\n");
-	  
-	} 
-	else
-	  OLEDPutstr("K1 OFF\n");
-	
-	if( !GETBIT( SW_K2 ) ){
-	  OLEDPutstr("K2 ON\n");
-	}
-	else
-	  OLEDPutstr("K2 OFF\n");
-	
+  while( 1 ) {
+    
+    OLEDClear();
+    
+    if( !GETBIT( SW_K1 ) ){
+      OLEDPutstr("K1 ON\n");
+      
+    } else{
+      OLEDPutstr("K1 OFF\n");
+    }
+    
+    if( !GETBIT( SW_K2 ) ){
+      OLEDPutstr("K2 ON\n");
+      cycleFPGAMode();
+      DelaymS(100);
+      
+    } else {
+      OLEDPutstr("K2 OFF\n");
+    }
 #ifdef SW_K3_PORT
-	if( !GETBIT( SW_K3 ) ){
-	  OLEDPutstr("K3 ON\n");
-	}else
-	  OLEDPutstr("K3 OFF\n");
+    if( !GETBIT( SW_K3 ) ){
+      OLEDPutstr("K3 ON\n");
+    }else
+      OLEDPutstr("K3 OFF\n");
 #endif
-	
-	if( !GETBIT( GPIO_FPGA_DONE ) ){
-	  OLEDPutstr("FPGA_DONE ON\n");
-	}else
-	  OLEDPutstr("FPGA_DONE OFF\n");
-	
-	if( !GETBIT( GPIO_FPGA_NINIT ) ){
-	  OLEDPutstr("FPGA_NINIT ON\n");
-	}else
-	  OLEDPutstr("FPGA_NINIT OFF\n");
-	
-	OLEDDraw();
+    
+    if( !GETBIT( GPIO_FPGA_DONE ) ){
+      OLEDPutstr("FPGA_DONE ON\n");
+    }else
+      OLEDPutstr("FPGA_DONE OFF\n");
+    
+    if( !GETBIT( GPIO_FPGA_NINIT ) ){
+      OLEDPutstr("FPGA_NINIT ON\n");
+    }else
+      OLEDPutstr("FPGA_NINIT OFF\n");
+    
+    if( GETBIT( GPIO_OE1 ) ){ 
+      OLEDPutstr("OE1 ");
+    }	
+    if( GETBIT( GPIO_OE2 ) ){ 
+      OLEDPutstr("OE2 ");
+    }	
+    if( GETBIT( GPIO_OE2 ) ){ 
+      OLEDPutstr("OE3 ");
+    }	
+    if( GETBIT( GPIO_OE4 ) ){ 
+      OLEDPutstr("OE4                   \n");
+    }	
+    
+    OLEDDraw();
   }
   
-
- OLEDClear();
-
-
+  OLEDClear();
+  
+  CmdHIDsimTAG(0x20,0x06040ef9 , 1);
+  
+  SimulateTagLowFrequency(1000,100,1);
+  
   MeasureAntennaTuning();
   DelaymS( 5000 );
   
   MeasureAntennaTuningHf();  
   DelaymS( 500 );
-  
-  SimulateTagLowFrequency(1000,100,0);
-  
   DelaymS(25000);
-    
+  
   ////////////////// Shut down 
   
   LOW(FPGAON);					// ensure everything is powered off
