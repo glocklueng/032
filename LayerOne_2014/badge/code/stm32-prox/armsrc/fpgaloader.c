@@ -360,13 +360,13 @@ void FpgaWriteConfWord(BYTE v)
 
 //Define all SPI Pins
 #define SPI_OUT_PORT            	GPIOB
-#define SPI_OUT_PIN			GPIO_Pin_5	
+#define SPI_OUT_PIN			GPIO_Pin_5			// SSP_DOUT
 #define SPI_IN_PORT      		GPIOB
-#define SPI_IN_PIN			GPIO_Pin_6
+#define SPI_IN_PIN			GPIO_Pin_6			// SSP_DIN
 #define SPI_CLK_PORT			GPIOB
-#define SPI_CLK_PIN			GPIO_Pin_2
+#define SPI_CLK_PIN			GPIO_Pin_2			// SSP_CLK
 #define SPI_CS_PORT			GPIOB
-#define SPI_CS_PIN			GPIO_Pin_1
+#define SPI_CS_PIN			GPIO_Pin_1			// SSP_FRAME
 
 #define __no_operation(void)		asm("nop")
 
@@ -422,6 +422,38 @@ unsigned char softspi_rxtx(unsigned char data)
   __no_operation();
   
   HIGH(SPI_CS);
+  
+  return ret;
+}
+
+// this one runs quickly >10Mhz. so needs to be hardware driven.
+
+unsigned char softspi_rx( void ) 
+{
+  register  unsigned char ret;
+  register unsigned char bitmask ;
+  
+  bitmask = 0x80;
+  
+  // Frame _||_____
+  while( GETBIT( SPI_CS  ) == 0 );
+  
+  ret = 0;                    			
+  
+  do  {
+    
+    //CLK HIGH _|~~~~~~~~
+    while( GETBIT( SPI_CLK  )  == 0 );
+     
+     
+    // Get state of SPI_IN
+    if (GETBIT(SPI_IN)) {
+      ret |= bitmask;   
+    }   
+    
+    bitmask = bitmask >> 1;      
+    
+  } while ( bitmask != 0 );
   
   return ret;
 }
@@ -762,4 +794,12 @@ void FpgaDownloadAndGo(void)
 	 */
 	if( *(uint32_t*)0x102000 == 0xFFFFFFFF && *(uint32_t*)0x102004 == 0xAA995566 )
 		DownloadFPGA((char*)0x102000, 10524*4, 1);
+}
+
+//-----------------------------------------------------------------------------
+// Set up the synchronous serial port, with the one set of options that we
+// always use when we are talking to the FPGA. Both RX and TX are enabled.
+//-----------------------------------------------------------------------------
+void FpgaSetupSsc(void)
+{
 }

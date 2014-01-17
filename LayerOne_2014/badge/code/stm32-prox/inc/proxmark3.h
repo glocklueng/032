@@ -62,7 +62,9 @@
 #define HIGH(x)	 x##_PORT->BSRR = x##_PIN
 #define LOW(x)	 x##_PORT->BRR = x##_PIN
 
-#define GETBIT(x) GPIO_ReadInputDataBit(x##_PORT,x##_PIN)
+/// if ((GPIOx->IDR & GPIO_Pin) != (u32)Bit_RESET)
+#define GETBIT(x) (x##_PORT->IDR & x##_PIN) 
+
 #define SETBIT(x, y) (y) ? (HIGH(x)):(LOW(x))
 #define INVBIT(x) SETBIT((x), !(GETBIT(x)))
 
@@ -91,6 +93,8 @@
 #define RELAY_ON()		HIGH(GPIO_RELAY)
 #define RELAY_OFF()		LOW(GPIO_RELAY)
 #define BUTTON_PRESS()		!GETBIT( SW_K2 )
+
+#define	LEDsoff()		LOW(GPIO_LED_A)
 
 #define VERSION_INFORMATION_MAGIC 0x56334d50
 PACKED struct version_information {

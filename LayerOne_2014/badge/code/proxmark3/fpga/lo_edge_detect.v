@@ -3,6 +3,8 @@
 // case just pass everything through to the ARM, which can bit-bang this
 // (because it is so slow).
 //
+// FPGA_MAJOR_MODE_LF_EDGE_DETECT
+//
 // Jonathan Westhues, April 2006
 //-----------------------------------------------------------------------------
 

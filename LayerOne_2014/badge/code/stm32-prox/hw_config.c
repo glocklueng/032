@@ -210,7 +210,9 @@ void USB_Interrupts_Config(void)
   NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
   NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
   NVIC_Init(&NVIC_InitStructure);
+
 #if 0
+
   /* Enable the EXTI0 Interrupt(KEY) */
   NVIC_InitStructure.NVIC_IRQChannel = EXTI0_IRQChannel;
   NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
@@ -817,22 +819,26 @@ void Get_SerialNum( void )
   Device_Serial1 = *(u32*)(0x1FFFF7EC);
   Device_Serial2 = *(u32*)(0x1FFFF7F0);
   
+  return ;
+  
   if(Device_Serial0 != 0)
   {
-     CustomHID_StringSerial[2] = (u8)(Device_Serial0 & 0x000000FF);  
-     CustomHID_StringSerial[4] = (u8)((Device_Serial0 & 0x0000FF00) >> 8);
-     CustomHID_StringSerial[6] = (u8)((Device_Serial0 & 0x00FF0000) >> 16);
-     CustomHID_StringSerial[8] = (u8)((Device_Serial0 & 0xFF000000) >> 24);  
+    
+    // starts at 2, to skip the length / type
+     CustomHID_StringSerial[2] = (u8)(Device_Serial0 & 0x0000000F);  
+     CustomHID_StringSerial[4] = (u8)((Device_Serial0 & 0x00000F00) >> 8);
+     CustomHID_StringSerial[6] = (u8)((Device_Serial0 & 0x000F0000) >> 16);
+     CustomHID_StringSerial[8] = (u8)((Device_Serial0 & 0x0F000000) >> 24);  
      
-     CustomHID_StringSerial[10] = (u8)(Device_Serial1 & 0x000000FF);  
-     CustomHID_StringSerial[12] = (u8)((Device_Serial1 & 0x0000FF00) >> 8);
-     CustomHID_StringSerial[14] = (u8)((Device_Serial1 & 0x00FF0000) >> 16);
-     CustomHID_StringSerial[16] = (u8)((Device_Serial1 & 0xFF000000) >> 24); 
+     CustomHID_StringSerial[10] = (u8)(Device_Serial1 & 0x0000000F);  
+     CustomHID_StringSerial[12] = (u8)((Device_Serial1 & 0x00000F00) >> 8);
+     CustomHID_StringSerial[14] = (u8)((Device_Serial1 & 0x000F0000) >> 16);
+     CustomHID_StringSerial[16] = (u8)((Device_Serial1 & 0x0F000000) >> 24); 
      
-     CustomHID_StringSerial[18] = (u8)(Device_Serial2 & 0x000000FF);  
-     CustomHID_StringSerial[20] = (u8)((Device_Serial2 & 0x0000FF00) >> 8);
-     CustomHID_StringSerial[22] = (u8)((Device_Serial2 & 0x00FF0000) >> 16);
-     CustomHID_StringSerial[24] = (u8)((Device_Serial2 & 0xFF000000) >> 24); 
+     CustomHID_StringSerial[18] = (u8)(Device_Serial2 & 0x0000000F);  
+     CustomHID_StringSerial[20] = (u8)((Device_Serial2 & 0x00000F00) >> 8);
+     CustomHID_StringSerial[22] = (u8)((Device_Serial2 & 0x000F0000) >> 16);
+     CustomHID_StringSerial[24] = (u8)((Device_Serial2 & 0x0F000000) >> 24); 
   }   
 }
 /**************************************************************************************/

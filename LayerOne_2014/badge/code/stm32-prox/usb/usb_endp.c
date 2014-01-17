@@ -54,14 +54,10 @@ void EP1_OUT_Callback(void)
   switch (Receive_Buffer[0])
   {
     case 1: /* Led 1 */
-     GPIO_WriteBit(LED_PORT, LED_PIN, Led_State);
      break;
     case 2: /* Led 2 */
-      GPIO_WriteBit(SPEAKER_PORT, SPEAKER_PIN, Led_State);
       break;
   default:
-    GPIO_Write(LED_PORT, ~(u16)(LED_PIN));
-    GPIO_Write(SPEAKER_PORT, ~(u16)(SPEAKER_PIN));
     break;
   }
  

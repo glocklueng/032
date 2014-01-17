@@ -19,6 +19,7 @@
 
 #include <string.h>
 #include <stdarg.h>
+#include <stdlib.h>
 
 // STM32 Library
 #include "stm32f10x_lib.h"
@@ -220,7 +221,7 @@ extern uint16_t  ADC_Ampl[2];
 #if DMA_ADC == 1
 static unsigned int ReadAdc(int ch)
 {
-	return ADC_Ampl[1-ch];
+	return ADC_Ampl[1-ch]/4;
 }
 #else
 static unsigned int ReadAdc(int ch)
@@ -229,28 +230,28 @@ static unsigned int ReadAdc(int ch)
   if( ch == 0  ){
 //    ADC_SoftwareStartConv(ADC1);//Start the conversion
  	while(!ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC));//Processing the conversion
-	 return ADC_GetConversionValue(ADC1); //Return the converted data
+	 return ADC_GetConversionValue(ADC1)/4; //Return the converted data
   } else {
   //  ADC_SoftwareStartConv(ADC2);//Start the conversion
  	while(!ADC_GetFlagStatus(ADC2, ADC_FLAG_EOC));//Processing the conversion
-	 return ADC_GetConversionValue(ADC2); //Return the converted data
+	 return ADC_GetConversionValue(ADC2)/4; //Return the converted data
   }
 }
 #endif
 
 int AvgAdc(int ch) // was static - merlok
 {
-	unsigned int i;
-	unsigned int a = 0;
+  unsigned int i;
+  unsigned int a = 0;
   
-	for(i = 0; i < 32; i++) {
-		a += ReadAdc(ch);
-	}
-
-	// convert to what the proxmark expects 0..1025 (we should change the code to allow the better resolution
-	a /= 4;
-	
-	return (a + 15) >> 5;
+  for(i = 0; i < 32; i++) {
+    a += ReadAdc(ch);
+  }
+  
+  // convert to what the proxmark expects 0..1025 (we should change the code to allow the better resolution
+//  a /= 4;
+  
+  return (a + 15) >> 5;
 }
 
 bool cmd_send(uint32_t cmd, uint32_t arg0, uint32_t arg1, uint32_t arg2, void* data, size_t len)
@@ -264,63 +265,63 @@ uint32_t BigBuf[BIG_BUFFER];
 
 void MeasureAntennaTuning(void)
 {
-	uint8_t *dest = (uint8_t *)BigBuf+FREE_BUFFER_OFFSET;
-	int i, adcval = 0, peak = 0, peakv = 0, peakf = 0; //ptr = 0 
-	int vLf125 = 0, vLf134 = 0, vHf = 0;	// in mV
-
-//	UsbCommand c;
+  uint8_t *dest = (uint8_t *)BigBuf+FREE_BUFFER_OFFSET;
+  int i, adcval = 0, peak = 0, peakv = 0, peakf = 0; //ptr = 0 
+  int vLf125 = 0, vLf134 = 0, vHf = 0;	// in mV
   
-	OLEDClear();
+  //	UsbCommand c;
+  
+  OLEDClear();
   
   LED_B_ON();
-	DbpString("Measuring antenna\nPlease wait...\n");
-	memset(dest,0,sizeof(FREE_BUFFER_SIZE));
-
-/*
- * Sweeps the useful LF range of the proxmark from
- * 46.8kHz (divisor=255) to 600kHz (divisor=19) and
- * read the voltage in the antenna, the result left
- * in the buffer is a graph which should clearly show
- * the resonating frequency of your LF antenna
- * ( hopefully around 95 if it is tuned to 125kHz!)
- */
+  DbpString("Measuring antenna\nPlease wait...\n");
+  memset(dest,0,sizeof(FREE_BUFFER_SIZE));
   
-	FpgaWriteConfWord(FPGA_MAJOR_MODE_LF_READER);
-	for (i=255; i>19; i--) {
-    	
-	  	WDT_HIT();
-		
-		FpgaSendCommand(FPGA_CMD_SET_DIVISOR, i);
-		SpinDelay(20);
-		// Vref = 3.3V, and a 10000:240 voltage divider on the input
-		// can measure voltages up to 137500 mV
-		adcval = ((137500 * AvgAdc(ADC_CHAN_LF)) >> 10);
-		if (i==95) 	vLf125 = adcval; // voltage at 125Khz
-		if (i==89) 	vLf134 = adcval; // voltage at 134Khz
-
-		dest[i] = adcval>>8; // scale int to fit in byte for graphing purposes
-		if(dest[i] > peak) {
-			peakv = adcval;
-			peak = dest[i];
-			peakf = i;
-			//ptr = i;
-		}
-	}
-
+  /*
+  * Sweeps the useful LF range of the proxmark from
+  * 46.8kHz (divisor=255) to 600kHz (divisor=19) and
+  * read the voltage in the antenna, the result left
+  * in the buffer is a graph which should clearly show
+  * the resonating frequency of your LF antenna
+  * ( hopefully around 95 if it is tuned to 125kHz!)
+  */
+  
+  FpgaWriteConfWord(FPGA_MAJOR_MODE_LF_READER);
+  for (i=255; i>19; i--) {
+    
+    WDT_HIT();
+    
+    FpgaSendCommand(FPGA_CMD_SET_DIVISOR, i);
+    SpinDelay(20);
+    // Vref = 3.3V, and a 10000:240 voltage divider on the input
+    // can measure voltages up to 137500 mV
+    adcval = ((137500 * AvgAdc(ADC_CHAN_LF)) >> 10);
+    if (i==95) 	vLf125 = adcval; // voltage at 125Khz
+    if (i==89) 	vLf134 = adcval; // voltage at 134Khz
+    
+    dest[i] = adcval>>8; // scale int to fit in byte for graphing purposes
+    if(dest[i] > peak) {
+      peakv = adcval;
+      peak = dest[i];
+      peakf = i;
+      //ptr = i;
+    }
+  }
+  
   LED_A_ON();
-	// Let the FPGA drive the high-frequency antenna around 13.56 MHz.
-	FpgaWriteConfWord(FPGA_MAJOR_MODE_HF_READER_RX_XCORR);
-	SpinDelay(20);
-	// Vref = 3300mV, and an 10:1 voltage divider on the input
-	// Vref = 3340mV, and an 10:1 voltage divider on the input
-	// can measure voltages up to 33000 mV
-	vHf = (VDD_MV * AvgAdc(ADC_CHAN_HF)) >> 10;
-
-//	c.cmd = CMD_MEASURED_ANTENNA_TUNING;
-//	c.arg[0] = (vLf125 << 0) | (vLf134 << 16);
-//	c.arg[1] = vHf;
-//	c.arg[2] = peakf | (peakv << 16);
-
+  // Let the FPGA drive the high-frequency antenna around 13.56 MHz.
+  FpgaWriteConfWord(FPGA_MAJOR_MODE_HF_READER_RX_XCORR);
+  SpinDelay(20);
+  // Vref = 3300mV, and an 10:1 voltage divider on the input
+  // Vref = 3340mV, and an 10:1 voltage divider on the input
+  // can measure voltages up to 33000 mV
+  vHf = (VDD_MV * AvgAdc(ADC_CHAN_HF)) >> 10;
+  
+  //	c.cmd = CMD_MEASURED_ANTENNA_TUNING;
+  //	c.arg[0] = (vLf125 << 0) | (vLf134 << 16);
+  //	c.arg[1] = vHf;
+  //	c.arg[2] = peakf | (peakv << 16);
+  
   OLEDClear();
   DbpString("Results\n");
   Dbprintf("LF %5.2fV @ 125kHz\n",vLf125/1000.0f);
@@ -335,7 +336,7 @@ void MeasureAntennaTuning(void)
     DbpString("Your LF antenna is marginal.\n");
   else 
     DbpString("Your LF antenna is good.\n");
-    
+  
   if ( vHf < 2000 )
     DbpString("Your HF antenna is unusable.\n");
   else if ( vHf < 5000  )
@@ -343,9 +344,9 @@ void MeasureAntennaTuning(void)
   else 
     DbpString("Your HF antenna is good.\n");
   
-	      
+  
   cmd_send(CMD_MEASURED_ANTENNA_TUNING,vLf125|(vLf134<<16),vHf,peakf|(peakv<<16),0,0);
-//UsbSendPacket((uint8_t *)&c, sizeof(c));
+  //UsbSendPacket((uint8_t *)&c, sizeof(c));
   FpgaWriteConfWord(FPGA_MAJOR_MODE_OFF);
   LED_A_OFF();
   LED_B_OFF();
@@ -354,27 +355,34 @@ void MeasureAntennaTuning(void)
 
 void MeasureAntennaTuningHf(void)
 {
-	int vHf = 0;	// in mV
-	
-	OLEDClear();
-	
-	DbpString("Measuring HF antenna\nPress button to exit\n\n");
-
-	for (;;) {
-		// Let the FPGA drive the high-frequency antenna around 13.56 MHz.
-		FpgaWriteConfWord(FPGA_MAJOR_MODE_HF_READER_RX_XCORR);
-		SpinDelay(20);
-		// Vref = 3300mV, and an 10:1 voltage divider on the input
-		// Vref = 3400mV, and an 10:1 voltage divider on the input
-		// can measure voltages up to 33000 mV
-		vHf = (VDD_MV * AvgAdc(ADC_CHAN_HF)) >> 10;
-
-		Dbprintf("\r%d mV           ",vHf/10);
-		
-		if (BUTTON_PRESS()) 
-		  break;
-	}
-	DbpString("\nCancelled");
+  unsigned char ch;
+  
+  int vHf = 0;	// in mV
+  
+  OLEDClear();
+  
+  DbpString("Measuring HF antenna\nPress button to exit\n\n");
+  
+  for (;;) {
+    // Let the FPGA drive the high-frequency antenna around 13.56 MHz.
+    FpgaWriteConfWord(FPGA_MAJOR_MODE_HF_READER_RX_XCORR);
+    SpinDelay(20);
+    // Vref = 3300mV, and an 10:1 voltage divider on the input
+    // Vref = 3400mV, and an 10:1 voltage divider on the input
+    // can measure voltages up to 33000 mV
+    vHf = (VDD_MV * AvgAdc(ADC_CHAN_HF)) >> 10;
+    
+    Dbprintf("\r%d mV           ",vHf/10);
+    
+    ch =  softspi_rx( ); 
+    
+    
+    Dbprintf("%d   \n",ch);
+      
+    if (BUTTON_PRESS()) 
+      break;
+  }
+  DbpString("\nCancelled");
 }
 
 
@@ -635,8 +643,6 @@ void SimulateTagLowFrequency(int period, int gap, int ledcontrol)
 	}
 }
 
-void FPGASpiSendWord(unsigned short cmdword);
-
 void cycleFPGAMode( void ) {
 
   static unsigned short pFPGAMode = 0;
@@ -674,6 +680,265 @@ void cycleFPGAMode( void ) {
   pFPGAMode++; 
   
 }  
+
+/*
+  OBJECTIVE
+  	Listen and detect an external reader. Determine the best location
+  	for the antenna.
+
+  INSTRUCTIONS:
+  	Inside the ListenReaderField() function, there is two mode.
+  	By default, when you call the function, you will enter mode 1.
+  	If you press the PM3 button one time, you will enter mode 2.
+  	If you press the PM3 button a second time, you will exit the function.
+
+  DESCRIPTION OF MODE 1:
+  	This mode just listens for an external reader field and lights up green
+  	for HF and/or red for LF. This is the original mode of the detectreader
+  	function.
+
+  DESCRIPTION OF MODE 2:
+  	This mode will visually represent, using the LEDs, the actual strength of the
+	 current compared to the maximum current detected. Basically, once you know
+  	what kind of external reader is present, it will help you spot the best location to place
+  	your antenna. You will probably not get some good results if there is a LF and a HF reader
+  	at the same place! :-)
+
+*/
+
+static unsigned short hf_values[128];
+static unsigned short hf_high = 1;
+static unsigned char hf_gcount = 0;
+static unsigned short lf_values[128];
+static unsigned short lf_high = 1;
+static unsigned char lf_gcount = 0;
+
+void ListenReaderField(int limit)
+{
+  int lf_av, lf_av_new, lf_baseline= 0, lf_count= 0, lf_max;
+  int hf_av, hf_av_new,  hf_baseline= 0, hf_count= 0, hf_max;
+  int mode=1 ,i;
+  
+#define LF_ONLY		(1)
+#define HF_ONLY		(2)
+  
+  OLEDClear();
+  LEDsoff();
+  
+  memset(hf_values,0,sizeof(hf_values));
+  hf_high = 1;hf_count=0;
+  
+  memset(lf_values,0,sizeof(hf_values));
+  lf_high = 1;lf_count=0;
+  
+  //charliex: changed from ReadAdc to AvgAdc
+  lf_av = lf_max=AvgAdc(ADC_CHAN_LF);
+  
+  if(limit != HF_ONLY) {
+    Dbprintf("LF 125/134 Baseline: %d\n", lf_av);
+    lf_baseline = lf_av;
+  }
+  
+  hf_av=hf_max=AvgAdc(ADC_CHAN_HF);
+  
+  if (limit != LF_ONLY) {
+    Dbprintf("HF 13.56 Baseline: %d\n", hf_av);
+    hf_baseline = hf_av;
+  }
+  
+  DelaymS( 4000 );
+  
+  OLEDClear();
+  
+  for(;;) {
+    
+    if (BUTTON_PRESS()) {
+      SpinDelay(500);
+      switch (mode) {
+      case 1:
+	mode=2;
+	OLEDSetCursor(0,0);
+	DbpString("Signal Strength Mode\n");
+	break;
+      case 2:
+      default:
+	OLEDSetCursor(0,6);
+	DbpString("Stopped\n");
+	LEDsoff();
+	DelaymS(1000);
+	return;
+	break;
+      }
+    }
+    WDT_HIT();
+    
+    if (limit != HF_ONLY) {
+      if(mode==1) {
+	if (abs(lf_av - lf_baseline) > 10) LED_D_ON();
+	else                               LED_D_OFF();
+      }
+      
+      ++lf_count;
+      lf_av_new= ReadAdc(ADC_CHAN_LF);
+      
+      // see if there's a significant change
+      if( abs( lf_av - lf_av_new ) > 10 ) {
+	
+	OLEDSetCursor(0,0);
+	
+	Dbprintf("\n\nLF 125/134 Field Change    \n    %x %x %x          \n", lf_av, lf_av_new, lf_count);
+	
+	lf_av = lf_av_new;
+	if (lf_av > lf_max)
+	  lf_max = lf_av;
+	lf_count= 0;
+      }
+    }
+    
+    if (limit != LF_ONLY) {
+      if (mode == 1){
+	if (abs(hf_av - hf_baseline) > 10) LED_B_ON();
+	else                               LED_B_OFF();
+      }
+      
+      ++hf_count;
+      hf_av_new= ReadAdc(ADC_CHAN_HF);
+      
+      // see if there's a significant change
+      
+      if(abs(hf_av - hf_av_new) > 10) {
+	
+	OLEDSetCursor(0,5);
+	Dbprintf("HF 13.56 Field Change    \n    %x %x %x               \n", hf_av, hf_av_new, hf_count);
+	hf_av = hf_av_new;
+	if (hf_av > hf_max){
+	  hf_max = hf_av;
+	}
+	hf_count= 0;
+      }
+    }
+   
+    if(mode == 2) {
+      
+      float div;
+       
+      if (limit != LF_ONLY) {
+	
+	div = 128.0f / hf_max;
+	
+	// store at current pos
+	hf_values[hf_gcount] = hf_av;
+	hf_gcount++;
+	hf_gcount%=128;
+      }
+      
+      if (limit != HF_ONLY){
+	
+	div = 128.0f / lf_max;
+	
+	// store at current pos
+	lf_values[lf_gcount] = lf_av;
+	lf_gcount++;
+	lf_gcount %= 128;
+	
+      }
+      
+      hf_high = 0; lf_high = 0;
+      
+      for( i = 0 ; i  < 128; i++ ) {
+	
+	if( hf_values[i] > hf_high ) {
+	  hf_high  = hf_values[i];
+	}
+	
+	if( lf_values[i] > lf_high ) {
+	  lf_high  = lf_values[i];
+	}
+      }
+      
+      for( i = 0 ; i  < 128; i ++ ) {
+        
+	// up/down
+	div = 64.0f / 1024.0f;
+	  
+	OLEDSetPixel( i, (short)(div*(float)hf_values[i])  ,1 );
+	
+      }
+    }
+  }
+}
+/*
+
+  ca 83 19 86 99 85 e0 26 85 66 80 6c 53 86 5e 62 64 bf 
+  78 37 d8 2f e3 1d fc f7 1a 3a ce 58 68 bd 55 ec 75 e1 
+  7e 6f e1 12 76 c9 2d 10 03 6e 79 3c b8 2e 80 9e 4b ee 
+  d5 f4 e6 6d 39 82 1b dc 6b 22 ab 17 b8 43 10 a7 3f 5a 
+  a1 24 32 3a fe 17 aa f4 81 6a c2 fd 24 87 46 ae cc fe 
+  3f 8d 26 4c 2d 71 8a ac 6a ce d7 68 97 b2 80 b6 85 c6 
+  29 f9 22 d1 91 d7 d5 1c db c4 80 90
+
+  24 2a 60 de a3 a8 36 9a 66 e1 52 d0 8d ce d0 bb e7 f3 
+  b0 a3 64 62 a1 f9 f6 bb fe fa 33 46 e8 1c 29 35 03 a3 
+  ee 9c 33 78 1f 58 27 54 49 4e 80 b3 f6 d2 b6 af e4 c0 
+  dc 3d ff 69 46 5c 74 70 61 c3 eb cf 79 9c 9f f0 02 7a 
+  41 61 5e 38 87 47 1f 3c ba f9 29 07 df 07 d7 50 70 62 
+  e5 1a de 02 e4 20 8e 2b b3 12 25 e0 fa 1a fd ec 7b f5 
+  39 7d 95 13 b7 5a 38 bd ff ff 3e 72 72 e9 5c 37 7a 27 
+  c2 d4 b1 c3 a9 7f 8a ac ea 67 ce dc 0c b3 eb d4 63 7c 
+  73 ed 67 56 8a e6 dd 2e cb b3 ee a9 7e 1f 9e 8a d8 3c 
+  df e8 08 6b ba 5c b5 c6 b1 c1 0d b1 17 ed f6 dd af 5b 
+  20 71 0a 6f
+
+*/
+
+
+void SimulateTagHfListen(void)
+{
+  uint8_t *dest = (uint8_t *)BigBuf+FREE_BUFFER_OFFSET;
+  uint8_t v = 0;
+  int i;
+  int p = 0;
+  OLEDClear();
+  
+  OLEDPutstr("SimulateTagHfListen");
+  OLEDDraw();	  
+  
+  // We're using this mode just so that I can test it out; the simulated
+  // tag mode would work just as well and be simpler.
+  FpgaWriteConfWord(FPGA_MAJOR_MODE_HF_READER_RX_XCORR | FPGA_HF_READER_RX_XCORR_848_KHZ | FPGA_HF_READER_RX_XCORR_SNOOP);
+  
+  // We need to listen to the high-frequency, peak-detected path.
+  SetAdcMuxFor(GPIO_MUXSEL_HIPKD);
+  
+  FpgaSetupSsc();
+  
+  i = 0;
+  
+  for(;;) {
+    
+    {
+      uint8_t r = softspi_rx();
+      
+      v <<= 1;
+      if(r & 1) {
+	v |= 1;
+      }
+      p++;
+      
+      if(p >= 8) {
+	dest[i] = v;
+	v = 0;
+	p = 0;
+	i++;
+	
+	if(i >= FREE_BUFFER_SIZE) {
+	  break;
+	}
+      }
+    }
+  }
+  DbpString("simulate tag (now type bitsamples)");
+}
 
 // starts here
 int main(void)
@@ -730,7 +995,8 @@ int main(void)
   SetupPCK0Clock();
   
   FpgaDownloadAndGo();
-  
+  SimulateTagHfListen();
+
 #if 0
   OLEDClear();
   OLEDPutstr("FPGA TEST MODE\n");
@@ -764,6 +1030,15 @@ int main(void)
   OLEDDraw();
   
   DelaymS(1000);
+
+  MeasureAntennaTuningHf();
+    
+  CmdHIDsimTAG(0x20,0x06040ef9 , 1);
+    
+  ListenReaderField(0);
+  
+  MeasureAntennaTuning();
+  DelaymS( 5000 );
   
   // button test
   while( 1 ) {
@@ -779,9 +1054,10 @@ int main(void)
     
     if( !GETBIT( SW_K2 ) ){
       OLEDPutstr("K2 ON\n");
-      cycleFPGAMode();
+      //cycleFPGAMode();
       DelaymS(100);
-      
+        MeasureAntennaTuningHf();  
+       DelaymS(100);
     } else {
       OLEDPutstr("K2 OFF\n");
     }
@@ -820,12 +1096,11 @@ int main(void)
   
   OLEDClear();
   
-  CmdHIDsimTAG(0x20,0x06040ef9 , 1);
+
   
   SimulateTagLowFrequency(1000,100,1);
   
-  MeasureAntennaTuning();
-  DelaymS( 5000 );
+
   
   MeasureAntennaTuningHf();  
   DelaymS( 500 );

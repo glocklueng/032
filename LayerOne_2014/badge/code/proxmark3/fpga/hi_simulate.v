@@ -13,6 +13,8 @@
 // bit rate of 106 kbit/s, or fc/128. Oversample by 4, which ought to make
 // things practical for the ARM (fc/32, 423.8 kbits/s, ~50 kbytes/s)
 //
+// FPGA_MAJOR_MODE_HF_SIMULATOR
+//
 // Jonathan Westhues, October 2006
 //-----------------------------------------------------------------------------
 

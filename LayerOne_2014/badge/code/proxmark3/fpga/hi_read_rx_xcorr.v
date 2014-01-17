@@ -1,5 +1,7 @@
 //-----------------------------------------------------------------------------
 //
+// FPGA_MAJOR_MODE_HF_READER_RX_XCORR
+//
 // Jonathan Westhues, April 2006
 //-----------------------------------------------------------------------------
 
@@ -180,6 +182,6 @@ assign ssp_din = corr_i_out[7];
 assign dbg = corr_i_cnt[3];
 
 // Unused.
-assign pwr_lo = 1'b0;
+assign pwr_lo = 1'b1;
 
 endmodule

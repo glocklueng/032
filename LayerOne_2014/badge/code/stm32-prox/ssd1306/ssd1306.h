@@ -85,5 +85,15 @@
 void InitOLED( void );
 void FlushOLED( void );
 void OLEDInit(void);
+void OLEDDrawGraph( void );
+void OLEDSetCursor( int x,int y );
+void OLEDLine(int x0, int y0, int x1, int y1,int col);
+void OLEDText8x6(short x,short y,const char *string,unsigned char f_colour, unsigned char b_colour);
+void OLEDText6x6(short x,short y,const char *string,char f_colour,char b_colour );
+void OLEDPixelQuad( int x, int y, unsigned char colour );
+void OLEDFlatLine( unsigned char colour,short x,unsigned short length,int y);
+void OLEDDrawCircle( int xc,int yc, unsigned int radius , unsigned char c);
+void OLEDDrawOutlineCircle( int xc,int yc, unsigned int radius , unsigned char c );
+void OLEDOutlineRect(unsigned char colour, int x,int y, int width,int height);
 
 #endif /* _SSD1306_H */
