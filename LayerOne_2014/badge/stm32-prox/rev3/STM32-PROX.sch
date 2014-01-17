@@ -15360,7 +15360,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 </part>
 <part name="V36" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="V37" library="STM32-PROX" deviceset="SUPPLY_2V5" device=""/>
-<part name="C33" library="STM32-PROX" deviceset="CAPACITOR" device="RLC_0603" value="4.7uF">
+<part name="C33" library="STM32-PROX" deviceset="CAPACITOR" device="1210" value="4.7uF">
 <attribute name="DIGIKEY" value="1276-1856-1-ND"/>
 <attribute name="MF" value=""/>
 <attribute name="MPN" value="CL32B475KOINNNE"/>
@@ -15850,7 +15850,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <attribute name="OC_NEWARK" value="06R5073"/>
 <attribute name="PARTNO" value="CC0603ZRY5V7BB105"/>
 </part>
-<part name="TP8" library="STM32-PROX" deviceset="TESTPAD" device="" value="TESTPADKEYSTONE-SMD">
+<part name="TP8" library="STM32-PROX" deviceset="TESTPAD" device="KEYSTONE-PTH" value="TESTPADKEYSTONE-PTH">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value="NONE"/>
 <attribute name="OC_NEWARK" value="unknown"/>
