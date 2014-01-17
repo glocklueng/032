@@ -77,7 +77,7 @@ void SetupSpi(int mode);
 bool FpgaSetupSscDma(uint8_t *buf, int len);
 #define FpgaDisableSscDma(void)	AT91C_BASE_PDC_SSC->PDC_PTCR = AT91C_PDC_RXTDIS;
 #define FpgaEnableSscDma(void) AT91C_BASE_PDC_SSC->PDC_PTCR = AT91C_PDC_RXTEN;
-#define SetAdcMuxFor(x) _SetAdcMuxFor( X##_PORT,X##_PIN); 
+#define SetAdcMuxFor(X) _SetAdcMuxFor( X##_PORT,X##_PIN); 
 void _SetAdcMuxFor(GPIO_TypeDef *port, u16 pin);
 
 // Definitions for the FPGA commands.

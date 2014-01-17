@@ -422,6 +422,7 @@ number:
 			break;
 		}
 	}
+	
 	PCHAR(0);
 	return retval;
 #undef PCHAR

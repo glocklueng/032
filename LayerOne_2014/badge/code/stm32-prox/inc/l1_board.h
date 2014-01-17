@@ -5,6 +5,9 @@
 
 // defines
 
+#define MIN(a,b) (((a)<(b))?(a):(b))
+#define MAX(a,b) (((a)>(b))?(a):(b))
+
 // VDD voltage in MV
 #define VDD_MV		( 33400 )
 
@@ -40,7 +43,7 @@
 #define SW_K1_PIN                      GPIO_Pin_4								// input, pulldown
 #define SW_K2_PIN                      GPIO_Pin_3								// input, pulldown
 //#define SW_K3_PIN                    GPIO_Pin_2								// input, pulldown
-#define USB_DISCONNECT_PIN			   GPIO_Pin_2								// output:
+#define USB_DISCONNECT_PIN		GPIO_Pin_2								// output:
 
 #define GPIO_SW_PORTSOURCE            GPIO_PortSourceGPIOA      				// PA
 #define GPIO_SW_K1_PINSOURCE          GPIO_PinSource4     						// PA4
@@ -105,16 +108,16 @@
 
 #define FPGA_DONE_PIN                  GPIO_Pin_0								// input
 
-#define GPIOB_OUTPUTS_2MHZ_PP_MASK		(SSP_DIN_PIN | SSP_FRAME  | DC_PIN | RES_PIN | 	\
+#define GPIOB_OUTPUTS_2MHZ_PP_MASK		( SSP_FRAME  | DC_PIN | RES_PIN | 	\
 						CS_PIN | FPGAON_PIN  | NVDD_ON_PIN | MUXSEL_HIPKD_PIN | 	\
 						MUXSEL_LOPKD_PIN |MUXSEL_HIRAW_PIN | MUXSEL_LORAW_PIN )
 
 //#define GPIOB_OUTPUTS_10MHZ_PP_MASK		( )
 #define GPIOB_OUTPUTS_50MHZ_PP_MASK		( SSP_DOUT_PIN )
 //#define GPIOB_OUTPUTS_50MHZ_OD_MASK		( USB_DISCONNECT_PIN )
-#define GPIOB_INPUT_FLOAT_MASK			( SSP_FRAME   )
-#define GPIOB_INPUT_PULLUP_MASK			( FPGA_DONE_PIN |SSP_CLK_PIN) 
-//#define GPIOB_ANALOG_MASK				( )
+//#define GPIOB_INPUT_FLOAT_MASK			(   )
+#define GPIOB_INPUT_PULLUP_MASK			( SSP_DIN_PIN| SSP_FRAME  | FPGA_DONE_PIN |SSP_CLK_PIN) 
+//#define GPIOB_ANALOG_MASK			( )
 #define	GPIOB_DEFAULT_LOW_MASK			( GPIOB_OUTPUTS_2MHZ_PP_MASK )
 //#define	GPIOB_DEFAULT_HIGH_MASK		( )
 /* End Section GPIOB */

@@ -179,7 +179,7 @@
 <text x="-2.42448125" y="36.49144375" size="1.778" layer="52" rot="MR270">www.layerone.org</text>
 <text x="2.6445125" y="35.153565625" size="1.778" layer="52" rot="MR270">LayerOne 2014</text>
 <text x="-3.839565625" y="2.313478125" size="1.778" layer="52" rot="MR180">prototype</text>
-<text x="33.321175" y="55.0785875" size="1.778" layer="52" rot="MR180">charliex</text>
+<text x="23.161175" y="0.4685875" size="1.778" layer="52" rot="MR180">charliex</text>
 <text x="79.66961875" y="13.236459375" size="1.778" layer="52" rot="MR0">(o)(o)</text>
 <text x="13.843" y="40.64" size="1.778" layer="52" rot="MR270">[ NULL SPACE LABS ]</text>
 <text x="16.51" y="34.29" size="1.778" layer="52" rot="MR270">http://032.la</text>
@@ -5182,7 +5182,7 @@ design rules under a new name.</description>
 <via x="40.7924" y="20.6756" extent="1-16" drill="0.3048"/>
 <via x="40.7416" y="17.3228" extent="1-16" drill="0.3048"/>
 </signal>
-<signal name="FPGA_DOUT">
+<signal name="FPGA_DOUT/PCK0">
 <contactref element="U2" pad="40"/>
 <contactref element="IC2" pad="43"/>
 <contactref element="TP27" pad="1"/>

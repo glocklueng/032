@@ -11,6 +11,7 @@
 // Jonathan Westhues, March 2006
 // Added ISO14443-A support by Gerhard de Koning Gans, April 2008
 //-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 
 `include "lo_read.v"
 `include "lo_passthru.v"
@@ -73,12 +74,13 @@ begin
 	endcase
 end
 
+// tested and works
 always @(posedge spck)
 begin
 	if(~ncs)
 	begin
 		shift_reg[15:1] <= shift_reg[14:0];
-		shift_reg[0] <= mosi;
+		shift_reg[0] <= mosi;	 
 	end
 end
 

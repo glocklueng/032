@@ -35,7 +35,6 @@ uint64_t bytes_to_num(uint8_t* src, size_t len);
 //void SpinDelay(int ms);
 //void SpinDelayUs(int us);
 void LED(int led, int ms);
-void LEDsoff();
 int BUTTON_CLICKED(int ms);
 int BUTTON_HELD(int ms);
 void FormatVersionInformation(char *dst, int len, const char *prefix, void *version_information);

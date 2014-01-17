@@ -53,6 +53,20 @@ void HardFaultException(void)
   /* Go to infinite loop when Hard Fault exception occurs */
   while (1)
   {
+    
+    GPIOD->BSRR = GPIO_Pin_2;
+    
+    asm("nop");
+    asm("nop");
+    asm("nop");
+    asm("nop");
+    
+    GPIOD->BRR = GPIO_Pin_2;
+    
+    asm("nop");
+    asm("nop");
+    asm("nop");
+    asm("nop");
   }
 }
 

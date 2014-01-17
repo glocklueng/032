@@ -1,6 +1,9 @@
 //-----------------------------------------------------------------------------
 // For reading TI tags, we need to place the FPGA in pass through mode
 // and pass everything through to the ARM
+//
+// FPGA_MAJOR_MODE_LF_PASSTHRU
+//
 //-----------------------------------------------------------------------------
 
 module lo_passthru(

@@ -69,8 +69,9 @@ void LEDSet(unsigned char state);
 void OLEDDisplayPicture (const uint8_t *pointer) ;
 void InvertOLED( unsigned char state );
 void OLEDPutBigstr (const char *ptr);
-
+unsigned char softspi_rx( void );
 void DbpBigString(char *str);
+void FPGASpiSendWord(unsigned short cmdword);
 
 #define __enable_irq()    asm("cpsie i")
 #define __disable_irq()   asm("cpsid i")

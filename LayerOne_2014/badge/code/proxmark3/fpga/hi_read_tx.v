@@ -2,6 +2,8 @@
 // The way that we connect things when transmitting a command to an ISO
 // 15693 tag, using 100% modulation only for now.
 //
+// FPGA_MAJOR_MODE_HF_READER_TX
+//
 // Jonathan Westhues, April 2006
 //-----------------------------------------------------------------------------
 
