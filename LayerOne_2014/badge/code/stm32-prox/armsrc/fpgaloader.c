@@ -355,18 +355,8 @@ void FpgaWriteConfWord(BYTE v)
 #define	FPGA_SPCK_LOW()			LOW(SPCK)
 #define	FPGA_SPCK_HIGH()		HIGH(SPCK)
 	
-
 // Temporarily putting my SPI routines in here til they work.
 
-//Define all SPI Pins
-#define SPI_OUT_PORT            	GPIOB
-#define SPI_OUT_PIN			GPIO_Pin_5			// SSP_DOUT
-#define SPI_IN_PORT      		GPIOB
-#define SPI_IN_PIN			GPIO_Pin_6			// SSP_DIN
-#define SPI_CLK_PORT			GPIOB
-#define SPI_CLK_PIN			GPIO_Pin_2			// SSP_CLK
-#define SPI_CS_PORT			GPIOB
-#define SPI_CS_PIN			GPIO_Pin_1			// SSP_FRAME
 
 #define __no_operation(void)		asm("nop")
 
@@ -427,23 +417,78 @@ unsigned char softspi_rxtx(unsigned char data)
 }
 
 // this one runs quickly >10Mhz. so needs to be hardware driven.
+extern volatile unsigned char frame_sync;
+
+/*
+	__~
+
+*/
+
 
 unsigned char softspi_rx( void ) 
 {
+  //return ssp_byte;
+  
   register  unsigned char ret;
   register unsigned char bitmask ;
   
   bitmask = 0x80;
+  frame_sync = 0;  
   
   // Frame _||_____
-  while( GETBIT( SPI_CS  ) == 0 );
-  
+ //while( GETBIT( SPI_CS  ) == 0 );
+
   ret = 0;                    			
   
+  frame_sync = 0; 
+  EXTI_ClearITPendingBit(EXTI_Line1);
+  while( frame_sync );
+  
+  frame_sync = 0; 
+  //asm("BKPT #01");
+  
+#if 1
+  
+  // unrolled is faster...
+  
+  //#1
+  while( GETBIT( SPI_CLK  )  == 1 );
+  if (GETBIT(SPI_IN)) ret |=0x80;
+  
+  //#2
+  while( GETBIT( SPI_CLK  )  == 1 );
+  if (GETBIT(SPI_IN)) ret |= 0x40;
+  
+  //#3
+  while( GETBIT( SPI_CLK  )  == 1 );
+  if (GETBIT(SPI_IN)) ret |=0x20;
+  
+  //#4
+  while( GETBIT( SPI_CLK  )  == 1 );
+  if (GETBIT(SPI_IN)) ret |=0x10;
+
+  //#4
+  while( GETBIT( SPI_CLK  )  == 1 );
+  if (GETBIT(SPI_IN)) ret |=0x8;
+  
+  //#6
+  while( GETBIT( SPI_CLK  )  == 1 );
+  if (GETBIT(SPI_IN)) ret |=0x4;
+  
+  //#7
+  while( GETBIT( SPI_CLK  )  == 1 );
+  if (GETBIT(SPI_IN)) ret |=0x2;
+
+  //#8
+  while( GETBIT( SPI_CLK  )  == 1 );
+  if (GETBIT(SPI_IN)) ret |=0x1;
+
+#else
+
   do  {
     
     //CLK HIGH _|~~~~~~~~
-    while( GETBIT( SPI_CLK  )  == 0 );
+    while( GETBIT( SPI_CLK  )  == 1 );
      
      
     // Get state of SPI_IN
@@ -453,17 +498,23 @@ unsigned char softspi_rx( void )
     
     bitmask = bitmask >> 1;      
     
-  } while ( bitmask != 0 );
-  
+  } 
+  while ( bitmask != 0 );
+#endif
+
+  // if this, too slow
+  if ( frame_sync )
+    ;//while(frame_sync);
+
   return ret;
 }
 
 static void FPGASpiInit(void)
 {
-        FPGA_SDIN_HIGH() ;       
-        FPGA_SCLK_HIGH();
-
-        DelayuS(50);
+  FPGA_SDIN_HIGH() ;       
+  FPGA_SCLK_HIGH();
+  
+  DelayuS(50);
 }
 
 static void FPGASpiSendByte(unsigned char data)
@@ -800,6 +851,40 @@ void FpgaDownloadAndGo(void)
 // Set up the synchronous serial port, with the one set of options that we
 // always use when we are talking to the FPGA. Both RX and TX are enabled.
 //-----------------------------------------------------------------------------
-void FpgaSetupSsc(void)
-{
+void FpgaSetupSsc(unsigned char on_off)
+{  
+  
+  NVIC_InitTypeDef   NVIC_InitStructure;
+  
+  /* Enable and set EXTIn Interrupt to the lowest priority */
+  NVIC_InitStructure.NVIC_IRQChannel = EXTI1_IRQChannel;
+  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 4;
+  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 4;
+  
+  if( on_off == 1 ) 
+    NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+  else 
+    NVIC_InitStructure.NVIC_IRQChannelCmd = DISABLE;
+  
+  NVIC_Init(&NVIC_InitStructure);
+
+  return;
+  
+  NVIC_InitStructure.NVIC_IRQChannel = EXTI2_IRQChannel;
+  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 3;
+  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;
+  
+  if( on_off == 1 ) 
+    NVIC_InitStructure.NVIC_IRQChannelCmd = DISABLE;
+  else 
+    NVIC_InitStructure.NVIC_IRQChannelCmd = DISABLE;
+  NVIC_Init(&NVIC_InitStructure);
+  
+  
 }
+
+
+// DMA buffer
+
+uint8_t fpga_dma_buffer[];
+

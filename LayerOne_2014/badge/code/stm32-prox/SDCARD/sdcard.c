@@ -242,7 +242,7 @@ static void print_r1(u8 r)
 			printf("  %s\n", r1_strings[i]);
 }
 
-static const char *r2_strings[15] = {
+static const char * const r2_strings[15] = {
 	"card is locked",
 	"wp erase skip | lock/unlock cmd failed",
 	"error",

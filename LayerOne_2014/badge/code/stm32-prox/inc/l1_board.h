@@ -11,7 +11,7 @@
 // VDD voltage in MV
 #define VDD_MV		( 33400 )
 
-#define DMA_ADC		(  1 )
+#define DMA_ADC		(  0 )
 
 // Ports and pin mapping
 
@@ -48,7 +48,7 @@
 #define GPIO_SW_PORTSOURCE            GPIO_PortSourceGPIOA      				// PA
 #define GPIO_SW_K1_PINSOURCE          GPIO_PinSource4     						// PA4
 #define GPIO_SW_K1_EXTI_Line          EXTI_Line0          
-#define GPIO_SW_K2_PINSOURCE   		  GPIO_PinSource2     						// PA4
+#define GPIO_SW_K2_PINSOURCE   	      GPIO_PinSource2     						// PA4
 #define GPIO_SW_K2_EXTI_Line          EXTI_Line2          
 
 // Ampl Lo/Hi
@@ -104,19 +104,27 @@
 
 // PB3/4 JTAG
 #define SSP_CLK_PIN                    GPIO_Pin_2								// input
-#define SSP_FRAME                      GPIO_Pin_1								// input
+#define SSP_FRAME_PIN                  GPIO_Pin_1								// input
+
+#define GPIO_SSP_PORTSOURCE            GPIO_PortSourceGPIOB      				// PB
+
+// Frame ___||_________
+#define GPIO_SSP_FRAME_PINSOURCE	GPIO_PinSource1
+
+// _||_||_||_||
+#define GPIO_SSP_CLK_PINSOURCE		GPIO_PinSource2
 
 #define FPGA_DONE_PIN                  GPIO_Pin_0								// input
 
-#define GPIOB_OUTPUTS_2MHZ_PP_MASK		( SSP_FRAME  | DC_PIN | RES_PIN | 	\
+#define GPIOB_OUTPUTS_2MHZ_PP_MASK		( DC_PIN | RES_PIN | 						\
 						CS_PIN | FPGAON_PIN  | NVDD_ON_PIN | MUXSEL_HIPKD_PIN | 	\
 						MUXSEL_LOPKD_PIN |MUXSEL_HIRAW_PIN | MUXSEL_LORAW_PIN )
 
 //#define GPIOB_OUTPUTS_10MHZ_PP_MASK		( )
 #define GPIOB_OUTPUTS_50MHZ_PP_MASK		( SSP_DOUT_PIN )
 //#define GPIOB_OUTPUTS_50MHZ_OD_MASK		( USB_DISCONNECT_PIN )
-//#define GPIOB_INPUT_FLOAT_MASK			(   )
-#define GPIOB_INPUT_PULLUP_MASK			( SSP_DIN_PIN| SSP_FRAME  | FPGA_DONE_PIN |SSP_CLK_PIN) 
+//#define GPIOB_INPUT_FLOAT_MASK			(  )
+#define GPIOB_INPUT_PULLUP_MASK			( SSP_FRAME_PIN |  SSP_CLK_PIN | SSP_DIN_PIN | FPGA_DONE_PIN ) 
 //#define GPIOB_ANALOG_MASK			( )
 #define	GPIOB_DEFAULT_LOW_MASK			( GPIOB_OUTPUTS_2MHZ_PP_MASK )
 //#define	GPIOB_DEFAULT_HIGH_MASK		( )
@@ -258,7 +266,17 @@
 #define				SpinDelay			DelaymS
 #define				SpinDelayUs			DelayuS
 
+//Define all SPI Pins
+#define SPI_OUT_PORT            	GPIOB
+#define SPI_OUT_PIN			GPIO_Pin_5			// SSP_DOUT
+#define SPI_IN_PORT      		GPIOB
+#define SPI_IN_PIN			GPIO_Pin_6			// SSP_DIN
+#define SPI_CLK_PORT			GPIOB
+#define SPI_CLK_PIN			SSP_CLK_PIN			// SSP_CLK
+#define SPI_CS_PORT			GPIOB
+#define SPI_CS_PIN			SSP_FRAME_PIN			// SSP_FRAME
 
+						  
 // JTAG
 // PORTB/PORTA
 // PB3/PB4/PA14/PA14/PA15
