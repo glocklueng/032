@@ -363,6 +363,8 @@ void MeasureAntennaTuningHf(void)
   
   DbpString("Measuring HF antenna\nPress button to exit\n\n");
   
+  //FpgaSetupSsc(1);
+  
   for (;;) {
     // Let the FPGA drive the high-frequency antenna around 13.56 MHz.
     FpgaWriteConfWord(FPGA_MAJOR_MODE_HF_READER_RX_XCORR);
@@ -373,38 +375,34 @@ void MeasureAntennaTuningHf(void)
     vHf = (VDD_MV * AvgAdc(ADC_CHAN_HF)) >> 10;
     
     Dbprintf("\r%d mV           ",vHf/10);
-    
-    ch =  softspi_rx( ); 
-    
-    
-    Dbprintf("%d   \n",ch);
-      
+         
     if (BUTTON_PRESS()) 
       break;
   }
+  //FpgaSetupSsc(0);
   DbpString("\nCancelled");
 }
 
 
 void test_fpga()
 {
-
+  
   return;
   
   int i;
   
-      FpgaWriteConfWord(FPGA_MAJOR_MODE_LF_READER);
-      
-      for (i=255; i>19; i--) {
-      
-	      WDT_HIT();
-	      
-	      FpgaSendCommand(FPGA_CMD_SET_DIVISOR, i);
-	      
-	      DelaymS(5000);
-      }
-      
-      FpgaWriteConfWord(FPGA_MAJOR_MODE_OFF);	
+  FpgaWriteConfWord(FPGA_MAJOR_MODE_LF_READER);
+  
+  for (i=255; i>19; i--) {
+    
+    WDT_HIT();
+    
+    FpgaSendCommand(FPGA_CMD_SET_DIVISOR, i);
+    
+    DelaymS(5000);
+  }
+  
+  FpgaWriteConfWord(FPGA_MAJOR_MODE_OFF);	
 }
 
 
@@ -475,7 +473,8 @@ void SetupPCK0Clock(void)
 
 
 // compose fc/8 fc/10 waveform
-static void fc(int c, int *n) {
+static void fc(int c, int *n) 
+{
 	uint8_t *dest = (uint8_t *)BigBuf;
 	int idx;
 
@@ -892,6 +891,7 @@ void ListenReaderField(int limit)
 */
 
 
+
 void SimulateTagHfListen(void)
 {
   uint8_t *dest = (uint8_t *)BigBuf+FREE_BUFFER_OFFSET;
@@ -910,7 +910,7 @@ void SimulateTagHfListen(void)
   // We need to listen to the high-frequency, peak-detected path.
   SetAdcMuxFor(GPIO_MUXSEL_HIPKD);
   
-  FpgaSetupSsc();
+  FpgaSetupSsc(1);
   
   i = 0;
   
@@ -932,11 +932,13 @@ void SimulateTagHfListen(void)
 	i++;
 	
 	if(i >= FREE_BUFFER_SIZE) {
-	  break;
+	   i = 0;//break;
 	}
       }
     }
   }
+	
+  FpgaSetupSsc(0);
   DbpString("simulate tag (now type bitsamples)");
 }
 
@@ -946,6 +948,8 @@ int main(void)
 #ifdef DEBUG
   debug();
 #endif
+  
+ // MEM_WriteU32(0x40023830, 0x00000010);
   
   /* System Clocks Configuration **********************************************/
   // if this fails (xtal fault ) LED will blink indefinitely short off ,long on, repeat
@@ -968,6 +972,9 @@ int main(void)
   
   // USB Enable
   InitBoard();
+  
+  EXTI_Configuration();
+  
   // Startup OLED
   InitOLED();
   
@@ -995,6 +1002,7 @@ int main(void)
   SetupPCK0Clock();
   
   FpgaDownloadAndGo();
+  
   SimulateTagHfListen();
 
 #if 0
@@ -1096,12 +1104,8 @@ int main(void)
   
   OLEDClear();
   
-
-  
   SimulateTagLowFrequency(1000,100,1);
-  
-
-  
+ 
   MeasureAntennaTuningHf();  
   DelaymS( 500 );
   DelaymS(25000);

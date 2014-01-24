@@ -72,7 +72,7 @@ void FpgaSendCommand(uint16_t cmd, uint16_t v);
 void FpgaWriteConfWord(uint8_t v);
 void FpgaDownloadAndGo(void);
 void FpgaGatherVersion(char *dst, int len);
-void FpgaSetupSsc(void);
+void FpgaSetupSsc(unsigned char on_off);
 void SetupSpi(int mode);
 bool FpgaSetupSscDma(uint8_t *buf, int len);
 #define FpgaDisableSscDma(void)	AT91C_BASE_PDC_SSC->PDC_PTCR = AT91C_PDC_RXTDIS;

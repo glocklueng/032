@@ -15,7 +15,6 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f10x_lib.h"
-
 #include "l1_board.h"
 #include "hw_config.h"
 #include "usb_lib.h"
@@ -129,9 +128,7 @@ int Set_System(void)
 	
   /* Configure the used GPIOs*/
   GPIO_Configuration();
-  
-  /* Configure the EXTI lines for Key and Tamper push buttons*/
-  EXTI_Configuration();
+
   
   /* Configure the ADC*/
   ADC_Configuration();
@@ -201,9 +198,6 @@ void Leave_LowPowerMode(void)
 void USB_Interrupts_Config(void)
 {
   NVIC_InitTypeDef NVIC_InitStructure;
- 
-  /* Set the Vector Table base address at 0x08000000 */
-  NVIC_SetVectorTable(NVIC_VectTab_FLASH, 0x00);
   
   NVIC_InitStructure.NVIC_IRQChannel = USB_LP_CAN_RX0_IRQChannel;
   NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;
@@ -698,36 +692,40 @@ void GPIO_Configuration(void)
 void EXTI_Configuration(void)
 {
   EXTI_InitTypeDef EXTI_InitStructure;
-   
-  /* Enable the AFIO Clock */
-  RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE);  
+  NVIC_InitTypeDef NVIC_InitStructure;
   
-  /* Connect SW K1 to the correspondent EXTI line */
-  GPIO_EXTILineConfig(GPIO_SW_PORTSOURCE, GPIO_SW_K1_PINSOURCE);
+  /* Enable the APB2 GPIOB Clock */
+  RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB | RCC_APB2Periph_AFIO, ENABLE);  
+    
+  /* Connect SSP Frame to the correspondent EXTI line */
+  GPIO_EXTILineConfig(GPIO_PortSourceGPIOB, GPIO_PinSource1);
   
-  /* Configure SW K1 EXTI line to generate an interrupt on rising & falling edges */  
-  EXTI_InitStructure.EXTI_Line = GPIO_SW_K1_EXTI_Line;
+  /* Configure SSP Frame EXTI line to generate an interrupt on rising edges */  
+  EXTI_InitStructure.EXTI_Line = EXTI_Line1;
   EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
-  EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising_Falling;
+  EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling;
   EXTI_InitStructure.EXTI_LineCmd = ENABLE;
   EXTI_Init(&EXTI_InitStructure);
+  
+  /* Clear the SSP FRAME EXTI line pending bit */
+  EXTI_ClearITPendingBit(EXTI_Line1);
 
-  /* Clear the SW K1 EXTI line pending bit */
-  EXTI_ClearITPendingBit(GPIO_SW_K1_EXTI_Line);
+#if 0  
+  /* Connect SSP CLK to the correspondent EXTI line */
+  GPIO_EXTILineConfig(GPIO_PortSourceGPIOB, GPIO_PinSource2);
   
-  
-  /* Connect SW K2 button to the correspondent EXTI line */
-  GPIO_EXTILineConfig(GPIO_SW_PORTSOURCE, GPIO_SW_K2_PINSOURCE);
-  
-  /* Configure SW K2 EXTI Line to generate an interrupt rising & falling edges */  
-  EXTI_InitStructure.EXTI_Line = GPIO_SW_K2_EXTI_Line;
-  EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
-  EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising_Falling;
-  EXTI_InitStructure.EXTI_LineCmd = ENABLE;
+  /* Configure SW K2 EXTI Line to generate an interrupt rising edges */  
+  EXTI_InitStructure.EXTI_Line 		= EXTI_Line2;
+  EXTI_InitStructure.EXTI_Mode 		= EXTI_Mode_Interrupt;
+  EXTI_InitStructure.EXTI_Trigger	= EXTI_Trigger_Rising;
+  EXTI_InitStructure.EXTI_LineCmd	= ENABLE;
   EXTI_Init(&EXTI_InitStructure);
-
-  /* Clear the SW K2 EXTI line pending bit */
-  EXTI_ClearITPendingBit(GPIO_SW_K2_EXTI_Line);
+#endif
+  
+  FpgaSetupSsc( 0);
+  
+  /* Clear the EXTI line pending bit */
+  EXTI_ClearITPendingBit(EXTI_Line2);
   
 }
 
@@ -741,6 +739,8 @@ void EXTI_Configuration(void)
 void ADC_Configuration(void)
 {
   ADC_InitTypeDef ADC_InitStructure;
+#if DMA_ADC == 1
+
   DMA_InitTypeDef DMA_InitStructure;
 
   /* Enable DMA1 clock */
@@ -769,7 +769,8 @@ void ADC_Configuration(void)
   
   /* Disable the DMA1 Channel1 Transfer complete interrupt */
   DMA_ITConfig(DMA1_Channel1, DMA_IT_TC, DISABLE);
-     
+#endif
+  
   /* ADC1 configuration ------------------------------------------------------*/
   ADC_InitStructure.ADC_Mode = ADC_Mode_Independent;
   ADC_InitStructure.ADC_ScanConvMode = ENABLE;
@@ -785,8 +786,12 @@ void ADC_Configuration(void)
   /* ADC1 regular channel configuration */ 
   ADC_RegularChannelConfig(ADC1, ADC_Channel_1, 1, ADC_SampleTime_239Cycles5);
 
+#if DMA_ADC == 1
+
   /* Enable ADC1 DMA */
   ADC_DMACmd(ADC1, ENABLE);
+
+#endif
   
   /* Enable ADC1 */
   ADC_Cmd(ADC1, ENABLE);
@@ -853,10 +858,9 @@ void RCC_Configuration(void)
   //RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
 }
   
-/**************************************************************************************/
-  
-
-/**************************************************************************************/
+/**************************************************************************************
+ * Setup the 24Mhz clock
+ **************************************************************************************/
   
 void TIM1_Configuration(void)
 {
@@ -893,7 +897,33 @@ void TIM1_Configuration(void)
   TIM_Cmd(TIM1, ENABLE);
 }
 
-
+/*******************************************************************************
+* Function Name  : Timer2 configurations
+* Description    : Configure Timer2 in such a way that it can initiate data transfer using DMA on 
+*		  rising edge of clock signal received on port pin.
+* Input          : None
+* Output         : None
+* Return         : None
+*******************************************************************************/
+void TIM2_Configuration(void)
+{
+  GPIO_InitTypeDef   GPIO_InitStructure;
+  TIM_ICInitTypeDef  TIM_ICInitStructure;
+  
+  RCC_APB2PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);  /* TIM2 clock enable */
+  //RCC_AHB1PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);
+    
+  TIM_ICInitStructure.TIM_Channel     = TIM_Channel_2;
+  TIM_ICInitStructure.TIM_ICPolarity  = TIM_ICPolarity_Rising;
+  TIM_ICInitStructure.TIM_ICSelection = TIM_ICSelection_DirectTI;
+  TIM_ICInitStructure.TIM_ICPrescaler = TIM_ICPSC_DIV1;
+  TIM_ICInitStructure.TIM_ICFilter    = 0x0;
+  TIM_ICInit(TIM1, &TIM_ICInitStructure);
+  
+  TIM_CtrlPWMOutputs(TIM2, ENABLE);       /* TIM Main Inputs/Output Enable    */
+  TIM_Cmd(TIM2, ENABLE);                  /* TIM enable counter               */
+  TIM_DMACmd(TIM2, TIM_DMA_CC1, ENABLE ); /* Enable TIM2_CC1 DMA Requests     */
+}
 
 /******************* (C) COPYRIGHT 2008 STMicroelectronics *****END OF FILE****/
 

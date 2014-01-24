@@ -18,8 +18,10 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f10x_it.h"
 #include "l1_board.h"
+#include "proxmark3.h"
 #include "usb_lib.h"
 #include "usb_istr.h"
+
 
 extern void TimingDelay_Decrement(void);
 
@@ -156,7 +158,7 @@ void PendSVC(void)
 * Return         : None
 *******************************************************************************/
 void SysTickHandler(void)
-{
+{ 
   TimingDelay_Decrement();
 }
 
@@ -235,10 +237,11 @@ void RCC_IRQHandler(void)
 *******************************************************************************/
 void EXTI0_IRQHandler(void)
 {
-  if(EXTI_GetITStatus(GPIO_SW_K1_EXTI_Line) != RESET)  {  
-
-  }
 }
+
+unsigned char volatile ssp_byte = 0;
+static unsigned char  ssp_shift = 0x80;
+volatile  unsigned char  frame_sync = 0;
 
 /*******************************************************************************
 * Function Name  : EXTI1_IRQHandler
@@ -249,6 +252,25 @@ void EXTI0_IRQHandler(void)
 *******************************************************************************/
 void EXTI1_IRQHandler(void)
 {
+  //if ( !( ( (EXTI->PR & EXTI_Line1) != (u32)RESET) && (EXTI->IMR & EXTI_Line1 != (u32)RESET)))
+  if(EXTI_GetITStatus(EXTI_Line1) != RESET)
+  {
+    frame_sync ++; 
+    // frame has been asserted
+    // reset ssp_byte;
+    
+    ssp_byte = 0x0;
+    ssp_shift= 0x80;
+      
+    EXTI_ClearITPendingBit(EXTI_Line1);
+    //EXTI->PR = EXTI_Line1;
+   /*
+    if( frame_sync & 1  )
+    	HIGH (NVDD_ON);
+    else
+    	LOW ( NVDD_ON);
+    */
+  }
 }
 
 /*******************************************************************************
@@ -260,6 +282,27 @@ void EXTI1_IRQHandler(void)
 *******************************************************************************/
 void EXTI2_IRQHandler(void)
 {
+  static char tog = 0;
+  
+  if ( !( ( (EXTI->PR & EXTI_Line2) != 
+	   (u32)RESET) && (EXTI->IMR & EXTI_Line2 != (u32)RESET)))
+  //if(EXTI_GetITStatus(EXTI_Line2) != RESET)
+  {
+    EXTI->PR = EXTI_Line2;
+    
+    // asm("BKPT #01"); 
+    // on clock
+    // Get state of ssp in
+    
+    if (GETBIT(SPI_IN)) {
+      ssp_byte |= ssp_shift;   
+    }   
+
+    ssp_shift = ssp_shift >> 1;      
+    
+    // if ssp_shift ends up going too far, we missed data...
+    // EXTI_ClearITPendingBit(EXTI_Line2);
+  }
 }
 
 /*******************************************************************************
@@ -271,6 +314,7 @@ void EXTI2_IRQHandler(void)
 *******************************************************************************/
 void EXTI3_IRQHandler(void)
 {
+
 }
 
 /*******************************************************************************
@@ -428,6 +472,7 @@ void CAN_SCE_IRQHandler(void)
 *******************************************************************************/
 void EXTI9_5_IRQHandler(void)
 {
+  asm("BKPT #01");     
 }
 
 /*******************************************************************************
@@ -618,6 +663,7 @@ void USART3_IRQHandler(void)
 *******************************************************************************/
 void EXTI15_10_IRQHandler(void)
 {
+    asm("BKPT #01"); 
 }
 
 /*******************************************************************************

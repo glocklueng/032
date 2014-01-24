@@ -1280,7 +1280,7 @@
         <option>
           <name>CCOptStrategy</name>
           <version>0</version>
-          <state>0</state>
+          <state>2</state>
         </option>
         <option>
           <name>CCOptLevelSlave</name>
@@ -1306,7 +1306,7 @@
         </option>
         <option>
           <name>CCPosIndNoDynInit</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IccLang</name>
@@ -1530,7 +1530,7 @@
         </option>
         <option>
           <name>OOCOutputFile</name>
-          <state>5.srec</state>
+          <state>stm32-prox.srec</state>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>
