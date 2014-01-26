@@ -45,6 +45,10 @@ always @(posedge fc_div_2)
 reg fc_div_8;
 always @(posedge fc_div_4)
     fc_div_8 = ~fc_div_8;
+	 
+reg fc_div_16;
+always @(posedge fc_div_8)
+    fc_div_16 = ~fc_div_16;
 
 reg adc_clk;
 
@@ -54,20 +58,20 @@ always @(xcorr_is_848 or xcorr_quarter_freq or ck_1356meg)
 	    if(xcorr_is_848)
 	        // The subcarrier frequency is fc/16; we will sample at fc, so that 
 	        // means the subcarrier is 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 1 1 ...
-	        adc_clk <= ck_1356meg;
+	        adc_clk <= fc_div_2; // was before charlie's request to slow: adc_clk <= ck_1356meg;
 	    else
 	        // The subcarrier frequency is fc/32; we will sample at fc/2, and
 	        // the subcarrier will look identical.
-	        adc_clk <= fc_div_2;
+	        adc_clk <= fc_div_4;	// was before charlie's request to slow: adc_clk <= fc_div_2;
     end
     else
     begin
 	    if(xcorr_is_848)
 	        // The subcarrier frequency is fc/64
-	        adc_clk <= fc_div_4;
+	        adc_clk <= fc_div_8;	// was before charlie's request to slow: adc_clk <= fc_div_4;
 	    else
 	        // The subcarrier frequency is fc/128
-	        adc_clk <= fc_div_8;
+	        adc_clk <= fc_div_16;	// was before charlie's request to slow: adc_clk <= fc_div_8;
 	end
 
 // When we're a reader, we just need to do the BPSK demod; but when we're an
@@ -116,14 +120,14 @@ begin
     begin
         if(snoop)
         begin
-            corr_i_out <= {corr_i_accum[12:6], after_hysteresis_prev};
-            corr_q_out <= {corr_q_accum[12:6], after_hysteresis};
+            corr_i_out <= 8'b10101010;  		// Originally: corr_i_out <= {corr_i_accum[12:6], after_hysteresis_prev};
+            corr_q_out <= 8'b10101010;			// Originally: corr_q_out <= {corr_q_accum[12:6], after_hysteresis};
         end
         else
         begin
             // Only correlations need to be delivered.
-            corr_i_out <= corr_i_accum[13:6];
-            corr_q_out <= corr_q_accum[13:6];
+            corr_i_out <= 8'b10101010;						// Originally: corr_i_out <= corr_i_accum[13:6];
+            corr_q_out <= 8'b10101010;						// Originally: corr_q_out <= corr_q_accum[13:6];	
         end
 
         corr_i_accum <= adc_d;
@@ -170,7 +174,7 @@ begin
         end
     end
 
-    if(corr_i_cnt[5:2] == 4'b000 || corr_i_cnt[5:2] == 4'b1000)
+    if(corr_i_cnt[5:2] == 4'b0000 || corr_i_cnt[5:2] == 4'b1000)
         ssp_frame = 1'b1;
     else
         ssp_frame = 1'b0;
