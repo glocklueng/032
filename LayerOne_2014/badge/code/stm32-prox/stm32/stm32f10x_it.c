@@ -249,7 +249,8 @@ volatile  unsigned char  frame_sync = 0;
 * Input          : None
 * Output         : None
 * Return         : None
-*******************************************************************************/
+*******************************************************************************/               			
+
 void EXTI1_IRQHandler(void)
 {
   //if ( !( ( (EXTI->PR & EXTI_Line1) != (u32)RESET) && (EXTI->IMR & EXTI_Line1 != (u32)RESET)))
@@ -261,15 +262,9 @@ void EXTI1_IRQHandler(void)
     
     ssp_byte = 0x0;
     ssp_shift= 0x80;
-      
+    
+
     EXTI_ClearITPendingBit(EXTI_Line1);
-    //EXTI->PR = EXTI_Line1;
-   /*
-    if( frame_sync & 1  )
-    	HIGH (NVDD_ON);
-    else
-    	LOW ( NVDD_ON);
-    */
   }
 }
 

@@ -78,7 +78,7 @@ int Set_System(void)
     RCC_PCLK1Config(RCC_HCLK_Div2);
 
     /* On STICE the PLL output clock is fixed to 72 MHz */
-	/*  PLL configuration: PLLCLK = HSI/1 * 9 = 72 MHz */
+    /*  PLL configuration: PLLCLK = HSI/1 * 9 = 72 MHz */
     RCC_PLLConfig(RCC_PLLSource_HSE_Div1, RCC_PLLMul_9);
 
     /* Enable PLL */ 
@@ -289,6 +289,7 @@ void GPIO_Configuration(void)
   
   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4;
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_2MHz;
   GPIO_Init(GPIOB, &GPIO_InitStructure);
   GPIO_WriteBit(GPIOB, GPIO_Pin_4  , Bit_RESET);
  
@@ -381,6 +382,14 @@ void GPIO_Configuration(void)
   GPIO_InitStructure.GPIO_Pin = GPIOD_INPUT_PULLUP_MASK;
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
   GPIO_Init(GPIOD, &GPIO_InitStructure);
+#endif
+ 
+#ifdef GPIOB_INPUT_PULLDOWN_MASK
+  /* Configure GPIOB Inputs pulled UP */
+  GPIO_InitStructure.GPIO_Pin = GPIOB_INPUT_PULLDOWN_MASK;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  GPIO_Init(GPIOB, &GPIO_InitStructure);
 #endif
  
 	
@@ -528,35 +537,35 @@ void GPIO_Configuration(void)
 	/* Set OUTPUTs default state */
   
 #ifdef GPIOA_DEFAULT_LOW_MASK
-  GPIO_WriteBit(GPIOA, GPIOA_DEFAULT_LOW_MASK,Bit_RESET); 
+  GPIO_ResetBits(GPIOA, GPIOA_DEFAULT_LOW_MASK); 
 #endif
 
 #ifdef GPIOA_DEFAULT_HIGH_MASK
-  GPIO_WriteBit(GPIOA, GPIOA_DEFAULT_HIGH_MASK,Bit_SET); 
+  GPIO_SetBits(GPIOA, GPIOA_DEFAULT_HIGH_MASK); 
 #endif
  
 #ifdef GPIOB_DEFAULT_LOW_MASK
-  GPIO_WriteBit(GPIOB, GPIOB_DEFAULT_LOW_MASK,Bit_RESET); 
+  GPIO_ResetBits(GPIOB, GPIOB_DEFAULT_LOW_MASK); 
 #endif
 
 #ifdef GPIOB_DEFAULT_HIGH_MASK
-  GPIO_WriteBit(GPIOB, GPIOB_DEFAULT_HIGH_MASK,Bit_SET); 
+  GPIO_SetBits(GPIOB, GPIOB_DEFAULT_HIGH_MASK); 
 #endif
 
 #ifdef GPIOC_DEFAULT_LOW_MASK
-  GPIO_WriteBit(GPIOC, GPIOC_DEFAULT_LOW_MASK,Bit_RESET); 
+  GPIO_ResetBits(GPIOC, GPIOC_DEFAULT_LOW_MASK); 
 #endif
 
 #ifdef GPIOC_DEFAULT_HIGH_MASK
-  GPIO_WriteBit(GPIOC, GPIOC_DEFAULT_HIGH_MASK,Bit_SET); 
+  GPIO_SetBits(GPIOC, GPIOC_DEFAULT_HIGH_MASK); 
 #endif
 
 #ifdef GPIOD_DEFAULT_LOW_MASK
-  GPIO_WriteBit(GPIOD, GPIOD_DEFAULT_LOW_MASK,Bit_RESET); 
+  GPIO_ResetBits(GPIOD, GPIOD_DEFAULT_LOW_MASK); 
 #endif
 
 #ifdef GPIOD_DEFAULT_HIGH_MASK
-  GPIO_WriteBit(GPIOD, GPIOD_DEFAULT_HIGH_MASK,Bit_SET); 
+  GPIO_SetBits(GPIOD, GPIOD_DEFAULT_HIGH_MASK); 
 #endif
 
   /* End Default States */
@@ -703,7 +712,7 @@ void EXTI_Configuration(void)
   /* Configure SSP Frame EXTI line to generate an interrupt on rising edges */  
   EXTI_InitStructure.EXTI_Line = EXTI_Line1;
   EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
-  EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling;
+  EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising;
   EXTI_InitStructure.EXTI_LineCmd = ENABLE;
   EXTI_Init(&EXTI_InitStructure);
   

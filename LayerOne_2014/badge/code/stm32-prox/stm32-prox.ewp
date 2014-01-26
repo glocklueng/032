@@ -168,7 +168,7 @@
         </option>
         <option>
           <name>CCDefines</name>
-          <state></state>
+          <state>DEBUG</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
