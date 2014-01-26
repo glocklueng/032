@@ -953,7 +953,7 @@ void SimulateTagHfListen(void)
 int main(void)
 {
 #ifdef DEBUG
-  //debug();
+  debug();
 #endif
   
 // _WDWORD(0x40023830, 0x00000010);
