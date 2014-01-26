@@ -17430,29 +17430,6 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <label x="43.18" y="-17.78" size="1.778" layer="95" rot="R270"/>
 </segment>
 </net>
-<net name="VCC" class="2">
-<segment>
-<wire x1="127" y1="58.42" x2="137.16" y2="58.42" width="0.1524" layer="91"/>
-<wire x1="137.16" y1="58.42" x2="142.24" y2="58.42" width="0.1524" layer="91"/>
-<wire x1="142.24" y1="58.42" x2="142.24" y2="66.04" width="0.1524" layer="91"/>
-<pinref part="IC3" gate="G$1" pin="VO"/>
-<pinref part="U$3" gate="G$1" pin="+3V3"/>
-</segment>
-<segment>
-<wire x1="58.42" y1="96.52" x2="58.42" y2="99.06" width="0.1524" layer="91"/>
-<wire x1="58.42" y1="99.06" x2="58.42" y2="101.6" width="0.1524" layer="91"/>
-<wire x1="58.42" y1="99.06" x2="68.58" y2="99.06" width="0.1524" layer="91"/>
-<wire x1="68.58" y1="99.06" x2="68.58" y2="96.52" width="0.1524" layer="91"/>
-<wire x1="68.58" y1="99.06" x2="78.74" y2="99.06" width="0.1524" layer="91"/>
-<wire x1="78.74" y1="99.06" x2="78.74" y2="96.52" width="0.1524" layer="91"/>
-<junction x="58.42" y="99.06"/>
-<junction x="68.58" y="99.06"/>
-<pinref part="C25" gate="G$1" pin="1"/>
-<pinref part="U$8" gate="G$1" pin="+3V3"/>
-<pinref part="C26" gate="G$1" pin="1"/>
-<pinref part="C27" gate="G$1" pin="1"/>
-</segment>
-</net>
 <net name="VDD" class="2">
 <segment>
 <wire x1="-27.94" y1="101.6" x2="-27.94" y2="99.06" width="0.1524" layer="91"/>
@@ -17729,6 +17706,27 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <pinref part="R57" gate="G$1" pin="1"/>
 <wire x1="10.16" y1="12.7" x2="10.16" y2="22.86" width="0.1524" layer="91"/>
 <pinref part="U$15" gate="G$1" pin="+3V3"/>
+</segment>
+<segment>
+<wire x1="127" y1="58.42" x2="137.16" y2="58.42" width="0.1524" layer="91"/>
+<wire x1="137.16" y1="58.42" x2="142.24" y2="58.42" width="0.1524" layer="91"/>
+<wire x1="142.24" y1="58.42" x2="142.24" y2="66.04" width="0.1524" layer="91"/>
+<pinref part="IC3" gate="G$1" pin="VO"/>
+<pinref part="U$3" gate="G$1" pin="+3V3"/>
+</segment>
+<segment>
+<wire x1="58.42" y1="96.52" x2="58.42" y2="99.06" width="0.1524" layer="91"/>
+<wire x1="58.42" y1="99.06" x2="58.42" y2="101.6" width="0.1524" layer="91"/>
+<wire x1="58.42" y1="99.06" x2="68.58" y2="99.06" width="0.1524" layer="91"/>
+<wire x1="68.58" y1="99.06" x2="68.58" y2="96.52" width="0.1524" layer="91"/>
+<wire x1="68.58" y1="99.06" x2="78.74" y2="99.06" width="0.1524" layer="91"/>
+<wire x1="78.74" y1="99.06" x2="78.74" y2="96.52" width="0.1524" layer="91"/>
+<junction x="58.42" y="99.06"/>
+<junction x="68.58" y="99.06"/>
+<pinref part="C25" gate="G$1" pin="1"/>
+<pinref part="U$8" gate="G$1" pin="+3V3"/>
+<pinref part="C26" gate="G$1" pin="1"/>
+<pinref part="C27" gate="G$1" pin="1"/>
 </segment>
 </net>
 <net name="USB_ON" class="0">
@@ -18074,7 +18072,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <busses>
 </busses>
 <nets>
-<net name="VCC" class="2">
+<net name="+3V3" class="0">
 <segment>
 <pinref part="IC2" gate="G$1" pin="VDD@1"/>
 <wire x1="71.12" y1="83.82" x2="71.12" y2="101.6" width="0.1524" layer="91"/>
@@ -19299,7 +19297,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <junction x="154.94" y="80.01"/>
 </segment>
 </net>
-<net name="VCC" class="2">
+<net name="+3V3" class="0">
 <segment>
 <wire x1="142.24" y1="-29.21" x2="144.78" y2="-29.21" width="0.1524" layer="91"/>
 <wire x1="144.78" y1="-29.21" x2="144.78" y2="-6.35" width="0.1524" layer="91"/>
@@ -21830,7 +21828,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <wire x1="22.86" y1="88.9" x2="22.86" y2="91.44" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="VCC" class="2">
+<net name="+3V3" class="0">
 <segment>
 <pinref part="U3" gate="G$1" pin="VBAT"/>
 <wire x1="48.26" y1="86.36" x2="30.48" y2="86.36" width="0.1524" layer="91"/>
@@ -21973,7 +21971,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <label x="96.52" y="48.26" size="1.778" layer="95" rot="R90"/>
 </segment>
 </net>
-<net name="VCC" class="2">
+<net name="+3V3" class="0">
 <segment>
 <pinref part="U4" gate="G$1" pin="VCC"/>
 <wire x1="55.88" y1="76.2" x2="50.8" y2="76.2" width="0.1524" layer="91"/>
