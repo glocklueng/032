@@ -74,7 +74,6 @@ void DbpBigString(char *str);
 void FPGASpiSendWord(unsigned short cmdword);
 void FpgaSetupSsc(unsigned char on_off);
 
-extern  unsigned char volatile ssp_byte;
 #define __enable_irq()    asm("cpsie i")
 #define __disable_irq()   asm("cpsid i")
 

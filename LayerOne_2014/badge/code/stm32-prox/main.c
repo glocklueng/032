@@ -197,6 +197,9 @@ void assert_failed(u8* file, u32 line)
   /* Infinite loop */
   while (1)
   {
+    
+    asm("bkpt #00");
+    
   }
 }
 #endif
@@ -457,11 +460,15 @@ void SetupPCK0Clock(void)
   // Channel 2 Configuration in PWM1 mode
   // PWM1 gives a rounder pulse
   // PWM2 gives a more pointed
-  TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
+  TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM2;
   TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
+  TIM_OCInitStructure.TIM_OutputNState  = TIM_OutputNState_Enable;
   TIM_OCInitStructure.TIM_Pulse = Period/2;
   TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
-  
+  TIM_OCInitStructure.TIM_OCNIdleState = TIM_OCIdleState_Reset;
+  TIM_OCInitStructure.TIM_OCNPolarity = TIM_OCNPolarity_High;
+  TIM_OCInitStructure.TIM_OCIdleState = TIM_OCIdleState_Set;
+    
   // TI CH3 Init
   TIM_OC3Init(TIM1,&TIM_OCInitStructure);
   
@@ -946,10 +953,10 @@ void SimulateTagHfListen(void)
 int main(void)
 {
 #ifdef DEBUG
-  debug();
+  //debug();
 #endif
   
- // MEM_WriteU32(0x40023830, 0x00000010);
+// _WDWORD(0x40023830, 0x00000010);
   
   /* System Clocks Configuration **********************************************/
   // if this fails (xtal fault ) LED will blink indefinitely short off ,long on, repeat
@@ -971,7 +978,7 @@ int main(void)
   SysTick_ITConfig(ENABLE);
   
   // USB Enable
-  InitBoard();
+  //InitBoard();
   
   EXTI_Configuration();
   
@@ -1002,9 +1009,20 @@ int main(void)
   SetupPCK0Clock();
   
   FpgaDownloadAndGo();
+    
+  FpgaWriteConfWord(FPGA_MAJOR_MODE_HF_READER_RX_XCORR | FPGA_HF_READER_RX_XCORR_848_KHZ | FPGA_HF_READER_RX_XCORR_SNOOP);
+    
+  // We need to listen to the high-frequency, peak-detected path.
+  SetAdcMuxFor(GPIO_MUXSEL_HIPKD);
+  
+  FpgaSetupSsc(1);
   
   SimulateTagHfListen();
 
+  //SimulateTagLowFrequency(1000,100,1);
+
+  CmdHIDsimTAG(0x20,0x06040ef9 , 1);
+  
 #if 0
   OLEDClear();
   OLEDPutstr("FPGA TEST MODE\n");

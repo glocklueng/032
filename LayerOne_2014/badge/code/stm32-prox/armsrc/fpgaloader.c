@@ -415,10 +415,6 @@ unsigned char softspi_rxtx(unsigned char data)
   
   return ret;
 }
-
-// this one runs quickly >10Mhz. so needs to be hardware driven.
-extern volatile unsigned char frame_sync;
-
 /*
 	__~
 
@@ -433,79 +429,91 @@ unsigned char softspi_rx( void )
   register unsigned char bitmask ;
   
   bitmask = 0x80;
-  frame_sync = 0;  
+  
+  ret = 0;                    			
+
   
   // Frame _||_____
- //while( GETBIT( SPI_CS  ) == 0 );
-
-  ret = 0;                    			
   
-  frame_sync = 0; 
-  EXTI_ClearITPendingBit(EXTI_Line1);
-  while( frame_sync );
+  // if you enter and frame is high, wait til it goes low.
+  if( GETBIT( SSP_FRAME  ) == 1  ) {
+    
+    	//wait til it goes low
+	while( GETBIT( SSP_FRAME  ) == 1 );
+  }
+    
   
-  frame_sync = 0; 
-  //asm("BKPT #01");
+  // wait while frame is low (rising edge)
+  while( GETBIT( SSP_FRAME  ) == 0 );
   
-#if 1
   
   // unrolled is faster...
   
   //#1
-  while( GETBIT( SPI_CLK  )  == 1 );
-  if (GETBIT(SPI_IN)) ret |=0x80;
   
+  // 300ns
+  // wait while ssp clk is high
+  while( GETBIT( SPI_CLK  )  == 1 );
+  // now ssp_clk is low. read ssp_din
+  if (GETBIT(SPI_IN)) 
+    ret |=0x80;
+  //while active low, wait
+  while( GETBIT( SPI_CLK  )  == 0 );
+   
+  
+  // adc_clk should be as rising edge
+
   //#2
+  // wait til adc_clk goes to 0, active low
   while( GETBIT( SPI_CLK  )  == 1 );
   if (GETBIT(SPI_IN)) ret |= 0x40;
-  
+  //while active low, wait
+  while( GETBIT( SPI_CLK  )  == 0 );
+
   //#3
   while( GETBIT( SPI_CLK  )  == 1 );
   if (GETBIT(SPI_IN)) ret |=0x20;
+  while( GETBIT( SPI_CLK  )  == 0 );
   
   //#4
   while( GETBIT( SPI_CLK  )  == 1 );
   if (GETBIT(SPI_IN)) ret |=0x10;
+  while( GETBIT( SPI_CLK  )  == 0 );
 
   //#4
   while( GETBIT( SPI_CLK  )  == 1 );
   if (GETBIT(SPI_IN)) ret |=0x8;
+  while( GETBIT( SPI_CLK  )  == 0 );
   
   //#6
   while( GETBIT( SPI_CLK  )  == 1 );
   if (GETBIT(SPI_IN)) ret |=0x4;
+  while( GETBIT( SPI_CLK  )  == 0 );
   
   //#7
   while( GETBIT( SPI_CLK  )  == 1 );
   if (GETBIT(SPI_IN)) ret |=0x2;
+  while( GETBIT( SPI_CLK  )  == 0 );
 
   //#8
   while( GETBIT( SPI_CLK  )  == 1 );
   if (GETBIT(SPI_IN)) ret |=0x1;
+  
+  /*
+  if( ret != 0xaa ) {
 
-#else
-
-  do  {
-    
-    //CLK HIGH _|~~~~~~~~
-    while( GETBIT( SPI_CLK  )  == 1 );
-     
-     
-    // Get state of SPI_IN
-    if (GETBIT(SPI_IN)) {
-      ret |= bitmask;   
-    }   
-    
-    bitmask = bitmask >> 1;      
-    
-  } 
-  while ( bitmask != 0 );
-#endif
-
-  // if this, too slow
-  if ( frame_sync )
-    ;//while(frame_sync);
-
+    HIGH(NVDD_ON);
+  asm("nop");
+  asm("nop");
+  asm("nop");
+    LOW(NVDD_ON);
+  asm("nop");
+  asm("nop");
+  asm("nop");
+  }
+	*/
+  __enable_irq();
+  
   return ret;
 }
 
