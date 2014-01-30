@@ -8662,9 +8662,9 @@ www.SparkFun.com SKU : Comp-SMDS</description>
 <wire x1="38.1" y1="38.1" x2="-40.64" y2="38.1" width="0.254" layer="94"/>
 <wire x1="-40.64" y1="38.1" x2="-40.64" y2="-40.64" width="0.254" layer="94"/>
 <pin name="BOOT0" x="-43.18" y="17.78" length="short" direction="in"/>
-<pin name="NRST" x="-43.18" y="2.54" length="short" direction="in"/>
-<pin name="OSC_IN_PD0" x="-43.18" y="0" length="short"/>
-<pin name="OSC_OUT_PD1" x="-43.18" y="-2.54" length="short"/>
+<pin name="NRST/FT" x="-43.18" y="2.54" length="short" direction="in"/>
+<pin name="OSC_IN_PD0/FT" x="-43.18" y="0" length="short"/>
+<pin name="OSC_OUT_PD1/FT" x="-43.18" y="-2.54" length="short"/>
 <pin name="PA0-WKUP" x="-43.18" y="-5.08" length="short"/>
 <pin name="PA1" x="-43.18" y="-7.62" length="short"/>
 <pin name="PA2" x="-43.18" y="-10.16" length="short"/>
@@ -8673,47 +8673,47 @@ www.SparkFun.com SKU : Comp-SMDS</description>
 <pin name="PA5" x="-43.18" y="-17.78" length="short"/>
 <pin name="PA6" x="-43.18" y="-20.32" length="short"/>
 <pin name="PA7" x="-20.32" y="-43.18" length="short" rot="R90"/>
-<pin name="PA8" x="-17.78" y="-43.18" length="short" rot="R90"/>
-<pin name="PA9" x="-15.24" y="-43.18" length="short" rot="R90"/>
-<pin name="PA10" x="-12.7" y="-43.18" length="short" rot="R90"/>
-<pin name="PA11/UART1CTS/CNRX/TIM1CH4/USBD-" x="-10.16" y="-43.18" length="short" rot="R90"/>
-<pin name="PA12/UART1RTS/CNTX/TIM1ETR/USBD+" x="-7.62" y="-43.18" length="short" rot="R90"/>
-<pin name="PA13/JTMS/SWDIO" x="-43.18" y="12.7" length="short" direction="in"/>
-<pin name="PA14/JTCK/SWCLK" x="-43.18" y="10.16" length="short" direction="in"/>
+<pin name="PA8/FT" x="-17.78" y="-43.18" length="short" rot="R90"/>
+<pin name="PA9/FT" x="-15.24" y="-43.18" length="short" rot="R90"/>
+<pin name="PA10/FT" x="-12.7" y="-43.18" length="short" rot="R90"/>
+<pin name="PA11/UART1CTS/CNRX/TIM1CH4/USBD-/FT" x="-10.16" y="-43.18" length="short" rot="R90"/>
+<pin name="PA12/UART1RTS/CNTX/TIM1ETR/USBD+/FT" x="-7.62" y="-43.18" length="short" rot="R90"/>
+<pin name="PA13/JTMS/SWDIO/FT" x="-43.18" y="12.7" length="short" direction="in"/>
+<pin name="PA14/JTCK/SWCLK/FT" x="-43.18" y="10.16" length="short" direction="in"/>
 <pin name="PA15/JTDI/TIM2_CH1/SPI1_NSS" x="-43.18" y="15.24" length="short" direction="in"/>
 <pin name="PB0" x="-5.08" y="-43.18" length="short" rot="R90"/>
 <pin name="PB1" x="-2.54" y="-43.18" length="short" rot="R90"/>
-<pin name="PB2" x="0" y="-43.18" length="short" rot="R90"/>
+<pin name="PB2/BOOT1/FT" x="0" y="-43.18" length="short" rot="R90"/>
 <pin name="PB3/JTDO/TIM2_CH2/SPI1_SCK" x="-43.18" y="5.08" length="short" direction="out"/>
 <pin name="PB4/JNTRST/TIM3_CH1/SPI1_MISO" x="-43.18" y="7.62" length="short" direction="in"/>
 <pin name="PB5" x="2.54" y="-43.18" length="short" rot="R90"/>
-<pin name="PB6" x="5.08" y="-43.18" length="short" rot="R90"/>
-<pin name="PB7" x="7.62" y="-43.18" length="short" rot="R90"/>
-<pin name="PB8" x="10.16" y="-43.18" length="short" rot="R90"/>
-<pin name="PB9" x="12.7" y="-43.18" length="short" rot="R90"/>
-<pin name="PB10" x="15.24" y="-43.18" length="short" rot="R90"/>
-<pin name="PB11" x="17.78" y="-43.18" length="short" rot="R90"/>
-<pin name="PB12" x="40.64" y="-20.32" length="short" rot="R180"/>
-<pin name="PB13" x="40.64" y="-17.78" length="short" rot="R180"/>
-<pin name="PB14" x="40.64" y="-15.24" length="short" rot="R180"/>
-<pin name="PB15" x="40.64" y="-12.7" length="short" rot="R180"/>
+<pin name="PB6/FT" x="5.08" y="-43.18" length="short" rot="R90"/>
+<pin name="PB7/FT" x="7.62" y="-43.18" length="short" rot="R90"/>
+<pin name="PB8/FT" x="10.16" y="-43.18" length="short" rot="R90"/>
+<pin name="PB9/FT" x="12.7" y="-43.18" length="short" rot="R90"/>
+<pin name="PB10/FT" x="15.24" y="-43.18" length="short" rot="R90"/>
+<pin name="PB11/FT" x="17.78" y="-43.18" length="short" rot="R90"/>
+<pin name="PB12/FT" x="40.64" y="-20.32" length="short" rot="R180"/>
+<pin name="PB13/FT" x="40.64" y="-17.78" length="short" rot="R180"/>
+<pin name="PB14/FT" x="40.64" y="-15.24" length="short" rot="R180"/>
+<pin name="PB15/FT" x="40.64" y="-12.7" length="short" rot="R180"/>
 <pin name="PC0" x="40.64" y="-10.16" length="short" rot="R180"/>
 <pin name="PC1" x="40.64" y="-7.62" length="short" rot="R180"/>
 <pin name="PC2" x="40.64" y="-5.08" length="short" rot="R180"/>
 <pin name="PC3" x="40.64" y="-2.54" length="short" rot="R180"/>
 <pin name="PC4" x="40.64" y="0" length="short" rot="R180"/>
 <pin name="PC5" x="40.64" y="2.54" length="short" rot="R180"/>
-<pin name="PC6" x="40.64" y="5.08" length="short" rot="R180"/>
-<pin name="PC7" x="40.64" y="7.62" length="short" rot="R180"/>
-<pin name="PC8" x="40.64" y="10.16" length="short" rot="R180"/>
-<pin name="PC9" x="40.64" y="12.7" length="short" rot="R180"/>
-<pin name="PC10" x="40.64" y="15.24" length="short" rot="R180"/>
-<pin name="PC11" x="40.64" y="17.78" length="short" rot="R180"/>
-<pin name="PC12" x="17.78" y="40.64" length="short" rot="R270"/>
+<pin name="PC6/FT" x="40.64" y="5.08" length="short" rot="R180"/>
+<pin name="PC7/FT" x="40.64" y="7.62" length="short" rot="R180"/>
+<pin name="PC8/FT" x="40.64" y="10.16" length="short" rot="R180"/>
+<pin name="PC9/FT" x="40.64" y="12.7" length="short" rot="R180"/>
+<pin name="PC10/SDIO_D2/FT" x="40.64" y="15.24" length="short" rot="R180"/>
+<pin name="PC11/SDIO_D3/FT" x="40.64" y="17.78" length="short" rot="R180"/>
+<pin name="PC12/SDIO_CK/FT" x="17.78" y="40.64" length="short" rot="R270"/>
 <pin name="PC13-TAMPER-RTC" x="15.24" y="40.64" length="short" rot="R270"/>
 <pin name="PC14-OSC32_IN" x="12.7" y="40.64" length="short" rot="R270"/>
 <pin name="PC15-OSC32_OUT" x="10.16" y="40.64" length="short" rot="R270"/>
-<pin name="PD2" x="7.62" y="40.64" length="short" rot="R270"/>
+<pin name="PD2/SDIO_CMD/FT" x="7.62" y="40.64" length="short" rot="R270"/>
 <pin name="VBAT" x="0" y="40.64" length="short" direction="pas" rot="R270"/>
 <pin name="VDD@1" x="-2.54" y="40.64" length="short" direction="pwr" rot="R270"/>
 <pin name="VDD@2" x="-5.08" y="40.64" length="short" direction="pwr" rot="R270"/>
@@ -9792,16 +9792,16 @@ Source: STM32F1_High_density_LQFP64.bsd</description>
 <device name="LQF64" package="LQFP64_PACKAGE">
 <connects>
 <connect gate="G$1" pin="BOOT0" pad="60"/>
-<connect gate="G$1" pin="NRST" pad="7"/>
-<connect gate="G$1" pin="OSC_IN_PD0" pad="5"/>
-<connect gate="G$1" pin="OSC_OUT_PD1" pad="6"/>
+<connect gate="G$1" pin="NRST/FT" pad="7"/>
+<connect gate="G$1" pin="OSC_IN_PD0/FT" pad="5"/>
+<connect gate="G$1" pin="OSC_OUT_PD1/FT" pad="6"/>
 <connect gate="G$1" pin="PA0-WKUP" pad="14"/>
 <connect gate="G$1" pin="PA1" pad="15"/>
-<connect gate="G$1" pin="PA10" pad="43"/>
-<connect gate="G$1" pin="PA11/UART1CTS/CNRX/TIM1CH4/USBD-" pad="44"/>
-<connect gate="G$1" pin="PA12/UART1RTS/CNTX/TIM1ETR/USBD+" pad="45"/>
-<connect gate="G$1" pin="PA13/JTMS/SWDIO" pad="46"/>
-<connect gate="G$1" pin="PA14/JTCK/SWCLK" pad="49"/>
+<connect gate="G$1" pin="PA10/FT" pad="43"/>
+<connect gate="G$1" pin="PA11/UART1CTS/CNRX/TIM1CH4/USBD-/FT" pad="44"/>
+<connect gate="G$1" pin="PA12/UART1RTS/CNTX/TIM1ETR/USBD+/FT" pad="45"/>
+<connect gate="G$1" pin="PA13/JTMS/SWDIO/FT" pad="46"/>
+<connect gate="G$1" pin="PA14/JTCK/SWCLK/FT" pad="49"/>
 <connect gate="G$1" pin="PA15/JTDI/TIM2_CH1/SPI1_NSS" pad="50"/>
 <connect gate="G$1" pin="PA2" pad="16"/>
 <connect gate="G$1" pin="PA3" pad="17"/>
@@ -9809,29 +9809,29 @@ Source: STM32F1_High_density_LQFP64.bsd</description>
 <connect gate="G$1" pin="PA5" pad="21"/>
 <connect gate="G$1" pin="PA6" pad="22"/>
 <connect gate="G$1" pin="PA7" pad="23"/>
-<connect gate="G$1" pin="PA8" pad="41"/>
-<connect gate="G$1" pin="PA9" pad="42"/>
+<connect gate="G$1" pin="PA8/FT" pad="41"/>
+<connect gate="G$1" pin="PA9/FT" pad="42"/>
 <connect gate="G$1" pin="PB0" pad="26"/>
 <connect gate="G$1" pin="PB1" pad="27"/>
-<connect gate="G$1" pin="PB10" pad="29"/>
-<connect gate="G$1" pin="PB11" pad="30"/>
-<connect gate="G$1" pin="PB12" pad="33"/>
-<connect gate="G$1" pin="PB13" pad="34"/>
-<connect gate="G$1" pin="PB14" pad="35"/>
-<connect gate="G$1" pin="PB15" pad="36"/>
-<connect gate="G$1" pin="PB2" pad="28"/>
+<connect gate="G$1" pin="PB10/FT" pad="29"/>
+<connect gate="G$1" pin="PB11/FT" pad="30"/>
+<connect gate="G$1" pin="PB12/FT" pad="33"/>
+<connect gate="G$1" pin="PB13/FT" pad="34"/>
+<connect gate="G$1" pin="PB14/FT" pad="35"/>
+<connect gate="G$1" pin="PB15/FT" pad="36"/>
+<connect gate="G$1" pin="PB2/BOOT1/FT" pad="28"/>
 <connect gate="G$1" pin="PB3/JTDO/TIM2_CH2/SPI1_SCK" pad="55"/>
 <connect gate="G$1" pin="PB4/JNTRST/TIM3_CH1/SPI1_MISO" pad="56"/>
 <connect gate="G$1" pin="PB5" pad="57"/>
-<connect gate="G$1" pin="PB6" pad="58"/>
-<connect gate="G$1" pin="PB7" pad="59"/>
-<connect gate="G$1" pin="PB8" pad="61"/>
-<connect gate="G$1" pin="PB9" pad="62"/>
+<connect gate="G$1" pin="PB6/FT" pad="58"/>
+<connect gate="G$1" pin="PB7/FT" pad="59"/>
+<connect gate="G$1" pin="PB8/FT" pad="61"/>
+<connect gate="G$1" pin="PB9/FT" pad="62"/>
 <connect gate="G$1" pin="PC0" pad="8"/>
 <connect gate="G$1" pin="PC1" pad="9"/>
-<connect gate="G$1" pin="PC10" pad="51"/>
-<connect gate="G$1" pin="PC11" pad="52"/>
-<connect gate="G$1" pin="PC12" pad="53"/>
+<connect gate="G$1" pin="PC10/SDIO_D2/FT" pad="51"/>
+<connect gate="G$1" pin="PC11/SDIO_D3/FT" pad="52"/>
+<connect gate="G$1" pin="PC12/SDIO_CK/FT" pad="53"/>
 <connect gate="G$1" pin="PC13-TAMPER-RTC" pad="2"/>
 <connect gate="G$1" pin="PC14-OSC32_IN" pad="3"/>
 <connect gate="G$1" pin="PC15-OSC32_OUT" pad="4"/>
@@ -9839,11 +9839,11 @@ Source: STM32F1_High_density_LQFP64.bsd</description>
 <connect gate="G$1" pin="PC3" pad="11"/>
 <connect gate="G$1" pin="PC4" pad="24"/>
 <connect gate="G$1" pin="PC5" pad="25"/>
-<connect gate="G$1" pin="PC6" pad="37"/>
-<connect gate="G$1" pin="PC7" pad="38"/>
-<connect gate="G$1" pin="PC8" pad="39"/>
-<connect gate="G$1" pin="PC9" pad="40"/>
-<connect gate="G$1" pin="PD2" pad="54"/>
+<connect gate="G$1" pin="PC6/FT" pad="37"/>
+<connect gate="G$1" pin="PC7/FT" pad="38"/>
+<connect gate="G$1" pin="PC8/FT" pad="39"/>
+<connect gate="G$1" pin="PC9/FT" pad="40"/>
+<connect gate="G$1" pin="PD2/SDIO_CMD/FT" pad="54"/>
 <connect gate="G$1" pin="VBAT" pad="1"/>
 <connect gate="G$1" pin="VDD@1" pad="32"/>
 <connect gate="G$1" pin="VDD@2" pad="48"/>
@@ -9863,16 +9863,16 @@ Source: STM32F1_High_density_LQFP64.bsd</description>
 <device name="LQFP64(10X10)" package="LQFP64A_PACKAGE">
 <connects>
 <connect gate="G$1" pin="BOOT0" pad="60"/>
-<connect gate="G$1" pin="NRST" pad="7"/>
-<connect gate="G$1" pin="OSC_IN_PD0" pad="5"/>
-<connect gate="G$1" pin="OSC_OUT_PD1" pad="6"/>
+<connect gate="G$1" pin="NRST/FT" pad="7"/>
+<connect gate="G$1" pin="OSC_IN_PD0/FT" pad="5"/>
+<connect gate="G$1" pin="OSC_OUT_PD1/FT" pad="6"/>
 <connect gate="G$1" pin="PA0-WKUP" pad="14"/>
 <connect gate="G$1" pin="PA1" pad="15"/>
-<connect gate="G$1" pin="PA10" pad="43"/>
-<connect gate="G$1" pin="PA11/UART1CTS/CNRX/TIM1CH4/USBD-" pad="44"/>
-<connect gate="G$1" pin="PA12/UART1RTS/CNTX/TIM1ETR/USBD+" pad="45"/>
-<connect gate="G$1" pin="PA13/JTMS/SWDIO" pad="46"/>
-<connect gate="G$1" pin="PA14/JTCK/SWCLK" pad="49"/>
+<connect gate="G$1" pin="PA10/FT" pad="43"/>
+<connect gate="G$1" pin="PA11/UART1CTS/CNRX/TIM1CH4/USBD-/FT" pad="44"/>
+<connect gate="G$1" pin="PA12/UART1RTS/CNTX/TIM1ETR/USBD+/FT" pad="45"/>
+<connect gate="G$1" pin="PA13/JTMS/SWDIO/FT" pad="46"/>
+<connect gate="G$1" pin="PA14/JTCK/SWCLK/FT" pad="49"/>
 <connect gate="G$1" pin="PA15/JTDI/TIM2_CH1/SPI1_NSS" pad="50"/>
 <connect gate="G$1" pin="PA2" pad="16"/>
 <connect gate="G$1" pin="PA3" pad="17"/>
@@ -9880,29 +9880,29 @@ Source: STM32F1_High_density_LQFP64.bsd</description>
 <connect gate="G$1" pin="PA5" pad="21"/>
 <connect gate="G$1" pin="PA6" pad="22"/>
 <connect gate="G$1" pin="PA7" pad="23"/>
-<connect gate="G$1" pin="PA8" pad="41"/>
-<connect gate="G$1" pin="PA9" pad="42"/>
+<connect gate="G$1" pin="PA8/FT" pad="41"/>
+<connect gate="G$1" pin="PA9/FT" pad="42"/>
 <connect gate="G$1" pin="PB0" pad="26"/>
 <connect gate="G$1" pin="PB1" pad="27"/>
-<connect gate="G$1" pin="PB10" pad="29"/>
-<connect gate="G$1" pin="PB11" pad="30"/>
-<connect gate="G$1" pin="PB12" pad="33"/>
-<connect gate="G$1" pin="PB13" pad="34"/>
-<connect gate="G$1" pin="PB14" pad="35"/>
-<connect gate="G$1" pin="PB15" pad="36"/>
-<connect gate="G$1" pin="PB2" pad="28"/>
+<connect gate="G$1" pin="PB10/FT" pad="29"/>
+<connect gate="G$1" pin="PB11/FT" pad="30"/>
+<connect gate="G$1" pin="PB12/FT" pad="33"/>
+<connect gate="G$1" pin="PB13/FT" pad="34"/>
+<connect gate="G$1" pin="PB14/FT" pad="35"/>
+<connect gate="G$1" pin="PB15/FT" pad="36"/>
+<connect gate="G$1" pin="PB2/BOOT1/FT" pad="28"/>
 <connect gate="G$1" pin="PB3/JTDO/TIM2_CH2/SPI1_SCK" pad="55"/>
 <connect gate="G$1" pin="PB4/JNTRST/TIM3_CH1/SPI1_MISO" pad="56"/>
 <connect gate="G$1" pin="PB5" pad="57"/>
-<connect gate="G$1" pin="PB6" pad="58"/>
-<connect gate="G$1" pin="PB7" pad="59"/>
-<connect gate="G$1" pin="PB8" pad="61"/>
-<connect gate="G$1" pin="PB9" pad="62"/>
+<connect gate="G$1" pin="PB6/FT" pad="58"/>
+<connect gate="G$1" pin="PB7/FT" pad="59"/>
+<connect gate="G$1" pin="PB8/FT" pad="61"/>
+<connect gate="G$1" pin="PB9/FT" pad="62"/>
 <connect gate="G$1" pin="PC0" pad="8"/>
 <connect gate="G$1" pin="PC1" pad="9"/>
-<connect gate="G$1" pin="PC10" pad="51"/>
-<connect gate="G$1" pin="PC11" pad="52"/>
-<connect gate="G$1" pin="PC12" pad="53"/>
+<connect gate="G$1" pin="PC10/SDIO_D2/FT" pad="51"/>
+<connect gate="G$1" pin="PC11/SDIO_D3/FT" pad="52"/>
+<connect gate="G$1" pin="PC12/SDIO_CK/FT" pad="53"/>
 <connect gate="G$1" pin="PC13-TAMPER-RTC" pad="2"/>
 <connect gate="G$1" pin="PC14-OSC32_IN" pad="3"/>
 <connect gate="G$1" pin="PC15-OSC32_OUT" pad="4"/>
@@ -9910,11 +9910,11 @@ Source: STM32F1_High_density_LQFP64.bsd</description>
 <connect gate="G$1" pin="PC3" pad="11"/>
 <connect gate="G$1" pin="PC4" pad="24"/>
 <connect gate="G$1" pin="PC5" pad="25"/>
-<connect gate="G$1" pin="PC6" pad="37"/>
-<connect gate="G$1" pin="PC7" pad="38"/>
-<connect gate="G$1" pin="PC8" pad="39"/>
-<connect gate="G$1" pin="PC9" pad="40"/>
-<connect gate="G$1" pin="PD2" pad="54"/>
+<connect gate="G$1" pin="PC6/FT" pad="37"/>
+<connect gate="G$1" pin="PC7/FT" pad="38"/>
+<connect gate="G$1" pin="PC8/FT" pad="39"/>
+<connect gate="G$1" pin="PC9/FT" pad="40"/>
+<connect gate="G$1" pin="PD2/SDIO_CMD/FT" pad="54"/>
 <connect gate="G$1" pin="VBAT" pad="1"/>
 <connect gate="G$1" pin="VDD@1" pad="32"/>
 <connect gate="G$1" pin="VDD@2" pad="48"/>
@@ -17891,12 +17891,11 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <attribute name="DIGIKEY" x="-7.62" y="12.7" size="1.778" layer="96" rot="R180" display="off"/>
 </instance>
 <instance part="GND7" gate="GND" x="-12.7" y="-3.81"/>
-<instance part="R5" gate="G$1" x="-50.038" y="45.72">
-<attribute name="PARTNO" x="-50.038" y="45.72" size="1.778" layer="96" display="off"/>
-<attribute name="OC_NEWARK" x="-50.038" y="45.72" size="1.778" layer="96" display="off"/>
-<attribute name="MF" x="-50.038" y="45.72" size="1.778" layer="96" display="off"/>
-<attribute name="MPN" x="-50.038" y="45.72" size="1.778" layer="96" display="off"/>
-<attribute name="DIGIKEY" x="-50.038" y="45.72" size="1.778" layer="96"/>
+<instance part="R5" gate="G$1" x="-39.878" y="45.72">
+<attribute name="PARTNO" x="-39.878" y="45.72" size="1.778" layer="96" display="off"/>
+<attribute name="OC_NEWARK" x="-39.878" y="45.72" size="1.778" layer="96" display="off"/>
+<attribute name="MF" x="-39.878" y="45.72" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="-39.878" y="45.72" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="C55" gate="G$1" x="81.28" y="111.76" smashed="yes">
 <attribute name="NAME" x="78.105" y="110.236" size="1.778" layer="95" rot="R90"/>
@@ -17974,14 +17973,14 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <attribute name="NAME" x="68.8594" y="-38.1" size="1.778" layer="95" rot="R90"/>
 <attribute name="VALUE" x="69.215" y="-31.75" size="1.778" layer="96" rot="R90"/>
 </instance>
-<instance part="V12" gate="GND" x="-73.66" y="25.4" rot="MR0"/>
-<instance part="U$10" gate="G$1" x="-73.66" y="66.04"/>
-<instance part="IC7" gate="G$1" x="-63.5" y="53.34">
-<attribute name="PARTNO" x="-63.5" y="53.34" size="1.778" layer="96" display="off"/>
-<attribute name="OC_NEWARK" x="-63.5" y="53.34" size="1.778" layer="96" display="off"/>
-<attribute name="MF" x="-63.5" y="53.34" size="1.778" layer="96" display="off"/>
-<attribute name="MPN" x="-63.5" y="53.34" size="1.778" layer="96" display="off"/>
-<attribute name="DIGIKEY" x="-63.5" y="53.34" size="1.778" layer="96" display="off"/>
+<instance part="V12" gate="GND" x="-68.58" y="25.4" rot="MR0"/>
+<instance part="U$10" gate="G$1" x="-68.58" y="66.04"/>
+<instance part="IC7" gate="G$1" x="-58.42" y="53.34">
+<attribute name="PARTNO" x="-58.42" y="53.34" size="1.778" layer="96" display="off"/>
+<attribute name="OC_NEWARK" x="-58.42" y="53.34" size="1.778" layer="96" display="off"/>
+<attribute name="MF" x="-58.42" y="53.34" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="-58.42" y="53.34" size="1.778" layer="96" display="off"/>
+<attribute name="DIGIKEY" x="-58.42" y="53.34" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="LED3" gate="G$1" x="-30.48" y="137.16" rot="R90">
 <attribute name="PARTNO" x="-30.48" y="137.16" size="1.778" layer="96" display="off"/>
@@ -18057,7 +18056,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <instance part="TP54" gate="G$1" x="20.32" y="25.4" rot="R90"/>
 <instance part="TP55" gate="G$1" x="20.32" y="22.86" rot="R90"/>
 <instance part="JP4" gate="A" x="-31.242" y="93.98"/>
-<instance part="TP11" gate="G$1" x="-48.26" y="76.2"/>
+<instance part="TP11" gate="G$1" x="-40.64" y="58.42"/>
 <instance part="R66" gate="G$1" x="73.66" y="-33.02" smashed="yes" rot="R90">
 <attribute name="PARTNO" x="73.66" y="-33.02" size="1.778" layer="96" rot="R90" display="off"/>
 <attribute name="OC_NEWARK" x="73.66" y="-33.02" size="1.778" layer="96" display="off"/>
@@ -18139,7 +18138,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <pinref part="JP4" gate="A" pin="6"/>
 </segment>
 <segment>
-<wire x1="-73.66" y1="63.5" x2="-73.66" y2="58.42" width="0.1524" layer="91"/>
+<wire x1="-68.58" y1="63.5" x2="-68.58" y2="58.42" width="0.1524" layer="91"/>
 <pinref part="U$10" gate="G$1" pin="+3V3"/>
 <pinref part="IC7" gate="G$1" pin="V+"/>
 </segment>
@@ -18163,21 +18162,20 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <pinref part="IC2" gate="G$1" pin="PB4/JNTRST/TIM3_CH1/SPI1_MISO"/>
 <wire x1="30.48" y1="50.8" x2="22.86" y2="50.8" width="0.1524" layer="91"/>
 <label x="8.89" y="50.8" size="1.778" layer="95"/>
-</segment>
-<segment>
-<wire x1="-48.26" y1="73.66" x2="-48.26" y2="60.96" width="0.1524" layer="91"/>
-<label x="-48.26" y="60.96" size="1.778" layer="95"/>
+<wire x1="-40.64" y1="55.88" x2="-40.64" y2="53.34" width="0.1524" layer="91"/>
 <pinref part="TP11" gate="G$1" pin="P$1"/>
+<wire x1="22.86" y1="50.8" x2="-40.64" y2="50.8" width="0.1524" layer="91"/>
+<wire x1="-40.64" y1="50.8" x2="-40.64" y2="53.34" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="NRST" class="0">
 <segment>
-<pinref part="IC2" gate="G$1" pin="NRST"/>
+<pinref part="IC2" gate="G$1" pin="NRST/FT"/>
 <label x="2.54" y="45.72" size="1.778" layer="95"/>
 <pinref part="R5" gate="G$1" pin="2"/>
 <wire x1="30.48" y1="45.72" x2="-27.94" y2="45.72" width="0.1524" layer="91"/>
 <pinref part="C56" gate="G$1" pin="1"/>
-<wire x1="-27.94" y1="45.72" x2="-44.958" y2="45.72" width="0.1524" layer="91"/>
+<wire x1="-27.94" y1="45.72" x2="-34.798" y2="45.72" width="0.1524" layer="91"/>
 <wire x1="-27.94" y1="43.18" x2="-27.94" y2="45.72" width="0.1524" layer="91"/>
 <junction x="-27.94" y="45.72"/>
 </segment>
@@ -18278,7 +18276,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <wire x1="-27.94" y1="35.56" x2="-27.94" y2="31.75" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<wire x1="-73.66" y1="33.02" x2="-73.66" y2="27.94" width="0.1524" layer="91"/>
+<wire x1="-68.58" y1="33.02" x2="-68.58" y2="27.94" width="0.1524" layer="91"/>
 <pinref part="V12" gate="GND" pin="GND"/>
 <pinref part="IC7" gate="G$1" pin="V-"/>
 </segment>
@@ -18311,7 +18309,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <segment>
 <pinref part="R4" gate="G$1" pin="1"/>
 <wire x1="0" y1="60.96" x2="-15.24" y2="60.96" width="0.1524" layer="91"/>
-<label x="-17.78" y="60.96" size="1.778" layer="95"/>
+<label x="-15.24" y="60.96" size="1.778" layer="95" rot="R180"/>
 </segment>
 <segment>
 <pinref part="JP4" gate="A" pin="7"/>
@@ -18343,7 +18341,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 </net>
 <net name="N$2" class="0">
 <segment>
-<pinref part="IC2" gate="G$1" pin="OSC_IN_PD0"/>
+<pinref part="IC2" gate="G$1" pin="OSC_IN_PD0/FT"/>
 <wire x1="30.48" y1="43.18" x2="-17.78" y2="43.18" width="0.1524" layer="91"/>
 <wire x1="-17.78" y1="15.24" x2="-17.78" y2="22.86" width="0.1524" layer="91"/>
 <pinref part="Y1" gate="G$1" pin="1"/>
@@ -18397,7 +18395,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <label x="-73.66" y="5.08" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="IC2" gate="G$1" pin="PC6"/>
+<pinref part="IC2" gate="G$1" pin="PC6/FT"/>
 <wire x1="114.3" y1="48.26" x2="124.46" y2="48.26" width="0.1524" layer="91"/>
 <label x="132.08" y="48.26" size="1.778" layer="95"/>
 </segment>
@@ -18409,7 +18407,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <pinref part="JP4" gate="A" pin="1"/>
 </segment>
 <segment>
-<pinref part="IC2" gate="G$1" pin="PA13/JTMS/SWDIO"/>
+<pinref part="IC2" gate="G$1" pin="PA13/JTMS/SWDIO/FT"/>
 <wire x1="30.48" y1="55.88" x2="22.86" y2="55.88" width="0.1524" layer="91"/>
 <label x="8.89" y="55.88" size="1.778" layer="95"/>
 </segment>
@@ -18421,7 +18419,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <pinref part="JP4" gate="A" pin="4"/>
 </segment>
 <segment>
-<pinref part="IC2" gate="G$1" pin="PA14/JTCK/SWCLK"/>
+<pinref part="IC2" gate="G$1" pin="PA14/JTCK/SWCLK/FT"/>
 <wire x1="30.48" y1="53.34" x2="22.86" y2="53.34" width="0.1524" layer="91"/>
 <label x="8.89" y="53.34" size="1.778" layer="95"/>
 </segment>
@@ -18452,7 +18450,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 </net>
 <net name="N$61" class="0">
 <segment>
-<pinref part="IC2" gate="G$1" pin="OSC_OUT_PD1"/>
+<pinref part="IC2" gate="G$1" pin="OSC_OUT_PD1/FT"/>
 <pinref part="R6" gate="G$1" pin="2"/>
 <wire x1="10.16" y1="40.64" x2="30.48" y2="40.64" width="0.1524" layer="91"/>
 </segment>
@@ -18485,14 +18483,14 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 </net>
 <net name="D_N" class="0">
 <segment>
-<pinref part="IC2" gate="G$1" pin="PA11/UART1CTS/CNRX/TIM1CH4/USBD-"/>
+<pinref part="IC2" gate="G$1" pin="PA11/UART1CTS/CNRX/TIM1CH4/USBD-/FT"/>
 <pinref part="R7" gate="G$1" pin="2"/>
 <wire x1="63.5" y1="0" x2="63.5" y2="-27.94" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="D_P" class="0">
 <segment>
-<pinref part="IC2" gate="G$1" pin="PA12/UART1RTS/CNTX/TIM1ETR/USBD+"/>
+<pinref part="IC2" gate="G$1" pin="PA12/UART1RTS/CNTX/TIM1ETR/USBD+/FT"/>
 <pinref part="R8" gate="G$1" pin="2"/>
 <wire x1="66.04" y1="0" x2="66.04" y2="-25.4" width="0.1524" layer="91"/>
 <pinref part="R66" gate="G$1" pin="2"/>
@@ -18505,7 +18503,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 </net>
 <net name="USB_ON" class="0">
 <segment>
-<pinref part="IC2" gate="G$1" pin="PB10"/>
+<pinref part="IC2" gate="G$1" pin="PB10/FT"/>
 <wire x1="88.9" y1="0" x2="88.9" y2="-7.62" width="0.1524" layer="91"/>
 <label x="88.9" y="-27.94" size="1.778" layer="95" rot="R90"/>
 <pinref part="TP23" gate="G$1" pin="P$1"/>
@@ -18513,7 +18511,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 </net>
 <net name="FPGA_ON" class="0">
 <segment>
-<pinref part="IC2" gate="G$1" pin="PB11"/>
+<pinref part="IC2" gate="G$1" pin="PB11/FT"/>
 <wire x1="91.44" y1="0" x2="91.44" y2="-7.62" width="0.1524" layer="91"/>
 <label x="91.44" y="-27.94" size="1.778" layer="95" rot="R90"/>
 <pinref part="TP22" gate="G$1" pin="P$1"/>
@@ -18521,7 +18519,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 </net>
 <net name="!CS" class="0">
 <segment>
-<pinref part="IC2" gate="G$1" pin="PB9"/>
+<pinref part="IC2" gate="G$1" pin="PB9/FT"/>
 <wire x1="86.36" y1="0" x2="86.36" y2="-7.62" width="0.1524" layer="91"/>
 <label x="86.36" y="-20.32" size="1.778" layer="95" rot="R90"/>
 <pinref part="TP28" gate="G$1" pin="P$1"/>
@@ -18529,7 +18527,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 </net>
 <net name="!RES" class="0">
 <segment>
-<pinref part="IC2" gate="G$1" pin="PB8"/>
+<pinref part="IC2" gate="G$1" pin="PB8/FT"/>
 <wire x1="83.82" y1="0" x2="83.82" y2="-7.62" width="0.1524" layer="91"/>
 <label x="83.82" y="-20.32" size="1.778" layer="95" rot="R90"/>
 <pinref part="TP29" gate="G$1" pin="P$1"/>
@@ -18538,7 +18536,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <net name="D/C" class="0">
 <segment>
 <label x="81.28" y="-20.32" size="1.778" layer="95" rot="R90"/>
-<pinref part="IC2" gate="G$1" pin="PB7"/>
+<pinref part="IC2" gate="G$1" pin="PB7/FT"/>
 <wire x1="81.28" y1="0" x2="81.28" y2="-7.62" width="0.1524" layer="91"/>
 <pinref part="TP30" gate="G$1" pin="P$1"/>
 </segment>
@@ -18563,7 +18561,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <segment>
 <wire x1="114.3" y1="22.86" x2="124.46" y2="22.86" width="0.1524" layer="91"/>
 <label x="134.62" y="22.86" size="1.778" layer="95"/>
-<pinref part="IC2" gate="G$1" pin="PB12"/>
+<pinref part="IC2" gate="G$1" pin="PB12/FT"/>
 <pinref part="TP51" gate="G$1" pin="P$1"/>
 </segment>
 </net>
@@ -18571,7 +18569,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <segment>
 <wire x1="114.3" y1="25.4" x2="119.38" y2="25.4" width="0.1524" layer="91"/>
 <label x="134.62" y="25.4" size="1.778" layer="95"/>
-<pinref part="IC2" gate="G$1" pin="PB13"/>
+<pinref part="IC2" gate="G$1" pin="PB13/FT"/>
 <pinref part="TP50" gate="G$1" pin="P$1"/>
 </segment>
 </net>
@@ -18579,7 +18577,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <segment>
 <wire x1="114.3" y1="27.94" x2="124.46" y2="27.94" width="0.1524" layer="91"/>
 <label x="134.62" y="27.94" size="1.778" layer="95"/>
-<pinref part="IC2" gate="G$1" pin="PB14"/>
+<pinref part="IC2" gate="G$1" pin="PB14/FT"/>
 <pinref part="TP49" gate="G$1" pin="P$1"/>
 </segment>
 </net>
@@ -18587,13 +18585,13 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <segment>
 <wire x1="114.3" y1="30.48" x2="119.38" y2="30.48" width="0.1524" layer="91"/>
 <label x="134.62" y="30.48" size="1.778" layer="95"/>
-<pinref part="IC2" gate="G$1" pin="PB15"/>
+<pinref part="IC2" gate="G$1" pin="PB15/FT"/>
 <pinref part="TP48" gate="G$1" pin="P$1"/>
 </segment>
 </net>
 <net name="SSP_DIN" class="0">
 <segment>
-<pinref part="IC2" gate="G$1" pin="PB6"/>
+<pinref part="IC2" gate="G$1" pin="PB6/FT"/>
 <wire x1="78.74" y1="0" x2="78.74" y2="-7.62" width="0.1524" layer="91"/>
 <label x="78.74" y="-25.4" size="1.778" layer="95" rot="R90"/>
 <pinref part="TP31" gate="G$1" pin="P$1"/>
@@ -18661,7 +18659,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <segment>
 <pinref part="IC7" gate="G$1" pin="OUT"/>
 <pinref part="R5" gate="G$1" pin="1"/>
-<wire x1="-55.118" y1="45.72" x2="-60.96" y2="45.72" width="0.1524" layer="91"/>
+<wire x1="-44.958" y1="45.72" x2="-55.88" y2="45.72" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="SSP_DOUT" class="0">
@@ -18674,7 +18672,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 </net>
 <net name="SSP_CLK" class="0">
 <segment>
-<pinref part="IC2" gate="G$1" pin="PB2"/>
+<pinref part="IC2" gate="G$1" pin="PB2/BOOT1/FT"/>
 <wire x1="73.66" y1="0" x2="73.66" y2="-7.62" width="0.1524" layer="91"/>
 <label x="73.66" y="-25.4" size="1.778" layer="95" rot="R90"/>
 <pinref part="TP33" gate="G$1" pin="P$1"/>
@@ -18698,7 +18696,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 </net>
 <net name="FPGA_DIN" class="0">
 <segment>
-<pinref part="IC2" gate="G$1" pin="PA9"/>
+<pinref part="IC2" gate="G$1" pin="PA9/FT"/>
 <wire x1="58.42" y1="0" x2="58.42" y2="-7.62" width="0.1524" layer="91"/>
 <label x="58.42" y="-27.94" size="1.778" layer="95" rot="R90"/>
 <pinref part="TP26" gate="G$1" pin="P$1"/>
@@ -18706,7 +18704,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 </net>
 <net name="FPGA_CCLK" class="0">
 <segment>
-<pinref part="IC2" gate="G$1" pin="PA8"/>
+<pinref part="IC2" gate="G$1" pin="PA8/FT"/>
 <wire x1="55.88" y1="0" x2="55.88" y2="-7.62" width="0.1524" layer="91"/>
 <label x="55.88" y="-30.48" size="1.778" layer="95" rot="R90"/>
 <pinref part="TP25" gate="G$1" pin="P$1"/>
@@ -18722,7 +18720,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 </net>
 <net name="NCS" class="0">
 <segment>
-<pinref part="IC2" gate="G$1" pin="PC12"/>
+<pinref part="IC2" gate="G$1" pin="PC12/SDIO_CK/FT"/>
 <wire x1="91.44" y1="83.82" x2="91.44" y2="88.9" width="0.1524" layer="91"/>
 <label x="96.52" y="88.9" size="1.778" layer="95" rot="R180"/>
 <pinref part="TP39" gate="G$1" pin="P$1"/>
@@ -18738,7 +18736,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 </net>
 <net name="FPGA_NINIT" class="0">
 <segment>
-<pinref part="IC2" gate="G$1" pin="PC7"/>
+<pinref part="IC2" gate="G$1" pin="PC7/FT"/>
 <wire x1="114.3" y1="50.8" x2="124.46" y2="50.8" width="0.1524" layer="91"/>
 <label x="132.08" y="50.8" size="1.778" layer="95"/>
 <pinref part="TP45" gate="G$1" pin="P$1"/>
@@ -18758,7 +18756,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <label x="-60.96" y="137.16" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="IC2" gate="G$1" pin="PD2"/>
+<pinref part="IC2" gate="G$1" pin="PD2/SDIO_CMD/FT"/>
 <wire x1="81.28" y1="83.82" x2="81.28" y2="88.9" width="0.1524" layer="91"/>
 <label x="81.28" y="88.9" size="1.778" layer="95" rot="R90"/>
 <pinref part="TP36" gate="G$1" pin="P$1"/>
@@ -18832,7 +18830,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 </net>
 <net name="FPGA_DOUT" class="0">
 <segment>
-<pinref part="IC2" gate="G$1" pin="PC11"/>
+<pinref part="IC2" gate="G$1" pin="PC11/SDIO_D3/FT"/>
 <wire x1="114.3" y1="60.96" x2="124.46" y2="60.96" width="0.1524" layer="91"/>
 <label x="132.08" y="60.96" size="1.778" layer="95"/>
 <pinref part="TP6" gate="G$1" pin="P$1"/>
@@ -18840,7 +18838,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 </net>
 <net name="PCK0" class="0">
 <segment>
-<pinref part="IC2" gate="G$1" pin="PA10"/>
+<pinref part="IC2" gate="G$1" pin="PA10/FT"/>
 <wire x1="60.96" y1="0" x2="60.96" y2="-7.62" width="0.1524" layer="91"/>
 <pinref part="TP47" gate="G$1" pin="P$1"/>
 </segment>
