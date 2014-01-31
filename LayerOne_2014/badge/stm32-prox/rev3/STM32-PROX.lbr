@@ -9721,76 +9721,88 @@ two multiplexer-demultiplexers</description>
 <text x="1.524" y="-2.159" size="1.778" layer="96">&gt;VALUE</text>
 </symbol>
 <symbol name="STM32F1_HIGH_DENSITY_LQFP64">
-<wire x1="-40.64" y1="-40.64" x2="38.1" y2="-40.64" width="0.254" layer="94"/>
-<wire x1="38.1" y1="-40.64" x2="38.1" y2="38.1" width="0.254" layer="94"/>
-<wire x1="38.1" y1="38.1" x2="-40.64" y2="38.1" width="0.254" layer="94"/>
-<wire x1="-40.64" y1="38.1" x2="-40.64" y2="-40.64" width="0.254" layer="94"/>
-<pin name="BOOT0" x="-43.18" y="17.78" length="short" direction="in"/>
-<pin name="NRST/FT" x="-43.18" y="2.54" length="short" direction="in"/>
-<pin name="OSC_IN_PD0/FT" x="-43.18" y="0" length="short"/>
-<pin name="OSC_OUT_PD1/FT" x="-43.18" y="-2.54" length="short"/>
-<pin name="PA0-WKUP" x="-43.18" y="-5.08" length="short"/>
-<pin name="PA1" x="-43.18" y="-7.62" length="short"/>
-<pin name="PA2" x="-43.18" y="-10.16" length="short"/>
-<pin name="PA3" x="-43.18" y="-12.7" length="short"/>
-<pin name="PA4" x="-43.18" y="-15.24" length="short"/>
-<pin name="PA5" x="-43.18" y="-17.78" length="short"/>
-<pin name="PA6" x="-43.18" y="-20.32" length="short"/>
-<pin name="PA7" x="-20.32" y="-43.18" length="short" rot="R90"/>
-<pin name="PA8/FT" x="-17.78" y="-43.18" length="short" rot="R90"/>
-<pin name="PA9/FT" x="-15.24" y="-43.18" length="short" rot="R90"/>
-<pin name="PA10/FT" x="-12.7" y="-43.18" length="short" rot="R90"/>
-<pin name="PA11/UART1CTS/CNRX/TIM1CH4/USBD-/FT" x="-10.16" y="-43.18" length="short" rot="R90"/>
-<pin name="PA12/UART1RTS/CNTX/TIM1ETR/USBD+/FT" x="-7.62" y="-43.18" length="short" rot="R90"/>
-<pin name="PA13/JTMS/SWDIO/FT" x="-43.18" y="12.7" length="short" direction="in"/>
-<pin name="PA14/JTCK/SWCLK/FT" x="-43.18" y="10.16" length="short" direction="in"/>
-<pin name="PA15/JTDI/TIM2_CH1/SPI1_NSS" x="-43.18" y="15.24" length="short" direction="in"/>
-<pin name="PB0" x="-5.08" y="-43.18" length="short" rot="R90"/>
-<pin name="PB1" x="-2.54" y="-43.18" length="short" rot="R90"/>
-<pin name="PB2/BOOT1/FT" x="0" y="-43.18" length="short" rot="R90"/>
-<pin name="PB3/JTDO/TIM2_CH2/SPI1_SCK" x="-43.18" y="5.08" length="short" direction="out"/>
-<pin name="PB4/JNTRST/TIM3_CH1/SPI1_MISO" x="-43.18" y="7.62" length="short" direction="in"/>
-<pin name="PB5" x="2.54" y="-43.18" length="short" rot="R90"/>
-<pin name="PB6/FT" x="5.08" y="-43.18" length="short" rot="R90"/>
-<pin name="PB7/FT" x="7.62" y="-43.18" length="short" rot="R90"/>
-<pin name="PB8/FT" x="10.16" y="-43.18" length="short" rot="R90"/>
-<pin name="PB9/FT" x="12.7" y="-43.18" length="short" rot="R90"/>
-<pin name="PB10/FT" x="15.24" y="-43.18" length="short" rot="R90"/>
-<pin name="PB11/FT" x="17.78" y="-43.18" length="short" rot="R90"/>
-<pin name="PB12/FT" x="40.64" y="-20.32" length="short" rot="R180"/>
-<pin name="PB13/FT" x="40.64" y="-17.78" length="short" rot="R180"/>
-<pin name="PB14/FT" x="40.64" y="-15.24" length="short" rot="R180"/>
-<pin name="PB15/FT" x="40.64" y="-12.7" length="short" rot="R180"/>
-<pin name="PC0" x="40.64" y="-10.16" length="short" rot="R180"/>
-<pin name="PC1" x="40.64" y="-7.62" length="short" rot="R180"/>
-<pin name="PC2" x="40.64" y="-5.08" length="short" rot="R180"/>
-<pin name="PC3" x="40.64" y="-2.54" length="short" rot="R180"/>
-<pin name="PC4" x="40.64" y="0" length="short" rot="R180"/>
-<pin name="PC5" x="40.64" y="2.54" length="short" rot="R180"/>
-<pin name="PC6/FT" x="40.64" y="5.08" length="short" rot="R180"/>
-<pin name="PC7/FT" x="40.64" y="7.62" length="short" rot="R180"/>
-<pin name="PC8/FT" x="40.64" y="10.16" length="short" rot="R180"/>
-<pin name="PC9/FT" x="40.64" y="12.7" length="short" rot="R180"/>
-<pin name="PC10/SDIO_D2/FT" x="40.64" y="15.24" length="short" rot="R180"/>
-<pin name="PC11/SDIO_D3/FT" x="40.64" y="17.78" length="short" rot="R180"/>
-<pin name="PC12/SDIO_CK/FT" x="17.78" y="40.64" length="short" rot="R270"/>
-<pin name="PC13-TAMPER-RTC" x="15.24" y="40.64" length="short" rot="R270"/>
-<pin name="PC14-OSC32_IN" x="12.7" y="40.64" length="short" rot="R270"/>
-<pin name="PC15-OSC32_OUT" x="10.16" y="40.64" length="short" rot="R270"/>
-<pin name="PD2/SDIO_CMD/FT" x="7.62" y="40.64" length="short" rot="R270"/>
-<pin name="VBAT" x="0" y="40.64" length="short" direction="pas" rot="R270"/>
-<pin name="VDD@1" x="-2.54" y="40.64" length="short" direction="pwr" rot="R270"/>
-<pin name="VDD@2" x="-5.08" y="40.64" length="short" direction="pwr" rot="R270"/>
-<pin name="VDD@3" x="-7.62" y="40.64" length="short" direction="pwr" rot="R270"/>
-<pin name="VDD@4" x="-10.16" y="40.64" length="short" direction="pwr" rot="R270"/>
-<pin name="VDDA" x="5.08" y="40.64" length="short" direction="pwr" rot="R270"/>
-<pin name="VSS@1" x="-12.7" y="40.64" length="short" direction="pwr" rot="R270"/>
-<pin name="VSS@2" x="-15.24" y="40.64" length="short" direction="pwr" rot="R270"/>
-<pin name="VSS@3" x="-17.78" y="40.64" length="short" direction="pwr" rot="R270"/>
-<pin name="VSS@4" x="-20.32" y="40.64" length="short" direction="pwr" rot="R270"/>
-<pin name="VSSA" x="2.54" y="40.64" length="short" direction="pwr" rot="R270"/>
-<text x="-2.54" y="1.27" size="1.778" layer="95">&gt;NAME</text>
-<text x="-2.54" y="-2.54" size="1.778" layer="96">&gt;VALUE</text>
+<pin name="BOOT0" x="50.8" y="-17.78" length="short" direction="in" rot="R180"/>
+<pin name="NRST/FT" x="50.8" y="-20.32" length="short" direction="in" rot="R180"/>
+<pin name="OSC_IN_PD0/FT" x="50.8" y="-7.62" length="short" rot="R180"/>
+<pin name="OSC_OUT_PD1/FT" x="50.8" y="-5.08" length="short" rot="R180"/>
+<pin name="PA0-WKUP" x="-50.8" y="-2.54" length="short"/>
+<pin name="PA1" x="-50.8" y="-5.08" length="short"/>
+<pin name="PA2" x="-50.8" y="-7.62" length="short"/>
+<pin name="PA3" x="-50.8" y="-10.16" length="short"/>
+<pin name="PA4" x="-50.8" y="-12.7" length="short"/>
+<pin name="PA5" x="-50.8" y="-15.24" length="short"/>
+<pin name="PA6" x="-50.8" y="-17.78" length="short"/>
+<pin name="PA7" x="-50.8" y="-20.32" length="short"/>
+<pin name="PA8/FT" x="-50.8" y="-22.86" length="short"/>
+<pin name="PA9/FT" x="-50.8" y="-25.4" length="short"/>
+<pin name="PA10/FT" x="-50.8" y="-27.94" length="short"/>
+<pin name="PA11/UART1CTS/CNRX/TIM1CH4/USBD-/FT" x="-50.8" y="-30.48" length="short"/>
+<pin name="PA12/UART1RTS/CNTX/TIM1ETR/USBD+/FT" x="-50.8" y="-33.02" length="short"/>
+<pin name="PA13/JTMS/SWDIO/FT" x="-50.8" y="-35.56" length="short" direction="in"/>
+<pin name="PA14/JTCK/SWCLK/FT" x="-50.8" y="-38.1" length="short" direction="in"/>
+<pin name="PA15/JTDI/TIM2_CH1/SPI1_NSS" x="-50.8" y="-40.64" length="short" direction="in"/>
+<pin name="PB0" x="-50.8" y="43.18" length="short"/>
+<pin name="PB1" x="-50.8" y="40.64" length="short"/>
+<pin name="PB2/BOOT1/FT" x="-50.8" y="38.1" length="short"/>
+<pin name="PB3/JTDO/TIM2_CH2/SPI1_SCK" x="-50.8" y="35.56" length="short" direction="out"/>
+<pin name="PB4/JNTRST/TIM3_CH1/SPI1_MISO" x="-50.8" y="33.02" length="short" direction="in"/>
+<pin name="PB5" x="-50.8" y="30.48" length="short"/>
+<pin name="PB6/FT" x="-50.8" y="27.94" length="short"/>
+<pin name="PB7/FT" x="-50.8" y="25.4" length="short"/>
+<pin name="PB8/FT" x="-50.8" y="22.86" length="short"/>
+<pin name="PB9/FT" x="-50.8" y="20.32" length="short"/>
+<pin name="PB10/FT" x="-50.8" y="17.78" length="short"/>
+<pin name="PB11/FT" x="-50.8" y="15.24" length="short"/>
+<pin name="PB12/FT" x="-50.8" y="12.7" length="short"/>
+<pin name="PB13/FT" x="-50.8" y="10.16" length="short"/>
+<pin name="PB14/FT" x="-50.8" y="7.62" length="short"/>
+<pin name="PB15/FT" x="-50.8" y="5.08" length="short"/>
+<pin name="PC0" x="50.8" y="43.18" length="short" rot="R180"/>
+<pin name="PC1" x="50.8" y="40.64" length="short" rot="R180"/>
+<pin name="PC2" x="50.8" y="38.1" length="short" rot="R180"/>
+<pin name="PC3" x="50.8" y="35.56" length="short" rot="R180"/>
+<pin name="PC4" x="50.8" y="33.02" length="short" rot="R180"/>
+<pin name="PC5" x="50.8" y="30.48" length="short" rot="R180"/>
+<pin name="PC6/FT" x="50.8" y="27.94" length="short" rot="R180"/>
+<pin name="PC7/FT" x="50.8" y="25.4" length="short" rot="R180"/>
+<pin name="PC8/FT" x="50.8" y="22.86" length="short" rot="R180"/>
+<pin name="PC9/FT" x="50.8" y="20.32" length="short" rot="R180"/>
+<pin name="PC10/SDIO_D2/FT" x="50.8" y="17.78" length="short" rot="R180"/>
+<pin name="PC11/SDIO_D3/FT" x="50.8" y="15.24" length="short" rot="R180"/>
+<pin name="PC12/SDIO_CK/FT" x="50.8" y="12.7" length="short" rot="R180"/>
+<pin name="PC13-TAMPER-RTC" x="50.8" y="10.16" length="short" rot="R180"/>
+<pin name="PC14-OSC32_IN" x="50.8" y="7.62" length="short" rot="R180"/>
+<pin name="PC15-OSC32_OUT" x="50.8" y="5.08" length="short" rot="R180"/>
+<pin name="PD2/SDIO_CMD/FT" x="50.8" y="-2.54" length="short" rot="R180"/>
+<pin name="VBAT" x="7.62" y="58.42" length="short" direction="pas" rot="R270"/>
+<pin name="VDD@1" x="5.08" y="58.42" length="short" direction="pwr" rot="R270"/>
+<pin name="VDD@2" x="2.54" y="58.42" length="short" direction="pwr" rot="R270"/>
+<pin name="VDD@3" x="0" y="58.42" length="short" direction="pwr" rot="R270"/>
+<pin name="VDD@4" x="-2.54" y="58.42" length="short" direction="pwr" rot="R270"/>
+<pin name="VDDA" x="12.7" y="58.42" length="short" direction="pwr" rot="R270"/>
+<pin name="VSS@1" x="-5.08" y="58.42" length="short" direction="pwr" rot="R270"/>
+<pin name="VSS@2" x="-7.62" y="58.42" length="short" direction="pwr" rot="R270"/>
+<pin name="VSS@3" x="-10.16" y="58.42" length="short" direction="pwr" rot="R270"/>
+<pin name="VSS@4" x="-12.7" y="58.42" length="short" direction="pwr" rot="R270"/>
+<pin name="VSSA" x="10.16" y="58.42" length="short" direction="pwr" rot="R270"/>
+<text x="-17.78" y="3.81" size="1.778" layer="95" rot="R180">&gt;NAME</text>
+<text x="0" y="-45.72" size="1.778" layer="96">&gt;VALUE</text>
+<wire x1="-15.24" y1="55.88" x2="15.24" y2="55.88" width="0.254" layer="94"/>
+<wire x1="15.24" y1="55.88" x2="15.24" y2="45.72" width="0.254" layer="94"/>
+<wire x1="15.24" y1="45.72" x2="-15.24" y2="45.72" width="0.254" layer="94"/>
+<wire x1="-15.24" y1="45.72" x2="-15.24" y2="55.88" width="0.254" layer="94"/>
+<wire x1="-48.26" y1="0" x2="-48.26" y2="-43.18" width="0.254" layer="94"/>
+<wire x1="-48.26" y1="-43.18" x2="-38.1" y2="-43.18" width="0.254" layer="94"/>
+<wire x1="-48.26" y1="0" x2="-40.64" y2="0" width="0.254" layer="94"/>
+<wire x1="-48.26" y1="45.72" x2="-48.26" y2="2.54" width="0.254" layer="94"/>
+<wire x1="-48.26" y1="2.54" x2="-40.64" y2="2.54" width="0.254" layer="94"/>
+<wire x1="-48.26" y1="45.72" x2="-40.64" y2="45.72" width="0.254" layer="94"/>
+<wire x1="48.26" y1="2.54" x2="48.26" y2="45.72" width="0.254" layer="94"/>
+<wire x1="48.26" y1="45.72" x2="38.1" y2="45.72" width="0.254" layer="94"/>
+<wire x1="48.26" y1="2.54" x2="40.64" y2="2.54" width="0.254" layer="94"/>
+<wire x1="40.64" y1="0" x2="48.26" y2="0" width="0.254" layer="94"/>
+<wire x1="48.26" y1="0" x2="48.26" y2="-43.18" width="0.254" layer="94"/>
+<wire x1="48.26" y1="-43.18" x2="40.64" y2="-43.18" width="0.254" layer="94"/>
 </symbol>
 <symbol name="SUPPLY_+2V5">
 <wire x1="0" y1="0.635" x2="-1.27" y2="-0.635" width="0.1524" layer="94"/>
