@@ -8,34 +8,34 @@
 </settings>
 <grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
-<layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
-<layer number="2" name="Route2" color="1" fill="3" visible="no" active="no"/>
-<layer number="3" name="Route3" color="4" fill="3" visible="no" active="no"/>
-<layer number="4" name="Route4" color="1" fill="4" visible="no" active="no"/>
-<layer number="5" name="Route5" color="4" fill="4" visible="no" active="no"/>
-<layer number="6" name="Route6" color="1" fill="8" visible="no" active="no"/>
-<layer number="7" name="Route7" color="4" fill="8" visible="no" active="no"/>
-<layer number="8" name="Route8" color="1" fill="2" visible="no" active="no"/>
-<layer number="9" name="Route9" color="4" fill="2" visible="no" active="no"/>
-<layer number="10" name="Route10" color="1" fill="7" visible="no" active="no"/>
-<layer number="11" name="Route11" color="4" fill="7" visible="no" active="no"/>
-<layer number="12" name="Route12" color="1" fill="5" visible="no" active="no"/>
-<layer number="13" name="Route13" color="4" fill="5" visible="no" active="no"/>
-<layer number="14" name="Route14" color="1" fill="6" visible="no" active="no"/>
-<layer number="15" name="Route15" color="4" fill="6" visible="no" active="no"/>
-<layer number="16" name="Bottom" color="1" fill="1" visible="no" active="no"/>
-<layer number="17" name="Pads" color="2" fill="1" visible="no" active="no"/>
-<layer number="18" name="Vias" color="2" fill="1" visible="no" active="no"/>
-<layer number="19" name="Unrouted" color="6" fill="1" visible="no" active="no"/>
-<layer number="20" name="Dimension" color="15" fill="1" visible="no" active="no"/>
-<layer number="21" name="tPlace" color="7" fill="1" visible="no" active="no"/>
-<layer number="22" name="bPlace" color="7" fill="1" visible="no" active="no"/>
-<layer number="23" name="tOrigins" color="15" fill="1" visible="no" active="no"/>
-<layer number="24" name="bOrigins" color="15" fill="1" visible="no" active="no"/>
-<layer number="25" name="tNames" color="7" fill="1" visible="no" active="no"/>
-<layer number="26" name="bNames" color="7" fill="1" visible="no" active="no"/>
-<layer number="27" name="tValues" color="7" fill="1" visible="no" active="no"/>
-<layer number="28" name="bValues" color="7" fill="1" visible="no" active="no"/>
+<layer number="1" name="Top" color="4" fill="1" visible="yes" active="no"/>
+<layer number="2" name="Route2" color="1" fill="3" visible="yes" active="no"/>
+<layer number="3" name="Route3" color="4" fill="3" visible="yes" active="no"/>
+<layer number="4" name="Route4" color="1" fill="4" visible="yes" active="no"/>
+<layer number="5" name="Route5" color="4" fill="4" visible="yes" active="no"/>
+<layer number="6" name="Route6" color="1" fill="8" visible="yes" active="no"/>
+<layer number="7" name="Route7" color="4" fill="8" visible="yes" active="no"/>
+<layer number="8" name="Route8" color="1" fill="2" visible="yes" active="no"/>
+<layer number="9" name="Route9" color="4" fill="2" visible="yes" active="no"/>
+<layer number="10" name="Route10" color="1" fill="7" visible="yes" active="no"/>
+<layer number="11" name="Route11" color="4" fill="7" visible="yes" active="no"/>
+<layer number="12" name="Route12" color="1" fill="5" visible="yes" active="no"/>
+<layer number="13" name="Route13" color="4" fill="5" visible="yes" active="no"/>
+<layer number="14" name="Route14" color="1" fill="6" visible="yes" active="no"/>
+<layer number="15" name="Route15" color="4" fill="6" visible="yes" active="no"/>
+<layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="no"/>
+<layer number="17" name="Pads" color="2" fill="1" visible="yes" active="no"/>
+<layer number="18" name="Vias" color="2" fill="1" visible="yes" active="no"/>
+<layer number="19" name="Unrouted" color="6" fill="1" visible="yes" active="no"/>
+<layer number="20" name="Dimension" color="15" fill="1" visible="yes" active="no"/>
+<layer number="21" name="tPlace" color="7" fill="1" visible="yes" active="no"/>
+<layer number="22" name="bPlace" color="7" fill="1" visible="yes" active="no"/>
+<layer number="23" name="tOrigins" color="15" fill="1" visible="yes" active="no"/>
+<layer number="24" name="bOrigins" color="15" fill="1" visible="yes" active="no"/>
+<layer number="25" name="tNames" color="7" fill="1" visible="yes" active="no"/>
+<layer number="26" name="bNames" color="7" fill="1" visible="yes" active="no"/>
+<layer number="27" name="tValues" color="7" fill="1" visible="yes" active="no"/>
+<layer number="28" name="bValues" color="7" fill="1" visible="yes" active="no"/>
 <layer number="29" name="tStop" color="7" fill="3" visible="no" active="no"/>
 <layer number="30" name="bStop" color="7" fill="6" visible="no" active="no"/>
 <layer number="31" name="tCream" color="7" fill="4" visible="no" active="no"/>
@@ -44,8 +44,8 @@
 <layer number="34" name="bFinish" color="6" fill="6" visible="no" active="no"/>
 <layer number="35" name="tGlue" color="7" fill="4" visible="no" active="no"/>
 <layer number="36" name="bGlue" color="7" fill="5" visible="no" active="no"/>
-<layer number="37" name="tTest" color="7" fill="1" visible="no" active="no"/>
-<layer number="38" name="bTest" color="7" fill="1" visible="no" active="no"/>
+<layer number="37" name="tTest" color="7" fill="1" visible="yes" active="no"/>
+<layer number="38" name="bTest" color="7" fill="1" visible="yes" active="no"/>
 <layer number="39" name="tKeepout" color="4" fill="11" visible="no" active="no"/>
 <layer number="40" name="bKeepout" color="1" fill="11" visible="no" active="no"/>
 <layer number="41" name="tRestrict" color="4" fill="10" visible="no" active="no"/>
@@ -53,16 +53,16 @@
 <layer number="43" name="vRestrict" color="2" fill="10" visible="no" active="no"/>
 <layer number="44" name="Drills" color="7" fill="1" visible="no" active="no"/>
 <layer number="45" name="Holes" color="7" fill="1" visible="no" active="no"/>
-<layer number="46" name="Milling" color="3" fill="1" visible="no" active="no"/>
-<layer number="47" name="Measures" color="7" fill="1" visible="no" active="no"/>
-<layer number="48" name="Document" color="7" fill="1" visible="no" active="no"/>
-<layer number="49" name="Reference" color="7" fill="1" visible="no" active="no"/>
-<layer number="50" name="dxf" color="7" fill="1" visible="no" active="no"/>
-<layer number="51" name="tDocu" color="7" fill="1" visible="no" active="no"/>
-<layer number="52" name="bDocu" color="7" fill="1" visible="no" active="no"/>
-<layer number="53" name="tGND_GNDA" color="7" fill="1" visible="no" active="no"/>
-<layer number="54" name="bGND_GNDA" color="7" fill="1" visible="no" active="no"/>
-<layer number="56" name="wert" color="7" fill="1" visible="no" active="no"/>
+<layer number="46" name="Milling" color="3" fill="1" visible="yes" active="no"/>
+<layer number="47" name="Measures" color="7" fill="1" visible="yes" active="no"/>
+<layer number="48" name="Document" color="7" fill="1" visible="yes" active="no"/>
+<layer number="49" name="Reference" color="7" fill="1" visible="yes" active="no"/>
+<layer number="50" name="dxf" color="7" fill="1" visible="yes" active="no"/>
+<layer number="51" name="tDocu" color="7" fill="1" visible="yes" active="no"/>
+<layer number="52" name="bDocu" color="7" fill="1" visible="yes" active="no"/>
+<layer number="53" name="tGND_GNDA" color="7" fill="1" visible="yes" active="no"/>
+<layer number="54" name="bGND_GNDA" color="7" fill="1" visible="yes" active="no"/>
+<layer number="56" name="wert" color="7" fill="1" visible="yes" active="no"/>
 <layer number="91" name="Nets" color="2" fill="1" visible="yes" active="yes"/>
 <layer number="92" name="Busses" color="1" fill="1" visible="yes" active="yes"/>
 <layer number="93" name="Pins" color="2" fill="1" visible="no" active="yes"/>
@@ -16042,7 +16042,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <attribute name="OC_NEWARK" value="unknown"/>
 <attribute name="PARTNO" value="*"/>
 </part>
-<part name="DBG_TP" library="STM32-PROX" deviceset="TESTPAD" device="" value="TESTPAD">
+<part name="DBG_TP" library="STM32-PROX" deviceset="TESTPAD" device="KEYSTONE-SMD" value="TESTPADKEYSTONE-SMD">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
@@ -16123,6 +16123,8 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <part name="FPGA_NINIT_TP1" library="STM32-PROX" deviceset="TESTPAD" device=""/>
 <part name="FPGA_NINIT_TP2" library="STM32-PROX" deviceset="TESTPAD" device=""/>
 <part name="IC2" library="STM32-PROX" deviceset="STM32F1_HIGH_DENSITY_LQFP64" device="LQFP64(10X10)"/>
+<part name="JP_AL" library="STM32-PROX" deviceset="JUMPER-3" device="SMD" value=""/>
+<part name="JP_AH" library="STM32-PROX" deviceset="JUMPER-3" device="SMD" value=""/>
 </parts>
 <sheets>
 <sheet>
@@ -17846,6 +17848,8 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <instance part="FPGA_NINIT_TP1" gate="G$1" x="220.98" y="50.8" rot="R270"/>
 <instance part="FPGA_NINIT_TP2" gate="G$1" x="220.98" y="48.26" rot="R270"/>
 <instance part="IC2" gate="G$1" x="127" y="27.94"/>
+<instance part="JP_AL" gate="G$1" x="218.44" y="76.2"/>
+<instance part="JP_AH" gate="G$1" x="233.68" y="76.2"/>
 </instances>
 <busses>
 </busses>
@@ -18332,23 +18336,16 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 </net>
 <net name="AMPL_HI" class="0">
 <segment>
-<pinref part="TP53" gate="G$1" pin="P$1"/>
-<label x="33.02" y="22.86" size="1.778" layer="95"/>
-<wire x1="60.96" y1="22.86" x2="53.34" y2="22.86" width="0.1524" layer="91"/>
-<pinref part="IC2" gate="G$1" pin="PA1/USART2_RTS/ADC123_IN1/TIM5_CH2/TIM2_CH2"/>
+<pinref part="JP_AH" gate="G$1" pin="2"/>
+<wire x1="236.22" y1="73.66" x2="236.22" y2="71.12" width="0.1524" layer="91"/>
+<label x="236.22" y="78.74" size="1.778" layer="95" rot="R90"/>
 </segment>
 </net>
 <net name="AMPL_LO" class="0">
 <segment>
-<pinref part="TP52" gate="G$1" pin="P$1"/>
-<label x="33.02" y="25.4" size="1.778" layer="95"/>
-<wire x1="60.96" y1="25.4" x2="53.34" y2="25.4" width="0.1524" layer="91"/>
-<pinref part="IC2" gate="G$1" pin="PA0/WKUP/USART2_CTS/ADC123_IN0/TIM2_CH1_ETR/TIM5_CH1/TIME8_ETR"/>
-</segment>
-<segment>
-<label x="225.806" y="60.96" size="1.778" layer="95"/>
-<pinref part="IC2" gate="G$1" pin="PC4/ADC12_IN12"/>
-<wire x1="203.2" y1="60.96" x2="219.71" y2="60.96" width="0.1524" layer="91"/>
+<pinref part="JP_AL" gate="G$1" pin="2"/>
+<wire x1="220.98" y1="73.66" x2="220.98" y2="68.58" width="0.1524" layer="91"/>
+<label x="220.98" y="81.28" size="1.778" layer="95" rot="R90"/>
 </segment>
 </net>
 <net name="N$69" class="0">
@@ -18593,6 +18590,45 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <pinref part="FPGA_NINIT_TP2" gate="G$1" pin="P$1"/>
 <pinref part="IC2" gate="G$1" pin="PC9/TIM8_CH4/SDIO_D1/TIM3_CH4/FT"/>
 <wire x1="203.2" y1="48.26" x2="218.44" y2="48.26" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$1" class="0">
+<segment>
+<pinref part="IC2" gate="G$1" pin="PC4/ADC12_IN12"/>
+<wire x1="203.2" y1="60.96" x2="223.52" y2="60.96" width="0.1524" layer="91"/>
+<pinref part="JP_AL" gate="G$1" pin="3"/>
+<wire x1="223.52" y1="73.66" x2="223.52" y2="60.96" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$7" class="0">
+<segment>
+<pinref part="IC2" gate="G$1" pin="PC3/ADC123_IN13"/>
+<wire x1="203.2" y1="63.5" x2="215.9" y2="63.5" width="0.1524" layer="91"/>
+<pinref part="JP_AH" gate="G$1" pin="3"/>
+<wire x1="215.9" y1="63.5" x2="238.76" y2="63.5" width="0.1524" layer="91"/>
+<wire x1="238.76" y1="63.5" x2="238.76" y2="73.66" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="AMPL_LO1" class="0">
+<segment>
+<pinref part="IC2" gate="G$1" pin="PA0/WKUP/USART2_CTS/ADC123_IN0/TIM2_CH1_ETR/TIM5_CH1/TIME8_ETR"/>
+<pinref part="TP52" gate="G$1" pin="P$1"/>
+<wire x1="60.96" y1="25.4" x2="53.34" y2="25.4" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="JP_AL" gate="G$1" pin="1"/>
+<wire x1="218.44" y1="73.66" x2="218.44" y2="68.58" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="AMPL_HI1" class="0">
+<segment>
+<pinref part="IC2" gate="G$1" pin="PA1/USART2_RTS/ADC123_IN1/TIM5_CH2/TIM2_CH2"/>
+<pinref part="TP53" gate="G$1" pin="P$1"/>
+<wire x1="60.96" y1="22.86" x2="53.34" y2="22.86" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="JP_AH" gate="G$1" pin="1"/>
+<wire x1="233.68" y1="73.66" x2="233.68" y2="68.58" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>
@@ -21497,11 +21533,11 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <junction x="20.32" y="86.36"/>
 </segment>
 </net>
-<net name="!CS" class="0">
+<net name="!OLED_CS" class="0">
 <segment>
 <pinref part="U3" gate="G$1" pin="/CS"/>
 <wire x1="48.26" y1="68.58" x2="38.1" y2="68.58" width="0.1524" layer="91"/>
-<label x="35.56" y="68.58" size="1.778" layer="95"/>
+<label x="25.4" y="68.58" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="!RES" class="0">
@@ -21718,6 +21754,61 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 </nets>
 </sheet>
 </sheets>
+<errors>
+<approved hash="104,4,53.594,14.732,U2G$3,VCCAUX,+2V5,,,"/>
+<approved hash="104,4,53.594,12.192,U2G$3,VCCAUX,+2V5,,,"/>
+<approved hash="104,4,53.594,9.652,U2G$3,VCCAUX,+2V5,,,"/>
+<approved hash="104,4,53.594,7.112,U2G$3,VCCAUX,+2V5,,,"/>
+<approved hash="104,4,53.594,-0.508,U2G$3,VCCINT,+1V2,,,"/>
+<approved hash="104,4,53.594,-3.048,U2G$3,VCCINT,+1V2,,,"/>
+<approved hash="104,4,53.594,-5.588,U2G$3,VCCINT,+1V2,,,"/>
+<approved hash="104,4,53.594,-8.128,U2G$3,VCCINT,+1V2,,,"/>
+<approved hash="104,7,48.26,30.48,U3,VCC,N$25,,,"/>
+<approved hash="104,7,48.26,78.74,U3,VDD,+3V3,,,"/>
+<approved hash="104,7,48.26,27.94,U3,VLSS,GND,,,"/>
+<approved hash="104,7,48.26,81.28,U3,VSS,GND,,,"/>
+<approved hash="104,3,149.86,116.84,BAT1,+,N$57,,,"/>
+<approved hash="104,3,160.02,116.84,BAT1,-,GND,,,"/>
+<approved hash="104,1,10.16,2.54,IC1IC,PGND,GND,,,"/>
+<approved hash="104,1,60.96,-12.7,U$9,NEG,GND,,,"/>
+<approved hash="104,1,60.96,-20.32,U$9,POS,VBAT+,,,"/>
+<approved hash="104,1,-2.54,45.72,U$7G$1,EP,GND,,,"/>
+<approved hash="104,1,-15.24,43.18,U$7G$2,V1,GND,,,"/>
+<approved hash="104,3,132.08,86.36,IC2,VDD,+3V3,,,"/>
+<approved hash="104,3,129.54,86.36,IC2,VDD,+3V3,,,"/>
+<approved hash="104,3,127,86.36,IC2,VDD,+3V3,,,"/>
+<approved hash="104,3,124.46,86.36,IC2,VDD,+3V3,,,"/>
+<approved hash="104,3,121.92,86.36,IC2,VSS,GND,,,"/>
+<approved hash="104,3,119.38,86.36,IC2,VSS,GND,,,"/>
+<approved hash="104,3,116.84,86.36,IC2,VSS,GND,,,"/>
+<approved hash="104,3,114.3,86.36,IC2,VSS,GND,,,"/>
+<approved hash="104,3,137.16,86.36,IC2,VSSA,GND,,,"/>
+<approved hash="208,5,228.6,109.22,VMID,out,,,,"/>
+<approved hash="208,5,243.84,114.3,VMID,sup,,,,"/>
+<approved hash="208,5,99.06,68.58,VMID,sup,,,,"/>
+<approved hash="208,5,86.36,99.06,VMID,sup,,,,"/>
+<approved hash="208,5,139.7,-20.32,VMID,sup,,,,"/>
+<approved hash="208,5,119.38,-30.48,VMID,sup,,,,"/>
+<approved hash="208,5,116.84,10.16,VMID,sup,,,,"/>
+<approved hash="208,5,162.56,71.12,VMID,sup,,,,"/>
+<approved hash="208,5,149.86,114.3,VMID,sup,,,,"/>
+<approved hash="208,5,58.42,25.4,VMID,sup,,,,"/>
+<approved hash="208,5,58.42,50.8,VMID,sup,,,,"/>
+<approved hash="110,1,-35.56,60.96,N$6,N$55,,,,"/>
+<approved hash="110,1,-35.56,60.96,N$6,N$55,,,,"/>
+<approved hash="113,6,140.231,66.571,FRAME5,,,,,"/>
+<approved hash="113,5,137.691,46.251,FRAME4,,,,,"/>
+<approved hash="113,2,71.651,36.091,FRAME1,,,,,"/>
+<approved hash="113,7,17.78,52.3155,SJ1,,,,,"/>
+<approved hash="113,2,-15.24,72.7287,F1,,,,,"/>
+<approved hash="113,1,-45.3983,74.93,LED1,,,,,"/>
+<approved hash="113,1,-35.2383,74.93,LED2,,,,,"/>
+<approved hash="113,1,-25.4,67.0348,R24,,,,,"/>
+<approved hash="113,1,-25.4,61.9548,R25,,,,,"/>
+<approved hash="113,1,-59.69,-24.1385,S1,,,,,"/>
+<approved hash="113,3,58.7417,100.33,LED3,,,,,"/>
+<approved hash="113,3,50.2751,100.461,JP4,,,,,"/>
+</errors>
 </schematic>
 </drawing>
 <compatibility>
