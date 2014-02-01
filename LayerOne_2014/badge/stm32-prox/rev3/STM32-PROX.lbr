@@ -9732,7 +9732,7 @@ two multiplexer-demultiplexers</description>
 <pin name="PA3/USART2_RX/TIM5_CH4/ADC123_IN3/TIM2_CH4" x="-66.04" y="-10.16" length="short"/>
 <pin name="PA4/SPI1_NSS/USART2_CK/DAC_OUT1/ADC12_IN4" x="-66.04" y="-12.7" length="short"/>
 <pin name="PA5/SPI1_SCK/DAC_OUT2/ADC12_IN5" x="-66.04" y="-15.24" length="short"/>
-<pin name="PA6/SPI1_MOSI/TIM8_BKIN/ADC12_IN6/TIM3_CH1/TIM1_BKIN" x="-66.04" y="-17.78" length="short"/>
+<pin name="PA6/SPI1_MISO/TIM8_BKIN/ADC12_IN6/TIM3_CH1/TIM1_BKIN" x="-66.04" y="-17.78" length="short"/>
 <pin name="PA7/SPI1_MOSI/TIM8_CH1N/ADC12_IN7/TIM3_CH2/TIM1_CH1N" x="-66.04" y="-20.32" length="short"/>
 <pin name="PA8/USART1_CK/TIM1_CH1/MCO/FT" x="-66.04" y="-22.86" length="short"/>
 <pin name="PA9/USART1_TX/TIM1_CH2/FT" x="-66.04" y="-25.4" length="short"/>
@@ -13661,7 +13661,7 @@ Source: STM32F1_High_density_LQFP64.bsd</description>
 <connect gate="G$1" pin="PA3/USART2_RX/TIM5_CH4/ADC123_IN3/TIM2_CH4" pad="17"/>
 <connect gate="G$1" pin="PA4/SPI1_NSS/USART2_CK/DAC_OUT1/ADC12_IN4" pad="20"/>
 <connect gate="G$1" pin="PA5/SPI1_SCK/DAC_OUT2/ADC12_IN5" pad="21"/>
-<connect gate="G$1" pin="PA6/SPI1_MOSI/TIM8_BKIN/ADC12_IN6/TIM3_CH1/TIM1_BKIN" pad="22"/>
+<connect gate="G$1" pin="PA6/SPI1_MISO/TIM8_BKIN/ADC12_IN6/TIM3_CH1/TIM1_BKIN" pad="22"/>
 <connect gate="G$1" pin="PA7/SPI1_MOSI/TIM8_CH1N/ADC12_IN7/TIM3_CH2/TIM1_CH1N" pad="23"/>
 <connect gate="G$1" pin="PA8/USART1_CK/TIM1_CH1/MCO/FT" pad="41"/>
 <connect gate="G$1" pin="PA9/USART1_TX/TIM1_CH2/FT" pad="42"/>
@@ -13732,7 +13732,7 @@ Source: STM32F1_High_density_LQFP64.bsd</description>
 <connect gate="G$1" pin="PA3/USART2_RX/TIM5_CH4/ADC123_IN3/TIM2_CH4" pad="17"/>
 <connect gate="G$1" pin="PA4/SPI1_NSS/USART2_CK/DAC_OUT1/ADC12_IN4" pad="20"/>
 <connect gate="G$1" pin="PA5/SPI1_SCK/DAC_OUT2/ADC12_IN5" pad="21"/>
-<connect gate="G$1" pin="PA6/SPI1_MOSI/TIM8_BKIN/ADC12_IN6/TIM3_CH1/TIM1_BKIN" pad="22"/>
+<connect gate="G$1" pin="PA6/SPI1_MISO/TIM8_BKIN/ADC12_IN6/TIM3_CH1/TIM1_BKIN" pad="22"/>
 <connect gate="G$1" pin="PA7/SPI1_MOSI/TIM8_CH1N/ADC12_IN7/TIM3_CH2/TIM1_CH1N" pad="23"/>
 <connect gate="G$1" pin="PA8/USART1_CK/TIM1_CH1/MCO/FT" pad="41"/>
 <connect gate="G$1" pin="PA9/USART1_TX/TIM1_CH2/FT" pad="42"/>
