@@ -9754,10 +9754,10 @@ two multiplexer-demultiplexers</description>
 <pin name="PB9/TIM4_CH4/SDIO_D5/I2C1_SDA/CAN_TX/FT" x="-66.04" y="20.32" length="short"/>
 <pin name="PB10/I2C2_SCL/USART3_TX/TIM2_CH3/FT" x="-66.04" y="17.78" length="short"/>
 <pin name="PB11/I2C2_SDA/USART3_RX/TIM2_CH4/FT" x="-66.04" y="15.24" length="short"/>
-<pin name="PB12SPI2_NSS/I2C2_WS/I2C2_SMBA/USART3_CK/TIM1_BKIN/FT" x="-66.04" y="12.7" length="short"/>
-<pin name="PB13/FSMC_D10/TM1_CH3/FT" x="-66.04" y="10.16" length="short"/>
-<pin name="PB14/FSMC_D11/TIM1_CH4/FT" x="-66.04" y="7.62" length="short"/>
-<pin name="PB15/SPI_MOSI/I2S2_CK/USART3_CTS/TIM1_CH1N/FT" x="-66.04" y="5.08" length="short"/>
+<pin name="PB12/SPI2_NSS/I2C2_WS/I2C2_SMBA/USART3_CK/TIM1_BKIN/FT" x="-66.04" y="12.7" length="short"/>
+<pin name="PB13/SPI2_SCK/I2S2_CK/USART3_CTS/TM1_CH1N/FT" x="-66.04" y="10.16" length="short"/>
+<pin name="PB14/SPI2_MISO/TIM1_CH2N/USART3_RTS/FT" x="-66.04" y="7.62" length="short"/>
+<pin name="PB15/SPI2_MOSI/TIM1_CH3N/USART3_SD/FT" x="-66.04" y="5.08" length="short"/>
 <pin name="PC0/ADC123_IN10" x="73.66" y="43.18" length="short" rot="R180"/>
 <pin name="PC1/ADC123_IN11" x="73.66" y="40.64" length="short" rot="R180"/>
 <pin name="PC2/ADC123_IN12" x="73.66" y="38.1" length="short" rot="R180"/>
@@ -13664,10 +13664,10 @@ Source: STM32F1_High_density_LQFP64.bsd</description>
 <connect gate="G$1" pin="PB1/ADC12_IN9/TIM3_CH4/TIM8_CH3N/TIM1_CH3N" pad="27"/>
 <connect gate="G$1" pin="PB10/I2C2_SCL/USART3_TX/TIM2_CH3/FT" pad="29"/>
 <connect gate="G$1" pin="PB11/I2C2_SDA/USART3_RX/TIM2_CH4/FT" pad="30"/>
-<connect gate="G$1" pin="PB12SPI2_NSS/I2C2_WS/I2C2_SMBA/USART3_CK/TIM1_BKIN/FT" pad="33"/>
-<connect gate="G$1" pin="PB13/FSMC_D10/TM1_CH3/FT" pad="34"/>
-<connect gate="G$1" pin="PB14/FSMC_D11/TIM1_CH4/FT" pad="35"/>
-<connect gate="G$1" pin="PB15/SPI_MOSI/I2S2_CK/USART3_CTS/TIM1_CH1N/FT" pad="36"/>
+<connect gate="G$1" pin="PB12/SPI2_NSS/I2C2_WS/I2C2_SMBA/USART3_CK/TIM1_BKIN/FT" pad="33"/>
+<connect gate="G$1" pin="PB13/SPI2_SCK/I2S2_CK/USART3_CTS/TM1_CH1N/FT" pad="34"/>
+<connect gate="G$1" pin="PB14/SPI2_MISO/TIM1_CH2N/USART3_RTS/FT" pad="35"/>
+<connect gate="G$1" pin="PB15/SPI2_MOSI/TIM1_CH3N/USART3_SD/FT" pad="36"/>
 <connect gate="G$1" pin="PB2/BOOT1/FT" pad="28"/>
 <connect gate="G$1" pin="PB3/JTDO/SPI3SCK/I2S3_CK/TIM2_CH2/SPI1_SCK/TRACESWO" pad="55"/>
 <connect gate="G$1" pin="PB4/JNTRST/TIM3_CH1/SPI1_MISO" pad="56"/>
@@ -13735,10 +13735,10 @@ Source: STM32F1_High_density_LQFP64.bsd</description>
 <connect gate="G$1" pin="PB1/ADC12_IN9/TIM3_CH4/TIM8_CH3N/TIM1_CH3N" pad="27"/>
 <connect gate="G$1" pin="PB10/I2C2_SCL/USART3_TX/TIM2_CH3/FT" pad="29"/>
 <connect gate="G$1" pin="PB11/I2C2_SDA/USART3_RX/TIM2_CH4/FT" pad="30"/>
-<connect gate="G$1" pin="PB12SPI2_NSS/I2C2_WS/I2C2_SMBA/USART3_CK/TIM1_BKIN/FT" pad="33"/>
-<connect gate="G$1" pin="PB13/FSMC_D10/TM1_CH3/FT" pad="34"/>
-<connect gate="G$1" pin="PB14/FSMC_D11/TIM1_CH4/FT" pad="35"/>
-<connect gate="G$1" pin="PB15/SPI_MOSI/I2S2_CK/USART3_CTS/TIM1_CH1N/FT" pad="36"/>
+<connect gate="G$1" pin="PB12/SPI2_NSS/I2C2_WS/I2C2_SMBA/USART3_CK/TIM1_BKIN/FT" pad="33"/>
+<connect gate="G$1" pin="PB13/SPI2_SCK/I2S2_CK/USART3_CTS/TM1_CH1N/FT" pad="34"/>
+<connect gate="G$1" pin="PB14/SPI2_MISO/TIM1_CH2N/USART3_RTS/FT" pad="35"/>
+<connect gate="G$1" pin="PB15/SPI2_MOSI/TIM1_CH3N/USART3_SD/FT" pad="36"/>
 <connect gate="G$1" pin="PB2/BOOT1/FT" pad="28"/>
 <connect gate="G$1" pin="PB3/JTDO/SPI3SCK/I2S3_CK/TIM2_CH2/SPI1_SCK/TRACESWO" pad="55"/>
 <connect gate="G$1" pin="PB4/JNTRST/TIM3_CH1/SPI1_MISO" pad="56"/>
