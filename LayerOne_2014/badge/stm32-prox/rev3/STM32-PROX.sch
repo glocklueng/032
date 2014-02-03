@@ -14465,7 +14465,6 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <class number="1" name="adc" width="0.2032" drill="0">
 </class>
 <class number="2" name="power" width="0.2794" drill="0.254">
-<clearance class="2" value="0.3048"/>
 </class>
 </classes>
 <parts>
@@ -17492,7 +17491,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <junction x="27.94" y="5.08"/>
 </segment>
 </net>
-<net name="+3V3" class="0">
+<net name="+3V3" class="2">
 <segment>
 <pinref part="Q2" gate="G$1" pin="C"/>
 <wire x1="43.18" y1="10.16" x2="43.18" y2="22.86" width="0.1524" layer="91"/>
@@ -17854,7 +17853,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <busses>
 </busses>
 <nets>
-<net name="+3V3" class="0">
+<net name="+3V3" class="2">
 <segment>
 <wire x1="132.08" y1="86.36" x2="132.08" y2="99.06" width="0.1524" layer="91"/>
 <wire x1="132.08" y1="99.06" x2="129.54" y2="99.06" width="0.1524" layer="91"/>
@@ -18610,28 +18609,28 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 </net>
 <net name="AMPL_LO1" class="0">
 <segment>
-<pinref part="IC2" gate="G$1" pin="PA0/WKUP/USART2_CTS/ADC123_IN0/TIM2_CH1_ETR/TIM5_CH1/TIME8_ETR"/>
-<pinref part="TP52" gate="G$1" pin="P$1"/>
-<wire x1="60.96" y1="25.4" x2="50.8" y2="25.4" width="0.1524" layer="91"/>
-<label x="30.48" y="25.4" size="1.778" layer="95"/>
-</segment>
-<segment>
 <pinref part="JP_AL" gate="G$1" pin="1"/>
 <wire x1="226.06" y1="81.28" x2="226.06" y2="68.58" width="0.1524" layer="91"/>
 <label x="225.298" y="67.056" size="1.778" layer="95" rot="R90"/>
 </segment>
-</net>
-<net name="AMPL_HI1" class="0">
 <segment>
 <pinref part="IC2" gate="G$1" pin="PA1/USART2_RTS/ADC123_IN1/TIM5_CH2/TIM2_CH2"/>
 <pinref part="TP53" gate="G$1" pin="P$1"/>
 <wire x1="60.96" y1="22.86" x2="50.8" y2="22.86" width="0.1524" layer="91"/>
 <label x="30.48" y="22.86" size="1.778" layer="95"/>
 </segment>
+</net>
+<net name="AMPL_HI1" class="0">
 <segment>
 <pinref part="JP_AH" gate="G$1" pin="1"/>
 <wire x1="213.36" y1="81.28" x2="213.36" y2="68.58" width="0.1524" layer="91"/>
 <label x="212.598" y="69.088" size="1.778" layer="95" rot="R90"/>
+</segment>
+<segment>
+<pinref part="TP52" gate="G$1" pin="P$1"/>
+<pinref part="IC2" gate="G$1" pin="PA0/WKUP/USART2_CTS/ADC123_IN0/TIM2_CH1_ETR/TIM5_CH1/TIME8_ETR"/>
+<wire x1="50.8" y1="25.4" x2="60.96" y2="25.4" width="0.1524" layer="91"/>
+<label x="30.48" y="25.4" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>
@@ -19098,7 +19097,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <junction x="154.94" y="80.01"/>
 </segment>
 </net>
-<net name="+3V3" class="0">
+<net name="+3V3" class="2">
 <segment>
 <wire x1="142.24" y1="-29.21" x2="144.78" y2="-29.21" width="0.1524" layer="91"/>
 <wire x1="144.78" y1="-29.21" x2="144.78" y2="-6.35" width="0.1524" layer="91"/>
@@ -21525,7 +21524,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <wire x1="22.86" y1="88.9" x2="22.86" y2="91.44" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="+3V3" class="0">
+<net name="+3V3" class="2">
 <segment>
 <pinref part="U3" gate="G$1" pin="VBAT"/>
 <wire x1="48.26" y1="86.36" x2="30.48" y2="86.36" width="0.1524" layer="91"/>
@@ -21668,7 +21667,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <label x="96.52" y="48.26" size="1.778" layer="95" rot="R90"/>
 </segment>
 </net>
-<net name="+3V3" class="0">
+<net name="+3V3" class="2">
 <segment>
 <pinref part="U4" gate="G$1" pin="VCC"/>
 <wire x1="55.88" y1="76.2" x2="50.8" y2="76.2" width="0.1524" layer="91"/>
