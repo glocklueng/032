@@ -15708,7 +15708,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <attribute name="OC_NEWARK" value="06R5073"/>
 <attribute name="PARTNO" value="CC0603ZRY5V7BB105"/>
 </part>
-<part name="TP8" library="STM32-PROX" deviceset="TESTPAD" device="KEYSTONE-PTH" value="TESTPADKEYSTONE-PTH">
+<part name="TP8" library="STM32-PROX" deviceset="TESTPAD" device="0.7MM-ROUND-DRILLED" value="TESTPAD0.7MM-ROUND-DRILLED">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value="NONE"/>
 <attribute name="OC_NEWARK" value="unknown"/>
