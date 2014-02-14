@@ -919,8 +919,9 @@ void SimulateTagHfListen(void)
   
   FpgaSetupSsc(1);
   
-  i = 0;
+  __disable_irq();
   
+  i = 0;
   for(;;) {
     
     {
@@ -944,7 +945,7 @@ void SimulateTagHfListen(void)
       }
     }
   }
-	
+  __enable_irq();
   FpgaSetupSsc(0);
   DbpString("simulate tag (now type bitsamples)");
 }
