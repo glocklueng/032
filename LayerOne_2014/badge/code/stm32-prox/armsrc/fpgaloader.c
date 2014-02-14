@@ -425,13 +425,12 @@ unsigned char softspi_rx( void )
 {
   //return ssp_byte;
   
-  register  unsigned char ret;
+  register unsigned char ret;
   register unsigned char bitmask ;
-  
+
   bitmask = 0x80;
   
   ret = 0;                    			
-
   
   // Frame _||_____
   
@@ -455,8 +454,7 @@ unsigned char softspi_rx( void )
   // wait while ssp clk is high
   while( GETBIT( SPI_CLK  )  == 1 );
   // now ssp_clk is low. read ssp_din
-  if (GETBIT(SPI_IN)) 
-    ret |=0x80;
+  if (GETBIT(SPI_IN))  ret |=0x80;
   //while active low, wait
   while( GETBIT( SPI_CLK  )  == 0 );
    
@@ -512,7 +510,6 @@ unsigned char softspi_rx( void )
   asm("nop");
   }
 	*/
-  __enable_irq();
   
   return ret;
 }
