@@ -1,7 +1,11 @@
 #ifndef _L1_2014_DEF_
 #define _L1_2014_DEF_   ( 1 )
 
-// charliex - nullspacelabs.com
+
+
+// latest board
+
+#define BOARD_REVISION	( 3 )  
 
 // defines
 
@@ -17,14 +21,14 @@
 
 /* GPIOA Section */
 
-#define	FPGA_NPROGRAM_PORT				GPIOA
-#define FPGA_DOUT_PORT                 GPIOA
-#define OLED2_PORT                	   GPIOA
-#define SW_PORT                        GPIOA
-#define AMPL_PORT                      GPIOA
-#define	FPGA_CCLK_PORT					GPIOA
-#define	FPGA_DIN_PORT					GPIOA
-#define	USB_DISCONNECT_PORT				GPIOA
+#define	FPGA_NPROGRAM_PORT		GPIOA
+#define FPGA_DOUT_PORT                  GPIOA
+#define OLED2_PORT                	GPIOA
+#define SW_PORT                         GPIOA
+#define AMPL_PORT                       GPIOA
+#define	FPGA_CCLK_PORT			GPIOA
+#define	FPGA_DIN_PORT			GPIOA
+#define	USB_DISCONNECT_PORT		GPIOA
 
 #define FPGA_DOUT_PIN                  GPIO_Pin_10								//output ( reconfigure this to be PCK0)
 #define FPGA_DIN_PIN                   GPIO_Pin_9								//output
@@ -33,16 +37,36 @@
 #define SDIN_DB1_PIN                   GPIO_Pin_6								//output						
 #define SCLK_DB0_PIN                   GPIO_Pin_5								//output
 
+
+//OLED
+#if BOARD_REVISION == 3
+#define OLED_CS_PORT                	GPIOA
+#define CS_PIN                          GPIO_Pin_4               						// inverted output
+#endif
+
 // Switches
 
+#if BOARD_REVISION == 3
+#define SW_K1_PORT                     GPIOB
+#else
 #define SW_K1_PORT                     GPIOA
+#endif
+
 #define SW_K2_PORT                     GPIOA
 //#define SW_K3_PORT                     GPIOA
 
 #define	RCC_APB2Periph_GPIO_SW		   RCC_APB2Periph_GPIOA
+#if BOARD_REVISION == 3
+#define SW_K1_PIN                      GPIO_Pin_9								// input, pulldown
+#else
 #define SW_K1_PIN                      GPIO_Pin_4								// input, pulldown
+#endif
+
 #define SW_K2_PIN                      GPIO_Pin_3								// input, pulldown
 //#define SW_K3_PIN                    GPIO_Pin_2								// input, pulldown
+
+// USB
+
 #define USB_DISCONNECT_PIN		GPIO_Pin_2								// output:
 
 #define GPIO_SW_PORTSOURCE            GPIO_PortSourceGPIOA      				// PA
@@ -56,7 +80,13 @@
 #define AMPL_LO_PIN                    GPIO_Pin_0								// input analog
 
 #define ADC_AIN_CHANNEL                ADC_Channel_1             				// PA1
-#define GPIOA_OUTPUTS_2MHZ_PP_MASK		(  FPGA_NPROGRAM_PIN |SDIN_DB1_PIN | SCLK_DB0_PIN )
+
+#ifdef CS_PIN
+#define GPIOA_OUTPUTS_2MHZ_PP_MASK		( CS_PIN | FPGA_NPROGRAM_PIN |SDIN_DB1_PIN | SCLK_DB0_PIN )
+#else
+#define GPIOA_OUTPUTS_2MHZ_PP_MASK		( FPGA_NPROGRAM_PIN |SDIN_DB1_PIN | SCLK_DB0_PIN )
+#endif
+
 #define GPIOA_OUTPUTS_50MHZ_PP_MASK		( FPGA_DOUT_PIN  | FPGA_DIN_PIN | FPGA_CCLK_PIN | USB_DISCONNECT_PIN | FPGA_CCLK_PIN  | SDIN_DB1_PIN | SCLK_DB0_PIN )
 //#define GPIOA_OUTPUTS_50MHZ_OD_MASK		( USB_DISCONNECT_PIN )
 //#define GPIOA_INPUT_FLOAT_MASK			(  )
@@ -68,35 +98,60 @@
 
 /* GPIOB Section */
 
-#define FPGAON_PORT                    GPIOB
-#define FPGA_DONE_PORT                 GPIOB
+#define FPGAON_PORT                     GPIOB
+#define FPGA_DONE_PORT                  GPIOB
 #define	NVDD_ON_PORT			GPIOB
 #define SSP_CLK_PORT			GPIOB
 #define SSP_FRAME_PORT			GPIOB
 
 // MUXSEL's
-#define MUXSEL_PORT                   	GPIOB
-#define	MUXSEL_HIPKD_PORT		GPIOB
-#define	MUXSEL_LOPKD_PORT		GPIOB
+#if BOARD_REVISION == 3
+#	define MUXSEL_PORT              GPIOC
+#else
+#	define MUXSEL_PORT              GPIOB
+#endif
+
+#define	MUXSEL_HIPKD_PORT		MUXSEL_PORT
+#define	MUXSEL_LOPKD_PORT		MUXSEL_PORT
+
 #define	MUXSEL_HIRAW_PORT		GPIOB
 #define	MUXSEL_LORAW_PORT		GPIOB
+
 #define SSP_DIN_PORT			GPIOB
 #define SSP_DOUT_PORT			GPIOB
 
-#define MUXSEL_HIPKD_PIN               GPIO_Pin_15								//output
-#define MUXSEL_LOPKD_PIN               GPIO_Pin_14								//output
-#define MUXSEL_HIRAW_PIN               GPIO_Pin_13								//output
-#define MUXSEL_LORAW_PIN               GPIO_Pin_12								//output
+#if BOARD_REVISION == 3
+#	define MUXSEL_HIPKD_PIN               GPIO_Pin_9								//output
+#	define MUXSEL_LOPKD_PIN               GPIO_Pin_8								//output
+#else
+#	define MUXSEL_HIPKD_PIN               GPIO_Pin_15								//output
+#	define MUXSEL_LOPKD_PIN               GPIO_Pin_14								//output
+#endif
+
+#if BOARD_REVISION == 3
+#	define MUXSEL_HIRAW_PIN               GPIO_Pin_2								//output
+#	define MUXSEL_LORAW_PIN               GPIO_Pin_1								//output
+#else
+#	define MUXSEL_HIRAW_PIN               GPIO_Pin_13								//output
+	#define MUXSEL_LORAW_PIN               GPIO_Pin_12								//output
+#endif
 
 // FPGA Power On
 #define FPGAON_PIN                     GPIO_Pin_11								//output
 #define NVDD_ON_PIN                    GPIO_Pin_10								//output
 
 // OLED
+#if BOARD_REVISION == 3
 #define OLED_PORT                	GPIOB
+#define RES_PIN                         GPIO_Pin_8               						// inverted output
+#define DC_PIN                          GPIO_Pin_7								// output
+#else
+#define OLED_PORT                	GPIOB
+#define OLED_CS_PORT                	GPIOB
 #define CS_PIN                         GPIO_Pin_9               						// inverted output
 #define RES_PIN                        GPIO_Pin_8               						// inverted output
 #define DC_PIN                         GPIO_Pin_7								// output
+#endif
 
 // Synchronous Serial Port FPGA<>ARM
 #define SSP_PORT						GPIOB
@@ -125,8 +180,9 @@
 #define GPIOB_OUTPUTS_50MHZ_PP_MASK		( NVDD_ON_PIN |SSP_DOUT_PIN )
 //#define GPIOB_OUTPUTS_50MHZ_OD_MASK		( USB_DISCONNECT_PIN )
 
-//#define GPIOB_INPUT_FLOAT_MASK			(  )
-#define GPIOB_INPUT_PULLUP_MASK			( SSP_FRAME_PIN |  SSP_CLK_PIN | SSP_DIN_PIN | FPGA_DONE_PIN ) 
+//#define GPIOB_INPUT_FLOAT_MASK			( SSP_CLK_PIN )
+#define GPIOB_INPUT_PULLUP_MASK			( SSP_FRAME_PIN | SSP_DIN_PIN | FPGA_DONE_PIN ) 
+#define GPIOB_INPUT_PULLDOWN_MASK		( SSP_CLK_PIN )
 
 //#define GPIOB_ANALOG_MASK			( )
 #define	GPIOB_DEFAULT_LOW_MASK			( GPIOB_OUTPUTS_2MHZ_PP_MASK )

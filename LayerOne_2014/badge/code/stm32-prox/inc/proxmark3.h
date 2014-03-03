@@ -63,8 +63,8 @@
 #define LOW(x)	 x##_PORT->BRR = x##_PIN
 
 /// if ((GPIOx->IDR & GPIO_Pin) != (u32)Bit_RESET)
-//#define GETBIT(x) ((u8)(x##_PORT->IDR & x##_PIN)?1:0)
-#define GETBIT(x)( GPIO_ReadInputDataBit(x##_PORT,x##_PIN)?1:0)
+#define GETBIT(x) (x##_PORT->IDR & x##_PIN)
+//#define GETBIT(x)( GPIO_ReadInputDataBit(x##_PORT,x##_PIN)?1:0)
 
 
 #define SETBIT(x, y) (y) ? (HIGH(x)):(LOW(x))
