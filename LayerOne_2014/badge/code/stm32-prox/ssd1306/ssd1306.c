@@ -342,7 +342,7 @@ Send instruction to the LCD
 -------------------------------------------------------------------------------*/
 void LcdInstructionWrite (unsigned char u8Instruction)
 {
-  GPIO_WriteBit(OLED_PORT,CS_PIN,Bit_RESET);			// Select
+  GPIO_WriteBit(OLED_CS_PORT,CS_PIN,Bit_RESET);			// Select
   GPIO_WriteBit(OLED_PORT,DC_PIN,Bit_RESET);             // Instruction mode
 	
   OLEDSpiSendByte(u8Instruction);  
@@ -488,9 +488,9 @@ void OLEDDraw(void)
   LcdInstructionWrite(LCD_SET_COL_HI | 0x0); 
   LcdInstructionWrite(SSD1306_SETSTARTLINE | 0x0); 
   
-  GPIO_WriteBit(OLED_PORT,CS_PIN,Bit_SET);			// Select
-  GPIO_WriteBit(OLED_PORT,DC_PIN,Bit_SET);             // Instruction mode
-  GPIO_WriteBit(OLED_PORT,CS_PIN,Bit_RESET);			// Select
+  GPIO_WriteBit(OLED_CS_PORT,CS_PIN,Bit_SET);		// Select
+  GPIO_WriteBit(OLED_PORT,DC_PIN,Bit_SET);              // Instruction mode
+  GPIO_WriteBit(OLED_CS_PORT,CS_PIN,Bit_RESET);		// Select
   
   for ( i=0; i<(GDISP_SCREEN_WIDTH*GDISP_SCREEN_HEIGHT/8); i++) {
 	OLEDSpiSendByte(sVideoRAM[i]);
@@ -502,7 +502,7 @@ void OLEDDraw(void)
 	}
   }
   
-  GPIO_WriteBit(OLED_PORT,CS_PIN,Bit_SET);
+  GPIO_WriteBit(OLED_CS_PORT,CS_PIN,Bit_SET);
 }
 
 void OLEDSetPixel(unsigned char x, unsigned char y, unsigned char color) 
