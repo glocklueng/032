@@ -15851,7 +15851,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <label x="-30.48" y="68.58" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="VDD" class="2">
+<net name="5V" class="2">
 <segment>
 <wire x1="-27.94" y1="101.6" x2="-27.94" y2="99.06" width="0.1524" layer="91"/>
 <wire x1="-27.94" y1="99.06" x2="-27.94" y2="96.52" width="0.1524" layer="91"/>
@@ -17672,7 +17672,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <pinref part="IC4" gate="G$1" pin="Y"/>
 </segment>
 </net>
-<net name="VDD" class="2">
+<net name="5V" class="2">
 <segment>
 <wire x1="104.14" y1="29.21" x2="104.14" y2="26.67" width="0.1524" layer="91"/>
 <wire x1="104.14" y1="26.67" x2="93.98" y2="26.67" width="0.1524" layer="91"/>
@@ -19052,7 +19052,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <pinref part="IC5" gate="A" pin="OUT"/>
 </segment>
 </net>
-<net name="VDD" class="2">
+<net name="5V" class="2">
 <segment>
 <wire x1="203.2" y1="121.92" x2="203.2" y2="119.38" width="0.1524" layer="91"/>
 <pinref part="VDD3" gate="G$1" pin="VDD"/>
@@ -19592,7 +19592,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <pinref part="C36" gate="G$1" pin="2"/>
 </segment>
 </net>
-<net name="VDD" class="2">
+<net name="5V" class="2">
 <segment>
 <wire x1="73.66" y1="116.84" x2="73.66" y2="114.3" width="0.1524" layer="91"/>
 <pinref part="VDD5" gate="G$1" pin="VDD"/>
