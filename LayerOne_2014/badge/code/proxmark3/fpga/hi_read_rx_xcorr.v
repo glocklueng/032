@@ -34,9 +34,9 @@ assign pwr_oe2 = 1'b0;
 assign pwr_oe3 = 1'b0;
 assign pwr_oe4 = 1'b0;
 
-reg ssp_clk = 0;
-reg ssp_din = 0;
-reg ssp_frame = 0;
+reg ssp_clk_reg = 0;
+reg ssp_din_reg = 0;
+reg ssp_frame_reg = 0;
 
 reg dbg = 0;
 
@@ -115,7 +115,7 @@ reg signed [7:0] corr_i_out = 0;
 reg signed [7:0] corr_q_out = 0;
 
 // ADC data appears on the rising edge, so sample it on the falling edge
-always @(negedge adc_clk)
+always @(posedge adc_clk)
 begin
     // These are the correlators: we correlate against in-phase and quadrature
     // versions of our reference signal, and keep the (signed) result to
@@ -197,14 +197,14 @@ begin
 	 // Once the 16bit frame is ready, enable the spi to clock it out
 	 if(corr_i_cnt[5:2] == 4'b0000)
 	 begin
-		ssp_frame = 0;	
+		ssp_frame_reg = 0;	
 	 end
 	 // Trick here is ending the spi enable at the right time
 	 // Here we've simulated and measured the end to occur 
 	 // when corr_i_cnt[5:2] = 4'b0100
 	 if(corr_i_cnt[5:2] == 4'b0100)
 	 begin
-		ssp_frame = 1;
+		ssp_frame_reg = 1;
 	 end
 end
 
@@ -213,9 +213,9 @@ end
 // only if the spi is enabled.
 always @(ck_1356meg)
 begin
-	if(ssp_frame == 0)
+	if(ssp_frame_reg == 0)
 	begin
-		ssp_clk = ~ssp_clk;
+		ssp_clk_reg = ~ssp_clk_reg;
 	end
 end
 
@@ -223,17 +223,17 @@ end
 // If the spi data is ready (16bit frame of i & q adc data)
 // then set the fpga as the master and send the data out
 // over spi as fast as possible.
-always @(posedge ssp_clk)
+always @(posedge adc_clk)
 begin
-	if(ssp_frame == 0)
+	if(ssp_frame_reg == 0)
 	begin
 		if(spi_counter > 4'b0111)
 			begin
-				ssp_din = corr_i_out[spi_counter[2:0]];
+				ssp_din_reg = corr_i_out[spi_counter[2:0]];
 			end
 		else
 			begin
-				ssp_din = corr_q_out[spi_counter[2:0]];
+				ssp_din_reg = corr_q_out[spi_counter[2:0]];
 			end
 		
 		if(spi_counter > 4'b0000)
@@ -253,5 +253,8 @@ end
 
 // Unused.
 assign pwr_lo = 1'b0;
+assign ssp_clk = adc_clk; //ssp_clk_reg;
+assign ssp_din = ssp_din_reg;
+assign ssp_frame = ssp_frame_reg;
 
 endmodule
