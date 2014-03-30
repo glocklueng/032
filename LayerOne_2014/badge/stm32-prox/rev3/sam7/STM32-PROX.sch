@@ -19794,7 +19794,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 </sheet>
 <sheet>
 <plain>
-<text x="10.16" y="104.14" size="1.778" layer="91">OLED</text>
+<text x="71.12" y="104.14" size="1.778" layer="91">OLED</text>
 </plain>
 <instances>
 <instance part="U3" gate="G$1" x="73.66" y="63.5">
@@ -19835,8 +19835,8 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <attribute name="MPN" x="15.24" y="25.4" size="1.778" layer="96" display="off"/>
 <attribute name="DIGIKEY" x="15.24" y="25.4" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="GND15" gate="GND" x="22.86" y="15.24"/>
-<instance part="GND16" gate="GND" x="15.24" y="15.24"/>
+<instance part="GND15" gate="GND" x="22.86" y="17.78"/>
+<instance part="GND16" gate="GND" x="15.24" y="17.78"/>
 <instance part="C7" gate="G$1" x="20.32" y="73.66">
 <attribute name="PARTNO" x="20.32" y="73.66" size="1.778" layer="96" display="off"/>
 <attribute name="OC_NEWARK" x="20.32" y="73.66" size="1.778" layer="96" display="off"/>
@@ -19845,11 +19845,13 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <attribute name="DIGIKEY" x="20.32" y="73.66" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="GND18" gate="GND" x="20.32" y="63.5"/>
-<instance part="SJ1" gate="1" x="17.78" y="50.8">
+<instance part="SJ1" gate="1" x="17.78" y="50.8" smashed="yes">
 <attribute name="PARTNO" x="17.78" y="50.8" size="1.778" layer="96" display="off"/>
 <attribute name="OC_NEWARK" x="17.78" y="50.8" size="1.778" layer="96" display="off"/>
 <attribute name="MF" x="17.78" y="50.8" size="1.778" layer="96" display="off"/>
 <attribute name="MPN" x="17.78" y="50.8" size="1.778" layer="96" display="off"/>
+<attribute name="NAME" x="17.78" y="45.72" size="1.778" layer="95"/>
+<attribute name="VALUE" x="15.24" y="46.99" size="1.778" layer="96"/>
 </instance>
 <instance part="R3" gate="G$1" x="5.08" y="27.94" rot="R90">
 <attribute name="PARTNO" x="5.08" y="27.94" size="1.778" layer="96" display="off"/>
@@ -19858,7 +19860,42 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <attribute name="MPN" x="5.08" y="27.94" size="1.778" layer="96" display="off"/>
 <attribute name="DIGIKEY" x="5.08" y="27.94" size="1.778" layer="96" rot="R90" display="off"/>
 </instance>
-<instance part="GND17" gate="GND" x="5.08" y="15.24"/>
+<instance part="GND17" gate="GND" x="5.08" y="17.78"/>
+<instance part="U4" gate="G$1" x="-5.08" y="91.44">
+<attribute name="PARTNO" x="-5.08" y="91.44" size="1.778" layer="96" display="off"/>
+<attribute name="OC_NEWARK" x="-5.08" y="91.44" size="1.778" layer="96" display="off"/>
+<attribute name="MF" x="-5.08" y="91.44" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="-5.08" y="91.44" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="GND22" gate="GND" x="-17.78" y="71.12"/>
+<instance part="R61" gate="G$1" x="-33.02" y="50.8" rot="R90">
+<attribute name="PARTNO" x="-33.02" y="50.8" size="1.778" layer="96" display="off"/>
+<attribute name="OC_NEWARK" x="-33.02" y="50.8" size="1.778" layer="96" display="off"/>
+<attribute name="MF" x="-33.02" y="50.8" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="-33.02" y="50.8" size="1.778" layer="96" display="off"/>
+<attribute name="DIGIKEY" x="-33.02" y="50.8" size="1.778" layer="96" rot="R90" display="off"/>
+</instance>
+<instance part="R62" gate="G$1" x="-25.4" y="50.8" rot="R90">
+<attribute name="PARTNO" x="-25.4" y="50.8" size="1.778" layer="96" display="off"/>
+<attribute name="OC_NEWARK" x="-25.4" y="50.8" size="1.778" layer="96" display="off"/>
+<attribute name="MF" x="-25.4" y="50.8" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="-25.4" y="50.8" size="1.778" layer="96" display="off"/>
+<attribute name="DIGIKEY" x="-25.4" y="50.8" size="1.778" layer="96" rot="R90" display="off"/>
+</instance>
+<instance part="R63" gate="G$1" x="-17.78" y="50.8" rot="R90">
+<attribute name="PARTNO" x="-17.78" y="50.8" size="1.778" layer="96" display="off"/>
+<attribute name="OC_NEWARK" x="-17.78" y="50.8" size="1.778" layer="96" display="off"/>
+<attribute name="MF" x="-17.78" y="50.8" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="-17.78" y="50.8" size="1.778" layer="96" display="off"/>
+<attribute name="DIGIKEY" x="-17.78" y="50.8" size="1.778" layer="96" rot="R90" display="off"/>
+</instance>
+<instance part="R64" gate="G$1" x="-10.16" y="50.8" rot="R90">
+<attribute name="PARTNO" x="-10.16" y="50.8" size="1.778" layer="96" display="off"/>
+<attribute name="OC_NEWARK" x="-10.16" y="50.8" size="1.778" layer="96" display="off"/>
+<attribute name="MF" x="-10.16" y="50.8" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="-10.16" y="50.8" size="1.778" layer="96" display="off"/>
+<attribute name="DIGIKEY" x="-10.16" y="50.8" size="1.778" layer="96" rot="R90" display="off"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -19900,12 +19937,12 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 </segment>
 <segment>
 <pinref part="C6" gate="G$1" pin="2"/>
-<wire x1="22.86" y1="22.86" x2="22.86" y2="17.78" width="0.1524" layer="91"/>
+<wire x1="22.86" y1="22.86" x2="22.86" y2="20.32" width="0.1524" layer="91"/>
 <pinref part="GND15" gate="GND" pin="GND"/>
 </segment>
 <segment>
 <pinref part="C8" gate="G$1" pin="2"/>
-<wire x1="15.24" y1="22.86" x2="15.24" y2="17.78" width="0.1524" layer="91"/>
+<wire x1="15.24" y1="22.86" x2="15.24" y2="20.32" width="0.1524" layer="91"/>
 <pinref part="GND16" gate="GND" pin="GND"/>
 </segment>
 <segment>
@@ -19915,8 +19952,30 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 </segment>
 <segment>
 <pinref part="R3" gate="G$1" pin="1"/>
-<wire x1="5.08" y1="22.86" x2="5.08" y2="17.78" width="0.1524" layer="91"/>
+<wire x1="5.08" y1="22.86" x2="5.08" y2="20.32" width="0.1524" layer="91"/>
 <pinref part="GND17" gate="GND" pin="GND"/>
+</segment>
+<segment>
+<pinref part="U4" gate="G$1" pin="SHIELD@3"/>
+<wire x1="-12.7" y1="76.2" x2="-17.78" y2="76.2" width="0.1524" layer="91"/>
+<pinref part="U4" gate="G$1" pin="SHIELD@1"/>
+<wire x1="-12.7" y1="81.28" x2="-17.78" y2="81.28" width="0.1524" layer="91"/>
+<wire x1="-17.78" y1="81.28" x2="-17.78" y2="78.74" width="0.1524" layer="91"/>
+<pinref part="U4" gate="G$1" pin="SHIELD@4"/>
+<wire x1="-17.78" y1="78.74" x2="-17.78" y2="76.2" width="0.1524" layer="91"/>
+<wire x1="-17.78" y1="76.2" x2="-17.78" y2="73.66" width="0.1524" layer="91"/>
+<wire x1="-12.7" y1="73.66" x2="-17.78" y2="73.66" width="0.1524" layer="91"/>
+<junction x="-17.78" y="73.66"/>
+<junction x="-17.78" y="76.2"/>
+<pinref part="U4" gate="G$1" pin="SHIELD@2"/>
+<wire x1="-12.7" y1="78.74" x2="-17.78" y2="78.74" width="0.1524" layer="91"/>
+<junction x="-17.78" y="78.74"/>
+<pinref part="GND22" gate="GND" pin="GND"/>
+</segment>
+<segment>
+<pinref part="U4" gate="G$1" pin="GND"/>
+<wire x1="-12.7" y1="91.44" x2="-17.78" y2="91.44" width="0.1524" layer="91"/>
+<label x="-27.94" y="91.44" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="N$5" class="0">
@@ -19971,6 +20030,29 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <wire x1="20.32" y1="78.74" x2="20.32" y2="86.36" width="0.1524" layer="91"/>
 <junction x="20.32" y="86.36"/>
 </segment>
+<segment>
+<pinref part="U4" gate="G$1" pin="VCC"/>
+<wire x1="-12.7" y1="96.52" x2="-17.78" y2="96.52" width="0.1524" layer="91"/>
+<label x="-27.94" y="96.52" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="R61" gate="G$1" pin="2"/>
+<wire x1="-33.02" y1="55.88" x2="-33.02" y2="60.96" width="0.1524" layer="91"/>
+<wire x1="-33.02" y1="60.96" x2="-25.4" y2="60.96" width="0.1524" layer="91"/>
+<wire x1="-25.4" y1="60.96" x2="-17.78" y2="60.96" width="0.1524" layer="91"/>
+<wire x1="-17.78" y1="60.96" x2="-10.16" y2="60.96" width="0.1524" layer="91"/>
+<pinref part="R64" gate="G$1" pin="2"/>
+<wire x1="-10.16" y1="55.88" x2="-10.16" y2="60.96" width="0.1524" layer="91"/>
+<pinref part="R62" gate="G$1" pin="2"/>
+<wire x1="-25.4" y1="55.88" x2="-25.4" y2="60.96" width="0.1524" layer="91"/>
+<pinref part="R63" gate="G$1" pin="2"/>
+<wire x1="-17.78" y1="55.88" x2="-17.78" y2="60.96" width="0.1524" layer="91"/>
+<junction x="-17.78" y="60.96"/>
+<wire x1="-17.78" y1="60.96" x2="-17.78" y2="63.5" width="0.1524" layer="91"/>
+<label x="-17.78" y="63.5" size="1.778" layer="95"/>
+<junction x="-25.4" y="60.96"/>
+<junction x="-17.78" y="63.5"/>
+</segment>
 </net>
 <net name="!CS_OLED" class="0">
 <segment>
@@ -19996,8 +20078,13 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <net name="SCLK_OLED_SD" class="0">
 <segment>
 <pinref part="U3" gate="G$1" pin="D0/SPI_SCLK/I2C_SCK"/>
-<wire x1="48.26" y1="55.88" x2="38.1" y2="55.88" width="0.1524" layer="91"/>
-<label x="25.4" y="55.88" size="1.778" layer="95"/>
+<wire x1="48.26" y1="55.88" x2="43.18" y2="55.88" width="0.1524" layer="91"/>
+<label x="22.86" y="55.88" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="U4" gate="G$1" pin="SCK"/>
+<wire x1="-12.7" y1="93.98" x2="-17.78" y2="93.98" width="0.1524" layer="91"/>
+<label x="-35.56" y="93.98" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="MISO_SDIN_OLED_SD" class="0">
@@ -20008,6 +20095,16 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <wire x1="7.62" y1="53.34" x2="7.62" y2="50.8" width="0.1524" layer="91"/>
 <pinref part="SJ1" gate="1" pin="1"/>
 <wire x1="7.62" y1="50.8" x2="12.7" y2="50.8" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="R63" gate="G$1" pin="1"/>
+<wire x1="-17.78" y1="45.72" x2="-17.78" y2="40.64" width="0.1524" layer="91"/>
+<label x="-17.78" y="15.24" size="1.778" layer="95" rot="R90"/>
+</segment>
+<segment>
+<wire x1="-12.7" y1="88.9" x2="-17.78" y2="88.9" width="0.1524" layer="91"/>
+<label x="-35.56" y="88.9" size="1.778" layer="95"/>
+<pinref part="U4" gate="G$1" pin="DO"/>
 </segment>
 </net>
 <net name="DB2" class="0">
@@ -20041,155 +20138,52 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <wire x1="48.26" y1="35.56" x2="5.08" y2="35.56" width="0.1524" layer="91"/>
 </segment>
 </net>
-</nets>
-</sheet>
-<sheet>
-<plain>
-</plain>
-<instances>
-<instance part="U4" gate="G$1" x="63.5" y="71.12">
-<attribute name="PARTNO" x="63.5" y="71.12" size="1.778" layer="96" display="off"/>
-<attribute name="OC_NEWARK" x="63.5" y="71.12" size="1.778" layer="96" display="off"/>
-<attribute name="MF" x="63.5" y="71.12" size="1.778" layer="96" display="off"/>
-<attribute name="MPN" x="63.5" y="71.12" size="1.778" layer="96" display="off"/>
-</instance>
-<instance part="GND22" gate="GND" x="50.8" y="50.8"/>
-<instance part="R61" gate="G$1" x="81.28" y="68.58" rot="R90">
-<attribute name="PARTNO" x="81.28" y="68.58" size="1.778" layer="96" display="off"/>
-<attribute name="OC_NEWARK" x="81.28" y="68.58" size="1.778" layer="96" display="off"/>
-<attribute name="MF" x="81.28" y="68.58" size="1.778" layer="96" display="off"/>
-<attribute name="MPN" x="81.28" y="68.58" size="1.778" layer="96" display="off"/>
-<attribute name="DIGIKEY" x="81.28" y="68.58" size="1.778" layer="96" rot="R90" display="off"/>
-</instance>
-<instance part="R62" gate="G$1" x="88.9" y="68.58" rot="R90">
-<attribute name="PARTNO" x="88.9" y="68.58" size="1.778" layer="96" display="off"/>
-<attribute name="OC_NEWARK" x="88.9" y="68.58" size="1.778" layer="96" display="off"/>
-<attribute name="MF" x="88.9" y="68.58" size="1.778" layer="96" display="off"/>
-<attribute name="MPN" x="88.9" y="68.58" size="1.778" layer="96" display="off"/>
-<attribute name="DIGIKEY" x="88.9" y="68.58" size="1.778" layer="96" rot="R90" display="off"/>
-</instance>
-<instance part="R63" gate="G$1" x="96.52" y="68.58" rot="R90">
-<attribute name="PARTNO" x="96.52" y="68.58" size="1.778" layer="96" display="off"/>
-<attribute name="OC_NEWARK" x="96.52" y="68.58" size="1.778" layer="96" display="off"/>
-<attribute name="MF" x="96.52" y="68.58" size="1.778" layer="96" display="off"/>
-<attribute name="MPN" x="96.52" y="68.58" size="1.778" layer="96" display="off"/>
-<attribute name="DIGIKEY" x="96.52" y="68.58" size="1.778" layer="96" rot="R90" display="off"/>
-</instance>
-<instance part="R64" gate="G$1" x="104.14" y="68.58" rot="R90">
-<attribute name="PARTNO" x="104.14" y="68.58" size="1.778" layer="96" display="off"/>
-<attribute name="OC_NEWARK" x="104.14" y="68.58" size="1.778" layer="96" display="off"/>
-<attribute name="MF" x="104.14" y="68.58" size="1.778" layer="96" display="off"/>
-<attribute name="MPN" x="104.14" y="68.58" size="1.778" layer="96" display="off"/>
-<attribute name="DIGIKEY" x="104.14" y="68.58" size="1.778" layer="96" rot="R90" display="off"/>
-</instance>
-</instances>
-<busses>
-</busses>
-<nets>
-<net name="MISO_SDIN_OLED_SD" class="0">
-<segment>
-<pinref part="R63" gate="G$1" pin="1"/>
-<wire x1="96.52" y1="63.5" x2="96.52" y2="58.42" width="0.1524" layer="91"/>
-<label x="96.52" y="48.26" size="1.778" layer="95" rot="R90"/>
-</segment>
-<segment>
-<wire x1="55.88" y1="68.58" x2="50.8" y2="68.58" width="0.1524" layer="91"/>
-<label x="33.02" y="68.58" size="1.778" layer="95"/>
-<pinref part="U4" gate="G$1" pin="DO"/>
-</segment>
-</net>
-<net name="+3V3" class="0">
-<segment>
-<pinref part="U4" gate="G$1" pin="VCC"/>
-<wire x1="55.88" y1="76.2" x2="50.8" y2="76.2" width="0.1524" layer="91"/>
-<label x="40.64" y="76.2" size="1.778" layer="95"/>
-</segment>
-<segment>
-<pinref part="R61" gate="G$1" pin="2"/>
-<wire x1="81.28" y1="73.66" x2="81.28" y2="78.74" width="0.1524" layer="91"/>
-<wire x1="81.28" y1="78.74" x2="88.9" y2="78.74" width="0.1524" layer="91"/>
-<wire x1="88.9" y1="78.74" x2="96.52" y2="78.74" width="0.1524" layer="91"/>
-<wire x1="96.52" y1="78.74" x2="104.14" y2="78.74" width="0.1524" layer="91"/>
-<pinref part="R64" gate="G$1" pin="2"/>
-<wire x1="104.14" y1="73.66" x2="104.14" y2="78.74" width="0.1524" layer="91"/>
-<pinref part="R62" gate="G$1" pin="2"/>
-<wire x1="88.9" y1="73.66" x2="88.9" y2="78.74" width="0.1524" layer="91"/>
-<pinref part="R63" gate="G$1" pin="2"/>
-<wire x1="96.52" y1="73.66" x2="96.52" y2="78.74" width="0.1524" layer="91"/>
-<junction x="96.52" y="78.74"/>
-<wire x1="96.52" y1="78.74" x2="96.52" y2="81.28" width="0.1524" layer="91"/>
-<label x="96.52" y="81.28" size="1.778" layer="95"/>
-<junction x="88.9" y="78.74"/>
-<junction x="96.52" y="81.28"/>
-</segment>
-</net>
-<net name="SCLK_OLED_SD" class="0">
-<segment>
-<pinref part="U4" gate="G$1" pin="SCK"/>
-<wire x1="55.88" y1="73.66" x2="50.8" y2="73.66" width="0.1524" layer="91"/>
-<label x="33.02" y="73.66" size="1.778" layer="95"/>
-</segment>
-</net>
 <net name="SD_MOSI_DO" class="0">
 <segment>
 <pinref part="R62" gate="G$1" pin="1"/>
-<wire x1="88.9" y1="63.5" x2="88.9" y2="58.42" width="0.1524" layer="91"/>
-<label x="88.9" y="48.26" size="1.778" layer="95" rot="R90"/>
+<wire x1="-25.4" y1="45.72" x2="-25.4" y2="40.64" width="0.1524" layer="91"/>
+<label x="-25.4" y="25.4" size="1.778" layer="95" rot="R90"/>
 </segment>
 <segment>
-<wire x1="55.88" y1="78.74" x2="50.8" y2="78.74" width="0.1524" layer="91"/>
-<label x="35.56" y="78.74" size="1.778" layer="95"/>
+<wire x1="-12.7" y1="99.06" x2="-17.78" y2="99.06" width="0.1524" layer="91"/>
+<label x="-33.02" y="99.06" size="1.778" layer="95"/>
 <pinref part="U4" gate="G$1" pin="DI"/>
 </segment>
 </net>
 <net name="SD_RSV" class="0">
 <segment>
 <pinref part="U4" gate="G$1" pin="RSV"/>
-<wire x1="55.88" y1="66.04" x2="50.8" y2="66.04" width="0.1524" layer="91"/>
-<label x="40.64" y="66.04" size="1.778" layer="95"/>
+<wire x1="-12.7" y1="86.36" x2="-17.78" y2="86.36" width="0.1524" layer="91"/>
+<label x="-27.94" y="86.36" size="1.778" layer="95"/>
 </segment>
 <segment>
 <pinref part="R61" gate="G$1" pin="1"/>
-<wire x1="81.28" y1="63.5" x2="81.28" y2="58.42" width="0.1524" layer="91"/>
-<label x="81.28" y="48.26" size="1.778" layer="95" rot="R90"/>
-</segment>
-</net>
-<net name="GND" class="2">
-<segment>
-<pinref part="U4" gate="G$1" pin="SHIELD@3"/>
-<wire x1="55.88" y1="55.88" x2="50.8" y2="55.88" width="0.1524" layer="91"/>
-<pinref part="U4" gate="G$1" pin="SHIELD@1"/>
-<wire x1="55.88" y1="60.96" x2="50.8" y2="60.96" width="0.1524" layer="91"/>
-<wire x1="50.8" y1="60.96" x2="50.8" y2="58.42" width="0.1524" layer="91"/>
-<pinref part="U4" gate="G$1" pin="SHIELD@4"/>
-<wire x1="50.8" y1="58.42" x2="50.8" y2="55.88" width="0.1524" layer="91"/>
-<wire x1="50.8" y1="55.88" x2="50.8" y2="53.34" width="0.1524" layer="91"/>
-<wire x1="55.88" y1="53.34" x2="50.8" y2="53.34" width="0.1524" layer="91"/>
-<junction x="50.8" y="53.34"/>
-<junction x="50.8" y="55.88"/>
-<pinref part="U4" gate="G$1" pin="SHIELD@2"/>
-<wire x1="55.88" y1="58.42" x2="50.8" y2="58.42" width="0.1524" layer="91"/>
-<junction x="50.8" y="58.42"/>
-<pinref part="GND22" gate="GND" pin="GND"/>
-</segment>
-<segment>
-<pinref part="U4" gate="G$1" pin="GND"/>
-<wire x1="55.88" y1="71.12" x2="50.8" y2="71.12" width="0.1524" layer="91"/>
-<label x="40.64" y="71.12" size="1.778" layer="95"/>
+<wire x1="-33.02" y1="45.72" x2="-33.02" y2="40.64" width="0.1524" layer="91"/>
+<label x="-33.02" y="30.48" size="1.778" layer="95" rot="R90"/>
 </segment>
 </net>
 <net name="!CS_SD" class="0">
 <segment>
 <pinref part="U4" gate="G$1" pin="CS"/>
-<wire x1="55.88" y1="81.28" x2="50.8" y2="81.28" width="0.1524" layer="91"/>
-<label x="40.64" y="81.28" size="1.778" layer="95"/>
+<wire x1="-12.7" y1="101.6" x2="-17.78" y2="101.6" width="0.1524" layer="91"/>
+<label x="-27.94" y="101.6" size="1.778" layer="95"/>
 </segment>
 <segment>
 <pinref part="R64" gate="G$1" pin="1"/>
-<wire x1="104.14" y1="63.5" x2="104.14" y2="58.42" width="0.1524" layer="91"/>
-<label x="104.14" y="48.26" size="1.778" layer="95" rot="R90"/>
+<wire x1="-10.16" y1="45.72" x2="-10.16" y2="40.64" width="0.1524" layer="91"/>
+<label x="-10.16" y="30.48" size="1.778" layer="95" rot="R90"/>
 </segment>
 </net>
+</nets>
+</sheet>
+<sheet>
+<plain>
+</plain>
+<instances>
+</instances>
+<busses>
+</busses>
+<nets>
 </nets>
 </sheet>
 </sheets>
