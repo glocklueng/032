@@ -953,6 +953,8 @@ void SimulateTagHfListen(void)
 // starts here
 int main(void)
 {
+  #define BufferSize 32
+  
 #ifdef DEBUG
   debug();
 #endif
@@ -1005,7 +1007,7 @@ int main(void)
   while(ADC_GetCalibrationStatus(ADC1));  
   
   ADC_SoftwareStartConvCmd(ADC1, ENABLE);
-  
+    
   // Kicks off the 24Mhz PCK0 (DOUT/PA10)
   SetupPCK0Clock();
   
@@ -1017,6 +1019,50 @@ int main(void)
   SetAdcMuxFor(GPIO_MUXSEL_HIPKD);
   
   FpgaSetupSsc(1);
+  
+  
+  /*-----------------ARKO'S TEST CODE - SPI SLAVE-----------------------------*/
+  // Start SPI Slave
+  RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);
+
+  /* Enable SPI2 Periph clock */
+  RCC_APB1PeriphClockCmd(RCC_APB1Periph_SPI2, ENABLE);
+  
+  GPIO_InitTypeDef GPIO_InitStructure;
+  /* Configure SPIz pins: SCK, MISO and MOSI */
+  //GPIO_InitStructure.GPIO_Pin = SSP_FRAME_PIN | SSP_DIN_PIN |SSP_DOUT_PIN | SSP_CLK_PIN;
+  //GPIO_Init(GPIOB, &GPIO_InitStructure);
+  
+  /* SPIz Config */
+  SPI_InitStructure.SPI_Direction = SPI_Direction_1Line_Rx;
+  SPI_InitStructure.SPI_Mode = SPI_Mode_Slave;
+  SPI_InitStructure.SPI_DataSize = SPI_DataSize_16b;
+  SPI_InitStructure.SPI_CPOL = SPI_CPOL_High;
+  SPI_InitStructure.SPI_CPHA = SPI_CPHA_1Edge;  // Sample on clock falling edge
+  SPI_InitStructure.SPI_NSS = SPI_NSS_Soft;
+  SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_2;
+  SPI_InitStructure.SPI_FirstBit = SPI_FirstBit_MSB;
+  SPI_InitStructure.SPI_CRCPolynomial = 15;
+  SPI_Init(SPI2, &SPI_InitStructure);
+  
+  /* Enable SPIz */
+  SPI_Cmd(SPI2, ENABLE);
+  
+  uint16_t TxIdx = 0;
+  uint16_t RxIdx = 0;
+  uint16_t SPIz_Buffer_Tx[BufferSize] = {0xFFFF};
+  
+  uint16_t SPIy_Buffer_Rx[BufferSize], SPIz_Buffer_Rx[BufferSize];
+  
+  /* Transfer procedure */
+  while (TxIdx < BufferSize)
+  {
+    /* Wait for SPIz data reception */
+    while (SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_RXNE) == RESET);
+    /* Read SPIz received data */
+    SPIz_Buffer_Rx[RxIdx] = SPI_I2S_ReceiveData(SPI2);
+  }
+  /*-------------- END ARKO'S TEST CODE - SPI SLAVE---------------------------*/
   
   SimulateTagHfListen();
 
