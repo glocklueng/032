@@ -115,7 +115,7 @@ reg signed [7:0] corr_i_out = 0;
 reg signed [7:0] corr_q_out = 0;
 
 // ADC data appears on the rising edge, so sample it on the falling edge
-always @(posedge ck_1356meg)
+always @(negedge ck_1356meg)
 begin
     // These are the correlators: we correlate against in-phase and quadrature
     // versions of our reference signal, and keep the (signed) result to
@@ -188,30 +188,47 @@ begin
 	 // FOR DEBUG
 	 // Set the debug to toggle at each 8bit frame
 	 if(corr_i_cnt[5:2] == 4'b0000 || corr_i_cnt[5:2] == 4'b1000)
-        dbg = 1'b1;
-    else
-        dbg = 1'b0;
-		  
-		  
+		 begin
+			  dbg = 1'b1;
+		 end
+	 else
+		 begin
+			  dbg = 1'b1;
+		 end
+	
+	 
 	 // SPI Slave Out - FPGA (SPI Master) to ARM (SPI Slave)
 	 // Once the 16bit frame is ready, enable the spi to clock it out
 	 if(corr_i_cnt[5:2] == 4'b0000)
 	 begin
-		ssp_frame_reg = 0;	
+		ssp_frame_reg = ~ssp_frame_reg;	
 	 end
 	 // Trick here is ending the spi enable at the right time
 	 // Here we've simulated and measured the end to occur 
 	 // when corr_i_cnt[5:2] = 4'b0100
-	 if(corr_i_cnt[5:2] == 4'b0100)
+	 if(corr_i_cnt[5:2] == 4'b1000)
 	 begin
-		ssp_frame_reg = 1;
+		ssp_frame_reg = ~ssp_frame_reg;
 	 end
+	 
+	 /*
+	 //if(corr_i_cnt[5:0] == 6'b000100 || corr_i_cnt[5:0] == 6'b000101 || corr_i_cnt[5:0] == 6'b000110 || corr_i_cnt[5:0] == 6'b100100 || corr_i_cnt[5:0] == 6'b100101 || corr_i_cnt[5:0] == 6'b100110)
+	 if(corr_i_cnt[5:0] > 6'b000111 && corr_i_cnt[5:0] < 6'b101000)
+		 begin
+			  ssp_frame_reg = 1'b0;
+		 end
+	 else
+		 begin
+			  ssp_frame_reg = 1'b1;
+		 end
+		*/ 
+		 
 end
 
 // SPI Slave Out - FPGA (SPI Master) to ARM (SPI Slave)
 // This clocks the ssp_clk at the highest speed possible, 13.56Mhz
 // only if the spi is enabled.
-always @(ck_1356meg)
+always @(fc_div_2)
 begin
 	if(ssp_frame_reg == 0)
 	begin
@@ -223,7 +240,7 @@ end
 // If the spi data is ready (16bit frame of i & q adc data)
 // then set the fpga as the master and send the data out
 // over spi as fast as possible.
-always @(posedge ck_1356meg)
+always @(posedge fc_div_2)
 begin
 	if(ssp_frame_reg == 0)
 	begin
@@ -253,7 +270,7 @@ end
 
 // Unused.
 assign pwr_lo = 1'b0;
-assign ssp_clk = adc_clk; //ssp_clk_reg;
+assign ssp_clk = fc_div_2; //ssp_clk_reg;
 assign ssp_din = ssp_din_reg;
 assign ssp_frame = ssp_frame_reg;
 
