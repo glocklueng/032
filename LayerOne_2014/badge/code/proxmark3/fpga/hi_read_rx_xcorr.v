@@ -115,7 +115,7 @@ reg signed [7:0] corr_i_out = 0;
 reg signed [7:0] corr_q_out = 0;
 
 // ADC data appears on the rising edge, so sample it on the falling edge
-always @(posedge adc_clk)
+always @(posedge ck_1356meg)
 begin
     // These are the correlators: we correlate against in-phase and quadrature
     // versions of our reference signal, and keep the (signed) result to
@@ -223,7 +223,7 @@ end
 // If the spi data is ready (16bit frame of i & q adc data)
 // then set the fpga as the master and send the data out
 // over spi as fast as possible.
-always @(posedge adc_clk)
+always @(posedge ck_1356meg)
 begin
 	if(ssp_frame_reg == 0)
 	begin
