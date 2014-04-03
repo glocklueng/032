@@ -1037,8 +1037,8 @@ int main(void)
   SPI_InitStructure.SPI_Direction = SPI_Direction_1Line_Rx;
   SPI_InitStructure.SPI_Mode = SPI_Mode_Slave;
   SPI_InitStructure.SPI_DataSize = SPI_DataSize_16b;
-  SPI_InitStructure.SPI_CPOL = SPI_CPOL_High;
-  SPI_InitStructure.SPI_CPHA = SPI_CPHA_1Edge;  // Sample on clock falling edge
+  SPI_InitStructure.SPI_CPOL = SPI_CPOL_High;   // high
+  SPI_InitStructure.SPI_CPHA = SPI_CPHA_1Edge;  // 1edge // Sample on clock falling edge
   SPI_InitStructure.SPI_NSS = SPI_NSS_Soft;
   SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_2;
   SPI_InitStructure.SPI_FirstBit = SPI_FirstBit_MSB;
