@@ -1037,8 +1037,8 @@ int main(void)
   SPI_InitStructure.SPI_Direction = SPI_Direction_1Line_Rx;
   SPI_InitStructure.SPI_Mode = SPI_Mode_Slave;
   SPI_InitStructure.SPI_DataSize = SPI_DataSize_16b;
-  SPI_InitStructure.SPI_CPOL = SPI_CPOL_High;   // high
-  SPI_InitStructure.SPI_CPHA = SPI_CPHA_1Edge;  // 1edge // Sample on clock falling edge
+  SPI_InitStructure.SPI_CPOL = SPI_CPOL_Low;   // high
+  SPI_InitStructure.SPI_CPHA = SPI_CPHA_2Edge;  // 1edge // Sample on clock falling edge
   SPI_InitStructure.SPI_NSS = SPI_NSS_Soft;
   SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_2;
   SPI_InitStructure.SPI_FirstBit = SPI_FirstBit_MSB;
@@ -1054,13 +1054,16 @@ int main(void)
   
   uint16_t SPIy_Buffer_Rx[BufferSize], SPIz_Buffer_Rx[BufferSize];
   
+  while( GETBIT( SSP_FRAME  ) == 0 );
+
   /* Transfer procedure */
-  while (TxIdx < BufferSize)
+  while (RxIdx < BufferSize)
   {
     /* Wait for SPIz data reception */
     while (SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_RXNE) == RESET);
     /* Read SPIz received data */
     SPIz_Buffer_Rx[RxIdx] = SPI_I2S_ReceiveData(SPI2);
+    RxIdx++;
   }
   /*-------------- END ARKO'S TEST CODE - SPI SLAVE---------------------------*/
   

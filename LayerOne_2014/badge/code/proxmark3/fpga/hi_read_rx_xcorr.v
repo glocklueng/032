@@ -34,9 +34,9 @@ assign pwr_oe2 = 1'b0;
 assign pwr_oe3 = 1'b0;
 assign pwr_oe4 = 1'b0;
 
-reg ssp_clk_reg = 0;
-reg ssp_din_reg = 0;
-reg ssp_frame_reg = 0;
+reg ssp_clk_reg = 1'b0;
+reg ssp_din_reg = 1'b0;
+reg ssp_frame_reg = 1'b0;
 
 reg dbg = 0;
 
@@ -124,14 +124,14 @@ begin
     begin
         if(snoop)
         begin
-            corr_i_out <= 8'b01010101;  		// Originally: corr_i_out <= {corr_i_accum[12:6], after_hysteresis_prev};
-            corr_q_out <= 8'b01010101;		// Originally: corr_q_out <= {corr_q_accum[12:6], after_hysteresis};
+            corr_i_out <= 8'b10101010;  		// Originally: corr_i_out <= {corr_i_accum[12:6], after_hysteresis_prev};
+            corr_q_out <= 8'b10101010;		// Originally: corr_q_out <= {corr_q_accum[12:6], after_hysteresis};
         end
         else
         begin
             // Only correlations need to be delivered.
-            corr_i_out <= 8'b01010101;						// Originally: corr_i_out <= corr_i_accum[13:6];
-            corr_q_out <= 8'b01010101;						// Originally: corr_q_out <= corr_q_accum[13:6];	
+            corr_i_out <= 8'b10101010;						// Originally: corr_i_out <= corr_i_accum[13:6];
+            corr_q_out <= 8'b10101010;						// Originally: corr_q_out <= corr_q_accum[13:6];	
         end
 
         corr_i_accum <= adc_d;
@@ -196,32 +196,34 @@ begin
 			  dbg = 1'b1;
 		 end
 	
-	 
+	 /*
 	 // SPI Slave Out - FPGA (SPI Master) to ARM (SPI Slave)
 	 // Once the 16bit frame is ready, enable the spi to clock it out
-	 if(corr_i_cnt[5:2] == 4'b0000)
+	 if(corr_i_cnt[5:0] == 6'b000011)
 	 begin
 		ssp_frame_reg = ~ssp_frame_reg;	
 	 end
 	 // Trick here is ending the spi enable at the right time
 	 // Here we've simulated and measured the end to occur 
 	 // when corr_i_cnt[5:2] = 4'b0100
-	 if(corr_i_cnt[5:2] == 4'b1000)
+	 if(corr_i_cnt[5:0] == 6'b100010)
 	 begin
 		ssp_frame_reg = ~ssp_frame_reg;
 	 end
+	 */
 	 
-	 /*
-	 //if(corr_i_cnt[5:0] == 6'b000100 || corr_i_cnt[5:0] == 6'b000101 || corr_i_cnt[5:0] == 6'b000110 || corr_i_cnt[5:0] == 6'b100100 || corr_i_cnt[5:0] == 6'b100101 || corr_i_cnt[5:0] == 6'b100110)
-	 if(corr_i_cnt[5:0] > 6'b000111 && corr_i_cnt[5:0] < 6'b101000)
-		 begin
-			  ssp_frame_reg = 1'b0;
-		 end
-	 else
+	 //if(corr_i_cnt[5:0] == 6'b000000 || corr_i_cnt[5:0] == 6'b000001 || corr_i_cnt[5:0] == 6'b000010 || 
+	 //   corr_i_cnt[5:0] == 6'b100000 || corr_i_cnt[5:0] == 6'b100001 || corr_i_cnt[5:0] == 6'b100010)
+	 if(corr_i_cnt[5:0] >= 6'b100001 )
+	 //if(corr_i_cnt[5:0] > 6'b000111 && corr_i_cnt[5:0] < 6'b101000)
 		 begin
 			  ssp_frame_reg = 1'b1;
 		 end
-		*/ 
+	 else
+		 begin
+			  ssp_frame_reg = 1'b0;
+		 end
+		
 		 
 end
 
@@ -243,34 +245,45 @@ end
 always @(posedge fc_div_2)
 begin
 	if(ssp_frame_reg == 0)
-	begin
-		if(spi_counter > 4'b0111)
-			begin
-				ssp_din_reg = corr_i_out[spi_counter[2:0]];
-			end
-		else
-			begin
-				ssp_din_reg = corr_q_out[spi_counter[2:0]];
-			end
-		
-		if(spi_counter > 4'b0000)
-			begin
-				spi_counter = spi_counter - 1;
-			end
-		else
-			begin
-				spi_counter = 4'b1111;
-			end
-	end
+		begin
+			if(spi_counter > 4'b0111)
+				begin
+					ssp_din_reg = corr_i_out[spi_counter[2:0]];
+				end
+			else
+				begin
+					ssp_din_reg = corr_q_out[spi_counter[2:0]];
+				end
+		end
 end
 	 
+always @(negedge fc_div_2)
+begin
+	if(ssp_frame_reg == 0)
+		begin
+			if(spi_counter > 4'b0000)
+				begin
+					spi_counter = spi_counter - 1;
+				end
+			else
+				begin
+					spi_counter = 4'b1111;
+				end
+		end
+	else
+		begin
+			spi_counter = 4'b1111;
+		end
+
+end
 //ORIGINAL PROXMARK SSP FPGA to ARM
 //assign ssp_din = corr_i_out[7];
 //assign dbg = corr_i_cnt[3];
 
 // Unused.
 assign pwr_lo = 1'b0;
-assign ssp_clk = fc_div_2; //ssp_clk_reg;
+assign ssp_clk = (~ssp_frame_reg && corr_i_cnt[5:0] >= 6'b000000 && corr_i_cnt[5:0] < 6'b100000) ? fc_div_2 : 0;
+//assign ssp_clk = ssp_clk_reg; //ssp_clk_reg;
 assign ssp_din = ssp_din_reg;
 assign ssp_frame = ssp_frame_reg;
 
