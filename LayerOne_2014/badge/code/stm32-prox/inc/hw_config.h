@@ -38,41 +38,42 @@
 /* Exported constants --------------------------------------------------------*/
 /* Exported macro ------------------------------------------------------------*/
 
-#define _BV(bit) (1 << (bit)) 
+#define _BV(bit) (1 << (bit))
 
 /* Exported define -----------------------------------------------------------*/
 
 extern uint32_t SystemCoreClock;
 
 /* Exported functions ------------------------------------------------------- */
-int Set_System(void);
-void Set_USBClock(void);
-void Enter_LowPowerMode(void);
-void Leave_LowPowerMode(void);
-void USB_Interrupts_Config(void);
-void USB_Cable_Config (FunctionalState NewState);
-void GPIO_Configuration(void);
-void EXTI_Configuration(void);
-void ADC_Configuration(void);
-void Get_SerialNum(void);
-void SetSpeaker(unsigned int delay);
-void DelayuS(vu32 nCount);	 			// 1uS Delay
-void DelaymS(vu32 nTime);				// 1mS Delay
-void GLCD_LcdInit(void);
-void OLEDDraw(void);
-void OLEDSetPixel(unsigned char x, unsigned char y, unsigned char color);
-void OLEDClear( void );
-void OLEDBigchar (unsigned char u8Char);
-void OLEDPutchar(char u8Char);
-void OLEDPutstr (const char *ptr);
-void LEDSet(unsigned char state);
-void OLEDDisplayPicture (const uint8_t *pointer) ;
-void InvertOLED( unsigned char state );
-void OLEDPutBigstr (const char *ptr);
-unsigned char softspi_rx( void );
-void DbpBigString(char *str);
-void FPGASpiSendWord(unsigned short cmdword);
-void FpgaSetupSsc(unsigned char on_off);
+int Set_System ( void );
+void Set_USBClock ( void );
+void Enter_LowPowerMode ( void );
+void Leave_LowPowerMode ( void );
+void USB_Interrupts_Config ( void );
+void USB_Cable_Config ( FunctionalState NewState );
+void GPIO_Configuration ( void );
+void EXTI_Configuration ( void );
+void ADC_Configuration ( void );
+void Get_SerialNum ( void );
+void SetSpeaker ( unsigned int delay );
+void DelayuS ( vu32 nCount );           // 1uS Delay
+void DelaymS ( vu32 nTime );            // 1mS Delay
+void GLCD_LcdInit ( void );
+void OLEDDraw ( void );
+void OLEDSetPixel ( unsigned char x, unsigned char y, unsigned char color );
+void OLEDClear ( void );
+void OLEDBigchar ( unsigned char u8Char );
+void OLEDPutchar ( char u8Char );
+void OLEDPutstr ( const char *ptr );
+void LEDSet ( unsigned char state );
+void OLEDDisplayPicture ( const uint8_t *pointer ) ;
+void InvertOLED ( unsigned char state );
+void OLEDPutBigstr ( const char *ptr );
+unsigned char softspi_rx ( void );
+void DbpBigString ( char *str );
+void FPGASpiSendWord ( unsigned short cmdword );
+void FpgaSetupSsc ( unsigned char on_off );
+void test_spi ( void );
 
 #define __enable_irq()    asm("cpsie i")
 #define __disable_irq()   asm("cpsid i")

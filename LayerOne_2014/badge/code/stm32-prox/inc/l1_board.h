@@ -5,7 +5,7 @@
 
 // latest board
 
-#define BOARD_REVISION	( 3 )  
+//#define BOARD_REVISION	( 3 )  
 
 // defines
 
@@ -60,7 +60,7 @@
 #endif
 
 #define SW_K2_PORT                     GPIOA
-//#define SW_K3_PORT                     GPIOA
+#define SW_K3_PORT                     GPIOA
 
 #define	RCC_APB2Periph_GPIO_SW		   RCC_APB2Periph_GPIOA
 #if BOARD_REVISION == 3
@@ -70,17 +70,26 @@
 #endif
 
 #define SW_K2_PIN                      GPIO_Pin_3				// input, pulldown
-//#define SW_K3_PIN                    GPIO_Pin_2				// input, pulldown
+#define SW_K3_PIN                      GPIO_Pin_2				// input, pulldown
 
 // USB
-
+#if BOARD_REVISION == 3
+#define USB_DISCONNECT_PIN		GPIO_Pin_10				// output:
+#else
 #define USB_DISCONNECT_PIN		GPIO_Pin_2				// output:
+#endif
 
 #define GPIO_SW_PORTSOURCE            GPIO_PortSourceGPIOA      		// PA
+
+#if BOARD_REVISION == 3
+#define GPIO_SW_K1_PINSOURCE          GPIO_PinSource9     			// PB9
+#define GPIO_SW_K2_PINSOURCE   	      GPIO_PinSource3     			// PA4
+#else
 #define GPIO_SW_K1_PINSOURCE          GPIO_PinSource4     			// PA4
-#define GPIO_SW_K1_EXTI_Line          EXTI_Line0          
 #define GPIO_SW_K2_PINSOURCE   	      GPIO_PinSource2     			// PA4
-#define GPIO_SW_K2_EXTI_Line          EXTI_Line2          
+#endif
+
+#define GPIO_SW_K1_EXTI_Line          EXTI_Line0          
 
 // Ampl Lo/Hi
 #define AMPL_HI_PIN                    GPIO_Pin_1				// input analog
@@ -94,10 +103,19 @@
 #define GPIOA_OUTPUTS_2MHZ_PP_MASK		( FPGA_NPROGRAM_PIN |SDIN_DB1_PIN | SCLK_DB0_PIN )
 #endif
 
-#define GPIOA_OUTPUTS_50MHZ_PP_MASK		( FPGA_DOUT_PIN  | FPGA_DIN_PIN | FPGA_CCLK_PIN | USB_DISCONNECT_PIN | FPGA_CCLK_PIN  | SDIN_DB1_PIN | SCLK_DB0_PIN )
+#if BOARD_REVISION == 3
+#define GPIOA_OUTPUTS_50MHZ_PP_MASK		( FPGA_DOUT_PIN  | FPGA_DIN_PIN | FPGA_CCLK_PIN | SDIN_DB1_PIN | SCLK_DB0_PIN )
+#else
+#define GPIOA_OUTPUTS_50MHZ_PP_MASK		( FPGA_DOUT_PIN  | FPGA_DIN_PIN | FPGA_CCLK_PIN | USB_DISCONNECT_PIN   | SDIN_DB1_PIN | SCLK_DB0_PIN )
+#endif
+
 //#define GPIOA_OUTPUTS_50MHZ_OD_MASK		( USB_DISCONNECT_PIN )
-//#define GPIOA_INPUT_FLOAT_MASK			(  )
-#define GPIOA_INPUT_PULLDOWN_MASK		( SW_K1_PIN | SW_K2_PIN  )
+#define GPIOA_INPUT_FLOAT_MASK			( SW_K3_PIN  )
+#if BOARD_REVISION == 3
+#define GPIOA_INPUT_PULLDOWN_MASK		(  SW_K2_PIN  )
+#else
+#define GPIOA_INPUT_PULLDOWN_MASK		( SW_K1_PIN | SW_K2_PIN )
+#endif
 #define GPIOA_ANALOG_MASK			( AMPL_HI_PIN | AMPL_LO_PIN  )
 #define GPIOA_DEFAULT_LOW_MASK			( GPIOA_OUTPUTS_2MHZ_PP_MASK | GPIOA_OUTPUTS_50MHZ_PP_MASK )
 
@@ -181,10 +199,17 @@
 // _||_||_||_||
 #define GPIO_SSP_CLK_PINSOURCE		GPIO_PinSource2
 
+//@todo: USB_DISCONNECT_PIN
+#if BOARD_REVISION == 3
 
+#define GPIOB_OUTPUTS_2MHZ_PP_MASK		( DC_PIN | RES_PIN | USB_DISCONNECT_PIN |				\
+						CS_PIN | FPGAON_PIN  | 	\
+						MUXSEL_LOPKD_PIN |MUXSEL_HIRAW_PIN | MUXSEL_LORAW_PIN )
+#else
 #define GPIOB_OUTPUTS_2MHZ_PP_MASK		( DC_PIN | RES_PIN | 				\
 						CS_PIN | FPGAON_PIN  | MUXSEL_HIPKD_PIN | 	\
 						MUXSEL_LOPKD_PIN |MUXSEL_HIRAW_PIN | MUXSEL_LORAW_PIN )
+#endif
 
 //#define GPIOB_OUTPUTS_10MHZ_PP_MASK		( )
 #define GPIOB_OUTPUTS_50MHZ_PP_MASK		( NVDD_ON_PIN  )
@@ -192,7 +217,12 @@
 
 //#define GPIOB_INPUT_FLOAT_MASK		( SSP_CLK_PIN )
 #define GPIOB_INPUT_PULLUP_MASK			( FPGA_DONE_PIN ) 
+
+#if BOARD_REVISION == 3
+#define GPIOB_INPUT_PULLDOWN_MASK		( SW_K1_PIN | SSP_FRAME_PIN | SSP_DIN_PIN |SSP_DOUT_PIN | SSP_CLK_PIN ) // Might want to make these float
+#else
 #define GPIOB_INPUT_PULLDOWN_MASK		( SSP_FRAME_PIN | SSP_DIN_PIN |SSP_DOUT_PIN | SSP_CLK_PIN ) // Might want to make these float
+#endif
 
 //#define GPIOB_ANALOG_MASK			( )
 #define	GPIOB_DEFAULT_LOW_MASK			( GPIOB_OUTPUTS_2MHZ_PP_MASK )
@@ -212,17 +242,20 @@
 #define NCS_PORT                       GPIOC
 #define NCS_PIN                        GPIO_Pin_12				// output to fpga
 
+#if BOARD_REVISION != 3
 // Output Enables (these aren't supposed to be on the ARM) !!
 #define OE_PORT                         GPIOC
-#define OE1_PORT			GPIOC
-#define OE2_PORT			GPIOC
-#define OE3_PORT			GPIOC
-#define OE4_PORT			GPIOC
+#define OE1_PORT            GPIOC
+#define OE2_PORT            GPIOC
+#define OE3_PORT            GPIOC
+#define OE4_PORT            GPIOC
 
 #define OE4_PIN                         GPIO_Pin_11                             // input float
 #define OE3_PIN                         GPIO_Pin_10                             // input float
 #define OE2_PIN                         GPIO_Pin_9                              // input float
 #define OE1_PIN                         GPIO_Pin_8                              // input float
+
+#endif
 
 // FPGA_NINIT
 #define FPGA_NINIT_PORT                 GPIOC
@@ -247,13 +280,28 @@
 #define SDSCK_PIN                      GPIO_Pin_1   				// inverted output
 #define SDCS_PIN                       GPIO_Pin_0				// output
 
+#if BOARD_REVISION == 3
+#define GPIOC_OUTPUTS_2MHZ_PP_MASK		(MUXSEL_HIPKD_PIN |SPEAKER_PIN | RELAY_PIN |SDDO_PIN | SDCS_PIN)
+#else
 #define GPIOC_OUTPUTS_2MHZ_PP_MASK		( SPEAKER_PIN | RELAY_PIN |SDDO_PIN | SDCS_PIN)
+
+#endif
+
 #define GPIOC_OUTPUTS_10MHZ_PP_MASK		( SDSCK_PIN | NCS_PIN | MOSI_PIN |SPCK_PIN )
 #define GPIOC_OUTPUTS_50MHZ_PP_MASK		( PCK0_PIN   )
 
-#define GPIOC_INPUT_FLOAT_MASK			( OE4_PIN | OE3_PIN | OE2_PIN | OE1_PIN | SDDI_PIN | MISO_PIN )
+#if BOARD_REVISION == 3
+#define GPIOC_INPUT_FLOAT_MASK          ( SDDI_PIN | MISO_PIN )
+#else
+#define GPIOC_INPUT_FLOAT_MASK          ( OE4_PIN | OE3_PIN | OE2_PIN | OE1_PIN | SDDI_PIN | MISO_PIN )
+#endif
+
 #define GPIOC_INPUT_PULLUP_MASK			( FPGA_NINIT_PIN )
-//#define GPIOC_ANALOG_MASK				( )
+
+#if BOARD_REVISION == 3
+#define GPIOC_ANALOG_MASK				( GPIO_Pin_4 | GPIO_Pin_3 )
+#endif
+
 #define	GPIOC_DEFAULT_LOW_MASK			( GPIOC_OUTPUTS_2MHZ_PP_MASK | GPIOC_OUTPUTS_10MHZ_PP_MASK )
 //#define	GPIOC_DEFAULT_HIGH_MASK		( )
 /* End Section GPIOC */
