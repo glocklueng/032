@@ -1052,7 +1052,7 @@ int main(void)
   uint16_t RxIdx = 0;
   uint16_t SPIz_Buffer_Tx[BufferSize] = {0xFFFF};
   
-  uint16_t SPIy_Buffer_Rx[BufferSize], SPIz_Buffer_Rx[BufferSize];
+  static uint16_t SPIy_Buffer_Rx[BufferSize], SPIz_Buffer_Rx[BufferSize];
   
   while( GETBIT( SSP_FRAME  ) == 0 );
 
@@ -1066,6 +1066,8 @@ int main(void)
     RxIdx++;
   }
   /*-------------- END ARKO'S TEST CODE - SPI SLAVE---------------------------*/
+  
+  asm("nop");
   
   SimulateTagHfListen();
 
