@@ -251,19 +251,15 @@ volatile  unsigned char  frame_sync = 0;
 * Return         : None
 *******************************************************************************/               			
 
+unsigned char ssp_value;
+
 void EXTI1_IRQHandler(void)
 {
+  
   //if ( !( ( (EXTI->PR & EXTI_Line1) != (u32)RESET) && (EXTI->IMR & EXTI_Line1 != (u32)RESET)))
   if(EXTI_GetITStatus(EXTI_Line1) != RESET)
   {
-    frame_sync ++; 
-    // frame has been asserted
-    // reset ssp_byte;
-    
-    ssp_byte = 0x0;
-    ssp_shift= 0x80;
-    
-
+    // unrolled is faster...
     EXTI_ClearITPendingBit(EXTI_Line1);
   }
 }
@@ -277,8 +273,7 @@ void EXTI1_IRQHandler(void)
 *******************************************************************************/
 void EXTI2_IRQHandler(void)
 {
-  static char tog = 0;
-  
+
   if ( !( ( (EXTI->PR & EXTI_Line2) != 
 	   (u32)RESET) && (EXTI->IMR & EXTI_Line2 != (u32)RESET)))
   //if(EXTI_GetITStatus(EXTI_Line2) != RESET)
@@ -289,7 +284,7 @@ void EXTI2_IRQHandler(void)
     // on clock
     // Get state of ssp in
     
-    if (GETBIT(SPI_IN)) {
+    if (GETBIT(SSP_DIN)) {
       ssp_byte |= ssp_shift;   
     }   
 
