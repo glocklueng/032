@@ -54,28 +54,45 @@ reg fc_div_8 = 0;
 always @(posedge fc_div_4)
     fc_div_8 = ~fc_div_8;
 	 
+reg fc_div_16 = 0;
+always @(posedge fc_div_8)
+    fc_div_16 = ~fc_div_16;
+	 
 reg adc_clk = 0;
+reg spi_clk = 0;
 
 always @(xcorr_is_848 or xcorr_quarter_freq or ck_1356meg)
     if(~xcorr_quarter_freq)
     begin
 	    if(xcorr_is_848)
-	        // The subcarrier frequency is fc/16; we will sample at fc, so that 
-	        // means the subcarrier is 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 1 1 ...
-	        adc_clk <= ck_1356meg; // was before charlie's request to slow: adc_clk <= ck_1356meg;
-	    else
-	        // The subcarrier frequency is fc/32; we will sample at fc/2, and
-	        // the subcarrier will look identical.
-	        adc_clk <= fc_div_2;	// was before charlie's request to slow: adc_clk <= fc_div_2;
+			begin
+				// The subcarrier frequency is fc/16; we will sample at fc, so that 
+				// means the subcarrier is 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 1 1 ...
+				adc_clk <= ck_1356meg; // was before charlie's request to slow: adc_clk <= ck_1356meg;
+				spi_clk <= fc_div_2;	
+			end
+		 else
+			begin
+				// The subcarrier frequency is fc/32; we will sample at fc/2, and
+				// the subcarrier will look identical.
+				adc_clk <= fc_div_2;	// was before charlie's request to slow: adc_clk <= fc_div_2;
+				spi_clk <= fc_div_4;
+			end
     end
     else
     begin
 	    if(xcorr_is_848)
-	        // The subcarrier frequency is fc/64
-	        adc_clk <= fc_div_4;	// was before charlie's request to slow: adc_clk <= fc_div_4;
+			begin
+				// The subcarrier frequency is fc/64
+				adc_clk <= fc_div_4;	// was before charlie's request to slow: adc_clk <= fc_div_4;
+				spi_clk <= fc_div_8;
+			end
 	    else
-	        // The subcarrier frequency is fc/128
-	        adc_clk <= fc_div_8;	// was before charlie's request to slow: adc_clk <= fc_div_8;
+			begin
+				// The subcarrier frequency is fc/128
+				adc_clk <= fc_div_8;	// was before charlie's request to slow: adc_clk <= fc_div_8;
+				spi_clk <= fc_div_16;
+			end
 	end
 
 // When we're a reader, we just need to do the BPSK demod; but when we're an
@@ -114,46 +131,54 @@ reg signed [15:0] corr_q_accum = 0;
 reg signed [7:0] corr_i_out = 0;
 reg signed [7:0] corr_q_out = 0;
 
+//reg [15:0] fake_adc = 16'b1111111111111111;
+
 // ADC data appears on the rising edge, so sample it on the falling edge
-always @(negedge ck_1356meg)
+always @(negedge adc_clk)
 begin
     // These are the correlators: we correlate against in-phase and quadrature
     // versions of our reference signal, and keep the (signed) result to
     // send out later over the SSP.
+	 /*
+	 if(corr_i_cnt == 7'd61)
+		 begin
+			fake_adc <= fake_adc - 1;
+		 end
+	 */ 
     if(corr_i_cnt == 7'd63)
-    begin
-        if(snoop)
-        begin
-            corr_i_out <= 8'b10101010;  		// Originally: corr_i_out <= {corr_i_accum[12:6], after_hysteresis_prev};
-            corr_q_out <= 8'b10101010;		// Originally: corr_q_out <= {corr_q_accum[12:6], after_hysteresis};
-        end
-        else
-        begin
-            // Only correlations need to be delivered.
-            corr_i_out <= 8'b10101010;						// Originally: corr_i_out <= corr_i_accum[13:6];
-            corr_q_out <= 8'b10101010;						// Originally: corr_q_out <= corr_q_accum[13:6];	
-        end
+		 begin
+			  if(snoop)
+			  begin
+					corr_i_out <= {corr_i_accum[12:6], after_hysteresis_prev};    //fake_adc[15:8];  	// Originally: corr_i_out <= {corr_i_accum[12:6], after_hysteresis_prev};
+					corr_q_out <= {corr_q_accum[12:6], after_hysteresis};         //fake_adc[7:0];		// Originally: corr_q_out <= {corr_q_accum[12:6], after_hysteresis};
+			  end
+			  else
+			  begin
+					// Only correlations need to be delivered.
+					corr_i_out <= corr_i_accum[13:6];									  //fake_adc;				// Originally: corr_i_out <= corr_i_accum[13:6];
+					corr_q_out <= corr_q_accum[13:6]; 									  //fake_adc;				// Originally: corr_q_out <= corr_q_accum[13:6];	
+			  end
 
-        corr_i_accum <= adc_d;
-        corr_q_accum <= adc_d;
-        corr_q_cnt <= 4;
-        corr_i_cnt <= 0;
-    end
+			  corr_i_accum <= adc_d;
+			  corr_q_accum <= adc_d;
+			  corr_q_cnt <= 4;
+			  corr_i_cnt <= 0;
+		 end
     else
-    begin
-        if(corr_i_cnt[3])
-            corr_i_accum <= corr_i_accum - adc_d;
-        else
-            corr_i_accum <= corr_i_accum + adc_d;
+		 begin
+			  if(corr_i_cnt[3])
+					corr_i_accum <= corr_i_accum - adc_d;
+			  else
+					corr_i_accum <= corr_i_accum + adc_d;
 
-        if(corr_q_cnt[3])
-            corr_q_accum <= corr_q_accum - adc_d;
-        else
-            corr_q_accum <= corr_q_accum + adc_d;
+			  if(corr_q_cnt[3])
+					corr_q_accum <= corr_q_accum - adc_d;
+			  else
+					corr_q_accum <= corr_q_accum + adc_d;
 
-        corr_i_cnt <= corr_i_cnt + 1;
-        corr_q_cnt <= corr_q_cnt + 1;
-    end
+			  corr_i_cnt <= corr_i_cnt + 1;
+			  corr_q_cnt <= corr_q_cnt + 1;
+		 end
 
     // The logic in hi_simulate.v reports 4 samples per bit. We report two
     // (I, Q) pairs per bit, so we should do 2 samples per pair.
@@ -230,7 +255,7 @@ end
 // SPI Slave Out - FPGA (SPI Master) to ARM (SPI Slave)
 // This clocks the ssp_clk at the highest speed possible, 13.56Mhz
 // only if the spi is enabled.
-always @(fc_div_2)
+always @(spi_clk)
 begin
 	if(ssp_frame_reg == 0)
 	begin
@@ -242,7 +267,7 @@ end
 // If the spi data is ready (16bit frame of i & q adc data)
 // then set the fpga as the master and send the data out
 // over spi as fast as possible.
-always @(posedge fc_div_2)
+always @(posedge spi_clk)
 begin
 	if(ssp_frame_reg == 0)
 		begin
@@ -257,7 +282,7 @@ begin
 		end
 end
 	 
-always @(negedge fc_div_2)
+always @(negedge spi_clk)
 begin
 	if(ssp_frame_reg == 0)
 		begin
@@ -282,7 +307,7 @@ end
 
 // Unused.
 assign pwr_lo = 1'b0;
-assign ssp_clk = (~ssp_frame_reg && corr_i_cnt[5:0] >= 6'b000000 && corr_i_cnt[5:0] < 6'b100000) ? fc_div_2 : 0;
+assign ssp_clk = (~ssp_frame_reg && corr_i_cnt[5:0] >= 6'b000000 && corr_i_cnt[5:0] < 6'b100000) ? spi_clk : 0;
 //assign ssp_clk = ssp_clk_reg; //ssp_clk_reg;
 assign ssp_din = ssp_din_reg;
 assign ssp_frame = ssp_frame_reg;
