@@ -56,18 +56,52 @@ void FpgaSetupSsc ( void )
 //-----------------------------------------------------------------------------
 void FpgaSetupSscDma ( BYTE *buf, int len )
 {
+	DMA_InitTypeDef DMA_InitStructure;
+
+	/* DMA configuration */
+	DMA_DeInit ( SPI_SLAVE_DMA );
+	DMA_InitStructure.DMA_PeripheralBaseAddr = ( uint32_t ) SPI_SLAVE_DR_Adress;
+	DMA_InitStructure.DMA_MemoryBaseAddr = ( uint32_t ) buf;
+	DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralDST;
+	DMA_InitStructure.DMA_BufferSize = len;
+	DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
+	DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;
+	DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_HalfWord;
+	DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_HalfWord;
+	DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;
+	DMA_InitStructure.DMA_Priority = DMA_Priority_VeryHigh;
+	DMA_InitStructure.DMA_M2M = DMA_M2M_Disable;
+	DMA_Init ( SPI_SLAVE_DMA, &DMA_InitStructure );
+
+	/* Enable DMA Transfer Complete interrupt */
+	DMA_ITConfig ( SPI_SLAVE_DMA, DMA_IT_TC, ENABLE );
+
+	/* Enable DMA */
+	DMA_Cmd ( SPI_SLAVE_DMA, ENABLE );
+
+#if 0
+
 	// charlie
 	//AT91C_BASE_PDC_SSC->PDC_PTCR = AT91C_PDC_RXTDIS; // disable Rx DMA
 
+	// pdc_RPR (Transmit/Receive Pointer Register) contains the address of the next transfer.
 	AT91C_BASE_PDC_SSC->PDC_RPR = ( uint32_t ) buf;
+
+	// pdc_RCR (Receive Counter Register) contains the number of transfers to be performed.
 	AT91C_BASE_PDC_SSC->PDC_RCR = len;
 
 	// next buffer pointer
+	// pdc_RNPR (Transmit/Receive Next Pointer Register) contains the address of the next buffer to use when the current buffer fills.
 	AT91C_BASE_PDC_SSC->PDC_RNPR = ( uint32_t ) buf;
+
+	//pdc_RNCR (Transmit/Receive Next Counter Register) contains the size of the next buffer to be transferred.
 	AT91C_BASE_PDC_SSC->PDC_RNCR = len;
 
 	// enable rx transfer
 	AT91C_BASE_PDC_SSC->PDC_PTCR = AT91C_PDC_RXTEN | AT91C_PDC_TXTDIS;
+
+#endif
+
 }
 
 static void DownloadFPGA_byte ( unsigned char w )
@@ -259,8 +293,9 @@ int bitparse_find_section ( char section_name, char **section_start, unsigned in
 // with the right parameters to download the image
 //-----------------------------------------------------------------------------
 static const char _binary_fpga_bit_start[] = {
-	//#include "fpga.h"
-#include "fpga_test.h"
+
+#include "fpga.h"
+	//#include "fpga_test.h"
 };
 
 static const char *_binary_fpga_bit_end=_binary_fpga_bit_start+sizeof ( _binary_fpga_bit_start );
@@ -452,7 +487,7 @@ unsigned char softspi_rxtx ( unsigned char data )
 */
 
 
-unsigned char softspi_rx ( void )
+u16 softspi_rx ( void )
 {
 	//return ssp_byte;
 
@@ -909,8 +944,12 @@ int bitparse_find_section ( char section_name, char **section_start, unsigned in
 // with the right parameters to download the image
 //-----------------------------------------------------------------------------
 static const char _binary_fpga_bit_start[] = {
+
+#if BOARD_REVISION == 3
 #include "fpga.h"
-	//#include "fpga_test.h"
+#else
+#include "fpga_rev2.h"
+#endif
 };
 
 static const char *_binary_fpga_bit_end=_binary_fpga_bit_start+sizeof ( _binary_fpga_bit_start );
@@ -952,6 +991,8 @@ void FpgaDownloadAndGo ( void )
 void FpgaSetupSsc ( unsigned char on_off )
 {
 
+#if BOARD_REVISION == 3
+
 	SPI_InitTypeDef  SPI_InitStructure;
 
 	if ( on_off ) {
@@ -977,7 +1018,7 @@ void FpgaSetupSsc ( unsigned char on_off )
 		SPI_InitStructure.SPI_FirstBit = SPI_FirstBit_MSB;
 		SPI_InitStructure.SPI_CRCPolynomial = 15;
 		SPI_Init ( SPI2, &SPI_InitStructure );
-		
+
 		/* Enable SPIz */
 		SPI_Cmd ( SPI2, ENABLE );
 	}
@@ -1015,7 +1056,76 @@ void FpgaSetupSsc ( unsigned char on_off )
 
 	NVIC_Init ( &NVIC_InitStructure );
 
+#else
+#endif
 
+
+}
+
+void FpgaDisableSscDma ( void )
+{
+}
+
+void FpgaEnableSscDma ( void )
+{
+}
+
+// DMA channel assignment 
+// DMA1 channel 4 for SPI2 RX request
+// DMA1 channel 5 for SPI2 TX request.  
+
+#define SPI_SLAVE_DMA DMA1_Channel4
+
+//-----------------------------------------------------------------------------
+// Set up DMA to receive samples from the FPGA. We will use the PDC, with
+// a single buffer as a circular buffer (so that we just chain back to
+// ourselves, not to another buffer). The stuff to manipulate those buffers
+// is in apps.h, because it should be inlined, for speed.
+//-----------------------------------------------------------------------------
+bool FpgaSetupSscDma ( uint8_t *buf, int len )
+{
+	DMA_InitTypeDef DMA_InitStructure;
+	NVIC_InitTypeDef    NVIC_InitStructure;
+	//DMA setup
+
+#if 0
+	//Enable DMA1 channel IRQ Channel 
+	NVIC_InitStructure.NVIC_IRQChannel = DMA1_Channel4_IRQn;
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+	NVIC_Init(&NVIC_InitStructure);
+#endif
+	
+	DMA_StructInit ( &DMA_InitStructure );
+	RCC_AHBPeriphClockCmd ( RCC_AHBPeriph_DMA1, ENABLE );
+
+	
+	/* DMA configuration */
+	DMA_DeInit ( SPI_SLAVE_DMA );
+
+	DMA_InitStructure.DMA_PeripheralBaseAddr =  ( uint32_t ) &SPI2->DR;
+	DMA_InitStructure.DMA_MemoryBaseAddr = ( uint32_t ) buf;
+	DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralSRC;	// from device to cpu
+	DMA_InitStructure.DMA_BufferSize = len;
+	DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
+	DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;
+	DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_Byte;
+	DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_Byte;
+	DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;
+	DMA_InitStructure.DMA_Priority = DMA_Priority_VeryHigh;
+	DMA_InitStructure.DMA_M2M = DMA_M2M_Disable;
+	DMA_Init ( SPI_SLAVE_DMA, &DMA_InitStructure );
+
+	/* Enable DMA Transfer Complete interrupt */
+	DMA_ITConfig ( SPI_SLAVE_DMA, DMA_IT_TC, ENABLE );
+
+	/* Enable DMA */
+	DMA_Cmd ( SPI_SLAVE_DMA, ENABLE );
+
+	SPI_I2S_DMACmd(SPI2, SPI_I2S_DMAReq_Rx , ENABLE);
+
+	return true;
 }
 
 
@@ -1023,24 +1133,25 @@ void FpgaSetupSsc ( unsigned char on_off )
 
 uint8_t fpga_dma_buffer[];
 #if 0
-	uint16_t TxIdx = 0;
-	uint16_t RxIdx = 0;
-	uint16_t SPIz_Buffer_Tx[BufferSize] = {0xFFFF};
+uint16_t TxIdx = 0;
+uint16_t RxIdx = 0;
+uint16_t SPIz_Buffer_Tx[BufferSize] = {0xFFFF};
 
-	static uint16_t SPIy_Buffer_Rx[BufferSize], SPIz_Buffer_Rx[BufferSize];
+static uint16_t SPIy_Buffer_Rx[BufferSize], SPIz_Buffer_Rx[BufferSize];
 
-	while ( GETBIT ( SSP_FRAME  ) == 0 );
+while ( GETBIT ( SSP_FRAME  ) == 0 );
 
-	/* Transfer procedure */
-	while ( RxIdx < BufferSize ) {
-		/* Wait for SPIz data reception */
-		while ( SPI_I2S_GetFlagStatus ( SPI2, SPI_I2S_FLAG_RXNE ) == RESET );
+/* Transfer procedure */
+while ( RxIdx < BufferSize )
+{
+	/* Wait for SPIz data reception */
+	while ( SPI_I2S_GetFlagStatus ( SPI2, SPI_I2S_FLAG_RXNE ) == RESET );
 
-		/* Read SPIz received data */
-		SPIz_Buffer_Rx[RxIdx] = SPI_I2S_ReceiveData ( SPI2 );
-		RxIdx++;
-	}
+	/* Read SPIz received data */
+	SPIz_Buffer_Rx[RxIdx] = SPI_I2S_ReceiveData ( SPI2 );
+	RxIdx++;
+}
 
-	/*-------------- END ARKO'S TEST CODE - SPI SLAVE---------------------------*/
+/*-------------- END ARKO'S TEST CODE - SPI SLAVE---------------------------*/
 
 #endif

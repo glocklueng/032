@@ -75,8 +75,11 @@ void FpgaGatherVersion ( char *dst, int len );
 void FpgaSetupSsc ( unsigned char on_off );
 void SetupSpi ( int mode );
 bool FpgaSetupSscDma ( uint8_t *buf, int len );
-#define FpgaDisableSscDma(void) AT91C_BASE_PDC_SSC->PDC_PTCR = AT91C_PDC_RXTDIS;
-#define FpgaEnableSscDma(void) AT91C_BASE_PDC_SSC->PDC_PTCR = AT91C_PDC_RXTEN;
+void FpgaEnableSscDma( void );
+void FpgaDisableSscDma( void );
+
+//#define FpgaDisableSscDma(void) AT91C_BASE_PDC_SSC->PDC_PTCR = AT91C_PDC_RXTDIS;
+//#define FpgaEnableSscDma(void) AT91C_BASE_PDC_SSC->PDC_PTCR = AT91C_PDC_RXTEN;
 #define SetAdcMuxFor(X) _SetAdcMuxFor( X##_PORT,X##_PIN);
 void _SetAdcMuxFor ( GPIO_TypeDef *port, u16 pin );
 
@@ -149,7 +152,7 @@ void RAMFUNC SnoopIso14443a ( uint8_t param );
 void SimulateIso14443aTag ( int tagType, int uid_1st, int uid_2nd, byte_t* data );
 void ReaderIso14443a ( UsbCommand * c );
 // Also used in iclass.c
-int RAMFUNC LogTrace ( const uint8_t * btBytes, int iLen, int iSamples, uint32_t dwParity, int bReader );
+bool  LogTrace(const uint8_t * btBytes, uint8_t iLen, uint32_t timestamp, uint32_t dwParity, bool bReader);
 uint32_t GetParity ( const uint8_t * pbtCmd, int iLen );
 void iso14a_set_trigger ( bool enable );
 void iso14a_clear_trace();
@@ -208,6 +211,7 @@ bool cmd_send ( uint32_t cmd, uint32_t arg0, uint32_t arg1, uint32_t arg2, void*
 // fpgaloader.h
 void FpgaDownloadAndGo ( void );
 
+void OLEDTest( void ) ;
 
 
 #endif
