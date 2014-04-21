@@ -69,7 +69,7 @@ void LEDSet ( unsigned char state );
 void OLEDDisplayPicture ( const uint8_t *pointer ) ;
 void InvertOLED ( unsigned char state );
 void OLEDPutBigstr ( const char *ptr );
-unsigned char softspi_rx ( void );
+u16 softspi_rx ( void );
 void DbpBigString ( char *str );
 void FPGASpiSendWord ( unsigned short cmdword );
 void FpgaSetupSsc ( unsigned char on_off );

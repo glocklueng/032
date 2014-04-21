@@ -304,6 +304,7 @@
           <state>..\stm32\library\</state>
           <state>..\stm32\</state>
           <state>..\inc\</state>
+          <state>.\common\</state>
           <state>..\</state>
           <state>..\..\</state>
           <state>..\..\..\</state>
@@ -593,7 +594,7 @@
         </option>
         <option>
           <name>OOCOutputFile</name>
-          <state>5.srec</state>
+          <state>stm32-prox.srec</state>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>
@@ -1036,7 +1037,7 @@
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
-          <state>STM32F103xE    ST STM32F103xE</state>
+          <state>STM32F103xE	ST STM32F103xE</state>
         </option>
         <option>
           <name>GenLowLevelInterface</name>
@@ -1904,6 +1905,30 @@
     </file>
     <file>
       <name>$PROJ_DIR$\stm32\stm32f10x_vector.c</name>
+    </file>
+  </group>
+  <group>
+    <name>proxmark</name>
+    <group>
+      <name>common</name>
+      <group>
+        <name>inc</name>
+        <file>
+          <name>$PROJ_DIR$\common\cmd.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\common\crc16.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\common\iso14443crc.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\common\iso15693tools.h</name>
+        </file>
+      </group>
+    </group>
+    <file>
+      <name>$PROJ_DIR$\iso14443a.c</name>
     </file>
   </group>
   <group>

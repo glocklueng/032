@@ -387,6 +387,9 @@ void MeasureAntennaTuning ( void )
 	FpgaWriteConfWord ( FPGA_MAJOR_MODE_OFF );
 	LED_A_OFF();
 	LED_B_OFF();
+
+	while ( GETBIT ( SW_K1 ) );
+
 	return;
 }
 
@@ -674,7 +677,9 @@ void SimulateTagLowFrequency ( int period, int gap, int ledcontrol )
 	i = 0;
 
 	for ( ;; ) {
+
 		// SSP_CLK(P9(ssp_clk) -> SSP_CLK_PIN GPIOB/GPIO_Pin_2(SSP_CLK)
+
 		while ( ! ( GETBIT ( GPIO_SSC_CLK ) ) ) {
 			if ( BUTTON_PRESS() ) {
 				DbpString ( "Stopped" );
@@ -999,12 +1004,65 @@ void ListenReaderField ( int limit )
 
 */
 
+void DrawADCOLED ( void )
+{
+	uint8_t *dest = ( uint8_t * ) BigBuf+FREE_BUFFER_OFFSET;
+	uint8_t v = 0;
+	uint16_t r;
+	int i;
+	int p = 0;
+
+	OLEDClear();
+
+	OLEDPutstr ( "SimulateTagHfListen" );
+	OLEDDraw();
+
+	// We're using this mode just so that I can test it out; the simulated
+	// tag mode would work just as well and be simpler.
+	FpgaWriteConfWord ( FPGA_MAJOR_MODE_HF_READER_RX_XCORR | FPGA_HF_READER_RX_XCORR_848_KHZ | FPGA_HF_READER_RX_XCORR_SNOOP );
+
+	// We need to listen to the high-frequency, peak-detected path.
+	SetAdcMuxFor ( GPIO_MUXSEL_HIPKD );
+
+	FpgaSetupSsc ( 1 );
+
+	FpgaSetupSscDma ( dest, 95 ) ;
+
+	FpgaEnableSscDma();
+
+//	__disable_irq();
+
+	i = 0;
+
+	for ( ;; ) {
+
+	  while(!DMA_GetITStatus(DMA1_IT_TC4));
+  //		Clear DMA1 Channel1 Half Transfer, Transfer Complete and Global interrupt pending bits
+  		DMA_ClearITPendingBit(DMA1_IT_GL4);
+    
+		while (DMA_GetFlagStatus(DMA1_FLAG_TC4) == RESET) {}
+    
+		OLEDClear();
+
+		for ( int y =  0 ; y < 95; y++ ) {
+			OLEDLine ( 0,y,dest[y]/2,y,1 );
+		}
+
+		OLEDDraw();
+	}
+
+	FpgaDisableSscDma();
+
+}
+
 void SimulateTagHfListen ( void )
 {
 	uint8_t *dest = ( uint8_t * ) BigBuf+FREE_BUFFER_OFFSET;
-	uint8_t r, v = 0;
+	uint8_t v = 0;
+	uint16_t r;
 	int i;
 	int p = 0;
+
 	OLEDClear();
 
 	OLEDPutstr ( "SimulateTagHfListen" );
@@ -1045,6 +1103,29 @@ void SimulateTagHfListen ( void )
 					break;
 				}
 			}
+
+			// byte two
+			r>>=8;
+
+			v <<= 1;
+
+			if ( r & 1 ) {
+				v |= 1;
+			}
+
+			p++;
+
+			if ( p >= 8 ) {
+				dest[i] = v;
+				v = 0;
+				p = 0;
+				i++;
+
+				if ( i >= FREE_BUFFER_SIZE ) {
+					break;
+				}
+			}
+
 		}
 	}
 
@@ -1052,6 +1133,11 @@ void SimulateTagHfListen ( void )
 	FpgaSetupSsc ( 0 );
 	DbpString ( "simulate tag (now type bitsamples)" );
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // starts here
 int main ( void )
@@ -1062,7 +1148,7 @@ int main ( void )
 	debug();
 #endif
 
-// _WDWORD(0x40023830, 0x00000010);
+//	_WDWORD(0x40023830, 0x00000010);
 
 	/* System Clocks Configuration **********************************************/
 	// if this fails (xtal fault ) LED will blink indefinitely short off ,long on, repeat
@@ -1116,19 +1202,6 @@ int main ( void )
 
 	FpgaDownloadAndGo();
 
-	FpgaWriteConfWord ( FPGA_MAJOR_MODE_HF_READER_RX_XCORR | FPGA_HF_READER_RX_XCORR_848_KHZ | FPGA_HF_READER_RX_XCORR_SNOOP );
-
-	// We need to listen to the high-frequency, peak-detected path.
-	SetAdcMuxFor ( GPIO_MUXSEL_HIPKD );
-
-	FpgaSetupSsc ( 1 );
-
-	//SimulateTagHfListen();
-
-	//SimulateTagLowFrequency(1000,100,1);
-
-//	CmdHIDsimTAG ( 0x20,0x06040ef9 , 1 );
-
 #if 0
 	OLEDClear();
 	OLEDPutstr ( "FPGA TEST MODE\n" );
@@ -1163,7 +1236,19 @@ int main ( void )
 	OLEDDraw();
 
 	DelaymS ( 100 );
-	ListenReaderField ( 0 );
+
+	//ListenReaderField ( 0 );
+	while ( 1 ) {
+		DrawADCOLED();
+	}
+
+	SimulateTagHfListen();
+
+	//SimulateTagLowFrequency(1000,100,1);
+
+	MeasureAntennaTuning();
+
+	CmdHIDsimTAG ( 0x20,0x06040ef9 , 1 );
 
 	MeasureAntennaTuningHf();
 
@@ -1171,7 +1256,7 @@ int main ( void )
 
 	ListenReaderField ( 0 );
 
-	MeasureAntennaTuning();
+
 	DelaymS ( 5000 );
 
 	// button test
@@ -1252,10 +1337,6 @@ int main ( void )
 	}
 
 	OLEDClear();
-
-	SimulateTagLowFrequency ( 1000,100,1 );
-
-	MeasureAntennaTuningHf();
 
 	////////////////// Shut down
 

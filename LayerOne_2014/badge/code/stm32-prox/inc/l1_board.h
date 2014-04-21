@@ -1,11 +1,9 @@
 #ifndef _L1_2014_DEF_
 #define _L1_2014_DEF_   ( 1 )
 
-
-
 // latest board
 
-//#define BOARD_REVISION	( 3 )  
+#define BOARD_REVISION	( 3 )  
 
 // defines
 
@@ -146,7 +144,9 @@
 #define MUXSEL_LOPKD_PIN                GPIO_Pin_14			        //output
 #endif
 
+
 #if BOARD_REVISION == 3
+//PORTB
 #define MUXSEL_HIRAW_PIN                GPIO_Pin_2			        //output
 #define MUXSEL_LORAW_PIN                GPIO_Pin_1			        //output
 #else
@@ -181,6 +181,8 @@
 #endif
 
 // Synchronous Serial Port FPGA<>ARM
+#if BOARD_REVISION == 3
+
 #define SSP_PORT	                GPIOB
 #define SSP_DIN_PORT			GPIOB
 #define SSP_DIN_PIN                     GPIO_Pin_15				// input(OUTPUT)	
@@ -190,6 +192,21 @@
 #define SSP_CLK_PIN                     GPIO_Pin_13			        // input
 #define SSP_FRAME_PORT			GPIOB
 #define SSP_FRAME_PIN                   GPIO_Pin_12				// input
+
+#else
+
+#define SSP_PORT	                GPIOB
+#define SSP_DIN_PORT			GPIOB
+
+#define SSP_DIN_PIN                     GPIO_Pin_6				// input(OUTPUT)	
+#define SSP_DOUT_PORT			GPIOB
+#define SSP_DOUT_PIN                    GPIO_Pin_5				// output
+#define SSP_CLK_PORT			GPIOB
+#define SSP_CLK_PIN                     GPIO_Pin_2			        // input
+#define SSP_FRAME_PORT			GPIOB
+#define SSP_FRAME_PIN                   GPIO_Pin_1				// input
+
+#endif
 
 #define GPIO_SSP_PORTSOURCE             GPIO_PortSourceGPIOB      		// PB
 
