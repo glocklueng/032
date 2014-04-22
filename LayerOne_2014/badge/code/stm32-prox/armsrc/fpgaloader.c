@@ -294,10 +294,13 @@ int bitparse_find_section ( char section_name, char **section_start, unsigned in
 //-----------------------------------------------------------------------------
 static const char _binary_fpga_bit_start[] = {
 
+  not this code
+    
 	//#include "fpga.h"
 	//#include "fpga_test.h"
 
-	#include "fpga_counter.h"
+//	#include "fpga_counter.h"
+	#include "fpga_fixed.h"
   
 };
 
@@ -493,7 +496,7 @@ unsigned char softspi_rxtx ( unsigned char data )
 u16 softspi_rx ( void )
 {
 	//return ssp_byte;
-
+  
 	/* Wait for SPIz data reception */
 	while ( SPI_I2S_GetFlagStatus ( SPI2, SPI_I2S_FLAG_RXNE ) == RESET );
 
@@ -948,8 +951,17 @@ int bitparse_find_section ( char section_name, char **section_start, unsigned in
 //-----------------------------------------------------------------------------
 static const char _binary_fpga_bit_start[] = {
 
+  
+
 #if BOARD_REVISION == 3
-#include "fpga.h"
+
+	#include "fpga.h"
+	//#include "fpga_test.h"
+	//#include "fpga_adc.h"
+
+	//#include "fpga_counter.h"
+	//#include "fpga_constant.h"
+  
 #else
 #include "fpga_rev2.h"
 #endif
@@ -1065,19 +1077,25 @@ void FpgaSetupSsc ( unsigned char on_off )
 
 }
 
+
 void FpgaDisableSscDma ( void )
 {
+  	/* Enable DMA */
+	DMA_Cmd ( SPI_SLAVE_RX_DMA, DISABLE );
+
+	SPI_I2S_DMACmd(SPI2, SPI_I2S_DMAReq_Rx , DISABLE);
+
 }
 
 void FpgaEnableSscDma ( void )
 {
+  	/* Enable DMA */
+	DMA_Cmd ( SPI_SLAVE_RX_DMA, ENABLE );
+
+	SPI_I2S_DMACmd(SPI2, SPI_I2S_DMAReq_Rx , ENABLE);
+
 }
 
-// DMA channel assignment 
-// DMA1 channel 4 for SPI2 RX request
-// DMA1 channel 5 for SPI2 TX request.  
-
-#define SPI_SLAVE_DMA DMA1_Channel4
 
 //-----------------------------------------------------------------------------
 // Set up DMA to receive samples from the FPGA. We will use the PDC, with
@@ -1105,7 +1123,7 @@ bool FpgaSetupSscDma ( uint8_t *buf, int len )
 
 	
 	/* DMA configuration */
-	DMA_DeInit ( SPI_SLAVE_DMA );
+	DMA_DeInit ( SPI_SLAVE_RX_DMA );
 
 	DMA_InitStructure.DMA_PeripheralBaseAddr =  ( uint32_t ) &SPI2->DR;
 	DMA_InitStructure.DMA_MemoryBaseAddr = ( uint32_t ) buf;
@@ -1113,20 +1131,19 @@ bool FpgaSetupSscDma ( uint8_t *buf, int len )
 	DMA_InitStructure.DMA_BufferSize = len;
 	DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
 	DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;
+	
+	// a word is 32 bits... halfword 16 bit....
 	DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_HalfWord;
 	DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_HalfWord;
+	
 	DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;
 	DMA_InitStructure.DMA_Priority = DMA_Priority_VeryHigh;
 	DMA_InitStructure.DMA_M2M = DMA_M2M_Disable;
-	DMA_Init ( SPI_SLAVE_DMA, &DMA_InitStructure );
+	DMA_Init ( SPI_SLAVE_RX_DMA, &DMA_InitStructure );
 
 	/* Enable DMA Transfer Complete interrupt */
-	DMA_ITConfig ( SPI_SLAVE_DMA, DMA_IT_TC, ENABLE );
+	DMA_ITConfig ( SPI_SLAVE_RX_DMA, DMA_IT_TC, ENABLE );
 
-	/* Enable DMA */
-	DMA_Cmd ( SPI_SLAVE_DMA, ENABLE );
-
-	SPI_I2S_DMACmd(SPI2, SPI_I2S_DMAReq_Rx , ENABLE);
 
 	return true;
 }

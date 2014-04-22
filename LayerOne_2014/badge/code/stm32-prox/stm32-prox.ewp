@@ -1242,6 +1242,7 @@
           <state>..\stm32\library\</state>
           <state>..\stm32\</state>
           <state>..\inc\</state>
+          <state>.\common\</state>
           <state>..\</state>
           <state>..\..\</state>
           <state>..\..\..\</state>

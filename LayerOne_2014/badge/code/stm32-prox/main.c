@@ -1008,13 +1008,15 @@ void DrawADCOLED ( void )
 {
 	uint16_t *dest = ( uint16_t * ) BigBuf+FREE_BUFFER_OFFSET;
 	uint8_t v = 0;
+	uint16_t temp[128];
+	
 	uint16_t r;
 	int i;
 	int p = 0;
 
 	OLEDClear();
 
-	OLEDPutstr ( "SimulateTagHfListen" );
+	OLEDPutstr ( "DrawADCOLED" );
 	OLEDDraw();
 
 	// We're using this mode just so that I can test it out; the simulated
@@ -1022,43 +1024,147 @@ void DrawADCOLED ( void )
 	FpgaWriteConfWord ( FPGA_MAJOR_MODE_HF_READER_RX_XCORR | FPGA_HF_READER_RX_XCORR_848_KHZ | FPGA_HF_READER_RX_XCORR_SNOOP );
 
 	// We need to listen to the high-frequency, peak-detected path.
-	SetAdcMuxFor ( GPIO_MUXSEL_HIPKD );
+	SetAdcMuxFor ( GPIO_MUXSEL_HIRAW );
 
 	FpgaSetupSsc ( 1 );
 
-//#define US_FPGA_DMA ( 1 )
-	
+#define USE_FPGA_DMA ( 1 )
+
 #ifdef  USE_FPGA_DMA
-	FpgaSetupSscDma ( dest, 128 ) ;
+	//where too, amount to transfer in bytes
+	FpgaSetupSscDma ( ( uint8_t* ) dest, 128 ) ;
 	FpgaEnableSscDma();
 #else
 	__disable_irq();
 #endif
+
+
+	i = 0;
 	
+	__disable_irq();
+	
+	for ( ;; ) {
+
+#ifdef  USE_FPGA_DMA
+
+		while ( !DMA_GetITStatus ( DMA1_IT_TC4 ) );
+
+
+		//Clear DMA1 Channel1 Half Transfer, Transfer Complete and Global interrupt pending bits
+		//DMA_ClearITPendingBit(DMA1_IT_GL4);
+
+		while ( DMA_GetFlagStatus ( DMA1_FLAG_TC4 ) == RESET ) {}
+
+		
+		memcpy(temp,dest,128*2);
+
+#endif
+
+		OLEDClear();
+
+		for ( int x =  0 ; x < 127; x+=2 ) {
+
+#ifndef  USE_FPGA_DMA
+			dest[x] = softspi_rx();
+#endif
+			OLEDLine ( x,0,x, ( temp[x] & 0xff ) /4,1 );
+			OLEDLine ( x+1,0,x+1, ( dest[x] >> 8) /4,1 );
+
+		}
+
+		OLEDDraw();
+		//memset(dest,0,128);
+
+	}
+
+	FpgaDisableSscDma();
+
+}
+
+void Draw_ADC_LOW_OLED ( void )
+{
+	uint16_t *dest = ( uint16_t * ) BigBuf+FREE_BUFFER_OFFSET;
+	uint8_t v = 0;
+	uint16_t r;
+	int i;
+	int p = 0;
+
+	OLEDClear();
+
+	OLEDPutstr ( "Draw_ADC_LOW_OLED" );
+	OLEDDraw();
+
+	// We're using this mode just so that I can test it out; the simulated
+	// tag mode would work just as well and be simpler.
+	//FpgaWriteConfWord ( FPGA_MAJOR_MODE_HF_READER_RX_XCORR | FPGA_HF_READER_RX_XCORR_848_KHZ | FPGA_HF_READER_RX_XCORR_SNOOP );
+
+	FpgaWriteConfWord ( FPGA_MAJOR_MODE_LF_READER );
+
+	// We need to listen to the high-frequency, peak-detected path.
+	SetAdcMuxFor ( GPIO_MUXSEL_LOPKD );
+
+	__disable_irq();
+
+
 
 	i = 0;
 
 	for ( ;; ) {
 
-#ifdef  USE_FPGA_DMA
-	  while(!DMA_GetITStatus(DMA1_IT_TC4));
-  		Clear DMA1 Channel1 Half Transfer, Transfer Complete and Global interrupt pending bits
-  		//DMA_ClearITPendingBit(DMA1_IT_GL4);
-    
-		while (DMA_GetFlagStatus(DMA1_FLAG_TC4) == RESET) {}
-#endif
-		
+
 		OLEDClear();
 
 		for ( int x =  0 ; x < 127; x++ ) {
-		  
-#ifndef  USE_FPGA_DMA
-		  	dest[x] = softspi_rx();
-#endif
-			OLEDLine ( x,0,x,( dest[x] & 0xff ) /4,1 );
+
+			dest[x] = ReadAdc ( 1 );
+			OLEDLine ( x,0,x, ( dest[x] ) / 16,1 );
 		}
 
 		OLEDDraw();
+	}
+
+	FpgaDisableSscDma();
+
+}
+void Draw_ADC_HIGH_OLED ( void )
+{
+	uint16_t *dest = ( uint16_t * ) BigBuf+FREE_BUFFER_OFFSET;
+	uint8_t v = 0;
+	uint16_t r;
+	int i;
+	int p = 0;
+
+	OLEDClear();
+
+	OLEDPutstr ( "Draw_ADC_HIGH_OLED" );
+	OLEDDraw();
+
+	// We're using this mode just so that I can test it out; the simulated
+	// tag mode would work just as well and be simpler.
+	FpgaWriteConfWord ( FPGA_MAJOR_MODE_HF_READER_RX_XCORR | FPGA_HF_READER_RX_XCORR_848_KHZ | FPGA_HF_READER_RX_XCORR_SNOOP );
+
+	// We need to listen to the high-frequency, peak-detected path.
+	SetAdcMuxFor ( GPIO_MUXSEL_HIRAW );
+
+	__disable_irq();
+
+
+
+	i = 0;
+
+	for ( ;; ) {
+
+
+		OLEDClear();
+
+		for ( int x =  0 ; x < 127; x++ ) {
+
+			dest[x] = ReadAdc ( 1 );
+			OLEDLine ( x,0,x, ( dest[x] ) / 16,1 );
+		}
+
+		OLEDDraw();
+
 	}
 
 	FpgaDisableSscDma();
@@ -1250,6 +1356,8 @@ int main ( void )
 	//ListenReaderField ( 0 );
 	while ( 1 ) {
 		DrawADCOLED();
+		//Draw_ADC_HIGH_OLED();
+		//Draw_ADC_LOW_OLED();
 	}
 
 	SimulateTagHfListen();

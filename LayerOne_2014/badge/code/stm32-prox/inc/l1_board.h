@@ -15,6 +15,14 @@
 
 #define DMA_ADC		(  0 )
 
+
+
+// DMA channel assignment 
+// DMA1 channel 4 for SPI2 RX request
+// DMA1 channel 5 for SPI2 TX request.  
+
+#define SPI_SLAVE_RX_DMA DMA1_Channel4
+
 // Ports and pin mapping
 
 /* GPIOA Section */
