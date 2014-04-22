@@ -1006,7 +1006,7 @@ void ListenReaderField ( int limit )
 
 void DrawADCOLED ( void )
 {
-	uint8_t *dest = ( uint8_t * ) BigBuf+FREE_BUFFER_OFFSET;
+	uint16_t *dest = ( uint16_t * ) BigBuf+FREE_BUFFER_OFFSET;
 	uint8_t v = 0;
 	uint16_t r;
 	int i;
@@ -1026,26 +1026,36 @@ void DrawADCOLED ( void )
 
 	FpgaSetupSsc ( 1 );
 
-	FpgaSetupSscDma ( dest, 95 ) ;
-
+//#define US_FPGA_DMA ( 1 )
+	
+#ifdef  USE_FPGA_DMA
+	FpgaSetupSscDma ( dest, 128 ) ;
 	FpgaEnableSscDma();
-
-//	__disable_irq();
+#else
+	__disable_irq();
+#endif
+	
 
 	i = 0;
 
 	for ( ;; ) {
 
+#ifdef  USE_FPGA_DMA
 	  while(!DMA_GetITStatus(DMA1_IT_TC4));
-  //		Clear DMA1 Channel1 Half Transfer, Transfer Complete and Global interrupt pending bits
-  		DMA_ClearITPendingBit(DMA1_IT_GL4);
+  		Clear DMA1 Channel1 Half Transfer, Transfer Complete and Global interrupt pending bits
+  		//DMA_ClearITPendingBit(DMA1_IT_GL4);
     
 		while (DMA_GetFlagStatus(DMA1_FLAG_TC4) == RESET) {}
-    
+#endif
+		
 		OLEDClear();
 
-		for ( int y =  0 ; y < 95; y++ ) {
-			OLEDLine ( 0,y,dest[y]/2,y,1 );
+		for ( int x =  0 ; x < 127; x++ ) {
+		  
+#ifndef  USE_FPGA_DMA
+		  	dest[x] = softspi_rx();
+#endif
+			OLEDLine ( x,0,x,( dest[x] & 0xff ) /4,1 );
 		}
 
 		OLEDDraw();
