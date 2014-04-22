@@ -648,7 +648,7 @@ void EXTI_Configuration ( void )
 
 #if BOARD_REVISION == 3
 	/* Connect SSP Frame to the correspondent EXTI line */
-	GPIO_EXTILineConfig ( GPIO_PortSourceGPIOB, GPIO_PinSource12 );
+	//GPIO_EXTILineConfig ( GPIO_PortSourceGPIOB, GPIO_PinSource12 );
 #else
 	/* Connect SSP Frame to the correspondent EXTI line */
 	GPIO_EXTILineConfig ( GPIO_PortSourceGPIOB, GPIO_PinSource1 );
