@@ -294,8 +294,11 @@ int bitparse_find_section ( char section_name, char **section_start, unsigned in
 //-----------------------------------------------------------------------------
 static const char _binary_fpga_bit_start[] = {
 
-#include "fpga.h"
+	//#include "fpga.h"
 	//#include "fpga_test.h"
+
+	#include "fpga_counter.h"
+  
 };
 
 static const char *_binary_fpga_bit_end=_binary_fpga_bit_start+sizeof ( _binary_fpga_bit_start );
@@ -1110,8 +1113,8 @@ bool FpgaSetupSscDma ( uint8_t *buf, int len )
 	DMA_InitStructure.DMA_BufferSize = len;
 	DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
 	DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;
-	DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_Byte;
-	DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_Byte;
+	DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_HalfWord;
+	DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_HalfWord;
 	DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;
 	DMA_InitStructure.DMA_Priority = DMA_Priority_VeryHigh;
 	DMA_InitStructure.DMA_M2M = DMA_M2M_Disable;
