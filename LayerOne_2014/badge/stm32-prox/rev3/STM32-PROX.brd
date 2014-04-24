@@ -3623,18 +3623,18 @@ design rules under a new name.</description>
 <attribute name="NAME" x="29.9466" y="4.3688" size="0.762" layer="51" rot="R270"/>
 </element>
 <element name="FB2\" library="STM32-PROX" package="RLC_0603" value="FERRITERLC_0603" x="33.528" y="2.921" smashed="yes" rot="R270">
-<attribute name="DIGIKEY" value="490-1057-6-ND" x="33.528" y="2.921" size="1.778" layer="27" rot="R270" display="off"/>
-<attribute name="PARTNO" value="BLM31PG601SN1L" x="33.528" y="2.921" size="1.778" layer="27" rot="R270" display="off"/>
+<attribute name="DIGIKEY" value="1276-6379-2-ND" x="33.528" y="2.921" size="1.778" layer="27" rot="R270" display="off"/>
+<attribute name="PARTNO" value="CIM10J601NC" x="33.528" y="2.921" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="NAME" x="33.8328" y="5.4864" size="0.762" layer="51" rot="R180"/>
 </element>
 <element name="FB3" library="STM32-PROX" package="RLC_0603" value="FERRITERLC_0603" x="34.29" y="-1.778" smashed="yes">
-<attribute name="DIGIKEY" value="490-1057-6-ND" x="34.29" y="-1.778" size="1.778" layer="27" display="off"/>
-<attribute name="PARTNO" value="BLM31PG601SN1L" x="34.29" y="-1.778" size="1.778" layer="27" display="off"/>
+<attribute name="DIGIKEY" value="1276-6379-2-ND" x="34.29" y="-1.778" size="1.778" layer="27" display="off"/>
+<attribute name="PARTNO" value="CIM10J601NC" x="34.29" y="-1.778" size="1.778" layer="27" display="off"/>
 <attribute name="NAME" x="35.7632" y="-2.3114" size="0.762" layer="51"/>
 </element>
 <element name="FB1" library="STM32-PROX" package="RLC_0603" value="FERRITERLC_0603" x="41.402" y="6.858" smashed="yes" rot="R90">
-<attribute name="DIGIKEY" value="490-1057-6-ND" x="41.402" y="6.858" size="1.778" layer="27" rot="R90" display="off"/>
-<attribute name="PARTNO" value="BLM31PG601SN1L" x="41.402" y="6.858" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="DIGIKEY" value="1276-6379-2-ND" x="41.402" y="6.858" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="PARTNO" value="CIM10J601NC" x="41.402" y="6.858" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="NAME" x="40.4114" y="5.7912" size="0.762" layer="51" rot="R90"/>
 </element>
 <element name="C68" library="microbuilder" package="EIA3216-18/A-R" value="4.7uF" x="31.496" y="-6.223" smashed="yes" rot="R90">
