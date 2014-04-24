@@ -3382,21 +3382,21 @@ design rules under a new name.</description>
 <element name="RLY1" library="STM32-PROX" package="G6S-2F" value="G6S-2H" x="7.493" y="7.112" smashed="yes" rot="R180">
 <attribute name="NAME" x="1.143" y="9.652" size="1.27" layer="21" ratio="17" rot="R270"/>
 </element>
-<element name="C65" library="STM32-PROX" package="RLC_0603" value="33nF" x="43.307" y="37.592" rot="R180">
+<element name="C65" library="STM32-PROX" package="RLC_0603" value="0.1uF" x="43.307" y="37.592" rot="R180">
 <attribute name="OC_NEWARK" value="unknown" x="43.307" y="37.592" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="PARTNO" value="CC0603KRX7R9BB333" x="43.307" y="37.592" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="MPN" value="CC0603KRX7R9BB333" x="43.307" y="37.592" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="MF" value="" x="43.307" y="37.592" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="DIGIKEY" value="311-1429-1-ND" x="43.307" y="37.592" size="1.778" layer="27" rot="R180" display="off"/>
 </element>
-<element name="C66" library="STM32-PROX" package="RLC_0603" value="33nF" x="49.276" y="42.799">
+<element name="C66" library="STM32-PROX" package="RLC_0603" value="0.1uF" x="49.276" y="42.799">
 <attribute name="OC_NEWARK" value="unknown" x="49.276" y="42.799" size="1.778" layer="27" display="off"/>
 <attribute name="PARTNO" value="CC0603KRX7R9BB333" x="49.276" y="42.799" size="1.778" layer="27" display="off"/>
 <attribute name="MPN" value="CC0603KRX7R9BB333" x="49.276" y="42.799" size="1.778" layer="27" display="off"/>
 <attribute name="MF" value="" x="49.276" y="42.799" size="1.778" layer="27" display="off"/>
 <attribute name="DIGIKEY" value="311-1429-1-ND" x="49.276" y="42.799" size="1.778" layer="27" display="off"/>
 </element>
-<element name="C67" library="STM32-PROX" package="RLC_0603" value="33nF" x="51.308" y="36.449">
+<element name="C67" library="STM32-PROX" package="RLC_0603" value="0.1uF" x="51.308" y="36.449">
 <attribute name="OC_NEWARK" value="unknown" x="51.308" y="36.449" size="1.778" layer="27" display="off"/>
 <attribute name="PARTNO" value="CC0603KRX7R9BB333" x="51.308" y="36.449" size="1.778" layer="27" display="off"/>
 <attribute name="MPN" value="CC0603KRX7R9BB333" x="51.308" y="36.449" size="1.778" layer="27" display="off"/>
@@ -3421,14 +3421,14 @@ design rules under a new name.</description>
 </element>
 <element name="C69" library="microbuilder" package="EIA3216-18/A-R" value="4.7uF" x="49.403" y="38.608" rot="R180"/>
 <element name="C70" library="microbuilder" package="EIA3216-18/A-R" value="4.7uF" x="44.069" y="42.926" rot="R270"/>
-<element name="C71" library="STM32-PROX" package="RLC_0603" value="33nF" x="64.77" y="38.354">
+<element name="C71" library="STM32-PROX" package="RLC_0603" value="0.1uF" x="64.77" y="38.354">
 <attribute name="OC_NEWARK" value="unknown" x="64.77" y="38.354" size="1.778" layer="27" display="off"/>
 <attribute name="PARTNO" value="CC0603KRX7R9BB333" x="64.77" y="38.354" size="1.778" layer="27" display="off"/>
 <attribute name="MPN" value="CC0603KRX7R9BB333" x="64.77" y="38.354" size="1.778" layer="27" display="off"/>
 <attribute name="MF" value="" x="64.77" y="38.354" size="1.778" layer="27" display="off"/>
 <attribute name="DIGIKEY" value="311-1429-1-ND" x="64.77" y="38.354" size="1.778" layer="27" display="off"/>
 </element>
-<element name="C72" library="STM32-PROX" package="RLC_0603" value="33nF" x="64.77" y="36.068">
+<element name="C72" library="STM32-PROX" package="RLC_0603" value="0.1uF" x="64.77" y="36.068">
 <attribute name="OC_NEWARK" value="unknown" x="64.77" y="36.068" size="1.778" layer="27" display="off"/>
 <attribute name="PARTNO" value="CC0603KRX7R9BB333" x="64.77" y="36.068" size="1.778" layer="27" display="off"/>
 <attribute name="MPN" value="CC0603KRX7R9BB333" x="64.77" y="36.068" size="1.778" layer="27" display="off"/>
@@ -3468,17 +3468,17 @@ design rules under a new name.</description>
 </element>
 <element name="C74" library="STM32-PROX" package="RLC_0603" value="10nF" x="23.241" y="42.926">
 <attribute name="OC_NEWARK" value="unknown" x="23.241" y="42.926" size="1.778" layer="27" display="off"/>
-<attribute name="PARTNO" value="CC0603KRX7R9BB333" x="23.241" y="42.926" size="1.778" layer="27" display="off"/>
-<attribute name="MPN" value="CC0603KRX7R9BB333" x="23.241" y="42.926" size="1.778" layer="27" display="off"/>
+<attribute name="PARTNO" value="C0603C103K5RACTU" x="23.241" y="42.926" size="1.778" layer="27" display="off"/>
+<attribute name="MPN" value="C0603C103K5RACTU" x="23.241" y="42.926" size="1.778" layer="27" display="off"/>
 <attribute name="MF" value="" x="23.241" y="42.926" size="1.778" layer="27" display="off"/>
-<attribute name="DIGIKEY" value="311-1429-1-ND" x="23.241" y="42.926" size="1.778" layer="27" display="off"/>
+<attribute name="DIGIKEY" value="399-1091-2-ND" x="23.241" y="42.926" size="1.778" layer="27" display="off"/>
 </element>
 <element name="C75" library="STM32-PROX" package="RLC_0603" value="10nF" x="35.56" y="35.306">
 <attribute name="OC_NEWARK" value="unknown" x="35.56" y="35.306" size="1.778" layer="27" display="off"/>
-<attribute name="PARTNO" value="CC0603KRX7R9BB333" x="35.56" y="35.306" size="1.778" layer="27" display="off"/>
-<attribute name="MPN" value="CC0603KRX7R9BB333" x="35.56" y="35.306" size="1.778" layer="27" display="off"/>
+<attribute name="PARTNO" value="C0603C103K5RACTU" x="35.56" y="35.306" size="1.778" layer="27" display="off"/>
+<attribute name="MPN" value="C0603C103K5RACTU" x="35.56" y="35.306" size="1.778" layer="27" display="off"/>
 <attribute name="MF" value="" x="35.56" y="35.306" size="1.778" layer="27" display="off"/>
-<attribute name="DIGIKEY" value="311-1429-1-ND" x="35.56" y="35.306" size="1.778" layer="27" display="off"/>
+<attribute name="DIGIKEY" value="399-1091-2-ND" x="35.56" y="35.306" size="1.778" layer="27" display="off"/>
 </element>
 <element name="TP6" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="44.577" y="21.209" rot="MR90"/>
 <element name="OE5" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="32.639" y="10.668" rot="MR90">
