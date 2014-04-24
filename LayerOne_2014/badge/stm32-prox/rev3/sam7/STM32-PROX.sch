@@ -14691,16 +14691,16 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <attribute name="PARTNO" value="CC0603KRX7R9BB333"/>
 </part>
 <part name="FB2" library="STM32-PROX" deviceset="FERRITE" device="RLC_0603">
-<attribute name="DIGIKEY" value="490-1057-6-ND"/>
-<attribute name="PARTNO" value="BLM31PG601SN1L"/>
+<attribute name="DIGIKEY" value="1276-6379-2-ND"/>
+<attribute name="PARTNO" value="CIM10J601NC"/>
 </part>
 <part name="FB3" library="STM32-PROX" deviceset="FERRITE" device="RLC_0603">
-<attribute name="DIGIKEY" value="490-1057-6-ND"/>
-<attribute name="PARTNO" value="BLM31PG601SN1L"/>
+<attribute name="DIGIKEY" value="1276-6379-2-ND"/>
+<attribute name="PARTNO" value="CIM10J601NC"/>
 </part>
 <part name="FB1" library="STM32-PROX" deviceset="FERRITE" device="RLC_0603">
-<attribute name="DIGIKEY" value="490-1057-6-ND"/>
-<attribute name="PARTNO" value="BLM31PG601SN1L"/>
+<attribute name="DIGIKEY" value="1276-6379-2-ND"/>
+<attribute name="PARTNO" value="CIM10J601NC"/>
 </part>
 <part name="C68" library="microbuilder" deviceset="CAP_TANTALUM" device="A/3216_REFLOW" value="4.7uF"/>
 <part name="C69" library="microbuilder" deviceset="CAP_TANTALUM" device="A/3216_REFLOW" value="4.7uF"/>
