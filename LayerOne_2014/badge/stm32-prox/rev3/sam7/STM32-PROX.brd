@@ -3538,6 +3538,13 @@ design rules under a new name.</description>
 <attribute name="MF" value="" x="63.627" y="4.699" size="1.778" layer="27" display="off"/>
 <attribute name="DIGIKEY" value="RMCF0603JT330RCT-ND" x="63.627" y="4.699" size="1.778" layer="27" display="off"/>
 </element>
+<element name="C9" library="STM32-PROX" package="RLC_0603" value="100nF" x="1.27" y="-2.54">
+<attribute name="OC_NEWARK" value="85K9474" x="1.27" y="-2.54" size="1.778" layer="27" display="off"/>
+<attribute name="PARTNO" value="CL10B104KO8NNNC" x="1.27" y="-2.54" size="1.778" layer="27" display="off"/>
+<attribute name="MPN" value="CL10B104KO8NNNC" x="1.27" y="-2.54" size="1.778" layer="27" display="off"/>
+<attribute name="MF" value="" x="1.27" y="-2.54" size="1.778" layer="27" display="off"/>
+<attribute name="DIGIKEY" value="1276-1005-1-ND" x="1.27" y="-2.54" size="1.778" layer="27" display="off"/>
+</element>
 </elements>
 <signals>
 <signal name="GND" class="2" airwireshidden="yes">
@@ -5318,6 +5325,7 @@ design rules under a new name.</description>
 <wire x1="82.55" y1="43.18" x2="82.55" y2="39.37" width="0.2794" layer="1"/>
 <wire x1="82.55" y1="39.37" x2="83.82" y2="38.1" width="0.2794" layer="1"/>
 <wire x1="83.82" y1="38.1" x2="84.875" y2="38.1" width="0.2794" layer="1"/>
+<contactref element="C9" pad="1"/>
 <wire x1="96.125" y1="39.859" x2="96.7" y2="41.23" width="0" layer="19" extent="1-16"/>
 <wire x1="93.4652" y1="37.963" x2="96.125" y2="39.859" width="0" layer="19" extent="1-1"/>
 <wire x1="94.95" y1="36.48" x2="93.4652" y2="37.963" width="0" layer="19" extent="1-16"/>
@@ -5325,6 +5333,7 @@ design rules under a new name.</description>
 <wire x1="84.79135" y1="47.41565" x2="85.09" y2="46.99" width="0" layer="19" extent="1-1"/>
 <wire x1="89.91" y1="26.2" x2="94.95" y2="36.48" width="0" layer="19" extent="1-16"/>
 <wire x1="81.35" y1="26.349" x2="89.91" y2="26.2" width="0" layer="19" extent="1-1"/>
+<wire x1="0.42" y1="-2.54" x2="81.35" y2="26.349" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$64">
 <contactref element="R26" pad="1"/>
@@ -5368,6 +5377,8 @@ design rules under a new name.</description>
 <wire x1="86.749" y1="40.365" x2="86.749" y2="38.274" width="0.2032" layer="1"/>
 <wire x1="86.749" y1="38.274" x2="86.575" y2="38.1" width="0.2032" layer="1"/>
 <wire x1="88.05" y1="38.1" x2="86.575" y2="38.1" width="0.2032" layer="1"/>
+<contactref element="C9" pad="2"/>
+<wire x1="2.12" y1="-2.54" x2="86.575" y2="38.1" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$68">
 <contactref element="L2" pad="P$2"/>
