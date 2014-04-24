@@ -15447,6 +15447,13 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <attribute name="OC_NEWARK" value="unknown"/>
 <attribute name="PARTNO" value="RC0603JR-07820KL"/>
 </part>
+<part name="C76" library="STM32-PROX" deviceset="CAPACITOR" device="RLC_0603" value="100nF">
+<attribute name="DIGIKEY" value="1276-1005-1-ND"/>
+<attribute name="MF" value=""/>
+<attribute name="MPN" value="CL10B104KO8NNNC"/>
+<attribute name="OC_NEWARK" value="85K9474"/>
+<attribute name="PARTNO" value="CL10B104KO8NNNC"/>
+</part>
 </parts>
 <sheets>
 <sheet>
@@ -15566,7 +15573,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <instance part="R55" gate="G$1" x="-48.26" y="7.62" smashed="yes" rot="R90">
 <attribute name="PARTNO" x="-48.26" y="7.62" size="1.778" layer="96" display="off"/>
 <attribute name="NAME" x="-49.7586" y="5.334" size="1.778" layer="95" rot="R90"/>
-<attribute name="VALUE" x="-35.814" y="8.763" size="1.778" layer="96" rot="R180"/>
+<attribute name="VALUE" x="-46.355" y="10.16" size="1.778" layer="96" rot="R270"/>
 <attribute name="TOLERANCE" x="-48.26" y="7.62" size="1.778" layer="96" rot="R90" display="off"/>
 <attribute name="OC_NEWARK" x="-48.26" y="7.62" size="1.778" layer="96" display="off"/>
 <attribute name="MF" x="-48.26" y="7.62" size="1.778" layer="96" display="off"/>
@@ -15639,6 +15646,13 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <instance part="SUPPLY6" gate="GND" x="7.62" y="-40.64"/>
 <instance part="SUPPLY7" gate="GND" x="60.96" y="-5.08" rot="R180"/>
 <instance part="TP16" gate="G$1" x="60.96" y="48.26"/>
+<instance part="C76" gate="G$1" x="-40.64" y="7.62">
+<attribute name="PARTNO" x="-40.64" y="7.62" size="1.778" layer="96" display="off"/>
+<attribute name="OC_NEWARK" x="-40.64" y="7.62" size="1.778" layer="96" display="off"/>
+<attribute name="MF" x="-40.64" y="7.62" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="-40.64" y="7.62" size="1.778" layer="96" display="off"/>
+<attribute name="DIGIKEY" x="-40.64" y="7.62" size="1.778" layer="96" display="off"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -15725,7 +15739,8 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <wire x1="-15.24" y1="12.7" x2="-22.86" y2="12.7" width="0.1524" layer="91"/>
 <label x="-76.2" y="12.7" size="1.778" layer="95"/>
 <pinref part="C62" gate="G$1" pin="1"/>
-<wire x1="-22.86" y1="12.7" x2="-48.26" y2="12.7" width="0.1524" layer="91"/>
+<wire x1="-22.86" y1="12.7" x2="-40.64" y2="12.7" width="0.1524" layer="91"/>
+<wire x1="-40.64" y1="12.7" x2="-48.26" y2="12.7" width="0.1524" layer="91"/>
 <wire x1="-48.26" y1="12.7" x2="-60.96" y2="12.7" width="0.1524" layer="91"/>
 <wire x1="-60.96" y1="12.7" x2="-68.58" y2="12.7" width="0.1524" layer="91"/>
 <junction x="-60.96" y="12.7"/>
@@ -15736,6 +15751,8 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <wire x1="-22.86" y1="22.86" x2="-22.86" y2="12.7" width="0.1524" layer="91"/>
 <junction x="-22.86" y="12.7"/>
 <junction x="-68.58" y="12.7"/>
+<pinref part="C76" gate="G$1" pin="1"/>
+<junction x="-40.64" y="12.7"/>
 </segment>
 <segment>
 <pinref part="U$9" gate="G$1" pin="POS"/>
@@ -15821,9 +15838,13 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <wire x1="-15.24" y1="5.08" x2="-30.48" y2="5.08" width="0.1524" layer="91"/>
 <pinref part="R55" gate="G$1" pin="1"/>
 <wire x1="-30.48" y1="5.08" x2="-30.48" y2="2.54" width="0.1524" layer="91"/>
-<wire x1="-30.48" y1="2.54" x2="-48.26" y2="2.54" width="0.1524" layer="91"/>
+<wire x1="-30.48" y1="2.54" x2="-40.64" y2="2.54" width="0.1524" layer="91"/>
 <pinref part="R60" gate="G$1" pin="2"/>
 <junction x="-48.26" y="2.54"/>
+<pinref part="C76" gate="G$1" pin="2"/>
+<wire x1="-40.64" y1="2.54" x2="-48.26" y2="2.54" width="0.1524" layer="91"/>
+<wire x1="-40.64" y1="2.54" x2="-40.64" y2="5.08" width="0.1524" layer="91"/>
+<junction x="-40.64" y="2.54"/>
 </segment>
 </net>
 <net name="N$68" class="0">
