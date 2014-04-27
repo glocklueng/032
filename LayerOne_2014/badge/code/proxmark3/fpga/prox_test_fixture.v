@@ -125,10 +125,10 @@ module prox_test_fixture;
 			#10 mosi = 0;
 			#10 spcki = ~spcki;	
 			#10 spcki = ~spcki;
-			#10 mosi = 1;
+			#10 mosi = 0;
 			#10 spcki = ~spcki;	
 			#10 spcki = ~spcki;	
-			#10 mosi = 1;
+			#10 mosi = 0;
 			#10 spcki = ~spcki;	
 			#10 spcki = ~spcki;	
 			#10 mosi = 0;
@@ -184,10 +184,10 @@ module prox_test_fixture;
 			#10 mosi = 0;
 			#10 spcki = ~spcki;	
 			#10 spcki = ~spcki;
-			#10 mosi = 1;
+			#10 mosi = 0;
 			#10 spcki = ~spcki;	
 			#10 spcki = ~spcki;	
-			#10 mosi = 1;
+			#10 mosi = 0;
 			#10 spcki = ~spcki;	
 			#10 spcki = ~spcki;	
 			#10 mosi = 0;
@@ -215,6 +215,6 @@ module prox_test_fixture;
 	
    always
 	begin
-		#1 ck_1356meg = ~ck_1356meg; ck_1356megb = ck_1356meg; //pck0i = ck_1356meg;
+		#1 ck_1356meg = ~ck_1356meg; ck_1356megb = ck_1356meg; pck0i = ck_1356meg;
    end
 endmodule
