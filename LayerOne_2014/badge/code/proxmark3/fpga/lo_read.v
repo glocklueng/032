@@ -26,9 +26,9 @@ module lo_read(
     input lo_is_125khz; // redundant signal, no longer used anywhere
     input [7:0] divisor;
 
-reg [7:0] to_arm_shiftreg;
-reg [7:0] pck_divider;
-reg ant_lo;
+reg [7:0] to_arm_shiftreg=0;
+reg [7:0] pck_divider=0;
+reg ant_lo=0;
 
 // this task runs on the rising egde of pck0 clock (24Mhz) and creates ant_lo
 // which is high for (divisor+1) pck0 cycles and low for the same duration
@@ -87,7 +87,7 @@ assign ssp_din = to_arm_shiftreg[7] && !ant_lo;
 // SSP clock always runs at 24Mhz
 assign ssp_clk = pck0;
 // SSP frame is gated by ant_lo and goes high when pck_divider=8..15
-assign ssp_frame = (pck_divider[7:3] == 5'd1) && !ant_lo;
+assign ssp_frame = ~((pck_divider[7:3] == 5'd1) && !ant_lo);
 // unused signals tied low
 assign pwr_hi = 1'b0;
 assign pwr_oe1 = 1'b0;
