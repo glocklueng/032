@@ -14457,7 +14457,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <attribute name="OC_NEWARK" value="85K9474"/>
 <attribute name="PARTNO" value="CL10B104KO8NNNC"/>
 </part>
-<part name="R55" library="STM32-PROX" deviceset="RESISTOR" device="0603" value="953K 1%">
+<part name="R55" library="STM32-PROX" deviceset="RESISTOR" device="0603" value="1.5M">
 <attribute name="DIGIKEY" value="RHM1.5MDCT-ND"/>
 <attribute name="MF" value=""/>
 <attribute name="MPN" value="ESR03EZPJ155"/>
@@ -14465,7 +14465,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <attribute name="PARTNO" value="ESR03EZPJ155"/>
 <attribute name="TOLERANCE" value="5%"/>
 </part>
-<part name="R60" library="STM32-PROX" deviceset="RESISTOR" device="0603" value="95.3K 1%">
+<part name="R60" library="STM32-PROX" deviceset="RESISTOR" device="0603" value="150K 1%">
 <attribute name="DIGIKEY" value="RHM150KADCT-ND"/>
 <attribute name="MF" value=""/>
 <attribute name="MPN" value="ESR03EZPF1503"/>
@@ -14944,7 +14944,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <instance part="R55" gate="G$1" x="-48.26" y="7.62" smashed="yes" rot="R90">
 <attribute name="PARTNO" x="-48.26" y="7.62" size="1.778" layer="96" display="off"/>
 <attribute name="NAME" x="-49.7586" y="5.334" size="1.778" layer="95" rot="R90"/>
-<attribute name="VALUE" x="-46.863" y="14.986" size="1.778" layer="96" rot="R270"/>
+<attribute name="VALUE" x="-44.323" y="9.906" size="1.778" layer="96" rot="R270"/>
 <attribute name="TOLERANCE" x="-48.26" y="7.62" size="1.778" layer="96" rot="R90" display="off"/>
 <attribute name="OC_NEWARK" x="-48.26" y="7.62" size="1.778" layer="96" display="off"/>
 <attribute name="MF" x="-48.26" y="7.62" size="1.778" layer="96" display="off"/>
