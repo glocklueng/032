@@ -13733,11 +13733,11 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <variantdefs>
 </variantdefs>
 <classes>
-<class number="0" name="default" width="0.1524" drill="0">
+<class number="0" name="default" width="0.2032" drill="0">
 </class>
-<class number="1" name="adc" width="0.1524" drill="0">
+<class number="1" name="adc" width="0.2032" drill="0">
 </class>
-<class number="2" name="power" width="0.1524" drill="0.254">
+<class number="2" name="power" width="0.254" drill="0.254">
 <clearance class="2" value="0.1778"/>
 </class>
 </classes>
