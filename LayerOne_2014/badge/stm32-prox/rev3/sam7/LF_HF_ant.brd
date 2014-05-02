@@ -191,6 +191,11 @@
 <text x="17.272" y="9.144" size="0.889" layer="21" font="vector" align="center">USB for Testing</text>
 <hole x="96" y="17.272" drill="3.937"/>
 <hole x="96" y="-16.256" drill="3.937"/>
+<text x="87.122" y="-5.842" size="1.778" layer="22" font="vector" rot="MR90">krs</text>
+<text x="84.836" y="-5.842" size="1.778" layer="22" font="vector" rot="MR90">arko</text>
+<text x="82.804" y="-5.842" size="1.778" layer="22" font="vector" rot="MR90">mmca</text>
+<text x="80.264" y="-5.842" size="1.778" layer="22" font="vector" rot="MR90">charliex</text>
+<text x="89.662" y="-5.842" size="1.27" layer="22" font="vector" rot="MR90">badge team:</text>
 </plain>
 <libraries>
 <library name="SparkFun-Passives">
