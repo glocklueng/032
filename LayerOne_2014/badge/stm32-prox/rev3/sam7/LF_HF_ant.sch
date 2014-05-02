@@ -5364,6 +5364,10 @@ Mfr no. AU-Y1006-2-R&lt;br&gt;
 <sheet>
 <description>LF Section</description>
 <plain>
+<text x="33.02" y="99.06" size="1.778" layer="91">http://www.mscdirect.com/product/details/68024926
+http://www.mscdirect.com/product/details/68024009
+http://www.mscdirect.com/product/details/03818101
+</text>
 </plain>
 <instances>
 <instance part="C1" gate="G$1" x="20.32" y="71.12"/>
@@ -5572,4 +5576,10 @@ Mfr no. AU-Y1006-2-R&lt;br&gt;
 </sheets>
 </schematic>
 </drawing>
+<compatibility>
+<note version="6.3" minversion="6.2.2" severity="warning">
+Since Version 6.2.2 text objects can contain more than one line,
+which will not be processed correctly with this version.
+</note>
+</compatibility>
 </eagle>
