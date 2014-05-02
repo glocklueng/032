@@ -16732,6 +16732,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <segment>
 <pinref part="R7" gate="G$1" pin="2"/>
 <wire x1="48.26" y1="96.52" x2="48.26" y2="91.44" width="0.1524" layer="91"/>
+<label x="45.72" y="93.98" size="1.778" layer="95" rot="R90"/>
 </segment>
 <segment>
 <wire x1="-45.72" y1="-12.7" x2="-38.1" y2="-12.7" width="0.1524" layer="91"/>
@@ -16749,6 +16750,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <wire x1="58.42" y1="93.98" x2="53.34" y2="93.98" width="0.1524" layer="91"/>
 <wire x1="53.34" y1="93.98" x2="50.8" y2="93.98" width="0.1524" layer="91"/>
 <junction x="50.8" y="93.98"/>
+<label x="53.34" y="101.6" size="1.778" layer="95" rot="R90"/>
 </segment>
 <segment>
 <wire x1="-38.1" y1="-15.24" x2="-45.72" y2="-15.24" width="0.1524" layer="91"/>

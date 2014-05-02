@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="yes"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="20" unitdist="mil" unit="inch" style="dots" multiple="1" display="yes" altdistance="0.0025" altunitdist="inch" altunit="inch"/>
+<grid distance="10" unitdist="mil" unit="mil" style="dots" multiple="1" display="yes" altdistance="0.0025" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="2" name="$GND" color="1" fill="3" visible="yes" active="yes"/>
@@ -22,13 +22,14 @@
 <layer number="12" name="Route12" color="1" fill="5" visible="no" active="no"/>
 <layer number="13" name="Route13" color="4" fill="5" visible="no" active="no"/>
 <layer number="14" name="Route14" color="1" fill="6" visible="no" active="no"/>
+<layer number="15" name="Route15" color="4" fill="6" visible="no" active="yes"/>
 <layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="yes"/>
 <layer number="17" name="Pads" color="2" fill="1" visible="yes" active="yes"/>
 <layer number="18" name="Vias" color="2" fill="1" visible="yes" active="yes"/>
 <layer number="19" name="Unrouted" color="6" fill="1" visible="yes" active="yes"/>
 <layer number="20" name="Dimension" color="15" fill="1" visible="yes" active="yes"/>
-<layer number="21" name="tPlace" color="7" fill="1" visible="no" active="yes"/>
-<layer number="22" name="bPlace" color="7" fill="1" visible="no" active="yes"/>
+<layer number="21" name="tPlace" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="22" name="bPlace" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="23" name="tOrigins" color="15" fill="1" visible="yes" active="yes"/>
 <layer number="24" name="bOrigins" color="15" fill="1" visible="yes" active="yes"/>
 <layer number="25" name="tNames" color="7" fill="1" visible="no" active="yes"/>
@@ -1632,7 +1633,7 @@ design rules under a new name.</description>
 <param name="layerSetup" value="((1*2)*(3*16))"/>
 <param name="mtCopper" value="0.0356mm 0.0356mm 0.0356mm 0.0356mm 0.0356mm 0.0356mm 0.0356mm 0.0356mm 0.0356mm 0.0356mm 0.0356mm 0.0356mm 0.0356mm 0.0356mm 0.0356mm 0.0356mm"/>
 <param name="mtIsolate" value="1.5011mm 0.1499mm 0.2007mm 0.1499mm 0.2007mm 0.1499mm 0.2007mm 0.1499mm 0.2007mm 0.1499mm 0.2007mm 0.1499mm 0.2007mm 0.1499mm 0.2007mm"/>
-<param name="mdWireWire" value="7mil"/>
+<param name="mdWireWire" value="6mil"/>
 <param name="mdWirePad" value="7mil"/>
 <param name="mdWireVia" value="7mil"/>
 <param name="mdPadPad" value="7mil"/>
@@ -1646,7 +1647,7 @@ design rules under a new name.</description>
 <param name="mdCopperDimension" value="20mil"/>
 <param name="mdDrill" value="8mil"/>
 <param name="mdSmdStop" value="0mil"/>
-<param name="msWidth" value="7mil"/>
+<param name="msWidth" value="6mil"/>
 <param name="msDrill" value="14mil"/>
 <param name="msMicroVia" value="9.9898mm"/>
 <param name="msBlindViaRatio" value="0.5"/>
@@ -2239,29 +2240,29 @@ design rules under a new name.</description>
 <attribute name="MF" value="" x="23.241" y="14.097" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="MPN" value="" x="23.241" y="14.097" size="1.778" layer="27" rot="R180" display="off"/>
 </element>
-<element name="Q1" library="STM32-PROX" package="SOT23-3LEAD" value="NPN-SOT23-2N3904" x="17.145" y="6.985" smashed="yes" rot="R180">
-<attribute name="PARTNO" value="PMBT3904,215" x="17.145" y="6.985" size="1.778" layer="27" rot="R180" display="off"/>
-<attribute name="NAME" x="15.798409375" y="6.05991875" size="0.762" layer="25" font="vector" ratio="10" rot="R270"/>
-<attribute name="OC_NEWARK" value="unknown" x="17.145" y="6.985" size="1.778" layer="27" rot="R180" display="off"/>
-<attribute name="MF" value="PMBT3904,215" x="17.145" y="6.985" size="1.778" layer="27" rot="R180" display="off"/>
-<attribute name="MPN" value="PMBT3904,215" x="17.145" y="6.985" size="1.778" layer="27" rot="R180" display="off"/>
-<attribute name="DIGIKEY" value="568-1741-1-ND" x="17.145" y="6.985" size="1.778" layer="27" rot="R180" display="off"/>
+<element name="Q1" library="STM32-PROX" package="SOT23-3LEAD" value="NPN-SOT23-2N3904" x="18.161" y="4.699" smashed="yes" rot="R180">
+<attribute name="PARTNO" value="PMBT3904,215" x="18.161" y="4.699" size="1.778" layer="27" rot="R180" display="off"/>
+<attribute name="NAME" x="16.814409375" y="3.77391875" size="0.762" layer="25" font="vector" ratio="10" rot="R270"/>
+<attribute name="OC_NEWARK" value="unknown" x="18.161" y="4.699" size="1.778" layer="27" rot="R180" display="off"/>
+<attribute name="MF" value="PMBT3904,215" x="18.161" y="4.699" size="1.778" layer="27" rot="R180" display="off"/>
+<attribute name="MPN" value="PMBT3904,215" x="18.161" y="4.699" size="1.778" layer="27" rot="R180" display="off"/>
+<attribute name="DIGIKEY" value="568-1741-1-ND" x="18.161" y="4.699" size="1.778" layer="27" rot="R180" display="off"/>
 </element>
-<element name="D7" library="STM32-PROX" package="SOT23-3LEAD" value="DIODE-SMD-SOT23" x="16.383" y="2.286" smashed="yes">
-<attribute name="PARTNO" value="*" x="16.383" y="2.286" size="1.778" layer="27" display="off"/>
-<attribute name="NAME" x="17.704671875" y="3.577759375" size="0.762" layer="25" font="vector" ratio="10" rot="R90"/>
-<attribute name="OC_NEWARK" value="unknown" x="16.383" y="2.286" size="1.778" layer="27" display="off"/>
-<attribute name="MF" value="" x="16.383" y="2.286" size="1.778" layer="27" display="off"/>
-<attribute name="MPN" value="" x="16.383" y="2.286" size="1.778" layer="27" display="off"/>
-<attribute name="DIGIKEY" value="BZX84C47-FDICT-ND" x="16.383" y="2.286" size="1.778" layer="27" display="off"/>
+<element name="D7" library="STM32-PROX" package="SOT23-3LEAD" value="DIODE-SMD-SOT23" x="16.383" y="1.524" smashed="yes">
+<attribute name="PARTNO" value="*" x="16.383" y="1.524" size="1.778" layer="27" display="off"/>
+<attribute name="NAME" x="17.704671875" y="2.815759375" size="0.762" layer="25" font="vector" ratio="10" rot="R90"/>
+<attribute name="OC_NEWARK" value="unknown" x="16.383" y="1.524" size="1.778" layer="27" display="off"/>
+<attribute name="MF" value="" x="16.383" y="1.524" size="1.778" layer="27" display="off"/>
+<attribute name="MPN" value="" x="16.383" y="1.524" size="1.778" layer="27" display="off"/>
+<attribute name="DIGIKEY" value="BZX84C47-FDICT-ND" x="16.383" y="1.524" size="1.778" layer="27" display="off"/>
 </element>
-<element name="R40" library="STM32-PROX" package="RLC_0603" value="10K" x="17.018" y="9.525" smashed="yes">
-<attribute name="PARTNO" value="RMCF0603JT10K0" x="17.018" y="9.525" size="1.778" layer="27" display="off"/>
-<attribute name="NAME" x="17.8308" y="11.0744" size="0.762" layer="51" rot="R180"/>
-<attribute name="OC_NEWARK" value="unknown" x="17.018" y="9.525" size="1.778" layer="27" display="off"/>
-<attribute name="MF" value="" x="17.018" y="9.525" size="1.778" layer="27" display="off"/>
-<attribute name="MPN" value="RMCF0603JT10K0" x="17.018" y="9.525" size="1.778" layer="27" display="off"/>
-<attribute name="DIGIKEY" value="RMCF0603JT10K0CT-ND" x="17.018" y="9.525" size="1.778" layer="27" display="off"/>
+<element name="R40" library="STM32-PROX" package="RLC_0603" value="10K" x="18.288" y="7.239" smashed="yes">
+<attribute name="PARTNO" value="RMCF0603JT10K0" x="18.288" y="7.239" size="1.778" layer="27" display="off"/>
+<attribute name="NAME" x="19.1008" y="8.7884" size="0.762" layer="51" rot="R180"/>
+<attribute name="OC_NEWARK" value="unknown" x="18.288" y="7.239" size="1.778" layer="27" display="off"/>
+<attribute name="MF" value="" x="18.288" y="7.239" size="1.778" layer="27" display="off"/>
+<attribute name="MPN" value="RMCF0603JT10K0" x="18.288" y="7.239" size="1.778" layer="27" display="off"/>
+<attribute name="DIGIKEY" value="RMCF0603JT10K0CT-ND" x="18.288" y="7.239" size="1.778" layer="27" display="off"/>
 </element>
 <element name="R41" library="STM32-PROX" package="RLC_0603" value="10M" x="21.336" y="21.209" smashed="yes" rot="R90">
 <attribute name="PARTNO" value="RC0603JR-0710ML" x="21.336" y="21.209" size="1.778" layer="27" rot="R90" display="off"/>
@@ -2325,12 +2326,12 @@ design rules under a new name.</description>
 <attribute name="MPN" value="CL10B104KO8NNNC" x="26.416" y="22.987" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="DIGIKEY" value="1276-1005-1-ND" x="26.416" y="22.987" size="1.778" layer="27" rot="R90" display="off"/>
 </element>
-<element name="D10" library="STM32-PROX" package="SOT23-3LEAD" value="DIODE-SMD-SOT23" x="17.272" y="13.081" smashed="yes" rot="R90">
-<attribute name="PARTNO" value="*" x="17.272" y="13.081" size="1.778" layer="27" rot="R90" display="off"/>
-<attribute name="NAME" x="17.237065625" y="11.827984375" size="0.762" layer="25" font="vector" ratio="10" rot="R180"/>
-<attribute name="OC_NEWARK" value="unknown" x="17.272" y="13.081" size="1.778" layer="27" rot="R90" display="off"/>
-<attribute name="MF" value="" x="17.272" y="13.081" size="1.778" layer="27" rot="R90" display="off"/>
-<attribute name="MPN" value="" x="17.272" y="13.081" size="1.778" layer="27" rot="R90" display="off"/>
+<element name="D10" library="STM32-PROX" package="SOT23-3LEAD" value="DIODE-SMD-SOT23" x="18.034" y="13.589" smashed="yes" rot="R90">
+<attribute name="PARTNO" value="*" x="18.034" y="13.589" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="NAME" x="17.999065625" y="12.335984375" size="0.762" layer="25" font="vector" ratio="10" rot="R180"/>
+<attribute name="OC_NEWARK" value="unknown" x="18.034" y="13.589" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="MF" value="" x="18.034" y="13.589" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="MPN" value="" x="18.034" y="13.589" size="1.778" layer="27" rot="R90" display="off"/>
 </element>
 <element name="D11" library="STM32-PROX" package="SOT23-3LEAD" value="DIODE-SMD-SOT23" x="20.32" y="2.286" smashed="yes">
 <attribute name="PARTNO" value="*" x="20.32" y="2.286" size="1.778" layer="27" display="off"/>
@@ -2753,14 +2754,14 @@ design rules under a new name.</description>
 <attribute name="MPN" value="RC0603JR-07820KL" x="87.757" y="18.288" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="DIGIKEY" value="311-820KGRTR-ND" x="87.757" y="18.288" size="1.778" layer="27" rot="R180" display="off"/>
 </element>
-<element name="K1" library="STM32-PROX" package="B3F-5XX" value="" x="80.639" y="43.825" smashed="yes" rot="MR270">
-<attribute name="PARTNO" value="PTS635SL50 LFS" x="80.639" y="43.825" size="1.778" layer="28" rot="MR270" display="off"/>
-<attribute name="NAME" x="77.925925" y="41.081078125" size="1.27" layer="26" ratio="10" rot="MR270"/>
-<attribute name="VALUE" x="84.219" y="46.873" size="1.27" layer="28" ratio="10" rot="MR270"/>
-<attribute name="OC_NEWARK" value="unknown" x="80.639" y="43.825" size="1.778" layer="28" rot="MR270" display="off"/>
-<attribute name="MF" value="PTS635SL50 LFS" x="80.639" y="43.825" size="1.778" layer="28" rot="MR270" display="off"/>
-<attribute name="MPN" value="PTS635SL50 LFS" x="80.639" y="43.825" size="1.778" layer="28" rot="MR270" display="off"/>
-<attribute name="DIGIKEY" value="CKN9102-ND" x="80.639" y="43.825" size="1.778" layer="28" rot="MR270" display="off"/>
+<element name="K1" library="STM32-PROX" package="B3F-5XX" value="" x="80.639" y="43.317" smashed="yes" rot="MR270">
+<attribute name="PARTNO" value="PTS635SL50 LFS" x="80.639" y="43.317" size="1.778" layer="28" rot="MR270" display="off"/>
+<attribute name="NAME" x="77.925925" y="40.573078125" size="1.27" layer="26" ratio="10" rot="MR270"/>
+<attribute name="VALUE" x="84.219" y="46.365" size="1.27" layer="28" ratio="10" rot="MR270"/>
+<attribute name="OC_NEWARK" value="unknown" x="80.639" y="43.317" size="1.778" layer="28" rot="MR270" display="off"/>
+<attribute name="MF" value="PTS635SL50 LFS" x="80.639" y="43.317" size="1.778" layer="28" rot="MR270" display="off"/>
+<attribute name="MPN" value="PTS635SL50 LFS" x="80.639" y="43.317" size="1.778" layer="28" rot="MR270" display="off"/>
+<attribute name="DIGIKEY" value="CKN9102-ND" x="80.639" y="43.317" size="1.778" layer="28" rot="MR270" display="off"/>
 </element>
 <element name="K2" library="STM32-PROX" package="B3F-5XX" value="" x="87.255" y="6.127" smashed="yes" rot="MR90">
 <attribute name="PARTNO" value="PTS635SL50 LFS" x="87.255" y="6.127" size="1.778" layer="28" rot="MR90" display="off"/>
@@ -2995,7 +2996,7 @@ design rules under a new name.</description>
 <attribute name="MPN" value="RMCF0603JT27R0" x="84.074" y="20.32" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="DIGIKEY" value="RMCF0603JT27R0CT-ND" x="84.074" y="20.32" size="1.778" layer="27" rot="R180" display="off"/>
 </element>
-<element name="U$1" library="STM32-PROX" package="STAND-OFF-TIGHT" value="" x="9.024" y="7.072" smashed="yes"/>
+<element name="U$1" library="STM32-PROX" package="STAND-OFF-TIGHT" value="" x="16.764" y="10.16" smashed="yes"/>
 <element name="U$2" library="STM32-PROX" package="STAND-OFF-TIGHT" value="" x="2.295" y="46.365" smashed="yes"/>
 <element name="IC1" library="STM32-PROX" package="QFN-10" value="" x="87.249" y="41.91" smashed="yes" rot="R180">
 <attribute name="NAME" x="87.92865" y="39.480096875" size="0.762" layer="25" font="vector" ratio="10" rot="R180"/>
@@ -3180,12 +3181,12 @@ design rules under a new name.</description>
 <attribute name="MPN" value="MC34674AEPR2" x="81.35" y="28.254" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="DIGIKEY" value="MC34674AEPR2TR-ND" x="81.35" y="28.254" size="1.778" layer="27" rot="R270" display="off"/>
 </element>
-<element name="TP10" library="STM32-PROX" package="--MERGED_KEYSTONE-SMD-TESTPOINT-5015" value="TESTPADKEYSTONE-SMD" x="92.202" y="44.751" smashed="yes" rot="MR0">
-<attribute name="NAME" x="94.2971375" y="41.682209375" size="1.27" layer="52" rot="MR0"/>
-<attribute name="PARTNO" value="NONE" x="92.202" y="44.751" size="1.778" layer="28" rot="MR0" display="off"/>
-<attribute name="OC_NEWARK" value="unknown" x="92.202" y="44.751" size="1.778" layer="28" rot="MR0" display="off"/>
-<attribute name="MF" value="" x="92.202" y="44.751" size="1.778" layer="28" rot="MR0" display="off"/>
-<attribute name="MPN" value="NONE" x="92.202" y="44.751" size="1.778" layer="28" rot="MR0" display="off"/>
+<element name="TP10" library="STM32-PROX" package="--MERGED_KEYSTONE-SMD-TESTPOINT-5015" value="TESTPADKEYSTONE-SMD" x="91.186" y="45.259" smashed="yes" rot="MR0">
+<attribute name="NAME" x="93.2811375" y="42.190209375" size="1.27" layer="52" rot="MR0"/>
+<attribute name="PARTNO" value="NONE" x="91.186" y="45.259" size="1.778" layer="28" rot="MR0" display="off"/>
+<attribute name="OC_NEWARK" value="unknown" x="91.186" y="45.259" size="1.778" layer="28" rot="MR0" display="off"/>
+<attribute name="MF" value="" x="91.186" y="45.259" size="1.778" layer="28" rot="MR0" display="off"/>
+<attribute name="MPN" value="NONE" x="91.186" y="45.259" size="1.778" layer="28" rot="MR0" display="off"/>
 </element>
 <element name="S1" library="SparkFun-Electromechanical" package="SWITCH-SPST-SMD-A" value="" x="96.7" y="34.23" smashed="yes" rot="MR90">
 <attribute name="NAME" x="93.39868125" y="36.50053125" size="1.27" layer="26" rot="MR270"/>
@@ -3753,8 +3754,8 @@ design rules under a new name.</description>
 <contactref element="C79" pad="1"/>
 <wire x1="86.649" y1="41.91" x2="86.749" y2="43.455" width="0" layer="19" extent="1-1"/>
 <wire x1="58.293" y1="45.696" x2="57.76" y2="46.415" width="0" layer="19" extent="1-16"/>
-<wire x1="85.699" y1="41.66" x2="86.649" y2="41.91" width="0" layer="19" extent="1-1"/>
 <wire x1="88.799" y1="41.66" x2="87.849" y2="41.91" width="0" layer="19" extent="1-1"/>
+<wire x1="85.699" y1="41.66" x2="86.649" y2="41.91" width="0" layer="19" extent="1-1"/>
 <wire x1="83.1" y1="34.08" x2="84.013" y2="35.087" width="0" layer="19" extent="1-16"/>
 <wire x1="90.037" y1="24.7" x2="88.787" y2="25.45" width="0" layer="19" extent="1-1"/>
 <wire x1="87.537" y1="24.7" x2="88.787" y2="25.45" width="0" layer="19" extent="1-1"/>
@@ -3792,8 +3793,11 @@ design rules under a new name.</description>
 <wire x1="37.9" y1="6.5" x2="35.902" y2="5.08" width="0" layer="19" extent="1-1"/>
 <wire x1="32.643" y1="4.999" x2="35.902" y2="5.08" width="0" layer="19" extent="1-1"/>
 <wire x1="30.226" y1="5.549" x2="32.643" y2="4.999" width="0" layer="19" extent="1-1"/>
-<wire x1="24.042" y1="5.207" x2="20.74" y2="5.207" width="0" layer="19" extent="1-1"/>
 <wire x1="37.9" y1="10" x2="37.9" y2="6.5" width="0" layer="19" extent="1-1"/>
+<wire x1="20.74" y1="5.207" x2="19.3802" y2="1.524" width="0" layer="19" extent="1-1"/>
+<wire x1="24.042" y1="5.207" x2="20.74" y2="5.207" width="0" layer="19" extent="1-1"/>
+<wire x1="18.161" y1="16.041" x2="18.796" y2="12.6492" width="0" layer="19" extent="1-1"/>
+<wire x1="17.1958" y1="5.461" x2="20.74" y2="5.207" width="0" layer="19" extent="1-1"/>
 <wire x1="26.67" y1="1.69" x2="24.042" y2="5.207" width="0" layer="19" extent="1-1"/>
 <wire x1="37.9" y1="15" x2="37.9" y2="10" width="0" layer="19" extent="1-1"/>
 <wire x1="34.075" y1="15.367" x2="37.9" y2="15" width="0" layer="19" extent="1-1"/>
@@ -3816,6 +3820,7 @@ design rules under a new name.</description>
 <wire x1="39.366" y1="25.071" x2="44.715" y2="24.232" width="0" layer="19" extent="1-1"/>
 <wire x1="72.811" y1="38.999" x2="66.128" y2="37.719" width="0" layer="19" extent="1-1"/>
 <wire x1="18.042" y1="36.179" x2="24.9" y2="36.179" width="0" layer="19" extent="1-1"/>
+<wire x1="9.2202" y1="15.748" x2="16.51" y2="16.041" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="VBUS" class="2">
 <contactref element="C1" pad="1"/>
@@ -5174,20 +5179,22 @@ design rules under a new name.</description>
 <contactref element="D7" pad="1"/>
 <contactref element="Q1" pad="3"/>
 <contactref element="RLY1" pad="12"/>
-<wire x1="15.4432" y1="1.524" x2="12.573" y2="1.524" width="0.2032" layer="1"/>
 <wire x1="12.573" y1="1.524" x2="12.573" y2="2.332" width="0.2032" layer="1"/>
-<wire x1="17.1323" y1="5.842" x2="18.161" y2="4.8133" width="0.2032" layer="1"/>
-<wire x1="18.161" y1="4.8133" x2="18.161" y2="0.635" width="0.2032" layer="1"/>
-<wire x1="18.161" y1="0.635" x2="18.034" y2="0.508" width="0.2032" layer="1"/>
-<wire x1="18.034" y1="0.508" x2="15.621" y2="0.508" width="0.2032" layer="1"/>
-<wire x1="15.621" y1="0.508" x2="15.4432" y2="0.6858" width="0.2032" layer="1"/>
-<wire x1="15.4432" y1="0.6858" x2="15.4432" y2="1.524" width="0.2032" layer="1"/>
+<wire x1="15.4432" y1="0.6858" x2="15.4432" y2="0.762" width="0.2032" layer="1"/>
+<wire x1="18.1483" y1="1.9177" x2="18.288" y2="1.778" width="0.2032" layer="1"/>
+<wire x1="18.288" y1="1.778" x2="18.288" y2="0" width="0.2032" layer="1"/>
+<wire x1="18.288" y1="0" x2="18.034" y2="-0.254" width="0.2032" layer="1"/>
+<wire x1="18.034" y1="-0.254" x2="16.4592" y2="-0.254" width="0.2032" layer="1"/>
+<wire x1="16.4592" y1="-0.254" x2="15.4432" y2="0.762" width="0.2032" layer="1"/>
+<wire x1="15.4432" y1="0.762" x2="13.335" y2="0.762" width="0.2032" layer="1"/>
+<wire x1="13.335" y1="0.762" x2="12.573" y2="1.524" width="0.2032" layer="1"/>
+<wire x1="18.1483" y1="1.9177" x2="18.1483" y2="3.556" width="0.2032" layer="1"/>
 </signal>
 <signal name="N$38">
 <contactref element="Q1" pad="1"/>
 <contactref element="R40" pad="2"/>
-<wire x1="18.0848" y1="7.747" x2="18.0848" y2="9.0052" width="0.2032" layer="1"/>
-<wire x1="18.0848" y1="9.0052" x2="17.868" y2="9.525" width="0.2032" layer="1"/>
+<wire x1="19.1008" y1="5.461" x2="19.1008" y2="7.2018" width="0.2032" layer="1"/>
+<wire x1="19.1008" y1="7.2018" x2="19.138" y2="7.239" width="0.2032" layer="1"/>
 </signal>
 <signal name="RELAY_ON">
 <contactref element="R40" pad="1"/>
@@ -5201,8 +5208,7 @@ design rules under a new name.</description>
 <wire x1="37.465" y1="17.0815" x2="37.465" y2="14.605" width="0.2032" layer="16"/>
 <wire x1="37.465" y1="14.605" x2="37.465" y2="5.08" width="0.2032" layer="16"/>
 <wire x1="37.465" y1="5.08" x2="36.195" y2="3.81" width="0.2032" layer="16"/>
-<via x="14.7955" y="9.525" extent="1-16" drill="0.3556"/>
-<wire x1="14.7955" y1="9.525" x2="16.168" y2="9.525" width="0.2032" layer="1"/>
+<via x="15.8115" y="5.207" extent="1-16" drill="0.3556"/>
 <wire x1="65.869" y1="16.3035" x2="65.7385" y2="16.3035" width="0.2032" layer="16"/>
 <wire x1="65.7385" y1="16.3035" x2="65.744746875" y2="16.3035" width="0.2032" layer="16"/>
 <wire x1="65.744746875" y1="16.3035" x2="66.675" y2="15.182746875" width="0.2032" layer="16" curve="-90"/>
@@ -5211,9 +5217,14 @@ design rules under a new name.</description>
 <wire x1="65.7225" y1="16.3195" x2="65.7385" y2="16.3035" width="0.2032" layer="16"/>
 <wire x1="65.7385" y1="16.3035" x2="65.869" y2="16.3035" width="0.2032" layer="16"/>
 <wire x1="36.195" y1="3.81" x2="20.5105" y2="3.81" width="0.2032" layer="16"/>
-<wire x1="20.5105" y1="3.81" x2="14.7955" y2="9.525" width="0.2032" layer="16"/>
 <wire x1="62.667" y1="16.637" x2="65.405" y2="16.637" width="0.2032" layer="1"/>
 <wire x1="65.405" y1="16.637" x2="65.7225" y2="16.3195" width="0.2032" layer="1" curve="-90"/>
+<wire x1="20.5105" y1="3.81" x2="18.9865" y2="3.81" width="0.2032" layer="16"/>
+<wire x1="18.9865" y1="3.81" x2="15.8115" y2="5.207" width="0.2032" layer="16"/>
+<wire x1="15.8115" y1="5.207" x2="15.8115" y2="6.4135" width="0.2032" layer="1"/>
+<wire x1="15.8115" y1="6.4135" x2="16.51" y2="7.112" width="0.2032" layer="1"/>
+<wire x1="16.51" y1="7.112" x2="17.311" y2="7.112" width="0.2032" layer="1"/>
+<wire x1="17.311" y1="7.112" x2="17.438" y2="7.239" width="0.2032" layer="1"/>
 </signal>
 <signal name="A_RLY_NC">
 <contactref element="C14" pad="1"/>
@@ -5282,10 +5293,11 @@ design rules under a new name.</description>
 <wire x1="7.574" y1="2.413" x2="7.493" y2="2.332" width="0.2032" layer="1"/>
 <wire x1="22.2758" y1="11.684" x2="21.59" y2="12.7" width="0.2032" layer="1"/>
 <via x="21.59" y="12.7" extent="1-16" drill="0.3556"/>
-<wire x1="21.59" y1="12.7" x2="11.303" y2="12.7" width="0.2032" layer="16"/>
 <wire x1="11.303" y1="12.7" x2="11.303" y2="12.065" width="0.2032" layer="16"/>
 <wire x1="13.3105" y1="20.2565" x2="11.43" y2="20.2565" width="0.2032" layer="1"/>
 <wire x1="11.43" y1="20.2565" x2="11.2395" y2="20.066" width="0.2032" layer="1"/>
+<wire x1="21.59" y1="12.7" x2="18.6055" y2="12.7" width="0.2032" layer="16"/>
+<wire x1="18.6055" y1="12.7" x2="11.2395" y2="20.066" width="0.2032" layer="16"/>
 </signal>
 <signal name="B_RLY_NO">
 <contactref element="C43" pad="1"/>
@@ -5357,7 +5369,7 @@ design rules under a new name.</description>
 <contactref element="R16" pad="1"/>
 <contactref element="R41" pad="1"/>
 <wire x1="14.605" y1="17.1323" x2="14.605" y2="14.9987" width="0.2032" layer="1"/>
-<wire x1="14.605" y1="14.9987" x2="16.129" y2="13.0937" width="0.2032" layer="1"/>
+<wire x1="14.605" y1="14.9987" x2="16.891" y2="13.6017" width="0.2032" layer="1"/>
 <wire x1="14.605" y1="17.1323" x2="15.6473" y2="17.1323" width="0.2032" layer="1"/>
 <wire x1="15.6473" y1="17.1323" x2="16.51" y2="17.741" width="0.2032" layer="1"/>
 <wire x1="16.51" y1="17.741" x2="18.161" y2="17.741" width="0.2032" layer="1"/>
@@ -6446,7 +6458,7 @@ design rules under a new name.</description>
 <wire x1="45.72" y1="40.132" x2="45.72" y2="37.504" width="0.2794" layer="1"/>
 <wire x1="45.72" y1="37.504" x2="46.902" y2="36.449" width="0.2794" layer="1"/>
 <wire x1="12.573" y1="11.892" x2="12.573" y2="7.2517" width="0.2794" layer="1"/>
-<wire x1="12.573" y1="7.2517" x2="16.3957" y2="3.429" width="0.2794" layer="1"/>
+<wire x1="12.573" y1="7.2517" x2="16.3957" y2="2.667" width="0.2794" layer="1"/>
 <wire x1="12.573" y1="11.892" x2="12.573" y2="13.589" width="0.2794" layer="1"/>
 <wire x1="12.573" y1="13.589" x2="13.716" y2="14.732" width="0.2794" layer="1"/>
 <via x="13.716" y="14.732" extent="1-16" drill="0.3556"/>
@@ -6478,8 +6490,6 @@ design rules under a new name.</description>
 <wire x1="35.052" y1="39.116" x2="35.2425" y2="22.352" width="0.2794" layer="3"/>
 <wire x1="23.876" y1="9.31" x2="23.837" y2="9.144" width="0.2794" layer="1"/>
 <wire x1="23.837" y1="9.144" x2="22.86" y2="9.144" width="0.2794" layer="1"/>
-<wire x1="22.86" y1="9.144" x2="19.304" y2="9.144" width="0.2794" layer="3"/>
-<wire x1="19.304" y1="9.144" x2="13.716" y2="14.732" width="0.2794" layer="3"/>
 <wire x1="23.876" y1="9.31" x2="23.71" y2="9.144" width="0.2794" layer="1"/>
 <wire x1="23.71" y1="9.144" x2="22.86" y2="9.144" width="0.2794" layer="1"/>
 <via x="22.86" y="9.144" extent="1-16" drill="0.3556"/>
@@ -6497,7 +6507,7 @@ design rules under a new name.</description>
 <wire x1="92.456" y1="40.64" x2="92.456" y2="44.196" width="0.2794" layer="1"/>
 <via x="92.456" y="44.196" extent="1-16" drill="0.3556"/>
 <wire x1="92.456" y1="44.196" x2="92.456" y2="44.497" width="0.2794" layer="16"/>
-<wire x1="92.456" y1="44.497" x2="92.202" y2="44.751" width="0.2794" layer="16"/>
+<wire x1="92.456" y1="44.497" x2="91.186" y2="45.259" width="0.2794" layer="16"/>
 <wire x1="89.828" y1="45.974" x2="91.606" y2="44.196" width="0.2794" layer="1"/>
 <wire x1="91.606" y1="44.196" x2="92.456" y2="44.196" width="0.2794" layer="1"/>
 <wire x1="64.428" y1="37.719" x2="64.428" y2="38.52" width="0.2794" layer="1"/>
@@ -6530,6 +6540,9 @@ design rules under a new name.</description>
 <wire x1="50.565" y1="28.213" x2="51.181" y2="28.829" width="0.2794" layer="1"/>
 <wire x1="51.181" y1="28.829" x2="51.181" y2="30.7975" width="0.2794" layer="1"/>
 <wire x1="51.181" y1="30.7975" x2="51.562" y2="31.1785" width="0.2794" layer="1"/>
+<wire x1="22.86" y1="9.144" x2="21.59" y2="9.144" width="0.2794" layer="3"/>
+<wire x1="21.59" y1="9.144" x2="16.002" y2="14.732" width="0.2794" layer="3"/>
+<wire x1="16.002" y1="14.732" x2="13.716" y2="14.732" width="0.2794" layer="3"/>
 </signal>
 <signal name="PS">
 <contactref element="IC1" pad="8"/>
@@ -6654,7 +6667,7 @@ design rules under a new name.</description>
 <contactref element="K1" pad="2"/>
 <contactref element="R71" pad="1"/>
 <contactref element="IC12" pad="15"/>
-<wire x1="80.6684" y1="40.3238" x2="79.3726" y2="39.028" width="0.2032" layer="1"/>
+<wire x1="80.6684" y1="39.8158" x2="79.3726" y2="39.028" width="0.2032" layer="1"/>
 <wire x1="79.3726" y1="39.028" x2="76.835" y2="39.028" width="0.2032" layer="1"/>
 <wire x1="76.835" y1="39.028" x2="77.304" y2="39.028" width="0.2032" layer="1"/>
 <wire x1="77.304" y1="39.028" x2="78.232" y2="38.1" width="0.2032" layer="1"/>
