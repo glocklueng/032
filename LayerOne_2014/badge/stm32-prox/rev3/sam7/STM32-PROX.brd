@@ -166,14 +166,14 @@
 </layers>
 <board>
 <plain>
-<wire x1="0" y1="46.2647125" x2="0" y2="1.832684375" width="0" layer="20"/>
+<wire x1="99" y1="1.286" x2="99" y2="46.714" width="0" layer="20"/>
+<wire x1="99" y1="46.714" x2="96.714" y2="49" width="0" layer="20" curve="90"/>
+<wire x1="96.714" y1="49" x2="2.286" y2="49" width="0" layer="20"/>
+<wire x1="2.286" y1="49" x2="0" y2="46.714" width="0" layer="20" curve="90"/>
+<wire x1="0" y1="46.714" x2="0" y2="1.832684375" width="0" layer="20"/>
 <wire x1="0" y1="1.832684375" x2="2.832684375" y2="-1" width="0" layer="20" curve="90"/>
-<wire x1="2.832684375" y1="-1" x2="97.455540625" y2="-1" width="0" layer="20"/>
-<wire x1="97.455540625" y1="-1" x2="99" y2="0.544459375" width="0" layer="20" curve="90"/>
-<wire x1="99" y1="0.544459375" x2="99" y2="47.7910625" width="0" layer="20"/>
-<wire x1="99" y1="47.7910625" x2="97.7910625" y2="49" width="0" layer="20" curve="90"/>
-<wire x1="97.7910625" y1="49" x2="2.7352875" y2="49" width="0" layer="20"/>
-<wire x1="2.7352875" y1="49" x2="0" y2="46.2647125" width="0" layer="20" curve="90"/>
+<wire x1="2.832684375" y1="-1" x2="96.714" y2="-1" width="0" layer="20"/>
+<wire x1="96.714" y1="-1" x2="99" y2="1.286" width="0" layer="20" curve="90"/>
 <text x="6.46551875" y="33.95144375" size="1.778" layer="52" rot="MR270">www.layerone.org</text>
 <text x="2.6445125" y="35.153565625" size="1.778" layer="52" rot="MR270">LayerOne 2014</text>
 <text x="23.161175" y="2.4405875" size="1.778" layer="52" rot="MR180">charliex</text>
@@ -3877,16 +3877,20 @@ design rules under a new name.</description>
 <polygon width="0.3" layer="1">
 <vertex x="55" y="49"/>
 <vertex x="54.69" y="-1.27"/>
-<vertex x="99.06" y="-1.27"/>
-<vertex x="99" y="48.73"/>
+<vertex x="96.77125625" y="-1.27" curve="90.076758"/>
+<vertex x="99.057253125" y="1.0190625"/>
+<vertex x="99.002721875" y="46.461771875" curve="89.579468"/>
+<vertex x="96.730753125" y="48.743925"/>
 </polygon>
 <polygon width="0.2794" layer="16">
-<vertex x="99.06" y="48.61"/>
+<vertex x="3.256825" y="-1.27"/>
+<vertex x="96.774" y="-1.27" curve="90"/>
+<vertex x="99.06" y="1.016"/>
+<vertex x="99.06" y="46.324" curve="90"/>
+<vertex x="96.774" y="48.61"/>
 <vertex x="1.882225" y="48.61" curve="90"/>
 <vertex x="0.08" y="46.807775"/>
 <vertex x="0.08" y="1.906825" curve="90"/>
-<vertex x="3.256825" y="-1.27"/>
-<vertex x="99.06" y="-1.27"/>
 </polygon>
 <contactref element="IC7" pad="3"/>
 <contactref element="LED3" pad="C"/>
@@ -3940,8 +3944,8 @@ design rules under a new name.</description>
 <contactref element="C75" pad="2"/>
 <polygon width="0.2794" layer="1">
 <vertex x="51.905" y="49"/>
-<vertex x="2.7352875" y="49" curve="90"/>
-<vertex x="0" y="46.2647125"/>
+<vertex x="2.286" y="49" curve="90"/>
+<vertex x="0" y="46.714"/>
 <vertex x="0" y="2.091315625" curve="90"/>
 <vertex x="3.091315625" y="-1"/>
 <vertex x="52.07" y="-1"/>
