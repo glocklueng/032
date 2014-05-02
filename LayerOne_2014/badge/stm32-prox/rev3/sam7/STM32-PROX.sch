@@ -15348,12 +15348,19 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <part name="U$827" library="00-own_parts" deviceset="VCC_0V9" device=""/>
 <part name="U$828" library="00-own_parts" deviceset="VCC_0V9" device=""/>
 <part name="U$829" library="00-own_parts" deviceset="VCC_0V9" device=""/>
-<part name="U$830" library="00-own_parts" deviceset="GND" device=""/>
 <part name="U$697" library="00-bitfury" deviceset="VCC_1V8" device=""/>
 <part name="U$720" library="00-own_parts" deviceset="GND" device=""/>
 <part name="U$721" library="00-own_parts" deviceset="GND" device=""/>
 <part name="U$722" library="00-own_parts" deviceset="GND" device=""/>
 <part name="U$41" library="00-own_parts" deviceset="VCC_0V9" device=""/>
+<part name="TP12" library="STM32-PROX" deviceset="TESTPAD" device=""/>
+<part name="TP13" library="STM32-PROX" deviceset="TESTPAD" device=""/>
+<part name="TP14" library="STM32-PROX" deviceset="TESTPAD" device=""/>
+<part name="TP15" library="STM32-PROX" deviceset="TESTPAD" device=""/>
+<part name="TP42" library="STM32-PROX" deviceset="TESTPAD" device=""/>
+<part name="TP43" library="STM32-PROX" deviceset="TESTPAD" device=""/>
+<part name="TP44" library="STM32-PROX" deviceset="TESTPAD" device=""/>
+<part name="TP56" library="STM32-PROX" deviceset="TESTPAD" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -20791,21 +20798,24 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <instance part="U$827" gate="G$1" x="114.3" y="76.2"/>
 <instance part="U$828" gate="G$1" x="116.84" y="76.2"/>
 <instance part="U$829" gate="G$1" x="119.38" y="76.2"/>
-<instance part="U$830" gate="G$1" x="78.74" y="27.94"/>
 <instance part="U$697" gate="G$1" x="30.48" y="76.2"/>
 <instance part="U$720" gate="G$1" x="25.4" y="63.5"/>
 <instance part="U$721" gate="G$1" x="25.4" y="60.96"/>
 <instance part="U$722" gate="G$1" x="25.4" y="58.42"/>
 <instance part="U$41" gate="G$1" x="132.08" y="63.5"/>
+<instance part="TP12" gate="G$1" x="22.86" y="53.34" rot="R90"/>
+<instance part="TP13" gate="G$1" x="7.62" y="50.8" rot="R90"/>
+<instance part="TP14" gate="G$1" x="22.86" y="48.26" rot="R90"/>
+<instance part="TP15" gate="G$1" x="7.62" y="45.72" rot="R90"/>
+<instance part="TP42" gate="G$1" x="30.48" y="83.82"/>
+<instance part="TP43" gate="G$1" x="35.56" y="83.82" rot="MR0"/>
+<instance part="TP44" gate="G$1" x="38.1" y="83.82" rot="MR0"/>
+<instance part="TP56" gate="G$1" x="132.08" y="60.96" rot="MR180"/>
 </instances>
 <busses>
 </busses>
 <nets>
 <net name="GND" class="2">
-<segment>
-<pinref part="U40" gate="G$1" pin="EP.VSS_EP"/>
-<pinref part="U$830" gate="G$1" pin="GND"/>
-</segment>
 <segment>
 <pinref part="U40" gate="G$1" pin="1.QCM"/>
 <pinref part="U$720" gate="G$1" pin="GND"/>
@@ -20823,10 +20833,116 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <segment>
 <pinref part="U40" gate="G$1" pin="14.VDD"/>
 <pinref part="U$4" gate="G$1" pin="VDD_0V9"/>
-</segment>
-<segment>
+<pinref part="TP43" gate="G$1" pin="P$1"/>
+<junction x="35.56" y="81.28"/>
+<pinref part="TP43" gate="G$1" pin="P$1"/>
+<wire x1="121.92" y1="76.2" x2="121.92" y2="81.28" width="0.1524" layer="91"/>
+<wire x1="121.92" y1="81.28" x2="119.38" y2="81.28" width="0.1524" layer="91"/>
+<wire x1="119.38" y1="81.28" x2="116.84" y2="81.28" width="0.1524" layer="91"/>
+<wire x1="116.84" y1="81.28" x2="114.3" y2="81.28" width="0.1524" layer="91"/>
+<wire x1="114.3" y1="81.28" x2="111.76" y2="81.28" width="0.1524" layer="91"/>
+<wire x1="111.76" y1="81.28" x2="109.22" y2="81.28" width="0.1524" layer="91"/>
+<wire x1="109.22" y1="81.28" x2="106.68" y2="81.28" width="0.1524" layer="91"/>
+<wire x1="106.68" y1="81.28" x2="104.14" y2="81.28" width="0.1524" layer="91"/>
+<wire x1="104.14" y1="81.28" x2="101.6" y2="81.28" width="0.1524" layer="91"/>
+<wire x1="101.6" y1="81.28" x2="99.06" y2="81.28" width="0.1524" layer="91"/>
+<wire x1="99.06" y1="81.28" x2="96.52" y2="81.28" width="0.1524" layer="91"/>
+<wire x1="96.52" y1="81.28" x2="93.98" y2="81.28" width="0.1524" layer="91"/>
+<wire x1="93.98" y1="81.28" x2="91.44" y2="81.28" width="0.1524" layer="91"/>
+<wire x1="91.44" y1="81.28" x2="88.9" y2="81.28" width="0.1524" layer="91"/>
+<wire x1="88.9" y1="81.28" x2="86.36" y2="81.28" width="0.1524" layer="91"/>
+<wire x1="86.36" y1="81.28" x2="83.82" y2="81.28" width="0.1524" layer="91"/>
+<wire x1="83.82" y1="81.28" x2="81.28" y2="81.28" width="0.1524" layer="91"/>
+<wire x1="81.28" y1="81.28" x2="78.74" y2="81.28" width="0.1524" layer="91"/>
+<wire x1="78.74" y1="81.28" x2="76.2" y2="81.28" width="0.1524" layer="91"/>
+<wire x1="76.2" y1="81.28" x2="73.66" y2="81.28" width="0.1524" layer="91"/>
+<wire x1="73.66" y1="81.28" x2="71.12" y2="81.28" width="0.1524" layer="91"/>
+<wire x1="71.12" y1="81.28" x2="68.58" y2="81.28" width="0.1524" layer="91"/>
+<wire x1="68.58" y1="81.28" x2="66.04" y2="81.28" width="0.1524" layer="91"/>
+<wire x1="66.04" y1="81.28" x2="63.5" y2="81.28" width="0.1524" layer="91"/>
+<wire x1="63.5" y1="81.28" x2="60.96" y2="81.28" width="0.1524" layer="91"/>
+<wire x1="60.96" y1="81.28" x2="58.42" y2="81.28" width="0.1524" layer="91"/>
+<wire x1="58.42" y1="81.28" x2="55.88" y2="81.28" width="0.1524" layer="91"/>
+<wire x1="55.88" y1="81.28" x2="53.34" y2="81.28" width="0.1524" layer="91"/>
+<wire x1="53.34" y1="81.28" x2="50.8" y2="81.28" width="0.1524" layer="91"/>
+<wire x1="50.8" y1="81.28" x2="48.26" y2="81.28" width="0.1524" layer="91"/>
+<wire x1="48.26" y1="81.28" x2="45.72" y2="81.28" width="0.1524" layer="91"/>
+<wire x1="45.72" y1="81.28" x2="43.18" y2="81.28" width="0.1524" layer="91"/>
+<wire x1="43.18" y1="81.28" x2="40.64" y2="81.28" width="0.1524" layer="91"/>
+<wire x1="40.64" y1="81.28" x2="38.1" y2="81.28" width="0.1524" layer="91"/>
+<wire x1="38.1" y1="81.28" x2="35.56" y2="81.28" width="0.1524" layer="91"/>
+<wire x1="35.56" y1="81.28" x2="35.56" y2="76.2" width="0.1524" layer="91"/>
+<junction x="35.56" y="76.2"/>
 <pinref part="U40" gate="G$1" pin="15.VDD"/>
 <pinref part="U$6" gate="G$1" pin="VDD_0V9"/>
+<pinref part="TP44" gate="G$1" pin="P$1"/>
+<wire x1="38.1" y1="76.2" x2="38.1" y2="81.28" width="0.1524" layer="91"/>
+<junction x="38.1" y="76.2"/>
+<junction x="38.1" y="81.28"/>
+<wire x1="40.64" y1="76.2" x2="40.64" y2="81.28" width="0.1524" layer="91"/>
+<junction x="40.64" y="81.28"/>
+<wire x1="43.18" y1="76.2" x2="43.18" y2="81.28" width="0.1524" layer="91"/>
+<junction x="43.18" y="81.28"/>
+<wire x1="45.72" y1="76.2" x2="45.72" y2="81.28" width="0.1524" layer="91"/>
+<junction x="45.72" y="81.28"/>
+<wire x1="48.26" y1="76.2" x2="48.26" y2="81.28" width="0.1524" layer="91"/>
+<junction x="48.26" y="81.28"/>
+<wire x1="50.8" y1="76.2" x2="50.8" y2="81.28" width="0.1524" layer="91"/>
+<junction x="50.8" y="81.28"/>
+<wire x1="55.88" y1="76.2" x2="55.88" y2="81.28" width="0.1524" layer="91"/>
+<junction x="55.88" y="81.28"/>
+<wire x1="53.34" y1="76.2" x2="53.34" y2="81.28" width="0.1524" layer="91"/>
+<junction x="53.34" y="81.28"/>
+<wire x1="58.42" y1="76.2" x2="58.42" y2="81.28" width="0.1524" layer="91"/>
+<junction x="58.42" y="81.28"/>
+<wire x1="60.96" y1="76.2" x2="60.96" y2="81.28" width="0.1524" layer="91"/>
+<junction x="60.96" y="81.28"/>
+<wire x1="63.5" y1="76.2" x2="63.5" y2="81.28" width="0.1524" layer="91"/>
+<junction x="63.5" y="81.28"/>
+<wire x1="66.04" y1="76.2" x2="66.04" y2="81.28" width="0.1524" layer="91"/>
+<junction x="66.04" y="81.28"/>
+<wire x1="68.58" y1="76.2" x2="68.58" y2="81.28" width="0.1524" layer="91"/>
+<junction x="68.58" y="81.28"/>
+<wire x1="71.12" y1="76.2" x2="71.12" y2="81.28" width="0.1524" layer="91"/>
+<junction x="71.12" y="81.28"/>
+<wire x1="73.66" y1="76.2" x2="73.66" y2="81.28" width="0.1524" layer="91"/>
+<junction x="73.66" y="81.28"/>
+<wire x1="76.2" y1="76.2" x2="76.2" y2="81.28" width="0.1524" layer="91"/>
+<junction x="76.2" y="81.28"/>
+<wire x1="78.74" y1="76.2" x2="78.74" y2="81.28" width="0.1524" layer="91"/>
+<junction x="78.74" y="81.28"/>
+<wire x1="81.28" y1="76.2" x2="81.28" y2="81.28" width="0.1524" layer="91"/>
+<junction x="81.28" y="81.28"/>
+<wire x1="86.36" y1="76.2" x2="86.36" y2="81.28" width="0.1524" layer="91"/>
+<junction x="86.36" y="81.28"/>
+<wire x1="83.82" y1="76.2" x2="83.82" y2="81.28" width="0.1524" layer="91"/>
+<junction x="83.82" y="81.28"/>
+<wire x1="88.9" y1="76.2" x2="88.9" y2="81.28" width="0.1524" layer="91"/>
+<junction x="88.9" y="81.28"/>
+<wire x1="91.44" y1="76.2" x2="91.44" y2="81.28" width="0.1524" layer="91"/>
+<junction x="91.44" y="81.28"/>
+<wire x1="93.98" y1="76.2" x2="93.98" y2="81.28" width="0.1524" layer="91"/>
+<junction x="93.98" y="81.28"/>
+<wire x1="96.52" y1="76.2" x2="96.52" y2="81.28" width="0.1524" layer="91"/>
+<junction x="96.52" y="81.28"/>
+<wire x1="99.06" y1="76.2" x2="99.06" y2="81.28" width="0.1524" layer="91"/>
+<junction x="99.06" y="81.28"/>
+<wire x1="101.6" y1="76.2" x2="101.6" y2="81.28" width="0.1524" layer="91"/>
+<junction x="101.6" y="81.28"/>
+<wire x1="104.14" y1="76.2" x2="104.14" y2="81.28" width="0.1524" layer="91"/>
+<junction x="104.14" y="81.28"/>
+<wire x1="106.68" y1="76.2" x2="106.68" y2="81.28" width="0.1524" layer="91"/>
+<junction x="106.68" y="81.28"/>
+<wire x1="109.22" y1="76.2" x2="109.22" y2="81.28" width="0.1524" layer="91"/>
+<junction x="109.22" y="81.28"/>
+<wire x1="111.76" y1="76.2" x2="111.76" y2="81.28" width="0.1524" layer="91"/>
+<junction x="111.76" y="81.28"/>
+<wire x1="114.3" y1="76.2" x2="114.3" y2="81.28" width="0.1524" layer="91"/>
+<junction x="114.3" y="81.28"/>
+<wire x1="116.84" y1="76.2" x2="116.84" y2="81.28" width="0.1524" layer="91"/>
+<junction x="116.84" y="81.28"/>
+<wire x1="119.38" y1="76.2" x2="119.38" y2="81.28" width="0.1524" layer="91"/>
+<junction x="119.38" y="81.28"/>
 </segment>
 <segment>
 <pinref part="U40" gate="G$1" pin="16.VDD"/>
@@ -20964,12 +21080,18 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <pinref part="U40" gate="G$1" pin="13.IOREF"/>
 <pinref part="U$41" gate="G$1" pin="VDD_0V9"/>
 <wire x1="132.08" y1="63.5" x2="129.54" y2="63.5" width="0.1524" layer="91"/>
+<pinref part="TP56" gate="G$1" pin="P$1"/>
+<junction x="132.08" y="63.5"/>
 </segment>
 </net>
 <net name="VDD_1V8" class="0">
 <segment>
 <pinref part="U40" gate="G$1" pin="4.VDD_IO"/>
 <pinref part="U$697" gate="G$1" pin="VDD_1V8"/>
+<pinref part="TP42" gate="G$1" pin="P$1"/>
+<pinref part="TP42" gate="G$1" pin="P$1"/>
+<wire x1="30.48" y1="81.28" x2="30.48" y2="76.2" width="0.1524" layer="91"/>
+<wire x1="30.48" y1="81.28" x2="30.48" y2="76.2" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="INSCK" class="0">
@@ -20977,13 +21099,14 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <wire x1="25.4" y1="50.8" x2="10.16" y2="50.8" width="0.1524" layer="91"/>
 <label x="10.668" y="51.308" size="1.27" layer="95" ratio="10"/>
 <pinref part="U40" gate="G$1" pin="11.INSCK"/>
+<pinref part="TP13" gate="G$1" pin="P$1"/>
 </segment>
 </net>
 <net name="INMOSI" class="0">
 <segment>
-<wire x1="25.4" y1="48.26" x2="10.16" y2="48.26" width="0.1524" layer="91"/>
 <label x="10.668" y="48.768" size="1.27" layer="95" ratio="10"/>
 <pinref part="U40" gate="G$1" pin="10.INMOSI"/>
+<pinref part="TP14" gate="G$1" pin="P$1"/>
 </segment>
 </net>
 <net name="INMISO" class="0">
@@ -20991,41 +21114,14 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <wire x1="25.4" y1="45.72" x2="10.16" y2="45.72" width="0.1524" layer="91"/>
 <label x="10.668" y="46.228" size="1.27" layer="95" ratio="10"/>
 <pinref part="U40" gate="G$1" pin="9.INMISO"/>
-</segment>
-</net>
-<net name="SCK0" class="0">
-<segment>
-<wire x1="25.4" y1="38.1" x2="15.24" y2="38.1" width="0.1524" layer="91"/>
-<label x="15.748" y="38.608" size="1.27" layer="95" ratio="10"/>
-<pinref part="U40" gate="G$1" pin="6.OUTSCK"/>
-</segment>
-</net>
-<net name="MOSI0" class="0">
-<segment>
-<wire x1="25.4" y1="35.56" x2="15.24" y2="35.56" width="0.1524" layer="91"/>
-<label x="15.748" y="36.068" size="1.27" layer="95" ratio="10"/>
-<pinref part="U40" gate="G$1" pin="7.OUTMOSI"/>
-</segment>
-</net>
-<net name="MISO0" class="0">
-<segment>
-<wire x1="25.4" y1="33.02" x2="15.24" y2="33.02" width="0.1524" layer="91"/>
-<label x="15.748" y="33.528" size="1.27" layer="95" ratio="10"/>
-<pinref part="U40" gate="G$1" pin="8.OUTMISO"/>
+<pinref part="TP15" gate="G$1" pin="P$1"/>
 </segment>
 </net>
 <net name="INCLK" class="0">
 <segment>
-<wire x1="25.4" y1="53.34" x2="10.16" y2="53.34" width="0.1524" layer="91"/>
 <label x="10.668" y="53.848" size="1.27" layer="95" ratio="10"/>
 <pinref part="U40" gate="G$1" pin="12.INCLK"/>
-</segment>
-</net>
-<net name="CLK0" class="0">
-<segment>
-<wire x1="25.4" y1="40.64" x2="15.24" y2="40.64" width="0.1524" layer="91"/>
-<label x="15.748" y="41.148" size="1.27" layer="95" ratio="10"/>
-<pinref part="U40" gate="G$1" pin="5.OUTCLK"/>
+<pinref part="TP12" gate="G$1" pin="P$1"/>
 </segment>
 </net>
 </nets>
