@@ -1760,7 +1760,7 @@ KEMET S / EIA 3216-12</description>
 <clearance class="2" value="0.1778"/>
 </class>
 </classes>
-<designrules name="SilverCircuits4layer">
+<designrules name="SilverCircuits4layer *">
 <description language="en">&lt;b&gt;EAGLE Design Rules&lt;/b&gt;
 &lt;p&gt;
 The default Design Rules have been set to cover
@@ -1830,7 +1830,7 @@ design rules under a new name.</description>
 <param name="dpMaxLengthDifference" value="10mm"/>
 <param name="dpGapFactor" value="2.5"/>
 <param name="checkGrid" value="0"/>
-<param name="checkAngle" value="0"/>
+<param name="checkAngle" value="1"/>
 <param name="checkFont" value="0"/>
 <param name="checkRestrict" value="1"/>
 <param name="useDiameter" value="13"/>
@@ -5911,8 +5911,8 @@ design rules under a new name.</description>
 <signal name="N$45">
 <contactref element="IC10" pad="9"/>
 <contactref element="R46" pad="1"/>
-<wire x1="1.397" y1="34.759" x2="1.397" y2="33.909" width="0.2032" layer="1"/>
-<wire x1="1.397" y1="33.909" x2="11.202334375" y2="33.909" width="0.2032" layer="1"/>
+<wire x1="1.397" y1="34.759" x2="2.247" y2="33.909" width="0.2032" layer="1" curve="90"/>
+<wire x1="2.247" y1="33.909" x2="11.202334375" y2="33.909" width="0.2032" layer="1"/>
 <wire x1="11.202334375" y1="33.909" x2="11.8926375" y2="33.59150625" width="0.2032" layer="1" curve="-49.398748"/>
 <wire x1="11.8926375" y1="33.59150625" x2="12.168778125" y2="33.4645" width="0.2032" layer="1" curve="49.398866"/>
 <wire x1="12.168778125" y1="33.4645" x2="17.9705" y2="33.4645" width="0.2032" layer="1"/>
