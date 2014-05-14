@@ -13052,9 +13052,9 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <part name="SV2" library="STM32-PROX" deviceset="HIROSE-MQ172-4POS" device="">
 <attribute name="DIGIKEY" value="H10488CT-ND"/>
 <attribute name="MF" value="MQ172X-4PA(66)"/>
-<attribute name="MPN" value=""/>
+<attribute name="MPN" value="MQ172X-4PA(66)"/>
 <attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="MQ172X-4PA(66)"/>
 </part>
 <part name="IC9" library="STM32-PROX" deviceset="74XX244-OCTAL-TRISTATE-BUFFERS" device="" value="74XX244">
 <attribute name="DIGIKEY" value="497-2913-1-ND"/>
