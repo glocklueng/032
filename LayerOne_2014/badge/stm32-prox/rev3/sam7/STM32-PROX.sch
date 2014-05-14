@@ -8373,16 +8373,6 @@ www.SparkFun.com SKU : Comp-SMDS</description>
 <text x="5.08" y="0" size="1.778" layer="95">&gt;NAME</text>
 <text x="5.08" y="-2.54" size="1.778" layer="96">&gt;VALUE</text>
 </symbol>
-<symbol name="C-EU">
-<wire x1="-2.54" y1="0" x2="2.54" y2="0" width="0.254" layer="94"/>
-<wire x1="-2.54" y1="-1.016" x2="0" y2="-1.016" width="0.254" layer="94"/>
-<wire x1="0" y1="-1.016" x2="2.54" y2="-1.016" width="0.254" layer="94"/>
-<wire x1="0" y1="-2.54" x2="0" y2="-1.016" width="0.1524" layer="94"/>
-<pin name="1" x="0" y="2.54" visible="off" length="short" direction="pas" swaplevel="1" rot="R270"/>
-<pin name="2" x="0" y="-5.08" visible="off" length="short" direction="pas" swaplevel="1" rot="R90"/>
-<text x="1.016" y="0.635" size="1.778" layer="95" font="vector">&gt;NAME</text>
-<text x="1.016" y="-4.191" size="1.778" layer="96" font="vector">&gt;VALUE</text>
-</symbol>
 <symbol name="TPS799">
 <wire x1="0" y1="10.16" x2="17.78" y2="10.16" width="0.254" layer="94"/>
 <wire x1="17.78" y1="10.16" x2="17.78" y2="0" width="0.254" layer="94"/>
@@ -11398,23 +11388,6 @@ BJT configuration in SOT23 package. MMBT2222 is the common NPN we use. Double ch
 </device>
 </devices>
 </deviceset>
-<deviceset name="C-EU" prefix="C" uservalue="yes">
-<description>&lt;b&gt;CERAMIC CHIP CAPACITOR&lt;/b&gt;</description>
-<gates>
-<gate name="G$1" symbol="C-EU" x="0" y="0" swaplevel="1"/>
-</gates>
-<devices>
-<device name="" package="RLC_0603">
-<connects>
-<connect gate="G$1" pin="1" pad="1"/>
-<connect gate="G$1" pin="2" pad="2"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
 <deviceset name="TPS799*" prefix="IC">
 <description>&lt;b&gt;IC LDO REG 200mA&lt;/b&gt;&lt;br&gt;
 Digikey part: 296-17782-1-ND</description>
@@ -14269,27 +14242,27 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <part name="GND13" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="GND14" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="C6" library="STM32-PROX" deviceset="CAPACITOR" device="0603" value="4.7uF">
-<attribute name="DIGIKEY" value="1276-1065-1-ND"/>
+<attribute name="DIGIKEY" value="1276-1784-2-ND"/>
 <attribute name="MF" value=""/>
-<attribute name="MPN" value="CL21A475KOFNNNE"/>
+<attribute name="MPN" value="CL10A475KO8NNNC"/>
 <attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="CL21A475KOFNNNE"/>
+<attribute name="PARTNO" value="CL10A475KO8NNNC"/>
 </part>
 <part name="C8" library="STM32-PROX" deviceset="CAPACITOR" device="0603" value="4.7uF">
-<attribute name="DIGIKEY" value="1276-1065-1-ND"/>
+<attribute name="DIGIKEY" value="1276-1784-2-ND"/>
 <attribute name="MF" value=""/>
-<attribute name="MPN" value="CL21A475KOFNNNE"/>
+<attribute name="MPN" value="CL10A475KO8NNNC"/>
 <attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="CL21A475KOFNNNE"/>
+<attribute name="PARTNO" value="CL10A475KO8NNNC"/>
 </part>
 <part name="GND15" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="GND16" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="C7" library="STM32-PROX" deviceset="CAPACITOR" device="0603" value="4.7uF">
-<attribute name="DIGIKEY" value="1276-1065-1-ND"/>
+<attribute name="DIGIKEY" value="1276-1784-2-ND"/>
 <attribute name="MF" value=""/>
-<attribute name="MPN" value="CL21A475KOFNNNE"/>
+<attribute name="MPN" value="CL10A475KO8NNNC"/>
 <attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="CL21A475KOFNNNE"/>
+<attribute name="PARTNO" value="CL10A475KO8NNNC"/>
 </part>
 <part name="GND18" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="SJ1" library="STM32-PROX" deviceset="SOLDERJUMPER" device="REFLOW">
@@ -14423,40 +14396,40 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <attribute name="OC_NEWARK" value="unknown"/>
 <attribute name="PARTNO" value="*"/>
 </part>
-<part name="C209" library="STM32-PROX" deviceset="C-EU" device="" value="100nF">
+<part name="C209" library="STM32-PROX" deviceset="CAPACITOR" device="0603" value="100nF">
 <attribute name="DIGIKEY" value="1276-1005-1-ND"/>
 <attribute name="MF" value=""/>
 <attribute name="MPN" value="CL10B104KO8NNNC"/>
 <attribute name="OC_NEWARK" value="unknown"/>
 <attribute name="PARTNO" value="CL10B104KO8NNNC"/>
 </part>
-<part name="C210" library="STM32-PROX" deviceset="C-EU" device="" value="100nF">
+<part name="C210" library="STM32-PROX" deviceset="CAPACITOR" device="0603" value="100nF">
 <attribute name="DIGIKEY" value="1276-1005-1-ND"/>
 <attribute name="MF" value=""/>
 <attribute name="MPN" value="CL10B104KO8NNNC"/>
 <attribute name="OC_NEWARK" value="unknown"/>
 <attribute name="PARTNO" value="CL10B104KO8NNNC"/>
 </part>
-<part name="C211" library="STM32-PROX" deviceset="C-EU" device="" value="100nF">
+<part name="C211" library="STM32-PROX" deviceset="CAPACITOR" device="0603" value="100nF">
 <attribute name="DIGIKEY" value="1276-1005-1-ND"/>
 <attribute name="MF" value=""/>
 <attribute name="MPN" value="CL10B104KO8NNNC"/>
 <attribute name="OC_NEWARK" value="unknown"/>
 <attribute name="PARTNO" value="CL10B104KO8NNNC"/>
 </part>
-<part name="C212" library="STM32-PROX" deviceset="C-EU" device="" value="100nF">
+<part name="C212" library="STM32-PROX" deviceset="CAPACITOR" device="0603" value="100nF">
 <attribute name="DIGIKEY" value="1276-1005-1-ND"/>
 <attribute name="MF" value=""/>
 <attribute name="MPN" value="CL10B104KO8NNNC"/>
 <attribute name="OC_NEWARK" value="unknown"/>
 <attribute name="PARTNO" value="CL10B104KO8NNNC"/>
 </part>
-<part name="C206" library="STM32-PROX" deviceset="C-EU" device="" value="4.7uF">
+<part name="C206" library="STM32-PROX" deviceset="CAPACITOR" device="0603" value="4.7uF">
 <attribute name="DIGIKEY" value="1276-1784-1-ND"/>
 <attribute name="MF" value=""/>
-<attribute name="MPN" value="EMK107ABJ475KA-T"/>
+<attribute name="MPN" value="CL10A475KO8NNNC"/>
 <attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="EMK107ABJ475KA-T"/>
+<attribute name="PARTNO" value="CL10A475KO8NNNC"/>
 </part>
 <part name="R102" library="STM32-PROX" deviceset="RESISTOR" device="0603" value="10K">
 <attribute name="DIGIKEY" value="RMCF0603JT10K0CT-ND"/>
@@ -14946,7 +14919,11 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <attribute name="OC_NEWARK" value="unknown"/>
 <attribute name="PARTNO" value="*"/>
 </part>
-<part name="IC12" library="STM32-PROX" deviceset="AT91SAM7S64" device=""/>
+<part name="IC12" library="STM32-PROX" deviceset="AT91SAM7S64" device="" value="AT91SAM7S512B">
+<attribute name="DIGIKEY" value="AT91SAM7S512B-AU-ND"/>
+<attribute name="OEM" value="ATMEL"/>
+<attribute name="PARTNO" value="AT91SAM7S512B-AU"/>
+</part>
 <part name="GND1" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="R72" library="  merged" deviceset="RESISTOR" device="0603" value="330Ohm"/>
 <part name="C76" library="  merged" deviceset="CAPACITOR" device="0603" value="33nF"/>
@@ -15984,15 +15961,15 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <pinref part="C46" gate="G$1" pin="2"/>
 </segment>
 <segment>
-<wire x1="-38.1" y1="-30.48" x2="-30.48" y2="-30.48" width="0.1524" layer="91"/>
-<wire x1="-30.48" y1="-30.48" x2="-22.86" y2="-30.48" width="0.1524" layer="91"/>
-<wire x1="-22.86" y1="-30.48" x2="-15.24" y2="-30.48" width="0.1524" layer="91"/>
-<wire x1="-15.24" y1="-30.48" x2="-7.62" y2="-30.48" width="0.1524" layer="91"/>
-<wire x1="-7.62" y1="-38.1" x2="-7.62" y2="-30.48" width="0.1524" layer="91"/>
-<junction x="-30.48" y="-30.48"/>
-<junction x="-22.86" y="-30.48"/>
-<junction x="-15.24" y="-30.48"/>
-<junction x="-7.62" y="-30.48"/>
+<wire x1="-38.1" y1="-27.94" x2="-30.48" y2="-27.94" width="0.1524" layer="91"/>
+<wire x1="-30.48" y1="-27.94" x2="-22.86" y2="-27.94" width="0.1524" layer="91"/>
+<wire x1="-22.86" y1="-27.94" x2="-15.24" y2="-27.94" width="0.1524" layer="91"/>
+<wire x1="-15.24" y1="-27.94" x2="-7.62" y2="-27.94" width="0.1524" layer="91"/>
+<wire x1="-7.62" y1="-38.1" x2="-7.62" y2="-27.94" width="0.1524" layer="91"/>
+<junction x="-30.48" y="-27.94"/>
+<junction x="-22.86" y="-27.94"/>
+<junction x="-15.24" y="-27.94"/>
+<junction x="-7.62" y="-27.94"/>
 <pinref part="C209" gate="G$1" pin="2"/>
 <pinref part="C212" gate="G$1" pin="2"/>
 <pinref part="C210" gate="G$1" pin="2"/>
@@ -16201,15 +16178,10 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 </net>
 <net name="+1V2" class="2">
 <segment>
-<wire x1="-15.24" y1="-22.86" x2="-15.24" y2="-20.32" width="0.1524" layer="91"/>
 <wire x1="-15.24" y1="-20.32" x2="-22.86" y2="-20.32" width="0.1524" layer="91"/>
 <wire x1="-22.86" y1="-20.32" x2="-30.48" y2="-20.32" width="0.1524" layer="91"/>
 <wire x1="-30.48" y1="-20.32" x2="-38.1" y2="-20.32" width="0.1524" layer="91"/>
-<wire x1="-38.1" y1="-20.32" x2="-38.1" y2="-22.86" width="0.1524" layer="91"/>
-<wire x1="-30.48" y1="-20.32" x2="-30.48" y2="-22.86" width="0.1524" layer="91"/>
-<wire x1="-22.86" y1="-22.86" x2="-22.86" y2="-20.32" width="0.1524" layer="91"/>
 <wire x1="-15.24" y1="-20.32" x2="-7.62" y2="-20.32" width="0.1524" layer="91"/>
-<wire x1="-7.62" y1="-20.32" x2="-7.62" y2="-22.86" width="0.1524" layer="91"/>
 <wire x1="-40.64" y1="-15.24" x2="-38.1" y2="-15.24" width="0.1524" layer="91"/>
 <wire x1="-38.1" y1="-15.24" x2="-35.56" y2="-15.24" width="0.1524" layer="91"/>
 <wire x1="-38.1" y1="-20.32" x2="-38.1" y2="-15.24" width="0.1524" layer="91"/>
@@ -16567,7 +16539,11 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <attribute name="VALUE" x="61.595" y="82.55" size="1.778" layer="96" rot="R90"/>
 </instance>
 <instance part="TP6" gate="G$1" x="33.02" y="-35.56" rot="R270"/>
-<instance part="IC12" gate="G$1" x="22.86" y="43.18"/>
+<instance part="IC12" gate="G$1" x="22.86" y="43.18">
+<attribute name="OEM" x="22.86" y="43.18" size="1.778" layer="96" display="off"/>
+<attribute name="DIGIKEY" x="22.86" y="43.18" size="1.778" layer="96" display="off"/>
+<attribute name="PARTNO" x="22.86" y="43.18" size="1.778" layer="96" display="off"/>
+</instance>
 <instance part="GND1" gate="G$1" x="27.94" y="53.34"/>
 <instance part="R72" gate="G$1" x="-55.88" y="38.1"/>
 <instance part="C76" gate="G$1" x="-68.58" y="38.1" rot="R90"/>
