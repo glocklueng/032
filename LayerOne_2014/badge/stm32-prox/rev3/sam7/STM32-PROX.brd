@@ -3421,7 +3421,9 @@ design rules under a new name.</description>
 <element name="TP24" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="55.339" y="2.8245" smashed="yes" rot="MR180"/>
 <element name="TP25" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="38.7805" y="16.062" smashed="yes" rot="MR180"/>
 <element name="TP26" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="42.8755" y="9.789" smashed="yes" rot="MR180"/>
-<element name="TP28" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="79.5615" y="25.6745" smashed="yes" rot="MR0"/>
+<element name="TP28" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="79.5615" y="25.6745" smashed="yes" rot="MR0">
+<attribute name="PARTNO" value="NONE" x="79.5615" y="25.6745" size="1.778" layer="28" rot="MR0" display="off"/>
+</element>
 <element name="TP29" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="70.967" y="12.4225" smashed="yes" rot="MR0"/>
 <element name="TP30" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="62.94" y="12.541" smashed="yes" rot="MR270"/>
 <element name="TP31" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="47.9575" y="9.161" smashed="yes" rot="MR0"/>
@@ -3429,7 +3431,9 @@ design rules under a new name.</description>
 <element name="TP33" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="50.3485" y="9.6745" smashed="yes" rot="MR180"/>
 <element name="TP34" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="59.189" y="18.622" smashed="yes" rot="MR0"/>
 <element name="TP35" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="37.873" y="19" smashed="yes" rot="MR180"/>
-<element name="TP36" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="73.266" y="10.997" smashed="yes" rot="MR90"/>
+<element name="TP36" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="73.266" y="10.997" smashed="yes" rot="MR90">
+<attribute name="PARTNO" value="NONE" x="73.266" y="10.997" size="1.778" layer="28" rot="MR90" display="off"/>
+</element>
 <element name="TP37" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="50.6025" y="12.8175" smashed="yes" rot="MR180"/>
 <element name="TP38" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="50.3485" y="11.5635" smashed="yes" rot="MR180"/>
 <element name="TP39" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="63.965" y="15.294" smashed="yes" rot="MR0"/>
@@ -3667,7 +3671,9 @@ design rules under a new name.</description>
 <attribute name="PARTNO" value="GRM188R71H102KA01D" x="66.675" y="26.67" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="DIGIKEY" value="490-1494-2-ND" x="66.675" y="26.67" size="1.778" layer="27" rot="R270" display="off"/>
 </element>
-<element name="TP7" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="62.9775" y="33.191" smashed="yes" rot="MR90"/>
+<element name="TP7" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="62.9775" y="33.191" smashed="yes" rot="MR90">
+<attribute name="PARTNO" value="NONE" x="62.9775" y="33.191" size="1.778" layer="28" rot="MR90" display="off"/>
+</element>
 <element name="TP11" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="64.068" y="11.787" smashed="yes" rot="MR90"/>
 <element name="R4" library="STM32-PROX" package="RLC_0603" value="10K" x="63.627" y="3.683" smashed="yes">
 <attribute name="OC_NEWARK" value="unknown" x="63.627" y="3.683" size="1.778" layer="27" display="off"/>

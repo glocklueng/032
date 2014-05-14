@@ -14413,7 +14413,9 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <part name="TP24" library="STM32-PROX" deviceset="TESTPAD" device=""/>
 <part name="TP25" library="STM32-PROX" deviceset="TESTPAD" device=""/>
 <part name="TP26" library="STM32-PROX" deviceset="TESTPAD" device=""/>
-<part name="TP28" library="STM32-PROX" deviceset="TESTPAD" device=""/>
+<part name="TP28" library="STM32-PROX" deviceset="TESTPAD" device="">
+<attribute name="PARTNO" value="NONE"/>
+</part>
 <part name="TP29" library="STM32-PROX" deviceset="TESTPAD" device=""/>
 <part name="TP30" library="STM32-PROX" deviceset="TESTPAD" device=""/>
 <part name="TP31" library="STM32-PROX" deviceset="TESTPAD" device=""/>
@@ -14421,7 +14423,9 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <part name="TP33" library="STM32-PROX" deviceset="TESTPAD" device=""/>
 <part name="TP34" library="STM32-PROX" deviceset="TESTPAD" device=""/>
 <part name="TP35" library="STM32-PROX" deviceset="TESTPAD" device=""/>
-<part name="TP36" library="STM32-PROX" deviceset="TESTPAD" device=""/>
+<part name="TP36" library="STM32-PROX" deviceset="TESTPAD" device="">
+<attribute name="PARTNO" value="NONE"/>
+</part>
 <part name="TP37" library="STM32-PROX" deviceset="TESTPAD" device=""/>
 <part name="TP38" library="STM32-PROX" deviceset="TESTPAD" device=""/>
 <part name="TP39" library="STM32-PROX" deviceset="TESTPAD" device=""/>
@@ -14635,7 +14639,9 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <attribute name="OEM" value="MURATA"/>
 <attribute name="PARTNO" value="GRM188R71H102KA01D"/>
 </part>
-<part name="TP7" library="STM32-PROX" deviceset="TESTPAD" device=""/>
+<part name="TP7" library="STM32-PROX" deviceset="TESTPAD" device="">
+<attribute name="PARTNO" value="NONE"/>
+</part>
 <part name="TP11" library="STM32-PROX" deviceset="TESTPAD" device=""/>
 <part name="R4" library="STM32-PROX" deviceset="RESISTOR" device="0603" value="10K">
 <attribute name="DIGIKEY" value="RMCF0603JT10K0CT-ND"/>
@@ -16210,7 +16216,9 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <instance part="TP24" gate="G$1" x="38.1" y="-27.94" rot="R270"/>
 <instance part="TP25" gate="G$1" x="33.02" y="-30.48" rot="R270"/>
 <instance part="TP26" gate="G$1" x="38.1" y="-33.02" rot="R270"/>
-<instance part="TP28" gate="G$1" x="33.02" y="40.64" rot="R270"/>
+<instance part="TP28" gate="G$1" x="33.02" y="40.64" rot="R270">
+<attribute name="PARTNO" x="33.02" y="40.64" size="1.778" layer="96" rot="R270" display="off"/>
+</instance>
 <instance part="TP29" gate="G$1" x="33.02" y="35.56" rot="R270"/>
 <instance part="TP30" gate="G$1" x="33.02" y="25.4" rot="R270"/>
 <instance part="TP31" gate="G$1" x="38.1" y="-2.54" rot="R270"/>
@@ -16218,7 +16226,9 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <instance part="TP33" gate="G$1" x="38.1" y="2.54" rot="R270"/>
 <instance part="TP34" gate="G$1" x="33.02" y="5.08" rot="R270"/>
 <instance part="TP35" gate="G$1" x="33.02" y="-25.4" rot="R270"/>
-<instance part="TP36" gate="G$1" x="38.1" y="43.18" rot="R270"/>
+<instance part="TP36" gate="G$1" x="38.1" y="43.18" rot="R270">
+<attribute name="PARTNO" x="38.1" y="43.18" size="1.778" layer="96" rot="R270" display="off"/>
+</instance>
 <instance part="TP37" gate="G$1" x="38.1" y="12.7" rot="R270"/>
 <instance part="TP38" gate="G$1" x="33.02" y="10.16" rot="R270"/>
 <instance part="TP39" gate="G$1" x="33.02" y="15.24" rot="R270"/>
@@ -16279,7 +16289,9 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <attribute name="PARTNO" x="17.78" y="66.04" size="1.778" layer="96" rot="R180" display="off"/>
 <attribute name="DIGIKEY" x="17.78" y="66.04" size="1.778" layer="96" rot="R180" display="off"/>
 </instance>
-<instance part="TP7" gate="G$1" x="38.1" y="38.1" rot="R270"/>
+<instance part="TP7" gate="G$1" x="38.1" y="38.1" rot="R270">
+<attribute name="PARTNO" x="38.1" y="38.1" size="1.778" layer="96" rot="R270" display="off"/>
+</instance>
 <instance part="TP11" gate="G$1" x="33.02" y="30.48" rot="R270"/>
 <instance part="R4" gate="G$1" x="-55.88" y="88.9" rot="R270">
 <attribute name="PARTNO" x="-55.88" y="88.9" size="1.778" layer="96" rot="R270" display="off"/>
