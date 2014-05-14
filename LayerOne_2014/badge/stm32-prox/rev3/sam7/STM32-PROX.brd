@@ -1899,11 +1899,11 @@ design rules under a new name.</description>
 </autorouter>
 <elements>
 <element name="SV2" library="STM32-PROX" package="HIROSE-MQ172-4POS" value="HIROSE-MQ172-4POS" x="0.127" y="23.749" smashed="yes" rot="R270">
-<attribute name="PARTNO" value="*" x="0.127" y="23.749" size="1.778" layer="27" rot="R270" display="off"/>
+<attribute name="PARTNO" value="MQ172X-4PA(66)" x="0.127" y="23.749" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="NAME" x="0.368640625" y="19.132540625" size="0.762" layer="21" ratio="10"/>
 <attribute name="OC_NEWARK" value="unknown" x="0.127" y="23.749" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="MF" value="MQ172X-4PA(66)" x="0.127" y="23.749" size="1.778" layer="27" rot="R270" display="off"/>
-<attribute name="MPN" value="" x="0.127" y="23.749" size="1.778" layer="27" rot="R270" display="off"/>
+<attribute name="MPN" value="MQ172X-4PA(66)" x="0.127" y="23.749" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="DIGIKEY" value="H10488CT-ND" x="0.127" y="23.749" size="1.778" layer="27" rot="R270" display="off"/>
 </element>
 <element name="IC9" library="STM32-PROX" package="TSSOP-20" value="74XX244" x="12.192" y="36.179" smashed="yes" rot="R90">
