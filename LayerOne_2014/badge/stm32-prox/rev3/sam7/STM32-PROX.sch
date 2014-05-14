@@ -14000,14 +14000,14 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 </part>
 <part name="GND5" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="C53" library="STM32-PROX" deviceset="CAPACITOR" device="0603" value="22pF">
-<attribute name="DIGIKEY" value="1276-1047-2-ND"/>
+<attribute name="DIGIKEY" value="445-1273-2-ND"/>
 <attribute name="MF" value=""/>
-<attribute name="MPN" value="CL21C220JBANNNC"/>
+<attribute name="MPN" value="C1608C0G1H220J080AA"/>
 <attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="CL21C220JBANNNC"/>
+<attribute name="PARTNO" value="C1608C0G1H220J080AA"/>
 </part>
 <part name="C54" library="STM32-PROX" deviceset="CAPACITOR" device="0603" value="22pF">
-<attribute name="DIGIKEY" value="1276-1047-2-ND"/>
+<attribute name="DIGIKEY" value="445-1273-2-ND"/>
 <attribute name="MF" value=""/>
 <attribute name="MPN" value="CL21C220JBANNNC"/>
 <attribute name="OC_NEWARK" value="unknown"/>
@@ -14049,13 +14049,13 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <attribute name="PARTNO" value="CL21F104ZBCNNNC"/>
 </part>
 <part name="GND8" library="STM32-PROX" deviceset="GND" device=""/>
-<part name="Y1" library="STM32-PROX" deviceset="CRYSTAL" device="TXC-7A" value="8Mhz">
-<attribute name="DIGIKEY" value="887-1740-1-ND"/>
+<part name="Y1" library="STM32-PROX" deviceset="CRYSTAL" device="TXC-7A" value="16Mhz">
+<attribute name="DIGIKEY" value="887-1086-1-ND"/>
 <attribute name="MF" value=""/>
-<attribute name="MPN" value="7A-8.000MAAE-T"/>
+<attribute name="MPN" value="7A-16.000MAAJ-T"/>
 <attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTDB" value="7A-8.000MAAE-T"/>
-<attribute name="PARTNO" value="7A-8.000MAAE-T"/>
+<attribute name="PARTDB" value="7A-16.000MAAJ-T"/>
+<attribute name="PARTNO" value="7A-16.000MAAJ-T"/>
 </part>
 <part name="U4" library="STM32-PROX" deviceset="USD-SOCKET" device="NEW" value="SDCARD">
 <attribute name="MF" value=""/>
