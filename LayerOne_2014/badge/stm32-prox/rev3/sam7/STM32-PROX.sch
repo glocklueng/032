@@ -14092,7 +14092,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <attribute name="PARTNO" value="CL10B104KO8NNNC"/>
 </part>
 <part name="C206" library="STM32-PROX" deviceset="CAPACITOR" device="0603" value="4.7uF">
-<attribute name="DIGIKEY" value="1276-1784-1-ND"/>
+<attribute name="DIGIKEY" value="1276-1784-2-ND"/>
 <attribute name="MF" value=""/>
 <attribute name="MPN" value="CL10A475KO8NNNC"/>
 <attribute name="OC_NEWARK" value="unknown"/>

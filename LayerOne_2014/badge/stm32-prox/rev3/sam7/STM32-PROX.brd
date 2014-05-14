@@ -3046,7 +3046,7 @@ design rules under a new name.</description>
 <attribute name="OC_NEWARK" value="unknown" x="56.0975" y="36.1585" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="MF" value="" x="56.0975" y="36.1585" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="MPN" value="CL10A475KO8NNNC" x="56.0975" y="36.1585" size="1.778" layer="27" rot="R90" display="off"/>
-<attribute name="DIGIKEY" value="1276-1784-1-ND" x="56.0975" y="36.1585" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="DIGIKEY" value="1276-1784-2-ND" x="56.0975" y="36.1585" size="1.778" layer="27" rot="R90" display="off"/>
 </element>
 <element name="R102" library="STM32-PROX" package="RLC_0603" value="10K" x="38.907" y="35.389" smashed="yes">
 <attribute name="NAME" x="38.654371875" y="33.833396875" size="0.508" layer="25" font="vector"/>
