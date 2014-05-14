@@ -3269,10 +3269,11 @@ design rules under a new name.</description>
 <element name="L2" library="STM32-PROX" package="CDRH2D18" value="CDRH2D18/HPNP-2R2NC" x="85.852" y="46.355" smashed="yes">
 <attribute name="NAME" x="84.016903125" y="46.467040625" size="0.762" layer="25" ratio="10" rot="R90"/>
 <attribute name="VALUE" x="84.581996875" y="43.81499375" size="1" layer="27" ratio="10"/>
-<attribute name="PARTNO" value="*" x="85.852" y="46.355" size="1.778" layer="27" display="off"/>
+<attribute name="PARTNO" value="CDRH2D18/HPNP-2R2NC" x="85.852" y="46.355" size="1.778" layer="27" display="off"/>
 <attribute name="OC_NEWARK" value="unknown" x="85.852" y="46.355" size="1.778" layer="27" display="off"/>
-<attribute name="MF" value="" x="85.852" y="46.355" size="1.778" layer="27" display="off"/>
-<attribute name="MPN" value="" x="85.852" y="46.355" size="1.778" layer="27" display="off"/>
+<attribute name="MF" value="CDRH2D18/HPNP-2R2NC" x="85.852" y="46.355" size="1.778" layer="27" display="off"/>
+<attribute name="MPN" value="CDRH2D18/HPNP-2R2NC" x="85.852" y="46.355" size="1.778" layer="27" display="off"/>
+<attribute name="DIGIKEY" value="308-2295-1-ND" x="85.852" y="46.355" size="1.778" layer="27" display="off"/>
 </element>
 <element name="U$9" library="STM32-PROX" package="BATT" value="BATT" x="81.35" y="26.984" smashed="yes" rot="R270">
 <attribute name="PARTNO" value="MC34674AEPR2" x="81.35" y="26.984" size="1.778" layer="27" rot="R270" display="off"/>
