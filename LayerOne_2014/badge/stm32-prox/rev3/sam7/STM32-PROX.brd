@@ -2001,28 +2001,28 @@ design rules under a new name.</description>
 <attribute name="DIGIKEY" value="RMCF0603JT10K0CT-ND" x="1.397" y="33.909" size="1.778" layer="27" rot="R270" display="off"/>
 </element>
 <element name="TP2" library="STM32-PROX" package="KEYSTONE-SMD-TESTPOINT-5015" value="TESTPADKEYSTONE-SMD" x="2.54" y="17.145" smashed="yes" rot="R180">
-<attribute name="PARTNO" value="*" x="2.54" y="17.145" size="1.778" layer="27" rot="R180" display="off"/>
+<attribute name="PARTNO" value="NONE" x="2.54" y="17.145" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="NAME" x="1.134684375" y="14.92508125" size="0.762" layer="25"/>
 <attribute name="OC_NEWARK" value="unknown" x="2.54" y="17.145" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="MF" value="" x="2.54" y="17.145" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="MPN" value="" x="2.54" y="17.145" size="1.778" layer="27" rot="R180" display="off"/>
 </element>
 <element name="TP3" library="STM32-PROX" package="KEYSTONE-SMD-TESTPOINT-5015" value="TESTPADKEYSTONE-SMD" x="9.144" y="20.701" smashed="yes" rot="R180">
-<attribute name="PARTNO" value="*" x="9.144" y="20.701" size="1.778" layer="27" rot="R180" display="off"/>
+<attribute name="PARTNO" value="NONE" x="9.144" y="20.701" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="NAME" x="11.353234375" y="21.461078125" size="0.762" layer="25" rot="R270"/>
 <attribute name="OC_NEWARK" value="unknown" x="9.144" y="20.701" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="MF" value="" x="9.144" y="20.701" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="MPN" value="" x="9.144" y="20.701" size="1.778" layer="27" rot="R180" display="off"/>
 </element>
 <element name="TP4" library="STM32-PROX" package="KEYSTONE-SMD-TESTPOINT-5015" value="TESTPADKEYSTONE-SMD" x="9.144" y="30.861" smashed="yes" rot="R180">
-<attribute name="PARTNO" value="*" x="9.144" y="30.861" size="1.778" layer="27" rot="R180" display="off"/>
+<attribute name="PARTNO" value="NONE" x="9.144" y="30.861" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="NAME" x="11.278828125" y="32.05518125" size="0.762" layer="25" rot="R270"/>
 <attribute name="OC_NEWARK" value="unknown" x="9.144" y="30.861" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="MF" value="" x="9.144" y="30.861" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="MPN" value="" x="9.144" y="30.861" size="1.778" layer="27" rot="R180" display="off"/>
 </element>
 <element name="TP5" library="STM32-PROX" package="KEYSTONE-SMD-TESTPOINT-5015" value="TESTPADKEYSTONE-SMD" x="4.191" y="30.861" smashed="yes" rot="R180">
-<attribute name="PARTNO" value="*" x="4.191" y="30.861" size="1.778" layer="27" rot="R180" display="off"/>
+<attribute name="PARTNO" value="NONE" x="4.191" y="30.861" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="NAME" x="1.247259375" y="31.251321875" size="0.762" layer="25" rot="R270"/>
 <attribute name="OC_NEWARK" value="unknown" x="4.191" y="30.861" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="MF" value="" x="4.191" y="30.861" size="1.778" layer="27" rot="R180" display="off"/>
@@ -2387,7 +2387,7 @@ design rules under a new name.</description>
 <attribute name="DIGIKEY" value="311-1.0MGRTR-ND" x="23.368" y="21.209" size="1.778" layer="27" rot="R90" display="off"/>
 </element>
 <element name="TP1" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="36.703" y="28.829" smashed="yes" rot="MR0">
-<attribute name="PARTNO" value="*" x="36.703" y="28.829" size="1.778" layer="28" rot="MR0" display="off"/>
+<attribute name="PARTNO" value="NONE" x="36.703" y="28.829" size="1.778" layer="28" rot="MR0" display="off"/>
 <attribute name="NAME" x="35.16508125" y="28.115540625" size="1.27" layer="52" rot="MR180"/>
 <attribute name="OC_NEWARK" value="unknown" x="36.703" y="28.829" size="1.778" layer="28" rot="MR0" display="off"/>
 <attribute name="MF" value="" x="36.703" y="28.829" size="1.778" layer="28" rot="MR0" display="off"/>
@@ -2441,11 +2441,11 @@ design rules under a new name.</description>
 <attribute name="DIGIKEY" value="BZX84C47-FDICT-ND" x="18.034" y="13.589" size="1.778" layer="27" rot="R90" display="off"/>
 </element>
 <element name="D11" library="STM32-PROX" package="SOT23-3LEAD" value="DIODE-SMD-SOT23" x="20.32" y="2.286" smashed="yes">
-<attribute name="PARTNO" value="*" x="20.32" y="2.286" size="1.778" layer="27" display="off"/>
+<attribute name="PARTNO" value="BZX84C47-7-F" x="20.32" y="2.286" size="1.778" layer="27" display="off"/>
 <attribute name="NAME" x="20.990375" y="0.7075875" size="0.762" layer="25" font="vector" ratio="10" rot="R180"/>
 <attribute name="OC_NEWARK" value="unknown" x="20.32" y="2.286" size="1.778" layer="27" display="off"/>
-<attribute name="MF" value="" x="20.32" y="2.286" size="1.778" layer="27" display="off"/>
-<attribute name="MPN" value="" x="20.32" y="2.286" size="1.778" layer="27" display="off"/>
+<attribute name="MF" value="BZX84C47-7-F" x="20.32" y="2.286" size="1.778" layer="27" display="off"/>
+<attribute name="MPN" value="BZX84C47-7-F" x="20.32" y="2.286" size="1.778" layer="27" display="off"/>
 <attribute name="DIGIKEY" value="BZX84C47-FDICT-ND" x="20.32" y="2.286" size="1.778" layer="27" display="off"/>
 </element>
 <element name="XT1" library="STM32-PROX" package="XTAL-SMD-CITIZEN-CS10" value="XTAL-SMD-CITIZEN-CS10" x="81.28" y="6.985" smashed="yes" rot="R180">
@@ -2457,11 +2457,11 @@ design rules under a new name.</description>
 <attribute name="DIGIKEY" value="535-9101-1-ND" x="81.28" y="6.985" size="1.778" layer="27" rot="R180" display="off"/>
 </element>
 <element name="IC4" library="STM32-PROX" package="SMV-5" value="HCU-INVERTER" x="81.153" y="2.032" smashed="yes" rot="R180">
-<attribute name="PARTNO" value="*" x="81.153" y="2.032" size="1.778" layer="27" rot="R180" display="off"/>
+<attribute name="PARTNO" value="NC7SZ04M5X" x="81.153" y="2.032" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="NAME" x="79.415203125" y="0.64074375" size="0.762" layer="21" ratio="10"/>
 <attribute name="OC_NEWARK" value="unknown" x="81.153" y="2.032" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="MF" value="NC7SZ04M5X" x="81.153" y="2.032" size="1.778" layer="27" rot="R180" display="off"/>
-<attribute name="MPN" value="" x="81.153" y="2.032" size="1.778" layer="27" rot="R180" display="off"/>
+<attribute name="MPN" value="NC7SZ04M5X" x="81.153" y="2.032" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="DIGIKEY" value="NC7SZ04M5XCT-ND" x="81.153" y="2.032" size="1.778" layer="27" rot="R180" display="off"/>
 </element>
 <element name="R1" library="STM32-PROX" package="RLC_0603" value="1M" x="83.566" y="6.858" smashed="yes" rot="R90">
@@ -3415,43 +3415,105 @@ design rules under a new name.</description>
 <attribute name="NAME" x="90.551" y="20.574" size="1.016" layer="25" font="vector" ratio="12" rot="R90"/>
 <attribute name="VALUE" x="85.09" y="22.606" size="1.016" layer="27" font="vector" ratio="12" rot="R180"/>
 </element>
-<element name="TP16" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="81.0525" y="36.53" smashed="yes" rot="MR0"/>
-<element name="TP18" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="33.674" y="31.342" smashed="yes" rot="MR0"/>
-<element name="TP19" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="43.676" y="7.593" smashed="yes" rot="MR270"/>
-<element name="TP20" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="55.863" y="34.3365" smashed="yes" rot="MR270"/>
-<element name="TP22" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="60.573" y="16.6095" smashed="yes" rot="MR270"/>
-<element name="TP23" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="64.711" y="17.621" smashed="yes" rot="MR0"/>
-<element name="TP24" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="55.339" y="2.8245" smashed="yes" rot="MR180"/>
-<element name="TP25" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="38.7805" y="16.062" smashed="yes" rot="MR180"/>
-<element name="TP26" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="42.8755" y="9.789" smashed="yes" rot="MR180"/>
+<element name="TP16" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="81.0525" y="36.53" smashed="yes" rot="MR0">
+<attribute name="PARTNO" value="NONE" x="81.0525" y="36.53" size="1.778" layer="28" rot="MR0" display="off"/>
+</element>
+<element name="TP18" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="33.674" y="31.342" smashed="yes" rot="MR0">
+<attribute name="PARTNO" value="NONE" x="33.674" y="31.342" size="1.778" layer="28" rot="MR0" display="off"/>
+</element>
+<element name="TP19" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="43.676" y="7.593" smashed="yes" rot="MR270">
+<attribute name="PARTNO" value="NONE" x="43.676" y="7.593" size="1.778" layer="28" rot="MR270" display="off"/>
+</element>
+<element name="TP20" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="55.863" y="34.3365" smashed="yes" rot="MR270">
+<attribute name="PARTNO" value="NONE" x="55.863" y="34.3365" size="1.778" layer="28" rot="MR270" display="off"/>
+</element>
+<element name="TP22" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="60.573" y="16.6095" smashed="yes" rot="MR270">
+<attribute name="PARTNO" value="NONE" x="60.573" y="16.6095" size="1.778" layer="28" rot="MR270" display="off"/>
+</element>
+<element name="TP23" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="64.711" y="17.621" smashed="yes" rot="MR0">
+<attribute name="PARTNO" value="NONE" x="64.711" y="17.621" size="1.778" layer="28" rot="MR0" display="off"/>
+</element>
+<element name="TP24" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="55.339" y="2.8245" smashed="yes" rot="MR180">
+<attribute name="PARTNO" value="NONE" x="55.339" y="2.8245" size="1.778" layer="28" rot="MR180" display="off"/>
+</element>
+<element name="TP25" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="38.7805" y="16.062" smashed="yes" rot="MR180">
+<attribute name="PARTNO" value="NONE" x="38.7805" y="16.062" size="1.778" layer="28" rot="MR180" display="off"/>
+</element>
+<element name="TP26" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="42.8755" y="9.789" smashed="yes" rot="MR180">
+<attribute name="PARTNO" value="NONE" x="42.8755" y="9.789" size="1.778" layer="28" rot="MR180" display="off"/>
+</element>
 <element name="TP28" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="79.5615" y="25.6745" smashed="yes" rot="MR0">
 <attribute name="PARTNO" value="NONE" x="79.5615" y="25.6745" size="1.778" layer="28" rot="MR0" display="off"/>
 </element>
-<element name="TP29" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="70.967" y="12.4225" smashed="yes" rot="MR0"/>
-<element name="TP30" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="62.94" y="12.541" smashed="yes" rot="MR270"/>
-<element name="TP31" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="47.9575" y="9.161" smashed="yes" rot="MR0"/>
-<element name="TP32" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="50.666" y="7.7065" smashed="yes" rot="MR180"/>
-<element name="TP33" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="50.3485" y="9.6745" smashed="yes" rot="MR180"/>
-<element name="TP34" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="59.189" y="18.622" smashed="yes" rot="MR0"/>
-<element name="TP35" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="37.873" y="19" smashed="yes" rot="MR180"/>
+<element name="TP29" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="70.967" y="12.4225" smashed="yes" rot="MR0">
+<attribute name="PARTNO" value="NONE" x="70.967" y="12.4225" size="1.778" layer="28" rot="MR0" display="off"/>
+</element>
+<element name="TP30" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="62.94" y="12.541" smashed="yes" rot="MR270">
+<attribute name="PARTNO" value="NONE" x="62.94" y="12.541" size="1.778" layer="28" rot="MR270" display="off"/>
+</element>
+<element name="TP31" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="47.9575" y="9.161" smashed="yes" rot="MR0">
+<attribute name="PARTNO" value="NONE" x="47.9575" y="9.161" size="1.778" layer="28" rot="MR0" display="off"/>
+</element>
+<element name="TP32" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="50.666" y="7.7065" smashed="yes" rot="MR180">
+<attribute name="PARTNO" value="NONE" x="50.666" y="7.7065" size="1.778" layer="28" rot="MR180" display="off"/>
+</element>
+<element name="TP33" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="50.3485" y="9.6745" smashed="yes" rot="MR180">
+<attribute name="PARTNO" value="NONE" x="50.3485" y="9.6745" size="1.778" layer="28" rot="MR180" display="off"/>
+</element>
+<element name="TP34" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="59.189" y="18.622" smashed="yes" rot="MR0">
+<attribute name="PARTNO" value="NONE" x="59.189" y="18.622" size="1.778" layer="28" rot="MR0" display="off"/>
+</element>
+<element name="TP35" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="37.873" y="19" smashed="yes" rot="MR180">
+<attribute name="PARTNO" value="NONE" x="37.873" y="19" size="1.778" layer="28" rot="MR180" display="off"/>
+</element>
 <element name="TP36" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="73.266" y="10.997" smashed="yes" rot="MR90">
 <attribute name="PARTNO" value="NONE" x="73.266" y="10.997" size="1.778" layer="28" rot="MR90" display="off"/>
 </element>
-<element name="TP37" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="50.6025" y="12.8175" smashed="yes" rot="MR180"/>
-<element name="TP38" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="50.3485" y="11.5635" smashed="yes" rot="MR180"/>
-<element name="TP39" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="63.965" y="15.294" smashed="yes" rot="MR0"/>
-<element name="TP40" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="50.5165" y="5.865" smashed="yes" rot="MR180"/>
-<element name="TP45" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="56.402" y="18.179" smashed="yes" rot="MR180"/>
-<element name="TP46" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="65.869" y="16.3035" smashed="yes" rot="MR180"/>
-<element name="TP47" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="60.35" y="4.2025" smashed="yes" rot="MR90"/>
-<element name="TP48" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="58.8195" y="25.075" smashed="yes" rot="MR180"/>
-<element name="TP49" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="58.3335" y="21.9905" smashed="yes" rot="MR180"/>
-<element name="TP50" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="58.3115" y="23.0635" smashed="yes" rot="MR180"/>
-<element name="TP51" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="58.397" y="24.073" smashed="yes" rot="MR180"/>
-<element name="TP52" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="58.34" y="20.065" smashed="yes" rot="MR0"/>
-<element name="TP53" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="69.94" y="24.633" smashed="yes" rot="MR180"/>
-<element name="TP54" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="76.72" y="42.607" smashed="yes" rot="MR0"/>
-<element name="TP55" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="60.689" y="14.349" smashed="yes" rot="MR180"/>
+<element name="TP37" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="50.6025" y="12.8175" smashed="yes" rot="MR180">
+<attribute name="PARTNO" value="NONE" x="50.6025" y="12.8175" size="1.778" layer="28" rot="MR180" display="off"/>
+</element>
+<element name="TP38" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="50.3485" y="11.5635" smashed="yes" rot="MR180">
+<attribute name="PARTNO" value="NONE" x="50.3485" y="11.5635" size="1.778" layer="28" rot="MR180" display="off"/>
+</element>
+<element name="TP39" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="63.965" y="15.294" smashed="yes" rot="MR0">
+<attribute name="PARTNO" value="NONE" x="63.965" y="15.294" size="1.778" layer="28" rot="MR0" display="off"/>
+</element>
+<element name="TP40" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="50.5165" y="5.865" smashed="yes" rot="MR180">
+<attribute name="PARTNO" value="NONE" x="50.5165" y="5.865" size="1.778" layer="28" rot="MR180" display="off"/>
+</element>
+<element name="TP45" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="56.402" y="18.179" smashed="yes" rot="MR180">
+<attribute name="PARTNO" value="NONE" x="56.402" y="18.179" size="1.778" layer="28" rot="MR180" display="off"/>
+</element>
+<element name="TP46" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="65.869" y="16.3035" smashed="yes" rot="MR180">
+<attribute name="PARTNO" value="NONE" x="65.869" y="16.3035" size="1.778" layer="28" rot="MR180" display="off"/>
+</element>
+<element name="TP47" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="60.35" y="4.2025" smashed="yes" rot="MR90">
+<attribute name="PARTNO" value="NONE" x="60.35" y="4.2025" size="1.778" layer="28" rot="MR90" display="off"/>
+</element>
+<element name="TP48" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="58.8195" y="25.075" smashed="yes" rot="MR180">
+<attribute name="PARTNO" value="NONE" x="58.8195" y="25.075" size="1.778" layer="28" rot="MR180" display="off"/>
+</element>
+<element name="TP49" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="58.3335" y="21.9905" smashed="yes" rot="MR180">
+<attribute name="PARTNO" value="NONE" x="58.3335" y="21.9905" size="1.778" layer="28" rot="MR180" display="off"/>
+</element>
+<element name="TP50" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="58.3115" y="23.0635" smashed="yes" rot="MR180">
+<attribute name="PARTNO" value="NONE" x="58.3115" y="23.0635" size="1.778" layer="28" rot="MR180" display="off"/>
+</element>
+<element name="TP51" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="58.397" y="24.073" smashed="yes" rot="MR180">
+<attribute name="PARTNO" value="NONE" x="58.397" y="24.073" size="1.778" layer="28" rot="MR180" display="off"/>
+</element>
+<element name="TP52" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="58.34" y="20.065" smashed="yes" rot="MR0">
+<attribute name="PARTNO" value="NONE" x="58.34" y="20.065" size="1.778" layer="28" rot="MR0" display="off"/>
+</element>
+<element name="TP53" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="69.94" y="24.633" smashed="yes" rot="MR180">
+<attribute name="PARTNO" value="NONE" x="69.94" y="24.633" size="1.778" layer="28" rot="MR180" display="off"/>
+</element>
+<element name="TP54" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="76.72" y="42.607" smashed="yes" rot="MR0">
+<attribute name="PARTNO" value="NONE" x="76.72" y="42.607" size="1.778" layer="28" rot="MR0" display="off"/>
+</element>
+<element name="TP55" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="60.689" y="14.349" smashed="yes" rot="MR180">
+<attribute name="PARTNO" value="NONE" x="60.689" y="14.349" size="1.778" layer="28" rot="MR180" display="off"/>
+</element>
 <element name="JP4" library="microbuilder" package="1X07_ROUND" value="" x="64.54" y="1" smashed="yes">
 <attribute name="NAME" x="52.2718" y="0.1618" size="1.27" layer="25" ratio="10"/>
 <attribute name="VALUE" x="55.65" y="-2.175" size="1.27" layer="27"/>
@@ -3550,31 +3612,31 @@ design rules under a new name.</description>
 </element>
 <element name="OE1" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="43.307" y="16.5735" smashed="yes" rot="MR180">
 <attribute name="OC_NEWARK" value="unknown" x="43.307" y="16.5735" size="1.778" layer="28" rot="MR180" display="off"/>
-<attribute name="PARTNO" value="*" x="43.307" y="16.5735" size="1.778" layer="28" rot="MR180" display="off"/>
+<attribute name="PARTNO" value="NONE" x="43.307" y="16.5735" size="1.778" layer="28" rot="MR180" display="off"/>
 <attribute name="MPN" value="" x="43.307" y="16.5735" size="1.778" layer="28" rot="MR180" display="off"/>
 <attribute name="MF" value="" x="43.307" y="16.5735" size="1.778" layer="28" rot="MR180" display="off"/>
 </element>
 <element name="OE2" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="41.656" y="17.653" smashed="yes" rot="MR180">
 <attribute name="OC_NEWARK" value="unknown" x="41.656" y="17.653" size="1.778" layer="28" rot="MR180" display="off"/>
-<attribute name="PARTNO" value="*" x="41.656" y="17.653" size="1.778" layer="28" rot="MR180" display="off"/>
+<attribute name="PARTNO" value="NONE" x="41.656" y="17.653" size="1.778" layer="28" rot="MR180" display="off"/>
 <attribute name="MPN" value="" x="41.656" y="17.653" size="1.778" layer="28" rot="MR180" display="off"/>
 <attribute name="MF" value="" x="41.656" y="17.653" size="1.778" layer="28" rot="MR180" display="off"/>
 </element>
 <element name="OE3" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="34.671" y="6.223" smashed="yes" rot="MR0">
 <attribute name="OC_NEWARK" value="unknown" x="34.671" y="6.223" size="1.778" layer="28" rot="MR0" display="off"/>
-<attribute name="PARTNO" value="*" x="34.671" y="6.223" size="1.778" layer="28" rot="MR0" display="off"/>
+<attribute name="PARTNO" value="NONE" x="34.671" y="6.223" size="1.778" layer="28" rot="MR0" display="off"/>
 <attribute name="MPN" value="" x="34.671" y="6.223" size="1.778" layer="28" rot="MR0" display="off"/>
 <attribute name="MF" value="" x="34.671" y="6.223" size="1.778" layer="28" rot="MR0" display="off"/>
 </element>
 <element name="OE4" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="34.544" y="5.134" smashed="yes" rot="MR0">
 <attribute name="OC_NEWARK" value="unknown" x="34.544" y="5.134" size="1.778" layer="28" rot="MR0" display="off"/>
-<attribute name="PARTNO" value="*" x="34.544" y="5.134" size="1.778" layer="28" rot="MR0" display="off"/>
+<attribute name="PARTNO" value="NONE" x="34.544" y="5.134" size="1.778" layer="28" rot="MR0" display="off"/>
 <attribute name="MPN" value="" x="34.544" y="5.134" size="1.778" layer="28" rot="MR0" display="off"/>
 <attribute name="MF" value="" x="34.544" y="5.134" size="1.778" layer="28" rot="MR0" display="off"/>
 </element>
 <element name="TP_ADC_NOE" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="37.846" y="23.622" smashed="yes" rot="MR0">
 <attribute name="OC_NEWARK" value="unknown" x="37.846" y="23.622" size="1.778" layer="28" rot="MR0" display="off"/>
-<attribute name="PARTNO" value="*" x="37.846" y="23.622" size="1.778" layer="28" rot="MR0" display="off"/>
+<attribute name="PARTNO" value="NONE" x="37.846" y="23.622" size="1.778" layer="28" rot="MR0" display="off"/>
 <attribute name="MPN" value="" x="37.846" y="23.622" size="1.778" layer="28" rot="MR0" display="off"/>
 <attribute name="MF" value="" x="37.846" y="23.622" size="1.778" layer="28" rot="MR0" display="off"/>
 </element>
@@ -3594,46 +3656,48 @@ design rules under a new name.</description>
 <attribute name="DIGIKEY" value="399-1091-2-ND" x="35.56" y="35.306" size="1.778" layer="27" display="off"/>
 <attribute name="NAME" x="36.3728" y="34.3154" size="0.762" layer="25" rot="R180"/>
 </element>
-<element name="TP6" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="44.577" y="21.209" smashed="yes" rot="MR90"/>
+<element name="TP6" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="44.577" y="21.209" smashed="yes" rot="MR90">
+<attribute name="PARTNO" value="NONE" x="44.577" y="21.209" size="1.778" layer="28" rot="MR90" display="off"/>
+</element>
 <element name="OE5" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="28.067" y="13.462" smashed="yes" rot="MR0">
 <attribute name="OC_NEWARK" value="unknown" x="28.067" y="13.462" size="1.778" layer="28" rot="MR0" display="off"/>
-<attribute name="PARTNO" value="*" x="28.067" y="13.462" size="1.778" layer="28" rot="MR0" display="off"/>
+<attribute name="PARTNO" value="NONE" x="28.067" y="13.462" size="1.778" layer="28" rot="MR0" display="off"/>
 <attribute name="MPN" value="" x="28.067" y="13.462" size="1.778" layer="28" rot="MR0" display="off"/>
 <attribute name="MF" value="" x="28.067" y="13.462" size="1.778" layer="28" rot="MR0" display="off"/>
 </element>
 <element name="OE6" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="15.9385" y="23.1775" smashed="yes" rot="MR90">
 <attribute name="OC_NEWARK" value="unknown" x="15.9385" y="23.1775" size="1.778" layer="28" rot="MR90" display="off"/>
-<attribute name="PARTNO" value="*" x="15.9385" y="23.1775" size="1.778" layer="28" rot="MR90" display="off"/>
+<attribute name="PARTNO" value="NONE" x="15.9385" y="23.1775" size="1.778" layer="28" rot="MR90" display="off"/>
 <attribute name="MPN" value="" x="15.9385" y="23.1775" size="1.778" layer="28" rot="MR90" display="off"/>
 <attribute name="MF" value="" x="15.9385" y="23.1775" size="1.778" layer="28" rot="MR90" display="off"/>
 </element>
 <element name="OE7" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="39.794" y="5.842" smashed="yes" rot="MR180">
 <attribute name="OC_NEWARK" value="unknown" x="39.794" y="5.842" size="1.778" layer="28" rot="MR180" display="off"/>
-<attribute name="PARTNO" value="*" x="39.794" y="5.842" size="1.778" layer="28" rot="MR180" display="off"/>
+<attribute name="PARTNO" value="NONE" x="39.794" y="5.842" size="1.778" layer="28" rot="MR180" display="off"/>
 <attribute name="MPN" value="" x="39.794" y="5.842" size="1.778" layer="28" rot="MR180" display="off"/>
 <attribute name="MF" value="" x="39.794" y="5.842" size="1.778" layer="28" rot="MR180" display="off"/>
 </element>
 <element name="OE8" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="44.831" y="6.6675" smashed="yes" rot="MR270">
 <attribute name="OC_NEWARK" value="unknown" x="44.831" y="6.6675" size="1.778" layer="28" rot="MR270" display="off"/>
-<attribute name="PARTNO" value="*" x="44.831" y="6.6675" size="1.778" layer="28" rot="MR270" display="off"/>
+<attribute name="PARTNO" value="NONE" x="44.831" y="6.6675" size="1.778" layer="28" rot="MR270" display="off"/>
 <attribute name="MPN" value="" x="44.831" y="6.6675" size="1.778" layer="28" rot="MR270" display="off"/>
 <attribute name="MF" value="" x="44.831" y="6.6675" size="1.778" layer="28" rot="MR270" display="off"/>
 </element>
 <element name="OE9" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="52.078" y="22.098" smashed="yes" rot="MR0">
 <attribute name="OC_NEWARK" value="unknown" x="52.078" y="22.098" size="1.778" layer="28" rot="MR0" display="off"/>
-<attribute name="PARTNO" value="*" x="52.078" y="22.098" size="1.778" layer="28" rot="MR0" display="off"/>
+<attribute name="PARTNO" value="NONE" x="52.078" y="22.098" size="1.778" layer="28" rot="MR0" display="off"/>
 <attribute name="MPN" value="" x="52.078" y="22.098" size="1.778" layer="28" rot="MR0" display="off"/>
 <attribute name="MF" value="" x="52.078" y="22.098" size="1.778" layer="28" rot="MR0" display="off"/>
 </element>
 <element name="OE10" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="40.64" y="11.049" smashed="yes" rot="MR0">
 <attribute name="OC_NEWARK" value="unknown" x="40.64" y="11.049" size="1.778" layer="28" rot="MR0" display="off"/>
-<attribute name="PARTNO" value="*" x="40.64" y="11.049" size="1.778" layer="28" rot="MR0" display="off"/>
+<attribute name="PARTNO" value="NONE" x="40.64" y="11.049" size="1.778" layer="28" rot="MR0" display="off"/>
 <attribute name="MPN" value="" x="40.64" y="11.049" size="1.778" layer="28" rot="MR0" display="off"/>
 <attribute name="MF" value="" x="40.64" y="11.049" size="1.778" layer="28" rot="MR0" display="off"/>
 </element>
 <element name="OE11" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="39.624" y="12.7" smashed="yes" rot="MR180">
 <attribute name="OC_NEWARK" value="unknown" x="39.624" y="12.7" size="1.778" layer="28" rot="MR180" display="off"/>
-<attribute name="PARTNO" value="*" x="39.624" y="12.7" size="1.778" layer="28" rot="MR180" display="off"/>
+<attribute name="PARTNO" value="NONE" x="39.624" y="12.7" size="1.778" layer="28" rot="MR180" display="off"/>
 <attribute name="MPN" value="" x="39.624" y="12.7" size="1.778" layer="28" rot="MR180" display="off"/>
 <attribute name="MF" value="" x="39.624" y="12.7" size="1.778" layer="28" rot="MR180" display="off"/>
 </element>
@@ -3677,7 +3741,9 @@ design rules under a new name.</description>
 <element name="TP7" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="62.9775" y="33.191" smashed="yes" rot="MR90">
 <attribute name="PARTNO" value="NONE" x="62.9775" y="33.191" size="1.778" layer="28" rot="MR90" display="off"/>
 </element>
-<element name="TP11" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="64.068" y="11.787" smashed="yes" rot="MR90"/>
+<element name="TP11" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="64.068" y="11.787" smashed="yes" rot="MR90">
+<attribute name="PARTNO" value="NONE" x="64.068" y="11.787" size="1.778" layer="28" rot="MR90" display="off"/>
+</element>
 <element name="R4" library="STM32-PROX" package="RLC_0603" value="10K" x="63.627" y="3.683" smashed="yes">
 <attribute name="OC_NEWARK" value="unknown" x="63.627" y="3.683" size="1.778" layer="27" display="off"/>
 <attribute name="PARTNO" value="RMCF0603JT10K0" x="63.627" y="3.683" size="1.778" layer="27" display="off"/>
@@ -3695,14 +3761,30 @@ design rules under a new name.</description>
 <attribute name="NAME" x="93.6244" y="30.9372" size="0.762" layer="25" rot="R90"/>
 </element>
 <element name="U40" library="00-bitfury" package="QNF48" value="BITFURY" x="70.866" y="31.75" rot="MR180"/>
-<element name="TP12" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="77.089" y="35.306" rot="MR270"/>
-<element name="TP13" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="74.803" y="38.1" rot="MR270"/>
-<element name="TP14" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="72.7075" y="38.1" rot="MR90"/>
-<element name="TP15" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="70.993" y="38.1" rot="MR270"/>
-<element name="TP42" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="68.58" y="38.1" rot="MR270"/>
-<element name="TP43" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="76.2" y="27.94" rot="MR90"/>
-<element name="TP44" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="76.327" y="31.115" rot="MR90"/>
-<element name="TP56" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="77.47" y="33.02" rot="MR90"/>
+<element name="TP12" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="77.089" y="35.306" rot="MR270">
+<attribute name="PARTNO" value="NONE" x="77.089" y="35.306" size="1.778" layer="28" rot="MR270" display="off"/>
+</element>
+<element name="TP13" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="74.803" y="38.1" rot="MR270">
+<attribute name="PARTNO" value="NONE" x="74.803" y="38.1" size="1.778" layer="28" rot="MR270" display="off"/>
+</element>
+<element name="TP14" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="72.7075" y="38.1" rot="MR90">
+<attribute name="PARTNO" value="NONE" x="72.7075" y="38.1" size="1.778" layer="28" rot="MR90" display="off"/>
+</element>
+<element name="TP15" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="70.993" y="38.1" rot="MR270">
+<attribute name="PARTNO" value="NONE" x="70.993" y="38.1" size="1.778" layer="28" rot="MR270" display="off"/>
+</element>
+<element name="TP42" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="68.58" y="38.1" rot="MR270">
+<attribute name="PARTNO" value="NONE" x="68.58" y="38.1" size="1.778" layer="28" rot="MR270" display="off"/>
+</element>
+<element name="TP43" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="76.2" y="27.94" rot="MR90">
+<attribute name="PARTNO" value="NONE" x="76.2" y="27.94" size="1.778" layer="28" rot="MR90" display="off"/>
+</element>
+<element name="TP44" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="76.327" y="31.115" rot="MR90">
+<attribute name="PARTNO" value="NONE" x="76.327" y="31.115" size="1.778" layer="28" rot="MR90" display="off"/>
+</element>
+<element name="TP56" library="STM32-PROX" package="SMD-TESTPOINT" value="TESTPAD" x="77.47" y="33.02" rot="MR90">
+<attribute name="PARTNO" value="NONE" x="77.47" y="33.02" size="1.778" layer="28" rot="MR90" display="off"/>
+</element>
 <element name="BUZ1" library="STM32-PROX" package="BUZZER" value="BUZZER" x="48.768" y="30.226" smashed="yes" rot="MR180">
 <attribute name="NAME" x="50.466" y="36.922" size="0.8128" layer="26" ratio="10" rot="MR0"/>
 <attribute name="VALUE" x="50.368" y="35.326" size="0.8128" layer="28" ratio="10" rot="MR270"/>

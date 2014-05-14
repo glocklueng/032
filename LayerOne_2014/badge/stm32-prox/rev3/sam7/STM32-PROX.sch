@@ -13148,25 +13148,25 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="NONE"/>
 </part>
 <part name="TP3" library="STM32-PROX" deviceset="TESTPAD" device="KEYSTONE-SMD">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="NONE"/>
 </part>
 <part name="TP4" library="STM32-PROX" deviceset="TESTPAD" device="KEYSTONE-SMD">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="NONE"/>
 </part>
 <part name="TP5" library="STM32-PROX" deviceset="TESTPAD" device="KEYSTONE-SMD">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="NONE"/>
 </part>
 <part name="FRAME4" library="STM32-PROX" deviceset="A4L-LOC" device=""/>
 <part name="IC6" library="STM32-PROX" deviceset="OPAMP-TLC2274" device="" value="MCP6294">
@@ -13508,7 +13508,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="NONE"/>
 </part>
 <part name="R48" library="STM32-PROX" deviceset="RESISTOR" device="0603" value="dnp">
 <attribute name="MF" value=""/>
@@ -13556,10 +13556,10 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 </part>
 <part name="D11" library="STM32-PROX" deviceset="DIODE-SMD-SOT23" device="">
 <attribute name="DIGIKEY" value="BZX84C47-FDICT-ND"/>
-<attribute name="MF" value=""/>
-<attribute name="MPN" value=""/>
+<attribute name="MF" value="BZX84C47-7-F"/>
+<attribute name="MPN" value="BZX84C47-7-F"/>
 <attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="BZX84C47-7-F"/>
 </part>
 <part name="V56" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="XT1" library="STM32-PROX" deviceset="XTAL-SMD-CITIZEN-CS10" device="">
@@ -13572,9 +13572,9 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <part name="IC4" library="STM32-PROX" deviceset="HCU-INVERTER" device="">
 <attribute name="DIGIKEY" value="NC7SZ04M5XCT-ND"/>
 <attribute name="MF" value="NC7SZ04M5X"/>
-<attribute name="MPN" value=""/>
+<attribute name="MPN" value="NC7SZ04M5X"/>
 <attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="NC7SZ04M5X"/>
 </part>
 <part name="R1" library="STM32-PROX" deviceset="RESISTOR" device="0603" value="1M">
 <attribute name="DIGIKEY" value="311-1.0MGRTR-ND"/>
@@ -14407,43 +14407,105 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <part name="V3" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="D6" library="badge.lbrbadge_2013" deviceset="USBUG_PRTR5V0U2X" device=""/>
 <part name="V5" library="STM32-PROX" deviceset="GND" device=""/>
-<part name="TP16" library="STM32-PROX" deviceset="TESTPAD" device=""/>
-<part name="TP18" library="STM32-PROX" deviceset="TESTPAD" device=""/>
-<part name="TP19" library="STM32-PROX" deviceset="TESTPAD" device=""/>
-<part name="TP20" library="STM32-PROX" deviceset="TESTPAD" device=""/>
-<part name="TP22" library="STM32-PROX" deviceset="TESTPAD" device=""/>
-<part name="TP23" library="STM32-PROX" deviceset="TESTPAD" device=""/>
-<part name="TP24" library="STM32-PROX" deviceset="TESTPAD" device=""/>
-<part name="TP25" library="STM32-PROX" deviceset="TESTPAD" device=""/>
-<part name="TP26" library="STM32-PROX" deviceset="TESTPAD" device=""/>
+<part name="TP16" library="STM32-PROX" deviceset="TESTPAD" device="">
+<attribute name="PARTNO" value="NONE"/>
+</part>
+<part name="TP18" library="STM32-PROX" deviceset="TESTPAD" device="">
+<attribute name="PARTNO" value="NONE"/>
+</part>
+<part name="TP19" library="STM32-PROX" deviceset="TESTPAD" device="">
+<attribute name="PARTNO" value="NONE"/>
+</part>
+<part name="TP20" library="STM32-PROX" deviceset="TESTPAD" device="">
+<attribute name="PARTNO" value="NONE"/>
+</part>
+<part name="TP22" library="STM32-PROX" deviceset="TESTPAD" device="">
+<attribute name="PARTNO" value="NONE"/>
+</part>
+<part name="TP23" library="STM32-PROX" deviceset="TESTPAD" device="">
+<attribute name="PARTNO" value="NONE"/>
+</part>
+<part name="TP24" library="STM32-PROX" deviceset="TESTPAD" device="">
+<attribute name="PARTNO" value="NONE"/>
+</part>
+<part name="TP25" library="STM32-PROX" deviceset="TESTPAD" device="">
+<attribute name="PARTNO" value="NONE"/>
+</part>
+<part name="TP26" library="STM32-PROX" deviceset="TESTPAD" device="">
+<attribute name="PARTNO" value="NONE"/>
+</part>
 <part name="TP28" library="STM32-PROX" deviceset="TESTPAD" device="">
 <attribute name="PARTNO" value="NONE"/>
 </part>
-<part name="TP29" library="STM32-PROX" deviceset="TESTPAD" device=""/>
-<part name="TP30" library="STM32-PROX" deviceset="TESTPAD" device=""/>
-<part name="TP31" library="STM32-PROX" deviceset="TESTPAD" device=""/>
-<part name="TP32" library="STM32-PROX" deviceset="TESTPAD" device=""/>
-<part name="TP33" library="STM32-PROX" deviceset="TESTPAD" device=""/>
-<part name="TP34" library="STM32-PROX" deviceset="TESTPAD" device=""/>
-<part name="TP35" library="STM32-PROX" deviceset="TESTPAD" device=""/>
+<part name="TP29" library="STM32-PROX" deviceset="TESTPAD" device="">
+<attribute name="PARTNO" value="NONE"/>
+</part>
+<part name="TP30" library="STM32-PROX" deviceset="TESTPAD" device="">
+<attribute name="PARTNO" value="NONE"/>
+</part>
+<part name="TP31" library="STM32-PROX" deviceset="TESTPAD" device="">
+<attribute name="PARTNO" value="NONE"/>
+</part>
+<part name="TP32" library="STM32-PROX" deviceset="TESTPAD" device="">
+<attribute name="PARTNO" value="NONE"/>
+</part>
+<part name="TP33" library="STM32-PROX" deviceset="TESTPAD" device="">
+<attribute name="PARTNO" value="NONE"/>
+</part>
+<part name="TP34" library="STM32-PROX" deviceset="TESTPAD" device="">
+<attribute name="PARTNO" value="NONE"/>
+</part>
+<part name="TP35" library="STM32-PROX" deviceset="TESTPAD" device="">
+<attribute name="PARTNO" value="NONE"/>
+</part>
 <part name="TP36" library="STM32-PROX" deviceset="TESTPAD" device="">
 <attribute name="PARTNO" value="NONE"/>
 </part>
-<part name="TP37" library="STM32-PROX" deviceset="TESTPAD" device=""/>
-<part name="TP38" library="STM32-PROX" deviceset="TESTPAD" device=""/>
-<part name="TP39" library="STM32-PROX" deviceset="TESTPAD" device=""/>
-<part name="TP40" library="STM32-PROX" deviceset="TESTPAD" device=""/>
-<part name="TP45" library="STM32-PROX" deviceset="TESTPAD" device=""/>
-<part name="TP46" library="STM32-PROX" deviceset="TESTPAD" device=""/>
-<part name="TP47" library="STM32-PROX" deviceset="TESTPAD" device=""/>
-<part name="TP48" library="STM32-PROX" deviceset="TESTPAD" device=""/>
-<part name="TP49" library="STM32-PROX" deviceset="TESTPAD" device=""/>
-<part name="TP50" library="STM32-PROX" deviceset="TESTPAD" device=""/>
-<part name="TP51" library="STM32-PROX" deviceset="TESTPAD" device=""/>
-<part name="TP52" library="STM32-PROX" deviceset="TESTPAD" device=""/>
-<part name="TP53" library="STM32-PROX" deviceset="TESTPAD" device=""/>
-<part name="TP54" library="STM32-PROX" deviceset="TESTPAD" device=""/>
-<part name="TP55" library="STM32-PROX" deviceset="TESTPAD" device=""/>
+<part name="TP37" library="STM32-PROX" deviceset="TESTPAD" device="">
+<attribute name="PARTNO" value="NONE"/>
+</part>
+<part name="TP38" library="STM32-PROX" deviceset="TESTPAD" device="">
+<attribute name="PARTNO" value="NONE"/>
+</part>
+<part name="TP39" library="STM32-PROX" deviceset="TESTPAD" device="">
+<attribute name="PARTNO" value="NONE"/>
+</part>
+<part name="TP40" library="STM32-PROX" deviceset="TESTPAD" device="">
+<attribute name="PARTNO" value="NONE"/>
+</part>
+<part name="TP45" library="STM32-PROX" deviceset="TESTPAD" device="">
+<attribute name="PARTNO" value="NONE"/>
+</part>
+<part name="TP46" library="STM32-PROX" deviceset="TESTPAD" device="">
+<attribute name="PARTNO" value="NONE"/>
+</part>
+<part name="TP47" library="STM32-PROX" deviceset="TESTPAD" device="">
+<attribute name="PARTNO" value="NONE"/>
+</part>
+<part name="TP48" library="STM32-PROX" deviceset="TESTPAD" device="">
+<attribute name="PARTNO" value="NONE"/>
+</part>
+<part name="TP49" library="STM32-PROX" deviceset="TESTPAD" device="">
+<attribute name="PARTNO" value="NONE"/>
+</part>
+<part name="TP50" library="STM32-PROX" deviceset="TESTPAD" device="">
+<attribute name="PARTNO" value="NONE"/>
+</part>
+<part name="TP51" library="STM32-PROX" deviceset="TESTPAD" device="">
+<attribute name="PARTNO" value="NONE"/>
+</part>
+<part name="TP52" library="STM32-PROX" deviceset="TESTPAD" device="">
+<attribute name="PARTNO" value="NONE"/>
+</part>
+<part name="TP53" library="STM32-PROX" deviceset="TESTPAD" device="">
+<attribute name="PARTNO" value="NONE"/>
+</part>
+<part name="TP54" library="STM32-PROX" deviceset="TESTPAD" device="">
+<attribute name="PARTNO" value="NONE"/>
+</part>
+<part name="TP55" library="STM32-PROX" deviceset="TESTPAD" device="">
+<attribute name="PARTNO" value="NONE"/>
+</part>
 <part name="JP4" library="microbuilder" deviceset="HEADER-1X7" device="ROUND"/>
 <part name="R66" library="STM32-PROX" deviceset="RESISTOR" device="0603" value="1.5K">
 <attribute name="DIGIKEY" value="RHM1.5KCGTR-ND"/>
@@ -14523,31 +14585,31 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="NONE"/>
 </part>
 <part name="OE2" library="STM32-PROX" deviceset="TESTPAD" device="" value="TESTPAD">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="NONE"/>
 </part>
 <part name="OE3" library="STM32-PROX" deviceset="TESTPAD" device="" value="TESTPAD">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="NONE"/>
 </part>
 <part name="OE4" library="STM32-PROX" deviceset="TESTPAD" device="" value="TESTPAD">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="NONE"/>
 </part>
 <part name="TP_ADC_NOE" library="STM32-PROX" deviceset="TESTPAD" device="" value="TESTPAD">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="NONE"/>
 </part>
 <part name="C74" library="STM32-PROX" deviceset="CAPACITOR" device="0603" value="10nF">
 <attribute name="DIGIKEY" value="399-1091-2-ND"/>
@@ -14565,48 +14627,50 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 </part>
 <part name="V11" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="V25" library="STM32-PROX" deviceset="GND" device=""/>
-<part name="TP6" library="STM32-PROX" deviceset="TESTPAD" device=""/>
+<part name="TP6" library="STM32-PROX" deviceset="TESTPAD" device="">
+<attribute name="PARTNO" value="NONE"/>
+</part>
 <part name="OE5" library="STM32-PROX" deviceset="TESTPAD" device="" value="TESTPAD">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="NONE"/>
 </part>
 <part name="OE6" library="STM32-PROX" deviceset="TESTPAD" device="" value="TESTPAD">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="NONE"/>
 </part>
 <part name="OE7" library="STM32-PROX" deviceset="TESTPAD" device="" value="TESTPAD">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="NONE"/>
 </part>
 <part name="OE8" library="STM32-PROX" deviceset="TESTPAD" device="" value="TESTPAD">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="NONE"/>
 </part>
 <part name="OE9" library="STM32-PROX" deviceset="TESTPAD" device="" value="TESTPAD">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="NONE"/>
 </part>
 <part name="OE10" library="STM32-PROX" deviceset="TESTPAD" device="" value="TESTPAD">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="NONE"/>
 </part>
 <part name="OE11" library="STM32-PROX" deviceset="TESTPAD" device="" value="TESTPAD">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="NONE"/>
 </part>
 <part name="IC12" library="STM32-PROX" deviceset="AT91SAM7S64" device="" value="AT91SAM7S512B">
 <attribute name="DIGIKEY" value="AT91SAM7S512B-AU-ND"/>
@@ -14645,7 +14709,9 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <part name="TP7" library="STM32-PROX" deviceset="TESTPAD" device="">
 <attribute name="PARTNO" value="NONE"/>
 </part>
-<part name="TP11" library="STM32-PROX" deviceset="TESTPAD" device=""/>
+<part name="TP11" library="STM32-PROX" deviceset="TESTPAD" device="">
+<attribute name="PARTNO" value="NONE"/>
+</part>
 <part name="R4" library="STM32-PROX" deviceset="RESISTOR" device="0603" value="10K">
 <attribute name="DIGIKEY" value="RMCF0603JT10K0CT-ND"/>
 <attribute name="MF" value=""/>
@@ -14701,14 +14767,30 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <part name="U$721" library="00-own_parts" deviceset="GND" device=""/>
 <part name="U$722" library="00-own_parts" deviceset="GND" device=""/>
 <part name="U$41" library="00-own_parts" deviceset="VCC_0V9" device=""/>
-<part name="TP12" library="STM32-PROX" deviceset="TESTPAD" device=""/>
-<part name="TP13" library="STM32-PROX" deviceset="TESTPAD" device=""/>
-<part name="TP14" library="STM32-PROX" deviceset="TESTPAD" device=""/>
-<part name="TP15" library="STM32-PROX" deviceset="TESTPAD" device=""/>
-<part name="TP42" library="STM32-PROX" deviceset="TESTPAD" device=""/>
-<part name="TP43" library="STM32-PROX" deviceset="TESTPAD" device=""/>
-<part name="TP44" library="STM32-PROX" deviceset="TESTPAD" device=""/>
-<part name="TP56" library="STM32-PROX" deviceset="TESTPAD" device=""/>
+<part name="TP12" library="STM32-PROX" deviceset="TESTPAD" device="">
+<attribute name="PARTNO" value="NONE"/>
+</part>
+<part name="TP13" library="STM32-PROX" deviceset="TESTPAD" device="">
+<attribute name="PARTNO" value="NONE"/>
+</part>
+<part name="TP14" library="STM32-PROX" deviceset="TESTPAD" device="">
+<attribute name="PARTNO" value="NONE"/>
+</part>
+<part name="TP15" library="STM32-PROX" deviceset="TESTPAD" device="">
+<attribute name="PARTNO" value="NONE"/>
+</part>
+<part name="TP42" library="STM32-PROX" deviceset="TESTPAD" device="">
+<attribute name="PARTNO" value="NONE"/>
+</part>
+<part name="TP43" library="STM32-PROX" deviceset="TESTPAD" device="">
+<attribute name="PARTNO" value="NONE"/>
+</part>
+<part name="TP44" library="STM32-PROX" deviceset="TESTPAD" device="">
+<attribute name="PARTNO" value="NONE"/>
+</part>
+<part name="TP56" library="STM32-PROX" deviceset="TESTPAD" device="">
+<attribute name="PARTNO" value="NONE"/>
+</part>
 <part name="BUZ1" library="STM32-PROX" deviceset="BUZZER" device=""/>
 </parts>
 <sheets>
@@ -14904,7 +14986,9 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <instance part="SUPPLY5" gate="G$1" x="-73.66" y="-33.02"/>
 <instance part="SUPPLY6" gate="G$1" x="7.62" y="-38.1"/>
 <instance part="SUPPLY7" gate="G$1" x="99.06" y="76.2" rot="R180"/>
-<instance part="TP16" gate="G$1" x="60.96" y="48.26"/>
+<instance part="TP16" gate="G$1" x="60.96" y="48.26">
+<attribute name="PARTNO" x="60.96" y="48.26" size="1.778" layer="96" display="off"/>
+</instance>
 <instance part="C9" gate="G$1" x="-38.1" y="7.62">
 <attribute name="PARTNO" x="-38.1" y="7.62" size="1.778" layer="96" display="off"/>
 <attribute name="OC_NEWARK" x="-38.1" y="7.62" size="1.778" layer="96" display="off"/>
@@ -15517,9 +15601,15 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <instance part="V3" gate="G$1" x="-27.94" y="76.2" rot="R90"/>
 <instance part="D6" gate="G$1" x="-15.24" y="38.1"/>
 <instance part="V5" gate="G$1" x="-20.32" y="22.86"/>
-<instance part="TP18" gate="G$1" x="134.62" y="33.02"/>
-<instance part="TP19" gate="G$1" x="132.08" y="12.7"/>
-<instance part="TP20" gate="G$1" x="127" y="-15.24"/>
+<instance part="TP18" gate="G$1" x="134.62" y="33.02">
+<attribute name="PARTNO" x="134.62" y="33.02" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="TP19" gate="G$1" x="132.08" y="12.7">
+<attribute name="PARTNO" x="132.08" y="12.7" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="TP20" gate="G$1" x="127" y="-15.24">
+<attribute name="PARTNO" x="127" y="-15.24" size="1.778" layer="96" display="off"/>
+</instance>
 <instance part="C74" gate="G$1" x="142.24" y="45.72">
 <attribute name="PARTNO" x="142.24" y="45.72" size="1.778" layer="96" display="off"/>
 <attribute name="OC_NEWARK" x="142.24" y="45.72" size="1.778" layer="96" display="off"/>
@@ -16215,39 +16305,93 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 </instance>
 <instance part="GND9" gate="G$1" x="-115.57" y="-30.48"/>
 <instance part="GND10" gate="G$1" x="-97.79" y="60.96"/>
-<instance part="TP22" gate="G$1" x="38.1" y="-22.86" rot="R270"/>
-<instance part="TP23" gate="G$1" x="38.1" y="-17.78" rot="R270"/>
-<instance part="TP24" gate="G$1" x="38.1" y="-27.94" rot="R270"/>
-<instance part="TP25" gate="G$1" x="33.02" y="-30.48" rot="R270"/>
-<instance part="TP26" gate="G$1" x="38.1" y="-33.02" rot="R270"/>
+<instance part="TP22" gate="G$1" x="38.1" y="-22.86" rot="R270">
+<attribute name="PARTNO" x="38.1" y="-22.86" size="1.778" layer="96" rot="R270" display="off"/>
+</instance>
+<instance part="TP23" gate="G$1" x="38.1" y="-17.78" rot="R270">
+<attribute name="PARTNO" x="38.1" y="-17.78" size="1.778" layer="96" rot="R270" display="off"/>
+</instance>
+<instance part="TP24" gate="G$1" x="38.1" y="-27.94" rot="R270">
+<attribute name="PARTNO" x="38.1" y="-27.94" size="1.778" layer="96" rot="R270" display="off"/>
+</instance>
+<instance part="TP25" gate="G$1" x="33.02" y="-30.48" rot="R270">
+<attribute name="PARTNO" x="33.02" y="-30.48" size="1.778" layer="96" rot="R270" display="off"/>
+</instance>
+<instance part="TP26" gate="G$1" x="38.1" y="-33.02" rot="R270">
+<attribute name="PARTNO" x="38.1" y="-33.02" size="1.778" layer="96" rot="R270" display="off"/>
+</instance>
 <instance part="TP28" gate="G$1" x="33.02" y="40.64" rot="R270">
 <attribute name="PARTNO" x="33.02" y="40.64" size="1.778" layer="96" rot="R270" display="off"/>
 </instance>
-<instance part="TP29" gate="G$1" x="33.02" y="35.56" rot="R270"/>
-<instance part="TP30" gate="G$1" x="33.02" y="25.4" rot="R270"/>
-<instance part="TP31" gate="G$1" x="38.1" y="-2.54" rot="R270"/>
-<instance part="TP32" gate="G$1" x="33.02" y="0" rot="R270"/>
-<instance part="TP33" gate="G$1" x="38.1" y="2.54" rot="R270"/>
-<instance part="TP34" gate="G$1" x="33.02" y="5.08" rot="R270"/>
-<instance part="TP35" gate="G$1" x="33.02" y="-25.4" rot="R270"/>
+<instance part="TP29" gate="G$1" x="33.02" y="35.56" rot="R270">
+<attribute name="PARTNO" x="33.02" y="35.56" size="1.778" layer="96" rot="R270" display="off"/>
+</instance>
+<instance part="TP30" gate="G$1" x="33.02" y="25.4" rot="R270">
+<attribute name="PARTNO" x="33.02" y="25.4" size="1.778" layer="96" rot="R270" display="off"/>
+</instance>
+<instance part="TP31" gate="G$1" x="38.1" y="-2.54" rot="R270">
+<attribute name="PARTNO" x="38.1" y="-2.54" size="1.778" layer="96" rot="R270" display="off"/>
+</instance>
+<instance part="TP32" gate="G$1" x="33.02" y="0" rot="R270">
+<attribute name="PARTNO" x="33.02" y="0" size="1.778" layer="96" rot="R270" display="off"/>
+</instance>
+<instance part="TP33" gate="G$1" x="38.1" y="2.54" rot="R270">
+<attribute name="PARTNO" x="38.1" y="2.54" size="1.778" layer="96" rot="R270" display="off"/>
+</instance>
+<instance part="TP34" gate="G$1" x="33.02" y="5.08" rot="R270">
+<attribute name="PARTNO" x="33.02" y="5.08" size="1.778" layer="96" rot="R270" display="off"/>
+</instance>
+<instance part="TP35" gate="G$1" x="33.02" y="-25.4" rot="R270">
+<attribute name="PARTNO" x="33.02" y="-25.4" size="1.778" layer="96" rot="R270" display="off"/>
+</instance>
 <instance part="TP36" gate="G$1" x="38.1" y="43.18" rot="R270">
 <attribute name="PARTNO" x="38.1" y="43.18" size="1.778" layer="96" rot="R270" display="off"/>
 </instance>
-<instance part="TP37" gate="G$1" x="38.1" y="12.7" rot="R270"/>
-<instance part="TP38" gate="G$1" x="33.02" y="10.16" rot="R270"/>
-<instance part="TP39" gate="G$1" x="33.02" y="15.24" rot="R270"/>
-<instance part="TP40" gate="G$1" x="38.1" y="7.62" rot="R270"/>
-<instance part="TP45" gate="G$1" x="38.1" y="33.02" rot="R270"/>
-<instance part="TP46" gate="G$1" x="33.02" y="-20.32" rot="R270"/>
-<instance part="TP47" gate="G$1" x="38.1" y="27.94" rot="R270"/>
-<instance part="TP48" gate="G$1" x="33.02" y="-5.08" rot="R270"/>
-<instance part="TP49" gate="G$1" x="38.1" y="-7.62" rot="R270"/>
-<instance part="TP50" gate="G$1" x="33.02" y="-10.16" rot="R270"/>
-<instance part="TP51" gate="G$1" x="38.1" y="-12.7" rot="R270"/>
-<instance part="TP52" gate="G$1" x="-40.64" y="-22.86" rot="R90"/>
-<instance part="TP53" gate="G$1" x="-45.72" y="-25.4" rot="R90"/>
-<instance part="TP54" gate="G$1" x="38.1" y="17.78" rot="R270"/>
-<instance part="TP55" gate="G$1" x="33.02" y="20.32" rot="R270"/>
+<instance part="TP37" gate="G$1" x="38.1" y="12.7" rot="R270">
+<attribute name="PARTNO" x="38.1" y="12.7" size="1.778" layer="96" rot="R270" display="off"/>
+</instance>
+<instance part="TP38" gate="G$1" x="33.02" y="10.16" rot="R270">
+<attribute name="PARTNO" x="33.02" y="10.16" size="1.778" layer="96" rot="R270" display="off"/>
+</instance>
+<instance part="TP39" gate="G$1" x="33.02" y="15.24" rot="R270">
+<attribute name="PARTNO" x="33.02" y="15.24" size="1.778" layer="96" rot="R270" display="off"/>
+</instance>
+<instance part="TP40" gate="G$1" x="38.1" y="7.62" rot="R270">
+<attribute name="PARTNO" x="38.1" y="7.62" size="1.778" layer="96" rot="R270" display="off"/>
+</instance>
+<instance part="TP45" gate="G$1" x="38.1" y="33.02" rot="R270">
+<attribute name="PARTNO" x="38.1" y="33.02" size="1.778" layer="96" rot="R270" display="off"/>
+</instance>
+<instance part="TP46" gate="G$1" x="33.02" y="-20.32" rot="R270">
+<attribute name="PARTNO" x="33.02" y="-20.32" size="1.778" layer="96" rot="R270" display="off"/>
+</instance>
+<instance part="TP47" gate="G$1" x="38.1" y="27.94" rot="R270">
+<attribute name="PARTNO" x="38.1" y="27.94" size="1.778" layer="96" rot="R270" display="off"/>
+</instance>
+<instance part="TP48" gate="G$1" x="33.02" y="-5.08" rot="R270">
+<attribute name="PARTNO" x="33.02" y="-5.08" size="1.778" layer="96" rot="R270" display="off"/>
+</instance>
+<instance part="TP49" gate="G$1" x="38.1" y="-7.62" rot="R270">
+<attribute name="PARTNO" x="38.1" y="-7.62" size="1.778" layer="96" rot="R270" display="off"/>
+</instance>
+<instance part="TP50" gate="G$1" x="33.02" y="-10.16" rot="R270">
+<attribute name="PARTNO" x="33.02" y="-10.16" size="1.778" layer="96" rot="R270" display="off"/>
+</instance>
+<instance part="TP51" gate="G$1" x="38.1" y="-12.7" rot="R270">
+<attribute name="PARTNO" x="38.1" y="-12.7" size="1.778" layer="96" rot="R270" display="off"/>
+</instance>
+<instance part="TP52" gate="G$1" x="-40.64" y="-22.86" rot="R90">
+<attribute name="PARTNO" x="-40.64" y="-22.86" size="1.778" layer="96" rot="R90" display="off"/>
+</instance>
+<instance part="TP53" gate="G$1" x="-45.72" y="-25.4" rot="R90">
+<attribute name="PARTNO" x="-45.72" y="-25.4" size="1.778" layer="96" rot="R90" display="off"/>
+</instance>
+<instance part="TP54" gate="G$1" x="38.1" y="17.78" rot="R270">
+<attribute name="PARTNO" x="38.1" y="17.78" size="1.778" layer="96" rot="R270" display="off"/>
+</instance>
+<instance part="TP55" gate="G$1" x="33.02" y="20.32" rot="R270">
+<attribute name="PARTNO" x="33.02" y="20.32" size="1.778" layer="96" rot="R270" display="off"/>
+</instance>
 <instance part="JP4" gate="A" x="-71.882" y="71.12"/>
 <instance part="R66" gate="G$1" x="58.42" y="86.36" smashed="yes" rot="R90">
 <attribute name="PARTNO" x="58.42" y="86.36" size="1.778" layer="96" rot="R90" display="off"/>
@@ -16258,7 +16402,9 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <attribute name="NAME" x="56.9214" y="80.01" size="1.778" layer="95" rot="R90"/>
 <attribute name="VALUE" x="61.595" y="82.55" size="1.778" layer="96" rot="R90"/>
 </instance>
-<instance part="TP6" gate="G$1" x="33.02" y="-35.56" rot="R270"/>
+<instance part="TP6" gate="G$1" x="33.02" y="-35.56" rot="R270">
+<attribute name="PARTNO" x="33.02" y="-35.56" size="1.778" layer="96" rot="R270" display="off"/>
+</instance>
 <instance part="IC12" gate="G$1" x="22.86" y="43.18">
 <attribute name="OEM" x="22.86" y="43.18" size="1.778" layer="96" display="off"/>
 <attribute name="DIGIKEY" x="22.86" y="43.18" size="1.778" layer="96" display="off"/>
@@ -16296,7 +16442,9 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <instance part="TP7" gate="G$1" x="38.1" y="38.1" rot="R270">
 <attribute name="PARTNO" x="38.1" y="38.1" size="1.778" layer="96" rot="R270" display="off"/>
 </instance>
-<instance part="TP11" gate="G$1" x="33.02" y="30.48" rot="R270"/>
+<instance part="TP11" gate="G$1" x="33.02" y="30.48" rot="R270">
+<attribute name="PARTNO" x="33.02" y="30.48" size="1.778" layer="96" rot="R270" display="off"/>
+</instance>
 <instance part="R4" gate="G$1" x="-55.88" y="88.9" rot="R270">
 <attribute name="PARTNO" x="-55.88" y="88.9" size="1.778" layer="96" rot="R270" display="off"/>
 <attribute name="OC_NEWARK" x="-55.88" y="88.9" size="1.778" layer="96" rot="R270" display="off"/>
@@ -20185,14 +20333,30 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <instance part="U$721" gate="G$1" x="25.4" y="60.96"/>
 <instance part="U$722" gate="G$1" x="25.4" y="58.42"/>
 <instance part="U$41" gate="G$1" x="132.08" y="63.5"/>
-<instance part="TP12" gate="G$1" x="22.86" y="53.34" rot="R90"/>
-<instance part="TP13" gate="G$1" x="7.62" y="50.8" rot="R90"/>
-<instance part="TP14" gate="G$1" x="22.86" y="48.26" rot="R90"/>
-<instance part="TP15" gate="G$1" x="7.62" y="45.72" rot="R90"/>
-<instance part="TP42" gate="G$1" x="30.48" y="83.82"/>
-<instance part="TP43" gate="G$1" x="35.56" y="83.82" rot="MR0"/>
-<instance part="TP44" gate="G$1" x="38.1" y="83.82" rot="MR0"/>
-<instance part="TP56" gate="G$1" x="132.08" y="60.96" rot="MR180"/>
+<instance part="TP12" gate="G$1" x="22.86" y="53.34" rot="R90">
+<attribute name="PARTNO" x="22.86" y="53.34" size="1.778" layer="96" rot="R90" display="off"/>
+</instance>
+<instance part="TP13" gate="G$1" x="7.62" y="50.8" rot="R90">
+<attribute name="PARTNO" x="7.62" y="50.8" size="1.778" layer="96" rot="R90" display="off"/>
+</instance>
+<instance part="TP14" gate="G$1" x="22.86" y="48.26" rot="R90">
+<attribute name="PARTNO" x="22.86" y="48.26" size="1.778" layer="96" rot="R90" display="off"/>
+</instance>
+<instance part="TP15" gate="G$1" x="7.62" y="45.72" rot="R90">
+<attribute name="PARTNO" x="7.62" y="45.72" size="1.778" layer="96" rot="R90" display="off"/>
+</instance>
+<instance part="TP42" gate="G$1" x="30.48" y="83.82">
+<attribute name="PARTNO" x="30.48" y="83.82" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="TP43" gate="G$1" x="35.56" y="83.82" rot="MR0">
+<attribute name="PARTNO" x="35.56" y="83.82" size="1.778" layer="96" rot="MR0" display="off"/>
+</instance>
+<instance part="TP44" gate="G$1" x="38.1" y="83.82" rot="MR0">
+<attribute name="PARTNO" x="38.1" y="83.82" size="1.778" layer="96" rot="MR0" display="off"/>
+</instance>
+<instance part="TP56" gate="G$1" x="132.08" y="60.96" rot="MR180">
+<attribute name="PARTNO" x="132.08" y="60.96" size="1.778" layer="96" rot="MR180" display="off"/>
+</instance>
 </instances>
 <busses>
 </busses>
