@@ -14606,7 +14606,11 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <attribute name="PARTNO" value="AT91SAM7S512B-AU"/>
 </part>
 <part name="GND1" library="STM32-PROX" deviceset="GND" device=""/>
-<part name="R72" library="  merged" deviceset="RESISTOR" device="0603" value="330Ohm"/>
+<part name="R72" library="  merged" deviceset="RESISTOR" device="0603" value="330Ohm">
+<attribute name="DIGIKEY" value="311-330HRTR-ND"/>
+<attribute name="MPN" value="RC0603FR-07330RL"/>
+<attribute name="PARTNO" value="RC0603FR-07330RL"/>
+</part>
 <part name="C76" library="  merged" deviceset="CAPACITOR" device="0603" value="33nF">
 <attribute name="DIGIKEY" value="311-1429-1-ND"/>
 <attribute name="MPN" value="CC0603KRX7R9BB333"/>
@@ -16245,7 +16249,11 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <attribute name="PARTNO" x="22.86" y="43.18" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="GND1" gate="G$1" x="27.94" y="53.34"/>
-<instance part="R72" gate="G$1" x="-55.88" y="38.1"/>
+<instance part="R72" gate="G$1" x="-55.88" y="38.1">
+<attribute name="MPN" x="-55.88" y="38.1" size="1.778" layer="96" display="off"/>
+<attribute name="PARTNO" x="-55.88" y="38.1" size="1.778" layer="96" display="off"/>
+<attribute name="DIGIKEY" x="-55.88" y="38.1" size="1.778" layer="96" display="off"/>
+</instance>
 <instance part="C76" gate="G$1" x="-68.58" y="38.1" rot="R90">
 <attribute name="MPN" x="-68.58" y="38.1" size="1.778" layer="96" rot="R90" display="off"/>
 <attribute name="PARTNO" x="-68.58" y="38.1" size="1.778" layer="96" rot="R90" display="off"/>
