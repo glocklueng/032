@@ -13971,32 +13971,32 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <part name="GND45" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="GND46" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="C48" library="STM32-PROX" deviceset="CAPACITOR" device="0603" value="100nF">
-<attribute name="DIGIKEY" value="1276-1007-1-ND"/>
+<attribute name="DIGIKEY" value="1276-1005-1-ND"/>
 <attribute name="MF" value=""/>
-<attribute name="MPN" value="CL21F104ZBCNNNC"/>
+<attribute name="MPN" value="CL10B104KO8NNNC"/>
 <attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="CL21F104ZBCNNNC"/>
+<attribute name="PARTNO" value="CL10B104KO8NNNC"/>
 </part>
 <part name="C49" library="STM32-PROX" deviceset="CAPACITOR" device="0603" value="100nF">
-<attribute name="DIGIKEY" value="1276-1007-1-ND"/>
+<attribute name="DIGIKEY" value="1276-1005-1-ND"/>
 <attribute name="MF" value=""/>
-<attribute name="MPN" value="CL21F104ZBCNNNC"/>
+<attribute name="MPN" value="CL10B104KO8NNNC"/>
 <attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="CL21F104ZBCNNNC"/>
+<attribute name="PARTNO" value="CL10B104KO8NNNC"/>
 </part>
 <part name="C50" library="STM32-PROX" deviceset="CAPACITOR" device="0603" value="100nF">
-<attribute name="DIGIKEY" value="1276-1007-1-ND"/>
+<attribute name="DIGIKEY" value="1276-1005-1-ND"/>
 <attribute name="MF" value=""/>
-<attribute name="MPN" value="CL21F104ZBCNNNC"/>
+<attribute name="MPN" value="CL10B104KO8NNNC"/>
 <attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="CL21F104ZBCNNNC"/>
+<attribute name="PARTNO" value="CL10B104KO8NNNC"/>
 </part>
 <part name="C51" library="STM32-PROX" deviceset="CAPACITOR" device="0603" value="100nF">
-<attribute name="DIGIKEY" value="1276-1007-1-ND"/>
+<attribute name="DIGIKEY" value="1276-1005-1-ND"/>
 <attribute name="MF" value=""/>
-<attribute name="MPN" value="CL21F104ZBCNNNC"/>
+<attribute name="MPN" value="CL10B104KO8NNNC"/>
 <attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="CL21F104ZBCNNNC"/>
+<attribute name="PARTNO" value="CL10B104KO8NNNC"/>
 </part>
 <part name="GND5" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="C53" library="STM32-PROX" deviceset="CAPACITOR" device="0603" value="22pF">
@@ -14042,11 +14042,11 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <attribute name="PARTNO" value="MMBT2222A-7-F"/>
 </part>
 <part name="C56" library="STM32-PROX" deviceset="CAPACITOR" device="0603" value="100nF">
-<attribute name="DIGIKEY" value="1276-1007-1-ND"/>
+<attribute name="DIGIKEY" value="1276-1005-1-ND"/>
 <attribute name="MF" value=""/>
-<attribute name="MPN" value="CL21F104ZBCNNNC"/>
+<attribute name="MPN" value="CL10B104KO8NNNC"/>
 <attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="CL21F104ZBCNNNC"/>
+<attribute name="PARTNO" value="CL10B104KO8NNNC"/>
 </part>
 <part name="GND8" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="Y1" library="STM32-PROX" deviceset="CRYSTAL" device="TXC-7A" value="16Mhz">
@@ -14619,11 +14619,11 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <part name="TP7" library="STM32-PROX" deviceset="TESTPAD" device=""/>
 <part name="TP11" library="STM32-PROX" deviceset="TESTPAD" device=""/>
 <part name="R4" library="STM32-PROX" deviceset="RESISTOR" device="0603" value="10K">
-<attribute name="DIGIKEY" value="RMCF0603JT330RCT-ND"/>
+<attribute name="DIGIKEY" value="RMCF0603JT10K0CT-ND"/>
 <attribute name="MF" value=""/>
-<attribute name="MPN" value="RMCF0603JT330R"/>
+<attribute name="MPN" value="RMCF0603JT10K0"/>
 <attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="RMCF0603JT330R"/>
+<attribute name="PARTNO" value="RMCF0603JT10K0"/>
 </part>
 <part name="C9" library="STM32-PROX" deviceset="CAPACITOR" device="0603" value="100nF">
 <attribute name="DIGIKEY" value="1276-1005-1-ND"/>
