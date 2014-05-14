@@ -14036,6 +14036,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <attribute name="PARTNO" value="RMCF0603JT100R"/>
 </part>
 <part name="Q3" library="STM32-PROX" deviceset="TRANSISTOR_NPN" device="SOT23" value="MMBT2222">
+<attribute name="DIGIKEY" value="MMBT2222A-FDITR-ND"/>
 <attribute name="MF" value=""/>
 <attribute name="MPN" value="MMBT2222A-7-F"/>
 <attribute name="OC_NEWARK" value="unknown"/>
@@ -16111,6 +16112,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <attribute name="OC_NEWARK" x="-118.11" y="-17.78" size="1.778" layer="96" display="off"/>
 <attribute name="MF" x="-118.11" y="-17.78" size="1.778" layer="96" display="off"/>
 <attribute name="MPN" x="-118.11" y="-17.78" size="1.778" layer="96" display="off"/>
+<attribute name="DIGIKEY" x="-118.11" y="-17.78" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="C56" gate="G$1" x="-99.06" y="17.78" smashed="yes">
 <attribute name="NAME" x="-98.298" y="21.971" size="1.778" layer="95" rot="R180"/>
