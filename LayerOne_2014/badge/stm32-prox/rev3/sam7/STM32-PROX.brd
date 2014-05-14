@@ -2975,6 +2975,7 @@ design rules under a new name.</description>
 <attribute name="OC_NEWARK" value="unknown" x="63.369" y="29.963" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="MF" value="" x="63.369" y="29.963" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="MPN" value="MMBT2222A-7-F" x="63.369" y="29.963" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="DIGIKEY" value="MMBT2222A-FDITR-ND" x="63.369" y="29.963" size="1.778" layer="27" rot="R90" display="off"/>
 </element>
 <element name="C56" library="STM32-PROX" package="RLC_0603" value="100nF" x="66.626" y="6.073" smashed="yes" rot="R180">
 <attribute name="PARTNO" value="CL10B104KO8NNNC" x="66.626" y="6.073" size="1.778" layer="27" rot="R180" display="off"/>
