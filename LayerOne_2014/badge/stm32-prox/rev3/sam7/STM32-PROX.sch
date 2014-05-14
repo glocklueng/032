@@ -14474,15 +14474,15 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <attribute name="OC_NEWARK" value="unknown"/>
 <attribute name="PARTNO" value="CL10B104KO8NNNC"/>
 </part>
-<part name="FB2" library="STM32-PROX" deviceset="FERRITE" device="RLC_0603">
+<part name="FB2" library="STM32-PROX" deviceset="FERRITE" device="RLC_0603" value="600 OHM ">
 <attribute name="DIGIKEY" value="1276-6379-2-ND"/>
 <attribute name="PARTNO" value="CIM10J601NC"/>
 </part>
-<part name="FB3" library="STM32-PROX" deviceset="FERRITE" device="RLC_0603">
+<part name="FB3" library="STM32-PROX" deviceset="FERRITE" device="RLC_0603" value="600 OHM ">
 <attribute name="DIGIKEY" value="1276-6379-2-ND"/>
 <attribute name="PARTNO" value="CIM10J601NC"/>
 </part>
-<part name="FB1" library="STM32-PROX" deviceset="FERRITE" device="RLC_0603">
+<part name="FB1" library="STM32-PROX" deviceset="FERRITE" device="RLC_0603" value="600 OHM ">
 <attribute name="DIGIKEY" value="1276-6379-2-ND"/>
 <attribute name="PARTNO" value="CIM10J601NC"/>
 </part>
