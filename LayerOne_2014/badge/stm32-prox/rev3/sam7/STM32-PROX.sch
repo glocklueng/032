@@ -14271,10 +14271,11 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <attribute name="PARTNO" value="C1608X5R1C106M080AB"/>
 </part>
 <part name="L2" library="STM32-PROX" deviceset="CDRH2D18" device="" value="CDRH2D18/HPNP-2R2NC">
-<attribute name="MF" value=""/>
-<attribute name="MPN" value=""/>
+<attribute name="DIGIKEY" value="308-2295-1-ND"/>
+<attribute name="MF" value="CDRH2D18/HPNP-2R2NC"/>
+<attribute name="MPN" value="CDRH2D18/HPNP-2R2NC"/>
 <attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="CDRH2D18/HPNP-2R2NC"/>
 </part>
 <part name="U$9" library="STM32-PROX" deviceset="BATT" device="">
 <attribute name="DIGIKEY" value="MC34674AEPR2TR-ND"/>
@@ -14858,6 +14859,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <attribute name="OC_NEWARK" x="-2.54" y="22.86" size="1.778" layer="96" display="off"/>
 <attribute name="MF" x="-2.54" y="22.86" size="1.778" layer="96" display="off"/>
 <attribute name="MPN" x="-2.54" y="22.86" size="1.778" layer="96" display="off"/>
+<attribute name="DIGIKEY" x="-2.54" y="22.86" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="U$9" gate="G$1" x="99.06" y="66.04">
 <attribute name="PARTNO" x="99.06" y="66.04" size="1.778" layer="96" display="off"/>
