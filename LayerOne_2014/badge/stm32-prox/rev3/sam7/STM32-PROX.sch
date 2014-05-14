@@ -14608,9 +14608,9 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 </part>
 <part name="GND1" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="R72" library="  merged" deviceset="RESISTOR" device="0603" value="330Ohm">
-<attribute name="DIGIKEY" value="311-330HRTR-ND"/>
-<attribute name="MPN" value="RC0603FR-07330RL"/>
-<attribute name="PARTNO" value="RC0603FR-07330RL"/>
+<attribute name="DIGIKEY" value="RMCF0603JT330RCT-ND"/>
+<attribute name="MPN" value="RMCF0603JT330R"/>
+<attribute name="PARTNO" value="RMCF0603JT330R"/>
 </part>
 <part name="C76" library="  merged" deviceset="CAPACITOR" device="0603" value="33nF">
 <attribute name="DIGIKEY" value="311-1429-1-ND"/>
