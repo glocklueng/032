@@ -14000,18 +14000,18 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 </part>
 <part name="GND5" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="C53" library="STM32-PROX" deviceset="CAPACITOR" device="0603" value="22pF">
-<attribute name="DIGIKEY" value="445-1273-2-ND"/>
+<attribute name="DIGIKEY" value="445-1273-1-ND"/>
 <attribute name="MF" value=""/>
 <attribute name="MPN" value="C1608C0G1H220J080AA"/>
 <attribute name="OC_NEWARK" value="unknown"/>
 <attribute name="PARTNO" value="C1608C0G1H220J080AA"/>
 </part>
 <part name="C54" library="STM32-PROX" deviceset="CAPACITOR" device="0603" value="22pF">
-<attribute name="DIGIKEY" value="445-1273-2-ND"/>
+<attribute name="DIGIKEY" value="445-1273-1-ND"/>
 <attribute name="MF" value=""/>
-<attribute name="MPN" value="CL21C220JBANNNC"/>
+<attribute name="MPN" value="C1608C0G1H220J080AA"/>
 <attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="CL21C220JBANNNC"/>
+<attribute name="PARTNO" value="C1608C0G1H220J080AA"/>
 </part>
 <part name="GND7" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="R5" library="STM32-PROX" deviceset="RESISTOR" device="0603" value="10K">
@@ -14608,7 +14608,11 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <part name="GND1" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="R72" library="  merged" deviceset="RESISTOR" device="0603" value="330Ohm"/>
 <part name="C76" library="  merged" deviceset="CAPACITOR" device="0603" value="33nF"/>
-<part name="C77" library="  merged" deviceset="CAPACITOR" device="0603" value="2nF"/>
+<part name="C77" library="  merged" deviceset="CAPACITOR" device="0603" value="2nF">
+<attribute name="DIGIKEY" value="490-1458-2-ND"/>
+<attribute name="MPN" value="GRM1885C1H202JA01D"/>
+<attribute name="PARTNO" value="GRM1885C1H202JA01D"/>
+</part>
 <part name="V54" library="supply2" deviceset="GND" device=""/>
 <part name="GND11" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="C78" library="  merged" deviceset="CAPACITOR" device="0603" value="2.2uF"/>
@@ -16235,7 +16239,11 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <instance part="GND1" gate="G$1" x="27.94" y="53.34"/>
 <instance part="R72" gate="G$1" x="-55.88" y="38.1"/>
 <instance part="C76" gate="G$1" x="-68.58" y="38.1" rot="R90"/>
-<instance part="C77" gate="G$1" x="-68.58" y="48.26" rot="R90"/>
+<instance part="C77" gate="G$1" x="-68.58" y="48.26" rot="R90">
+<attribute name="MPN" x="-68.58" y="48.26" size="1.778" layer="96" rot="R90" display="off"/>
+<attribute name="PARTNO" x="-68.58" y="48.26" size="1.778" layer="96" rot="R90" display="off"/>
+<attribute name="DIGIKEY" x="-68.58" y="48.26" size="1.778" layer="96" rot="R90" display="off"/>
+</instance>
 <instance part="V54" gate="GND" x="-78.74" y="33.02" rot="MR0"/>
 <instance part="GND11" gate="G$1" x="2.54" y="-50.8"/>
 <instance part="C78" gate="G$1" x="27.94" y="66.04" rot="R180"/>
