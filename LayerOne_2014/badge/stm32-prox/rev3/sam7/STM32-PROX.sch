@@ -14196,7 +14196,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <attribute name="PARTNO" value="CL10B104KO8NNNC"/>
 </part>
 <part name="C59" library="STM32-PROX" deviceset="CAPACITOR" device="0603" value="1uF">
-<attribute name="DIGIKEY" value="311-1372-1-ND"/>
+<attribute name="DIGIKEY" value="311-1372-2-ND"/>
 <attribute name="MF" value=""/>
 <attribute name="MPN" value="CC0603ZRY5V7BB105"/>
 <attribute name="OC_NEWARK" value="06R5073"/>
@@ -14210,7 +14210,7 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <attribute name="PARTNO" value="CL10B104KO8NNNC"/>
 </part>
 <part name="C61" library="STM32-PROX" deviceset="CAPACITOR" device="0603" value="1uF">
-<attribute name="DIGIKEY" value="311-1372-1-ND"/>
+<attribute name="DIGIKEY" value="311-1372-2-ND"/>
 <attribute name="MF" value=""/>
 <attribute name="MPN" value="CC0603ZRY5V7BB105"/>
 <attribute name="OC_NEWARK" value="06R5073"/>
@@ -14476,9 +14476,18 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <attribute name="DIGIKEY" value="1276-6379-2-ND"/>
 <attribute name="PARTNO" value="CIM10J601NC"/>
 </part>
-<part name="C68" library="microbuilder" deviceset="CAP_TANTALUM" device="A/3216_REFLOW" value="4.7uF"/>
-<part name="C69" library="microbuilder" deviceset="CAP_TANTALUM" device="A/3216_REFLOW" value="4.7uF"/>
-<part name="C70" library="microbuilder" deviceset="CAP_TANTALUM" device="A/3216_REFLOW" value="4.7uF"/>
+<part name="C68" library="microbuilder" deviceset="CAP_TANTALUM" device="A/3216_REFLOW" value="4.7uF">
+<attribute name="DIGIKEY" value="399-3698-1-ND"/>
+<attribute name="PARTNO" value="T491A475M010AT"/>
+</part>
+<part name="C69" library="microbuilder" deviceset="CAP_TANTALUM" device="A/3216_REFLOW" value="4.7uF">
+<attribute name="DIGIKEY" value="399-3698-1-ND"/>
+<attribute name="PARTNO" value="T491A475M010AT"/>
+</part>
+<part name="C70" library="microbuilder" deviceset="CAP_TANTALUM" device="A/3216_REFLOW" value="4.7uF">
+<attribute name="DIGIKEY" value="399-3698-1-ND"/>
+<attribute name="PARTNO" value="T491A475M010AT"/>
+</part>
 <part name="C71" library="STM32-PROX" deviceset="CAPACITOR" device="0603" value="100nF">
 <attribute name="DIGIKEY" value="311-1429-1-ND"/>
 <attribute name="MF" value=""/>
@@ -14493,7 +14502,10 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <attribute name="OC_NEWARK" value="unknown"/>
 <attribute name="PARTNO" value="CC0603KRX7R9BB333"/>
 </part>
-<part name="C73" library="microbuilder" deviceset="CAP_TANTALUM" device="A/3216_REFLOW" value="4.7uF"/>
+<part name="C73" library="microbuilder" deviceset="CAP_TANTALUM" device="A/3216_REFLOW" value="4.7uF">
+<attribute name="DIGIKEY" value="399-3698-1-ND"/>
+<attribute name="PARTNO" value="T491A475M010AT"/>
+</part>
 <part name="V9" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="V10" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="VDD13" library="STM32-PROX" deviceset="VDD" device=""/>
@@ -17167,14 +17179,20 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <instance part="C68" gate="G$1" x="147.32" y="104.14" smashed="yes" rot="R90">
 <attribute name="NAME" x="153.924" y="106.553" size="1.778" layer="95" rot="R180"/>
 <attribute name="VALUE" x="145.288" y="106.299" size="1.778" layer="96" rot="R180"/>
+<attribute name="DIGIKEY" x="147.32" y="104.14" size="1.778" layer="96" rot="R90" display="off"/>
+<attribute name="PARTNO" x="147.32" y="104.14" size="1.778" layer="96" rot="R90" display="off"/>
 </instance>
 <instance part="C69" gate="G$1" x="147.32" y="91.44" smashed="yes" rot="R90">
 <attribute name="NAME" x="148.336" y="92.075" size="1.778" layer="95"/>
 <attribute name="VALUE" x="145.288" y="93.599" size="1.778" layer="96" rot="R180"/>
+<attribute name="DIGIKEY" x="147.32" y="91.44" size="1.778" layer="96" rot="R90" display="off"/>
+<attribute name="PARTNO" x="147.32" y="91.44" size="1.778" layer="96" rot="R90" display="off"/>
 </instance>
 <instance part="C70" gate="G$1" x="147.32" y="116.84" smashed="yes" rot="R90">
 <attribute name="NAME" x="153.416" y="119.253" size="1.778" layer="95" rot="R180"/>
 <attribute name="VALUE" x="145.796" y="118.999" size="1.778" layer="96" rot="R180"/>
+<attribute name="DIGIKEY" x="147.32" y="116.84" size="1.778" layer="96" rot="R90" display="off"/>
+<attribute name="PARTNO" x="147.32" y="116.84" size="1.778" layer="96" rot="R90" display="off"/>
 </instance>
 <instance part="C71" gate="G$1" x="124.46" y="96.52" smashed="yes" rot="R180">
 <attribute name="PARTNO" x="124.46" y="96.52" size="1.778" layer="96" rot="R180" display="off"/>
@@ -17197,6 +17215,8 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <instance part="C73" gate="G$1" x="114.3" y="96.52" smashed="yes" rot="R180">
 <attribute name="NAME" x="113.665" y="97.028" size="1.778" layer="95" rot="R90"/>
 <attribute name="VALUE" x="111.633" y="94.742" size="1.778" layer="96" rot="R270"/>
+<attribute name="PARTNO" x="114.3" y="96.52" size="1.778" layer="96" rot="R180" display="off"/>
+<attribute name="DIGIKEY" x="114.3" y="96.52" size="1.778" layer="96" rot="R180" display="off"/>
 </instance>
 <instance part="V9" gate="G$1" x="154.94" y="77.47"/>
 <instance part="V10" gate="G$1" x="119.38" y="111.76" rot="R180"/>
