@@ -14156,16 +14156,18 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <attribute name="PARTNO" value="*"/>
 </part>
 <part name="R24" library="STM32-PROX" deviceset="RESISTOR" device="0603" value="1K">
+<attribute name="DIGIKEY" value="RMCF0603JT1K00TR-ND"/>
 <attribute name="MF" value=""/>
-<attribute name="MPN" value=""/>
+<attribute name="MPN" value="RMCF0603JT1K00"/>
 <attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="RMCF0603JT1K00"/>
 </part>
 <part name="R25" library="STM32-PROX" deviceset="RESISTOR" device="0603" value="1K">
+<attribute name="DIGIKEY" value="RMCF0603JT1K00TR-ND"/>
 <attribute name="MF" value=""/>
-<attribute name="MPN" value=""/>
+<attribute name="MPN" value="RMCF0603JT1K00"/>
 <attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="RMCF0603JT1K00"/>
 </part>
 <part name="R26" library="STM32-PROX" deviceset="RESISTOR" device="0603" value="215.9K">
 <attribute name="DIGIKEY" value="541-215KHCT-ND"/>
@@ -14715,12 +14717,14 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <attribute name="OC_NEWARK" x="-25.4" y="66.04" size="1.778" layer="96" display="off"/>
 <attribute name="MF" x="-25.4" y="66.04" size="1.778" layer="96" display="off"/>
 <attribute name="MPN" x="-25.4" y="66.04" size="1.778" layer="96" display="off"/>
+<attribute name="DIGIKEY" x="-25.4" y="66.04" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="R25" gate="G$1" x="-25.4" y="60.96">
 <attribute name="PARTNO" x="-25.4" y="60.96" size="1.778" layer="96" display="off"/>
 <attribute name="OC_NEWARK" x="-25.4" y="60.96" size="1.778" layer="96" display="off"/>
 <attribute name="MF" x="-25.4" y="60.96" size="1.778" layer="96" display="off"/>
 <attribute name="MPN" x="-25.4" y="60.96" size="1.778" layer="96" display="off"/>
+<attribute name="DIGIKEY" x="-25.4" y="60.96" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="R26" gate="G$1" x="22.86" y="66.04">
 <attribute name="PARTNO" x="22.86" y="66.04" size="1.778" layer="96" display="off"/>

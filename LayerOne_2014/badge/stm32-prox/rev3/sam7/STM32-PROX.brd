@@ -3124,18 +3124,20 @@ design rules under a new name.</description>
 <element name="R24" library="STM32-PROX" package="RLC_0603" value="1K" x="90.17" y="32.385" smashed="yes" rot="R270">
 <attribute name="NAME" x="90.425475" y="30.695040625" size="0.762" layer="25" ratio="10" rot="R270"/>
 <attribute name="VALUE" x="88.265" y="33.02" size="1.27" layer="27" rot="R270"/>
-<attribute name="PARTNO" value="*" x="90.17" y="32.385" size="1.778" layer="27" rot="R270" display="off"/>
+<attribute name="PARTNO" value="RMCF0603JT1K00" x="90.17" y="32.385" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="OC_NEWARK" value="unknown" x="90.17" y="32.385" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="MF" value="" x="90.17" y="32.385" size="1.778" layer="27" rot="R270" display="off"/>
-<attribute name="MPN" value="" x="90.17" y="32.385" size="1.778" layer="27" rot="R270" display="off"/>
+<attribute name="MPN" value="RMCF0603JT1K00" x="90.17" y="32.385" size="1.778" layer="27" rot="R270" display="off"/>
+<attribute name="DIGIKEY" value="RMCF0603JT1K00TR-ND" x="90.17" y="32.385" size="1.778" layer="27" rot="R270" display="off"/>
 </element>
 <element name="R25" library="STM32-PROX" package="RLC_0603" value="1K" x="84.836" y="26.289" smashed="yes" rot="R270">
 <attribute name="NAME" x="83.295190625" y="27.755796875" size="0.762" layer="25" ratio="10" rot="R270"/>
 <attribute name="VALUE" x="82.931" y="26.924" size="1.27" layer="27" rot="R270"/>
-<attribute name="PARTNO" value="*" x="84.836" y="26.289" size="1.778" layer="27" rot="R270" display="off"/>
+<attribute name="PARTNO" value="RMCF0603JT1K00" x="84.836" y="26.289" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="OC_NEWARK" value="unknown" x="84.836" y="26.289" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="MF" value="" x="84.836" y="26.289" size="1.778" layer="27" rot="R270" display="off"/>
-<attribute name="MPN" value="" x="84.836" y="26.289" size="1.778" layer="27" rot="R270" display="off"/>
+<attribute name="MPN" value="RMCF0603JT1K00" x="84.836" y="26.289" size="1.778" layer="27" rot="R270" display="off"/>
+<attribute name="DIGIKEY" value="RMCF0603JT1K00TR-ND" x="84.836" y="26.289" size="1.778" layer="27" rot="R270" display="off"/>
 </element>
 <element name="R26" library="STM32-PROX" package="RLC_0603" value="215.9K" x="91.44" y="25.527" smashed="yes" rot="R270">
 <attribute name="NAME" x="90.496975" y="23.6501625" size="0.762" layer="25" ratio="10" rot="R90"/>
