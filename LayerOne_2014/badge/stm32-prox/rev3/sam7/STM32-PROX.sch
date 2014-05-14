@@ -14444,25 +14444,25 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 </part>
 <part name="RLY1" library="STM32-PROX" deviceset="G6S-2H" device=""/>
 <part name="C65" library="STM32-PROX" deviceset="CAPACITOR" device="0603" value="100nF">
-<attribute name="DIGIKEY" value="311-1429-1-ND"/>
+<attribute name="DIGIKEY" value="1276-1005-1-ND"/>
 <attribute name="MF" value=""/>
-<attribute name="MPN" value="CC0603KRX7R9BB333"/>
+<attribute name="MPN" value="CL10B104KO8NNNC"/>
 <attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="CC0603KRX7R9BB333"/>
+<attribute name="PARTNO" value="CL10B104KO8NNNC"/>
 </part>
 <part name="C66" library="STM32-PROX" deviceset="CAPACITOR" device="0603" value="100nF">
-<attribute name="DIGIKEY" value="311-1429-1-ND"/>
+<attribute name="DIGIKEY" value="1276-1005-1-ND"/>
 <attribute name="MF" value=""/>
-<attribute name="MPN" value="CC0603KRX7R9BB333"/>
+<attribute name="MPN" value="CL10B104KO8NNNC"/>
 <attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="CC0603KRX7R9BB333"/>
+<attribute name="PARTNO" value="CL10B104KO8NNNC"/>
 </part>
 <part name="C67" library="STM32-PROX" deviceset="CAPACITOR" device="0603" value="100nF">
-<attribute name="DIGIKEY" value="311-1429-1-ND"/>
+<attribute name="DIGIKEY" value="1276-1005-1-ND"/>
 <attribute name="MF" value=""/>
-<attribute name="MPN" value="CC0603KRX7R9BB333"/>
+<attribute name="MPN" value="CL10B104KO8NNNC"/>
 <attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="CC0603KRX7R9BB333"/>
+<attribute name="PARTNO" value="CL10B104KO8NNNC"/>
 </part>
 <part name="FB2" library="STM32-PROX" deviceset="FERRITE" device="RLC_0603">
 <attribute name="DIGIKEY" value="1276-6379-2-ND"/>
@@ -14489,18 +14489,18 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <attribute name="PARTNO" value="T491A475M010AT"/>
 </part>
 <part name="C71" library="STM32-PROX" deviceset="CAPACITOR" device="0603" value="100nF">
-<attribute name="DIGIKEY" value="311-1429-1-ND"/>
+<attribute name="DIGIKEY" value="1276-1005-1-ND"/>
 <attribute name="MF" value=""/>
-<attribute name="MPN" value="CC0603KRX7R9BB333"/>
+<attribute name="MPN" value="CL10B104KO8NNNC"/>
 <attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="CC0603KRX7R9BB333"/>
+<attribute name="PARTNO" value="CL10B104KO8NNNC"/>
 </part>
 <part name="C72" library="STM32-PROX" deviceset="CAPACITOR" device="0603" value="100nF">
-<attribute name="DIGIKEY" value="311-1429-1-ND"/>
+<attribute name="DIGIKEY" value="1276-1005-1-ND"/>
 <attribute name="MF" value=""/>
-<attribute name="MPN" value="CC0603KRX7R9BB333"/>
+<attribute name="MPN" value="CL10B104KO8NNNC"/>
 <attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="CC0603KRX7R9BB333"/>
+<attribute name="PARTNO" value="CL10B104KO8NNNC"/>
 </part>
 <part name="C73" library="microbuilder" deviceset="CAP_TANTALUM" device="A/3216_REFLOW" value="4.7uF">
 <attribute name="DIGIKEY" value="399-3698-1-ND"/>
