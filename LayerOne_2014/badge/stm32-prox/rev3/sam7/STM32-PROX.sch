@@ -13475,10 +13475,10 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 </part>
 <part name="D7" library="STM32-PROX" deviceset="DIODE-SMD-SOT23" device="">
 <attribute name="DIGIKEY" value="BZX84C47-FDICT-ND"/>
-<attribute name="MF" value=""/>
-<attribute name="MPN" value=""/>
+<attribute name="MF" value="BZX84C47-7-F"/>
+<attribute name="MPN" value="BZX84C47-7-F"/>
 <attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="BZX84C47-7-F"/>
 </part>
 <part name="VDD9" library="STM32-PROX" deviceset="VDD" device=""/>
 <part name="V48" library="STM32-PROX" deviceset="GND" device=""/>
@@ -13548,12 +13548,14 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <attribute name="PARTNO" value="CL10B104KO8NNNC"/>
 </part>
 <part name="D10" library="STM32-PROX" deviceset="DIODE-SMD-SOT23" device="">
-<attribute name="MF" value=""/>
-<attribute name="MPN" value=""/>
+<attribute name="DIGIKEY" value="BZX84C47-FDICT-ND"/>
+<attribute name="MF" value="BZX84C47-7-F"/>
+<attribute name="MPN" value="BZX84C47-7-F"/>
 <attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="*"/>
+<attribute name="PARTNO" value="BZX84C47-7-F"/>
 </part>
 <part name="D11" library="STM32-PROX" deviceset="DIODE-SMD-SOT23" device="">
+<attribute name="DIGIKEY" value="BZX84C47-FDICT-ND"/>
 <attribute name="MF" value=""/>
 <attribute name="MPN" value=""/>
 <attribute name="OC_NEWARK" value="unknown"/>
@@ -18557,12 +18559,14 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <attribute name="OC_NEWARK" x="66.04" y="-12.7" size="1.778" layer="96" display="off"/>
 <attribute name="MF" x="66.04" y="-12.7" size="1.778" layer="96" display="off"/>
 <attribute name="MPN" x="66.04" y="-12.7" size="1.778" layer="96" display="off"/>
+<attribute name="DIGIKEY" x="66.04" y="-12.7" size="1.778" layer="96" rot="R90" display="off"/>
 </instance>
 <instance part="D11" gate="G$1" x="81.28" y="73.66" rot="R90">
 <attribute name="PARTNO" x="81.28" y="73.66" size="1.778" layer="96" display="off"/>
 <attribute name="OC_NEWARK" x="81.28" y="73.66" size="1.778" layer="96" display="off"/>
 <attribute name="MF" x="81.28" y="73.66" size="1.778" layer="96" display="off"/>
 <attribute name="MPN" x="81.28" y="73.66" size="1.778" layer="96" display="off"/>
+<attribute name="DIGIKEY" x="81.28" y="73.66" size="1.778" layer="96" rot="R90" display="off"/>
 </instance>
 <instance part="V56" gate="G$1" x="81.28" y="63.5"/>
 <instance part="RLY1" gate="L" x="35.56" y="76.2"/>
