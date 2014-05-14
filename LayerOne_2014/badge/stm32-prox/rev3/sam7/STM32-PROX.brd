@@ -3637,6 +3637,9 @@ design rules under a new name.</description>
 </element>
 <element name="R72" library="  merged" package="RLC_0603" value="330Ohm" x="74.676" y="26.67" smashed="yes" rot="R270">
 <attribute name="NAME" x="74.5236" y="30.5308" size="0.762" layer="25" rot="R270"/>
+<attribute name="MPN" value="RC0603FR-07330RL" x="74.676" y="26.67" size="1.778" layer="27" rot="R270" display="off"/>
+<attribute name="PARTNO" value="RC0603FR-07330RL" x="74.676" y="26.67" size="1.778" layer="27" rot="R270" display="off"/>
+<attribute name="DIGIKEY" value="311-330HRTR-ND" x="74.676" y="26.67" size="1.778" layer="27" rot="R270" display="off"/>
 </element>
 <element name="C76" library="  merged" package="RLC_0603" value="33nF" x="76.581" y="26.67" smashed="yes" rot="R90">
 <attribute name="NAME" x="77.1144" y="22.8092" size="0.762" layer="25" rot="R90"/>
