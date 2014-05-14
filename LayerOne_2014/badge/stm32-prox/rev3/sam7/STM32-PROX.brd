@@ -3450,10 +3450,10 @@ design rules under a new name.</description>
 <element name="U$13" library="STM32-PROX" package="L1LOGO" value="" x="19.22" y="6.56" smashed="yes" rot="R270"/>
 <element name="R66" library="STM32-PROX" package="RLC_0603" value="1.5K" x="83.24" y="17.819" smashed="yes" rot="R90">
 <attribute name="OC_NEWARK" value="unknown" x="83.24" y="17.819" size="1.778" layer="27" rot="R90" display="off"/>
-<attribute name="PARTNO" value="" x="83.24" y="17.819" size="1.778" layer="27" rot="R90" display="off"/>
-<attribute name="MPN" value="" x="83.24" y="17.819" size="1.778" layer="27" rot="R90" display="off"/>
-<attribute name="MF" value="" x="83.24" y="17.819" size="1.778" layer="27" rot="R90" display="off"/>
-<attribute name="DIGIKEY" value="" x="83.24" y="17.819" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="PARTNO" value="MCR03ERTJ152" x="83.24" y="17.819" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="MPN" value="MCR03ERTJ152" x="83.24" y="17.819" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="MF" value="MCR03ERTJ152" x="83.24" y="17.819" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="DIGIKEY" value="RHM1.5KCGTR-ND" x="83.24" y="17.819" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="NAME" x="84.9164" y="16.4982" size="0.762" layer="25" rot="R90"/>
 </element>
 <element name="RLY1" library="STM32-PROX" package="G6S-2F" value="G6S-2H" x="7.493" y="7.112" smashed="yes" rot="R180">
