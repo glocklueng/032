@@ -13767,28 +13767,28 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 </part>
 <part name="V27" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="VDD6" library="STM32-PROX" deviceset="VDD" device=""/>
-<part name="R22" library="STM32-PROX" deviceset="RESISTOR" device="0603" value="33">
+<part name="R22" library="STM32-PROX" deviceset="RESISTOR" device="0603" value="33Ohm">
 <attribute name="DIGIKEY" value="311-33GRTR-ND"/>
 <attribute name="MF" value=""/>
 <attribute name="MPN" value="RC0603JR-0733RL"/>
 <attribute name="OC_NEWARK" value="unknown"/>
 <attribute name="PARTNO" value="RC0603JR-0733RL"/>
 </part>
-<part name="R27" library="STM32-PROX" deviceset="RESISTOR" device="0603" value="33">
+<part name="R27" library="STM32-PROX" deviceset="RESISTOR" device="0603" value="33Ohm">
 <attribute name="DIGIKEY" value="311-33GRTR-ND"/>
 <attribute name="MF" value=""/>
 <attribute name="MPN" value="RC0603JR-0733RL"/>
 <attribute name="OC_NEWARK" value="unknown"/>
 <attribute name="PARTNO" value="RC0603JR-0733RL"/>
 </part>
-<part name="R28" library="STM32-PROX" deviceset="RESISTOR" device="0603" value="33">
+<part name="R28" library="STM32-PROX" deviceset="RESISTOR" device="0603" value="33Ohm">
 <attribute name="DIGIKEY" value="311-33GRTR-ND"/>
 <attribute name="MF" value=""/>
 <attribute name="MPN" value="RC0603JR-0733RL"/>
 <attribute name="OC_NEWARK" value="unknown"/>
 <attribute name="PARTNO" value="RC0603JR-0733RL"/>
 </part>
-<part name="R29" library="STM32-PROX" deviceset="RESISTOR" device="0603" value="33">
+<part name="R29" library="STM32-PROX" deviceset="RESISTOR" device="0603" value="33Ohm">
 <attribute name="DIGIKEY" value="311-33GRTR-ND"/>
 <attribute name="MF" value=""/>
 <attribute name="MPN" value="RC0603JR-0733RL"/>

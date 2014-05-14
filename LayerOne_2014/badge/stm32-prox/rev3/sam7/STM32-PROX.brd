@@ -1954,7 +1954,7 @@ design rules under a new name.</description>
 <attribute name="MPN" value="74AC244TTR" x="19.05" y="36.179" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="DIGIKEY" value="497-2913-1-ND" x="19.05" y="36.179" size="1.778" layer="27" rot="R90" display="off"/>
 </element>
-<element name="R22" library="STM32-PROX" package="RLC_0603" value="33" x="5.08" y="33.909" smashed="yes" rot="R270">
+<element name="R22" library="STM32-PROX" package="RLC_0603" value="33Ohm" x="5.08" y="33.909" smashed="yes" rot="R270">
 <attribute name="PARTNO" value="RC0603JR-0733RL" x="5.08" y="33.909" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="NAME" x="4.6736" y="37.7698" size="0.762" layer="25" rot="R270"/>
 <attribute name="OC_NEWARK" value="unknown" x="5.08" y="33.909" size="1.778" layer="27" rot="R270" display="off"/>
@@ -1962,7 +1962,7 @@ design rules under a new name.</description>
 <attribute name="MPN" value="RC0603JR-0733RL" x="5.08" y="33.909" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="DIGIKEY" value="311-33GRTR-ND" x="5.08" y="33.909" size="1.778" layer="27" rot="R270" display="off"/>
 </element>
-<element name="R27" library="STM32-PROX" package="RLC_0603" value="33" x="6.985" y="33.909" smashed="yes" rot="R270">
+<element name="R27" library="STM32-PROX" package="RLC_0603" value="33Ohm" x="6.985" y="33.909" smashed="yes" rot="R270">
 <attribute name="PARTNO" value="RC0603JR-0733RL" x="6.985" y="33.909" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="NAME" x="6.5786" y="37.769471875" size="0.762" layer="25" rot="R270"/>
 <attribute name="OC_NEWARK" value="unknown" x="6.985" y="33.909" size="1.778" layer="27" rot="R270" display="off"/>
@@ -1970,7 +1970,7 @@ design rules under a new name.</description>
 <attribute name="MPN" value="RC0603JR-0733RL" x="6.985" y="33.909" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="DIGIKEY" value="311-33GRTR-ND" x="6.985" y="33.909" size="1.778" layer="27" rot="R270" display="off"/>
 </element>
-<element name="R28" library="STM32-PROX" package="RLC_0603" value="33" x="3.175" y="33.909" smashed="yes" rot="R270">
+<element name="R28" library="STM32-PROX" package="RLC_0603" value="33Ohm" x="3.175" y="33.909" smashed="yes" rot="R270">
 <attribute name="PARTNO" value="RC0603JR-0733RL" x="3.175" y="33.909" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="NAME" x="3.3834" y="35.7632" size="0.762" layer="25" rot="R90"/>
 <attribute name="OC_NEWARK" value="unknown" x="3.175" y="33.909" size="1.778" layer="27" rot="R270" display="off"/>
@@ -1978,7 +1978,7 @@ design rules under a new name.</description>
 <attribute name="MPN" value="RC0603JR-0733RL" x="3.175" y="33.909" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="DIGIKEY" value="311-33GRTR-ND" x="3.175" y="33.909" size="1.778" layer="27" rot="R270" display="off"/>
 </element>
-<element name="R29" library="STM32-PROX" package="RLC_0603" value="33" x="8.763" y="33.909" smashed="yes" rot="R270">
+<element name="R29" library="STM32-PROX" package="RLC_0603" value="33Ohm" x="8.763" y="33.909" smashed="yes" rot="R270">
 <attribute name="PARTNO" value="RC0603JR-0733RL" x="8.763" y="33.909" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="NAME" x="8.16295625" y="37.8409" size="0.762" layer="25" rot="R270"/>
 <attribute name="OC_NEWARK" value="unknown" x="8.763" y="33.909" size="1.778" layer="27" rot="R270" display="off"/>
