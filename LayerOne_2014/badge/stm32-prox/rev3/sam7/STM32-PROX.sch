@@ -14251,19 +14251,19 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <attribute name="PARTNO" value="*"/>
 </part>
 <part name="C4" library="STM32-PROX" deviceset="CAPACITOR" device="0603" value="1uF">
-<attribute name="DIGIKEY" value="311-1358-1-ND"/>
-<attribute name="MF" value=""/>
-<attribute name="MPN" value="CC0805ZRY5V8BB105"/>
+<attribute name="DIGIKEY" value="311-1372-2-ND"/>
+<attribute name="MF" value="YAGEO"/>
+<attribute name="MPN" value="CC0603ZRY5V7BB105"/>
 <attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="CC0805ZRY5V8BB105"/>
+<attribute name="PARTNO" value="CC0603ZRY5V7BB105"/>
 </part>
 <part name="GND3" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="C5" library="STM32-PROX" deviceset="CAPACITOR" device="0603" value="1uF">
-<attribute name="DIGIKEY" value="311-1358-1-ND"/>
-<attribute name="MF" value=""/>
-<attribute name="MPN" value="CC0805ZRY5V8BB105"/>
+<attribute name="DIGIKEY" value="311-1372-2-ND"/>
+<attribute name="MF" value="YAGEO"/>
+<attribute name="MPN" value="CC0603ZRY5V7BB105"/>
 <attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="CC0805ZRY5V8BB105"/>
+<attribute name="PARTNO" value="CC0603ZRY5V7BB105"/>
 </part>
 <part name="GND12" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="GND13" library="STM32-PROX" deviceset="GND" device=""/>
