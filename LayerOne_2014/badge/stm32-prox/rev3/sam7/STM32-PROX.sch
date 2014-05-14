@@ -14244,19 +14244,19 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <attribute name="PARTNO" value="CL10B104KO8NNNC"/>
 </part>
 <part name="R55" library="STM32-PROX" deviceset="RESISTOR" device="0603" value="953K 1%">
-<attribute name="DIGIKEY" value="RHM1.5MDCT-ND"/>
+<attribute name="DIGIKEY" value="311-953KHRCT-ND"/>
 <attribute name="MF" value=""/>
-<attribute name="MPN" value="ESR03EZPJ155"/>
+<attribute name="MPN" value="RC0603FR-07953KL"/>
 <attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="ESR03EZPJ155"/>
+<attribute name="PARTNO" value="RC0603FR-07953KL"/>
 <attribute name="TOLERANCE" value="5%"/>
 </part>
 <part name="R60" library="STM32-PROX" deviceset="RESISTOR" device="0603" value="95.3K 1%">
-<attribute name="DIGIKEY" value="RHM150KADCT-ND"/>
+<attribute name="DIGIKEY" value="311-95.3KHRCT-ND"/>
 <attribute name="MF" value=""/>
-<attribute name="MPN" value="ESR03EZPF1503"/>
+<attribute name="MPN" value="RC0603FR-0795K3L"/>
 <attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="ESR03EZPF1503"/>
+<attribute name="PARTNO" value="RC0603FR-0795K3L"/>
 <attribute name="TOLERANCE" value="1%"/>
 </part>
 <part name="C64" library="STM32-PROX" deviceset="CAPACITOR" device="0603" value="10uF">
