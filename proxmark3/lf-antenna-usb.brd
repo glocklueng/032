@@ -659,7 +659,10 @@ design rules under a new name.</description>
 <element name="E$7" library="  merged" package="RLC_0603" value="zerohm" x="96.073296875" y="76.479996875" rot="R215"/>
 <element name="E$1" library="STM32-PROX" package="L1LOGO" value="" x="76.97038125" y="19.369103125" rot="R135"/>
 <element name="E$8" library="STM32-PROX" package="L1LOGO" value="" x="26.680946875" y="69.6585375" rot="R135"/>
-<element name="E$10" library="dp_devices" package="CONN_USB_A_F" value="" x="97.79" y="87.249" rot="R135"/>
+<element name="E$10" library="dp_devices" package="CONN_USB_A_F" value="" x="97.79" y="87.249" rot="R135">
+<attribute name="OEM" value="AU-Y1006-2-R" x="97.79" y="87.249" size="1.778" layer="27" rot="R135" display="off"/>
+<attribute name="DIGIKEY" value="AE10332-ND" x="97.79" y="87.249" size="1.778" layer="27" rot="R135" display="off"/>
+</element>
 </elements>
 <signals>
 <signal name="BUFD">
