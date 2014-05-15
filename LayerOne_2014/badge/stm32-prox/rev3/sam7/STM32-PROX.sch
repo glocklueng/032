@@ -14795,7 +14795,12 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <part name="TP56" library="STM32-PROX" deviceset="TESTPAD" device="">
 <attribute name="PARTNO" value="NONE"/>
 </part>
-<part name="BUZ1" library="STM32-PROX" deviceset="BUZZER" device=""/>
+<part name="BUZ1" library="STM32-PROX" deviceset="BUZZER" device="">
+<attribute name="DIGIKEY" value="102-1265-2-ND"/>
+<attribute name="MF" value="CUI Inc"/>
+<attribute name="MPN" value="CCV-084B16-SMT"/>
+<attribute name="PARTNO" value="CCV-084B16-SMT"/>
+</part>
 </parts>
 <sheets>
 <sheet>
@@ -16460,7 +16465,12 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <attribute name="MPN" x="-55.88" y="88.9" size="1.778" layer="96" rot="R270" display="off"/>
 <attribute name="DIGIKEY" x="-55.88" y="88.9" size="1.778" layer="96" rot="R270" display="off"/>
 </instance>
-<instance part="BUZ1" gate="G$1" x="-115.57" y="-7.62"/>
+<instance part="BUZ1" gate="G$1" x="-115.57" y="-7.62">
+<attribute name="MF" x="-115.57" y="-7.62" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="-115.57" y="-7.62" size="1.778" layer="96" display="off"/>
+<attribute name="PARTNO" x="-115.57" y="-7.62" size="1.778" layer="96" display="off"/>
+<attribute name="DIGIKEY" x="-115.57" y="-7.62" size="1.778" layer="96" display="off"/>
+</instance>
 </instances>
 <busses>
 </busses>
