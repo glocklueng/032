@@ -14405,7 +14405,11 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <attribute name="PARTNO" value="1981568-1"/>
 </part>
 <part name="V3" library="STM32-PROX" deviceset="GND" device=""/>
-<part name="D6" library="badge.lbrbadge_2013" deviceset="USBUG_PRTR5V0U2X" device=""/>
+<part name="D6" library="badge.lbrbadge_2013" deviceset="USBUG_PRTR5V0U2X" device="">
+<attribute name="DIGIKEY" value="568-4140-1-ND"/>
+<attribute name="MPN" value="PRTR5V0U2X,215"/>
+<attribute name="PARTNO" value="PRTR5V0U2X,215"/>
+</part>
 <part name="V5" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="TP16" library="STM32-PROX" deviceset="TESTPAD" device="">
 <attribute name="PARTNO" value="NONE"/>
@@ -15599,7 +15603,11 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <attribute name="DIGIKEY" x="-38.1" y="76.2" size="1.778" layer="96" rot="R180" display="off"/>
 </instance>
 <instance part="V3" gate="G$1" x="-27.94" y="76.2" rot="R90"/>
-<instance part="D6" gate="G$1" x="-15.24" y="38.1"/>
+<instance part="D6" gate="G$1" x="-15.24" y="38.1">
+<attribute name="MPN" x="-15.24" y="38.1" size="1.778" layer="96" display="off"/>
+<attribute name="PARTNO" x="-15.24" y="38.1" size="1.778" layer="96" display="off"/>
+<attribute name="DIGIKEY" x="-15.24" y="38.1" size="1.778" layer="96" display="off"/>
+</instance>
 <instance part="V5" gate="G$1" x="-20.32" y="22.86"/>
 <instance part="TP18" gate="G$1" x="134.62" y="33.02">
 <attribute name="PARTNO" x="134.62" y="33.02" size="1.778" layer="96" display="off"/>
