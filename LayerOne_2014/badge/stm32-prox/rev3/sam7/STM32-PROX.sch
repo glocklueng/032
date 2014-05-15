@@ -14518,7 +14518,13 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <attribute name="OC_NEWARK" value="unknown"/>
 <attribute name="PARTNO" value="MCR03ERTJ152"/>
 </part>
-<part name="RLY1" library="STM32-PROX" deviceset="G6S-2H" device=""/>
+<part name="RLY1" library="STM32-PROX" deviceset="G6S-2H" device="">
+<attribute name="DIGIKEY" value="Z888-ND"/>
+<attribute name="MOUSER" value="653-G6S-2F-DC5"/>
+<attribute name="MPN" value="G6S-2F-DC5"/>
+<attribute name="OEM" value="OMRON"/>
+<attribute name="PARTNO" value="G6S-2F-DC5"/>
+</part>
 <part name="C65" library="STM32-PROX" deviceset="CAPACITOR" device="0603" value="100nF">
 <attribute name="DIGIKEY" value="1276-1005-1-ND"/>
 <attribute name="MF" value=""/>
@@ -18736,8 +18742,15 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 </instance>
 <instance part="V56" gate="G$1" x="81.28" y="63.5"/>
 <instance part="RLY1" gate="L" x="35.56" y="76.2"/>
-<instance part="RLY1" gate="A" x="22.86" y="5.08" rot="R90"/>
-<instance part="RLY1" gate="B" x="25.4" y="101.6" rot="R90"/>
+<instance part="RLY1" gate="A" x="22.86" y="5.08" rot="R90">
+<attribute name="MPN" x="22.86" y="5.08" size="1.778" layer="96" rot="R90" display="off"/>
+</instance>
+<instance part="RLY1" gate="B" x="25.4" y="101.6" rot="R90">
+<attribute name="DIGIKEY" x="25.4" y="101.6" size="1.778" layer="96" rot="R90" display="off"/>
+<attribute name="OEM" x="25.4" y="101.6" size="1.778" layer="96" rot="R90" display="off"/>
+<attribute name="PARTNO" x="25.4" y="101.6" size="1.778" layer="96" rot="R90" display="off"/>
+<attribute name="MOUSER" x="25.4" y="101.6" size="1.778" layer="96" rot="R90" display="off"/>
+</instance>
 </instances>
 <busses>
 </busses>
