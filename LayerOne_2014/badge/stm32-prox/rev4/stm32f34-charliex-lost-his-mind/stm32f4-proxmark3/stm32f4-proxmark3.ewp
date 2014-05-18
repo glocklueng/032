@@ -1093,6 +1093,8 @@
           <state>NDEBUG</state>
           <state>USE_STDPERIPH_DRIVER</state>
           <state>STM32F4XX</state>
+          <state>USE_USB_OTG_FS</state>
+          <state>USB_OTG_FS_CORE</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1227,6 +1229,12 @@
           <state>$PROJ_DIR$\Libraries\CMSIS\ST\STM32F4xx\Include</state>
           <state>$PROJ_DIR$\Libraries\STM32F4xx_StdPeriph_Driver\inc</state>
           <state>$PROJ_DIR$\Utilities\STM32F4-Discovery</state>
+          <state>$PROJ_DIR$\Libraries\STM32_USB_HOST_Library\Core\inc</state>
+          <state>$PROJ_DIR$\Libraries\STM32_USB_HOST_Library\Class\MSC\inc</state>
+          <state>$PROJ_DIR$\Libraries\STM32_USB_OTG_Driver\inc</state>
+          <state>$PROJ_DIR$\Utilities\Third_Party\fat_fs\inc</state>
+          <state>$PROJ_DIR$\Libraries\STM32_USB_Device_Library\Class\cdc\inc</state>
+          <state>$PROJ_DIR$\Libraries\STM32_USB_Device_Library\Core\inc</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1848,6 +1856,18 @@
     </settings>
   </configuration>
   <group>
+    <name>includes</name>
+    <file>
+      <name>$PROJ_DIR$\usb_conf.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\usbh_conf.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\usbh_usr.h</name>
+    </file>
+  </group>
+  <group>
     <name>STM32F4xx</name>
     <group>
       <name>EWARM</name>
@@ -1868,6 +1888,27 @@
       </file>
       <file>
         <name>$PROJ_DIR$\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c</name>
+      </file>
+    </group>
+    <group>
+      <name>STM32_USB_OTG_Driver</name>
+      <group>
+        <name>class</name>
+        <file>
+          <name>$PROJ_DIR$\Libraries\STM32_USB_Device_Library\Class\cdc\src\usbd_cdc_core.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\Libraries\STM32_USB_Device_Library\Class\cdc\src\usbd_cdc_if_template.c</name>
+        </file>
+      </group>
+      <file>
+        <name>$PROJ_DIR$\Libraries\STM32_USB_OTG_Driver\src\usb_core.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\Libraries\STM32_USB_OTG_Driver\src\usb_hcd.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\Libraries\STM32_USB_OTG_Driver\src\usb_hcd_int.c</name>
       </file>
     </group>
     <file>
