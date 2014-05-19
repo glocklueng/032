@@ -2997,6 +2997,8 @@ design rules under a new name.</description>
 <attribute name="MF" value="" x="80.294" y="17.27" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="MPN" value="7A-16.000MAAJ-T" x="80.294" y="17.27" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="DIGIKEY" value="887-1086-1-ND" x="80.294" y="17.27" size="1.778" layer="27" rot="R270" display="off"/>
+<attribute name="PARTNO_ALT" value="ABM2-16.000MHZ-D4Y-T" x="80.294" y="17.27" size="1.778" layer="27" rot="R270" display="off"/>
+<attribute name="DIGIKEY_ALT" value="535-10881-1-ND" x="80.294" y="17.27" size="1.778" layer="27" rot="R270" display="off"/>
 </element>
 <element name="U4" library="STM32-PROX" package="MICRO-SD-SOCKET-PP" value="SDCARD" x="57.31" y="32.865" smashed="yes" rot="MR0">
 <attribute name="NAME" x="56.431459375" y="34.22035625" size="0.762" layer="26" ratio="10" rot="MR270"/>
