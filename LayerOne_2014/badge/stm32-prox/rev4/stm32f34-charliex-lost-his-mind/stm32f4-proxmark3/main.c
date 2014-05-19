@@ -1,32 +1,14 @@
 #include "stm32f4_discovery.h"
  
-void RCC_Configuration(void)
-{
-  /* --------------------------- System Clocks Configuration -----------------*/
-  /* TIM1 clock enable */
-  RCC_APB2PeriphClockCmd(RCC_APB2Periph_TIM1, ENABLE);
-  
-  /* GPIOA clock enable */
-  RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
-}
-  
-/**************************************************************************************/
-  
-void GPIO_Configuration(void)
-{
-  GPIO_InitTypeDef GPIO_InitStructure;
-  
-  /*-------------------------- GPIO Configuration ----------------------------*/
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10;
-  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
-  GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
-  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
-  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
-  GPIO_Init(GPIOA, &GPIO_InitStructure);
-  
-  /* Connect TIM1 pins to AF */
-  GPIO_PinAFConfig(GPIOA, GPIO_PinSource10, GPIO_AF_TIM1);
-}
+#include "l1_board.h"
+#include "proxmark3.h"
+#include "apps.h"
+#include <string.h>
+#include "logos.h"
+
+#include "stm32f4xx_dma.h"
+
+uint32_t BigBuf[BIG_BUFFER];
 
 // PCK0 needs to run at 24Mhz, main clock is 72MHz, so div 3
 // Moved to DOUT PA10, FPGA matches now too.
@@ -88,17 +70,232 @@ void SetupPCK0Clock ( void )
 }
 
 
+void DrawADCOLED ( void )
+{
+	uint16_t *dest = ( uint16_t * ) &BigBuf[0];
+	uint8_t v = 0;
+	uint16_t temp[256];
 
+	uint16_t r;
+	int i;
+	int p = 0;
+
+	memset ( temp,0,sizeof ( temp ) );
+
+	OLEDClear();
+
+	OLEDPutstr ( "DrawADCOLED" );
+	OLEDDraw();
+
+	// We're using this mode just so that I can test it out; the simulated
+	// tag mode would work just as well and be simpler.
+	FpgaWriteConfWord ( FPGA_MAJOR_MODE_HF_READER_RX_XCORR | FPGA_HF_READER_RX_XCORR_848_KHZ | FPGA_HF_READER_RX_XCORR_SNOOP );
+
+	// We need to listen to the high-frequency, peak-detected path.
+	SetAdcMuxFor ( GPIO_MUXSEL_HIPKD );
+
+	FpgaSetupSsc ( 1 );
+
+//#define USE_FPGA_DMA ( 1 )
+
+#ifdef  USE_FPGA_DMA
+	//where too, amount to transfer in bytes
+	FpgaSetupSscDma ( ( uint8_t* ) dest, 128 ) ;
+	FpgaEnableSscDma();
+#else
+	__disable_irq();
+#endif
+
+	i = 0;
+
+	for ( ;; ) {
+
+#ifdef  USE_FPGA_DMA
+
+		while ( !DMA_GetITStatus ( SPI_SLAVE_RX_DMA, DMA_IT_TCIF0  ) );
+
+		// wait for a full transfer
+		while ( DMA_GetCurrDataCounter ( SPI_SLAVE_RX_DMA )  > 2 );
+
+		memcpy ( temp,dest,sizeof ( temp ) );
+
+		//Clear DMA1 Channel1 Half Transfer, Transfer Complete and Global interrupt pending bits
+		DMA_ClearITPendingBit (SPI_SLAVE_RX_DMA, DMA_IT_TEIF0 | DMA_IT_DMEIF0 | DMA_IT_FEIF0 | DMA_IT_TCIF0 | DMA_IT_HTIF0 );
+
+		while ( DMA_GetFlagStatus ( SPI_SLAVE_RX_DMA, DMA_FLAG_TCIF4 ) == RESET ) {}
+
+#endif
+		OLEDClear();
+
+		for ( int x =  0 ; x < 127; x ++ ) {
+
+			register uint16_t xt;
+
+#ifndef  USE_FPGA_DMA
+			// 16 bit read
+			temp[x] = softspi_rx();
+#endif
+			xt = ( temp[x] >> 8 ); // +   ((temp[x]&0xff)<<8);
+			OLEDLine ( x,0,x, xt,1 );
+			
+//			OLEDLine ( x,0,x, ( ( temp[x]&0xff ) /4 ),1 );
+//			OLEDLine ( x+1,0,x+1, ( temp[x] >> 8 ) /4,1 );
+		}
+
+		OLEDDraw();
+
+
+		//memset(dest,0,128);
+
+	}
+
+	FpgaDisableSscDma();
+
+}
+
+void Draw_ADC_LOW_OLED ( void )
+{
+	uint16_t *dest = ( uint16_t * ) BigBuf+FREE_BUFFER_OFFSET;
+	uint8_t v = 0;
+	uint16_t r;
+	int i;
+	int p = 0;
+
+	OLEDClear();
+
+	OLEDPutstr ( "Draw_ADC_LOW_OLED" );
+	OLEDDraw();
+
+	// We're using this mode just so that I can test it out; the simulated
+	// tag mode would work just as well and be simpler.
+	//FpgaWriteConfWord ( FPGA_MAJOR_MODE_HF_READER_RX_XCORR | FPGA_HF_READER_RX_XCORR_848_KHZ | FPGA_HF_READER_RX_XCORR_SNOOP );
+
+	FpgaWriteConfWord ( FPGA_MAJOR_MODE_LF_READER );
+
+	// We need to listen to the high-frequency, peak-detected path.
+	SetAdcMuxFor ( GPIO_MUXSEL_LORAW );
+
+	__disable_irq();
+
+	i = 0;
+
+	for ( ;; ) {
+
+		OLEDClear();
+
+		for ( int x =  0 ; x < 127; x++ ) {
+
+			dest[x] = ReadAdc (0 )/4;
+			//OLEDLine ( x,0,x, dest[x] ,1 );
+			OLEDSetPixel ( x,dest[x] ,1 );
+		}
+
+		OLEDDraw();
+	}
+
+	FpgaDisableSscDma();
+
+}
+void Draw_ADC_HIGH_OLED ( void )
+{
+	uint16_t *dest = ( uint16_t * ) BigBuf+FREE_BUFFER_OFFSET;
+	uint8_t v = 0;
+	uint16_t r;
+	int i;
+	int p = 0;
+
+	OLEDClear();
+
+	OLEDPutstr ( "Draw_ADC_HIGH_OLED" );
+	OLEDDraw();
+
+	// We're using this mode just so that I can test it out; the simulated
+	// tag mode would work just as well and be simpler.
+	FpgaWriteConfWord ( FPGA_MAJOR_MODE_HF_READER_RX_XCORR | FPGA_HF_READER_RX_XCORR_848_KHZ | FPGA_HF_READER_RX_XCORR_SNOOP );
+
+	// We need to listen to the high-frequency, peak-detected path.
+	SetAdcMuxFor ( GPIO_MUXSEL_HIRAW );
+
+	__disable_irq();
+	
+	i = 0;
+
+	for ( ;; ) {
+
+		OLEDClear();
+
+		for ( int x =  0 ; x < 127; x++ ) {
+
+			dest[x] = ReadAdc ( 1 )/4;
+			//OLEDLine ( x,0,x, ( dest[x] ) ,1 );
+			OLEDSetPixel ( x,dest[x]/2 ,1 );
+		}
+
+		OLEDDraw();
+	}
+
+	FpgaDisableSscDma();
+}
 
 int main()
 {
 
   RCC_Configuration();
   
-  GPIO_Configuration();
+  SysTick_Config(SystemCoreClock / 1000);
   
+  Set_System();
+  
+  // Startup OLED
+  InitOLED();
+  
+  
+  //OLEDTest(  );
+  
+  FpgaDownloadAndGo();
+	
+#if 0
+	OLEDClear();
+	OLEDPutstr ( "FPGA TEST MODE\n" );
+	OLEDDraw();
+
+	HIGH ( FPGAON );              // Enable VREG's
+	DelaymS ( 100 );
+
+	// about 1.3MHz (works)
+	while ( 0 ) {
+		LOW ( NCS );
+		DelayuS ( 1 );
+		HIGH ( NCS );
+		DelayuS ( 1 );
+	}
+
+	while ( 1 ) {
+		LOW ( GPIO_FPGA_DIN );DelayuS ( 1 );
+		HIGH ( GPIO_FPGA_DIN );DelayuS ( 1 );
+	}
+
+#endif
   SetupPCK0Clock();
+
+  OLEDClear();
+  OLEDPutstr ( "SYSTEM INIT\n" );
+  OLEDPutstr ( "SYSTEM READY\n" );
+  OLEDDraw();
+
+  DelaymS ( 100 );
+
+  OLEDDisplayPicture ( l1logo_inv );
+  OLEDDraw();
+
+  DelaymS ( 100 );
   
+  while ( 1 ) {
+	  //DrawADCOLED();
+	  //Draw_ADC_HIGH_OLED();
+	  Draw_ADC_LOW_OLED();
+  }
+
   
   return 0;
 }

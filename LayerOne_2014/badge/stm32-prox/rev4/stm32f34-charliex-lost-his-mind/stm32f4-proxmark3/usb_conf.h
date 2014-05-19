@@ -129,8 +129,8 @@
 /****************** USB OTG MODE CONFIGURATION ********************************/
 
 #define USE_HOST_MODE
-//#define USE_DEVICE_MODE
-//#define USE_OTG_MODE
+#define USE_DEVICE_MODE
+#define USE_OTG_MODE
 
 
 #ifndef USB_OTG_FS_CORE
@@ -226,6 +226,12 @@
 /**
   * @}
   */ 
+/****************** USB OTG FS CONFIGURATION **********************************/
+ #define RX_FIFO_FS_SIZE                          128
+ #define TX0_FIFO_FS_SIZE                          32
+ #define TX1_FIFO_FS_SIZE                         128
+ #define TX2_FIFO_FS_SIZE                          32 
+ #define TX3_FIFO_FS_SIZE                           0
 
 
 #endif //__USB_CONF__H__

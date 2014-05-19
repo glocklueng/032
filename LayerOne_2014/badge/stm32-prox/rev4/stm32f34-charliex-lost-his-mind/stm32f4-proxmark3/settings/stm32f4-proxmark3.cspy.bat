@@ -19,6 +19,6 @@
 @REM 
 
 
-"C:\IAR Systems\Embedded Workbench 6.5\common\bin\cspybat" "C:\IAR Systems\Embedded Workbench 6.5\arm\bin\armproc.dll" "C:\IAR Systems\Embedded Workbench 6.5\arm\bin\armjlink.dll"  %1 --plugin "C:\IAR Systems\Embedded Workbench 6.5\arm\bin\armbat.dll" --macro "C:\IAR Systems\Embedded Workbench 6.5\arm\config\debugger\ST\Trace_STM32F4xx.dmac" --backend -B "--endian=little" "--cpu=Cortex-M4" "--fpu=None" "-p" "C:\IAR Systems\Embedded Workbench 6.5\arm\CONFIG\debugger\ST\STM32F405RG.ddf" "--semihosting=none" "--device=STM32F405RG" "--drv_communication=USB0" "--jlink_speed=auto" "--jlink_initial_speed=32" "--jlink_reset_strategy=0,0" "--jlink_interface=SWD" "--drv_catch_exceptions=0x000" "--drv_swo_clock_setup=72000000,0,2000000" 
+"C:\IAR Systems\Embedded Workbench 6.5\common\bin\cspybat" "C:\IAR Systems\Embedded Workbench 6.5\arm\bin\armproc.dll" "C:\IAR Systems\Embedded Workbench 6.5\arm\bin\armjlink.dll"  %1 --plugin "C:\IAR Systems\Embedded Workbench 6.5\arm\bin\armbat.dll" --macro "C:\IAR Systems\Embedded Workbench 6.5\arm\config\debugger\ST\Trace_STM32F4xx.dmac" --backend -B "--endian=little" "--cpu=Cortex-M4" "--fpu=VFPv4" "-p" "C:\IAR Systems\Embedded Workbench 6.5\arm\CONFIG\debugger\ST\STM32F405RG.ddf" "--semihosting" "--device=STM32F405RG" "--drv_communication=USB0" "--jlink_speed=auto" "--jlink_initial_speed=32" "--jlink_reset_strategy=0,0" "--jlink_interface=SWD" "--drv_catch_exceptions=0x000" "--drv_swo_clock_setup=72000000,0,2000000" 
 
 

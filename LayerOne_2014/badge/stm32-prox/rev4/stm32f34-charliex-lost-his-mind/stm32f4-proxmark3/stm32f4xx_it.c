@@ -123,6 +123,7 @@ void SVC_Handler(void)
 void PendSV_Handler(void)
 {}
 
+extern void TimingDelay_Decrement(void);
 /**
   * @brief  This function handles SysTick Handler.
   * @param  None
@@ -130,6 +131,7 @@ void PendSV_Handler(void)
   */
 void SysTick_Handler(void)
 {
+  TimingDelay_Decrement();
 }
 
 /******************************************************************************/

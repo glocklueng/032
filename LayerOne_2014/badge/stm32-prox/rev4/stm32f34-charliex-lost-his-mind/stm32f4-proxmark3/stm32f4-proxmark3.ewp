@@ -170,6 +170,8 @@
           <name>CCDefines</name>
           <state>USE_STDPERIPH_DRIVER</state>
           <state>STM32F4XX</state>
+          <state>USE_USB_OTG_FS</state>
+          <state>USB_OTG_FS_CORE</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -300,10 +302,17 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$\..\</state>
           <state>$PROJ_DIR$\</state>
+          <state>$PROJ_DIR$\include</state>
           <state>$PROJ_DIR$\Libraries\CMSIS\Include</state>
           <state>$PROJ_DIR$\Libraries\CMSIS\ST\STM32F4xx\Include</state>
           <state>$PROJ_DIR$\Libraries\STM32F4xx_StdPeriph_Driver\inc</state>
           <state>$PROJ_DIR$\Utilities\STM32F4-Discovery</state>
+          <state>$PROJ_DIR$\Libraries\STM32_USB_HOST_Library\Core\inc</state>
+          <state>$PROJ_DIR$\Libraries\STM32_USB_HOST_Library\Class\MSC\inc</state>
+          <state>$PROJ_DIR$\Libraries\STM32_USB_OTG_Driver\inc</state>
+          <state>$PROJ_DIR$\Utilities\Third_Party\fat_fs\inc</state>
+          <state>$PROJ_DIR$\Libraries\STM32_USB_Device_Library\Class\cdc\inc</state>
+          <state>$PROJ_DIR$\Libraries\STM32_USB_Device_Library\Core\inc</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1225,6 +1234,7 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$\..\</state>
           <state>$PROJ_DIR$\</state>
+          <state>$PROJ_DIR$\include</state>
           <state>$PROJ_DIR$\Libraries\CMSIS\Include</state>
           <state>$PROJ_DIR$\Libraries\CMSIS\ST\STM32F4xx\Include</state>
           <state>$PROJ_DIR$\Libraries\STM32F4xx_StdPeriph_Driver\inc</state>
@@ -1856,7 +1866,43 @@
     </settings>
   </configuration>
   <group>
+    <name>armsrc</name>
+    <file>
+      <name>$PROJ_DIR$\armsrc\fpgaloader.c</name>
+    </file>
+  </group>
+  <group>
     <name>includes</name>
+    <file>
+      <name>$PROJ_DIR$\include\common.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\include\fpga.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\include\hitag2.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\include\hw_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\include\integer.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\include\l1_board.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\include\mifare.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\include\proxmark3.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\include\ssd1306.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\include\usb_cmd.h</name>
+    </file>
     <file>
       <name>$PROJ_DIR$\usb_conf.h</name>
     </file>
@@ -1865,6 +1911,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$\usbh_usr.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\include\util.h</name>
     </file>
   </group>
   <group>
@@ -1881,10 +1930,19 @@
         <name>$PROJ_DIR$\Libraries\STM32F4xx_StdPeriph_Driver\src\misc.c</name>
       </file>
       <file>
+        <name>$PROJ_DIR$\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_adc.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_dma.c</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_gpio.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rcc.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_spi.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c</name>
@@ -1925,7 +1983,16 @@
     </file>
   </group>
   <file>
+    <name>$PROJ_DIR$\hw_config.c</name>
+  </file>
+  <file>
+    <name>$PROJ_DIR$\logos.c</name>
+  </file>
+  <file>
     <name>$PROJ_DIR$\main.c</name>
+  </file>
+  <file>
+    <name>$PROJ_DIR$\ssd1306.c</name>
   </file>
 </project>
 
