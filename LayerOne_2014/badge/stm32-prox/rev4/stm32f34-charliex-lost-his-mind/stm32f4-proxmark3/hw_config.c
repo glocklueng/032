@@ -880,8 +880,6 @@ void SetSpeaker ( unsigned int delay )
 //-----------------------------------------------------------------------------
 #if DMA_ADC == 1
 
-extern __IO uint16_t  ADC_Ampl[2];
-
 unsigned int ReadAdc( int ch )
 {
 	return ADC_Ampl[1-ch]/4;
