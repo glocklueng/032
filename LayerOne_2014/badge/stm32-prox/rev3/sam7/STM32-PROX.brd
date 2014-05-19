@@ -3351,6 +3351,8 @@ design rules under a new name.</description>
 <attribute name="MPN" value="MCP100T-270I/TT" x="62.23" y="7.166" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="DIGIKEY" value="MCP100T-270I/TTCT-ND" x="62.23" y="7.166" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="NAME" x="60.9589" y="8.7974" size="1.016" layer="25" font="vector" ratio="18"/>
+<attribute name="DIGIKEY_ALT" value="MCP809T-270I/TTDKR-ND" x="62.23" y="7.166" size="1.778" layer="27" rot="R270" display="off"/>
+<attribute name="PARTNO_ALT" value="MCP809T-270I/TT" x="62.23" y="7.166" size="1.778" layer="27" rot="R270" display="off"/>
 </element>
 <element name="LED3" library="STM32-PROX" package="LED_SML0603" value="" x="73.169" y="7.136" smashed="yes">
 <attribute name="NAME" x="71.167903125" y="7.667425" size="0.762" layer="25"/>

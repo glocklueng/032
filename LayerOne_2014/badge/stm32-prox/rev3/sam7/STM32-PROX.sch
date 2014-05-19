@@ -14337,10 +14337,12 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <part name="U$10" library="STM32-PROX" deviceset="+3V3" device=""/>
 <part name="IC7" library="STM32-PROX" deviceset="MCP100" device="">
 <attribute name="DIGIKEY" value="MCP100T-270I/TTCT-ND"/>
+<attribute name="DIGIKEY_ALT" value="MCP809T-270I/TTDKR-ND"/>
 <attribute name="MF" value=""/>
 <attribute name="MPN" value="MCP100T-270I/TT"/>
 <attribute name="OC_NEWARK" value="unknown"/>
 <attribute name="PARTNO" value="MCP100T-270I/TT"/>
+<attribute name="PARTNO_ALT" value="MCP809T-270I/TT"/>
 </part>
 <part name="LED3" library="STM32-PROX" deviceset="LED_LED" device="SML0603">
 <attribute name="DIGIKEY" value="475-2558-1-ND"/>
@@ -16279,6 +16281,8 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <attribute name="MF" x="-116.84" y="33.02" size="1.778" layer="96" display="off"/>
 <attribute name="MPN" x="-116.84" y="33.02" size="1.778" layer="96" display="off"/>
 <attribute name="DIGIKEY" x="-116.84" y="33.02" size="1.778" layer="96" display="off"/>
+<attribute name="DIGIKEY_ALT" x="-116.84" y="33.02" size="1.778" layer="96" display="off"/>
+<attribute name="PARTNO_ALT" x="-116.84" y="33.02" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="LED3" gate="G$1" x="-71.12" y="99.06" rot="R90">
 <attribute name="PARTNO" x="-71.12" y="99.06" size="1.778" layer="96" display="off"/>
