@@ -14054,11 +14054,13 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <part name="GND8" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="Y1" library="STM32-PROX" deviceset="CRYSTAL" device="TXC-7A" value="16Mhz">
 <attribute name="DIGIKEY" value="887-1086-1-ND"/>
+<attribute name="DIGIKEY_ALT" value="535-10881-1-ND"/>
 <attribute name="MF" value=""/>
 <attribute name="MPN" value="7A-16.000MAAJ-T"/>
 <attribute name="OC_NEWARK" value="unknown"/>
 <attribute name="PARTDB" value="7A-16.000MAAJ-T"/>
 <attribute name="PARTNO" value="7A-16.000MAAJ-T"/>
+<attribute name="PARTNO_ALT" value="ABM2-16.000MHZ-D4Y-T"/>
 </part>
 <part name="U4" library="STM32-PROX" deviceset="USD-SOCKET" device="NEW" value="SDCARD">
 <attribute name="MF" value=""/>
@@ -16254,6 +16256,8 @@ KEMET V / EIA 7343-20, KEMET X / EIA 7343-43 Wafe solder</description>
 <attribute name="MF" x="-60.96" y="-2.54" size="1.778" layer="96" rot="R270" display="off"/>
 <attribute name="MPN" x="-60.96" y="-2.54" size="1.778" layer="96" rot="R270" display="off"/>
 <attribute name="DIGIKEY" x="-60.96" y="-2.54" size="1.778" layer="96" rot="R270" display="off"/>
+<attribute name="PARTNO_ALT" x="-60.96" y="-2.54" size="1.778" layer="96" rot="R270" display="off"/>
+<attribute name="DIGIKEY_ALT" x="-60.96" y="-2.54" size="1.778" layer="96" rot="R270" display="off"/>
 </instance>
 <instance part="R7" gate="G$1" x="48.26" y="86.36" smashed="yes" rot="R90">
 <attribute name="PARTNO" x="48.26" y="86.36" size="1.778" layer="96" rot="R90" display="off"/>
