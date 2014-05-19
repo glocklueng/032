@@ -70,7 +70,7 @@ void SetupPCK0Clock ( void )
 }
 
 
-void DrawADCOLED ( void )
+void DrawHIPKD_OLED ( void )
 {
 	uint16_t *dest = ( uint16_t * ) &BigBuf[0];
 	uint8_t v = 0;
@@ -84,8 +84,9 @@ void DrawADCOLED ( void )
 
 	OLEDClear();
 
-	OLEDPutstr ( "DrawADCOLED" );
+	OLEDPutstr ( "DrawHIPKD_OLED" );
 	OLEDDraw();
+
 
 	// We're using this mode just so that I can test it out; the simulated
 	// tag mode would work just as well and be simpler.
@@ -96,11 +97,11 @@ void DrawADCOLED ( void )
 
 	FpgaSetupSsc ( 1 );
 
-//#define USE_FPGA_DMA ( 1 )
+#define USE_FPGA_DMA ( 1 )
 
 #ifdef  USE_FPGA_DMA
 	//where too, amount to transfer in bytes
-	FpgaSetupSscDma ( ( uint8_t* ) dest, 128 ) ;
+	FpgaSetupSscDma ( ( uint8_t* ) dest, 1024 ) ;
 	FpgaEnableSscDma();
 #else
 	__disable_irq();
@@ -112,17 +113,17 @@ void DrawADCOLED ( void )
 
 #ifdef  USE_FPGA_DMA
 
-		while ( !DMA_GetITStatus ( SPI_SLAVE_RX_DMA, DMA_IT_TCIF0  ) );
+		while ( !DMA_GetITStatus ( DMA1_Stream3, DMA_IT_TCIF3  ) );
 
 		// wait for a full transfer
-		while ( DMA_GetCurrDataCounter ( SPI_SLAVE_RX_DMA )  > 2 );
+		while ( DMA_GetCurrDataCounter ( DMA1_Stream3 )  > 2 );
 
 		memcpy ( temp,dest,sizeof ( temp ) );
 
 		//Clear DMA1 Channel1 Half Transfer, Transfer Complete and Global interrupt pending bits
-		DMA_ClearITPendingBit (SPI_SLAVE_RX_DMA, DMA_IT_TEIF0 | DMA_IT_DMEIF0 | DMA_IT_FEIF0 | DMA_IT_TCIF0 | DMA_IT_HTIF0 );
+		DMA_ClearITPendingBit (DMA1_Stream3, DMA_IT_TEIF3 | DMA_IT_DMEIF3 | DMA_IT_FEIF3 | DMA_IT_TCIF3 | DMA_IT_HTIF3 );
 
-		while ( DMA_GetFlagStatus ( SPI_SLAVE_RX_DMA, DMA_FLAG_TCIF4 ) == RESET ) {}
+		while ( DMA_GetFlagStatus ( DMA1_Stream3, DMA_FLAG_TCIF3 ) == RESET ) {}
 
 #endif
 		OLEDClear();
@@ -135,8 +136,7 @@ void DrawADCOLED ( void )
 			// 16 bit read
 			temp[x] = softspi_rx();
 #endif
-			xt = ( temp[x] >> 8 ); // +   ((temp[x]&0xff)<<8);
-			OLEDLine ( x,0,x, xt,1 );
+			OLEDLine ( x,0,x, temp[x]>>12,1 );
 			
 //			OLEDLine ( x,0,x, ( ( temp[x]&0xff ) /4 ),1 );
 //			OLEDLine ( x+1,0,x+1, ( temp[x] >> 8 ) /4,1 );
@@ -159,7 +159,7 @@ void Draw_ADC_LOW_OLED ( void )
 	uint8_t v = 0;
 	uint16_t r;
 	int i;
-	int p = 0;
+	uint16_t p = 0;
 
 	OLEDClear();
 
@@ -170,24 +170,26 @@ void Draw_ADC_LOW_OLED ( void )
 	// tag mode would work just as well and be simpler.
 	//FpgaWriteConfWord ( FPGA_MAJOR_MODE_HF_READER_RX_XCORR | FPGA_HF_READER_RX_XCORR_848_KHZ | FPGA_HF_READER_RX_XCORR_SNOOP );
 
-	FpgaWriteConfWord ( FPGA_MAJOR_MODE_LF_READER );
+	FpgaWriteConfWord ( FPGA_MAJOR_MODE_LF_PASSTHRU );
 
-	// We need to listen to the high-frequency, peak-detected path.
 	SetAdcMuxFor ( GPIO_MUXSEL_LORAW );
 
 	__disable_irq();
 
 	i = 0;
 
+	HIGH(FPGA_DOUT);
+
 	for ( ;; ) {
 
 		OLEDClear();
 
-		for ( int x =  0 ; x < 127; x++ ) {
+		for ( unsigned char  x =  0 ; x < 127; x++ ) {
 
-			dest[x] = ReadAdc (0 )/4;
+			
 			//OLEDLine ( x,0,x, dest[x] ,1 );
-			OLEDSetPixel ( x,dest[x] ,1 );
+			OLEDSetPixel ( x,ADC_Ampl[1]/16 ,1 );
+			//LOW(FPGA_DOUT);
 		}
 
 		OLEDDraw();
@@ -214,7 +216,7 @@ void Draw_ADC_HIGH_OLED ( void )
 	FpgaWriteConfWord ( FPGA_MAJOR_MODE_HF_READER_RX_XCORR | FPGA_HF_READER_RX_XCORR_848_KHZ | FPGA_HF_READER_RX_XCORR_SNOOP );
 
 	// We need to listen to the high-frequency, peak-detected path.
-	SetAdcMuxFor ( GPIO_MUXSEL_HIRAW );
+	SetAdcMuxFor ( GPIO_MUXSEL_HIPKD );
 
 	__disable_irq();
 	
@@ -226,7 +228,7 @@ void Draw_ADC_HIGH_OLED ( void )
 
 		for ( int x =  0 ; x < 127; x++ ) {
 
-			dest[x] = ReadAdc ( 1 )/4;
+			dest[x] = ReadAdc ( 1 )/3;
 			//OLEDLine ( x,0,x, ( dest[x] ) ,1 );
 			OLEDSetPixel ( x,dest[x]/2 ,1 );
 		}
@@ -249,33 +251,10 @@ int main()
   // Startup OLED
   InitOLED();
   
-  
   //OLEDTest(  );
   
   FpgaDownloadAndGo();
 	
-#if 0
-	OLEDClear();
-	OLEDPutstr ( "FPGA TEST MODE\n" );
-	OLEDDraw();
-
-	HIGH ( FPGAON );              // Enable VREG's
-	DelaymS ( 100 );
-
-	// about 1.3MHz (works)
-	while ( 0 ) {
-		LOW ( NCS );
-		DelayuS ( 1 );
-		HIGH ( NCS );
-		DelayuS ( 1 );
-	}
-
-	while ( 1 ) {
-		LOW ( GPIO_FPGA_DIN );DelayuS ( 1 );
-		HIGH ( GPIO_FPGA_DIN );DelayuS ( 1 );
-	}
-
-#endif
   SetupPCK0Clock();
 
   OLEDClear();
@@ -291,7 +270,7 @@ int main()
   DelaymS ( 100 );
   
   while ( 1 ) {
-	  //DrawADCOLED();
+	  //DrawHIPKD_OLED();
 	  //Draw_ADC_HIGH_OLED();
 	  Draw_ADC_LOW_OLED();
   }

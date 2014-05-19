@@ -59,7 +59,7 @@ void FpgaSetupSscDma ( BYTE *buf, int len )
 	DMA_InitTypeDef DMA_InitStructure;
 
 	/* DMA configuration */
-	DMA_DeInit ( SPI_SLAVE_DMA );
+	DMA_DeInit ( DMA1_Stream3 );
 	DMA_InitStructure.DMA_PeripheralBaseAddr = ( uint32_t ) SPI_SLAVE_DR_Adress;
 	DMA_InitStructure.DMA_MemoryBaseAddr = ( uint32_t ) buf;
 	DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralDST;
@@ -950,10 +950,10 @@ static const char _binary_fpga_bit_start[] = {
 
 #if BOARD_REVISION == 3
 
-	//#include "fpga.h"
+	#include "fpga.h"
 	//#include "fpga_test.h"
   	// copy the adc out
-	#include "fpga_adc.h"
+	//#include "fpga_adc.h"
 
 	//#include "fpga_counter.h"
 	//#include "fpga_constant.h"
@@ -1065,7 +1065,7 @@ void FpgaSetupSsc ( unsigned char on_off )
 void FpgaDisableSscDma ( void )
 {
   	/* Enable DMA */
-	DMA_Cmd ( SPI_SLAVE_RX_DMA, DISABLE );
+	DMA_Cmd ( DMA1_Stream3, DISABLE );
 
 	SPI_I2S_DMACmd(SPI2, SPI_I2S_DMAReq_Rx , DISABLE);
 
@@ -1074,7 +1074,7 @@ void FpgaDisableSscDma ( void )
 void FpgaEnableSscDma ( void )
 {
   	/* Enable DMA */
-	DMA_Cmd ( SPI_SLAVE_RX_DMA, ENABLE );
+	DMA_Cmd ( DMA1_Stream3, ENABLE );
 
 	SPI_I2S_DMACmd(SPI2, SPI_I2S_DMAReq_Rx , ENABLE);
 
@@ -1097,15 +1097,21 @@ bool FpgaSetupSscDma ( uint8_t *buf, int len )
 	
 	// Enable DMA clock
 	RCC_AHB1PeriphClockCmd ( RCC_AHB1Periph_DMA1, ENABLE );
-
 	
 	/* DMA configuration */
 	
-	//channel 4, rx, channel 5 tx
-	DMA_DeInit ( SPI_SLAVE_RX_DMA );
+	//channel 0, stream 3, rx, channel 0, stream 4, tx
+	DMA_DeInit ( DMA1_Stream3 );
+	
+	DMA_ClearFlag(DMA1_Stream3, DMA_FLAG_TCIF3);	//transfer complete
+  	DMA_ClearFlag(DMA1_Stream3, DMA_FLAG_TEIF3); 
+  	DMA_ClearFlag(DMA1_Stream3, DMA_FLAG_FEIF3); 
+  	DMA_ClearFlag(DMA1_Stream3, DMA_FLAG_DMEIF3);
+	
+	DMA_Cmd(DMA1_Stream3, DISABLE);	
 
 	DMA_StructInit( &DMA_InitStructure );
-	DMA_InitStructure.DMA_Channel  = DMA_Channel_4;			//SPI2 RX
+	DMA_InitStructure.DMA_Channel  = DMA_Channel_0;				//SPI2_RX
 	DMA_InitStructure.DMA_PeripheralBaseAddr =  ( uint32_t ) &SPI2->DR;
 	DMA_InitStructure.DMA_Memory0BaseAddr = ( uint32_t ) buf;
 	DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralToMemory;	// from device to cpu
@@ -1126,10 +1132,10 @@ bool FpgaSetupSscDma ( uint8_t *buf, int len )
 	DMA_InitStructure.DMA_PeripheralBurst = DMA_PeripheralBurst_Single;  
 
 //	DMA_InitStructure.DMA_M2M = DMA_M2M_Disable;
-	DMA_Init ( SPI_SLAVE_RX_DMA, &DMA_InitStructure );
+	DMA_Init ( DMA1_Stream3, &DMA_InitStructure );
 
 	/* Enable DMA Transfer Complete interrupt */
-	DMA_ITConfig ( SPI_SLAVE_RX_DMA, DMA_IT_HT | DMA_IT_TC, ENABLE );
+	DMA_ITConfig ( DMA1_Stream3, DMA_IT_HT | DMA_IT_TC, ENABLE );
 
 	return true;
 }

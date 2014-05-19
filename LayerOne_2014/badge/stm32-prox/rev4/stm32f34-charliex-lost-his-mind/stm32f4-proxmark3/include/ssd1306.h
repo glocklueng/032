@@ -96,5 +96,6 @@ void OLEDDrawCircle ( int xc,int yc, unsigned int radius , unsigned char c );
 void OLEDDrawOutlineCircle ( int xc,int yc, unsigned int radius , unsigned char c );
 void OLEDOutlineRect ( unsigned char colour, int x,int y, int width,int height );
 void OLEDTest(void);
+void OLEDSub(void);
 
 #endif /* _SSD1306_H */

@@ -16,16 +16,15 @@
 #define DMA_ADC		(  1 )
 
 
+#if DMA_ADC 
+extern __IO uint16_t  ADC_Ampl[2];
+#endif
 
 // DMA channel assignment 
 // DMA1 channel 4 for SPI2 RX request
 // DMA1 channel 5 for SPI2 TX request.  
 
 #include "stm32f4xx_dma.h"
-
-#define SPI_SLAVE_RX_DMA &FPGA_DMA
-extern DMA_Stream_TypeDef FPGA_DMA;
-
 
 // Ports and pin mapping
 

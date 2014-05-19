@@ -420,6 +420,19 @@ void OLEDClear ( void )
 	memset ( sVideoRAM,0,sizeof ( sVideoRAM ) );
 }
 
+void OLEDSub(void)
+{
+	uint16_t i;
+	
+	for( i = 0 ; i < sizeof ( sVideoRAM ) ; i++ ) {
+	  if( sVideoRAM[i] ) sVideoRAM[i]/=2;
+	}
+
+	
+	
+}
+
+
 /*-------------------------------------------------------------------------------
 Send instruction to the LCD
     LcdInstructionWrite (uint8_t u8Instruction)
@@ -631,11 +644,11 @@ void OLEDSetPixel ( unsigned char x, unsigned char y, unsigned char color )
 	//y = (GDISP_SCREEN_HEIGHT-1) -  y;
 
 	// x is which column
-	if ( color )
-	{ sVideoRAM[x+ ( y/8 ) *GDISP_SCREEN_WIDTH] |= _BV ( ( y%8 ) ); }
-
-	else
-	{ sVideoRAM[x+ ( y/8 ) *GDISP_SCREEN_WIDTH] &= ~_BV ( ( ( y%8 ) ) ); }
+	if ( color ) { 
+	  sVideoRAM[x+ ( y/8 ) *GDISP_SCREEN_WIDTH] |= _BV ( ( y%8 ) ); 
+	} else { 
+	  sVideoRAM[x+ ( y/8 ) *GDISP_SCREEN_WIDTH] &= ~_BV ( ( ( y%8 ) ) ); 
+	}
 }
 
 /**
