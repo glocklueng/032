@@ -1,0 +1,3 @@
+perl ../tools/mkversion.pl .. > version.c || cp ../common/default_version.c version.c 
+arm-none-eabi-gcc -c -I../include -I../common -Wall -Werror -pedantic -std=c99 -DWITH_LF -DWITH_ISO15693 -DWITH_ISO14443a -DWITH_ISO14443b -DWITH_ICLASS -DWITH_LEGICRF -DWITH_HITAG -I. -Os -mthumb -mthumb-interwork -o obj/version.o version.c 
+arm-none-eabi-gcc -c -I../include -I../common -Wall -Werror -pedantic -std=c99 -DWITH_LF -DWITH_ISO15693 -DWITH_ISO14443a -DWITH_ISO14443b -DWITH_ICLASS -DWITH_LEGICRF -DWITH_HITAG -I. -Os -mthumb -mthumb-interwork -o obj/ssd1306.o ssd1306.c 

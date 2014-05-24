@@ -1,0 +1,10 @@
+exec device = AT91SAM7S256
+exec EnableFlashDL
+speed 12000
+power on
+r
+h
+loadbin obj/fullimage.bin 0x102000
+r
+g
+qc

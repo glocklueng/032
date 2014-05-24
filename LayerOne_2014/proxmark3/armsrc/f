@@ -1,0 +1,49 @@
+perl ../tools/mkversion.pl .. > version.c || cp ../common/default_version.c version.c 
+arm-none-eabi-gcc -c -I../include -I../common -Wall -Werror -pedantic -std=c99 -DWITH_LF -DWITH_ISO15693 -DWITH_ISO14443a -DWITH_ISO14443b -DWITH_ICLASS -DWITH_LEGICRF -DWITH_HITAG -I. -Os -mthumb -mthumb-interwork -o obj/version.o version.c 
+arm-none-eabi-gcc -c -I../include -I../common -Wall -Werror -pedantic -std=c99 -DWITH_LF -DWITH_ISO15693 -DWITH_ISO14443a -DWITH_ISO14443b -DWITH_ICLASS -DWITH_LEGICRF -DWITH_HITAG -I. -Os -mthumb -mthumb-interwork -o obj/ssd1306.o ssd1306.c 
+In file included from ssd1306.c:5:0:
+ssd1306.c: In function 'OLEDInit':
+ssd1306.c:373:7: error: 'OLED_RES' undeclared (first use in this function)
+  LOW( OLED_RES );
+       ^
+../include/proxmark3.h:54:46: note: in definition of macro 'LOW'
+ #define LOW(x)  AT91C_BASE_PIOA->PIO_CODR = (x)
+                                              ^
+ssd1306.c:373:7: note: each undeclared identifier is reported only once for each function it appears in
+  LOW( OLED_RES );
+       ^
+../include/proxmark3.h:54:46: note: in definition of macro 'LOW'
+ #define LOW(x)  AT91C_BASE_PIOA->PIO_CODR = (x)
+                                              ^
+ssd1306.c: In function 'OLEDTest':
+ssd1306.c:466:3: error: implicit declaration of function 'SetSpeaker' [-Werror=implicit-function-declaration]
+   SetSpeaker ( y * 100 );
+   ^
+ssd1306.c:478:3: error: implicit declaration of function 'LEDSet' [-Werror=implicit-function-declaration]
+   LEDSet ( 1 );
+   ^
+In file included from ssd1306.c:5:0:
+ssd1306.c:488:9: error: 'RELAY' undeclared (first use in this function)
+  HIGH ( RELAY );
+         ^
+../include/proxmark3.h:55:47: note: in definition of macro 'HIGH'
+ #define HIGH(x)  AT91C_BASE_PIOA->PIO_SODR = (x)
+                                               ^
+ssd1306.c: In function 'OLEDSetPixel':
+ssd1306.c:547:2: error: implicit declaration of function '_BV' [-Werror=implicit-function-declaration]
+  { sVideoRAM[x+ ( y/8 ) *GDISP_SCREEN_WIDTH] |= _BV ( ( y%8 ) ); }
+  ^
+ssd1306.c: In function 'OLEDBigchar':
+ssd1306.c:611:15: error: cast to pointer from integer of different size [-Werror=int-to-pointer-cast]
+     pointer = ( uint16_t* ) BigFonts[u8Char*20];
+               ^
+ssd1306.c: In function 'OLEDPutchar':
+ssd1306.c:648:3: error: implicit declaration of function 'testbit' [-Werror=implicit-function-declaration]
+   if ( testbit ( Misc,NEGATIVE ) )
+   ^
+ssd1306.c: At top level:
+ssd1306.c:282:13: error: 'OLEDSpiSendInstruction' defined but not used [-Werror=unused-function]
+ static void OLEDSpiSendInstruction ( unsigned char byte )
+             ^
+cc1: all warnings being treated as errors
+make: *** [obj/ssd1306.o] Error 1
