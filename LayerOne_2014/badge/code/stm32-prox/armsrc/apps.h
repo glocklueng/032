@@ -45,7 +45,7 @@ extern uint8_t trigger;
 
 // This may be used (sparingly) to declare a function to be copied to
 // and executed from RAM
-#define RAMFUNC
+#define RAMFUNC __ramfunc
 
 /// appmain.h
 void ReadMem ( int addr );

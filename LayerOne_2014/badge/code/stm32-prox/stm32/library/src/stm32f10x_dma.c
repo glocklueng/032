@@ -321,7 +321,7 @@ void DMA_ITConfig(DMA_Channel_TypeDef* DMAy_Channelx, u32 DMA_IT, FunctionalStat
 }
 
 /*******************************************************************************
-* Function Name  : DMA_GetCurrDataCounter
+* Function Name  : SPI_SLAVE_RX_DMASPI_SLAVE_RX_DMA
 * Description    : Returns the number of remaining data units in the current
 *                  DMAy Channelx transfer.
 * Input          : - DMAy_Channelx: where y can be 1 or 2 to select the DMA and 

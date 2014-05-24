@@ -28,6 +28,6 @@ typedef unsigned char byte_t;
 # define MAX(a, b) (((a) > (b)) ? (a) : (b))
 #endif
 
-#define RAMFUNC 
+#define RAMFUNC __ramfunc
 
 #endif

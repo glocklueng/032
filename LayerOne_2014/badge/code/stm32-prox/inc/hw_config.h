@@ -17,8 +17,6 @@
 #ifndef __HW_CONFIG_H
 #define __HW_CONFIG_H
 
-#define RAMFUNC
-
 #include <stdint.h>
 
 #include "stm32f10x_lib.h"

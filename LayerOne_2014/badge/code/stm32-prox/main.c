@@ -1006,13 +1006,15 @@ void ListenReaderField ( int limit )
 
 void DrawADCOLED ( void )
 {
-	uint16_t *dest = ( uint16_t * ) BigBuf+FREE_BUFFER_OFFSET;
+	uint16_t *dest = ( uint16_t * ) &BigBuf[0];
 	uint8_t v = 0;
-	uint16_t temp[128];
-	
+	uint16_t temp[256];
+
 	uint16_t r;
 	int i;
 	int p = 0;
+
+	memset ( temp,0,sizeof ( temp ) );
 
 	OLEDClear();
 
@@ -1024,11 +1026,12 @@ void DrawADCOLED ( void )
 	FpgaWriteConfWord ( FPGA_MAJOR_MODE_HF_READER_RX_XCORR | FPGA_HF_READER_RX_XCORR_848_KHZ | FPGA_HF_READER_RX_XCORR_SNOOP );
 
 	// We need to listen to the high-frequency, peak-detected path.
-	SetAdcMuxFor ( GPIO_MUXSEL_HIRAW );
+	SetAdcMuxFor ( GPIO_MUXSEL_HIPKD );
 
 	FpgaSetupSsc ( 1 );
 
-#define USE_FPGA_DMA ( 1 )
+	/// dma not working yet
+//#define USE_FPGA_DMA ( 1 )
 
 #ifdef  USE_FPGA_DMA
 	//where too, amount to transfer in bytes
@@ -1038,41 +1041,46 @@ void DrawADCOLED ( void )
 	__disable_irq();
 #endif
 
-
 	i = 0;
-	
-	__disable_irq();
-	
+
+	//__disable_irq();
+
 	for ( ;; ) {
 
 #ifdef  USE_FPGA_DMA
 
 		while ( !DMA_GetITStatus ( DMA1_IT_TC4 ) );
 
+		// wait for a full transfer
+		while ( DMA_GetCurrDataCounter ( SPI_SLAVE_RX_DMA )  > 2 );
+
+		memcpy ( temp,dest,sizeof ( temp ) );
 
 		//Clear DMA1 Channel1 Half Transfer, Transfer Complete and Global interrupt pending bits
-		//DMA_ClearITPendingBit(DMA1_IT_GL4);
+		DMA_ClearITPendingBit ( DMA1_IT_GL4 );
 
 		while ( DMA_GetFlagStatus ( DMA1_FLAG_TC4 ) == RESET ) {}
 
-		
-		memcpy(temp,dest,128*2);
-
 #endif
-
 		OLEDClear();
 
-		for ( int x =  0 ; x < 127; x+=2 ) {
+		for ( int x =  0 ; x < 127; x += 2 ) {
+
+			register uint16_t xt;
 
 #ifndef  USE_FPGA_DMA
 			dest[x] = softspi_rx();
 #endif
-			OLEDLine ( x,0,x, ( temp[x] & 0xff ) /4,1 );
-			OLEDLine ( x+1,0,x+1, ( dest[x] >> 8) /4,1 );
 
+			xt = ( temp[x] >> 8 ); // +   ((temp[x]&0xff)<<8);
+
+			OLEDLine ( x,0,x, ( ( temp[x]&0xff ) /4 ),1 );
+			OLEDLine ( x+1,0,x+1, ( temp[x] >> 8 ) /4,1 );
 		}
 
 		OLEDDraw();
+
+
 		//memset(dest,0,128);
 
 	}

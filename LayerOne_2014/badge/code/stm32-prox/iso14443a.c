@@ -35,7 +35,7 @@
 
 
 
-uint32_t RAMFUNC GetCountSspClk()
+RAMFUNC uint32_t GetCountSspClk()
 {
   
   return 0;

@@ -4,6 +4,9 @@
   <project>
     <path>$WS_DIR$\stm32-prox.ewp</path>
   </project>
+  <project>
+    <path>$WS_DIR$\stm32-prox-f4.ewp</path>
+  </project>
   <batchBuild/>
 </workspace>
 

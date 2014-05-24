@@ -292,17 +292,6 @@ int bitparse_find_section ( char section_name, char **section_start, unsigned in
 // Find out which FPGA image format is stored in flash, then call DownloadFPGA
 // with the right parameters to download the image
 //-----------------------------------------------------------------------------
-static const char _binary_fpga_bit_start[] = {
-
-  not this code
-    
-	//#include "fpga.h"
-	//#include "fpga_test.h"
-
-//	#include "fpga_counter.h"
-	#include "fpga_fixed.h"
-  
-};
 
 static const char *_binary_fpga_bit_end=_binary_fpga_bit_start+sizeof ( _binary_fpga_bit_start );
 
@@ -957,6 +946,7 @@ static const char _binary_fpga_bit_start[] = {
 
 	#include "fpga.h"
 	//#include "fpga_test.h"
+  	// copy the adc out
 	//#include "fpga_adc.h"
 
 	//#include "fpga_counter.h"
@@ -1125,6 +1115,8 @@ bool FpgaSetupSscDma ( uint8_t *buf, int len )
 	/* DMA configuration */
 	DMA_DeInit ( SPI_SLAVE_RX_DMA );
 
+	DMA_StructInit( &DMA_InitStructure );
+	
 	DMA_InitStructure.DMA_PeripheralBaseAddr =  ( uint32_t ) &SPI2->DR;
 	DMA_InitStructure.DMA_MemoryBaseAddr = ( uint32_t ) buf;
 	DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralSRC;	// from device to cpu
