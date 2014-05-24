@@ -1,0 +1,248 @@
+help             This help. Use '<command> help' for details of a particular command.
+data             { Plot window / data buffer manipulation... }
+hf               { HF commands... }
+hw               { Hardware commands... }
+lf               { LF commands... }
+script           { Scripting commands }
+quit             Exit program
+exit             Exit program
+help             This help
+cmdread          <off period> <'0' period> <'1' period> <command> ['h'] -- Modulate LF reader field to send command before read (all periods in microseconds) (option 'h' for 134)
+em4x             { EM4X RFIDs... }
+flexdemod        Demodulate samples for FlexPass
+hid              { HID RFIDs... }
+io               { ioProx tags... }
+indalademod      ['224'] -- Demodulate samples for Indala 64 bit UID (option '224' for 224 bit)
+indalaclone      <UID> ['l']-- Clone Indala to T55x7 (tag must be in antenna)(UID in HEX)(option 'l' for 224 UID
+read             ['h' or <divisor>] -- Read 125/134 kHz LF ID-only tag (option 'h' for 134, alternatively: f=12MHz/(divisor+1))
+sim              [GAP] -- Simulate LF tag from buffer with optional GAP (in microseconds)
+simbidir         Simulate LF tag (with bidirectional data transmission between reader and tag)
+simman           <Clock> <Bitstream> [GAP] Simulate arbitrary Manchester LF tag
+ti               { TI RFIDs... }
+hitag            { Hitag tags and transponders... }
+vchdemod         ['clone'] -- Demodulate samples for VeriChip
+t55xx            { T55xx RFIDs... }
+pcf7931          {PCF7931 RFIDs...}
+#db# Measuring HF antenna, press button to exit       
+#db# 515 mV       
+#db# 515 mV       
+#db# 515 mV       
+#db# 128 mV       
+#db# 290 mV       
+#db# 128 mV       
+#db# 515 mV       
+#db# 128 mV       
+#db# 193 mV       
+#db# 515 mV       
+#db# 418 mV       
+#db# 515 mV       
+#db# 515 mV       
+#db# 225 mV       
+#db# 161 mV       
+#db# 128 mV       
+#db# 128 mV       
+#db# 128 mV       
+#db# 257 mV       
+#db# 515 mV       
+#db# 96 mV       
+#db# 128 mV       
+#db# 193 mV       
+#db# 128 mV       
+#db# 515 mV       
+#db# 515 mV       
+#db# 257 mV       
+#db# 515 mV       
+#db# 128 mV       
+#db# 515 mV       
+#db# 515 mV       
+#db# 547 mV       
+#db# 515 mV       
+#db# 547 mV       
+#db# 128 mV       
+#db# 128 mV       
+#db# 515 mV       
+#db# 515 mV       
+#db# 483 mV       
+#db# 515 mV       
+#db# 515 mV       
+#db# 547 mV       
+#db# 515 mV       
+#db# 257 mV       
+#db# 290 mV       
+#db# 128 mV       
+#db# 161 mV       
+#db# 96 mV       
+#db# 128 mV       
+#db# 193 mV       
+#db# 128 mV       
+#db# 128 mV       
+#db# 483 mV       
+#db# 515 mV       
+#db# 225 mV       
+#db# 128 mV       
+#db# 128 mV       
+#db# 515 mV       
+#db# 515 mV       
+#db# 515 mV       
+#db# 290 mV       
+#db# 451 mV       
+#db# 515 mV       
+#db# 515 mV       
+#db# 128 mV       
+#db# 515 mV       
+#db# 161 mV       
+#db# 161 mV       
+#db# 128 mV       
+#db# 193 mV       
+#db# 322 mV       
+#db# 515 mV       
+#db# 515 mV       
+#db# 161 mV       
+#db# 96 mV       
+#db# 161 mV       
+#db# 515 mV       
+#db# 128 mV       
+#db# 515 mV       
+#db# 515 mV       
+#db# 128 mV       
+#db# 515 mV       
+#db# 515 mV       
+#db# 161 mV       
+#db# 128 mV       
+#db# 161 mV       
+#db# 515 mV       
+#db# 322 mV       
+#db# 128 mV       
+#db# 451 mV       
+#db# 128 mV       
+#db# 386 mV       
+#db# 128 mV       
+#db# 128 mV       
+#db# 257 mV       
+#db# 515 mV       
+#db# 128 mV       
+#db# 128 mV       
+#db# 128 mV       
+#db# 128 mV       
+#db# 193 mV       
+#db# 547 mV       
+#db# 161 mV       
+#db# 128 mV       
+#db# 128 mV       
+#db# 225 mV       
+#db# 515 mV       
+#db# 128 mV       
+#db# 515 mV       
+#db# 418 mV       
+#db# 515 mV       
+#db# 515 mV       
+#db# 547 mV       
+#db# 451 mV       
+#db# 515 mV       
+#db# 515 mV       
+#db# 257 mV       
+#db# 515 mV       
+#db# 322 mV       
+#db# 515 mV       
+#db# 515 mV       
+#db# 161 mV       
+#db# 128 mV       
+#db# 128 mV       
+#db# 128 mV       
+#db# 515 mV       
+#db# 515 mV       
+#db# 515 mV       
+#db# 322 mV       
+#db# cancelled       
+help             This help
+14a              { ISO14443A RFIDs... }
+14b              { ISO14443B RFIDs... }
+15               { ISO15693 RFIDs... }
+epa              { German Identification Card... }
+legic            { LEGIC RFIDs... }
+iclass           { ICLASS RFIDs... }
+mf               { MIFARE RFIDs... }
+tune             Continuously measure HF antenna tuning
+help             This help
+14a              { ISO14443A RFIDs... }
+14b              { ISO14443B RFIDs... }
+15               { ISO15693 RFIDs... }
+epa              { German Identification Card... }
+legic            { LEGIC RFIDs... }
+iclass           { ICLASS RFIDs... }
+mf               { MIFARE RFIDs... }
+tune             Continuously measure HF antenna tuning
+help             This help
+14a              { ISO14443A RFIDs... }
+14b              { ISO14443B RFIDs... }
+15               { ISO15693 RFIDs... }
+epa              { German Identification Card... }
+legic            { LEGIC RFIDs... }
+iclass           { ICLASS RFIDs... }
+mf               { MIFARE RFIDs... }
+tune             Continuously measure HF antenna tuning
+#db# Measuring HF antenna, press button to exit       
+#db# 3158 mV       
+#db# 3577 mV       
+#db# 3544 mV       
+#db# 3416 mV       
+#db# 3158 mV       
+#db# 3158 mV       
+#db# 3544 mV       
+#db# 3125 mV       
+#db# 3383 mV       
+#db# 3158 mV       
+#db# 3383 mV       
+#db# 3319 mV       
+#db# 3544 mV       
+#db# 3158 mV       
+#db# 3158 mV       
+#db# 3158 mV       
+#db# 3222 mV       
+#db# 3544 mV       
+#db# 3287 mV       
+#db# 3158 mV       
+#db# 3544 mV       
+#db# 3158 mV       
+#db# 3158 mV       
+#db# 3158 mV       
+#db# 3158 mV       
+#db# 3577 mV       
+#db# 3577 mV       
+#db# 3125 mV       
+#db# 3158 mV       
+#db# 3544 mV       
+#db# 3577 mV       
+#db# 3158 mV       
+#db# 3158 mV       
+#db# 3577 mV       
+#db# 3190 mV       
+#db# 3544 mV       
+#db# 3544 mV       
+#db# 3125 mV       
+#db# 3158 mV       
+#db# 3351 mV       
+#db# 3319 mV       
+#db# 3158 mV       
+#db# 3544 mV       
+#db# 3577 mV       
+#db# 3544 mV       
+#db# 3158 mV       
+#db# 3158 mV       
+#db# 3577 mV       
+#db# 3319 mV       
+#db# 3544 mV       
+#db# 3544 mV       
+#db# 3544 mV       
+#db# 3448 mV       
+#db# 3544 mV       
+#db# 3158 mV       
+#db# 3125 mV       
+#db# 3544 mV       
+#db# 3512 mV       
+#db# 3544 mV       
+#db# 3544 mV       
+#db# 3125 mV       
+#db# 3544 mV       
+#db# 3544 mV       
+#db# cancelled       

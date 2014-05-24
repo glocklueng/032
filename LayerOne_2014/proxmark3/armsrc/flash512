@@ -1,0 +1,2 @@
+arm-none-eabi-objcopy -I elf32-littlearm -O binary obj/fullimage.elf obj/fullimage.bin
+JLinkExe scr/fullimage512.scr

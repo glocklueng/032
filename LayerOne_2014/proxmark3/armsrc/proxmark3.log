@@ -1,0 +1,157 @@
+help             This help. Use '<command> help' for details of a particular command.
+data             { Plot window / data buffer manipulation... }
+hf               { HF commands... }
+hw               { Hardware commands... }
+lf               { LF commands... }
+script           { Scripting commands }
+quit             Exit program
+exit             Exit program
+#db# Measuring HF antenna, press button to exit       
+#db# 3673 mV       
+#db# 3383 mV       
+#db# 3770 mV       
+#db# 3770 mV       
+#db# 3770 mV       
+#db# 3802 mV       
+#db# 3770 mV       
+#db# 3770 mV       
+#db# 3351 mV       
+#db# 3383 mV       
+#db# 3802 mV       
+#db# 3383 mV       
+#db# 3544 mV       
+#db# 3738 mV       
+#db# 3770 mV       
+#db# 3802 mV       
+#db# 3802 mV       
+#db# 3544 mV       
+#db# 3383 mV       
+#db# 3802 mV       
+#db# 3802 mV       
+#db# 3770 mV       
+#db# 3383 mV       
+#db# 3770 mV       
+#db# 3738 mV       
+#db# 3383 mV       
+#db# 3351 mV       
+#db# 3416 mV       
+#db# 3770 mV       
+#db# 3544 mV       
+#db# 3383 mV       
+#db# 3770 mV       
+#db# 3770 mV       
+#db# 3383 mV       
+#db# 3383 mV       
+#db# 3383 mV       
+#db# 3706 mV       
+#db# 3770 mV       
+#db# 3383 mV       
+#db# 3770 mV       
+#db# 3770 mV       
+#db# 3738 mV       
+#db# 3448 mV       
+#db# 3383 mV       
+#db# 3383 mV       
+#db# 3351 mV       
+#db# 3383 mV       
+#db# 3706 mV       
+#db# 3383 mV       
+#db# 3770 mV       
+#db# 3383 mV       
+#db# 3673 mV       
+#db# 3802 mV       
+#db# 3770 mV       
+#db# 3544 mV       
+#db# 3351 mV       
+#db# 3351 mV       
+#db# 3383 mV       
+#db# 3770 mV       
+#db# 3770 mV       
+#db# 3383 mV       
+#db# 3383 mV       
+#db# 3416 mV       
+#db# 3641 mV       
+#db# 3383 mV       
+#db# 3802 mV       
+#db# 3802 mV       
+#db# 3383 mV       
+#db# 3512 mV       
+#db# 3770 mV       
+#db# 3383 mV       
+#db# 3448 mV       
+#db# 3351 mV       
+#db# 3770 mV       
+#db# 3383 mV       
+#db# 3706 mV       
+#db# 3770 mV       
+#db# 3351 mV       
+#db# 3383 mV       
+#db# 3770 mV       
+#db# 3416 mV       
+#db# 3770 mV       
+#db# 3383 mV       
+#db# 3770 mV       
+#db# 3770 mV       
+#db# 3351 mV       
+#db# 3383 mV       
+#db# 3770 mV       
+#db# 3770 mV       
+#db# 3383 mV       
+#db# 3770 mV       
+#db# 3770 mV       
+#db# 3448 mV       
+#db# 3351 mV       
+#db# 3383 mV       
+#db# 3770 mV       
+#db# 3770 mV       
+#db# 3770 mV       
+#db# 3383 mV       
+#db# 3383 mV       
+#db# 3383 mV       
+#db# 3802 mV       
+#db# 3448 mV       
+#db# 3770 mV       
+#db# 3770 mV       
+#db# 3351 mV       
+#db# 3383 mV       
+#db# 3802 mV       
+#db# 3802 mV       
+#db# 3383 mV       
+#db# 3351 mV       
+#db# 3383 mV       
+#db# 3448 mV       
+#db# 3770 mV       
+#db# 3770 mV       
+#db# 3351 mV       
+#db# 3802 mV       
+#db# 3770 mV       
+#db# 3416 mV       
+#db# 3770 mV       
+#db# 3609 mV       
+#db# 3770 mV       
+#db# 3770 mV       
+#db# 3770 mV       
+#db# 3770 mV       
+#db# 3383 mV       
+#db# 3738 mV       
+#db# cancelled       
+help             This help
+14a              { ISO14443A RFIDs... }
+14b              { ISO14443B RFIDs... }
+15               { ISO15693 RFIDs... }
+epa              { German Identification Card... }
+legic            { LEGIC RFIDs... }
+iclass           { ICLASS RFIDs... }
+mf               { MIFARE RFIDs... }
+tune             Continuously measure HF antenna tuning
+#db# Prox/RFID mark3 RFID instrument       
+#db# bootrom: svn 0        
+#db# os: master/v1.0.0-3-gcba867f-suspect 2014-05-09 16:55:54       
+#db# FPGA image built on 2014/03/24 at 21:54:44       
+uC: AT91SAM7S512 Rev B
+Embedded Processor: ARM7TDMI
+Nonvolatile Program Memory Size: 512K bytes
+Second Nonvolatile Program Memory Size: None
+Internal SRAM Size: 64K bytes
+Architecture Identifier: AT91SAM7Sxx Series
+Nonvolatile Program Memory Type: Embedded Flash Memory
