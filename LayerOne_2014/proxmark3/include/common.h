@@ -25,7 +25,7 @@ typedef unsigned char byte_t;
 # define MAX(a, b) (((a) > (b)) ? (a) : (b))
 #endif
 
-#ifdef GCC
+#ifndef __IAR_SYSTEMS_ICC__
 #define RAMFUNC __attribute((long_call, section(".ramfunc")))
 #else
 #define RAMFUNC __ramfunc
