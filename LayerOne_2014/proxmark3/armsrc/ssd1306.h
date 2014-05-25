@@ -5,7 +5,7 @@
 #include "logos.h"
 
 #define DelayuS SpinDelayUs
-#define DelaymS SpinDelay 
+#define DelaymS SpinDelay
 #define _BV(bit) (1 << (bit))
 
 #define LCD_SCLK			AT91C_PIO_PA10
