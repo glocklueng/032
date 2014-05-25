@@ -370,7 +370,7 @@ void Draw_ADC_LOW_OLED ( void )
 		FpgaSendCommand ( FPGA_CMD_SET_DIVISOR, i );
 		SpinDelay ( 20 );
 		OLEDPIOA();
-		OLEDText8x6 ( 100, 0, "LF Sweep",1,0);
+		OLEDText8x6 ( 60, 0, "LF Sweep",1,0);
 		// Vref = 3.3V, and a 10000:240 voltage divider on the input
 		// can measure voltages up to 137500 mV
 		adcval = ( ( 137500 * AvgAdc ( ADC_CHAN_LF ) ) >> 10 );
