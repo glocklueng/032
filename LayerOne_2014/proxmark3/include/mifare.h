@@ -23,7 +23,7 @@ typedef struct {
 	byte_t sak;
 	byte_t ats_len;
 	byte_t ats[256];
-} __attribute__((__packed__)) iso14a_card_select_t;
+} PACKED iso14a_card_select_t;
 
 typedef enum ISO14A_COMMAND {
 	ISO14A_CONNECT = 1,

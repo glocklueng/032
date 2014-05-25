@@ -20,7 +20,13 @@ typedef BYTE uint8_t;
 #else
 #include <stdint.h>
 #include <stdbool.h>
-#define PACKED __attribute__((packed))
+
+#ifndef __IAR_SYSTEMS_ICC__
+#	define PACKED __attribute__((packed))
+#else
+#	define PACKED __packed
+#endif
+
 #endif
 
 #define USB_CMD_DATA_SIZE 512
