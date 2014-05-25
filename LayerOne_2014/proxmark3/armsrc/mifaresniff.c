@@ -37,7 +37,7 @@ bool MfSniffEnd(void){
 	return FALSE;
 }
 
-bool RAMFUNC MfSniffLogic(const uint8_t *data, uint16_t len, uint32_t parity, uint16_t bitCnt, bool reader) {
+RAMFUNC bool MfSniffLogic(const uint8_t *data, uint16_t len, uint32_t parity, uint16_t bitCnt, bool reader) {
 
 	if (reader && (len == 1) && (bitCnt == 7)) { 		// reset on 7-Bit commands from reader
 		sniffState = SNF_INIT;
@@ -68,7 +68,7 @@ bool RAMFUNC MfSniffLogic(const uint8_t *data, uint16_t len, uint32_t parity, ui
 			break;
 		}
 		case SNF_ANTICOL1:{
-			if ((!reader) && (len == 5) && ((data[0] ^ data[1] ^ data[2] ^ data[3]) == data[4])) {  // UID from tag (CL1) 
+			if ((!reader) && (len == 5) && ((data[0] ^ data[1] ^ data[2] ^ data[3]) == data[4])) {  // UID from tag (CL1)
 				memcpy(sniffUID + 3, data, 4);
 				sniffState = SNF_UID1;
 			}
@@ -92,7 +92,7 @@ bool RAMFUNC MfSniffLogic(const uint8_t *data, uint16_t len, uint32_t parity, ui
 			break;
 		}
 		case SNF_ANTICOL2:{
-			if ((!reader) && (len == 5) && ((data[0] ^ data[1] ^ data[2] ^ data[3]) == data[4])) { // CL2 UID 
+			if ((!reader) && (len == 5) && ((data[0] ^ data[1] ^ data[2] ^ data[3]) == data[4])) { // CL2 UID
 				memcpy(sniffUID, sniffUID+4, 3);
 				memcpy(sniffUID+3, data, 4);
 				sniffUIDType = SNF_UID_7;
@@ -116,7 +116,7 @@ bool RAMFUNC MfSniffLogic(const uint8_t *data, uint16_t len, uint32_t parity, ui
 			sniffBuf[13] = 0xFF;
 			LogTrace(sniffBuf, 14, 0, parity, true);
 		}	// intentionally no break;
-		case SNF_CARD_CMD:{		
+		case SNF_CARD_CMD:{
 			LogTrace(data, len, 0, parity, true);
 			sniffState = SNF_CARD_RESP;
 			timerData = GetTickCount();
@@ -128,7 +128,7 @@ bool RAMFUNC MfSniffLogic(const uint8_t *data, uint16_t len, uint32_t parity, ui
 			timerData = GetTickCount();
 			break;
 		}
-	
+
 		default:
 			sniffState = SNF_INIT;
 		break;
@@ -138,7 +138,7 @@ bool RAMFUNC MfSniffLogic(const uint8_t *data, uint16_t len, uint32_t parity, ui
 	return FALSE;
 }
 
-bool RAMFUNC MfSniffSend(uint16_t maxTimeoutMs) {
+RAMFUNC bool MfSniffSend(uint16_t maxTimeoutMs) {
 	if (traceLen && (GetTickCount() > timerData + maxTimeoutMs)) {
 		return intMfSniffSend();
 	}
@@ -168,6 +168,6 @@ bool intMfSniffSend() {
 	LED_B_OFF();
 
 	iso14a_clear_trace();
-	
+
 	return TRUE;
 }
