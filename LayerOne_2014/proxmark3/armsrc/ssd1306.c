@@ -43,7 +43,7 @@ static unsigned char sVideoRAM[GDISP_SCREEN_HEIGHT/8 * SSD1306_PAGE_WIDTH ];
 // These should be hardware SPI in board 3
 
 #define LCD_SCLK_HIGH()         HIGH( LCD_SCLK )
-#define LCD_SCLK_LOW()          LOW( LCD_SCLK )  
+#define LCD_SCLK_LOW()          LOW( LCD_SCLK )
 
 #define LCD_SDIN_HIGH()         HIGH( LCD_SDIN)
 #define LCD_SDIN_LOW()          LOW (LCD_SDIN)
@@ -413,18 +413,18 @@ void OLEDInit ( void )
 	LcdInstructionWrite ( 0x40 );
 	LcdInstructionWrite ( LCD_EON_OFF );
 	LcdInstructionWrite ( LCD_DISP_NOR );
-	
+
 	// horiz flip LCD_SET_SEG_REMAP0 / LCD_SET_SEG_REMAP1
 	LcdInstructionWrite ( LCD_SET_SEG_REMAP0);
-	
+
 	// vertical flip LCD_SET_SCAN_NOR / LCD_SET_SCAN_FLIP
 	LcdInstructionWrite ( LCD_SET_SCAN_FLIP );
 	LcdInstructionWrite ( LCD_MEM_ADDRESSING );
 	LcdInstructionWrite ( 0x00 );       // Horizontal Addressing mode
 	LcdInstructionWrite ( LCD_DISP_ON );
 
-OLEDTest();	
-	
+OLEDTest();
+
 	OLEDDisplayPicture ( l1logo_inv );
 	OLEDDraw();
 }
@@ -435,7 +435,7 @@ void LEDSet( int x)
 		LED_A_OFF();
 }
 
- unsigned short lfsr = 0xACE1u;
+static  unsigned short lfsr = 0xACE1u;
   unsigned bit;
 
   unsigned irand()
@@ -444,11 +444,11 @@ void LEDSet( int x)
     return lfsr =  (lfsr >> 1) | (bit << 15);
   }
 
-void OLEDTest( void ) 
+void OLEDTest( void )
 {
   	int y;
 
-	
+
   	unsigned short test;
 	unsigned short test2;
 //  while( 1)
@@ -538,7 +538,9 @@ void OLEDTest( void )
 void OLEDDraw ( void )
 {
 	unsigned short i;
+
 	OLEDPIOA();
+
 	LcdInstructionWrite ( LCD_SET_COL_LO | 0x0 );
 	LcdInstructionWrite ( LCD_SET_COL_HI | 0x0 );
 	LcdInstructionWrite ( SSD1306_SETSTARTLINE | 0x0 );
@@ -553,7 +555,7 @@ void OLEDDraw ( void )
 
 	// i wonder why we have to do this (check datasheet)
 	if ( GDISP_SCREEN_HEIGHT == 32 ) {
-		for ( unsigned short i=0; i< ( GDISP_SCREEN_WIDTH*GDISP_SCREEN_HEIGHT/8 ); i++ ) {
+		for ( i=0; i< ( GDISP_SCREEN_WIDTH*GDISP_SCREEN_HEIGHT/8 ); i++ ) {
 			OLEDSpiSendByte ( 0 );
 
 		}
