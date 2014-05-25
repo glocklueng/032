@@ -18,10 +18,10 @@
 #include "hitag2.h"
 #include "mifare.h"
 
-#ifdef GCC
+#ifndef __IAR_SYSTEMS_ICC__
 #define NORETURN  __attribute__((noreturn))
 #else
-#define NORETURN
+#define NORETURN __noreturn
 #endif
 
 // The large multi-purpose buffer, typically used to hold A/D samples,
@@ -58,7 +58,7 @@ extern uint8_t trigger;
 
 /// appmain.h
 void ReadMem(int addr);
-void NORETURN AppMain(void);
+NORETURN void AppMain(void);
 void SamyRun(void);
 //void DbpIntegers(int a, int b, int c);
 void DbpString(char *str);
