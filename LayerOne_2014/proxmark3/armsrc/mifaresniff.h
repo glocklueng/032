@@ -39,8 +39,8 @@
 #define SNF_UID_7				0
 
 bool MfSniffInit(void);
-bool RAMFUNC MfSniffLogic(const uint8_t * data, uint16_t len, uint32_t parity, uint16_t bitCnt, bool reader);
-bool RAMFUNC MfSniffSend(uint16_t maxTimeoutMs);
+RAMFUNC bool MfSniffLogic(const uint8_t * data, uint16_t len, uint32_t parity, uint16_t bitCnt, bool reader);
+RAMFUNC bool MfSniffSend(uint16_t maxTimeoutMs);
 bool intMfSniffSend();
 bool MfSniffEnd(void);
 
