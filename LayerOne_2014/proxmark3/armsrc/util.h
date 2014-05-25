@@ -41,13 +41,13 @@ int BUTTON_HELD(int ms);
 void FormatVersionInformation(char *dst, int len, const char *prefix, void *version_information);
 
 void StartTickCount();
-uint32_t RAMFUNC GetTickCount();
+RAMFUNC uint32_t GetTickCount();
 
 void StartCountUS();
-uint32_t RAMFUNC GetCountUS();
-uint32_t RAMFUNC GetDeltaCountUS();
+RAMFUNC uint32_t GetCountUS();
+RAMFUNC uint32_t GetDeltaCountUS();
 
 void StartCountSspClk();
-uint32_t RAMFUNC GetCountSspClk();
+RAMFUNC uint32_t GetCountSspClk();
 
 #endif
