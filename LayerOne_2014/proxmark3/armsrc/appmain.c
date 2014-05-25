@@ -335,6 +335,71 @@ int AvgAdc ( int ch ) // was static - merlok
 	return ( a + 15 ) >> 5;
 }
 
+
+void Draw_ADC_LOW_OLED ( void )
+{
+	uint16_t *dest = ( uint16_t * ) BigBuf+FREE_BUFFER_OFFSET;
+	uint8_t v = 0;
+	uint16_t r;
+	uint16_t p = 0;
+	char txtbuffer[256];
+	int i, adcval = 0, peak = 0, peakv = 0, peakf = 0; //ptr = 0
+	int vLf125 = 0, vLf134 = 0, vHf = 0;	// in mV
+
+	OLEDClear();
+
+	OLEDPutstr ( "Draw_ADC_LOW_OLED" );
+	OLEDDraw();
+	memset ( dest, 0, sizeof ( FREE_BUFFER_SIZE ) );
+
+	/*
+	 * Sweeps the useful LF range of the proxmark from
+	 * 46.8kHz (divisor=255) to 600kHz (divisor=19) and
+	 * read the voltage in the antenna, the result left
+	 * in the buffer is a graph which should clearly show
+	 * the resonating frequency of your LF antenna
+	 * ( hopefully around 95 if it is tuned to 125kHz!)
+	 */
+
+	FpgaWriteConfWord ( FPGA_MAJOR_MODE_LF_READER );
+
+
+	for ( i = 255; i > 19; i-- ) {
+		WDT_HIT();
+		FpgaSendCommand ( FPGA_CMD_SET_DIVISOR, i );
+		SpinDelay ( 20 );
+		// Vref = 3.3V, and a 10000:240 voltage divider on the input
+		// can measure voltages up to 137500 mV
+		adcval = ( ( 137500 * AvgAdc ( ADC_CHAN_LF ) ) >> 10 );
+
+		if ( i == 95 ) 	{ vLf125 = adcval; } // voltage at 125Khz
+
+		if ( i == 89 ) 	{ vLf134 = adcval; } // voltage at 134Khz
+
+		dest[i] = adcval >> 8; // scale int to fit in byte for graphing purposes
+
+		if ( dest[i] > peak ) {
+			peakv = adcval;
+			peak = dest[i];
+			peakf = i;
+
+			sprintf(txtbuffer,"peakv = %d    ",peakv);
+			OLEDText8x6 ( 0, 8, txtbuffer,1,0);
+			sprintf(txtbuffer,"peak = %d   ",peak);
+			OLEDText8x6 ( 0, 16, txtbuffer,1,0);
+			sprintf(txtbuffer,"peakf = %d khz  ",peakf);
+			OLEDText8x6 ( 0, 32, txtbuffer,1,0);
+
+			OLEDraw();
+
+		}
+	}
+
+
+	FpgaDisableSscDma();
+
+}
+
 void MeasureAntennaTuning ( void )
 {
 	uint8_t *dest = ( uint8_t * ) BigBuf + FREE_BUFFER_OFFSET;
@@ -423,6 +488,7 @@ void MeasureAntennaTuningHf ( void )
 
 	DbpString ( "cancelled" );
 }
+
 
 void Draw_ADC_HIGH_OLED ( void )
 {
