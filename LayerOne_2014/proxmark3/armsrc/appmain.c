@@ -280,6 +280,51 @@ void MeasureAntennaTuningHf(void)
 	DbpString("cancelled");
 }
 
+void Draw_ADC_HIGH_OLED ( void )
+{
+
+	volatile int vHf;
+
+	OLEDClear();
+
+	OLEDPutstr ( "Draw_ADC_HIGH_OLED" );
+	OLEDDraw();
+
+	// We're using this mode just so that I can test it out; the simulated
+	// tag mode would work just as well and be simpler.
+	FpgaWriteConfWord ( FPGA_MAJOR_MODE_HF_READER_RX_XCORR | FPGA_HF_READER_RX_XCORR_848_KHZ | FPGA_HF_READER_RX_XCORR_SNOOP );
+
+	// We need to listen to the high-frequency, peak-detected path.
+	SetAdcMuxFor ( GPIO_MUXSEL_HIPKD );
+
+	
+	for ( ;; ) {
+
+                // Let the FPGA drive the high-frequency antenna around 13.56 MHz.
+                FpgaWriteConfWord(FPGA_MAJOR_MODE_HF_READER_RX_XCORR);
+
+		OLEDClear();
+
+		for ( int x =  0 ; x < 127; x++ ) {
+              // Vref = 3300mV, and an 10:1 voltage divider on the input
+                // can measure voltages up to 33000 mV
+                vHf = (33000 * AvgAdc(ADC_CHAN_HF)) >> 10;
+
+
+			vHf = AvgAdc( ADC_CHAN_HF );
+			//OLEDLine ( x,0,x, ( dest[x] ) ,1 );
+			OLEDSetPixel ( x,vHf ,1 );
+		}
+		if( BUTTON_PRESS()) break;
+
+		WDT_HIT();
+		OLEDDraw();
+	}
+
+	OLEDClear();
+	OLEDPutstr( " End draw ");
+	OLEDDraw();
+}
 
 void SimulateTagHfListen(void)
 {
@@ -1045,6 +1090,7 @@ void  __attribute__((noreturn)) AppMain(void)
 
 		WDT_HIT();
 
+//Draw_ADC_HIGH_OLED();
 #ifdef WITH_LF
 		if (BUTTON_HELD(1000) > 0)
 			SamyRun();
