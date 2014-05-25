@@ -395,7 +395,14 @@ void Draw_ADC_LOW_OLED ( void )
 			OLEDText8x6 ( 0, 34, txtbuffer,1,0);
 
 
+
 		}
+
+
+
+		OLEDLine( 0,60,127,60, 0);
+		OLEDLine( 0,60,(255-i)/2,60, 1);
+
 		OLEDDraw();
 	}
 
