@@ -342,7 +342,7 @@ void Draw_ADC_LOW_OLED ( void )
 	uint8_t v = 0;
 	uint16_t r;
 	uint16_t p = 0;
-	char txtbuffer[256];
+	char txtbuffer[32]="HELLO";
 	int i, adcval = 0, peak = 0, peakv = 0, peakf = 0; //ptr = 0
 	int vLf125 = 0, vLf134 = 0, vHf = 0;	// in mV
 
@@ -386,13 +386,13 @@ void Draw_ADC_LOW_OLED ( void )
 			peak = dest[i];
 			peakf = i;
 
-			sprintf(txtbuffer,"peakv = %d    ",peakv);
+//			sprintf(txtbuffer,"peakv = %d    ",peakv);
 		OLEDPIOA();
 			OLEDText8x6 ( 0, 8, txtbuffer,1,0);
-			sprintf(txtbuffer,"peak = %d   ",peak);
+//			sprintf(txtbuffer,"peak = %d   ",peak);
 		OLEDPIOA();
 			OLEDText8x6 ( 0, 16, txtbuffer,1,0);
-			sprintf(txtbuffer,"peakf = %d khz  ",peakf);
+//			sprintf(txtbuffer,"peakf = %d khz  ",peakf);
 		OLEDPIOA();
 			OLEDText8x6 ( 0, 32, txtbuffer,1,0);
 
