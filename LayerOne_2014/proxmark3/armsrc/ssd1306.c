@@ -54,6 +54,8 @@ static unsigned char sVideoRAM[GDISP_SCREEN_HEIGHT/8 * SSD1306_PAGE_WIDTH ];
 static unsigned char    u8CursorX, u8CursorY;
 static unsigned char    Misc = 0;
 
+static unsigned char leda=0,ledb=0,ledc=0,ledd;
+
 #define             NEGATIVE        ( 1 )
 
 // System 3x6 (char #22 to #96)
@@ -381,8 +383,11 @@ void InvertOLED ( unsigned char state )
 	LcdInstructionWrite ( state?SSD1306_INVERTDISPLAY:SSD1306_NORMALDISPLAY );
 }
 
+
 void OLEDInit ( void )
 {
+  	ledb = 0 ; ledc = 0 ; ledd = 0 ;
+
 	OLEDSpiInit();
 	DelayuS ( 4 );
 	LOW( LCD_RES );
@@ -534,6 +539,26 @@ void OLEDTest( void )
 void OLEDDraw ( void )
 {
 	unsigned short i;
+
+	if( leda == 0 )
+	  OLEDPixelQuad( 0, 62, 0);
+	else
+	  OLEDPixelQuad( 0, 62, 1);
+
+	if( ledc == 0 )
+	  OLEDPixelQuad( 5, 62, 0);
+	else
+	  OLEDPixelQuad( 5, 62, 1);
+
+	if( ledb == 0 )
+	  OLEDPixelQuad( 9, 62, 0);
+	else
+	  OLEDPixelQuad( 9, 62, 1);
+
+	if( ledd == 0 )
+	  OLEDPixelQuad( 14, 62, 0);
+	else
+	  OLEDPixelQuad( 14, 62, 1);
 
 	OLEDPIOA();
 
@@ -1351,3 +1376,66 @@ void OLEDDrawOutlineCircle ( int xc,int yc, unsigned int radius , unsigned char 
 	}
 }
 
+void LED_A_ON(void )
+{
+	HIGH(GPIO_LED_A);
+  	leda = 0;
+}
+
+void LED_A_OFF(void)
+{
+	LOW(GPIO_LED_A);
+  	leda = 0;
+}
+
+void LED_A_INV(void)
+{
+	INVBIT(GPIO_LED_A);
+    	leda = 1 - leda;
+}
+
+void LED_B_ON(void )
+{
+  	ledb = 0;
+}
+
+void LED_B_OFF(void)
+{
+  	ledb = 0;
+}
+
+void LED_B_INV(void)
+{
+    	ledb = 1 - ledb;
+}
+
+
+void LED_C_ON(void )
+{
+  	ledc = 0;
+}
+
+void LED_C_OFF(void)
+{
+  	ledc = 0;
+}
+
+void LED_C_INV(void)
+{
+    	ledc = 1 - ledc;
+}
+
+void LED_D_ON(void )
+{
+  	ledd = 0;
+}
+
+void LED_D_OFF(void)
+{
+  	ledd = 0;
+}
+
+void LED_D_INV(void)
+{
+    	ledd = 1 - ledd;
+}
