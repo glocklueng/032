@@ -368,7 +368,10 @@ void Draw_ADC_LOW_OLED ( void )
 		FpgaSendCommand ( FPGA_CMD_SET_DIVISOR, i );
 		SpinDelay ( 20 );
 		OLEDPIOA();
-		OLEDText8x6 ( 0, 0, "LF Sweep",1,0);
+
+		sprintf(txtbuffer,"LF Sweep %ikhz  ",i);
+		OLEDText8x6 ( 0, 0, txtbuffer,1,0);
+
 		// Vref = 3.3V, and a 10000:240 voltage divider on the input
 		// can measure voltages up to 137500 mV
 		adcval = ( ( 137500 * AvgAdc ( ADC_CHAN_LF ) ) >> 10 );
@@ -384,14 +387,11 @@ void Draw_ADC_LOW_OLED ( void )
 			peak = dest[i];
 			peakf = i;
 
-		sprintf(txtbuffer,"peakv = %d    ",peakv);
-//		OLEDPIOA();
+			sprintf(txtbuffer,"peakv = %d    ",peakv);
 			OLEDText8x6 ( 0, 10, txtbuffer,1,0);
 			sprintf(txtbuffer,"peak = %d   ",peak);
-//		OLEDPIOA();
 			OLEDText8x6 ( 0, 20, txtbuffer,1,0);
 			sprintf(txtbuffer,"peakf = %d khz  ",peakf);
-//		OLEDPIOA();
 			OLEDText8x6 ( 0, 34, txtbuffer,1,0);
 
 
