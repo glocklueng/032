@@ -386,14 +386,14 @@ void Draw_ADC_LOW_OLED ( void )
 			peak = dest[i];
 			peakf = i;
 
-//			sprintf(txtbuffer,"peakv = %d    ",peakv);
-		OLEDPIOA();
+		sprintf(txtbuffer,"peakv = %d    ",peakv);
+//		OLEDPIOA();
 			OLEDText8x6 ( 0, 8, txtbuffer,1,0);
-//			sprintf(txtbuffer,"peak = %d   ",peak);
-		OLEDPIOA();
+			sprintf(txtbuffer,"peak = %d   ",peak);
+//		OLEDPIOA();
 			OLEDText8x6 ( 0, 16, txtbuffer,1,0);
-//			sprintf(txtbuffer,"peakf = %d khz  ",peakf);
-		OLEDPIOA();
+			sprintf(txtbuffer,"peakf = %d khz  ",peakf);
+//		OLEDPIOA();
 			OLEDText8x6 ( 0, 32, txtbuffer,1,0);
 
 
@@ -401,8 +401,6 @@ void Draw_ADC_LOW_OLED ( void )
 		OLEDDraw();
 	}
 
-
-	FpgaDisableSscDma();
 
 }
 
