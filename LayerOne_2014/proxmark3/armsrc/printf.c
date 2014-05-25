@@ -40,8 +40,10 @@
 #include "util.h"
 #include "string.h"
 
+#ifdef GCC
 typedef uint32_t uintmax_t;
 typedef int32_t intmax_t;
+#endif
 
 typedef unsigned char u_char;
 typedef unsigned int u_int;
