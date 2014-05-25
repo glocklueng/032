@@ -497,11 +497,11 @@ void OLEDTest( void )
 	OLEDDraw();
 
 	for ( y=0; y<400; y++ ) {
-		SetSpeaker ( y * 100 );
+		SetSpeaker ( y * 10 );
 	}
 
 	while ( y-- ) {
-		SetSpeaker ( y * 100 );
+		SetSpeaker ( y * 10 );
 	}
 
 	OLEDPutstr ( "LED TEST\n" );
