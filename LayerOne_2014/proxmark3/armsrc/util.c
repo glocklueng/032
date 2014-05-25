@@ -263,7 +263,7 @@ void FormatVersionInformation(char *dst, int len, const char *prefix, void *vers
 void StartTickCount()
 {
 //  must be 0x40, but on my cpu - included divider is optimal
-//  0x20 - 1 ms / bit 
+//  0x20 - 1 ms / bit
 //  0x40 - 2 ms / bit
 
 	AT91C_BASE_RTTC->RTTC_RTMR = AT91C_RTTC_RTTRST + 0x001D; // was 0x003B
@@ -272,12 +272,12 @@ void StartTickCount()
 /*
 * Get the current count.
 */
-uint32_t RAMFUNC GetTickCount(){
+RAMFUNC uint32_t GetTickCount(){
 	return AT91C_BASE_RTTC->RTTC_RTVR;// was * 2;
 }
 
 //  -------------------------------------------------------------------------
-//  microseconds timer 
+//  microseconds timer
 //  -------------------------------------------------------------------------
 void StartCountUS()
 {
@@ -292,22 +292,22 @@ void StartCountUS()
 														AT91C_TC_ACPC_SET | AT91C_TC_ASWTRG_SET;
 	AT91C_BASE_TC0->TC_RA = 1;
 	AT91C_BASE_TC0->TC_RC = 0xBFFF + 1; // 0xC000
-	
-	AT91C_BASE_TC1->TC_CCR = AT91C_TC_CLKDIS; // timer disable  
+
+	AT91C_BASE_TC1->TC_CCR = AT91C_TC_CLKDIS; // timer disable
 	AT91C_BASE_TC1->TC_CMR = AT91C_TC_CLKS_XC1; // from timer 0
-	
+
 	AT91C_BASE_TC0->TC_CCR = AT91C_TC_CLKEN;
 	AT91C_BASE_TC1->TC_CCR = AT91C_TC_CLKEN;
 	AT91C_BASE_TCB->TCB_BCR = 1;
 	}
 
-uint32_t RAMFUNC GetCountUS(){
+RAMFUNC uint32_t GetCountUS(){
 	return (AT91C_BASE_TC1->TC_CV * 0x8000) + ((AT91C_BASE_TC0->TC_CV / 15) * 10);
 }
 
 static uint32_t GlobalUsCounter = 0;
 
-uint32_t RAMFUNC GetDeltaCountUS(){
+RAMFUNC uint32_t GetDeltaCountUS(){
 	uint32_t g_cnt = GetCountUS();
 	uint32_t g_res = g_cnt - GlobalUsCounter;
 	GlobalUsCounter = g_cnt;
@@ -316,7 +316,7 @@ uint32_t RAMFUNC GetDeltaCountUS(){
 
 
 //  -------------------------------------------------------------------------
-//  Timer for iso14443 commands. Uses ssp_clk from FPGA 
+//  Timer for iso14443 commands. Uses ssp_clk from FPGA
 //  -------------------------------------------------------------------------
 void StartCountSspClk()
 {
@@ -349,17 +349,17 @@ void StartCountSspClk()
 	AT91C_BASE_TC0->TC_RC = 0; 								// RC Compare value = 0; increment TC2 on overflow
 
 	// use TC2 to count TIOA0 pulses (giving us a 32bit counter (TC0/TC2) clocked by ssp_clk)
-	AT91C_BASE_TC2->TC_CCR = AT91C_TC_CLKDIS; 				// disable TC2  
+	AT91C_BASE_TC2->TC_CCR = AT91C_TC_CLKDIS; 				// disable TC2
 	AT91C_BASE_TC2->TC_CMR = AT91C_TC_CLKS_XC2	 			// TC2 clock = XC2 clock = TIOA0
 							| AT91C_TC_WAVE 				// Waveform Mode
 							| AT91C_TC_WAVESEL_UP;	 		// just count
-	
+
 	AT91C_BASE_TC0->TC_CCR = AT91C_TC_CLKEN;				// enable TC0
 	AT91C_BASE_TC1->TC_CCR = AT91C_TC_CLKEN;				// enable TC1
 	AT91C_BASE_TC2->TC_CCR = AT91C_TC_CLKEN;				// enable TC2
 
 	//
-	// synchronize the counter with the ssp_frame signal. Note: FPGA must be in any iso14446 mode, otherwise the frame signal would not be present 
+	// synchronize the counter with the ssp_frame signal. Note: FPGA must be in any iso14446 mode, otherwise the frame signal would not be present
 	//
 	while(!(AT91C_BASE_PIOA->PIO_PDSR & GPIO_SSC_FRAME)); 	// wait for ssp_frame to go high (start of frame)
 	while(AT91C_BASE_PIOA->PIO_PDSR & GPIO_SSC_FRAME); 		// wait for ssp_frame to be low
@@ -377,12 +377,12 @@ void StartCountSspClk()
 }
 
 
-uint32_t RAMFUNC GetCountSspClk(){
+RAMFUNC uint32_t GetCountSspClk(){
 	uint32_t tmp_count;
 	tmp_count = (AT91C_BASE_TC2->TC_CV << 16) | AT91C_BASE_TC0->TC_CV;
 	if ((tmp_count & 0x0000ffff) == 0) { //small chance that we may have missed an increment in TC2
 		return (AT91C_BASE_TC2->TC_CV << 16);
-	} 
+	}
 	else {
 		return tmp_count;
 	}
