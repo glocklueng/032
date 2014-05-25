@@ -40,7 +40,7 @@
 #include "util.h"
 #include "string.h"
 
-#ifdef GCC
+#ifndef __IAR_SYSTEMS_ICC__
 typedef uint32_t uintmax_t;
 typedef int32_t intmax_t;
 #endif
