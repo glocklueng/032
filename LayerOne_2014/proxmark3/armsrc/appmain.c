@@ -44,8 +44,15 @@ uint8_t ToSend[512];
 int ToSendMax;
 static int ToSendBit;
 uint32_t BigBuf[10000];
-struct common_area common_area __attribute__ ( ( section ( ".commonarea" ) ) );
 int HIDhigh = 0, HIDlow = 0;
+
+#ifndef __IAR_SYSTEMS_ICC__
+struct common_area common_area __attribute__ ( ( section ( ".commonarea" ) ) );
+#else
+#pragma section=".commonarea"
+struct common_area common_area;
+#endif
+
 
 void BufferClear ( void )
 {
@@ -81,11 +88,11 @@ void ToSendStuffBit ( int b )
 
 static const char * const menu[] = {
 	"1. HF Antenna Tune\n",
-	"2. LF Antenna Tune\n", 
-	"3. Record HID Tag\n", 
-	"4. Replay HID Tag\n", 
+	"2. LF Antenna Tune\n",
+	"3. Record HID Tag\n",
+	"4. Replay HID Tag\n",
 	"5. Record raw tag\n",
-	"6. Replay raw tag\n", 
+	"6. Replay raw tag\n",
 	"7. Record ISO15693 tag\n",
 	"8. Replay ISO15693 tag\n",
 	"9. Record ISO14443 tag\n",
@@ -1178,8 +1185,8 @@ void UsbPacketReceived ( uint8_t *packet, int len )
 			LED_B_ON();
 
 			for ( size_t i = 0; i < c->arg[1]; i += USB_CMD_DATA_SIZE ) {
-				size_t len = MIN ( ( c->arg[1] - i ), USB_CMD_DATA_SIZE );
-				cmd_send ( CMD_DOWNLOADED_RAW_ADC_SAMPLES_125K, i, len, 0, ( ( byte_t* ) BigBuf ) + c->arg[0] + i, len );
+				size_t ulen = MIN ( ( c->arg[1] - i ), USB_CMD_DATA_SIZE );
+				cmd_send ( CMD_DOWNLOADED_RAW_ADC_SAMPLES_125K, i, len, 0, ( ( byte_t* ) BigBuf ) + c->arg[0] + i, ulen );
 			}
 
 			// Trigger a finish downloading signal with an ACK frame
@@ -1392,7 +1399,7 @@ void  __attribute__ ( ( noreturn ) ) AppMain ( void )
 //                }
 						break;
 
-					case 3: 
+					case 3:
                                                 OLEDPutstr("Replaying HID tag...\n");
 						CmdHIDsimTAG(HIDhigh, HIDlow, 0);
 						DelaymS ( 500 );
@@ -1442,6 +1449,6 @@ void  __attribute__ ( ( noreturn ) ) AppMain ( void )
 				menuitem %= sizeof ( menu ) / sizeof ( menu[0] ) - 1;
 			}
 		}
-	   
+
 	}
 }
