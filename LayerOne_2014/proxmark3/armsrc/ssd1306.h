@@ -110,7 +110,7 @@ void OLEDDrawCircle ( int xc,int yc, unsigned int radius , unsigned char c );
 void OLEDDrawOutlineCircle ( int xc,int yc, unsigned int radius , unsigned char c );
 void OLEDOutlineRect ( unsigned char colour, int x,int y, int width,int height );
 void OLEDDraw ( void );
-void OLEDSetPixel ( unsigned char x, unsigned char y, unsigned char color );
+void OLEDSetPixel ( short x, short y, unsigned char color );
 void OLEDClear ( void );
 void OLEDBigchar ( unsigned char u8Char );
 void OLEDPutchar ( char u8Char );

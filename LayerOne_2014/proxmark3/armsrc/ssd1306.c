@@ -561,9 +561,9 @@ void OLEDDraw ( void )
 	HIGH( LCD_CS );
 }
 
-void OLEDSetPixel ( unsigned char x, unsigned char y, unsigned char color )
+void OLEDSetPixel ( short x, short y, unsigned char color )
 {
-	if ( ( x >= GDISP_SCREEN_WIDTH ) || ( y >= GDISP_SCREEN_HEIGHT ) )
+	if ( x< 0 || y < 0 || ( x >= GDISP_SCREEN_WIDTH ) || ( y >= GDISP_SCREEN_HEIGHT ) )
 	{ return; }
 
 	// HARDWARE DOES THIS
