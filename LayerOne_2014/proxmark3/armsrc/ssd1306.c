@@ -275,6 +275,11 @@ unsigned char testbit ( unsigned char mask, unsigned char bit )
 
 void SetSpeaker( int freq)
 {
+  HIGH( SPEAKER);
+  DelayuS( freq) ;
+  LOW( SPEAKER);
+  DelayuS( freq) ;
+
 }
 
 static void OLEDSpiInit ( void )
@@ -316,16 +321,14 @@ static void OLEDSpiSendByte ( unsigned char byte )
 
 void OLEDPIOA ( void )
 {
-	AT91C_BASE_PIOA->PIO_OER = LCD_DC | LCD_SCLK | LCD_CS | LCD_DC | LCD_RES ;
-        AT91C_BASE_PIOA->PIO_PER = LCD_DC | LCD_SCLK | LCD_CS | LCD_DC | LCD_RES ;
+	AT91C_BASE_PIOA->PIO_OER = LCD_DC | LCD_SCLK | LCD_CS | LCD_DC | LCD_RES | SPEAKER;
+        AT91C_BASE_PIOA->PIO_PER = LCD_DC | LCD_SCLK | LCD_CS | LCD_DC | LCD_RES | SPEAKER;
 }
 
 void InitOLED ( void )
 {
 
-	AT91C_BASE_PIOA->PIO_OER = LCD_DC | LCD_SCLK | LCD_CS | LCD_DC | LCD_RES ;
-        AT91C_BASE_PIOA->PIO_PER = LCD_DC | LCD_SCLK | LCD_CS | LCD_DC | LCD_RES ;
-
+	OLEDPIOA();
 
 	u8CursorX = 0;
 	u8CursorY = 0;
@@ -423,11 +426,12 @@ void OLEDInit ( void )
 	LcdInstructionWrite ( 0x00 );       // Horizontal Addressing mode
 	LcdInstructionWrite ( LCD_DISP_ON );
 
-OLEDTest();
+	OLEDTest();
 
 	OLEDDisplayPicture ( l1logo_inv );
 	OLEDDraw();
 }
+
 void LEDSet( int x)
 {
 	if( x ) LED_A_ON();

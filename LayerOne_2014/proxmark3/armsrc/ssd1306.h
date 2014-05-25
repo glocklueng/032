@@ -13,6 +13,7 @@
 #define LCD_SDIN			AT91C_PIO_PA8 // kynar
 #define LCD_DC				AT91C_PIO_PA7
 #define LCD_RES				AT91C_PIO_PA3
+#define SPEAKER				AT91C_PIO_PA5
 
 #define SSD1306_SETCONTRAST             0x81
 #define SSD1306_DISPLAYALLON_RESUME     0xA4
