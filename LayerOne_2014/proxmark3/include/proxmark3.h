@@ -67,6 +67,8 @@
 
 //#define PACKED __attribute__((__packed__))
 
+
+#if 0
 #define LED_A_ON()		HIGH(GPIO_LED_A)
 #define LED_A_OFF()		LOW(GPIO_LED_A)
 #define LED_A_INV()		INVBIT(GPIO_LED_A)
@@ -79,6 +81,21 @@
 #define LED_D_ON()		HIGH(GPIO_LED_D)
 #define LED_D_OFF()		LOW(GPIO_LED_D)
 #define LED_D_INV()		INVBIT(GPIO_LED_D)
+#else
+void LED_A_ON(void );
+void LED_A_OFF(void);
+void LED_a_INV(void);
+void LED_B_ON(void );
+void LED_B_OFF(void);
+void LED_B_INV(void);
+void LED_C_ON(void );
+void LED_C_OFF(void);
+void LED_C_INV(void);
+void LED_D_ON(void );
+void LED_D_OFF(void);
+void LED_D_INV(void);
+#endif
+
 #define RELAY_ON()		HIGH(GPIO_RELAY)
 #define RELAY_OFF()		LOW(GPIO_RELAY)
 #define BUTTON_PRESS()	!(AT91C_BASE_PIOA->PIO_PDSR & GPIO_BUTTON)
