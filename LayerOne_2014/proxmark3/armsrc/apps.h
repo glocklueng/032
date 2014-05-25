@@ -18,9 +18,15 @@
 #include "hitag2.h"
 #include "mifare.h"
 
+#ifdef GCC
+#define NORETURN  __attribute__((noreturn))
+#else
+#define NORETURN
+#endif
+
 // The large multi-purpose buffer, typically used to hold A/D samples,
 // maybe processed in some way.
-uint32_t BigBuf[10000];
+extern uint32_t BigBuf[10000];
 // BIG CHANGE - UNDERSTAND THIS BEFORE WE COMMIT
 #define TRACE_OFFSET          0
 #define TRACE_SIZE         3000
@@ -40,13 +46,19 @@ extern int rsamples;   // = 0;
 extern int tracing;    // = TRUE;
 extern uint8_t trigger;
 
-// This may be used (sparingly) to declare a function to be copied to
-// and executed from RAM
-#define RAMFUNC __attribute((long_call, section(".ramfunc")))
+#if 0
+  // This may be used (sparingly) to declare a function to be copied to
+  // and executed from RAM
+  #ifdef GCC
+  #define RAMFUNC __attribute((long_call, section(".ramfunc")))
+  #else
+  #define RAMFUNC __ramfuncs
+  #endif
+#endif
 
 /// appmain.h
 void ReadMem(int addr);
-void __attribute__((noreturn)) AppMain(void);
+void NORETURN AppMain(void);
 void SamyRun(void);
 //void DbpIntegers(int a, int b, int c);
 void DbpString(char *str);
@@ -138,20 +150,20 @@ void EM4xWriteWord(uint32_t Data, uint8_t Address, uint32_t Pwd, uint8_t PwdMode
 void SimulateIso14443Tag(void);
 void AcquireRawAdcSamplesIso14443(uint32_t parameter);
 void ReadSTMemoryIso14443(uint32_t);
-void RAMFUNC SnoopIso14443(void);
+RAMFUNC void SnoopIso14443(void);
 void SendRawCommand14443B(uint32_t, uint32_t, uint8_t, uint8_t[]);
 
 /// iso14443a.h
-void RAMFUNC SnoopIso14443a(uint8_t param);
+RAMFUNC void SnoopIso14443a(uint8_t param);
 void SimulateIso14443aTag(int tagType, int uid_1st, int uid_2nd, byte_t* data);
 void ReaderIso14443a(UsbCommand * c);
 // Also used in iclass.c
-bool RAMFUNC LogTrace(const uint8_t * btBytes, uint8_t iLen, uint32_t iSamples, uint32_t dwParity, bool bReader);
+RAMFUNC bool LogTrace(const uint8_t * btBytes, uint8_t iLen, uint32_t iSamples, uint32_t dwParity, bool bReader);
 uint32_t GetParity(const uint8_t * pbtCmd, int iLen);
 void iso14a_set_trigger(bool enable);
 void iso14a_clear_trace();
 void iso14a_set_tracing(bool enable);
-void RAMFUNC SniffMifare(uint8_t param);
+RAMFUNC void SniffMifare(uint8_t param);
 
 /// epa.h
 void EPA_PACE_Collect_Nonce(UsbCommand * c);
@@ -183,7 +195,7 @@ void AcquireRawAdcSamplesIso15693(void);
 void ReaderIso15693(uint32_t parameter);	// Simulate an ISO15693 reader - greg
 void SimTagIso15693(uint32_t parameter);	// simulate an ISO15693 tag - greg
 void BruteforceIso15693Afi(uint32_t speed); // find an AFI of a tag - atrox
-void DirectTag15693Command(uint32_t datalen,uint32_t speed, uint32_t recv, uint8_t data[]); // send arbitrary commands from CLI - atrox 
+void DirectTag15693Command(uint32_t datalen,uint32_t speed, uint32_t recv, uint8_t data[]); // send arbitrary commands from CLI - atrox
 void SetDebugIso15693(uint32_t flag);
 
 /// iclass.h
