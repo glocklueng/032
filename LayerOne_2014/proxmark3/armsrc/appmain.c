@@ -386,13 +386,13 @@ void Draw_ADC_LOW_OLED ( void )
 
 		sprintf(txtbuffer,"peakv = %d    ",peakv);
 //		OLEDPIOA();
-			OLEDText8x6 ( 0, 8, txtbuffer,1,0);
+			OLEDText8x6 ( 0, 10, txtbuffer,1,0);
 			sprintf(txtbuffer,"peak = %d   ",peak);
 //		OLEDPIOA();
-			OLEDText8x6 ( 0, 16, txtbuffer,1,0);
+			OLEDText8x6 ( 0, 20, txtbuffer,1,0);
 			sprintf(txtbuffer,"peakf = %d khz  ",peakf);
 //		OLEDPIOA();
-			OLEDText8x6 ( 0, 32, txtbuffer,1,0);
+			OLEDText8x6 ( 0, 34, txtbuffer,1,0);
 
 
 		}
@@ -403,7 +403,7 @@ void Draw_ADC_LOW_OLED ( void )
 	OLEDText8x6 ( 0, 0, "DONE       ",1,0);
 	OLEDDraw();
 
-	while ( BUTTON_PRESS() )
+	while ( !BUTTON_PRESS() )
 	{ WDT_HIT(); }
 
 
