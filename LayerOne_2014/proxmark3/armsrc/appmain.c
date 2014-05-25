@@ -368,6 +368,7 @@ void Draw_ADC_LOW_OLED ( void )
 		WDT_HIT();
 		FpgaSendCommand ( FPGA_CMD_SET_DIVISOR, i );
 		SpinDelay ( 20 );
+		OLEDPIOA();
 		// Vref = 3.3V, and a 10000:240 voltage divider on the input
 		// can measure voltages up to 137500 mV
 		adcval = ( ( 137500 * AvgAdc ( ADC_CHAN_LF ) ) >> 10 );
