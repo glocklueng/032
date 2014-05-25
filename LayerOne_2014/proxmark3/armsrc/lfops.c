@@ -749,8 +749,8 @@ void CmdHIDdemodFSK(int findone, int *high, int *low, int ledcontrol)
 					/* if we're only looking for one tag */
 					if (findone)
 					{
-						//*high = (int) hi;
-						//*low = (int) lo;
+						*high = (int) hi;
+						*low = (int) lo;
 						return;
 					}
           hi2=0;
