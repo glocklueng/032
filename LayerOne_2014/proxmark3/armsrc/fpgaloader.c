@@ -146,7 +146,7 @@ bool FpgaSetupSscDma(uint8_t *buf, int len)
 	AT91C_BASE_PDC_SSC->PDC_RNPR = (uint32_t) buf;		// next transfer to same memory address
 	AT91C_BASE_PDC_SSC->PDC_RNCR = len;					// ... with same number of bytes
 	AT91C_BASE_PDC_SSC->PDC_PTCR = AT91C_PDC_RXTEN;		// go!
-    
+
     return true;
 }
 
@@ -322,13 +322,25 @@ int bitparse_find_section(char section_name, char **section_start, unsigned int 
 // Find out which FPGA image format is stored in flash, then call DownloadFPGA
 // with the right parameters to download the image
 //-----------------------------------------------------------------------------
+#ifndef __IAR_SYSTEMS_ICC__
 extern char _binary_fpga_bit_start, _binary_fpga_bit_end;
+#else
+static const char _binary_fpga_bit_start[] = {
+	#include "fpga.h"
+};
+#endif
+
 void FpgaDownloadAndGo(void)
 {
 	/* Check for the new flash image format: Should have the .bit file at &_binary_fpga_bit_start
 	 */
+#ifndef __IAR_SYSTEMS_ICC__
 	if(bitparse_init(&_binary_fpga_bit_start, &_binary_fpga_bit_end)) {
-		/* Successfully initialized the .bit parser. Find the 'e' section and
+#else
+	static const char *_binary_fpga_bit_end=_binary_fpga_bit_start+sizeof ( _binary_fpga_bit_start );
+	if ( bitparse_init ( ( void* ) &_binary_fpga_bit_start, ( void* ) _binary_fpga_bit_end ) ) {
+#endif
+	 	/* Successfully initialized the .bit parser. Find the 'e' section and
 		 * send its contents to the FPGA.
 		 */
 		char *bitstream_start;
