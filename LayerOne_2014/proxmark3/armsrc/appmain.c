@@ -532,7 +532,12 @@ void ReadMem ( int addr )
 /* osimage version information is linked in */
 extern struct version_information version_information;
 /* bootrom version information is pointed to from _bootphase1_version_pointer */
+#ifndef __IAR_SYSTEMS_ICC__
 extern char *_bootphase1_version_pointer, _flash_start, _flash_end;
+#else
+extern char *_bootphase1_version_pointer, _flash_start, _flash_end;
+char *_bootphase1_version_pointer;
+#endif
 void SendVersion ( void )
 {
 	char temp[256]; /* Limited data payload in USB packets */
@@ -1289,7 +1294,7 @@ void UsbPacketReceived ( uint8_t *packet, int len )
 	}
 }
 
-void  __attribute__ ( ( noreturn ) ) AppMain ( void )
+void  NORETURN AppMain ( void )
 {
 	SpinDelay ( 100 );
 
