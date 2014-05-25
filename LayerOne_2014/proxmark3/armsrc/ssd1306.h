@@ -114,7 +114,8 @@ void OLEDClear ( void );
 void OLEDBigchar ( unsigned char u8Char );
 void OLEDPutchar ( char u8Char );
 void OLEDPutstr ( const char *ptr );
+void OLEDPutBigstr ( const char *ptr );
 void OLEDTest(void);
  void OLEDDisplayPicture ( const uint8_t *pointer );
-
+void  OLEDPIOA ( void );
 #endif /* _SSD1306_H */

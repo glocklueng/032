@@ -314,6 +314,12 @@ static void OLEDSpiSendByte ( unsigned char byte )
 	}
 }
 
+void OLEDPIOA ( void )
+{
+	AT91C_BASE_PIOA->PIO_OER = LCD_DC | LCD_SCLK | LCD_CS | LCD_DC | LCD_RES ;
+        AT91C_BASE_PIOA->PIO_PER = LCD_DC | LCD_SCLK | LCD_CS | LCD_DC | LCD_RES ;
+}
+
 void InitOLED ( void )
 {
 
@@ -347,7 +353,6 @@ void OLEDClear ( void )
 	// Reset Cursor
 	u8CursorX = 0;
 	u8CursorY = 0;
-
 	memset ( sVideoRAM,0,sizeof ( sVideoRAM ) );
 }
 
@@ -533,7 +538,7 @@ void OLEDTest( void )
 void OLEDDraw ( void )
 {
 	unsigned short i;
-
+	OLEDPIOA();
 	LcdInstructionWrite ( LCD_SET_COL_LO | 0x0 );
 	LcdInstructionWrite ( LCD_SET_COL_HI | 0x0 );
 	LcdInstructionWrite ( SSD1306_SETSTARTLINE | 0x0 );

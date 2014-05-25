@@ -44,6 +44,7 @@ uint8_t ToSend[512];
 int ToSendMax;
 static int ToSendBit;
 struct common_area common_area __attribute__((section(".commonarea")));
+int HIDhigh=0, HIDlow=0;
 
 void BufferClear(void)
 {
@@ -77,14 +78,48 @@ void ToSendStuffBit(int b)
 	}
 }
 
+static const char * const menu[] = { 
+"1. OLED test\n", "2. Antenna Tune\n","3. Record HID Tag\n","4. Playback HID Tag\n",NULL
+    };
+
+void MenuDraw(int item) {
+    OLEDClear();
+    for(int i = item; i < item+5;i++){
+        if(menu[i] == NULL) break;
+        if(i == item) {
+            OLEDPutchar('>');
+            OLEDPutstr(menu[i]);
+         } else{
+    OLEDPutstr(menu[i]);}
+    }
+    OLEDDraw();
+}
+
+int h2a(char b)
+{
+	int offset=0;
+	if (b>9)
+		offset=7;
+
+	return 0x30+b+offset;
+//	return 'x';
+}
+
+   
+
 //=============================================================================
 // Debug print functions, to go out over USB, to the usual PC-side client.
 //=============================================================================
 
 void DbpString(char *str)
 {
+  LED_A_ON();
   byte_t len = strlen(str);
-  cmd_send(CMD_DEBUG_PRINT_STRING,len,0,0,(byte_t*)str,len);
+//  cmd_send(CMD_DEBUG_PRINT_STRING,len,0,0,(byte_t*)str,len);
+  OLEDPutstr(str);
+  OLEDPutstr("\n");
+  OLEDDraw();
+  LED_A_OFF();
 //	/* this holds up stuff unless we're connected to usb */
 //	if (!UsbConnected())
 //		return;
@@ -1080,6 +1115,7 @@ void  __attribute__((noreturn)) AppMain(void)
 	size_t rx_len;
   
 	for(;;) {
+            int menuitem;
     if (usb_poll()) {
       rx_len = usb_read(rx,sizeof(UsbCommand));
       if (rx_len) {
@@ -1090,10 +1126,52 @@ void  __attribute__((noreturn)) AppMain(void)
 
 		WDT_HIT();
 
-//Draw_ADC_HIGH_OLED();
-#ifdef WITH_LF
-		if (BUTTON_HELD(1000) > 0)
-			SamyRun();
-#endif
-	}
+//OLEDClear();
+//OLEDPutstr("fuuuuuck");
+//OLEDDraw();
+
+MenuDraw(menuitem);
+
+if (BUTTON_PRESS())
+    {
+    if (BUTTON_HELD(1000) > 0){
+//       WDT_HIT();
+       DelaymS(100);                                                                    
+       switch(menuitem){
+       case 0:
+            OLEDTest();
+            break;
+       case 1:
+            break;
+       case 2:
+            OLEDClear();
+	    OLEDPutstr("Recording HID tag...\n");
+	    OLEDDraw();
+            CmdHIDdemodFSK(1, &HIDhigh, &HIDlow, 0);
+ int i=0;
+ //           for (int j=0; j<8; j++)
+//	        {
+		    OLEDPutchar(h2a((HIDhigh>>((7-i)*4))&0xf));
+//                    OLEDPutstr("HIGH HIGH HIGH");
+//		}
+//	     for (int k=0; k<8; k++)
+//		{
+	            OLEDPutchar(h2a((HIDlow>>((7-i)*4))&0xf));
+//                      OLEDPutstr("LOW LOW LOW");
+//		}
+            OLEDDraw();
+	    DelaymS(2000);
+ //           while(!BUTTON_PRESS()){
+      //           WDT_HIT();
+ //                }
+
+   //          break;
+    }   
+    } else {
+     DelaymS(100);
+     menuitem++;
+     menuitem %= sizeof(menu)/sizeof(menu[0])-1;
+    }
+}
+}
 }
