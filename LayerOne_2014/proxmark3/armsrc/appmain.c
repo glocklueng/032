@@ -43,6 +43,7 @@
 uint8_t ToSend[512];
 int ToSendMax;
 static int ToSendBit;
+uint32_t BigBuf[10000];
 struct common_area common_area __attribute__ ( ( section ( ".commonarea" ) ) );
 int HIDhigh = 0, HIDlow = 0;
 
@@ -79,7 +80,17 @@ void ToSendStuffBit ( int b )
 }
 
 static const char * const menu[] = {
-	"1. HF Antenna Tune\n", "2. LF Antenna Tune\n", "3. Record HID Tag\n", "4. Replay HID Tag\n", "5. Record raw tag\n","6. Replay raw tag\n", NULL
+	"1. HF Antenna Tune\n",
+	"2. LF Antenna Tune\n", 
+	"3. Record HID Tag\n", 
+	"4. Replay HID Tag\n", 
+	"5. Record raw tag\n",
+	"6. Replay raw tag\n", 
+	"7. Record ISO15693 tag\n",
+	"8. Replay ISO15693 tag\n",
+	"9. Record ISO14443 tag\n",
+	"10. Replay ISO14443 tag\n",
+	NULL
 };
 
 void MenuDraw ( int item )
@@ -160,7 +171,7 @@ void MeasureAntennaTuningHf_OLED ( void )
 		sprintf(vhf,"%d mV  ",vHf);
 
 		OLEDText8x6(60,5,vhf,1,0);
-
+                OLEDText6x6(60,58,"Press to Exit",1,0);
 		if( y == 63 ) y = 1;
 
 		if ( BUTTON_PRESS() ) {
@@ -171,6 +182,19 @@ void MeasureAntennaTuningHf_OLED ( void )
 
 	OLEDPutstr ( "cancelled" );
 	OLEDDraw();
+}
+
+void CredScroll (void) {
+	static const char * const credits[] = {
+		"Camels",
+		"Elephants",
+		"Toucans",
+		"Your Mom",
+		"Morfir's Mom (wink)",
+		"Meerkats",
+		"Prairie Dogs",
+	};
+
 }
 
 //=============================================================================
@@ -1385,6 +1409,30 @@ void  __attribute__ ( ( noreturn ) ) AppMain ( void )
 						OLEDPutstr ("Replaying raw tag...\n(Push Button to stop)\n");
 						SimulateTagLowFrequency(sizeof(BigBuf), 0,1);
 						DelaymS ( 500 );
+						break;
+					case 6:
+						OLEDClear();
+						OLEDPutstr("Recording ISO15693 tag...\n(Push Button to stop\n");
+						AcquireRawAdcSamplesIso15693();
+                                                DelaymS ( 500 );
+						break;
+					case 7:
+						OLEDClear();
+						OLEDPutstr("Replaying ISO15693 tag...\n(Push Button to stop\n");
+						SimTagIso15693((uint32_t)0);
+                                                DelaymS ( 500 );
+						break;
+					case 8:
+						OLEDClear();
+                                                OLEDPutstr("Recording ISO14443 tag...\n(Push Button to stop\n");
+						AcquireRawAdcSamplesIso14443((uint32_t)0);
+                                                DelaymS ( 500 );
+						break;
+					case 9:
+						OLEDClear();
+                                                OLEDPutstr("Replaying ISO14443 tag...\n(Push Button to stop\n");
+						SimulateIso14443Tag();
+                                                DelaymS ( 500 );
 						break;
 				}
 
