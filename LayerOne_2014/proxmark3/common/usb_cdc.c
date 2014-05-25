@@ -566,3 +566,11 @@ void AT91F_CDC_Enumerate() {
 	    break;
 	}
 }
+
+  bool usb_connected(void)
+  {
+	  if (AT91C_BASE_UDP->UDP_GLBSTATE & AT91C_UDP_CONFG)
+		  return true;
+	  else
+		  return false;
+  }

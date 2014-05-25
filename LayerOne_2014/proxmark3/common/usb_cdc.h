@@ -43,6 +43,7 @@ bool usb_check();
 bool usb_poll();
 uint32_t usb_read(byte_t* data, size_t len);
 uint32_t usb_write(const byte_t* data, const size_t len);
+bool usb_connected(void);
 
 #endif // _USB_CDC_H_
 
