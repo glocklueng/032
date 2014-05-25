@@ -413,6 +413,9 @@ void Draw_ADC_LOW_OLED ( void )
 	while ( !BUTTON_PRESS() )
 	{ WDT_HIT(); }
 
+	FpgaWriteConfWord ( FPGA_MAJOR_MODE_OFF );
+	LED_A_OFF();
+	LED_B_OFF();
 
 }
 
