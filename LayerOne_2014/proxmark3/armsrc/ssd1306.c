@@ -497,17 +497,17 @@ void OLEDTest( void )
 	OLEDDraw();
 
 	for ( y=0; y<400; y++ ) {
-		SetSpeaker ( y * 10 );
+		SetSpeaker ( y * 5 );
 	}
 
 	while ( y-- ) {
-		SetSpeaker ( y * 10 );
+		SetSpeaker ( y * 5 );
 	}
 
 	OLEDPutstr ( "LED TEST\n" );
 	OLEDDraw();
 
-	for ( y=0; y<20; y++ ) {
+	for ( y=0; y<5; y++ ) {
 
 		LEDSet ( 1 );
 		DelaymS ( 10*y );
@@ -526,15 +526,7 @@ void OLEDTest( void )
 	LOW ( GPIO_RELAY );
 	DelaymS ( 500 );
 
-	LEDSet ( 1 );
-	HIGH ( GPIO_RELAY );
-	DelaymS ( 500 );
-
-	LEDSet ( 0 );
-	LOW ( GPIO_RELAY );
-	DelaymS ( 700 );
-
-	OLEDPutstr ( "DONE\n" );
+	OLEDPutstr ( "BOOTING\n" );
 	OLEDDraw();
 
 }
