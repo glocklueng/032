@@ -45,6 +45,7 @@ int ToSendMax;
 static int ToSendBit;
 uint32_t BigBuf[10000];
 int HIDhigh = 0, HIDlow = 0;
+void CredScroll ( void );
 
 #ifndef __IAR_SYSTEMS_ICC__
 struct common_area common_area __attribute__ ( ( section ( ".commonarea" ) ) );
@@ -87,16 +88,17 @@ void ToSendStuffBit ( int b )
 }
 
 static const char * const menu[] = {
-	"1. HF Antenna Tune\n",
-	"2. LF Antenna Tune\n",
-	"3. Record HID Tag\n",
-	"4. Replay HID Tag\n",
-	"5. Record raw tag\n",
-	"6. Replay raw tag\n",
-	"7. Record ISO15693 tag\n",
-	"8. Replay ISO15693 tag\n",
-	"9. Record ISO14443 tag\n",
-	"10. Replay ISO14443 tag\n",
+	"1. Antenna characterize\n",
+	"2. HF Antenna Tune\n",
+	"3. LF Antenna Tune\n",
+	"4. Record HID Tag\n",
+	"5. Replay HID Tag\n",
+	"6. Record raw tag\n",
+	"7. Replay raw tag\n",
+	"8. Record ISO15693 tag\n",
+	"9. Replay ISO15693 tag\n",
+	"10. Record ISO14443 tag\n",
+	"11. Replay ISO14443 tag\n",
 	NULL
 };
 
@@ -116,8 +118,13 @@ void MenuDraw ( int item )
 		}
 	}
 
+//	OLEDText8x6(100,0,usb_connected()?"1":"0",1,0);
+	CredScroll();
 	OLEDDraw();
 }
+
+
+
 
 int h2a ( char b )
 {
@@ -133,20 +140,25 @@ int h2a ( char b )
 void PrepBuffer()
 {
 	int i, max, min;
-	uint8_t *dest = (uint8_t *)BigBuf;
-	int n = sizeof(BigBuf);
+	uint8_t *dest = ( uint8_t * ) BigBuf;
+	int n = sizeof ( BigBuf );
 
-	max=127;
-	min=127;
+	max = 127;
+	min = 127;
+
 	// prepare the buffer, find min and max, then use average as threshold
-	for (i=0; i<n; i++) {
-		if (dest[i]>max) max=dest[i];
-		if (dest[i]<min) min=dest[i];
+	for ( i = 0; i < n; i++ ) {
+		if ( dest[i] > max ) { max = dest[i]; }
+
+		if ( dest[i] < min ) { min = dest[i]; }
 	}
-	min = (max + min) / 2;
-	for (i=0; i<n; i++) {
-		if (dest[i] > min ) dest[i]=1;
-		else dest[i]=0;
+
+	min = ( max + min ) / 2;
+
+	for ( i = 0; i < n; i++ ) {
+		if ( dest[i] > min ) { dest[i] = 1; }
+
+		else { dest[i] = 0; }
 	}
 }
 
@@ -154,17 +166,17 @@ void PrepBuffer()
 void MeasureAntennaTuningHf_OLED ( void )
 {
 	int vHf = 0;    // in mV
-	int y =1;
+	int y = 1;
 	char vhf[10];
 	static const char fmt[] = "%d mV";
 
 	OLEDClear();
 
-	OLEDPutstr( "Measuring HF antenna, press button to exit" );
+	OLEDPutstr ( "Measuring HF antenna, press button to exit" );
 
 	for ( ;; ) {
 
-	  	// Let the FPGA drive the high-frequency antenna around 13.56 MHz.
+		// Let the FPGA drive the high-frequency antenna around 13.56 MHz.
 		FpgaWriteConfWord ( FPGA_MAJOR_MODE_HF_READER_RX_XCORR );
 		SpinDelay ( 20 );
 
@@ -172,18 +184,21 @@ void MeasureAntennaTuningHf_OLED ( void )
 		// can measure voltages up to 33000 mV
 		vHf = ( 33000 * AvgAdc ( ADC_CHAN_HF ) ) >> 10;
 
-		OLEDLine(0,y-1,127,y-1,0);
-		OLEDSetPixel( vHf/128, y++, 1 );
+		OLEDLine ( 0, y - 1, 127, y - 1, 0 );
+		OLEDPixelQuad ( vHf / 128, y++, 1 );
 
-		sprintf(vhf,"%d mV  ",vHf);
+		sprintf ( vhf, "%d mV  ", vHf );
 
-		OLEDText8x6(60,5,vhf,1,0);
-                OLEDText6x6(60,58,"Press to Exit",1,0);
-		if( y == 63 ) y = 1;
+		OLEDText8x6 ( 60, 5, vhf, 1, 0 );
+
+		if ( y == 63 ) { y = 1; }
+
+		OLEDText6x6 ( 60, 58, "Press to Exit", 1, 0 );
 
 		if ( BUTTON_PRESS() ) {
 			break;
 		}
+
 		OLEDDraw();
 	}
 
@@ -191,17 +206,67 @@ void MeasureAntennaTuningHf_OLED ( void )
 	OLEDDraw();
 }
 
-void CredScroll (void) {
-	static const char * const credits[] = {
-		"Camels",
-		"Elephants",
-		"Toucans",
-		"Your Mom",
-		"Morfir's Mom (wink)",
-		"Meerkats",
-		"Prairie Dogs",
+void CredScroll ( void )
+{
+	static const char credits[] = {
+		"                            " \
+		"Grats, you went to LayerOne 2014. " \
+		"Thanks to all the Minions: " \
+		"Boh " \
+		"Morfir " \
+		"TheAmazingKing " \
+		"Viduata " \
+		"revolt " \
+		"CHRISB2B "  \
+		"Sandplum " \
+		"LadyJeza " \
+		"Pappy " \
+		"                           " \
+		"Shoutouts:"
+		"23b " \
+		"DG " \
+		"Coco " \
+		"Karen " \
+		"                           " \
+		"Morfir's Mom (wink) " \
+		"The letter U " \
+		"The NSA " \
+		"                           "
+	};
+	static int PosX;
+	static int PosY = 58;
+	OLEDText6x6 ( PosX, PosY, credits, 1, 0 );
+	PosX--;
+
+	if ( PosX < - ( ( sizeof ( credits ) * 5 ) + 12 ) ) { PosX = 0; }
+}
+
+void ButtWait ( void )
+{
+	OLEDText6x6 ( 60, 58, "Press to Exit", 1, 0 );
+	OLEDDraw();
+
+	while ( true ) {
+		if ( !BUTTON_PRESS() ) {
+			DelaymS ( 100 );
+
+		} else { break;}
+	}
+
+
+}
+
+void PlayTest ( void )
+{
+	static int tune1[] = {
+		100, 256, 271, 282, 272, 292, 233, 12, 14, 44, 56, 123, 183
 	};
 
+	for ( int y = 0; y < ( sizeof ( tune1 ) / 2 ); y++ ) {
+		for ( int j = tune1[ ( y ) + 1]; j < 400; j++ ) {
+			SetSpeaker ( tune1[y] * 5 );
+		}
+	};
 }
 
 //=============================================================================
@@ -212,7 +277,9 @@ void DbpString ( char *str )
 {
 	LED_A_ON();
 	byte_t len = strlen ( str );
-//  cmd_send(CMD_DEBUG_PRINT_STRING,len,0,0,(byte_t*)str,len);
+
+	if ( usb_connected() ) { cmd_send ( CMD_DEBUG_PRINT_STRING, len, 0, 0, ( byte_t* ) str, len ); }
+
 	OLEDPutstr ( str );
 	OLEDPutstr ( "\n" );
 	OLEDDraw();
@@ -338,11 +405,11 @@ int AvgAdc ( int ch ) // was static - merlok
 
 void Draw_ADC_LOW_OLED ( void )
 {
-	uint16_t *dest = ( uint16_t * ) BigBuf+FREE_BUFFER_OFFSET;
+	uint16_t *dest = ( uint16_t * ) BigBuf + FREE_BUFFER_OFFSET;
 	uint8_t v = 0;
 	uint16_t r;
 	uint16_t p = 0;
-	char txtbuffer[32]="HELLO";
+	char txtbuffer[32] = "HELLO";
 	int i, adcval = 0, peak = 0, peakv = 0, peakf = 0; //ptr = 0
 	int vLf125 = 0, vLf134 = 0, vHf = 0;	// in mV
 
@@ -369,8 +436,8 @@ void Draw_ADC_LOW_OLED ( void )
 		SpinDelay ( 20 );
 		OLEDPIOA();
 
-		sprintf(txtbuffer,"LF Sweep %ikhz  ",i);
-		OLEDText8x6 ( 0, 0, txtbuffer,1,0);
+		sprintf ( txtbuffer, "LF Sweep %ikhz  ", i );
+		OLEDText8x6 ( 0, 0, txtbuffer, 1, 0 );
 
 		// Vref = 3.3V, and a 10000:240 voltage divider on the input
 		// can measure voltages up to 137500 mV
@@ -387,27 +454,26 @@ void Draw_ADC_LOW_OLED ( void )
 			peak = dest[i];
 			peakf = i;
 
-			sprintf(txtbuffer,"peakv = %d    ",peakv);
-			OLEDText8x6 ( 0, 10, txtbuffer,1,0);
-			sprintf(txtbuffer,"peak = %d   ",peak);
-			OLEDText8x6 ( 0, 20, txtbuffer,1,0);
-			sprintf(txtbuffer,"peakf = %d khz  ",peakf);
-			OLEDText8x6 ( 0, 34, txtbuffer,1,0);
-
+			sprintf ( txtbuffer, "peakv = %d    ", peakv );
+			OLEDText8x6 ( 0, 10, txtbuffer, 1, 0 );
+			sprintf ( txtbuffer, "peak = %d   ", peak );
+			OLEDText8x6 ( 0, 20, txtbuffer, 1, 0 );
+			sprintf ( txtbuffer, "peakf = %d khz  ", peakf );
+			OLEDText8x6 ( 0, 34, txtbuffer, 1, 0 );
 
 
 		}
 
 
 
-		OLEDLine( 0,60,127,60, 0);
-		OLEDLine( 0,60,(255-i)/2,60, 1);
+		OLEDLine ( 0, 60, 127, 60, 0 );
+		OLEDLine ( 0, 60, ( 255 - i ) / 2, 60, 1 );
 
 		OLEDDraw();
 	}
 
 
-	OLEDText8x6 ( 0, 0, "DONE       ",1,0);
+	OLEDText8x6 ( 0, 0, "DONE       ", 1, 0 );
 	OLEDDraw();
 
 	while ( !BUTTON_PRESS() )
@@ -1444,92 +1510,89 @@ void  NORETURN AppMain ( void )
 
 		WDT_HIT();
 
-//OLEDClear();
-//OLEDPutstr("fuuuuuck");
-//OLEDDraw();
 
 		MenuDraw ( menuitem );
 
 		if ( BUTTON_PRESS() ) {
 			if ( BUTTON_HELD ( 1000 ) > 0 ) {
 //       WDT_HIT();
-		  	   while (BUTTON_PRESS());
+				while ( BUTTON_PRESS() );
 
 				switch ( menuitem ) {
 					case 0:
-						MeasureAntennaTuningHf_OLED();
+						OLEDClear();
+						MeasureAntennaTuning();
+						ButtWait();
 						break;
 
 					case 1:
 						OLEDClear();
-						MeasureAntennaTuning();
+						MeasureAntennaTuningHf_OLED();
 						break;
 
 					case 2:
 						OLEDClear();
-						OLEDPutstr ( "Recording HID tag...\n" );
-						OLEDDraw();
-						CmdHIDdemodFSK ( 1, &HIDhigh, &HIDlow, 0 );
-						DelaymS ( 500 );
-						//int i = 0;
-//           for (int j=0; j<8; j++)
-//	        {
-						//					OLEDPutchar ( h2a ( ( HIDhigh >> ( ( 7 - i ) * 4 ) ) & 0xf ) );
-//                    OLEDPutstr("HIGH HIGH HIGH");
-//		}
-//	     for (int k=0; k<8; k++)
-//		{
-						//					OLEDPutchar ( h2a ( ( HIDlow >> ( ( 7 - i ) * 4 ) ) & 0xf ) );
-//                      OLEDPutstr("LOW LOW LOW");
-//		}
-						//					OLEDDraw();
-						//					DelaymS ( 2000 );
-//           while(!BUTTON_PRESS()){
-						//           WDT_HIT();
-//                }
+						Draw_ADC_LOW_OLED();
 						break;
 
 					case 3:
-                                                OLEDPutstr("Replaying HID tag...\n");
-						CmdHIDsimTAG(HIDhigh, HIDlow, 0);
-						DelaymS ( 500 );
-						break;
-                                        case 4:
 						OLEDClear();
-                                                OLEDPutstr("Recording raw tag...\n(Push Button to stop\n");
-                                                AcquireRawAdcSamples125k((bool)0);
-						PrepBuffer();
-						DelaymS ( 500 );
+						OLEDPutstr ( "Recording HID tag...\n" );
+						OLEDDraw();
+						CmdHIDdemodFSK ( 1, &HIDhigh, &HIDlow, 0 );
+						ButtWait();
 						break;
+
+					case 4:
+						OLEDPutstr ( "Replaying HID tag...\n" );
+						CmdHIDsimTAG ( HIDhigh, HIDlow, 0 );
+						ButtWait();
+						break;
+
 					case 5:
 						OLEDClear();
-						OLEDPutstr ("Replaying raw tag...\n(Push Button to stop)\n");
-						SimulateTagLowFrequency(sizeof(BigBuf), 0,1);
-						DelaymS ( 500 );
+						OLEDPutstr ( "Recording raw tag...\n" );
+						AcquireRawAdcSamples125k ( ( bool ) 0 );
+						PrepBuffer();
+						ButtWait();
 						break;
+
 					case 6:
 						OLEDClear();
-						OLEDPutstr("Recording ISO15693 tag...\n(Push Button to stop\n");
-						AcquireRawAdcSamplesIso15693();
-                                                DelaymS ( 500 );
+						OLEDPutstr ( "Replaying raw tag...\n" );
+						SimulateTagLowFrequency ( sizeof ( BigBuf ), 0, 1 );
+						ButtWait();
 						break;
+
 					case 7:
 						OLEDClear();
-						OLEDPutstr("Replaying ISO15693 tag...\n(Push Button to stop\n");
-						SimTagIso15693((uint32_t)0);
-                                                DelaymS ( 500 );
+						OLEDPutstr ( "Recording ISO15693 tag...\n" );
+						AcquireRawAdcSamplesIso15693();
+						ButtWait();
 						break;
+
 					case 8:
 						OLEDClear();
-                                                OLEDPutstr("Recording ISO14443 tag...\n(Push Button to stop\n");
-						AcquireRawAdcSamplesIso14443((uint32_t)0);
-                                                DelaymS ( 500 );
+						OLEDPutstr ( "Replaying ISO15693 tag...\n" );
+						OLEDDraw();
+						SimTagIso15693 ( ( uint32_t ) 0 );
+						ButtWait();
 						break;
+
 					case 9:
 						OLEDClear();
-                                                OLEDPutstr("Replaying ISO14443 tag...\n(Push Button to stop\n");
+						OLEDPutstr ( "Recording ISO14443 tag...\n" );
+						OLEDDraw();
+						AcquireRawAdcSamplesIso14443 ( ( uint32_t ) 0 );
+						ButtWait();
+						break;
+
+					case 10:
+						OLEDClear();
+						OLEDPutstr ( "Replaying ISO14443 tag...\n" );
+						OLEDDraw();
 						SimulateIso14443Tag();
-                                                DelaymS ( 500 );
+						ButtWait();
 						break;
 				}
 
