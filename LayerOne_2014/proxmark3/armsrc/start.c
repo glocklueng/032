@@ -13,7 +13,13 @@
 #include "apps.h"
 
 extern char __data_start__, __data_src_start__,  __data_end__, __bss_start__, __bss_end__;
+#ifdef GCC
 void __attribute__((section(".startos"))) Vector(void)
+#else
+#pragma section=".startos"
+void Vector(void)
+#endif
+
 {
 	/* Stack should have been set up by the bootloader */
 	char *src, *dst, *end;
