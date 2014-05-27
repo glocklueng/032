@@ -1,10 +1,10 @@
 #include "proxmark3.h"
 /* Generated file, do not edit */
-#ifdef GCC
+#ifndef __IAR_SYSTEMS_ICC__
 
 const struct version_information __attribute__((section(".version_information"))) version_information = {
 #else
-#pragma section=".version_information"
+#pragma location=".version_information"
 const struct version_information version_information = {
 #endif
 

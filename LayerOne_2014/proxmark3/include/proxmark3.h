@@ -103,14 +103,14 @@ void LED_D_INV(void);
 #define BUTTON_C_PRESS()  !(AT91C_BASE_PIOA->PIO_PDSR & GPIO_BUTTON_C)
 
 #define VERSION_INFORMATION_MAGIC 0x56334d50
-struct version_information {
+PACKED struct version_information {
 	int magic; /* Magic sequence to identify this as a correct version information structure. Must be VERSION_INFORMATION_MAGIC */
 	char versionversion; /* Must be 1 */
 	char present; /* 1 if the version information could be created at compile time, otherwise 0 and the remaining fields (except for magic) are empty */
 	char clean; /* 1: Tree was clean, no local changes. 0: Tree was unclean. 2: Couldn't be determined */
 	char gitversion[50]; /* String with the git revision */
 	char buildtime[30]; /* string with the build time */
-} PACKED;
+} ;
 
 #define COMMON_AREA_MAGIC 0x43334d50
 #define COMMON_AREA_COMMAND_NONE 0

@@ -50,7 +50,7 @@ void CredScroll ( void );
 #ifndef __IAR_SYSTEMS_ICC__
 struct common_area common_area __attribute__ ( ( section ( ".commonarea" ) ) );
 #else
-#pragma section=".commonarea"
+#pragma location=".commonarea"
 struct common_area common_area;
 #endif
 
