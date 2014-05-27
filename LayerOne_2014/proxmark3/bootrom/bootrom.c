@@ -19,16 +19,17 @@ static void DbpString(char *str) {
   cmd_send(CMD_DEBUG_PRINT_STRING,len,0,0,(byte_t*)str,len);
 }
 
-#ifdef GCC
+#ifndef __IAR_SYSTEMS_ICC__
 struct common_area common_area __attribute__((section(".commonarea")));
+extern char _bootrom_start, _bootrom_end, _flash_start, _flash_end;
 #else
-#pragma section=".commonarea"
+#pragma location=".commonarea"
 static struct common_area common_area ;
-#pragma section=".text"
+#pragma location=".text"
+char _bootrom_start, _bootrom_end, _flash_start, _flash_end;
 #endif
 
 unsigned int start_addr, end_addr, bootrom_unlocked;
-char _bootrom_start, _bootrom_end, _flash_start, _flash_end;
 
 static void ConfigClocks(void)
 {
@@ -346,8 +347,12 @@ void main(void)
     } else if(_osimage_entry == 0xffffffffU) {
 	    flash_mode(1);
     } else {
+      
+#ifdef __IAR_SYSTEMS_ICC__
       	AppMain();
+#else
 	    // jump to Flash address of the osimage entry point (LSBit set for thumb mode)
 	//    __asm("bx %0\n" : : "r" ( ((int)&_osimage_entry) | 0x1 ) );
+#endif
     }
 }
