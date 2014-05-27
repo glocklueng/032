@@ -11,7 +11,7 @@
 #include "cmd.h"
 //#include "usb_hid.h"
 
-void DbpString(char *str) {
+static void DbpString(char *str) {
   byte_t len = 0;
   while (str[len] != 0x00) {
     len++;
@@ -19,9 +19,16 @@ void DbpString(char *str) {
   cmd_send(CMD_DEBUG_PRINT_STRING,len,0,0,(byte_t*)str,len);
 }
 
+#ifdef GCC
 struct common_area common_area __attribute__((section(".commonarea")));
+#else
+#pragma section=".commonarea"
+static struct common_area common_area ;
+#pragma section=".text"
+#endif
+
 unsigned int start_addr, end_addr, bootrom_unlocked;
-extern char _bootrom_start, _bootrom_end, _flash_start, _flash_end;
+char _bootrom_start, _bootrom_end, _flash_start, _flash_end;
 
 static void ConfigClocks(void)
 {
@@ -89,17 +96,17 @@ static void Fatal(void)
   for(;;);
 }
 
-void UsbPacketReceived(uint8_t *packet, int len) {
+static void UsbPacketReceived(uint8_t *packet, int len) {
   int i, dont_ack=0;
   UsbCommand* c = (UsbCommand *)packet;
   volatile uint32_t *p;
-  
+
   if(len != sizeof(UsbCommand)) {
     Fatal();
   }
-  
+
   uint32_t arg0 = (uint32_t)c->arg[0];
-  
+
   switch(c->cmd) {
     case CMD_DEVICE_INFO: {
       dont_ack = 1;
@@ -112,7 +119,7 @@ void UsbPacketReceived(uint8_t *packet, int len) {
 //      UsbSendPacket(packet, len);
       cmd_send(CMD_DEVICE_INFO,arg0,1,2,0,0);
     } break;
-      
+
     case CMD_SETUP_WRITE: {
       /* The temporary write buffer of the embedded flash controller is mapped to the
        * whole memory region, only the last 8 bits are decoded.
@@ -122,7 +129,7 @@ void UsbPacketReceived(uint8_t *packet, int len) {
         p[i+arg0] = c->d.asDwords[i];
       }
     } break;
-      
+
     case CMD_FINISH_WRITE: {
       uint32_t* flash_mem = (uint32_t*)(&_flash_start);
 //      p = (volatile uint32_t *)&_flash_start;
@@ -131,9 +138,9 @@ void UsbPacketReceived(uint8_t *packet, int len) {
           //p[i+60] = c->d.asDwords[i];
           flash_mem[i] = c->d.asDwords[i];
         }
-        
+
         uint32_t flash_address = arg0 + (0x100*j);
-        
+
         /* Check that the address that we are supposed to write to is within our allowed region */
         if( ((flash_address+AT91C_IFLASH_PAGE_SIZE-1) >= end_addr) || (flash_address < start_addr) ) {
           /* Disallow write */
@@ -149,7 +156,7 @@ void UsbPacketReceived(uint8_t *packet, int len) {
           AT91C_MC_FCMD_START_PROG;
           //        arg0 = (address - ((uint32_t)flash_s));
         }
-        
+
         // Wait until flashing of page finishes
         uint32_t sr;
         while(!((sr = AT91C_BASE_EFC0->EFC_FSR) & AT91C_MC_FRDY));
@@ -161,13 +168,13 @@ void UsbPacketReceived(uint8_t *packet, int len) {
         }
       }
     } break;
-      
+
     case CMD_HARDWARE_RESET: {
 //      USB_D_PLUS_PULLUP_OFF();
       usb_disable();
       AT91C_BASE_RSTC->RSTC_RCR = RST_CONTROL_KEY | AT91C_RSTC_PROCRST;
     } break;
-      
+
     case CMD_START_FLASH: {
       if(c->arg[2] == START_FLASH_MAGIC) bootrom_unlocked = 1;
       else bootrom_unlocked = 0;
@@ -178,7 +185,7 @@ void UsbPacketReceived(uint8_t *packet, int len) {
         int allow_end = (int)&_flash_end;
         int cmd_start = c->arg[0];
         int cmd_end = c->arg[1];
-        
+
         /* Only allow command if the bootrom is unlocked, or the parameters are outside of the protected
          * bootrom area. In any case they must be within the flash area.
          */
@@ -195,12 +202,12 @@ void UsbPacketReceived(uint8_t *packet, int len) {
         }
       }
     } break;
-      
+
     default: {
       Fatal();
     } break;
   }
-  
+
   if(!dont_ack) {
 //    c->cmd = CMD_ACK;
 //    UsbSendPacket(packet, len);
@@ -248,8 +255,8 @@ static void flash_mode(int externally_entered)
 	}
 }
 
-extern uint32_t _osimage_entry;
-void BootROM(void)
+uint32_t _osimage_entry;
+void main(void)
 {
     //------------
     // First set up all the I/O pins; GPIOs configured directly, other ones
@@ -273,8 +280,7 @@ void BootROM(void)
 		GPIO_MUXSEL_HIRAW	|
 		GPIO_MUXSEL_LOPKD	|
 		GPIO_MUXSEL_LORAW	|
-		GPIO_RELAY			|
-		GPIO_NVDD_ON;
+		GPIO_RELAY;
 		// (and add GPIO_FPGA_ON)
 	// These pins are outputs
     AT91C_BASE_PIOA->PIO_OER =
@@ -282,8 +288,7 @@ void BootROM(void)
 		GPIO_LED_B			|
 		GPIO_LED_C			|
 		GPIO_LED_D			|
-		GPIO_RELAY			|
-		GPIO_NVDD_ON;
+		GPIO_RELAY;
 	// PIO controls the following pins
     AT91C_BASE_PIOA->PIO_PER =
     	GPIO_USB_PU			|
@@ -341,7 +346,8 @@ void BootROM(void)
     } else if(_osimage_entry == 0xffffffffU) {
 	    flash_mode(1);
     } else {
+      	AppMain();
 	    // jump to Flash address of the osimage entry point (LSBit set for thumb mode)
-	    __asm("bx %0\n" : : "r" ( ((int)&_osimage_entry) | 0x1 ) );
+	//    __asm("bx %0\n" : : "r" ( ((int)&_osimage_entry) | 0x1 ) );
     }
 }
