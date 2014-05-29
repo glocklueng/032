@@ -554,8 +554,8 @@ void RAMFUNC SnoopIso14443a(uint8_t param) {
 		LED_A_ON();
 		WDT_HIT();
 
-		int register readBufDataP = data - dmaBuf;
-		int register dmaBufDataP = DMA_BUFFER_SIZE - AT91C_BASE_PDC_SSC->PDC_RCR;
+		register int readBufDataP = data - dmaBuf;
+		register int dmaBufDataP = DMA_BUFFER_SIZE - AT91C_BASE_PDC_SSC->PDC_RCR;
 		if (readBufDataP <= dmaBufDataP){
 			dataLen = dmaBufDataP - readBufDataP;
 		} else {
@@ -2059,7 +2059,11 @@ void ReaderMifare(bool first_try)
 			}
 
 			led_on = !led_on;
-			if(led_on) LED_B_ON(); else LED_B_OFF();
+			if(led_on) {
+			  LED_B_ON(); 
+			} else  {
+			  LED_B_OFF();
+			}
 
 			par_list[nt_diff] = par;
 			ks_list[nt_diff] = receivedAnswer[0] ^ 0x05;

@@ -657,7 +657,7 @@ static void GetSamplesFor14443Demod(int weTx, int n, int quiet)
     FpgaSetupSscDma((uint8_t *)dmaBuf, DEMOD_DMA_BUFFER_SIZE);
 
     // Signal field is ON with the appropriate LED:
-    if (weTx) LED_D_ON(); else LED_D_OFF();
+    if (weTx) {LED_D_ON();} else LED_D_OFF();
     // And put the FPGA in the appropriate mode
     FpgaWriteConfWord(
     	FPGA_MAJOR_MODE_HF_READER_RX_XCORR | FPGA_HF_READER_RX_XCORR_848_KHZ |

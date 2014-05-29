@@ -30,19 +30,21 @@ void SetupSpi(int mode)
 	// Disable PIO control of the following pins, allows use by the SPI peripheral
 	AT91C_BASE_PIOA->PIO_PDR =
 		GPIO_NCS0	|
+#ifdef WITH_LCD
 		GPIO_NCS2 	|
+#endif
 		GPIO_MISO	|
 		GPIO_MOSI	|
 		GPIO_SPCK;
 
 	AT91C_BASE_PIOA->PIO_ASR =
 		GPIO_NCS0	|
-		GPIO_MISO	|
+  		GPIO_MISO	|
 		GPIO_MOSI	|
 		GPIO_SPCK;
 
 	AT91C_BASE_PIOA->PIO_BSR = GPIO_NCS2;
-
+	
 	//enable the SPI Peripheral clock
 	AT91C_BASE_PMC->PMC_PCER = (1<<AT91C_ID_SPI);
 	// Enable SPI

@@ -11,6 +11,8 @@
 #include "LCD.h"
 #include "fonts.h"
 
+#ifdef WITH_LCD
+
 void LCDSend(unsigned int data)
 {
 	// 9th bit set for data, clear for command
@@ -151,3 +153,4 @@ void LCDInit(void)
 	LCDFill(0, 1+8*15, 132, 8, MAGENTA);
 
 }
+#endif

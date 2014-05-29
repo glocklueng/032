@@ -29,8 +29,9 @@
 #endif
 
 #ifdef WITH_OLED
-#	include "ssd1306.h"
+#   include "ssd1306.h"
 #endif
+void	TimerSetup(void);
 
 #define abs(x) ( ((x)<0) ? -(x) : (x) )
 
@@ -87,54 +88,60 @@ void ToSendStuffBit ( int b )
 	}
 }
 
-static const char * const menu[] = {
-	"1. Antenna characterize\n",
-	"2. HF Antenna Tune\n",
-	"3. LF Antenna Tune\n",
-	"4. Record HID Tag\n",
-	"5. Replay HID Tag\n",
-	"6. Record raw tag\n",
-	"7. Replay raw tag\n",
-	"8. Record ISO15693 tag\n",
-	"9. Replay ISO15693 tag\n",
-	"10. Record ISO14443 tag\n",
-	"11. Replay ISO14443 tag\n",
-	NULL
-};
+typedef struct menu_item_tag {
+	const char *const string;
+	unsigned char value;
+} menu_item;
 
+menu_item menuList[] = {
+	"Antenna CHR",0,
+	"HF Antenna Tune",1,
+	"LF Antenna Tune",2,
+	"Record HID Tag",3,
+	"Replay HID Tag",4,
+	"Record raw tag",5,
+	"Replay raw tag",6,
+	"Record ISO15693",7,
+	"Replay ISO15693",8,
+	"Record ISO14443",9,
+	"Replay ISO14443",10,
+	"ADC LOW PKD",11,
+	"ADC HIGH ",12,
+	"SimTagHfListen",13,
+	0,0
+};
 void MenuDraw ( int item )
 {
+	short width;
 	OLEDClear();
 
 	for ( int i = item; i < item + 5; i++ ) {
-		if ( menu[i] == NULL ) { break; }
+
+		if ( menuList[i].string == NULL ) {
+			break;
+		}
 
 		if ( i == item ) {
-			OLEDPutchar ( '>' );
-			OLEDPutstr ( menu[i] );
+			width = ( 128/2 ) - ( ( strlen ( menuList[i].string ) *8 ) /2 );
+			OLEDText8x6 ( width, ( ( i-item ) *6 ), menuList[i].string ,1,0 );
+		}
 
-		} else {
-			OLEDPutstr ( menu[i] );
+		else {
+			width = ( 128/2 )- ( ( strlen ( menuList[i].string ) *6 ) /2 );
+			OLEDText6x6 ( width,4+ ( ( i-item ) *6 ),menuList[i].string,1,0 );
 		}
 	}
-
-//	OLEDText8x6(100,0,usb_connected()?"1":"0",1,0);
-	CredScroll();
-	OLEDDraw();
 }
-
-
-
 
 int h2a ( char b )
 {
 	int offset = 0;
 
-	if ( b > 9 )
-	{ offset = 7; }
+	if ( b > 9 ) {
+		offset = 7;
+	}
 
 	return 0x30 + b + offset;
-//	return 'x';
 }
 
 void PrepBuffer()
@@ -148,17 +155,25 @@ void PrepBuffer()
 
 	// prepare the buffer, find min and max, then use average as threshold
 	for ( i = 0; i < n; i++ ) {
-		if ( dest[i] > max ) { max = dest[i]; }
+		if ( dest[i] > max ) {
+			max = dest[i];
+		}
 
-		if ( dest[i] < min ) { min = dest[i]; }
+		if ( dest[i] < min ) {
+			min = dest[i];
+		}
 	}
 
 	min = ( max + min ) / 2;
 
 	for ( i = 0; i < n; i++ ) {
-		if ( dest[i] > min ) { dest[i] = 1; }
+		if ( dest[i] > min ) {
+			dest[i] = 1;
+		}
 
-		else { dest[i] = 0; }
+		else {
+			dest[i] = 0;
+		}
 	}
 }
 
@@ -191,7 +206,9 @@ void MeasureAntennaTuningHf_OLED ( void )
 
 		OLEDText8x6 ( 60, 5, vhf, 1, 0 );
 
-		if ( y == 63 ) { y = 1; }
+		if ( y == 63 ) {
+			y = 1;
+		}
 
 		OLEDText6x6 ( 60, 58, "Press to Exit", 1, 0 );
 
@@ -220,13 +237,15 @@ void CredScroll ( void )
 		"CHRISB2B "  \
 		"Sandplum " \
 		"LadyJeza " \
-		"Pappy " \
 		"                           " \
 		"Shoutouts:"
-		"23b " \
+		"Pappy " \
+		"CHS " \
+		"N0ID " \
 		"DG " \
 		"Coco " \
-		"Karen " \
+		"Special K " \
+		"23b " \
 		"                           " \
 		"Morfir's Mom (wink) " \
 		"The letter U " \
@@ -234,11 +253,12 @@ void CredScroll ( void )
 		"                           "
 	};
 	static int PosX;
-	static int PosY = 58;
-	OLEDText6x6 ( PosX, PosY, credits, 1, 0 );
-	PosX--;
+	OLEDText8x6 ( PosX, 64-7, credits, 1, 0 );
+	PosX-=1;
 
-	if ( PosX < - ( ( sizeof ( credits ) * 5 ) + 12 ) ) { PosX = 0; }
+	if ( PosX < - ( ( sizeof ( credits ) * 5 ) + 12 ) ) {
+		PosX = 0;
+	}
 }
 
 void ButtWait ( void )
@@ -246,13 +266,9 @@ void ButtWait ( void )
 	OLEDText6x6 ( 60, 58, "Press to Exit", 1, 0 );
 	OLEDDraw();
 
-	while ( true ) {
-		if ( !BUTTON_PRESS() ) {
-			DelaymS ( 100 );
+	while ( !BUTTON_PRESS() );
 
-		} else { break;}
-	}
-
+	while ( BUTTON_PRESS() );
 
 }
 
@@ -278,7 +294,9 @@ void DbpString ( char *str )
 	LED_A_ON();
 	byte_t len = strlen ( str );
 
-	if ( usb_connected() ) { cmd_send ( CMD_DEBUG_PRINT_STRING, len, 0, 0, ( byte_t* ) str, len ); }
+	if ( usb_connected() ) {
+		cmd_send ( CMD_DEBUG_PRINT_STRING, len, 0, 0, ( byte_t* ) str, len );
+	}
 
 	OLEDPutstr ( str );
 	OLEDPutstr ( "\n" );
@@ -341,21 +359,29 @@ void Dbhexdump ( int len, uint8_t *d, bool bAsci )
 	char ascii[9];
 
 	while ( len > 0 ) {
-		if ( len > 8 ) { l = 8; }
+		if ( len > 8 ) {
+			l = 8;
+		}
 
-		else { l = len; }
+		else {
+			l = len;
+		}
 
 		memcpy ( ascii, d, l );
 		ascii[l] = 0;
 
 		// filter safe ascii
 		for ( i = 0; i < l; i++ )
-			if ( ascii[i] < 32 || ascii[i] > 126 ) { ascii[i] = '.'; }
+			if ( ascii[i] < 32 || ascii[i] > 126 ) {
+				ascii[i] = '.';
+			}
 
 		if ( bAsci ) {
 			Dbprintf ( "%-8s %*D", ascii, l, d, " " );
 
-		} else {
+		}
+
+		else {
 			Dbprintf ( "%*D", l, d, " " );
 		}
 
@@ -403,18 +429,71 @@ int AvgAdc ( int ch ) // was static - merlok
 }
 
 
+void Draw_ADC_LOW_PKD_OLED ( void )
+{
+	uint16_t *dest = ( uint16_t * ) BigBuf+FREE_BUFFER_OFFSET;
+	uint8_t v = 0;
+	uint16_t r;
+	int i;
+	uint16_t p = 0;
+	int scale=1024/64;
+	unsigned short value,maxvalue=1;
+
+	// maximum value is 1023
+	// screen is 64 tall
+	// scaler 1024/64 = 16
+
+
+	OLEDClear();
+
+	OLEDPutstr ( "Draw_ADC_LOW_PKD_OLED" );
+	OLEDDraw();
+
+	FpgaWriteConfWord ( FPGA_MAJOR_MODE_LF_PASSTHRU );
+
+	SetAdcMuxFor ( GPIO_MUXSEL_LOPKD );
+
+	i = 0;
+
+	for ( ;; ) {
+
+		OLEDClear();
+
+		for ( unsigned char  x =  0 ; x < 127; x++ ) {
+
+			dest[x] = ReadAdc ( ADC_CHAN_LF );
+			dest[x] /= scale;
+			OLEDSetPixel ( x,dest[x],1 );
+		}
+
+		maxvalue = 1;
+
+		for ( unsigned char  x =  0 ; x < 127; x++ ) {
+			maxvalue = MAX ( dest[x],maxvalue );
+			scale = maxvalue/64;
+		}
+
+		if ( BUTTON_PRESS() ) {
+			break;
+		}
+
+		WDT_HIT();
+
+		OLEDDraw();
+	}
+}
+
 void Draw_ADC_LOW_OLED ( void )
 {
 	uint16_t *dest = ( uint16_t * ) BigBuf + FREE_BUFFER_OFFSET;
 	uint8_t v = 0;
 	uint16_t r;
 	uint16_t p = 0;
-	char txtbuffer[32] = "HELLO";
+	char txtbuffer[32];
 	int i, adcval = 0, peak = 0, peakv = 0, peakf = 0; //ptr = 0
-	int vLf125 = 0, vLf134 = 0, vHf = 0;	// in mV
+	int vLf125 = 0, vLf134 = 0, vHf = 0;    // in mV
 
 	OLEDClear();
-
 
 	memset ( dest, 0, sizeof ( FREE_BUFFER_SIZE ) );
 
@@ -434,7 +513,6 @@ void Draw_ADC_LOW_OLED ( void )
 		WDT_HIT();
 		FpgaSendCommand ( FPGA_CMD_SET_DIVISOR, i );
 		SpinDelay ( 20 );
-		OLEDPIOA();
 
 		sprintf ( txtbuffer, "LF Sweep %ikhz  ", i );
 		OLEDText8x6 ( 0, 0, txtbuffer, 1, 0 );
@@ -443,9 +521,13 @@ void Draw_ADC_LOW_OLED ( void )
 		// can measure voltages up to 137500 mV
 		adcval = ( ( 137500 * AvgAdc ( ADC_CHAN_LF ) ) >> 10 );
 
-		if ( i == 95 ) 	{ vLf125 = adcval; } // voltage at 125Khz
+		if ( i == 95 )  {
+			vLf125 = adcval;    // voltage at 125Khz
+		}
 
-		if ( i == 89 ) 	{ vLf134 = adcval; } // voltage at 134Khz
+		if ( i == 89 )  {
+			vLf134 = adcval;    // voltage at 134Khz
+		}
 
 		dest[i] = adcval >> 8; // scale int to fit in byte for graphing purposes
 
@@ -454,7 +536,7 @@ void Draw_ADC_LOW_OLED ( void )
 			peak = dest[i];
 			peakf = i;
 
-			sprintf ( txtbuffer, "peakv = %d    ", peakv );
+			sprintf ( txtbuffer, "peakv = %d    ", vLf125 );
 			OLEDText8x6 ( 0, 10, txtbuffer, 1, 0 );
 			sprintf ( txtbuffer, "peak = %d   ", peak );
 			OLEDText8x6 ( 0, 20, txtbuffer, 1, 0 );
@@ -476,8 +558,9 @@ void Draw_ADC_LOW_OLED ( void )
 	OLEDText8x6 ( 0, 0, "DONE       ", 1, 0 );
 	OLEDDraw();
 
-	while ( !BUTTON_PRESS() )
-	{ WDT_HIT(); }
+	while ( !BUTTON_PRESS() ) {
+		WDT_HIT();
+	}
 
 	FpgaWriteConfWord ( FPGA_MAJOR_MODE_OFF );
 	LED_A_OFF();
@@ -489,7 +572,7 @@ void MeasureAntennaTuning ( void )
 {
 	uint8_t *dest = ( uint8_t * ) BigBuf + FREE_BUFFER_OFFSET;
 	int i, adcval = 0, peak = 0, peakv = 0, peakf = 0; //ptr = 0
-	int vLf125 = 0, vLf134 = 0, vHf = 0;	// in mV
+	int vLf125 = 0, vLf134 = 0, vHf = 0;    // in mV
 
 //	UsbCommand c;
 
@@ -516,9 +599,13 @@ void MeasureAntennaTuning ( void )
 		// can measure voltages up to 137500 mV
 		adcval = ( ( 137500 * AvgAdc ( ADC_CHAN_LF ) ) >> 10 );
 
-		if ( i == 95 ) 	{ vLf125 = adcval; } // voltage at 125Khz
+		if ( i == 95 )  {
+			vLf125 = adcval;    // voltage at 125Khz
+		}
 
-		if ( i == 89 ) 	{ vLf134 = adcval; } // voltage at 134Khz
+		if ( i == 89 )  {
+			vLf134 = adcval;    // voltage at 134Khz
+		}
 
 		dest[i] = adcval >> 8; // scale int to fit in byte for graphing purposes
 
@@ -554,7 +641,7 @@ void MeasureAntennaTuning ( void )
 
 void MeasureAntennaTuningHf ( void )
 {
-	int vHf = 0;	// in mV
+	int vHf = 0;    // in mV
 
 	DbpString ( "Measuring HF antenna, press button to exit" );
 
@@ -568,7 +655,9 @@ void MeasureAntennaTuningHf ( void )
 
 		Dbprintf ( "%d mV", vHf );
 
-		if ( BUTTON_PRESS() ) { break; }
+		if ( BUTTON_PRESS() ) {
+			break;
+		}
 	}
 
 	DbpString ( "cancelled" );
@@ -603,15 +692,15 @@ void Draw_ADC_HIGH_OLED ( void )
 		for ( int x =  0 ; x < 127; x++ ) {
 			// Vref = 3300mV, and an 10:1 voltage divider on the input
 			// can measure voltages up to 33000 mV
-			vHf = ( 33000 * AvgAdc ( ADC_CHAN_HF ) ) >> 10;
 
-
-			vHf = AvgAdc ( ADC_CHAN_HF );
+			vHf = ReadAdc ( ADC_CHAN_HF );
 			//OLEDLine ( x,0,x, ( dest[x] ) ,1 );
-			OLEDSetPixel ( x, vHf , 1 );
+			OLEDSetPixel ( x, vHf/2 , 1 );
 		}
 
-		if ( BUTTON_PRESS() ) { break; }
+		if ( BUTTON_PRESS() ) {
+			break;
+		}
 
 		WDT_HIT();
 		OLEDDraw();
@@ -703,7 +792,9 @@ void SendVersion ( void )
 	if ( bootrom_version < &_flash_start || bootrom_version >= &_flash_end ) {
 		DbpString ( "bootrom version information appears invalid" );
 
-	} else {
+	}
+
+	else {
 		FormatVersionInformation ( temp, sizeof ( temp ), "bootrom: ", bootrom_version );
 		DbpString ( temp );
 	}
@@ -729,15 +820,15 @@ void SamyRun()
 	int high[OPTS], low[OPTS];
 
 	// Oooh pretty -- notify user we're in elite samy mode now
-	LED ( LED_RED,	200 );
+	LED ( LED_RED,  200 );
 	LED ( LED_ORANGE, 200 );
-	LED ( LED_GREEN,	200 );
+	LED ( LED_GREEN,    200 );
 	LED ( LED_ORANGE, 200 );
-	LED ( LED_RED,	200 );
+	LED ( LED_RED,  200 );
 	LED ( LED_ORANGE, 200 );
-	LED ( LED_GREEN,	200 );
+	LED ( LED_GREEN,    200 );
 	LED ( LED_ORANGE, 200 );
-	LED ( LED_RED,	200 );
+	LED ( LED_RED,  200 );
 
 	int selected = 0;
 	int playing = 0;
@@ -764,8 +855,9 @@ void SamyRun()
 			DbpString ( "Starting recording" );
 
 			// wait for button to be released
-			while ( BUTTON_PRESS() )
-			{ WDT_HIT(); }
+			while ( BUTTON_PRESS() ) {
+				WDT_HIT();
+			}
 
 			/* need this delay to prevent catching some weird data */
 			SpinDelay ( 500 );
@@ -783,48 +875,54 @@ void SamyRun()
 		}
 
 		// Change where to record (or begin playing)
-		else if ( button_pressed ) {
-			// Next option if we were previously playing
-			if ( playing )
-			{ selected = ( selected + 1 ) % OPTS; }
-
-			playing = !playing;
-
-			LEDsoff();
-			LED ( selected + 1, 0 );
-
-			// Begin transmitting
-			if ( playing ) {
-				LED ( LED_GREEN, 0 );
-				DbpString ( "Playing" );
-
-				// wait for button to be released
-				while ( BUTTON_PRESS() )
-				{ WDT_HIT(); }
-
-				Dbprintf ( "%x %x %x", selected, high[selected], low[selected] );
-				CmdHIDsimTAG ( high[selected], low[selected], 0 );
-				DbpString ( "Done playing" );
-
-				if ( BUTTON_HELD ( 1000 ) > 0 ) {
-					DbpString ( "Exiting" );
-					LEDsoff();
-					return;
+		else
+			if ( button_pressed ) {
+				// Next option if we were previously playing
+				if ( playing ) {
+					selected = ( selected + 1 ) % OPTS;
 				}
 
-				/* We pressed a button so ignore it here with a delay */
-				SpinDelay ( 300 );
-
-				// when done, we're done playing, move to next option
-				selected = ( selected + 1 ) % OPTS;
 				playing = !playing;
+
 				LEDsoff();
 				LED ( selected + 1, 0 );
 
-			} else
-				while ( BUTTON_PRESS() )
-				{ WDT_HIT(); }
-		}
+				// Begin transmitting
+				if ( playing ) {
+					LED ( LED_GREEN, 0 );
+					DbpString ( "Playing" );
+
+					// wait for button to be released
+					while ( BUTTON_PRESS() ) {
+						WDT_HIT();
+					}
+
+					Dbprintf ( "%x %x %x", selected, high[selected], low[selected] );
+					CmdHIDsimTAG ( high[selected], low[selected], 0 );
+					DbpString ( "Done playing" );
+
+					if ( BUTTON_HELD ( 1000 ) > 0 ) {
+						DbpString ( "Exiting" );
+						LEDsoff();
+						return;
+					}
+
+					/* We pressed a button so ignore it here with a delay */
+					SpinDelay ( 300 );
+
+					// when done, we're done playing, move to next option
+					selected = ( selected + 1 ) % OPTS;
+					playing = !playing;
+					LEDsoff();
+					LED ( selected + 1, 0 );
+
+				}
+
+				else
+					while ( BUTTON_PRESS() ) {
+						WDT_HIT();
+					}
+			}
 	}
 }
 #endif
@@ -872,8 +970,8 @@ void ListenReaderField ( int limit )
 	int hf_av, hf_av_new,  hf_baseline = 0, hf_count = 0, hf_max;
 	int mode = 1, display_val, display_max, i;
 
-#define LF_ONLY		1
-#define HF_ONLY		2
+#define LF_ONLY     1
+#define HF_ONLY     2
 
 	LEDsoff();
 
@@ -914,9 +1012,13 @@ void ListenReaderField ( int limit )
 
 		if ( limit != HF_ONLY ) {
 			if ( mode == 1 ) {
-				if ( abs ( lf_av - lf_baseline ) > 10 ) { LED_D_ON(); }
+				if ( abs ( lf_av - lf_baseline ) > 10 ) {
+					LED_D_ON();
+				}
 
-				else                               { LED_D_OFF(); }
+				else                               {
+					LED_D_OFF();
+				}
 			}
 
 			++lf_count;
@@ -927,8 +1029,9 @@ void ListenReaderField ( int limit )
 				Dbprintf ( "LF 125/134 Field Change: %x %x %x", lf_av, lf_av_new, lf_count );
 				lf_av = lf_av_new;
 
-				if ( lf_av > lf_max )
-				{ lf_max = lf_av; }
+				if ( lf_av > lf_max ) {
+					lf_max = lf_av;
+				}
 
 				lf_count = 0;
 			}
@@ -936,9 +1039,13 @@ void ListenReaderField ( int limit )
 
 		if ( limit != LF_ONLY ) {
 			if ( mode == 1 ) {
-				if ( abs ( hf_av - hf_baseline ) > 10 ) { LED_B_ON(); }
+				if ( abs ( hf_av - hf_baseline ) > 10 ) {
+					LED_B_ON();
+				}
 
-				else                               { LED_B_OFF(); }
+				else                               {
+					LED_B_OFF();
+				}
 			}
 
 			++hf_count;
@@ -949,8 +1056,9 @@ void ListenReaderField ( int limit )
 				Dbprintf ( "HF 13.56 Field Change: %x %x %x", hf_av, hf_av_new, hf_count );
 				hf_av = hf_av_new;
 
-				if ( hf_av > hf_max )
-				{ hf_max = hf_av; }
+				if ( hf_av > hf_max ) {
+					hf_max = hf_av;
+				}
 
 				hf_count = 0;
 			}
@@ -961,38 +1069,61 @@ void ListenReaderField ( int limit )
 				display_val = lf_av;
 				display_max = lf_max;
 
-			} else if ( limit == HF_ONLY ) {
-				display_val = hf_av;
-				display_max = hf_max;
+			}
 
-			} else { /* Pick one at random */
-				if ( ( hf_max - hf_baseline ) > ( lf_max - lf_baseline ) ) {
+			else
+				if ( limit == HF_ONLY ) {
 					display_val = hf_av;
 					display_max = hf_max;
 
-				} else {
-					display_val = lf_av;
-					display_max = lf_max;
 				}
-			}
+
+				else {   /* Pick one at random */
+					if ( ( hf_max - hf_baseline ) > ( lf_max - lf_baseline ) ) {
+						display_val = hf_av;
+						display_max = hf_max;
+
+					}
+
+					else {
+						display_val = lf_av;
+						display_max = lf_max;
+					}
+				}
 
 			for ( i = 0; i < LIGHT_LEN; i++ ) {
 				if ( display_val >= ( ( display_max / LIGHT_LEN ) *i ) && display_val <= ( ( display_max / LIGHT_LEN ) * ( i + 1 ) ) ) {
-					if ( LIGHT_SCHEME[i] & 0x1 ) { LED_C_ON(); }
+					if ( LIGHT_SCHEME[i] & 0x1 ) {
+						LED_C_ON();
+					}
 
-					else { LED_C_OFF(); }
+					else {
+						LED_C_OFF();
+					}
 
-					if ( LIGHT_SCHEME[i] & 0x2 ) { LED_A_ON(); }
+					if ( LIGHT_SCHEME[i] & 0x2 ) {
+						LED_A_ON();
+					}
 
-					else { LED_A_OFF(); }
+					else {
+						LED_A_OFF();
+					}
 
-					if ( LIGHT_SCHEME[i] & 0x4 ) { LED_B_ON(); }
+					if ( LIGHT_SCHEME[i] & 0x4 ) {
+						LED_B_ON();
+					}
 
-					else { LED_B_OFF(); }
+					else {
+						LED_B_OFF();
+					}
 
-					if ( LIGHT_SCHEME[i] & 0x8 ) { LED_D_ON(); }
+					if ( LIGHT_SCHEME[i] & 0x8 ) {
+						LED_D_ON();
+					}
 
-					else { LED_D_OFF(); }
+					else {
+						LED_D_OFF();
+					}
 
 					break;
 				}
@@ -1005,8 +1136,11 @@ void UsbPacketReceived ( uint8_t *packet, int len )
 {
 	UsbCommand *c = ( UsbCommand * ) packet;
 
-//  Dbprintf("received %d bytes, with command: 0x%04x and args: %d %d %d",len,c->cmd,c->arg[0],c->arg[1],c->arg[2]);
+	Dbprintf ( "received %d bytes, with command: 0x%04x and args: %d %d %d",len,c->cmd,c->arg[0],c->arg[1],c->arg[2] );
 
+#ifdef WITH_OLED
+	OLEDClear();
+#endif	
 	switch ( c->cmd ) {
 #ifdef WITH_LF
 
@@ -1020,11 +1154,11 @@ void UsbPacketReceived ( uint8_t *packet, int len )
 			break;
 
 		case CMD_HID_DEMOD_FSK:
-			CmdHIDdemodFSK ( 0, 0, 0, 1 );					// Demodulate HID tag
+			CmdHIDdemodFSK ( 0, 0, 0, 1 );                  // Demodulate HID tag
 			break;
 
 		case CMD_HID_SIM_TAG:
-			CmdHIDsimTAG ( c->arg[0], c->arg[1], 1 );					// Simulate HID tag by ID
+			CmdHIDsimTAG ( c->arg[0], c->arg[1], 1 );                   // Simulate HID tag by ID
 			break;
 
 		case CMD_HID_CLONE_TAG: // Clone HID tag by ID to T55x7
@@ -1032,7 +1166,7 @@ void UsbPacketReceived ( uint8_t *packet, int len )
 			break;
 
 		case CMD_IO_DEMOD_FSK:
-			CmdIOdemodFSK ( 1, 0, 0, 1 );					// Demodulate IO tag
+			CmdIOdemodFSK ( 1, 0, 0, 1 );                   // Demodulate IO tag
 			break;
 
 		case CMD_IO_CLONE_TAG: // Clone IO tag by ID to T55x7
@@ -1061,11 +1195,11 @@ void UsbPacketReceived ( uint8_t *packet, int len )
 			SimulateTagLowFrequencyBidir ( c->arg[0], c->arg[1] );
 			break;
 
-		case CMD_INDALA_CLONE_TAG:					// Clone Indala 64-bit tag by UID to T55x7
+		case CMD_INDALA_CLONE_TAG:                  // Clone Indala 64-bit tag by UID to T55x7
 			CopyIndala64toT55x7 ( c->arg[0], c->arg[1] );
 			break;
 
-		case CMD_INDALA_CLONE_TAG_L:					// Clone Indala 224-bit tag by UID to T55x7
+		case CMD_INDALA_CLONE_TAG_L:                    // Clone Indala 224-bit tag by UID to T55x7
 			CopyIndala224toT55x7 ( c->d.asDwords[0], c->d.asDwords[1], c->d.asDwords[2], c->d.asDwords[3], c->d.asDwords[4], c->d.asDwords[5], c->d.asDwords[6] );
 			break;
 
@@ -1084,7 +1218,7 @@ void UsbPacketReceived ( uint8_t *packet, int len )
 		case CMD_PCF7931_READ: // Read PCF7931 tag
 			ReadPCF7931();
 			cmd_send ( CMD_ACK, 0, 0, 0, 0, 0 );
-//      	UsbSendPacket((uint8_t*)&ack, sizeof(ack));
+//          UsbSendPacket((uint8_t*)&ack, sizeof(ack));
 			break;
 
 		case CMD_EM4X_READ_WORD:
@@ -1318,7 +1452,7 @@ void UsbPacketReceived ( uint8_t *packet, int len )
 			ListenReaderField ( c->arg[0] );
 			break;
 
-		case CMD_FPGA_MAJOR_MODE_OFF:		// ## FPGA Control
+		case CMD_FPGA_MAJOR_MODE_OFF:       // ## FPGA Control
 			FpgaWriteConfWord ( FPGA_MAJOR_MODE_OFF );
 			SpinDelay ( 200 );
 			LED_D_OFF(); // LED D indicates field ON or OFF
@@ -1332,11 +1466,11 @@ void UsbPacketReceived ( uint8_t *packet, int len )
 //				n.cmd = CMD_DOWNLOADED_RAW_BITS_TI_TYPE;
 //			}
 //			n.arg[0] = c->arg[0];
-			//			memcpy(n.d.asBytes, BigBuf+c->arg[0], 48); // 12*sizeof(uint32_t)
-			//			LED_B_ON();
+			//          memcpy(n.d.asBytes, BigBuf+c->arg[0], 48); // 12*sizeof(uint32_t)
+			//          LED_B_ON();
 			//      usb_write((uint8_t *)&n, sizeof(n));
-			//			UsbSendPacket((uint8_t *)&n, sizeof(n));
-			//			LED_B_OFF();
+			//          UsbSendPacket((uint8_t *)&n, sizeof(n));
+			//          LED_B_OFF();
 
 			LED_B_ON();
 
@@ -1432,7 +1566,9 @@ void UsbPacketReceived ( uint8_t *packet, int len )
 		case CMD_DEVICE_INFO: {
 				uint32_t dev_info = DEVICE_INFO_FLAG_OSIMAGE_PRESENT | DEVICE_INFO_FLAG_CURRENT_MODE_OS;
 
-				if ( common_area.flags.bootrom_present ) { dev_info |= DEVICE_INFO_FLAG_BOOTROM_PRESENT; }
+				if ( common_area.flags.bootrom_present ) {
+					dev_info |= DEVICE_INFO_FLAG_BOOTROM_PRESENT;
+				}
 
 //			UsbSendPacket((uint8_t*)&c, sizeof(c));
 				cmd_send ( CMD_DEVICE_INFO, dev_info, 0, 0, 0, 0 );
@@ -1447,6 +1583,8 @@ void UsbPacketReceived ( uint8_t *packet, int len )
 
 void  NORETURN AppMain ( void )
 {
+	int menuitem =0 ;
+
 	SpinDelay ( 100 );
 
 	if ( common_area.magic != COMMON_AREA_MAGIC || common_area.version != 1 ) {
@@ -1491,12 +1629,14 @@ void  NORETURN AppMain ( void )
 #endif
 #ifdef WITH_OLED
 	InitOLED();
+	MenuDraw ( menuitem );
+	OLEDDraw();
+
 #endif
 	byte_t rx[sizeof ( UsbCommand )];
 	size_t rx_len;
 
 	for ( ;; ) {
-		int menuitem;
 
 		if ( usb_poll() ) {
 			rx_len = usb_read ( rx, sizeof ( UsbCommand ) );
@@ -1504,39 +1644,40 @@ void  NORETURN AppMain ( void )
 			if ( rx_len ) {
 				UsbPacketReceived ( rx, rx_len );
 			}
+			
+			MenuDraw ( menuitem );
+			
 		}
 
 //		UsbPoll(FALSE);
 
 		WDT_HIT();
 
-
-		MenuDraw ( menuitem );
+#ifdef WITH_OLED
 
 		if ( BUTTON_PRESS() ) {
+
 			if ( BUTTON_HELD ( 1000 ) > 0 ) {
-//       WDT_HIT();
+
 				while ( BUTTON_PRESS() );
 
-				switch ( menuitem ) {
+				OLEDClear();
+
+				switch ( menuList[ menuitem ].value ) {
 					case 0:
-						OLEDClear();
 						MeasureAntennaTuning();
 						ButtWait();
 						break;
 
 					case 1:
-						OLEDClear();
 						MeasureAntennaTuningHf_OLED();
 						break;
 
 					case 2:
-						OLEDClear();
 						Draw_ADC_LOW_OLED();
 						break;
 
 					case 3:
-						OLEDClear();
 						OLEDPutstr ( "Recording HID tag...\n" );
 						OLEDDraw();
 						CmdHIDdemodFSK ( 1, &HIDhigh, &HIDlow, 0 );
@@ -1545,34 +1686,34 @@ void  NORETURN AppMain ( void )
 
 					case 4:
 						OLEDPutstr ( "Replaying HID tag...\n" );
+						OLEDDraw();
 						CmdHIDsimTAG ( HIDhigh, HIDlow, 0 );
 						ButtWait();
 						break;
 
 					case 5:
-						OLEDClear();
 						OLEDPutstr ( "Recording raw tag...\n" );
+						OLEDDraw();
 						AcquireRawAdcSamples125k ( ( bool ) 0 );
 						PrepBuffer();
 						ButtWait();
 						break;
 
 					case 6:
-						OLEDClear();
 						OLEDPutstr ( "Replaying raw tag...\n" );
+						OLEDDraw();
 						SimulateTagLowFrequency ( sizeof ( BigBuf ), 0, 1 );
 						ButtWait();
 						break;
 
 					case 7:
-						OLEDClear();
 						OLEDPutstr ( "Recording ISO15693 tag...\n" );
+						OLEDDraw();
 						AcquireRawAdcSamplesIso15693();
 						ButtWait();
 						break;
 
 					case 8:
-						OLEDClear();
 						OLEDPutstr ( "Replaying ISO15693 tag...\n" );
 						OLEDDraw();
 						SimTagIso15693 ( ( uint32_t ) 0 );
@@ -1580,7 +1721,6 @@ void  NORETURN AppMain ( void )
 						break;
 
 					case 9:
-						OLEDClear();
 						OLEDPutstr ( "Recording ISO14443 tag...\n" );
 						OLEDDraw();
 						AcquireRawAdcSamplesIso14443 ( ( uint32_t ) 0 );
@@ -1588,20 +1728,43 @@ void  NORETURN AppMain ( void )
 						break;
 
 					case 10:
-						OLEDClear();
 						OLEDPutstr ( "Replaying ISO14443 tag...\n" );
 						OLEDDraw();
 						SimulateIso14443Tag();
 						ButtWait();
 						break;
+
+					case 11:
+						Draw_ADC_LOW_PKD_OLED();
+						break;
+
+					case 12:
+						Draw_ADC_HIGH_OLED();
+						break;
+
+					case 13:
+						SimulateTagHfListen();
+						ButtWait();
+						break;
+
 				}
 
-			} else {
+				/// til let go button
+				while ( BUTTON_PRESS() );
+
+			}
+
+			else {
 				DelaymS ( 100 );
 				menuitem++;
-				menuitem %= sizeof ( menu ) / sizeof ( menu[0] ) - 1;
+				menuitem %= sizeof ( menuList ) / sizeof ( menuList[0] ) - 1;
 			}
+
+			MenuDraw ( menuitem );
 		}
 
+		CredScroll();
+		OLEDDraw();
+#endif
 	}
 }

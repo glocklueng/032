@@ -2,6 +2,8 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <limits.h>
+
 #include "proxmark3.h"
 #include "ssd1306.h"
 
@@ -53,8 +55,6 @@ static unsigned char sVideoRAM[GDISP_SCREEN_HEIGHT/8 * SSD1306_PAGE_WIDTH ];
 // Cursor
 static unsigned char    u8CursorX, u8CursorY;
 static unsigned char    Misc = 0;
-
-static unsigned char leda=0,ledb=0,ledc=0,ledd;
 
 #define             NEGATIVE        ( 1 )
 
@@ -270,35 +270,30 @@ const unsigned char font6x6[] = {
 	0x05,0x05,0x05,0x05,0x04,0x05,0x05,0x06,0x05,0x05,0x05,0x03,0x02,0x03,0x05,0x06
 };
 
-unsigned char testbit ( unsigned char mask, unsigned char bit )
+static unsigned char testbit ( unsigned char mask, unsigned char bit )
 {
 	return mask & _BV ( bit ) ;
 }
 
-void SetSpeaker( int freq)
+void SetSpeaker ( int freq )
 {
-  HIGH( SPEAKER);
-  DelayuS( freq) ;
-  LOW( SPEAKER);
-  DelayuS( freq) ;
+	HIGH ( SPEAKER );
+	DelayuS ( freq );
 
+	LOW ( SPEAKER );
+	DelayuS ( freq );
 }
 
 static void OLEDSpiInit ( void )
 {
-
 	LCD_SDIN_HIGH() ;
 	LCD_SCLK_HIGH();
 
 	DelayuS ( 50 );
-
 }
 
-
-
-static void OLEDSpiSendByte ( unsigned char byte )
+static RAMFUNC void OLEDSpiSendByte ( unsigned char byte )
 {
-
 	unsigned char  i ;
 	unsigned char  tbyte = byte ;
 
@@ -321,16 +316,10 @@ static void OLEDSpiSendByte ( unsigned char byte )
 	}
 }
 
-void OLEDPIOA ( void )
-{
-	AT91C_BASE_PIOA->PIO_OER = LCD_DC | LCD_SCLK | LCD_CS | LCD_DC | LCD_RES | SPEAKER;
-        AT91C_BASE_PIOA->PIO_PER = LCD_DC | LCD_SCLK | LCD_CS | LCD_DC | LCD_RES | SPEAKER;
-}
-
 void InitOLED ( void )
 {
-
-	OLEDPIOA();
+	AT91C_BASE_PIOA->PIO_OER = LCD_DC | LCD_SCLK | LCD_CS | LCD_DC | LCD_RES | SPEAKER;
+	AT91C_BASE_PIOA->PIO_PER = LCD_DC | LCD_SCLK | LCD_CS | LCD_DC | LCD_RES | SPEAKER;
 
 	u8CursorX = 0;
 	u8CursorY = 0;
@@ -344,13 +333,13 @@ void InitOLED ( void )
 	{
 		unsigned    i;
 
-		for ( i=0; i < GDISP_SCREEN_HEIGHT/8 * SSD1306_PAGE_WIDTH; i+=SSD1306_PAGE_WIDTH )
-		{ RAM ( g ) [i] = SSD1306_PAGE_PREFIX; }
+		for ( i=0; i < GDISP_SCREEN_HEIGHT/8 * SSD1306_PAGE_WIDTH; i+=SSD1306_PAGE_WIDTH ) {
+			RAM ( g ) [i] = SSD1306_PAGE_PREFIX;
+		}
 	}
 #endif
 	DelaymS ( 500 );
 	OLEDInit();
-
 }
 
 void OLEDClear ( void )
@@ -368,13 +357,12 @@ Send instruction to the LCD
 -------------------------------------------------------------------------------*/
 void LcdInstructionWrite ( unsigned char u8Instruction )
 {
-	LOW( LCD_CS ); // Select
-	LOW( LCD_DC ); // Instruction mode
+	LOW ( LCD_CS ); // Select
+	LOW ( LCD_DC ); // Instruction mode
 
 	OLEDSpiSendByte ( u8Instruction );
 
 	// Chip not selected
-
 	HIGH ( LCD_CS );
 }
 
@@ -383,19 +371,15 @@ void InvertOLED ( unsigned char state )
 	LcdInstructionWrite ( state?SSD1306_INVERTDISPLAY:SSD1306_NORMALDISPLAY );
 }
 
-
 void OLEDInit ( void )
 {
-  	ledb = 0 ; ledc = 0 ; ledd = 0 ;
-
 	OLEDSpiInit();
 	DelayuS ( 4 );
-	LOW( LCD_RES );
+	LOW ( LCD_RES );
 	DelayuS ( 4 );
 
-	HIGH(LCD_RES);
+	HIGH ( LCD_RES );
 	DelayuS ( 4 );
-
 
 	// Recommended initialization sequence
 	LcdInstructionWrite ( LCD_DISP_OFF );
@@ -414,7 +398,7 @@ void OLEDInit ( void )
 	LcdInstructionWrite ( LCD_SET_PADS );
 	LcdInstructionWrite ( 0x12 );
 	LcdInstructionWrite ( LCD_SET_CONTRAST );
-	LcdInstructionWrite ( 0xFF );
+	LcdInstructionWrite ( 0x01 );
 	LcdInstructionWrite ( LCD_SET_CHARGE );
 	LcdInstructionWrite ( 0xF1 );
 	LcdInstructionWrite ( LCD_SET_VCOM );
@@ -423,7 +407,7 @@ void OLEDInit ( void )
 	LcdInstructionWrite ( LCD_DISP_NOR );
 
 	// horiz flip LCD_SET_SEG_REMAP0 / LCD_SET_SEG_REMAP1
-	LcdInstructionWrite ( LCD_SET_SEG_REMAP0);
+	LcdInstructionWrite ( LCD_SET_SEG_REMAP0 );
 
 	// vertical flip LCD_SET_SCAN_NOR / LCD_SET_SCAN_FLIP
 	LcdInstructionWrite ( LCD_SET_SCAN_FLIP );
@@ -435,56 +419,36 @@ void OLEDInit ( void )
 
 	OLEDDisplayPicture ( l1logo_inv );
 	OLEDDraw();
-}
+	DelaymS(1500);
+} 
 
-void LEDSet( int x)
+void LEDSet ( int x )
 {
-	if( x ) LED_A_ON();
-	else
+	if ( x ) {
+		LED_A_ON();
+	} else {
 		LED_A_OFF();
+	}
 }
 
 static  unsigned short lfsr = 0xACE1u;
-  unsigned bit;
 
-  unsigned irand()
-  {
-    bit  = ((lfsr >> 0) ^ (lfsr >> 2) ^ (lfsr >> 3) ^ (lfsr >> 5) ) & 1;
-    return lfsr =  (lfsr >> 1) | (bit << 15);
-  }
+static unsigned int bit;
 
-void OLEDTest( void )
+unsigned int irand(void)
 {
-  	int y;
+	bit  = ( ( lfsr >> 0 ) ^ ( lfsr >> 2 ) ^ ( lfsr >> 3 ) ^ ( lfsr >> 5 ) ) & 1;
+	return lfsr =  ( lfsr >> 1 ) | ( bit << 15 );
+}
 
-
-  	unsigned short test;
-	unsigned short test2;
-//  while( 1)
-	{
-		test2 = 40;
-
-
-		while ( test2--  ) {
-
-			test = 100;
-
-			while ( test-- )  {
-
-				OLEDSetPixel ( irand() %128,irand() %64,irand() %2 );
-			}
-
-			OLEDDraw();
-			OLEDClear();
-		}
-	}
-	DelaymS ( 500 );
+void OLEDTest ( void )
+{
+	int y;
 
 	// Push cleared buffer
 	OLEDDraw();
 
-
-	OLEDPutstr ( "LAYERONE 2014 PROTOTYPE\n" );
+	OLEDPutstr ( "LAYERONE 2014\n" );
 	OLEDDraw();
 
 	OLEDPutstr ( "OLED TEST\n" );
@@ -494,6 +458,7 @@ void OLEDTest( void )
 
 		InvertOLED ( 1 );
 		DelaymS ( 10*y );
+		
 		InvertOLED ( 0 );
 		DelaymS ( 10*y );
 	}
@@ -501,12 +466,12 @@ void OLEDTest( void )
 	OLEDPutstr ( "AUDIO TEST\n" );
 	OLEDDraw();
 
-	for ( y=0; y<400; y++ ) {
-		SetSpeaker ( y * 5 );
+	for ( y=0; y<200; y++ ) {
+		SetSpeaker ( y * 10 );
 	}
 
 	while ( y-- ) {
-		SetSpeaker ( y * 5 );
+		SetSpeaker ( y * 10 );
 	}
 
 	OLEDPutstr ( "LED TEST\n" );
@@ -525,11 +490,11 @@ void OLEDTest( void )
 
 	LEDSet ( 1 );
 	HIGH ( GPIO_RELAY );
-	DelaymS ( 500 );
+	DelaymS ( 250 );
 
 	LEDSet ( 0 );
 	LOW ( GPIO_RELAY );
-	DelaymS ( 500 );
+	DelaymS ( 250 );
 
 	OLEDPutstr ( "BOOTING\n" );
 	OLEDDraw();
@@ -540,35 +505,46 @@ void OLEDDraw ( void )
 {
 	unsigned short i;
 
-	if( leda == 0 )
-	  OLEDPixelQuad( 0, 62, 0);
-	else
-	  OLEDPixelQuad( 0, 62, 1);
+	// virtual LED's
+	if ( GETBIT( GPIO_LED_A ) == 0 ) {
+		OLEDPixelQuad ( 0, 62, 0 );
+	}
 
-	if( ledc == 0 )
-	  OLEDPixelQuad( 5, 62, 0);
-	else
-	  OLEDPixelQuad( 5, 62, 1);
+	else {
+		OLEDPixelQuad ( 0, 62, 1 );
+	}
 
-	if( ledb == 0 )
-	  OLEDPixelQuad( 9, 62, 0);
-	else
-	  OLEDPixelQuad( 9, 62, 1);
+	if ( GETBIT( GPIO_LED_B ) == 0 ) {
+		OLEDPixelQuad ( 5, 62, 0 );
+	}
 
-	if( ledd == 0 )
-	  OLEDPixelQuad( 14, 62, 0);
-	else
-	  OLEDPixelQuad( 14, 62, 1);
+	else {
+		OLEDPixelQuad ( 5, 62, 1 );
+	}
 
-	OLEDPIOA();
+	if ( GETBIT( GPIO_LED_C ) == 0 ) {
+		OLEDPixelQuad ( 9, 62, 0 );
+	}
+
+	else {
+		OLEDPixelQuad ( 9, 62, 1 );
+	}
+
+	if ( GETBIT( GPIO_LED_D ) == 0 ) {
+		OLEDPixelQuad ( 14, 62, 0 );
+	}
+
+	else {
+		OLEDPixelQuad ( 14, 62, 1 );
+	}
 
 	LcdInstructionWrite ( LCD_SET_COL_LO | 0x0 );
 	LcdInstructionWrite ( LCD_SET_COL_HI | 0x0 );
 	LcdInstructionWrite ( SSD1306_SETSTARTLINE | 0x0 );
 
-	HIGH( LCD_CS);
-	HIGH( LCD_DC );
-	LOW(LCD_CS);
+	HIGH ( LCD_CS );
+	HIGH ( LCD_DC );
+	LOW ( LCD_CS );
 
 	for ( i=0; i< ( GDISP_SCREEN_WIDTH*GDISP_SCREEN_HEIGHT/8 ); i++ ) {
 		OLEDSpiSendByte ( sVideoRAM[i] );
@@ -583,24 +559,27 @@ void OLEDDraw ( void )
 	}
 
 	// turn of !CS
-	HIGH( LCD_CS );
+	HIGH ( LCD_CS );
 }
 
 void OLEDSetPixel ( short x, short y, unsigned char color )
 {
-	if ( x< 0 || y < 0 || ( x >= GDISP_SCREEN_WIDTH ) || ( y >= GDISP_SCREEN_HEIGHT ) )
-	{ return; }
+	if ( x< 0 || y < 0 || ( x >= GDISP_SCREEN_WIDTH ) || ( y >= GDISP_SCREEN_HEIGHT ) ) {
+		return;
+	}
 
 	// HARDWARE DOES THIS
 	//x = x - (GDISP_SCREEN_WIDTH-1);
 	//y = (GDISP_SCREEN_HEIGHT-1) -  y;
 
 	// x is which column
-	if ( color )
-	{ sVideoRAM[x+ ( y/8 ) *GDISP_SCREEN_WIDTH] |= _BV ( ( y%8 ) ); }
+	if ( color ) {
+		sVideoRAM[x+ ( y/8 ) *GDISP_SCREEN_WIDTH] |= _BV ( ( y%8 ) );
+	}
 
-	else
-	{ sVideoRAM[x+ ( y/8 ) *GDISP_SCREEN_WIDTH] &= ~_BV ( ( ( y%8 ) ) ); }
+	else {
+		sVideoRAM[x+ ( y/8 ) *GDISP_SCREEN_WIDTH] &= ~_BV ( ( ( y%8 ) ) );
+	}
 }
 
 /**
@@ -623,7 +602,7 @@ void FlushOLED ( void )
 
 // put byte on display buffer
 // for this to flip properly, needs 7-y, width-x and data to be reversed
-void write_display ( unsigned char data )
+inline void write_display ( unsigned char data )
 {
 	sVideoRAM[ ( ( unsigned short ) ( ( u8CursorY ) <<7 ) ) + u8CursorX++] = data;
 }
@@ -635,7 +614,6 @@ void write_display ( unsigned char data )
 -------------------------------------------------------------------------------*/
 void OLEDBigchar ( unsigned char u8Char )
 {
-
 	unsigned char  i=0;
 	intptr_t *pointer;
 
@@ -698,8 +676,9 @@ void OLEDPutchar ( char u8Char )
 
 		data = ( *pointer++ );
 
-		if ( testbit ( Misc,NEGATIVE ) )
-		{ data = ~ ( data|128 ); }
+		if ( testbit ( Misc,NEGATIVE ) ) {
+			data = ~ ( data|128 );
+		}
 
 		write_display ( data );
 
@@ -726,7 +705,9 @@ void OLEDPutchar ( char u8Char )
 				if ( u8CursorX < 128 ) { // if not then insert a space before next letter
 					data = 0;
 
-					if ( testbit ( Misc,NEGATIVE ) ) { data = 127; }
+					if ( testbit ( Misc,NEGATIVE ) ) {
+						data = 127;
+					}
 
 					write_display ( data );
 				}
@@ -741,8 +722,9 @@ void OLEDPutstr ( const char *ptr )
 {
 	char c;
 
-	if ( u8CursorY > 6 )
-	{ u8CursorY = 0 ; }
+	if ( u8CursorY > 6 ) {
+		u8CursorY = 0 ;
+	}
 
 	while ( ( c=* ( ptr++ ) ) != 0x00 ) {
 		if ( c == '\n' ) {
@@ -835,11 +817,30 @@ void OLEDDrawXY ( int x,int y )
 }
 
 // Graphs
-unsigned char graphx[ GDISP_SCREEN_WIDTH ] ;
 
-void OLEDDrawGraph ( void )
+void OLEDDrawGraph ( int *graphx, unsigned short length  , char autoscale )
 {
-	int x;
+	unsigned short x,scale_x,scale_y;
+
+	int minval=INT_MAX,maxval= INT_MIN;
+	int range;
+
+	if ( graphx == 0 || length == 0 ) {
+		return;
+	}
+
+	if ( autoscale ) {
+
+		// find min/max's
+		for ( x = 0 ; x < length ; x++ ) {
+			minval = MIN ( minval,graphx[x] );
+			maxval = MAX ( maxval,graphx[x] );
+		}
+  
+  	  	scale_x = (GDISP_SCREEN_WIDTH / maxval);
+    
+	}
+
 
 	for (  x =0 ; x < GDISP_SCREEN_WIDTH ; x ++ ) {
 
@@ -860,16 +861,23 @@ static int BuildOutcodes ( int x, int y )
 {
 	register int code = 0;
 
-	if ( y >= m_clip_y_max )
-	{ code |= 1; }        // top
+	if ( y >= m_clip_y_max ) {
+		code |= 1;    // top
+	}
 
 	else
-		if ( y < m_clip_y_min ) { code |= 2; } // bottom
+		if ( y < m_clip_y_min ) {
+			code |= 2;    // bottom
+		}
 
-	if ( x >= m_clip_x_max ) { code |= 4; }     // right
+	if ( x >= m_clip_x_max ) {
+		code |= 4;    // right
+	}
 
 	else
-		if ( x < m_clip_x_min ) { code |= 8; } // left
+		if ( x < m_clip_x_min ) {
+			code |= 8;    // left
+		}
 
 	return ( code );
 }
@@ -1049,8 +1057,9 @@ void OLEDText8x6 ( short x,short y,const char *string,unsigned char f_colour, un
 
 		nm= ( ( *string++ )-' ' );                              /* Starting from space */
 
-		if ( nm > 58 )
-		{ nm-=' '; }                                          /* to uppercase 58='Z'-' ' */
+		if ( nm > 58 ) {
+			nm-=' ';    /* to uppercase 58='Z'-' ' */
+		}
 
 		nm *= 6;                                            /* 6 bytes per char */
 
@@ -1091,7 +1100,6 @@ void OLEDText6x6 ( short x,short y,const char *string,char f_colour,char b_colou
 	unsigned char  cur;
 	int l = 0;
 
-
 	while ( *string!='\0' ) {                                   /* until the end of the string */
 
 		if ( *string=='\n' ) {
@@ -1104,7 +1112,9 @@ void OLEDText6x6 ( short x,short y,const char *string,char f_colour,char b_colou
 
 			nm= ( ( *string++ )-' ' );                /* Starting from space */
 
-			if ( nm>58 ) { nm-=' '; }                     /* to uppercase 58='Z'-' ' */
+			if ( nm>58 ) {
+				nm-=' ';    /* to uppercase 58='Z'-' ' */
+			}
 
 			nm*=6;                                    /* 6 bytes per char */
 
@@ -1113,6 +1123,8 @@ void OLEDText6x6 ( short x,short y,const char *string,char f_colour,char b_colou
 
 				for ( j=0; j<6; j++ ) {
 					if ( cur& ( 0x80>>j ) ) {
+
+					  	//sVideoRAM[(x+j+l)+ ( (y+i)/8 ) *GDISP_SCREEN_WIDTH] |= _BV ( ( (y+i)%8 ) );
 						OLEDSetPixel ( x+j+l,y+i,f_colour );
 					}
 
@@ -1125,7 +1137,7 @@ void OLEDText6x6 ( short x,short y,const char *string,char f_colour,char b_colou
 				}
 			}
 
-			l+=5;                                   /* Next word */
+			l+=5; /* Next word */
 		}
 	}
 }
@@ -1179,8 +1191,9 @@ void OLEDFilledRect ( unsigned char colour, int x,int y, unsigned int width,unsi
 
 		width = w  = width  - diff;
 
-		if ( w < 1 )
-		{ return ; }
+		if ( w < 1 ) {
+			return ;
+		}
 
 		x = 0;
 	}
@@ -1190,8 +1203,9 @@ void OLEDFilledRect ( unsigned char colour, int x,int y, unsigned int width,unsi
 
 		height = h  = height - diff;
 
-		if ( h< 1 )
-		{ return; }
+		if ( h< 1 ) {
+			return;
+		}
 
 		y = 0;
 	}
@@ -1199,7 +1213,7 @@ void OLEDFilledRect ( unsigned char colour, int x,int y, unsigned int width,unsi
 	height = MIN ( ( height+y ),m_clip_y_max-1 );
 
 
-	for ( int j=y; j<height; j++ ) {
+	for ( unsigned char j=y; j<height; j++ ) {
 		for ( i = 0 ; i < width ; i++ ) {
 
 			OLEDSetPixel ( x+i, j, colour );
@@ -1222,11 +1236,13 @@ void OLEDOutlineRect ( unsigned char colour, int x,int y, int width,int height )
 {
 	int i;
 
-	if ( height <1 )
-	{ return ; }
+	if ( height <1 ) {
+		return ;
+	}
 
-	if ( width <1 )
-	{ return ; }
+	if ( width <1 ) {
+		return ;
+	}
 
 	OLEDFlatLine ( colour,x,width,y );
 
@@ -1376,66 +1392,3 @@ void OLEDDrawOutlineCircle ( int xc,int yc, unsigned int radius , unsigned char 
 	}
 }
 
-void LED_A_ON(void )
-{
-	HIGH(GPIO_LED_A);
-  	leda = 0;
-}
-
-void LED_A_OFF(void)
-{
-	LOW(GPIO_LED_A);
-  	leda = 0;
-}
-
-void LED_A_INV(void)
-{
-	INVBIT(GPIO_LED_A);
-    	leda = 1 - leda;
-}
-
-void LED_B_ON(void )
-{
-  	ledb = 0;
-}
-
-void LED_B_OFF(void)
-{
-  	ledb = 0;
-}
-
-void LED_B_INV(void)
-{
-    	ledb = 1 - ledb;
-}
-
-
-void LED_C_ON(void )
-{
-  	ledc = 0;
-}
-
-void LED_C_OFF(void)
-{
-  	ledc = 0;
-}
-
-void LED_C_INV(void)
-{
-    	ledc = 1 - ledc;
-}
-
-void LED_D_ON(void )
-{
-  	ledd = 0;
-}
-
-void LED_D_OFF(void)
-{
-  	ledd = 0;
-}
-
-void LED_D_INV(void)
-{
-    	ledd = 1 - ledd;
-}
