@@ -188,12 +188,13 @@ int BUTTON_HELD(int ms)
 
 // attempt at high resolution microsecond timer
 // beware: timer counts in 21.3uS increments (1024/48Mhz)
-void SpinDelayUs(int us)
+void SpinDelayUs(uint32_t us)
 {
-	int ticks = (48*us) >> 10;
+	uint32_t ticks = (48*us) >> 10;
 
 	// Borrow a PWM unit for my real-time clock
 	AT91C_BASE_PWMC->PWMC_ENA = PWM_CHANNEL(0);
+	
 	// 48 MHz / 1024 gives 46.875 kHz
 	AT91C_BASE_PWMC_CH0->PWMC_CMR = PWM_CH_MODE_PRESCALER(10);
 	AT91C_BASE_PWMC_CH0->PWMC_CDTYR = 0;
@@ -210,7 +211,7 @@ void SpinDelayUs(int us)
 	}
 }
 
-void SpinDelay(int ms)
+void SpinDelay(uint32_t ms)
 {
   // convert to uS and call microsecond delay function
 	SpinDelayUs(ms*1000);
@@ -300,6 +301,7 @@ void StartCountUS()
 	AT91C_BASE_TC1->TC_CCR = AT91C_TC_CLKEN;
 	AT91C_BASE_TCB->TCB_BCR = 1;
 	}
+
 
 RAMFUNC uint32_t GetCountUS(){
 	return (AT91C_BASE_TC1->TC_CV * 0x8000) + ((AT91C_BASE_TC0->TC_CV / 15) * 10);

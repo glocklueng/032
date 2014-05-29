@@ -28,7 +28,8 @@ typedef unsigned char byte_t;
 #ifndef __IAR_SYSTEMS_ICC__
 #define RAMFUNC __attribute((long_call, section(".ramfunc")))
 #else
-#define RAMFUNC __ramfunc
+#define RAMFUNC 
+//__ramfunc
 #endif
 
 #endif

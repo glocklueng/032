@@ -8,12 +8,6 @@
 #define DelaymS SpinDelay
 #define _BV(bit) (1 << (bit))
 
-#define LCD_SCLK			AT91C_PIO_PA10
-#define LCD_CS				AT91C_PIO_PA1
-#define LCD_SDIN			AT91C_PIO_PA8 // kynar
-#define LCD_DC				AT91C_PIO_PA7
-#define LCD_RES				AT91C_PIO_PA3
-#define SPEAKER				AT91C_PIO_PA5
 
 #define SSD1306_SETCONTRAST             0x81
 #define SSD1306_DISPLAYALLON_RESUME     0xA4
@@ -99,7 +93,7 @@
 void InitOLED ( void );
 void FlushOLED ( void );
 void OLEDInit ( void );
-void OLEDDrawGraph ( void );
+void OLEDDrawGraph ( int *graphx, unsigned short length  , char autoscale );
 void OLEDSetCursor ( int x,int y );
 void OLEDLine ( int x0, int y0, int x1, int y1,int col );
 void OLEDText8x6 ( short x,short y,const char *string,unsigned char f_colour, unsigned char b_colour );

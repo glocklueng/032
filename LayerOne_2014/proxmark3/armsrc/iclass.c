@@ -1200,8 +1200,8 @@ static int SendIClassAnswer(uint8_t *resp, int respLen, int delay)
 	// send cycle
 	for(;;) {
 		if(AT91C_BASE_SSC->SSC_SR & (AT91C_SSC_RXRDY)) {
-			volatile uint8_t b = (uint8_t)AT91C_BASE_SSC->SSC_RHR;
-			(void)b;
+			volatile uint8_t bx = (uint8_t)AT91C_BASE_SSC->SSC_RHR;
+			(void)bx;
 		}
 		if(AT91C_BASE_SSC->SSC_SR & (AT91C_SSC_TXRDY)) {
 			if(d < delay) {

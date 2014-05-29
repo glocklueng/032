@@ -407,7 +407,7 @@ int legic_write_byte(int byte, int addr, int addr_sz) {
             old_level = level;
         }
         if(edges > 20 && edges < 60) { /* expected are 42 edges */
-			int t = timer->TC_CV;
+			int t1 = timer->TC_CV;
 			int c = t/TAG_TIME_BIT;
 			timer->TC_CCR = AT91C_TC_SWTRG;
 			while(timer->TC_CV > 1) ; /* Wait till the clock has reset */
@@ -467,7 +467,7 @@ int LegicRfReader(int offset, int bytes) {
 		((uint8_t*)BigBuf)[byte_index] = r;
         WDT_HIT();
 		byte_index++;
-		if(byte_index & 0x10) LED_C_ON(); else LED_C_OFF();
+		if(byte_index & 0x10) {LED_C_ON();} else {LED_C_OFF();}
 	}
 	LED_B_OFF();
     LED_C_OFF();
@@ -521,7 +521,7 @@ void LegicRfWriter(int bytes, int offset) {
 		}
         WDT_HIT();
 		byte_index++;
-        if(byte_index & 0x10) LED_C_ON(); else LED_C_OFF();
+		if(byte_index & 0x10) {LED_C_ON();} else {LED_C_OFF();}
 	}
     LED_B_OFF();
     LED_C_OFF();

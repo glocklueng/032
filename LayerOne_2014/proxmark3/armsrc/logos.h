@@ -6,4 +6,3 @@ extern const unsigned char l1logo[];
 extern const unsigned char l1logo_inv[];
 
 #endif
-

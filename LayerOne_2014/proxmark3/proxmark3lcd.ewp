@@ -239,7 +239,7 @@
         <option>
           <name>CCAllowList</name>
           <version>1</version>
-          <state>10010100</state>
+          <state>00000000</state>
         </option>
         <option>
           <name>CCDebugInfo</name>
@@ -331,7 +331,7 @@
         </option>
         <option>
           <name>CCOptLevel</name>
-          <state>2</state>
+          <state>0</state>
         </option>
         <option>
           <name>CCOptStrategy</name>
@@ -340,7 +340,7 @@
         </option>
         <option>
           <name>CCOptLevelSlave</name>
-          <state>2</state>
+          <state>0</state>
         </option>
         <option>
           <name>CompilerMisraRules98</name>
@@ -990,20 +990,20 @@
         <option>
           <name>Input variant</name>
           <version>3</version>
-          <state>0</state>
+          <state>7</state>
         </option>
         <option>
           <name>Input description</name>
-          <state>Automatic choice of formatter.</state>
+          <state>No specifier n, no float nor long long, no scan set, no assignment suppressing, without multibyte support.</state>
         </option>
         <option>
           <name>Output variant</name>
           <version>2</version>
-          <state>0</state>
+          <state>7</state>
         </option>
         <option>
           <name>Output description</name>
-          <state>Automatic choice of formatter.</state>
+          <state>No specifier a, A, no specifier n, no float nor long long, no flags.</state>
         </option>
         <option>
           <name>GOutputBinary</name>
@@ -1191,7 +1191,7 @@
         <option>
           <name>CCAllowList</name>
           <version>1</version>
-          <state>10010100</state>
+          <state>11111110</state>
         </option>
         <option>
           <name>CCDebugInfo</name>
@@ -1283,7 +1283,7 @@
         </option>
         <option>
           <name>CCOptLevel</name>
-          <state>2</state>
+          <state>3</state>
         </option>
         <option>
           <name>CCOptStrategy</name>
@@ -1292,7 +1292,7 @@
         </option>
         <option>
           <name>CCOptLevelSlave</name>
-          <state>2</state>
+          <state>3</state>
         </option>
         <option>
           <name>CompilerMisraRules98</name>
@@ -1425,11 +1425,14 @@
         </option>
         <option>
           <name>ADefines</name>
-          <state>flash</state>
           <state>NDEBUG</state>
-          <state>WITH_LF</state>
-          <state>WITH_LCD</state>
+          <state>flash</state>
           <state>at91sam7s512</state>
+          <state>WITH_OLED</state>
+          <state>WITH_LF</state>
+          <state>WITH_ISO14443b</state>
+          <state>WITH_ISO14443a</state>
+          <state>WITH_ISO15693</state>
         </option>
         <option>
           <name>AList</name>
@@ -1673,11 +1676,11 @@
         </option>
         <option>
           <name>IlinkIcfOverride</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>$TOOLKIT_DIR$\CONFIG\generic.icf</state>
+          <state>$PROJ_DIR$\flash.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -1729,11 +1732,11 @@
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IlinkProgramEntryLabelSelect</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IlinkProgramEntryLabel</name>
@@ -1832,7 +1835,7 @@
         </option>
         <option>
           <name>IlinkOptExceptionsAllow</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IlinkOptExceptionsForce</name>
@@ -1844,11 +1847,11 @@
         </option>
         <option>
           <name>IlinkOptMergeDuplSections</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IlinkOptUseVfe</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IlinkOptForceVfe</name>
@@ -1978,6 +1981,9 @@
       <name>$PROJ_DIR$\armsrc\LCD.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$\armsrc\ldscript</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$\armsrc\legicrf.c</name>
     </file>
     <file>
@@ -1993,6 +1999,9 @@
       <name>$PROJ_DIR$\armsrc\logos.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$\armsrc\Makefile</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$\armsrc\mifarecmd.c</name>
     </file>
     <file>
@@ -2006,6 +2015,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$\armsrc\mifareutil.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\armsrc\mmcbang.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$\armsrc\printf.c</name>
@@ -2092,6 +2104,42 @@
       <name>$PROJ_DIR$\common\legic_prng.c</name>
     </file>
   </group>
+  <group>
+    <name>include</name>
+    <file>
+      <name>$PROJ_DIR$\include\at91sam7s512.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\include\common.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\include\config_gpio.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\include\crc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\include\fpga.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\include\hitag2.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\include\integer.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\include\legic_prng.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\include\mifare.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\include\proxmark3.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\include\usb_cmd.h</name>
+    </file>
+  </group>
   <file>
     <name>$PROJ_DIR$\apps.h</name>
   </file>
@@ -2105,16 +2153,13 @@
     <name>$PROJ_DIR$\flash.icf</name>
   </file>
   <file>
-    <name>$PROJ_DIR$\ldscript</name>
+    <name>$PROJ_DIR$\Makefile</name>
   </file>
   <file>
     <name>$PROJ_DIR$\armsrc\mifareutil.c</name>
   </file>
   <file>
-    <name>$PROJ_DIR$\proxmark3lcd.ewp</name>
-  </file>
-  <file>
-    <name>$PROJ_DIR$\Debug\List\proxmark3lcd.map</name>
+    <name>$PROJ_DIR$\armsrc\sfrList.log</name>
   </file>
 </project>
 

@@ -777,7 +777,7 @@
         </option>
         <option>
           <name>CCJLinkSpeedRadioV2</name>
-          <state>2</state>
+          <state>0</state>
         </option>
         <option>
           <name>CCUSBDevice</name>
@@ -814,7 +814,7 @@
         </option>
         <option>
           <name>CCJLinkBreakpointRadio</name>
-          <state>2</state>
+          <state>1</state>
         </option>
         <option>
           <name>CCJLinkDoUpdateBreakpoints</name>
@@ -1068,7 +1068,7 @@
         </option>
         <option>
           <name>CCPEMicroJtagSpeed</name>
-          <state>#UNINITIALIZED#</state>
+          <state>5000</state>
         </option>
         <option>
           <name>CCJPEMicroShowSettings</name>
