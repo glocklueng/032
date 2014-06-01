@@ -286,7 +286,7 @@ static void flash_mode ( int externally_entered )
 }
 
 uint32_t _osimage_entry;
-void main ( void )
+void BootROM ( void )
 {
 	//------------
 	// First set up all the I/O pins; GPIOs configured directly, other ones
