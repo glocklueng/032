@@ -1,0 +1,2 @@
+arm-none-eabi-objcopy -I elf32-littlearm -O binary obj/bootrom.elf obj/bootrom.bin
+JLinkExe scr/boot512.scr
