@@ -31,7 +31,7 @@
 #ifdef WITH_OLED
 #   include "ssd1306.h"
 #endif
-void	TimerSetup(void);
+void    TimerSetup ( void );
 
 #define abs(x) ( ((x)<0) ? -(x) : (x) )
 
@@ -1140,7 +1140,8 @@ void UsbPacketReceived ( uint8_t *packet, int len )
 
 #ifdef WITH_OLED
 	OLEDClear();
-#endif	
+#endif
+
 	switch ( c->cmd ) {
 #ifdef WITH_LF
 
@@ -1644,9 +1645,9 @@ void  NORETURN AppMain ( void )
 			if ( rx_len ) {
 				UsbPacketReceived ( rx, rx_len );
 			}
-			
+
 			MenuDraw ( menuitem );
-			
+
 		}
 
 //		UsbPoll(FALSE);
@@ -1657,110 +1658,126 @@ void  NORETURN AppMain ( void )
 
 		if ( BUTTON_PRESS() ) {
 
-			if ( BUTTON_HELD ( 1000 ) > 0 ) {
+			while ( BUTTON_PRESS() );
 
-				while ( BUTTON_PRESS() );
+			OLEDClear();
 
-				OLEDClear();
+			switch ( menuList[ menuitem ].value ) {
+				case 0:
+					MeasureAntennaTuning();
+					ButtWait();
+					break;
 
-				switch ( menuList[ menuitem ].value ) {
-					case 0:
-						MeasureAntennaTuning();
-						ButtWait();
-						break;
+				case 1:
+					MeasureAntennaTuningHf_OLED();
+					break;
 
-					case 1:
-						MeasureAntennaTuningHf_OLED();
-						break;
+				case 2:
+					Draw_ADC_LOW_OLED();
+					break;
 
-					case 2:
-						Draw_ADC_LOW_OLED();
-						break;
+				case 3:
+					OLEDPutstr ( "Recording HID tag...\n" );
+					OLEDDraw();
+					CmdHIDdemodFSK ( 1, &HIDhigh, &HIDlow, 0 );
+					ButtWait();
+					break;
 
-					case 3:
-						OLEDPutstr ( "Recording HID tag...\n" );
-						OLEDDraw();
-						CmdHIDdemodFSK ( 1, &HIDhigh, &HIDlow, 0 );
-						ButtWait();
-						break;
+				case 4:
+					OLEDPutstr ( "Replaying HID tag...\n" );
+					OLEDDraw();
+					CmdHIDsimTAG ( HIDhigh, HIDlow, 0 );
+					ButtWait();
+					break;
 
-					case 4:
-						OLEDPutstr ( "Replaying HID tag...\n" );
-						OLEDDraw();
-						CmdHIDsimTAG ( HIDhigh, HIDlow, 0 );
-						ButtWait();
-						break;
+				case 5:
+					OLEDPutstr ( "Recording raw tag...\n" );
+					OLEDDraw();
+					AcquireRawAdcSamples125k ( ( bool ) 0 );
+					PrepBuffer();
+					ButtWait();
+					break;
 
-					case 5:
-						OLEDPutstr ( "Recording raw tag...\n" );
-						OLEDDraw();
-						AcquireRawAdcSamples125k ( ( bool ) 0 );
-						PrepBuffer();
-						ButtWait();
-						break;
+				case 6:
+					OLEDPutstr ( "Replaying raw tag...\n" );
+					OLEDDraw();
+					SimulateTagLowFrequency ( sizeof ( BigBuf ), 0, 1 );
+					ButtWait();
+					break;
 
-					case 6:
-						OLEDPutstr ( "Replaying raw tag...\n" );
-						OLEDDraw();
-						SimulateTagLowFrequency ( sizeof ( BigBuf ), 0, 1 );
-						ButtWait();
-						break;
+				case 7:
+					OLEDPutstr ( "Recording ISO15693 tag...\n" );
+					OLEDDraw();
+					AcquireRawAdcSamplesIso15693();
+					ButtWait();
+					break;
 
-					case 7:
-						OLEDPutstr ( "Recording ISO15693 tag...\n" );
-						OLEDDraw();
-						AcquireRawAdcSamplesIso15693();
-						ButtWait();
-						break;
+				case 8:
+					OLEDPutstr ( "Replaying ISO15693 tag...\n" );
+					OLEDDraw();
+					SimTagIso15693 ( ( uint32_t ) 0 );
+					ButtWait();
+					break;
 
-					case 8:
-						OLEDPutstr ( "Replaying ISO15693 tag...\n" );
-						OLEDDraw();
-						SimTagIso15693 ( ( uint32_t ) 0 );
-						ButtWait();
-						break;
+				case 9:
+					OLEDPutstr ( "Recording ISO14443 tag...\n" );
+					OLEDDraw();
+					AcquireRawAdcSamplesIso14443 ( ( uint32_t ) 0 );
+					ButtWait();
+					break;
 
-					case 9:
-						OLEDPutstr ( "Recording ISO14443 tag...\n" );
-						OLEDDraw();
-						AcquireRawAdcSamplesIso14443 ( ( uint32_t ) 0 );
-						ButtWait();
-						break;
+				case 10:
+					OLEDPutstr ( "Replaying ISO14443 tag...\n" );
+					OLEDDraw();
+					SimulateIso14443Tag();
+					ButtWait();
+					break;
 
-					case 10:
-						OLEDPutstr ( "Replaying ISO14443 tag...\n" );
-						OLEDDraw();
-						SimulateIso14443Tag();
-						ButtWait();
-						break;
+				case 11:
+					Draw_ADC_LOW_PKD_OLED();
+					break;
 
-					case 11:
-						Draw_ADC_LOW_PKD_OLED();
-						break;
+				case 12:
+					Draw_ADC_HIGH_OLED();
+					break;
 
-					case 12:
-						Draw_ADC_HIGH_OLED();
-						break;
+				case 13:
+					SimulateTagHfListen();
+					ButtWait();
+					break;
 
-					case 13:
-						SimulateTagHfListen();
-						ButtWait();
-						break;
+			}
 
-				}
+			/// til let go button
+			while ( BUTTON_PRESS() );
 
-				/// til let go button
-				while ( BUTTON_PRESS() );
+		}
 
+		// menu up
+		if ( BUTTON_B_PRESS() ) {
+		  	DelaymS(250);
+			if ( menuitem != 0 ) {
+				menuitem--;
 			}
 
 			else {
-				DelaymS ( 100 );
-				menuitem++;
-				menuitem %= sizeof ( menuList ) / sizeof ( menuList[0] ) - 1;
+				menuitem  = ( sizeof ( menuList ) / sizeof ( menuList[0] ) )- 2;
 			}
+		}
 
-			MenuDraw ( menuitem );
+		//menu down
+		if ( BUTTON_C_PRESS() ) {
+			  DelaymS(250);
+			menuitem++;
+			menuitem %= sizeof ( menuList ) / sizeof ( menuList[0] ) - 1;
+		}
+
+		{
+		  int lastmenu = -1;
+		  if( menuitem != lastmenu ) {
+		    lastmenu = menuitem;
+		    MenuDraw ( menuitem );
+		  }
 		}
 
 		CredScroll();
