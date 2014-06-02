@@ -8,6 +8,7 @@
 #include <windows.h>
 #else
 
+#include <stdint.h>
 #include <inttypes.h>   // include C99 standard types
 
 /* These types must be 16-bit, 32-bit or larger integer */
