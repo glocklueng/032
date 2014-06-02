@@ -15,7 +15,6 @@
 #include "cmd.h"
 
 #include "proxmark3.h"
-#include "ff.h"
 #include "apps.h"
 #include "util.h"
 #include "printf.h"
@@ -34,6 +33,9 @@
 #ifdef WITH_OLED
 #   include "ssd1306.h"
 #endif
+
+#include "ff.h"
+
 void    TimerSetup ( void );
 
 #define abs(x) ( ((x)<0) ? -(x) : (x) )
