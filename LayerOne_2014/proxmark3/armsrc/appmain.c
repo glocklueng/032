@@ -10,6 +10,7 @@
 // executes.
 //-----------------------------------------------------------------------------
 
+#include <stdint.h>
 #include "usb_cdc.h"
 #include "cmd.h"
 
@@ -20,7 +21,6 @@
 #include "printf.h"
 #include "string.h"
 
-#include <stdint.h>
 #include <stdarg.h>
 
 #include "legicrf.h"
