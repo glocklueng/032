@@ -6,5 +6,5 @@ const struct version_information __attribute__((section(".version_information"))
 	1,
 	2,
 	"master/v1.0.0-3-gcba867f-dirty",
-	"2014-05-24 20:18:17",
+	"2014-06-02 01:18:19",
 };
