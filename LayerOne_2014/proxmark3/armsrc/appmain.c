@@ -105,6 +105,7 @@ menu_item menuList[] = {
 	"Replay ISO15693",8,
 	"Record ISO14443",9,
 	"Replay ISO14443",10,
+	"14443A READER",14,
 	"ADC LOW PKD",11,
 	"ADC HIGH ",12,
 	"SimTagHfListen",13,
@@ -1751,6 +1752,14 @@ void  NORETURN AppMain ( void )
 				case 13:
 					SimulateTagHfListen();
 					ButtWait();
+					break;
+				case 14:
+				  
+				  {
+				    UsbCommand cmd = {CMD_READER_ISO_14443a, {ISO14A_CONNECT, 0, 0}};
+			  	
+					ReaderIso14443a ( &cmd );
+				  }
 					break;
 
 			}
