@@ -1128,7 +1128,7 @@ void UsbPacketReceived ( uint8_t *packet, int len )
 {
 	UsbCommand *c = ( UsbCommand * ) packet;
 
-	Dbprintf ( "received %d bytes, with command: 0x%04x and args: %d %d %d",len,c->cmd,c->arg[0],c->arg[1],c->arg[2] );
+	//Dbprintf ( "received %d bytes, with command: 0x%04x and args: %d %d %d",len,c->cmd,c->arg[0],c->arg[1],c->arg[2] );
 
 #ifdef WITH_OLED
 	OLEDClear();
