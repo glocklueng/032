@@ -13,8 +13,8 @@
 #include "usb_cdc.h"
 #include "cmd.h"
 
-#include "ff.h"
 #include "proxmark3.h"
+#include "ff.h"
 #include "apps.h"
 #include "util.h"
 #include "printf.h"
@@ -1769,6 +1769,7 @@ void  NORETURN AppMain ( void )
 					break;
 
 				case 15:
+				  {
 					FRESULT fr;
 					FATFS fs;
 					FIL fil;
@@ -1781,6 +1782,7 @@ void  NORETURN AppMain ( void )
 
 					/* Close the file */
 					f_close ( &fil );
+				  }
 
 			}
 
