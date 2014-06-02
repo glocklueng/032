@@ -1788,11 +1788,11 @@ void  NORETURN AppMain ( void )
 				  }
 
 			}
-
-		}
-
 		/// til let go button
 		while ( BUTTON_PRESS() );
+		}
+
+
 
 	}
 
