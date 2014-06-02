@@ -536,7 +536,7 @@ void Draw_ADC_LOW_OLED ( void )
 			peak = dest[i];
 			peakf = i;
 
-			sprintf ( txtbuffer, "peakv = %5.2f @ 125kHz    ", vLf125/1000.0 );
+			sprintf ( txtbuffer, "peakv = %d @ 125kHz    ", vLf125 );
 			OLEDText8x6 ( 0, 10, txtbuffer, 1, 0 );
 			sprintf ( txtbuffer, "peak = %d   ", peak );
 			OLEDText8x6 ( 0, 20, txtbuffer, 1, 0 );
