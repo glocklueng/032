@@ -34,8 +34,6 @@
 #   include "ssd1306.h"
 #endif
 
-#include "ff.h"
-
 void    TimerSetup ( void );
 
 #define abs(x) ( ((x)<0) ? -(x) : (x) )
@@ -1773,6 +1771,7 @@ void  NORETURN AppMain ( void )
 
 				case 15:
 				  {
+#if 0
 					FRESULT fr;
 					FATFS fs;
 					FIL fil;
@@ -1785,6 +1784,7 @@ void  NORETURN AppMain ( void )
 
 					/* Close the file */
 					f_close ( &fil );
+#endif
 				  }
 
 			}
