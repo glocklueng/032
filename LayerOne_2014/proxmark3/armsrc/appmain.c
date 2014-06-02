@@ -275,7 +275,8 @@ void ButtWait ( void )
 	while ( !BUTTON_PRESS() );
 
 	while ( BUTTON_PRESS() );
-
+	
+	DelaymS(250);
 }
 
 void PlayTest ( void )
@@ -1788,8 +1789,8 @@ void  NORETURN AppMain ( void )
 				  }
 
 			}
-		/// til let go button
-		while ( BUTTON_PRESS() );
+			/// til let go button
+			while ( BUTTON_PRESS() );
 		}
 
 
