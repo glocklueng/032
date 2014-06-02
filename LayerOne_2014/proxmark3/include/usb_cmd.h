@@ -31,14 +31,14 @@ typedef BYTE uint8_t;
 
 #define USB_CMD_DATA_SIZE 512
 
-typedef struct {
+PACKED typedef struct {
   uint64_t cmd;
   uint64_t arg[3];
   union {
     uint8_t  asBytes[USB_CMD_DATA_SIZE];
     uint32_t asDwords[USB_CMD_DATA_SIZE/4];
   } d;
-} PACKED UsbCommand;
+}  UsbCommand;
 
 // For the bootloader
 #define CMD_DEVICE_INFO                                                   0x0000

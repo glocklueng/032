@@ -26,6 +26,10 @@ export symbol __ICFEDIT_size_irqstack__;
 export symbol __ICFEDIT_size_heap__;
 /**** End of ICF editor section. ###ICF###*/
 
+define symbol _osimage_entry = 0x00110000;
+export symbol _osimage_entry;
+
+
 define memory mem with size = 4G;
 define region STA_region = mem:[from __ICFEDIT_region_ROM_start__ size __ICFEDIT_size_startup__];
 define region ROM_region = mem:[from __ICFEDIT_region_ROM_start__+__ICFEDIT_size_startup__ to __ICFEDIT_region_ROM_end__];
@@ -36,6 +40,13 @@ define block CSTACK    with alignment = 8, size = __ICFEDIT_size_cstack__   { };
 define block SYS_STACK with alignment = 8, size = __ICFEDIT_size_sysstack__ { };
 define block IRQ_STACK with alignment = 8, size = __ICFEDIT_size_irqstack__ { };
 define block HEAP      with alignment = 8, size = __ICFEDIT_size_heap__     { };
+
+//export symbol	bootphase1 = 0x00100000, LENGTH = 0x200             /* Phase 1 bootloader: Copies real bootloader to RAM */
+//export symbol	bootphase2 = 0x00100200, LENGTH = 0x2000 - 0x200    /* Main bootloader code, stored in Flash, executed from RAM */
+//export symbol	fpgaimage  = 0x00102000, LENGTH = 64k - 0x2000      /* Place where the FPGA image will end up */
+//export symbol	osimage    = 0x00110000, LENGTH = 256K - 64k        /* Place where the main OS will end up */
+//export symbol	ram        = 0x00200000, LENGTH = 64K - 0x20        /* RAM, minus small common area */
+//export symbol	commonarea = 0x00200000 + 64K - 0x20, LENGTH = 0x20 /* Communication between bootloader and main OS */
 
 initialize by copy { readwrite };
 initialize by copy { section .vectors };

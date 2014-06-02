@@ -10,6 +10,9 @@
 #include "integer.h"
 
 
+#define dly_us SpinDelayUs
+
+
 /* Status of Disk Functions */
 typedef BYTE	DSTATUS;
 
