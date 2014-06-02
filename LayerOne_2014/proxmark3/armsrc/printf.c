@@ -36,7 +36,7 @@
 
 #include <stddef.h>
 #include <stdarg.h>
-#include "stdint.h"
+#include <stdint.h>
 #include "printf.h"
 #include "util.h"
 #include "string.h"
