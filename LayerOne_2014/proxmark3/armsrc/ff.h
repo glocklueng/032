@@ -13,7 +13,6 @@
 / * Redistributions of source code must retain the above copyright notice.
 /----------------------------------------------------------------------------*/
 
-#include "integer.h"
 
 /*---------------------------------------------------------------------------/
 / FatFs Configuration Options
@@ -24,6 +23,8 @@
 /----------------------------------------------------------------------------*/
 #ifndef _FATFS
 #define _FATFS	0x007C
+
+#include "integer.h"
 
 #define _WORD_ACCESS	0
 /* The _WORD_ACCESS option defines which access method is used to the word
