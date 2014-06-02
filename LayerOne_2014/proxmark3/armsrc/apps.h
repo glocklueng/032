@@ -46,16 +46,6 @@ extern int rsamples;   // = 0;
 extern int tracing;    // = TRUE;
 extern uint8_t trigger;
 
-#if 0
-  // This may be used (sparingly) to declare a function to be copied to
-  // and executed from RAM
-  #ifdef GCC
-  #define RAMFUNC __attribute((long_call, section(".ramfunc")))
-  #else
-  #define RAMFUNC __ramfuncs
-  #endif
-#endif
-
 /// appmain.h
 void ReadMem(int addr);
 NORETURN void AppMain(void);
