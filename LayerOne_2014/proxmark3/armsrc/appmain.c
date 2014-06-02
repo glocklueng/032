@@ -117,13 +117,15 @@ void MenuDraw ( int item )
 
 	for ( int i = item; i < item + 5; i++ ) {
 
+	  //	break out
 		if ( menuList[i].string == NULL ) {
 			break;
 		}
 
+		// if selected item
 		if ( i == item ) {
 			width = ( 128/2 ) - ( ( strlen ( menuList[i].string ) *8 ) /2 );
-			OLEDText8x6 ( width, ( ( i-item ) *6 ), menuList[i].string ,1,0 );
+			OLEDText8x6 ( width , ( ( i-item ) *6 ), menuList[i].string ,1,0 );
 		}
 
 		else {
@@ -133,7 +135,7 @@ void MenuDraw ( int item )
 	}
 }
 
-int h2a ( char b )
+static int h2a ( char b )
 {
 	int offset = 0;
 
@@ -277,7 +279,7 @@ void PlayTest ( void )
 	static int tune1[] = {
 		100, 256, 271, 282, 272, 292, 233, 12, 14, 44, 56, 123, 183
 	};
-
+//tell gcc not to unroll this
 	for ( int y = 0; y < ( sizeof ( tune1 ) / 2 ); y++ ) {
 		for ( int j = tune1[ ( y ) + 1]; j < 400; j++ ) {
 			SetSpeaker ( tune1[y] * 5 );
@@ -523,25 +525,30 @@ void Draw_ADC_LOW_OLED ( void )
 
 		if ( i == 95 )  {
 			vLf125 = adcval;    // voltage at 125Khz
+			sprintf ( txtbuffer, "%d mv @ 125kHz    ", vLf125 );
+			OLEDText8x6 ( 0, 12, txtbuffer, 1, 0 );
 		}
 
 		if ( i == 89 )  {
 			vLf134 = adcval;    // voltage at 134Khz
+			sprintf ( txtbuffer, "%d mv @ 134kHz    ", vLf134 );
+			OLEDText8x6 ( 0, 22, txtbuffer, 1, 0 );
 		}
 
 		dest[i] = adcval >> 8; // scale int to fit in byte for graphing purposes
 
+
 		if ( dest[i] > peak ) {
+		  
 			peakv = adcval;
 			peak = dest[i];
 			peakf = i;
 
-			sprintf ( txtbuffer, "peakv = %d @ 125kHz    ", vLf125 );
-			OLEDText8x6 ( 0, 10, txtbuffer, 1, 0 );
-			sprintf ( txtbuffer, "peak = %d   ", peak );
-			OLEDText8x6 ( 0, 20, txtbuffer, 1, 0 );
-			sprintf ( txtbuffer, "peakf = %d khz  ", peakf );
-			OLEDText8x6 ( 0, 34, txtbuffer, 1, 0 );
+			sprintf ( txtbuffer, "best = %d  khz ", (12000/(peakf+1)) );
+			OLEDText8x6 ( 0, 38, txtbuffer, 1, 0 );
+
+			sprintf ( txtbuffer, "%d mV  ", adcval  );
+			OLEDText8x6 ( 0, 48, txtbuffer, 1, 0 );
 
 
 		}
@@ -555,7 +562,7 @@ void Draw_ADC_LOW_OLED ( void )
 	}
 
 
-	OLEDText8x6 ( 0, 0, "DONE       ", 1, 0 );
+	OLEDText8x6 ( 0, 0, "DONE          ", 1, 0 );
 	OLEDDraw();
 
 	while ( !BUTTON_PRESS() ) {
