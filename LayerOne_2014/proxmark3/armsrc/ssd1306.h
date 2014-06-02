@@ -8,12 +8,6 @@
 #define DelaymS SpinDelay
 #define _BV(bit) (1 << (bit))
 
-#ifndef __IAR_SYSTEMS_ICC__
-typedef int				intptr_t;
-typedef unsigned int			uintptr_t;
-#endif
-
-
 #define SSD1306_SETCONTRAST             0x81
 #define SSD1306_DISPLAYALLON_RESUME     0xA4
 #define SSD1306_DISPLAYALLON            0xA5

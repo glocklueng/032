@@ -14,6 +14,10 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <common.h>
+#ifndef __IAR_SYSTEMS_ICC__
+typedef int				intptr_t;
+typedef unsigned int			uintptr_t;
+#endif
 
 #define BYTEx(x, n) (((x) >> (n * 8)) & 0xff )
 
