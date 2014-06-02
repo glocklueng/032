@@ -275,8 +275,6 @@ void ButtWait ( void )
 	while ( !BUTTON_PRESS() );
 
 	while ( BUTTON_PRESS() );
-	
-	DelaymS(250);
 }
 
 void PlayTest ( void )
