@@ -189,8 +189,7 @@ void MeasureAntennaTuningHf_OLED ( void )
 	int vHf = 0;    // in mV
 	int y = 1;
 	char vhf[10];
-	static const char fmt[] = "%d mV";
-
+	
 	OLEDClear();
 
 	OLEDPutstr ( "Measuring HF antenna, press button to exit" );
@@ -438,12 +437,8 @@ int AvgAdc ( int ch ) // was static - merlok
 void Draw_ADC_LOW_PKD_OLED ( void )
 {
 	uint16_t *dest = ( uint16_t * ) BigBuf+FREE_BUFFER_OFFSET;
-	uint8_t v = 0;
-	uint16_t r;
-	int i;
-	uint16_t p = 0;
 	int scale=1024/64;
-	unsigned short value,maxvalue=1;
+	unsigned short maxvalue=1;
 
 	// maximum value is 1023
 	// screen is 64 tall
@@ -458,8 +453,6 @@ void Draw_ADC_LOW_PKD_OLED ( void )
 	FpgaWriteConfWord ( FPGA_MAJOR_MODE_LF_PASSTHRU );
 
 	SetAdcMuxFor ( GPIO_MUXSEL_LOPKD );
-
-	i = 0;
 
 	for ( ;; ) {
 
@@ -492,12 +485,9 @@ void Draw_ADC_LOW_PKD_OLED ( void )
 void Draw_ADC_LOW_OLED ( void )
 {
 	uint16_t *dest = ( uint16_t * ) BigBuf + FREE_BUFFER_OFFSET;
-	uint8_t v = 0;
-	uint16_t r;
-	uint16_t p = 0;
 	char txtbuffer[32];
-	int i, adcval = 0, peak = 0, peakv = 0, peakf = 0; //ptr = 0
-	int vLf125 = 0, vLf134 = 0, vHf = 0;    // in mV
+	int i, adcval = 0, peak = 0, peakf = 0; //ptr = 0
+	int vLf125 = 0, vLf134 = 0;    // in mV
 
 	OLEDClear();
 
@@ -513,7 +503,6 @@ void Draw_ADC_LOW_OLED ( void )
 	 */
 
 	FpgaWriteConfWord ( FPGA_MAJOR_MODE_LF_READER );
-
 
 	for ( i = 255; i > 19; i-- ) {
 		WDT_HIT();
@@ -541,10 +530,8 @@ void Draw_ADC_LOW_OLED ( void )
 
 		dest[i] = adcval >> 8; // scale int to fit in byte for graphing purposes
 
-
 		if ( dest[i] > peak ) {
 
-			peakv = adcval;
 			peak = dest[i];
 			peakf = i;
 
@@ -553,18 +540,13 @@ void Draw_ADC_LOW_OLED ( void )
 
 			sprintf ( txtbuffer, "%d mV  ", adcval  );
 			OLEDText8x6 ( 0, 48, txtbuffer, 1, 0 );
-
-
 		}
-
-
 
 		OLEDLine ( 0, 60, 127, 60, 0 );
 		OLEDLine ( 0, 60, ( 255 - i ) / 2, 60, 1 );
 
 		OLEDDraw();
 	}
-
 
 	OLEDText8x6 ( 0, 0, "DONE          ", 1, 0 );
 	OLEDDraw();
@@ -576,7 +558,6 @@ void Draw_ADC_LOW_OLED ( void )
 	FpgaWriteConfWord ( FPGA_MAJOR_MODE_OFF );
 	LED_A_OFF();
 	LED_B_OFF();
-
 }
 
 void MeasureAntennaTuning ( void )
@@ -1761,6 +1742,7 @@ void  NORETURN AppMain ( void )
 				case 14:
 
 					{
+					  /// this one won't work since it'll communicate to the usb
 						UsbCommand cmd = {CMD_READER_ISO_14443a, {ISO14A_CONNECT, 0, 0}};
 
 						ReaderIso14443a ( &cmd );
@@ -1813,7 +1795,7 @@ void  NORETURN AppMain ( void )
 	}
 
 	{
-		int lastmenu = -1;
+		static int lastmenu = -1;
 
 		if ( menuitem != lastmenu ) {
 			lastmenu = menuitem;
