@@ -1670,6 +1670,7 @@ void  NORETURN AppMain ( void )
 #ifdef WITH_OLED
 
 		if ( BUTTON_PRESS() ) {
+		  
 
 			while ( BUTTON_PRESS() );
 
@@ -1793,10 +1794,6 @@ void  NORETURN AppMain ( void )
 			while ( BUTTON_PRESS() );
 		}
 
-
-
-	}
-
 	// menu up
 	if ( BUTTON_B_PRESS() ) {
 		DelaymS ( 250 );
@@ -1829,5 +1826,6 @@ void  NORETURN AppMain ( void )
 	CredScroll();
 	OLEDDraw();
 #endif
+	}
 
 }
