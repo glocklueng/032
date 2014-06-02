@@ -285,8 +285,15 @@ static void flash_mode ( int externally_entered )
 	}
 }
 
+// this gets externally set in the linker script to point to the start of the main routine.
 extern uint32_t _osimage_entry;
+
+#ifdef __IAR_SYSTEMS_ICC__
+void AppMain(void);
+void main(void)
+#else
 void BootROM ( void )
+#endif
 {
 	//------------
 	// First set up all the I/O pins; GPIOs configured directly, other ones

@@ -13,6 +13,7 @@
 #include "usb_cdc.h"
 #include "cmd.h"
 
+#include "ff.h"
 #include "proxmark3.h"
 #include "apps.h"
 #include "util.h"
@@ -23,6 +24,7 @@
 
 #include "legicrf.h"
 #include <hitag2.h>
+
 
 #ifdef WITH_LCD
 #include "LCD.h"
@@ -118,7 +120,7 @@ void MenuDraw ( int item )
 
 	for ( int i = item; i < item + 5; i++ ) {
 
-	  //	break out
+		//    break out
 		if ( menuList[i].string == NULL ) {
 			break;
 		}
@@ -280,6 +282,7 @@ void PlayTest ( void )
 	static int tune1[] = {
 		100, 256, 271, 282, 272, 292, 233, 12, 14, 44, 56, 123, 183
 	};
+
 //tell gcc not to unroll this
 	for ( int y = 0; y < ( sizeof ( tune1 ) / 2 ); y++ ) {
 		for ( int j = tune1[ ( y ) + 1]; j < 400; j++ ) {
@@ -540,12 +543,12 @@ void Draw_ADC_LOW_OLED ( void )
 
 
 		if ( dest[i] > peak ) {
-		  
+
 			peakv = adcval;
 			peak = dest[i];
 			peakf = i;
 
-			sprintf ( txtbuffer, "best = %d  khz ", (12000/(peakf+1)) );
+			sprintf ( txtbuffer, "best = %d  khz ", ( 12000/ ( peakf+1 ) ) );
 			OLEDText8x6 ( 0, 38, txtbuffer, 1, 0 );
 
 			sprintf ( txtbuffer, "%d mV  ", adcval  );
@@ -1753,51 +1756,72 @@ void  NORETURN AppMain ( void )
 					SimulateTagHfListen();
 					ButtWait();
 					break;
+
 				case 14:
-				  
-				  {
-				    UsbCommand cmd = {CMD_READER_ISO_14443a, {ISO14A_CONNECT, 0, 0}};
-			  	
-					ReaderIso14443a ( &cmd );
-				  }
+
+					{
+						UsbCommand cmd = {CMD_READER_ISO_14443a, {ISO14A_CONNECT, 0, 0}};
+
+						ReaderIso14443a ( &cmd );
+
+
+					}
 					break;
 
+				case 15:
+					FRESULT fr;
+					FATFS fs;
+					FIL fil;
+					f_mount ( 0, &fs );
+					fr = f_open ( &fil, "logfile.txt", FA_OPEN_ALWAYS);
+
+					if ( fr != FR_OK ) {
+						break;
+					}
+
+					/* Close the file */
+					f_close ( &fil );
+
 			}
 
-			/// til let go button
-			while ( BUTTON_PRESS() );
-
 		}
 
-		// menu up
-		if ( BUTTON_B_PRESS() ) {
-		  	DelaymS(250);
-			if ( menuitem != 0 ) {
-				menuitem--;
-			}
+		/// til let go button
+		while ( BUTTON_PRESS() );
 
-			else {
-				menuitem  = ( sizeof ( menuList ) / sizeof ( menuList[0] ) )- 2;
-			}
-		}
-
-		//menu down
-		if ( BUTTON_C_PRESS() ) {
-			  DelaymS(250);
-			menuitem++;
-			menuitem %= sizeof ( menuList ) / sizeof ( menuList[0] ) - 1;
-		}
-
-		{
-		  int lastmenu = -1;
-		  if( menuitem != lastmenu ) {
-		    lastmenu = menuitem;
-		    MenuDraw ( menuitem );
-		  }
-		}
-
-		CredScroll();
-		OLEDDraw();
-#endif
 	}
+
+	// menu up
+	if ( BUTTON_B_PRESS() ) {
+		DelaymS ( 250 );
+
+		if ( menuitem != 0 ) {
+			menuitem--;
+		}
+
+		else {
+			menuitem  = ( sizeof ( menuList ) / sizeof ( menuList[0] ) )- 2;
+		}
+	}
+
+	//menu down
+	if ( BUTTON_C_PRESS() ) {
+		DelaymS ( 250 );
+		menuitem++;
+		menuitem %= sizeof ( menuList ) / sizeof ( menuList[0] ) - 1;
+	}
+
+	{
+		int lastmenu = -1;
+
+		if ( menuitem != lastmenu ) {
+			lastmenu = menuitem;
+			MenuDraw ( menuitem );
+		}
+	}
+
+	CredScroll();
+	OLEDDraw();
+#endif
+
 }
