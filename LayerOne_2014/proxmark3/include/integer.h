@@ -31,8 +31,10 @@ typedef long			LONG;
 typedef unsigned long	ULONG;
 typedef unsigned long	DWORD;
 
+#ifndef __bool_true_false_are_defined
 /* Boolean type */
 typedef enum { FALSE = 0, TRUE } BOOL;
+#endif
 
 #endif
 
