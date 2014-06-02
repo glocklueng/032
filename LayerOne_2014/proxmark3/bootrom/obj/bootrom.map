@@ -63,10 +63,10 @@ Linker script and memory map
                 0x0000000000100070                _version_information_start = .
  *(.version_information)
  .version_information
-                0x0000000000100070       0x57 obj/version.o
+                0x0000000000100070       0x58 obj/version.o
                 0x0000000000100070                version_information
                 0x00000000000001fc                . = 0x1fc
- *fill*         0x00000000001000c7      0x135 
+ *fill*         0x00000000001000c8      0x134 
                 0x00000000001001fc        0x4 LONG 0x100070 _version_information_start
 
 .vfp11_veneer   0x0000000000100200        0x0
@@ -84,7 +84,7 @@ Linker script and memory map
 .rel.dyn        0x0000000000100200        0x0
  .rel.iplt      0x0000000000000000        0x0 obj/ram-reset.o
 
-.bootphase2     0x0000000000200000      0xb38 load address 0x0000000000100200
+.bootphase2     0x0000000000200000      0xa48 load address 0x0000000000100200
  *(.startphase2)
  .startphase2   0x0000000000200000        0xc obj/ram-reset.o
                 0x0000000000200000                ram_start
@@ -92,7 +92,7 @@ Linker script and memory map
  .text          0x000000000020000c       0xa4 obj/cmd.o
                 0x000000000020000c                cmd_receive
                 0x0000000000200034                cmd_send
- .text          0x00000000002000b0      0x568 obj/usb_cdc.o
+ .text          0x00000000002000b0      0x578 obj/usb_cdc.o
                 0x0000000000200126                usb_disable
                 0x000000000020014c                usb_enable
                 0x00000000002001a4                AT91F_USB_SendZlp
@@ -102,61 +102,58 @@ Linker script and memory map
                 0x00000000002004d0                usb_poll
                 0x00000000002004f4                usb_read
                 0x0000000000200568                usb_write
- .text          0x0000000000200618      0x3b0 obj/bootrom.o
-                0x0000000000200618                DbpString
-                0x000000000020063e                UsbPacketReceived
-                0x0000000000200888                BootROM
- .text          0x00000000002009c8       0x14 /opt/devkitpro/devkitARM/lib/gcc/arm-none-eabi/4.8.2/libgcc.a(_thumb1_case_uqi.o)
-                0x00000000002009c8                __gnu_thumb1_case_uqi
- .text          0x00000000002009dc       0x24 /opt/devkitpro/devkitARM/lib/gcc/arm-none-eabi/4.8.2/libgcc.a(_aeabi_ulcmp.o)
-                0x00000000002009dc                __aeabi_ulcmp
+                0x0000000000200618                usb_connected
+ .text          0x0000000000200628      0x34c obj/bootrom.o
+                0x000000000020085c                BootROM
+ .text          0x0000000000200974       0x14 /opt/devkitpro/devkitARM/lib/gcc/arm-none-eabi/4.8.2/libgcc.a(_thumb1_case_uqi.o)
+                0x0000000000200974                __gnu_thumb1_case_uqi
+ .text          0x0000000000200988       0x24 /opt/devkitpro/devkitARM/lib/gcc/arm-none-eabi/4.8.2/libgcc.a(_aeabi_ulcmp.o)
+                0x0000000000200988                __aeabi_ulcmp
+ *fill*         0x00000000002009ac        0x4 
+ .text.__stub   0x00000000002009b0       0x14 linker stubs
  *(.text.*)
- .text.unlikely
-                0x0000000000200a00       0xa0 obj/bootrom.o
- .text.unlikely.__stub
-                0x0000000000200aa0       0x14 linker stubs
  *(.eh_frame)
  *(.glue_7)
  .glue_7        0x0000000000000000        0x0 linker stubs
  *(.glue_7t)
  .glue_7t       0x0000000000000000        0x0 linker stubs
  *(.rodata)
- .rodata        0x0000000000200ab8       0x6f obj/usb_cdc.o
-                0x0000000000200ab8                devDescriptor
-                0x0000000000200aca                cfgDescriptor
-                0x0000000000200b0d                strDescriptor
+ .rodata        0x00000000002009c8       0x6f obj/usb_cdc.o
+                0x00000000002009c8                devDescriptor
+                0x00000000002009da                cfgDescriptor
+                0x0000000000200a1d                strDescriptor
  *(.rodata.*)
  *(.data)
- *fill*         0x0000000000200b27        0x1 
- .data          0x0000000000200b28       0x10 obj/usb_cdc.o
-                0x0000000000200b28                pUdp
-                0x0000000000200b2c                line
-                0x0000000000200b34                btReceiveBank
+ *fill*         0x0000000000200a37        0x1 
+ .data          0x0000000000200a38       0x10 obj/usb_cdc.o
+                0x0000000000200a38                pUdp
+                0x0000000000200a3c                line
+                0x0000000000200a44                btReceiveBank
  *(.data.*)
-                0x0000000000200b38                . = ALIGN (0x4)
+                0x0000000000200a48                . = ALIGN (0x4)
                 0x0000000000100200                __bootphase2_src_start__ = LOADADDR (.bootphase2)
                 0x0000000000200000                __bootphase2_start__ = ADDR (.bootphase2)
-                0x0000000000200b38                __bootphase2_end__ = (__bootphase2_start__ + SIZEOF (.bootphase2))
+                0x0000000000200a48                __bootphase2_end__ = (__bootphase2_start__ + SIZEOF (.bootphase2))
 
-.bss            0x0000000000200b38       0x10
-                0x0000000000200b38                __bss_start__ = .
+.bss            0x0000000000200a48       0x10
+                0x0000000000200a48                __bss_start__ = .
  *(.bss)
- .bss           0x0000000000200b38        0x3 obj/usb_cdc.o
-                0x0000000000200b38                btConfiguration
-                0x0000000000200b39                btConnection
-                0x0000000000200b3a                csrIdx
+ .bss           0x0000000000200a48        0x3 obj/usb_cdc.o
+                0x0000000000200a48                btConfiguration
+                0x0000000000200a49                btConnection
+                0x0000000000200a4a                csrIdx
  *(.bss.*)
-                0x0000000000200b3c                . = ALIGN (0x4)
- *fill*         0x0000000000200b3b        0x1 
-                0x0000000000200b3c                __bss_end__ = .
- COMMON         0x0000000000200b3c        0xc obj/bootrom.o
-                0x0000000000200b3c                start_addr
-                0x0000000000200b40                end_addr
-                0x0000000000200b44                bootrom_unlocked
+                0x0000000000200a4c                . = ALIGN (0x4)
+ *fill*         0x0000000000200a4b        0x1 
+                0x0000000000200a4c                __bss_end__ = .
+ COMMON         0x0000000000200a4c        0xc obj/bootrom.o
+                0x0000000000200a4c                start_addr
+                0x0000000000200a50                end_addr
+                0x0000000000200a54                bootrom_unlocked
 
-.commonarea     0x000000000020ffe0        0xf
+.commonarea     0x000000000020ffe0       0x10
  *(.commonarea)
- .commonarea    0x000000000020ffe0        0xf obj/bootrom.o
+ .commonarea    0x000000000020ffe0       0x10 obj/bootrom.o
                 0x000000000020ffe0                common_area
 LOAD obj/version.o
 LOAD obj/ram-reset.o

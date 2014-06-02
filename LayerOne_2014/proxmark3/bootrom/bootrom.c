@@ -285,7 +285,7 @@ static void flash_mode ( int externally_entered )
 	}
 }
 
-uint32_t _osimage_entry;
+extern uint32_t _osimage_entry;
 void BootROM ( void )
 {
 	//------------
