@@ -278,7 +278,7 @@ void ButtWait ( void )
 
 void PlayTest ( void )
 {
-	static int tune1[] = {
+	const static int tune1[] = {
 		100, 256, 271, 282, 272, 292, 233, 12, 14, 44, 56, 123, 183
 	};
 
