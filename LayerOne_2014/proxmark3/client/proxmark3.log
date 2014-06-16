@@ -246,3 +246,539 @@ tune             Continuously measure HF antenna tuning
 #db# 3544 mV       
 #db# 3544 mV       
 #db# cancelled       
+help             This help. Use '<command> help' for details of a particular command.
+data             { Plot window / data buffer manipulation... }
+hf               { HF commands... }
+hw               { Hardware commands... }
+lf               { LF commands... }
+script           { Scripting commands }
+quit             Exit program
+exit             Exit program
+help             This help. Use '<command> help' for details of a particular command.
+data             { Plot window / data buffer manipulation... }
+hf               { HF commands... }
+hw               { Hardware commands... }
+lf               { LF commands... }
+script           { Scripting commands }
+quit             Exit program
+exit             Exit program
+#db# received 544 bytes, with command: 0x0400 and args: 0 0 0       
+#db# Measuring antenna characteristics, please wait...       
+#db# Measuring complete, sending report back to host       
+
+# LF antenna:  0.00 V @   125.00 kHz
+# LF antenna:  0.00 V @   134.00 kHz
+# LF optimal:  0.00 V @ 12000.00 kHz
+# HF antenna:  2.83 V @    13.56 MHz
+# Your LF antenna is unusable.
+# Your HF antenna is marginal.
+help             This help. Use '<command> help' for details of a particular command.
+data             { Plot window / data buffer manipulation... }
+hf               { HF commands... }
+hw               { Hardware commands... }
+lf               { LF commands... }
+script           { Scripting commands }
+quit             Exit program
+exit             Exit program
+#db# received 544 bytes, with command: 0x0400 and args: 0 0 0       
+#db# Measuring antenna characteristics, please wait...       
+#db# Measuring complete, sending report back to host       
+
+# LF antenna:  0.00 V @   125.00 kHz
+# LF antenna:  0.00 V @   134.00 kHz
+# LF optimal:  0.00 V @ 12000.00 kHz
+# HF antenna:  2.87 V @    13.56 MHz
+# Your LF antenna is unusable.
+# Your HF antenna is marginal.
+help             This help. Use '<command> help' for details of a particular command.
+data             { Plot window / data buffer manipulation... }
+hf               { HF commands... }
+hw               { Hardware commands... }
+lf               { LF commands... }
+script           { Scripting commands }
+quit             Exit program
+exit             Exit program
+help             This help
+14a              { ISO14443A RFIDs... }
+14b              { ISO14443B RFIDs... }
+15               { ISO15693 RFIDs... }
+epa              { German Identification Card... }
+legic            { LEGIC RFIDs... }
+iclass           { ICLASS RFIDs... }
+mf               { MIFARE RFIDs... }
+tune             Continuously measure HF antenna tuning
+help             This help
+14a              { ISO14443A RFIDs... }
+14b              { ISO14443B RFIDs... }
+15               { ISO15693 RFIDs... }
+epa              { German Identification Card... }
+legic            { LEGIC RFIDs... }
+iclass           { ICLASS RFIDs... }
+mf               { MIFARE RFIDs... }
+tune             Continuously measure HF antenna tuning
+help             This help
+list             List ISO 14443a history
+reader           Act like an ISO14443 Type A reader
+cuids            <n> Collect n>0 ISO14443 Type A UIDs in one go
+sim              <UID> -- Fake ISO 14443a tag
+snoop            Eavesdrop ISO 14443 Type A
+raw              Send raw hex data to tag
+Emulating ISO/IEC 14443 type A tag with 4 byte UID (00000000)
+#db# received 544 bytes, with command: 0x0384 and args: 0 142 0       
+#db# Error: unkown tagtype (142)       
+Emulating ISO/IEC 14443 type A tag with 4 byte UID (00000000)
+#db# received 544 bytes, with command: 0x0384 and args: 0 244 0       
+#db# Error: unkown tagtype (244)       
+Emulating ISO/IEC 14443 type A tag with 4 byte UID (00000000)
+#db# received 544 bytes, with command: 0x0384 and args: 0 69 0       
+#db# Error: unkown tagtype (69)       
+
+ Emulating ISO/IEC 14443 type A tag with 4 or 7 byte UID
+
+   syntax: hf 14a sim <type> <uid>
+    types: 1 = MIFARE Classic
+           2 = MIFARE Ultralight
+           3 = MIFARE DESFIRE
+           4 = ISO/IEC 14443-4
+
+help             This help
+list             List ISO 14443a history
+reader           Act like an ISO14443 Type A reader
+cuids            <n> Collect n>0 ISO14443 Type A UIDs in one go
+sim              <UID> -- Fake ISO 14443a tag
+snoop            Eavesdrop ISO 14443 Type A
+raw              Send raw hex data to tag
+Emulating ISO/IEC 14443 type A tag with 4 byte UID (12345678)
+#db# received 544 bytes, with command: 0x0384 and args: 0 1 0       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Received unknown command (len=1):       
+#db# 00       
+#db# Trace Full. Simulation stopped.       
+#db# 0 0 9e       
+help             This help. Use '<command> help' for details of a particular command.
+data             { Plot window / data buffer manipulation... }
+hf               { HF commands... }
+hw               { Hardware commands... }
+lf               { LF commands... }
+script           { Scripting commands }
+quit             Exit program
+exit             Exit program
+help             This help
+14a              { ISO14443A RFIDs... }
+14b              { ISO14443B RFIDs... }
+15               { ISO15693 RFIDs... }
+epa              { German Identification Card... }
+legic            { LEGIC RFIDs... }
+iclass           { ICLASS RFIDs... }
+mf               { MIFARE RFIDs... }
+tune             Continuously measure HF antenna tuning
+help             This help. Use '<command> help' for details of a particular command.
+data             { Plot window / data buffer manipulation... }
+hf               { HF commands... }
+hw               { Hardware commands... }
+lf               { LF commands... }
+script           { Scripting commands }
+quit             Exit program
+exit             Exit program
+help             This help
+list             List ISO 14443a history
+reader           Act like an ISO14443 Type A reader
+cuids            <n> Collect n>0 ISO14443 Type A UIDs in one go
+sim              <UID> -- Fake ISO 14443a tag
+snoop            Eavesdrop ISO 14443 Type A
+raw              Send raw hex data to tag
+#db# received 544 bytes, with command: 0x0383 and args: 0 0 0       
+Sending bytes to proxmark failed
+Sending bytes to proxmark failed
+#db# cancelled by button       
+#db# COMMAND FINISHED       
+#db# maxDataLen=1, Uart.state=0, Uart.len=0       
+#db# traceLen=0, Uart.output[0]=00000000       
+#db# received 544 bytes, with command: 0x0383 and args: 0 0 0       
+#db# cancelled by button       
+#db# COMMAND FINISHED       
+#db# maxDataLen=1, Uart.state=0, Uart.len=0       
+#db# traceLen=0, Uart.output[0]=00000000       
+#db# Measuring antenna characteristics, please wait...       
+#db# Measuring complete, sending report back to host       
+
+# LF antenna:  0.00 V @   125.00 kHz
+# LF antenna:  0.00 V @   134.00 kHz
+# LF optimal:  0.00 V @ 12000.00 kHz
+# HF antenna:  4.22 V @    13.56 MHz
+# Your LF antenna is unusable.
+# Your HF antenna is marginal.
+#db# received 544 bytes, with command: 0x0383 and args: 0 0 0       
+#db# COMMAND FINISHED       
+#db# maxDataLen=3, Uart.state=0, Uart.len=1       
+#db# traceLen=2993, Uart.output[0]=00000000       
+#db# Measuring antenna characteristics, please wait...       
+#db# Measuring complete, sending report back to host       
+
+# LF antenna:  0.00 V @   125.00 kHz
+# LF antenna:  0.00 V @   134.00 kHz
+# LF optimal:  0.00 V @ 12000.00 kHz
+# HF antenna:  2.87 V @    13.56 MHz
+# Your LF antenna is unusable.
+# Your HF antenna is marginal.
+#db# received 2 bytes, with command: 0xd3045 and args: 0 0 0       
+#db# unknown command:: 0xd3045       
+#db# received 1 bytes, with command: 0xd3041 and args: 0 0 0       
+#db# unknown command:: 0xd3041       
+#db# received 1 bytes, with command: 0xd3054 and args: 0 0 0       
+#db# unknown command:: 0xd3054       
+#db# received 1 bytes, with command: 0xd3041 and args: 0 0 0       
+#db# unknown command:: 0xd3041       
+#db# received 1 bytes, with command: 0xd3054 and args: 0 0 0       
+#db# unknown command:: 0xd3054       
+help             This help
+detectreader     ['l'|'h'] -- Detect external reader field (option 'l' or 'h' to limit to LF or HF)
+fpgaoff          Set FPGA off
+lcd              <HEX command> <count> -- Send command/data to LCD
+lcdreset         Hardware reset LCD
+readmem          [address] -- Read memory at decimal address from flash
+reset            Reset the Proxmark3
+setlfdivisor     <19 - 255> -- Drive LF antenna at 12Mhz/(divisor+1)
+setmux           <loraw|hiraw|lopkd|hipkd> -- Set the ADC mux to a specific value
+tune             Measure antenna tuning
+version          Show version inforation about the connected Proxmark
+#db# received 544 bytes, with command: 0x0400 and args: 0 0 0       
+#db# Measuring antenna characteristics, please wait...       
+#db# Measuring complete, sending report back to host       
+
+# LF antenna:  0.00 V @   125.00 kHz
+# LF antenna:  0.00 V @   134.00 kHz
+# LF optimal:  0.00 V @ 12000.00 kHz
+# HF antenna:  2.96 V @    13.56 MHz
+# Your LF antenna is unusable.
+# Your HF antenna is marginal.
+#db# received 544 bytes, with command: 0x0400 and args: 0 0 0       
+#db# Measuring antenna characteristics, please wait...       
+#db# Measuring complete, sending report back to host       
+
+# LF antenna: 15.44 V @   125.00 kHz
+# LF antenna:  8.06 V @   134.00 kHz
+# LF optimal: 18.26 V @   122.45 kHz
+# HF antenna:  0.03 V @    13.56 MHz
+# Your HF antenna is unusable.
+#db# Measuring antenna characteristics, please wait...       
+#db# Measuring complete, sending report back to host       
+
+# LF antenna: 15.31 V @   125.00 kHz
+# LF antenna:  8.06 V @   134.00 kHz
+# LF optimal: 18.26 V @   122.45 kHz
+# HF antenna:  0.03 V @    13.56 MHz
+# Your HF antenna is unusable.
