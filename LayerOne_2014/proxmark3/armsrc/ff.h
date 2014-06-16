@@ -24,7 +24,6 @@
 #ifndef _FATFS
 #define _FATFS	0x007C
 
-#include "stdint.h"
 #include "integer.h"
 
 #define _WORD_ACCESS	0
