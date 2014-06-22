@@ -1437,16 +1437,16 @@ Basic 0.1" spaced jumper. Use with breakaway headers.</description>
 <part name="SUPPLY1" library="supply2" deviceset="VCC" device=""/>
 <part name="C1" library="SparkFun" deviceset="CAP" device="0805" value="0.1uF"/>
 <part name="SUPPLY2" library="supply2" deviceset="GND" device=""/>
-<part name="R0" library="SparkFun" deviceset="RESISTOR" device="0603-RES" value="16"/>
+<part name="R0" library="SparkFun" deviceset="RESISTOR" device="" value="16"/>
 <part name="OPT1" library="SparkFun" deviceset="JUMPER-2" device="PTH"/>
-<part name="R1" library="SparkFun" deviceset="RESISTOR" device="0603-RES" value="16"/>
-<part name="R2" library="SparkFun" deviceset="RESISTOR" device="0603-RES" value="16"/>
-<part name="R3" library="SparkFun" deviceset="RESISTOR" device="0603-RES" value="16"/>
-<part name="R4" library="SparkFun" deviceset="RESISTOR" device="0603-RES" value="16"/>
-<part name="R5" library="SparkFun" deviceset="RESISTOR" device="0603-RES" value="16"/>
-<part name="R6" library="SparkFun" deviceset="RESISTOR" device="0603-RES" value="16"/>
-<part name="R7" library="SparkFun" deviceset="RESISTOR" device="0603-RES" value="16"/>
-<part name="R8" library="SparkFun" deviceset="RESISTOR" device="0603-RES" value="16"/>
+<part name="R1" library="SparkFun" deviceset="RESISTOR" device="" value="16"/>
+<part name="R2" library="SparkFun" deviceset="RESISTOR" device="" value="16"/>
+<part name="R3" library="SparkFun" deviceset="RESISTOR" device="" value="16"/>
+<part name="R4" library="SparkFun" deviceset="RESISTOR" device="" value="16"/>
+<part name="R5" library="SparkFun" deviceset="RESISTOR" device="" value="16"/>
+<part name="R6" library="SparkFun" deviceset="RESISTOR" device="" value="16"/>
+<part name="R7" library="SparkFun" deviceset="RESISTOR" device="" value="16"/>
+<part name="R8" library="SparkFun" deviceset="RESISTOR" device="" value="16"/>
 <part name="OPT2" library="SparkFun" deviceset="JUMPER-2" device="PTH"/>
 <part name="SUPPLY5" library="supply2" deviceset="GND" device=""/>
 <part name="SUPPLY6" library="supply2" deviceset="GND" device=""/>
