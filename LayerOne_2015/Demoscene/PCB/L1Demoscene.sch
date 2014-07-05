@@ -7349,7 +7349,7 @@ by exp-lbrs.ulp</description>
 <part name="JP3" library="STM32-PROX" deviceset="USB" device="-MICROB"/>
 <part name="GND12" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="R27" library="SparkFun-Resistors" deviceset="RESISTOR" device="0603-RES" value="1k"/>
-<part name="LED1" library="dp_devices" deviceset="LED" device="-0603"/>
+<part name="PWR" library="dp_devices" deviceset="LED" device="-0603"/>
 <part name="SUPPLY6" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
 <part name="GND13" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="IC2" library="burr-brown" deviceset="REG1117" device=""/>
@@ -7429,7 +7429,7 @@ by exp-lbrs.ulp</description>
 <instance part="JP3" gate="G$1" x="190.5" y="-20.32"/>
 <instance part="GND12" gate="1" x="185.42" y="-25.4"/>
 <instance part="R27" gate="G$1" x="142.24" y="22.86" rot="R90"/>
-<instance part="LED1" gate="LED" x="142.24" y="12.7"/>
+<instance part="PWR" gate="LED" x="142.24" y="12.7"/>
 <instance part="SUPPLY6" gate="1" x="142.24" y="30.48"/>
 <instance part="GND13" gate="1" x="142.24" y="2.54"/>
 <instance part="IC2" gate="G$1" x="165.1" y="-17.78" rot="MR0"/>
@@ -7538,7 +7538,7 @@ by exp-lbrs.ulp</description>
 <wire x1="185.42" y1="-20.32" x2="185.42" y2="-22.86" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="LED1" gate="LED" pin="C"/>
+<pinref part="PWR" gate="LED" pin="C"/>
 <pinref part="GND13" gate="1" pin="GND"/>
 <wire x1="142.24" y1="7.62" x2="142.24" y2="5.08" width="0.1524" layer="91"/>
 </segment>
@@ -8102,7 +8102,7 @@ by exp-lbrs.ulp</description>
 <net name="N$10" class="0">
 <segment>
 <pinref part="R27" gate="G$1" pin="1"/>
-<pinref part="LED1" gate="LED" pin="A"/>
+<pinref part="PWR" gate="LED" pin="A"/>
 <wire x1="142.24" y1="17.78" x2="142.24" y2="15.24" width="0.1524" layer="91"/>
 </segment>
 </net>
