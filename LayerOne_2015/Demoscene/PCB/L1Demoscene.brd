@@ -174,7 +174,7 @@
 <wire x1="0" y1="2" x2="2" y2="0" width="0" layer="20" curve="90"/>
 <wire x1="2" y1="0" x2="48" y2="0" width="0" layer="20"/>
 <wire x1="48" y1="0" x2="50" y2="2" width="0" layer="20" curve="90"/>
-<text x="31.496" y="28.956" size="1.778" layer="25" font="vector" rot="R90">LAYERONE 2015</text>
+<text x="31.242" y="26.162" size="1.778" layer="25" font="vector" rot="R90">LAYERONE 2015</text>
 <text x="34.036" y="22.86" size="1.778" layer="25" font="vector" rot="R90">DEMOSCENE BOARD</text>
 <text x="32.451484375" y="0.9944875" size="1.778" layer="25" font="vector">PROTOTYPE</text>
 <text x="4.318" y="30.734" size="1.9304" layer="21">+</text>
