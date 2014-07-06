@@ -7756,10 +7756,10 @@ Basic 0.1" spaced jumper. Use with breakaway headers.</description>
 <segment>
 <pinref part="C1" gate="G$1" pin="2"/>
 <wire x1="45.72" y1="93.98" x2="55.88" y2="93.98" width="0.1524" layer="91"/>
-<wire x1="55.88" y1="93.98" x2="63.5" y2="93.98" width="0.1524" layer="91"/>
-<wire x1="63.5" y1="93.98" x2="63.5" y2="91.44" width="0.1524" layer="91"/>
+<wire x1="55.88" y1="93.98" x2="60.96" y2="93.98" width="0.1524" layer="91"/>
+<wire x1="60.96" y1="93.98" x2="60.96" y2="91.44" width="0.1524" layer="91"/>
 <pinref part="IC1" gate="G$1" pin="PB6(XTAL1/TOSC1)"/>
-<wire x1="63.5" y1="91.44" x2="68.58" y2="91.44" width="0.1524" layer="91"/>
+<wire x1="60.96" y1="91.44" x2="68.58" y2="91.44" width="0.1524" layer="91"/>
 <pinref part="Y1" gate="G$1" pin="2"/>
 <wire x1="55.88" y1="91.44" x2="55.88" y2="93.98" width="0.1524" layer="91"/>
 <junction x="55.88" y="93.98"/>
@@ -7768,10 +7768,10 @@ Basic 0.1" spaced jumper. Use with breakaway headers.</description>
 <net name="N$2" class="0">
 <segment>
 <pinref part="IC1" gate="G$1" pin="PB7(XTAL2/TOSC2)"/>
-<wire x1="68.58" y1="86.36" x2="63.5" y2="86.36" width="0.1524" layer="91"/>
-<wire x1="63.5" y1="86.36" x2="63.5" y2="83.82" width="0.1524" layer="91"/>
+<wire x1="68.58" y1="86.36" x2="60.96" y2="86.36" width="0.1524" layer="91"/>
+<wire x1="60.96" y1="86.36" x2="60.96" y2="83.82" width="0.1524" layer="91"/>
 <pinref part="C2" gate="G$1" pin="2"/>
-<wire x1="63.5" y1="83.82" x2="55.88" y2="83.82" width="0.1524" layer="91"/>
+<wire x1="60.96" y1="83.82" x2="55.88" y2="83.82" width="0.1524" layer="91"/>
 <pinref part="Y1" gate="G$1" pin="1"/>
 <wire x1="55.88" y1="83.82" x2="45.72" y2="83.82" width="0.1524" layer="91"/>
 <wire x1="55.88" y1="86.36" x2="55.88" y2="83.82" width="0.1524" layer="91"/>
