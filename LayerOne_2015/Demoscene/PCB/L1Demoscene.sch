@@ -7365,6 +7365,11 @@ by exp-lbrs.ulp</description>
 <part name="GND16" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="J2" library="dp_devices" deviceset="CON_HEADER_1X02" device="-PTH"/>
 <part name="GND17" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
+<part name="R28" library="SparkFun-Resistors" deviceset="RESISTOR" device="0603-RES" value="1k"/>
+<part name="LED1" library="dp_devices" deviceset="LED" device="-0603"/>
+<part name="GND18" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
+<part name="S2" library="tvbgone-2layer" deviceset="SPARKFUN-ELECTROMECHANICAL_SWITCH-MOMENTARY-2" device="-SMD-1101NE" value="Switch"/>
+<part name="GND19" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -7430,7 +7435,7 @@ by exp-lbrs.ulp</description>
 <instance part="GND12" gate="1" x="185.42" y="-25.4"/>
 <instance part="R27" gate="G$1" x="142.24" y="22.86" rot="R90"/>
 <instance part="PWR" gate="LED" x="142.24" y="12.7"/>
-<instance part="SUPPLY6" gate="1" x="142.24" y="30.48"/>
+<instance part="SUPPLY6" gate="1" x="142.24" y="35.56"/>
 <instance part="GND13" gate="1" x="142.24" y="2.54"/>
 <instance part="IC2" gate="G$1" x="165.1" y="-17.78" rot="MR0"/>
 <instance part="GND14" gate="1" x="165.1" y="-38.1"/>
@@ -7445,6 +7450,11 @@ by exp-lbrs.ulp</description>
 <instance part="GND16" gate="1" x="55.88" y="55.88"/>
 <instance part="J2" gate="J" x="180.34" y="-48.26" rot="R180"/>
 <instance part="GND17" gate="1" x="190.5" y="-55.88"/>
+<instance part="R28" gate="G$1" x="154.94" y="25.4" rot="R90"/>
+<instance part="LED1" gate="LED" x="154.94" y="15.24"/>
+<instance part="GND18" gate="1" x="154.94" y="5.08"/>
+<instance part="S2" gate="G$1" x="167.64" y="17.78" rot="R90"/>
+<instance part="GND19" gate="1" x="167.64" y="5.08"/>
 </instances>
 <busses>
 </busses>
@@ -7570,6 +7580,16 @@ by exp-lbrs.ulp</description>
 <wire x1="190.5" y1="-48.26" x2="190.5" y2="-53.34" width="0.1524" layer="91"/>
 <pinref part="GND17" gate="1" pin="GND"/>
 </segment>
+<segment>
+<pinref part="LED1" gate="LED" pin="C"/>
+<pinref part="GND18" gate="1" pin="GND"/>
+<wire x1="154.94" y1="10.16" x2="154.94" y2="7.62" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="S2" gate="G$1" pin="1"/>
+<wire x1="167.64" y1="12.7" x2="167.64" y2="7.62" width="0.1524" layer="91"/>
+<pinref part="GND19" gate="1" pin="GND"/>
+</segment>
 </net>
 <net name="N$1" class="0">
 <segment>
@@ -7640,7 +7660,7 @@ by exp-lbrs.ulp</description>
 <segment>
 <pinref part="SUPPLY6" gate="1" pin="VCC"/>
 <pinref part="R27" gate="G$1" pin="2"/>
-<wire x1="142.24" y1="30.48" x2="142.24" y2="27.94" width="0.1524" layer="91"/>
+<wire x1="142.24" y1="35.56" x2="142.24" y2="27.94" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="IC2" gate="G$1" pin="VOUT"/>
@@ -8122,6 +8142,37 @@ by exp-lbrs.ulp</description>
 <segment>
 <pinref part="J2" gate="J" pin="2"/>
 <wire x1="180.34" y1="-45.72" x2="190.5" y2="-45.72" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$13" class="0">
+<segment>
+<pinref part="R28" gate="G$1" pin="1"/>
+<pinref part="LED1" gate="LED" pin="A"/>
+<wire x1="154.94" y1="20.32" x2="154.94" y2="17.78" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="PB0" class="0">
+<segment>
+<pinref part="IC1" gate="G$1" pin="PB0(ICP)"/>
+<wire x1="116.84" y1="63.5" x2="132.08" y2="63.5" width="0.1524" layer="91"/>
+<label x="127" y="63.5" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="R28" gate="G$1" pin="2"/>
+<wire x1="154.94" y1="30.48" x2="154.94" y2="38.1" width="0.1524" layer="91"/>
+<label x="154.94" y="38.1" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="PD0" class="0">
+<segment>
+<pinref part="IC1" gate="G$1" pin="PD0(RXD)"/>
+<wire x1="116.84" y1="86.36" x2="132.08" y2="86.36" width="0.1524" layer="91"/>
+<label x="127" y="86.36" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="S2" gate="G$1" pin="2"/>
+<wire x1="167.64" y1="22.86" x2="167.64" y2="38.1" width="0.1524" layer="91"/>
+<label x="167.64" y="38.1" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>
