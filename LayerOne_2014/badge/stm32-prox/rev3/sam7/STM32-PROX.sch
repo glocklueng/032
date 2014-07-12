@@ -14248,6 +14248,14 @@ http://dangerousprototypes.com</description>
 </part>
 <part name="SW2" library="dp_devices" deviceset="SW_TACT_2P" device="-3X6"/>
 <part name="SW3" library="dp_devices" deviceset="SW_TACT_2P" device="-3X6"/>
+<part name="R56" library="STM32-PROX" deviceset="RESISTOR" device="0603" value="10K">
+<attribute name="DIGIKEY" value="RMCF0603JT1K00TR-ND"/>
+<attribute name="MF" value=""/>
+<attribute name="MPN" value="RMCF0603JT1K00"/>
+<attribute name="OC_NEWARK" value="unknown"/>
+<attribute name="PARTNO" value="RMCF0603JT1K00"/>
+</part>
+<part name="SUPPLY6" library="STM32-PROX" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -14450,6 +14458,14 @@ http://dangerousprototypes.com</description>
 <attribute name="MPN" x="-38.1" y="7.62" size="1.778" layer="96" rot="R90" display="off"/>
 <attribute name="DIGIKEY" x="-38.1" y="7.62" size="1.778" layer="96" rot="R90" display="off"/>
 </instance>
+<instance part="R56" gate="G$1" x="-53.34" y="-30.48" rot="R90">
+<attribute name="PARTNO" x="-53.34" y="-30.48" size="1.778" layer="96" rot="R90" display="off"/>
+<attribute name="OC_NEWARK" x="-53.34" y="-30.48" size="1.778" layer="96" rot="R90" display="off"/>
+<attribute name="MF" x="-53.34" y="-30.48" size="1.778" layer="96" rot="R90" display="off"/>
+<attribute name="MPN" x="-53.34" y="-30.48" size="1.778" layer="96" rot="R90" display="off"/>
+<attribute name="DIGIKEY" x="-53.34" y="-30.48" size="1.778" layer="96" rot="R90" display="off"/>
+</instance>
+<instance part="SUPPLY6" gate="G$1" x="-53.34" y="-38.1"/>
 </instances>
 <busses>
 </busses>
@@ -14615,8 +14631,11 @@ http://dangerousprototypes.com</description>
 </segment>
 <segment>
 <pinref part="S1" gate="1" pin="P"/>
-<wire x1="-55.88" y1="-25.4" x2="-45.72" y2="-25.4" width="0.1524" layer="91"/>
+<wire x1="-55.88" y1="-25.4" x2="-53.34" y2="-25.4" width="0.1524" layer="91"/>
 <label x="-53.34" y="-25.4" size="1.778" layer="95"/>
+<pinref part="R56" gate="G$1" pin="2"/>
+<wire x1="-53.34" y1="-25.4" x2="-45.72" y2="-25.4" width="0.1524" layer="91"/>
+<junction x="-53.34" y="-25.4"/>
 </segment>
 </net>
 <net name="N$66" class="0">
@@ -14758,6 +14777,11 @@ http://dangerousprototypes.com</description>
 <label x="101.6" y="73.66" size="1.778" layer="95"/>
 <pinref part="SUPPLY7" gate="G$1" pin="GND"/>
 <junction x="99.06" y="76.2"/>
+</segment>
+<segment>
+<pinref part="SUPPLY6" gate="G$1" pin="GND"/>
+<pinref part="R56" gate="G$1" pin="1"/>
+<wire x1="-53.34" y1="-38.1" x2="-53.34" y2="-35.56" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>
