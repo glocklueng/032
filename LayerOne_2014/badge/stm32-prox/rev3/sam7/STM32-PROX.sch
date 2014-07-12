@@ -1975,19 +1975,6 @@ Source: http://www.osram.convergy.de/ ... LG M470.pdf</description>
 <text x="2.54" y="-1.905" size="1.27" layer="27" rot="R90">&gt;VALUE</text>
 <hole x="0" y="0" drill="2.7"/>
 </package>
-<package name="B3F-5XX">
-<wire x1="-4" y1="2" x2="-4" y2="-2" width="0.127" layer="21"/>
-<wire x1="-4" y1="-2" x2="4" y2="-2" width="0.127" layer="21"/>
-<wire x1="4" y1="-2" x2="4" y2="2" width="0.127" layer="21"/>
-<wire x1="4" y1="2" x2="-4" y2="2" width="0.127" layer="21"/>
-<wire x1="-2" y1="0" x2="0" y2="0" width="0.127" layer="21"/>
-<wire x1="0" y1="0" x2="1" y2="1" width="0.127" layer="21"/>
-<wire x1="1" y1="0" x2="2" y2="0" width="0.127" layer="21"/>
-<pad name="1" x="-3.5012" y="-0.0294" drill="1.016" shape="long"/>
-<pad name="2" x="3.5012" y="-0.0294" drill="1.016" shape="long"/>
-<text x="-3.048" y="2.143" size="1.27" layer="25" ratio="10">&gt;NAME</text>
-<text x="-3.048" y="-3.58" size="1.27" layer="27" ratio="10">&gt;VALUE</text>
-</package>
 <package name="140CLH-0810">
 <description>&lt;b&gt;Aluminum electrolytic capacitors SMD (Chip)&lt;/b&gt;&lt;p&gt;
 Long life base plate, High temperature 140 CLH&lt;p&gt;
@@ -7985,23 +7972,6 @@ www.SparkFun.com SKU : Comp-SMDS</description>
 <vertex x="-2.413" y="-2.921"/>
 </polygon>
 </symbol>
-<symbol name="TS">
-<wire x1="0" y1="-3.175" x2="0" y2="-2.54" width="0.254" layer="94"/>
-<wire x1="0" y1="2.54" x2="0" y2="3.175" width="0.254" layer="94"/>
-<wire x1="0" y1="-2.54" x2="-0.635" y2="0" width="0.254" layer="94"/>
-<wire x1="-4.445" y1="1.905" x2="-3.175" y2="1.905" width="0.254" layer="94"/>
-<wire x1="-4.445" y1="-1.905" x2="-3.175" y2="-1.905" width="0.254" layer="94"/>
-<wire x1="-4.445" y1="1.905" x2="-4.445" y2="0" width="0.254" layer="94"/>
-<wire x1="-4.445" y1="0" x2="-4.445" y2="-1.905" width="0.254" layer="94"/>
-<wire x1="-2.54" y1="0" x2="-1.905" y2="0" width="0.1524" layer="94"/>
-<wire x1="-1.27" y1="0" x2="-0.635" y2="0" width="0.1524" layer="94"/>
-<wire x1="-0.635" y1="0" x2="-1.27" y2="2.54" width="0.254" layer="94"/>
-<wire x1="-4.445" y1="0" x2="-3.175" y2="0" width="0.1524" layer="94"/>
-<pin name="P" x="0" y="-5.08" visible="pad" length="short" direction="pas" rot="R90"/>
-<pin name="S" x="0" y="5.08" visible="pad" length="short" direction="pas" rot="R270"/>
-<text x="-6.35" y="-1.905" size="1.778" layer="95" rot="R90">&gt;NAME</text>
-<text x="-3.81" y="3.175" size="1.778" layer="96" rot="R90">&gt;VALUE</text>
-</symbol>
 <symbol name="CPOL-US">
 <rectangle x1="-2.253" y1="0.668" x2="-1.364" y2="0.795" layer="94"/>
 <rectangle x1="-1.872" y1="0.287" x2="-1.745" y2="1.176" layer="94"/>
@@ -9631,22 +9601,6 @@ Source: www.kingbright.com</description>
 <connects>
 <connect gate="G$1" pin="A" pad="A"/>
 <connect gate="G$1" pin="C" pad="C"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-<deviceset name="5-XX">
-<gates>
-<gate name="G$1" symbol="TS" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="B3F-5XX">
-<connects>
-<connect gate="G$1" pin="P" pad="1"/>
-<connect gate="G$1" pin="S" pad="2"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -13505,27 +13459,6 @@ http://dangerousprototypes.com</description>
 <attribute name="PARTNO" value="RC0603JR-07820KL"/>
 </part>
 <part name="GND17" library="STM32-PROX" deviceset="GND" device=""/>
-<part name="K1" library="STM32-PROX" deviceset="5-XX" device="" value="">
-<attribute name="DIGIKEY" value="CKN9102-ND"/>
-<attribute name="MF" value="PTS635SL50 LFS"/>
-<attribute name="MPN" value="PTS635SL50 LFS"/>
-<attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="PTS635SL50 LFS"/>
-</part>
-<part name="K2" library="STM32-PROX" deviceset="5-XX" device="" value="">
-<attribute name="DIGIKEY" value="CKN9102-ND"/>
-<attribute name="MF" value="PTS635SL50 LFS"/>
-<attribute name="MPN" value="PTS635SL50 LFS"/>
-<attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="PTS635SL50 LFS"/>
-</part>
-<part name="K3" library="STM32-PROX" deviceset="5-XX" device="" value="">
-<attribute name="DIGIKEY" value="CKN9102-ND"/>
-<attribute name="MF" value="PTS635SL50 LFS"/>
-<attribute name="MPN" value="PTS635SL50 LFS"/>
-<attribute name="OC_NEWARK" value="unknown"/>
-<attribute name="PARTNO" value="PTS635SL50 LFS"/>
-</part>
 <part name="GND43" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="GND45" library="STM32-PROX" deviceset="GND" device=""/>
 <part name="GND46" library="STM32-PROX" deviceset="GND" device=""/>
@@ -13773,7 +13706,7 @@ http://dangerousprototypes.com</description>
 <attribute name="OC_NEWARK" value="06R5073"/>
 <attribute name="PARTNO" value="CC0603ZRY5V7BB105"/>
 </part>
-<part name="TP8" library="STM32-PROX" deviceset="TESTPAD" device="KEYSTONE-PTH" value="TESTPADKEYSTONE-PTH">
+<part name="VBUS" library="STM32-PROX" deviceset="TESTPAD" device="KEYSTONE-PTH" value="TESTPADKEYSTONE-PTH">
 <attribute name="MF" value=""/>
 <attribute name="MPN" value="NONE"/>
 <attribute name="OC_NEWARK" value="unknown"/>
@@ -14313,6 +14246,8 @@ http://dangerousprototypes.com</description>
 <attribute name="OC_NEWARK" value="unknown"/>
 <attribute name="PARTNO" value="RMCF0603JT1K00"/>
 </part>
+<part name="SW2" library="dp_devices" deviceset="SW_TACT_2P" device="-3X6"/>
+<part name="SW3" library="dp_devices" deviceset="SW_TACT_2P" device="-3X6"/>
 </parts>
 <sheets>
 <sheet>
@@ -14403,7 +14338,7 @@ http://dangerousprototypes.com</description>
 <attribute name="MPN" x="48.26" y="66.04" size="1.778" layer="96" display="off"/>
 <attribute name="DIGIKEY" x="48.26" y="66.04" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="TP8" gate="G$1" x="-22.86" y="86.36">
+<instance part="VBUS" gate="G$1" x="-22.86" y="86.36">
 <attribute name="PARTNO" x="-22.86" y="86.36" size="1.778" layer="96" display="off"/>
 <attribute name="OC_NEWARK" x="-22.86" y="86.36" size="1.778" layer="96" display="off"/>
 <attribute name="MF" x="-22.86" y="86.36" size="1.778" layer="96" display="off"/>
@@ -14535,7 +14470,7 @@ http://dangerousprototypes.com</description>
 <pinref part="C59" gate="G$1" pin="1"/>
 <wire x1="-55.88" y1="78.74" x2="-68.58" y2="78.74" width="0.1524" layer="91"/>
 <wire x1="-55.88" y1="78.74" x2="-55.88" y2="68.58" width="0.1524" layer="91"/>
-<pinref part="TP8" gate="G$1" pin="P$1"/>
+<pinref part="VBUS" gate="G$1" pin="P$1"/>
 <wire x1="-22.86" y1="83.82" x2="-22.86" y2="78.74" width="0.1524" layer="91"/>
 <junction x="-22.86" y="78.74"/>
 <junction x="-55.88" y="78.74"/>
@@ -15636,27 +15571,6 @@ http://dangerousprototypes.com</description>
 <text x="60.96" y="27.94" size="1.778" layer="91">SDCARD</text>
 </plain>
 <instances>
-<instance part="K1" gate="G$1" x="-43.18" y="76.2">
-<attribute name="PARTNO" x="-43.18" y="76.2" size="1.778" layer="96" display="off"/>
-<attribute name="OC_NEWARK" x="-43.18" y="76.2" size="1.778" layer="96" display="off"/>
-<attribute name="MF" x="-43.18" y="76.2" size="1.778" layer="96" display="off"/>
-<attribute name="MPN" x="-43.18" y="76.2" size="1.778" layer="96" display="off"/>
-<attribute name="DIGIKEY" x="-43.18" y="76.2" size="1.778" layer="96" display="off"/>
-</instance>
-<instance part="K2" gate="G$1" x="-33.02" y="76.2">
-<attribute name="PARTNO" x="-33.02" y="76.2" size="1.778" layer="96" display="off"/>
-<attribute name="OC_NEWARK" x="-33.02" y="76.2" size="1.778" layer="96" display="off"/>
-<attribute name="MF" x="-33.02" y="76.2" size="1.778" layer="96" display="off"/>
-<attribute name="MPN" x="-33.02" y="76.2" size="1.778" layer="96" display="off"/>
-<attribute name="DIGIKEY" x="-33.02" y="76.2" size="1.778" layer="96" display="off"/>
-</instance>
-<instance part="K3" gate="G$1" x="-22.86" y="76.2">
-<attribute name="PARTNO" x="-22.86" y="76.2" size="1.778" layer="96" display="off"/>
-<attribute name="OC_NEWARK" x="-22.86" y="76.2" size="1.778" layer="96" display="off"/>
-<attribute name="MF" x="-22.86" y="76.2" size="1.778" layer="96" display="off"/>
-<attribute name="MPN" x="-22.86" y="76.2" size="1.778" layer="96" display="off"/>
-<attribute name="DIGIKEY" x="-22.86" y="76.2" size="1.778" layer="96" display="off"/>
-</instance>
 <instance part="GND43" gate="G$1" x="-43.18" y="66.04"/>
 <instance part="GND45" gate="G$1" x="-33.02" y="66.04"/>
 <instance part="GND46" gate="G$1" x="-22.86" y="66.04"/>
@@ -15988,7 +15902,9 @@ http://dangerousprototypes.com</description>
 <instance part="JP1" gate="A" x="-73.66" y="-58.42"/>
 <instance part="JP2" gate="A" x="-73.66" y="-50.8"/>
 <instance part="U$4" gate="G$1" x="-91.44" y="-45.72"/>
-<instance part="SW1" gate="SW" x="-76.2" y="-33.02"/>
+<instance part="SW1" gate="SW" x="-43.18" y="76.2" rot="R90"/>
+<instance part="SW2" gate="SW" x="-33.02" y="76.2" rot="R90"/>
+<instance part="SW3" gate="SW" x="-22.86" y="76.2" rot="R90"/>
 </instances>
 <busses>
 </busses>
@@ -16106,19 +16022,19 @@ http://dangerousprototypes.com</description>
 </net>
 <net name="GND" class="2">
 <segment>
-<pinref part="K1" gate="G$1" pin="P"/>
 <pinref part="GND43" gate="G$1" pin="GND"/>
 <wire x1="-43.18" y1="66.04" x2="-43.18" y2="71.12" width="0.1524" layer="91"/>
+<pinref part="SW1" gate="SW" pin="1"/>
 </segment>
 <segment>
-<pinref part="K2" gate="G$1" pin="P"/>
 <pinref part="GND45" gate="G$1" pin="GND"/>
 <wire x1="-33.02" y1="66.04" x2="-33.02" y2="71.12" width="0.1524" layer="91"/>
+<pinref part="SW2" gate="SW" pin="1"/>
 </segment>
 <segment>
-<pinref part="K3" gate="G$1" pin="P"/>
 <pinref part="GND46" gate="G$1" pin="GND"/>
 <wire x1="-22.86" y1="66.04" x2="-22.86" y2="71.12" width="0.1524" layer="91"/>
+<pinref part="SW3" gate="SW" pin="1"/>
 </segment>
 <segment>
 <wire x1="-111.76" y1="76.2" x2="-116.84" y2="76.2" width="0.1524" layer="91"/>
@@ -16452,11 +16368,11 @@ http://dangerousprototypes.com</description>
 </net>
 <net name="SW_K3" class="0">
 <segment>
-<pinref part="K3" gate="G$1" pin="S"/>
 <wire x1="-22.86" y1="81.28" x2="-22.86" y2="83.82" width="0.1524" layer="91"/>
 <label x="-25.4" y="86.36" size="1.778" layer="95" rot="R90"/>
 <junction x="-22.86" y="83.82"/>
 <pinref part="R69" gate="G$1" pin="1"/>
+<pinref part="SW3" gate="SW" pin="3"/>
 </segment>
 <segment>
 <wire x1="-38.1" y1="-27.94" x2="-45.72" y2="-27.94" width="0.1524" layer="91"/>
@@ -16466,11 +16382,11 @@ http://dangerousprototypes.com</description>
 </net>
 <net name="SW_K2" class="0">
 <segment>
-<pinref part="K2" gate="G$1" pin="S"/>
 <wire x1="-33.02" y1="81.28" x2="-33.02" y2="83.82" width="0.1524" layer="91"/>
 <label x="-35.56" y="86.36" size="1.778" layer="95" rot="R90"/>
 <junction x="-33.02" y="83.82"/>
 <pinref part="R70" gate="G$1" pin="1"/>
+<pinref part="SW2" gate="SW" pin="3"/>
 </segment>
 <segment>
 <wire x1="-38.1" y1="-30.48" x2="-45.72" y2="-30.48" width="0.1524" layer="91"/>
@@ -16480,11 +16396,11 @@ http://dangerousprototypes.com</description>
 </net>
 <net name="SW_K1" class="0">
 <segment>
-<pinref part="K1" gate="G$1" pin="S"/>
 <wire x1="-43.18" y1="81.28" x2="-43.18" y2="83.82" width="0.1524" layer="91"/>
 <label x="-45.72" y="86.36" size="1.778" layer="95" rot="R90"/>
 <junction x="-43.18" y="83.82"/>
 <pinref part="R71" gate="G$1" pin="1"/>
+<pinref part="SW1" gate="SW" pin="3"/>
 </segment>
 <segment>
 <wire x1="27.94" y1="-15.24" x2="35.56" y2="-15.24" width="0.1524" layer="91"/>
