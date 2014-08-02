@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>6.1</ProjectVersion>
+    <ToolchainName>com.Atmel.AVRAssembler</ToolchainName>
+    <ProjectGuid>{7a96903e-273c-4865-aff2-a9a4e6908ce3}</ProjectGuid>
+    <avrdeviceseries>none</avrdeviceseries>
+    <avrdevice>ATmega88PA</avrdevice>
+    <OutputFileName>$(MSBuildProjectName)</OutputFileName>
+    <OutputFileExtension>.obj</OutputFileExtension>
+    <OutputDirectory>$(MSBuildProjectDirectory)\$(Configuration)</OutputDirectory>
+    <Language>ASSEMBLY</Language>
+    <AssemblyName>craft_asm</AssemblyName>
+    <Name>craft_asm</Name>
+    <RootNamespace>craft_asm</RootNamespace>
+    <EntryFile>$(MSBuildProjectDirectory)\craft_asm.asm</EntryFile>
+    <ToolchainFlavour>Native</ToolchainFlavour>
+    <KeepTimersRunning>true</KeepTimersRunning>
+    <OverrideVtor>false</OverrideVtor>
+    <CacheFlash>true</CacheFlash>
+    <ProgFlashFromRam>true</ProgFlashFromRam>
+    <RamSnippetAddress />
+    <UncachedRange />
+    <OverrideVtorValue />
+    <BootSegment>2</BootSegment>
+    <eraseonlaunchrule>1</eraseonlaunchrule>
+    <AsfFrameworkConfig>
+      <framework-data xmlns="">
+  <options />
+  <configurations />
+  <files />
+  <documentation help="" />
+  <offline-documentation help="" />
+  <dependencies>
+    <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.11.0" />
+  </dependencies>
+</framework-data>
+    </AsfFrameworkConfig>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <ToolchainSettings>
+      <AvrAssembler>
+  <avrasm.assembler.general.IncludeFile>(%24IncludeFile)</avrasm.assembler.general.IncludeFile>
+</AvrAssembler>
+    </ToolchainSettings>
+    <OutputType>Executable</OutputType>
+    <UsesExternalMakeFile>False</UsesExternalMakeFile>
+    <BuildTarget>all</BuildTarget>
+    <CleanTarget>clean</CleanTarget>
+    <ExternalMakeFilePath>C:\Users\arko\Desktop\Tesla\nsl\LayerOne_2015\Demoscene\Code\atmel_studio_craft\craft_asm\craft_asm\craft\Makefile</ExternalMakeFilePath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <ToolchainSettings>
+      <AvrAssembler>
+  <avrasm.assembler.general.IncludeFile>(%24IncludeFile)</avrasm.assembler.general.IncludeFile>
+</AvrAssembler>
+    </ToolchainSettings>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="craft_asm.asm">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="anim.S">
+      <SubType>Code</SubType>
+    </None>
+    <None Include="boot.S">
+      <SubType>Code</SubType>
+    </None>
+    <None Include="craft.S">
+      <SubType>Code</SubType>
+    </None>
+    <None Include="data.S">
+      <SubType>Code</SubType>
+    </None>
+    <None Include="delays.i">
+      <SubType>Code</SubType>
+    </None>
+    <None Include="fire.S">
+      <SubType>Code</SubType>
+    </None>
+    <None Include="flower.S">
+      <SubType>Code</SubType>
+    </None>
+    <None Include="julia.S">
+      <SubType>Code</SubType>
+    </None>
+    <None Include="mainloop.S">
+      <SubType>Code</SubType>
+    </None>
+    <None Include="Makefile">
+      <SubType>Code</SubType>
+    </None>
+    <None Include="music.S">
+      <SubType>Code</SubType>
+    </None>
+    <None Include="plasma.S">
+      <SubType>Code</SubType>
+    </None>
+    <None Include="song.S">
+      <SubType>Code</SubType>
+    </None>
+    <None Include="songee.S">
+      <SubType>Code</SubType>
+    </None>
+    <None Include="storyboard">
+      <SubType>Code</SubType>
+    </None>
+    <None Include="stuff.i">
+      <SubType>Code</SubType>
+    </None>
+    <None Include="title.S">
+      <SubType>Code</SubType>
+    </None>
+    <None Include="tunnel.S">
+      <SubType>Code</SubType>
+    </None>
+    <None Include="vars.S">
+      <SubType>Code</SubType>
+    </None>
+    <None Include="vblank.S">
+      <SubType>Code</SubType>
+    </None>
+    <None Include="vector.S">
+      <SubType>Code</SubType>
+    </None>
+  </ItemGroup>
+  <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Assembler.targets" />
+</Project>
