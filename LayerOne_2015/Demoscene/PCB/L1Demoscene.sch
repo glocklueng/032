@@ -7515,7 +7515,7 @@ Basic 0.1" spaced jumper. Use with breakaway headers.</description>
 <part name="IC2" library="burr-brown" deviceset="REG1117" device=""/>
 <part name="GND14" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="SUPPLY5" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
-<part name="R28-DNP" library="SparkFun-Resistors" deviceset="RESISTOR" device="1206" value="0"/>
+<part name="R29" library="SparkFun-Resistors" deviceset="RESISTOR" device="1206" value="0"/>
 <part name="C4" library="dp_devices" deviceset="CAPACITOR_POL" device="-SMC_A"/>
 <part name="C5" library="dp_devices" deviceset="CAPACITOR_POL" device="-SMC_A"/>
 <part name="S1" library="tvbgone-2layer" deviceset="SPARKFUN-ELECTROMECHANICAL_SWITCH-MOMENTARY-2" device="-SMD-1101NE" value="Switch"/>
@@ -7601,7 +7601,7 @@ Basic 0.1" spaced jumper. Use with breakaway headers.</description>
 <instance part="IC2" gate="G$1" x="165.1" y="-17.78" rot="MR0"/>
 <instance part="GND14" gate="1" x="165.1" y="-38.1"/>
 <instance part="SUPPLY5" gate="1" x="142.24" y="-15.24"/>
-<instance part="R28-DNP" gate="G$1" x="165.1" y="-5.08" rot="R180"/>
+<instance part="R29" gate="G$1" x="165.1" y="-5.08" rot="R180"/>
 <instance part="C4" gate="C" x="180.34" y="-20.32"/>
 <instance part="C5" gate="C" x="149.86" y="-20.32"/>
 <instance part="S1" gate="G$1" x="60.96" y="10.16" rot="R90"/>
@@ -7835,7 +7835,7 @@ Basic 0.1" spaced jumper. Use with breakaway headers.</description>
 <wire x1="144.78" y1="-17.78" x2="142.24" y2="-17.78" width="0.1524" layer="91"/>
 <wire x1="142.24" y1="-17.78" x2="142.24" y2="-15.24" width="0.1524" layer="91"/>
 <wire x1="149.86" y1="-17.78" x2="149.86" y2="-5.08" width="0.1524" layer="91"/>
-<pinref part="R28-DNP" gate="G$1" pin="2"/>
+<pinref part="R29" gate="G$1" pin="2"/>
 <wire x1="149.86" y1="-5.08" x2="160.02" y2="-5.08" width="0.1524" layer="91"/>
 <pinref part="C5" gate="C" pin="+"/>
 <junction x="149.86" y="-17.78"/>
@@ -8298,7 +8298,7 @@ Basic 0.1" spaced jumper. Use with breakaway headers.</description>
 <wire x1="187.96" y1="-17.78" x2="180.34" y2="-17.78" width="0.1524" layer="91"/>
 <wire x1="180.34" y1="-17.78" x2="177.8" y2="-17.78" width="0.1524" layer="91"/>
 <wire x1="180.34" y1="-17.78" x2="180.34" y2="-5.08" width="0.1524" layer="91"/>
-<pinref part="R28-DNP" gate="G$1" pin="1"/>
+<pinref part="R29" gate="G$1" pin="1"/>
 <wire x1="180.34" y1="-5.08" x2="170.18" y2="-5.08" width="0.1524" layer="91"/>
 <pinref part="C4" gate="C" pin="+"/>
 <junction x="180.34" y="-17.78"/>
