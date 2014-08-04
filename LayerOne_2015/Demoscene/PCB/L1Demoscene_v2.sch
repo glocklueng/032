@@ -2268,21 +2268,21 @@ We've spent an enormous amount of time creating and checking these footprints an
 <pad name="8" x="-0.88" y="-5.08" drill="1.016" diameter="1.8796"/>
 <pad name="9" x="1.41" y="-5.08" drill="1.016" diameter="1.8796"/>
 <pad name="10" x="3.7" y="-5.08" drill="1.016" diameter="1.8796"/>
-<pad name="11" x="-4.32" y="-2.54" drill="1.016" diameter="1.8796"/>
-<pad name="12" x="-2.03" y="-2.54" drill="1.016" diameter="1.8796"/>
-<pad name="13" x="0.26" y="-2.54" drill="1.016" diameter="1.8796"/>
-<pad name="14" x="2.55" y="-2.54" drill="1.016" diameter="1.8796"/>
+<pad name="11" x="-4.32" y="-3.048" drill="1.016" diameter="1.8796"/>
+<pad name="12" x="-2.03" y="-3.048" drill="1.016" diameter="1.8796"/>
+<pad name="13" x="0.26" y="-3.048" drill="1.016" diameter="1.8796"/>
+<pad name="14" x="2.55" y="-3.048" drill="1.016" diameter="1.8796"/>
 <pad name="G1" x="-12.5" y="-5.08" drill="3.302" diameter="5.08"/>
 <pad name="G2" x="12.5" y="-5.08" drill="3.302" diameter="5.08"/>
 <text x="-0.795" y="-1.19" size="0.4064" layer="25" ratio="10">&gt;NAME</text>
 <text x="-0.69" y="-0.395" size="0.4064" layer="27" ratio="10">&gt;VALUE</text>
 <pad name="6" x="-5.46" y="-5.08" drill="1.016" diameter="1.8796"/>
-<pad name="15" x="4.84" y="-2.54" drill="1.016" diameter="1.8796"/>
-<pad name="1" x="-4.32" y="-7.62" drill="1.016" diameter="1.8796"/>
-<pad name="2" x="-2.03" y="-7.62" drill="1.016" diameter="1.8796"/>
-<pad name="3" x="0.26" y="-7.62" drill="1.016" diameter="1.8796"/>
-<pad name="4" x="2.55" y="-7.62" drill="1.016" diameter="1.8796"/>
-<pad name="5" x="4.84" y="-7.62" drill="1.016" diameter="1.8796"/>
+<pad name="15" x="4.84" y="-3.048" drill="1.016" diameter="1.8796"/>
+<pad name="1" x="-4.32" y="-7.112" drill="1.016" diameter="1.8796"/>
+<pad name="2" x="-2.03" y="-7.112" drill="1.016" diameter="1.8796"/>
+<pad name="3" x="0.26" y="-7.112" drill="1.016" diameter="1.8796"/>
+<pad name="4" x="2.55" y="-7.112" drill="1.016" diameter="1.8796"/>
+<pad name="5" x="4.84" y="-7.112" drill="1.016" diameter="1.8796"/>
 </package>
 <package name="2X3">
 <wire x1="-1.27" y1="-0.635" x2="-0.635" y2="-1.27" width="0.2032" layer="21"/>
