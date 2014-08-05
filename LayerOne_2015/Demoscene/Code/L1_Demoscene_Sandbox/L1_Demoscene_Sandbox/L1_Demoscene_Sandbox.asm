@@ -45,52 +45,76 @@
 ; .include m88PAdef.inc  
 ;
 
+.equ clockmhz = 20		; CPU frequency is 20Mhz
+.equ f_cpu = 20000000
 
 start: 
-	;ldi r17, 0xF6 
-	;out DDRD, r17 
-
-	ldi r17, 0xF6 
+	ldi r17, 0x00	; PB0 and PB4 are set to outputs, other PORTB pins are set to inputs
 	out DDRB, r17 
 
-	;ldi r16, 0xFF
-	;out PORTD, r16 
-
-	ldi r16, 0xFF
+	ldi r16, 0xFF	; Set all PORTB outputs high, and inputs to pull-up
 	out PORTB, r16
-loop:  
-	;in r16, PORTD
-	;dec r16
-	;out PORTD, r16 
 
-	in r16, PORTB
+	ldi r17, 0xF6	; Audio DAC - PD7, PD6, PD5, PD4, PD2, and PD1 are set to outputs
+	out DDRD, r17   ; PD0 and PD3 pins are set to inputs
+
+	ldi r16, 0x09	; Set all PORTD outputs low, and inputs to pull-up
+	out PORTD, r16
+
+	ldi r16, 0x00
+
+sawup:  
+	rcall audio_playbyte
+	inc r16
+	rcall delay_1ms	
+	brcc sawup
+
+sawdown:	
+	rcall audio_playbyte
 	dec r16
-	out PORTB, r16 
-	
-	rcall Delay_20ms
+	rcall delay_1ms	
+	brcc sawdown
+	rjmp sawup
 
-	rjmp loop
+delay_1ms:                                                        
+	ldi     R27,byte3(clockmhz * 1000 * 5 / 5)	; Waste clock cycles 
+	ldi     R26,high(clockmhz * 1000 * 5 / 5)	; in a clever way
+	ldi     R25,low(clockmhz * 1000 * 5 / 5)
 
-Delay_Sound:                                                        
-	ldi     R18,byte3(2 * 1000 * 20 / 5)
-	ldi     R17,high(2 * 1000 * 20 / 5)
-	ldi     R16,low(2 * 1000 * 20 / 5)
-
-	subi    R16,1
-	sbci    R17,0
-	sbci    R18,0
+	subi    R25,1
+	sbci    R26,0
+	sbci    R27,0
 	brcc    pc-3
 
 	ret
 
-Delay_20ms:                                                        
-	ldi     R18,byte3(20000000 * 1000 * 20 / 5)
-	ldi     R17,high(20000000 * 1000 * 20 / 5)
-	ldi     R16,low(20000000 * 1000 * 20 / 5)
+audio_playbyte:
+	; This subroute takes the byte in r16 and correctly maps 
+	; it to PORTD which is connected to the DAC R2R
+	; Is this really inefficient code? Yep!
+	ldi r18, 0x00
 
-	subi    R16,1
-	sbci    R17,0
-	sbci    R18,0
-	brcc    pc-3
+	mov r17, r16
+	ldi r22, 0x01
+	and r17, r22
+	lsl r17
+	lsl r17
+	or  r18, r17
+
+	mov r17, r16
+	ldi r22, 0x02
+	and r17, r22
+	or  r18, r17
+
+	mov r17, r16
+	ldi r22, 0x3C
+	and r17, r22
+	lsl r17
+	lsl r17
+	or  r18, r17
+
+	ldi r22, 0x09
+	or r18, r22
+	out PORTD, r18
 
 	ret

@@ -51,7 +51,7 @@
       <ToolName>AVR Dragon</ToolName>
     </com_atmel_avrdbg_tool_avrdragon>
     <avrtoolinterface>ISP</avrtoolinterface>
-    <preserveEEPROM>False</preserveEEPROM>
+    <preserveEEPROM>True</preserveEEPROM>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <ToolchainSettings>
@@ -69,7 +69,13 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="L1_Demoscene_Blink.asm">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="L1_Demoscene_Sandbox.asm">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="L1_Demoscene_Sound_Saw.asm">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
