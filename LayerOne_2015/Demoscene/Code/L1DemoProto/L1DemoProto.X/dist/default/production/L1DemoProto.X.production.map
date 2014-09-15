@@ -1,4 +1,4 @@
-Microchip Technology Inc, v†Å8
+Microchip Technology Inc, vòÅ+
 
 Tool Name:
   c:\program files (x86)\microchip\xc16\v1.21\bin\bin\..\bin/elf-ld.exe
@@ -59,17 +59,18 @@ section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200                0xd0           0x138  (312)
 .text                        0x2d0                0xfc           0x17a  (378)
-.dinit                       0x3cc                 0x2             0x3  (3)
+.dinit                       0x3cc                0x14            0x1e  (30)
 
-                     Total program memory used (bytes):          0x2b5  (693) <1%
+                     Total program memory used (bytes):          0x2d0  (720) <1%
 
 
 Data Memory  [Origin = 0x800, Length = 0x18000]
 
 section                    address      alignment gaps    total length  (dec)
 -------                    -------      --------------    -------------------
+.ndata                       0x800                   0            0x10  (16)
 
-                        Total data memory used (bytes):              0  (0) 
+                        Total data memory used (bytes):           0x10  (16) <1%
 
 
 Dynamic Memory Usage
@@ -77,10 +78,32 @@ Dynamic Memory Usage
 region                     address                      maximum length  (dec)
 ------                     -------                      ---------------------
 heap                             0                                   0  (0)
-stack                        0x800                              0x7800  (30720)
+stack                        0x810                              0x77f0  (30704)
 
-                        Maximum dynamic memory (bytes):         0x7800  (30720)
+                        Maximum dynamic memory (bytes):         0x77f0  (30704)
 
+
+External Symbols in Data Memory (by address):
+
+                    0x0800                  _HOR_RES
+                    0x0802                  _VER_RES
+                    0x0804                  _HOR_FRONT_PORCH
+                    0x0806                  _HOR_BACK_PORCH
+                    0x0808                  _HOR_PULSE_WIDTH
+                    0x080a                  _VER_FRONT_PORCH
+                    0x080c                  _VER_BACK_PORCH
+                    0x080e                  _VER_PULSE_WIDTH
+
+External Symbols in Data Memory (by name):
+
+                    0x0806                  _HOR_BACK_PORCH
+                    0x0804                  _HOR_FRONT_PORCH
+                    0x0808                  _HOR_PULSE_WIDTH
+                    0x0800                  _HOR_RES
+                    0x080c                  _VER_BACK_PORCH
+                    0x080a                  _VER_FRONT_PORCH
+                    0x080e                  _VER_PULSE_WIDTH
+                    0x0802                  _VER_RES
 
 External Symbols in Program Memory (by address):
 
@@ -178,14 +201,14 @@ __CONFIG1         0x02abfe          0x2
 .comment
  *(.comment)
 
-.debug_info       0x000000       0x19b2
+.debug_info       0x000000       0x1a90
  *(.debug_info)
- .debug_info      0x000000       0x19b2 build/default/production/main.o
+ .debug_info      0x000000       0x1a90 build/default/production/main.o
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev     0x000000         0xe0
+.debug_abbrev     0x000000         0xf1
  *(.debug_abbrev)
- .debug_abbrev    0x000000         0xe0 build/default/production/main.o
+ .debug_abbrev    0x000000         0xf1 build/default/production/main.o
 
 .debug_line       0x000000        0x218
  *(.debug_line)
@@ -206,10 +229,10 @@ __CONFIG1         0x02abfe          0x2
  *(.debug_macinfo)
 
 .debug_pubnames
-                  0x000000         0x49
+                  0x000000         0xd7
  *(.debug_pubnames)
  .debug_pubnames
-                  0x000000         0x49 build/default/production/main.o
+                  0x000000         0xd7 build/default/production/main.o
 
 .debug_ranges
  *(.debug_ranges)
@@ -1735,10 +1758,21 @@ __c30_signature
  __c30_signature
                   0x00020c          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libpic30-elf.a(data_init_extended.o)
 
+.ndata              0x0800         0x10
+ .ndata             0x0800         0x10 build/default/production/main.o
+                    0x0800                  _HOR_RES
+                    0x0802                  _VER_RES
+                    0x0804                  _HOR_FRONT_PORCH
+                    0x0806                  _HOR_BACK_PORCH
+                    0x0808                  _HOR_PULSE_WIDTH
+                    0x080a                  _VER_FRONT_PORCH
+                    0x080c                  _VER_BACK_PORCH
+                    0x080e                  _VER_PULSE_WIDTH
+
 .text             0x0002d0         0xfc
  .text            0x0002d0         0xfc build/default/production/main.o
                   0x0002d0                  _config_graphics
                   0x000398                  _main
 
-.dinit            0x0003cc          0x2
- .dinit           0x0003cc          0x2 data_init
+.dinit            0x0003cc         0x14
+ .dinit           0x0003cc         0x14 data_init
