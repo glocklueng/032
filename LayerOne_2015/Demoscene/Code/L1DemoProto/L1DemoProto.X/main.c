@@ -15,14 +15,14 @@
 _CONFIG1(FWDTEN_OFF)
 _CONFIG2(FNOSC_FRCPLL & PLL96MHZ_ON & PLLDIV_DIV2)
 
-#define HOR_RES 640
-#define VER_RES 480
-#define HOR_FRONT_PORCH 20
-#define HOR_BACK_PORCH 51
-#define HOR_PULSE_WIDTH  96
-#define VER_FRONT_PORCH 12
-#define VER_BACK_PORCH 36
-#define VER_PULSE_WIDTH 2
+#define HOR_RES 320           //320      //640
+#define VER_RES 240           //240      //480
+#define HOR_FRONT_PORCH 10    //10       //20
+#define HOR_BACK_PORCH 22     //22       //51
+#define HOR_PULSE_WIDTH  46   //46       //96
+#define VER_FRONT_PORCH 6     //6        //12
+#define VER_BACK_PORCH 9      //9        //36
+#define VER_PULSE_WIDTH 1     //1        //2
 
 void config_graphics(void) {
     
@@ -70,8 +70,8 @@ void config_graphics(void) {
     
     CLKDIVbits.RCDIV = 0;
 
-    CLKDIVbits.G1CLKSEL = 1;    /* Use 96Mhz Clk */
-    CLKDIV2bits.GCLKDIV = 11;   /* 56 = divide by 15 = 6.5Mhz */
+    CLKDIVbits.G1CLKSEL = 1;                         /* Use 96Mhz Clk */
+    CLKDIV2bits.GCLKDIV = 56;  //56      //11        /* 56 = divide by 15 = 6.5Mhz */
 
     G1CON2bits.DPMODE = 1;      /* TFT */
     G1DBENbits.GDBEN = 0xFFFF;
