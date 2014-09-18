@@ -195,7 +195,7 @@ int main(void) {
                 }
                 else if(y < (uint32_t)42955)
                 {
-                   if((y-6844) % 332)
+                   if((y-6844) % 6)
                    {
                        GFXDisplayBuffer[(unsigned long)(y)] = 0x00;
                    }
