@@ -1,4 +1,4 @@
-Microchip Technology Inc, v∏Å>
+Microchip Technology Inc, v∏Åõ
 
 Tool Name:
   c:\program files (x86)\microchip\xc16\v1.21\bin\bin\..\bin/elf-ld.exe
@@ -60,11 +60,11 @@ Program Memory  [Origin = 0x200, Length = 0x2a9f6]
 section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200                0xd0           0x138  (312)
-.text                        0x2d0              0x3030          0x4848  (18504)
-.init.delay32               0x3300                0x1c            0x2a  (42)
-.dinit                      0x331c                 0x8             0xc  (12)
+.text                        0x2d0              0x5340          0x7ce0  (31968)
+.init.delay32               0x5610                0x1c            0x2a  (42)
+.dinit                      0x562c                 0x8             0xc  (12)
 
-                     Total program memory used (bytes):         0x49b6  (18870) 7%
+                     Total program memory used (bytes):         0x7e4e  (32334) 12%
 
 
 Data Memory  [Origin = 0x800, Length = 0x18000]
@@ -103,12 +103,12 @@ External Symbols in Program Memory (by address):
                   0x0002cc                  __DefaultInterrupt
                   0x0002d0                  _config_graphics
                   0x000394                  _main
-                  0x003300                  ___delay32
+                  0x005610                  ___delay32
 
 External Symbols in Program Memory (by name):
 
                   0x0002cc                  __DefaultInterrupt
-                  0x003300                  ___delay32
+                  0x005610                  ___delay32
                   0x000232                  __data_init
                   0x000232                  __data_init_extended
                   0x000226                  __psv_init
@@ -201,9 +201,9 @@ __CONFIG1         0x02abfe          0x2
  *(.debug_abbrev)
  .debug_abbrev    0x000000        0x132 build/default/production/main.o
 
-.debug_line       0x000000        0x8b9
+.debug_line       0x000000        0xcc4
  *(.debug_line)
- .debug_line      0x000000        0x8b9 build/default/production/main.o
+ .debug_line      0x000000        0xcc4 build/default/production/main.o
 
 .debug_frame      0x000000         0x34
  *(.debug_frame)
@@ -1755,14 +1755,14 @@ eds1b               0x1000      0x16030
  eds1b              0x1000      0x16030 build/default/production/main.o
                     0x1000                  _GFXDisplayBuffer
 
-.text             0x0002d0       0x3030
- .text            0x0002d0       0x3030 build/default/production/main.o
+.text             0x0002d0       0x5340
+ .text            0x0002d0       0x5340 build/default/production/main.o
                   0x0002d0                  _config_graphics
                   0x000394                  _main
 
-.init.delay32     0x003300         0x1c
- .init.delay32    0x003300         0x1c c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libpic30-elf.a(delay32.eo)
-                  0x003300                  ___delay32
+.init.delay32     0x005610         0x1c
+ .init.delay32    0x005610         0x1c c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libpic30-elf.a(delay32.eo)
+                  0x005610                  ___delay32
 
-.dinit            0x00331c          0x8
- .dinit           0x00331c          0x8 data_init
+.dinit            0x00562c          0x8
+ .dinit           0x00562c          0x8 data_init
