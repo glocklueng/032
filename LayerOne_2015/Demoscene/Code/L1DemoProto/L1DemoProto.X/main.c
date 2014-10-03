@@ -15,14 +15,14 @@
 _CONFIG1(FWDTEN_OFF)
 _CONFIG2(FNOSC_FRCPLL & PLL96MHZ_ON & PLLDIV_DIV2)
 
-#define HOR_RES 192           //320      //640
-#define VER_RES 480           //240      //480
-#define HOR_FRONT_PORCH 355   //10       //20
-#define HOR_BACK_PORCH 51     //22       //51
-#define HOR_PULSE_WIDTH  80   //46       //96
-#define VER_FRONT_PORCH 12    //6        //12
-#define VER_BACK_PORCH 21     //9        //36
-#define VER_PULSE_WIDTH 2     //1        //2
+#define HOR_RES 320
+#define VER_RES 480
+#define HOR_FRONT_PORCH 10
+#define HOR_BACK_PORCH 25
+#define HOR_PULSE_WIDTH  48
+#define VER_FRONT_PORCH 12
+#define VER_BACK_PORCH 36
+#define VER_PULSE_WIDTH 2
 
 #define GFX_DISPLAY_PIXEL_COUNT    90160
 
@@ -41,52 +41,10 @@ __eds__ unsigned char  __attribute__((far,section("eds1b"),space(eds) ,address(0
 
 void config_graphics(void) {
     
-    /*
-    CLKDIVbits.G1CLKSEL = 1;    // Use 96Mhz Clk
-    CLKDIV2bits.GCLKDIV = 56;  // 16 for 30Hz, 6 for 60Hz
-
-    CLKDIVbits.PLLEN = 1;
-
-    G1CON2bits.DPMODE = 1;      // TFT
-    G1DBENbits.GDBEN = 0xFFFF;
-    G1DPWbits.DPW = 320;
-    G1DPHbits.DPH = 240;
-    G1DPWTbits.DPWT = 99 + 320;
-    G1DPHTbits.DPHT = 22 + 240;
-    G1CON3bits.DPCLKPOL = 1;    // Sample on falling edge
-    G1CON3bits.DPENOE = 1;
-    G1CON3bits.DPENPOL = 1;
-    
-    G1CON3bits.DPVSOE = 1;      
-    G1CON3bits.DPHSOE = 1;     
-    G1CON3bits.DPVSPOL = 0;
-    G1CON3bits.DPHSPOL = 0;
-    G1ACTDAbits.ACTLINE = 22;    // ver sum
-    G1ACTDAbits.ACTPIX = 88;    // hor sum
-    G1VSYNCbits.VSST = 4;   // front
-    G1HSYNCbits.HSST = 20;
-    G1VSYNCbits.VSLEN = 3;  //pulse
-    G1HSYNCbits.HSLEN = 30;
-    G1DBLCONbits.VENST = 4;
-    G1DBLCONbits.HENST = 20;
-
-    G1DPADRL = (unsigned long)(0x0000) & 0xFFFF;
-    G1DPADRH = 0;
-
-    G1CON2bits.DPBPP = 3;     // 8bpp mode
-    G1CON1bits.PUBPP = 3;
-
-    G1CON3bits.DPPINOE = 1;
-    
-    G1CON3bits.DPPWROE = 1;
-
-    G1CON2bits.DPTEST = 2;
-    */
-    
     CLKDIVbits.RCDIV = 0;
 
     CLKDIVbits.G1CLKSEL = 1;                         /* Use 96Mhz Clk */
-    CLKDIV2bits.GCLKDIV = 11;  //56      //11        /* 56 = divide by 15 = 6.5Mhz */
+    CLKDIV2bits.GCLKDIV = 26;  //56      //11        /* 56 = divide by 15 = 6.5Mhz */
 
     G1CON2bits.DPMODE = 1;      /* TFT */
     G1DBENbits.GDBEN = 0xFFFF;
@@ -113,8 +71,8 @@ void config_graphics(void) {
     G1DPADRL = (unsigned long)(GFXDisplayBuffer) & 0xFFFF;
     G1DPADRH = 0;
 
-    G1CON2bits.DPBPP = 3;     /* 8bpp mode */
-    G1CON1bits.PUBPP = 3;
+    G1CON2bits.DPBPP = 2;     /* 8bpp mode */
+    G1CON1bits.PUBPP = 2;
 
     G1CON3bits.DPPINOE = 1;
     G1CON3bits.DPPOWER = 1;
@@ -167,15 +125,8 @@ int main(void) {
     while (1) {
         y=0;
 
-        for (y = 6528; y < 43008; y++)
+        for (y = 7928; y < 86168; y = y + 319)
         {
-            y = y + 191;
-                   //if(((y-6528)/192) % 4)
-                   //{
-                   //    GFXDisplayBuffer[(unsigned long)(y)] = 0x00;
-                   // }
-                   //else
-                   //{
 
                    GFXDisplayBuffer[y+1] = (unsigned char)x;
                    GFXDisplayBuffer[y+2] = (unsigned char)x;
@@ -339,6 +290,7 @@ int main(void) {
                    GFXDisplayBuffer[y+157] = (unsigned char)x;
                    GFXDisplayBuffer[y+158] = (unsigned char)x;
                    GFXDisplayBuffer[y+159] = (unsigned char)x;
+
                    GFXDisplayBuffer[y+160] = (unsigned char)x;
                    GFXDisplayBuffer[y+161] = (unsigned char)x;
                    GFXDisplayBuffer[y+162] = (unsigned char)x;
@@ -371,12 +323,144 @@ int main(void) {
                    GFXDisplayBuffer[y+189] = (unsigned char)x;
                    GFXDisplayBuffer[y+190] = (unsigned char)x;
                    GFXDisplayBuffer[y+191] = (unsigned char)x;
+
+                   GFXDisplayBuffer[y+192] = (unsigned char)x;
+                   GFXDisplayBuffer[y+193] = (unsigned char)x;
+                   GFXDisplayBuffer[y+194] = (unsigned char)x;
+                   GFXDisplayBuffer[y+195] = (unsigned char)x;
+                   GFXDisplayBuffer[y+196] = (unsigned char)x;
+                   GFXDisplayBuffer[y+197] = (unsigned char)x;
+                   GFXDisplayBuffer[y+198] = (unsigned char)x;
+                   GFXDisplayBuffer[y+199] = (unsigned char)x;
+                   GFXDisplayBuffer[y+200] = (unsigned char)x;
+                   GFXDisplayBuffer[y+201] = (unsigned char)x;
+                   GFXDisplayBuffer[y+202] = (unsigned char)x;
+                   GFXDisplayBuffer[y+203] = (unsigned char)x;
+                   GFXDisplayBuffer[y+204] = (unsigned char)x;
+                   GFXDisplayBuffer[y+205] = (unsigned char)x;
+                   GFXDisplayBuffer[y+206] = (unsigned char)x;
+                   GFXDisplayBuffer[y+207] = (unsigned char)x;
+                   GFXDisplayBuffer[y+208] = (unsigned char)x;
+                   GFXDisplayBuffer[y+209] = (unsigned char)x;
+                   GFXDisplayBuffer[y+210] = (unsigned char)x;
+                   GFXDisplayBuffer[y+211] = (unsigned char)x;
+                   GFXDisplayBuffer[y+211] = (unsigned char)x;
+                   GFXDisplayBuffer[y+212] = (unsigned char)x;
+                   GFXDisplayBuffer[y+213] = (unsigned char)x;
+                   GFXDisplayBuffer[y+214] = (unsigned char)x;
+                   GFXDisplayBuffer[y+215] = (unsigned char)x;
+                   GFXDisplayBuffer[y+216] = (unsigned char)x;
+                   GFXDisplayBuffer[y+217] = (unsigned char)x;
+                   GFXDisplayBuffer[y+218] = (unsigned char)x;
+                   GFXDisplayBuffer[y+219] = (unsigned char)x;
+                   GFXDisplayBuffer[y+220] = (unsigned char)x;
+                   GFXDisplayBuffer[y+221] = (unsigned char)x;
+                   GFXDisplayBuffer[y+222] = (unsigned char)x;
+                   GFXDisplayBuffer[y+223] = (unsigned char)x;
+                   GFXDisplayBuffer[y+224] = (unsigned char)x;
+                   GFXDisplayBuffer[y+225] = (unsigned char)x;
+                   GFXDisplayBuffer[y+226] = (unsigned char)x;
+                   GFXDisplayBuffer[y+227] = (unsigned char)x;
+                   GFXDisplayBuffer[y+228] = (unsigned char)x;
+                   GFXDisplayBuffer[y+229] = (unsigned char)x;
+                   GFXDisplayBuffer[y+230] = (unsigned char)x;
+                   GFXDisplayBuffer[y+231] = (unsigned char)x;
+                   GFXDisplayBuffer[y+232] = (unsigned char)x;
+                   GFXDisplayBuffer[y+233] = (unsigned char)x;
+                   GFXDisplayBuffer[y+234] = (unsigned char)x;
+                   GFXDisplayBuffer[y+235] = (unsigned char)x;
+                   GFXDisplayBuffer[y+236] = (unsigned char)x;
+                   GFXDisplayBuffer[y+237] = (unsigned char)x;
+                   GFXDisplayBuffer[y+238] = (unsigned char)x;
+                   GFXDisplayBuffer[y+239] = (unsigned char)x;
+                   GFXDisplayBuffer[y+240] = (unsigned char)x;
+                   GFXDisplayBuffer[y+241] = (unsigned char)x;
+                   GFXDisplayBuffer[y+242] = (unsigned char)x;
+                   GFXDisplayBuffer[y+243] = (unsigned char)x;
+                   GFXDisplayBuffer[y+244] = (unsigned char)x;
+                   GFXDisplayBuffer[y+245] = (unsigned char)x;
+                   GFXDisplayBuffer[y+246] = (unsigned char)x;
+                   GFXDisplayBuffer[y+247] = (unsigned char)x;
+                   GFXDisplayBuffer[y+248] = (unsigned char)x;
+                   GFXDisplayBuffer[y+249] = (unsigned char)x;
+                   GFXDisplayBuffer[y+250] = (unsigned char)x;
+                   GFXDisplayBuffer[y+251] = (unsigned char)x;
+                   GFXDisplayBuffer[y+252] = (unsigned char)x;
+                   GFXDisplayBuffer[y+253] = (unsigned char)x;
+                   GFXDisplayBuffer[y+254] = (unsigned char)x;
+                   GFXDisplayBuffer[y+255] = (unsigned char)x;
+                   GFXDisplayBuffer[y+256] = (unsigned char)x;
+                   GFXDisplayBuffer[y+257] = (unsigned char)x;
+                   GFXDisplayBuffer[y+258] = (unsigned char)x;
+                   GFXDisplayBuffer[y+259] = (unsigned char)x;
+                   GFXDisplayBuffer[y+260] = (unsigned char)x;
+                   GFXDisplayBuffer[y+261] = (unsigned char)x;
+                   GFXDisplayBuffer[y+262] = (unsigned char)x;
+                   GFXDisplayBuffer[y+263] = (unsigned char)x;
+                   GFXDisplayBuffer[y+264] = (unsigned char)x;
+                   GFXDisplayBuffer[y+265] = (unsigned char)x;
+                   GFXDisplayBuffer[y+266] = (unsigned char)x;
+                   GFXDisplayBuffer[y+267] = (unsigned char)x;
+                   GFXDisplayBuffer[y+268] = (unsigned char)x;
+                   GFXDisplayBuffer[y+269] = (unsigned char)x;
+                   GFXDisplayBuffer[y+270] = (unsigned char)x;
+                   GFXDisplayBuffer[y+271] = (unsigned char)x;
+                   GFXDisplayBuffer[y+272] = (unsigned char)x;
+                   GFXDisplayBuffer[y+273] = (unsigned char)x;
+                   GFXDisplayBuffer[y+274] = (unsigned char)x;
+                   GFXDisplayBuffer[y+275] = (unsigned char)x;
+                   GFXDisplayBuffer[y+276] = (unsigned char)x;
+                   GFXDisplayBuffer[y+277] = (unsigned char)x;
+                   GFXDisplayBuffer[y+278] = (unsigned char)x;
+                   GFXDisplayBuffer[y+279] = (unsigned char)x;
+                   GFXDisplayBuffer[y+280] = (unsigned char)x;
+                   GFXDisplayBuffer[y+281] = (unsigned char)x;
+                   GFXDisplayBuffer[y+282] = (unsigned char)x;
+                   GFXDisplayBuffer[y+283] = (unsigned char)x;
+                   GFXDisplayBuffer[y+284] = (unsigned char)x;
+                   GFXDisplayBuffer[y+285] = (unsigned char)x;
+                   GFXDisplayBuffer[y+286] = (unsigned char)x;
+                   GFXDisplayBuffer[y+287] = (unsigned char)x;
+                   GFXDisplayBuffer[y+288] = (unsigned char)x;
+                   GFXDisplayBuffer[y+289] = (unsigned char)x;
+                   GFXDisplayBuffer[y+290] = (unsigned char)x;
+                   GFXDisplayBuffer[y+291] = (unsigned char)x;
+                   GFXDisplayBuffer[y+292] = (unsigned char)x;
+                   GFXDisplayBuffer[y+293] = (unsigned char)x;
+                   GFXDisplayBuffer[y+294] = (unsigned char)x;
+                   GFXDisplayBuffer[y+295] = (unsigned char)x;
+                   GFXDisplayBuffer[y+296] = (unsigned char)x;
+                   GFXDisplayBuffer[y+297] = (unsigned char)x;
+                   GFXDisplayBuffer[y+298] = (unsigned char)x;
+                   GFXDisplayBuffer[y+299] = (unsigned char)x;
+                   GFXDisplayBuffer[y+300] = (unsigned char)x;
+                   GFXDisplayBuffer[y+301] = (unsigned char)x;
+                   GFXDisplayBuffer[y+302] = (unsigned char)x;
+                   GFXDisplayBuffer[y+303] = (unsigned char)x;
+                   GFXDisplayBuffer[y+304] = (unsigned char)x;
+                   GFXDisplayBuffer[y+305] = (unsigned char)x;
+                   GFXDisplayBuffer[y+306] = (unsigned char)x;
+                   GFXDisplayBuffer[y+307] = (unsigned char)x;
+                   GFXDisplayBuffer[y+308] = (unsigned char)x;
+                   GFXDisplayBuffer[y+309] = (unsigned char)x;
+                   GFXDisplayBuffer[y+310] = (unsigned char)x;
+                   GFXDisplayBuffer[y+311] = (unsigned char)x;
+                   GFXDisplayBuffer[y+311] = (unsigned char)x;
+                   GFXDisplayBuffer[y+312] = (unsigned char)x;
+                   GFXDisplayBuffer[y+313] = (unsigned char)x;
+                   GFXDisplayBuffer[y+314] = (unsigned char)x;
+                   GFXDisplayBuffer[y+315] = (unsigned char)x;
+                   GFXDisplayBuffer[y+316] = (unsigned char)x;
+                   GFXDisplayBuffer[y+317] = (unsigned char)x;
+                   GFXDisplayBuffer[y+318] = (unsigned char)x;
+                   GFXDisplayBuffer[y+319] = (unsigned char)x;
+                   
                    //}
                    __delay_ms(1);
         }
 
         __delay_ms(10);
-        x++;
+        x = x + 257;
         //G1CON2bits.DPTEST = 2;
     }
 
