@@ -75,12 +75,20 @@
 <layer number="100" name="Muster" color="7" fill="1" visible="no" active="yes"/>
 <layer number="101" name="Patch_Top" color="7" fill="1" visible="no" active="yes"/>
 <layer number="102" name="Vscore" color="7" fill="1" visible="no" active="yes"/>
+<layer number="103" name="tMap" color="7" fill="1" visible="no" active="yes"/>
 <layer number="104" name="Name" color="7" fill="1" visible="no" active="yes"/>
+<layer number="105" name="tPlate" color="7" fill="1" visible="no" active="yes"/>
+<layer number="106" name="bPlate" color="7" fill="1" visible="no" active="yes"/>
+<layer number="107" name="Crop" color="7" fill="1" visible="no" active="yes"/>
+<layer number="108" name="tplace-old" color="10" fill="1" visible="no" active="yes"/>
+<layer number="109" name="ref-old" color="11" fill="1" visible="no" active="yes"/>
 <layer number="116" name="Patch_BOT" color="7" fill="1" visible="no" active="yes"/>
 <layer number="121" name="_tsilk" color="7" fill="1" visible="no" active="yes"/>
 <layer number="122" name="_bsilk" color="7" fill="1" visible="no" active="yes"/>
+<layer number="125" name="_tNames" color="7" fill="1" visible="no" active="yes"/>
 <layer number="144" name="Drill_legend" color="7" fill="1" visible="no" active="yes"/>
 <layer number="151" name="HeatSink" color="7" fill="1" visible="no" active="yes"/>
+<layer number="199" name="Contour" color="7" fill="1" visible="no" active="yes"/>
 <layer number="200" name="200bmp" color="7" fill="1" visible="no" active="yes"/>
 <layer number="201" name="201bmp" color="7" fill="1" visible="no" active="yes"/>
 <layer number="202" name="202bmp" color="7" fill="1" visible="no" active="yes"/>
@@ -153,13 +161,6 @@
 <text x="-1.1176" y="1.3716" size="2.032" layer="25" font="vector" ratio="13" rot="SR0">&gt;NAME</text>
 <text x="-1.1176" y="1.1176" size="2.032" layer="27" font="vector" ratio="13" rot="SR0">&gt;VALUE</text>
 </package>
-<package name="PORT_1PIN_DECAL_1PRIMARY">
-<description>Original name &lt;b&gt;PORT_1PIN_DECAL&lt;/b&gt;&lt;p&gt;</description>
-<pad name="1" x="-0.0762" y="-1.27" drill="0.6096" diameter="0.9144"/>
-<circle x="-0.0762" y="-1.27" radius="0.2794" width="0.1524" layer="21"/>
-<text x="-0.635" y="0.254" size="2.032" layer="25" font="vector" ratio="13" rot="SR0">&gt;NAME</text>
-<text x="-0.635" y="0" size="2.032" layer="27" font="vector" ratio="13" rot="SR0">&gt;VALUE</text>
-</package>
 </packages>
 </library>
 <library name="vocore_dock">
@@ -180,7 +181,7 @@ by exp-project-lbr.ulp</description>
 <pad name="6" x="6.0198" y="11.049" drill="0.9398" diameter="1.1938" shape="long" rot="R90"/>
 <pad name="7" x="3.5052" y="5.715" drill="1.905" diameter="2.286" shape="long"/>
 <text x="-0.1016" y="14.3764" size="2.032" layer="25" font="vector" ratio="13" rot="SR0">&gt;NAME</text>
-<text x="-0.1016" y="14.1224" size="2.032" layer="27" font="vector" ratio="13" rot="SR0">&gt;VALUE</text>
+<text x="-0.1016" y="-2.3876" size="2.032" layer="27" font="vector" ratio="13" rot="SR0">&gt;VALUE</text>
 </package>
 <package name="RJ45ALED_1PRIMARY">
 <description>Original name &lt;b&gt;RJ45ALED&lt;/b&gt;&lt;p&gt;</description>
@@ -205,7 +206,7 @@ by exp-project-lbr.ulp</description>
 <pad name="15" x="0.635" y="14.478" drill="1.016" diameter="1.3716" shape="long" rot="R90"/>
 <pad name="16" x="15.367" y="14.478" drill="1.016" diameter="1.3716" shape="long" rot="R90"/>
 <text x="-0.127" y="21.59" size="2.032" layer="25" font="vector" ratio="13" rot="SR0">&gt;NAME</text>
-<text x="-0.127" y="21.336" size="2.032" layer="27" font="vector" ratio="13" rot="SR0">&gt;VALUE</text>
+<text x="6.223" y="-2.794" size="2.032" layer="27" font="vector" ratio="13" rot="SR0">&gt;VALUE</text>
 </package>
 <package name="USB_MICRO_A_1PRIMARY">
 <description>Original name &lt;b&gt;USB_MICRO_A&lt;/b&gt;&lt;p&gt;</description>
@@ -223,10 +224,15 @@ by exp-project-lbr.ulp</description>
 <pad name="8" x="0.3048" y="-2.794" drill="0.9144" diameter="1.1684" shape="long" rot="R90"/>
 <pad name="9" x="7.3406" y="-2.7686" drill="0.9144" diameter="1.1684" shape="long" rot="R90"/>
 <text x="-0.3302" y="0.8128" size="2.032" layer="25" font="vector" ratio="13" rot="SR0">&gt;NAME</text>
-<text x="-0.3302" y="0.5588" size="2.032" layer="27" font="vector" ratio="13" rot="SR0">&gt;VALUE</text>
+<text x="-0.3302" y="-8.3312" size="2.032" layer="27" font="vector" ratio="13" rot="SR0">&gt;VALUE</text>
 </package>
 <package name="MICROSD_PADS_1PRIMARY">
-<description>Original name &lt;b&gt;MICROSD_PADS&lt;/b&gt;&lt;p&gt;</description>
+<description>Original name &lt;b&gt;MICROSD_PADS&lt;/b&gt;&lt;p&gt;
+
+http://www.molex.com/pdm_docs/sd/473093351_sd.pdf
+
+
+http://www.molex.com/webdocs/datasheets/pdf/en-us/0473093351_MEMORY_CARD_SOCKET.pdf</description>
 <wire x1="0" y1="-5.588" x2="11.4046" y2="-5.588" width="0.2032" layer="21"/>
 <wire x1="0" y1="-5.588" x2="0" y2="0" width="0.2032" layer="21"/>
 <wire x1="0" y1="0" x2="11.4046" y2="0" width="0.2032" layer="21"/>
@@ -242,7 +248,7 @@ by exp-project-lbr.ulp</description>
 <smd name="9" x="0.5334" y="-3.1496" dx="2.413" dy="0.9652" layer="1" rot="R90"/>
 <smd name="10" x="10.7696" y="-3.0734" dx="1.4478" dy="1.143" layer="1" rot="R90"/>
 <text x="-0.1016" y="0.3556" size="2.032" layer="25" font="vector" ratio="13" rot="SR0">&gt;NAME</text>
-<text x="-0.1016" y="0.1016" size="2.032" layer="27" font="vector" ratio="13" rot="SR0">&gt;VALUE</text>
+<text x="1.1684" y="-7.5184" size="2.032" layer="27" font="vector" ratio="13" rot="SR0">&gt;VALUE</text>
 </package>
 <package name="0402_L_1PRIMARY">
 <description>Original name &lt;b&gt;0402_L&lt;/b&gt;&lt;p&gt;</description>
@@ -253,14 +259,14 @@ by exp-project-lbr.ulp</description>
 <smd name="1" x="0" y="1.143" dx="1.0668" dy="0.5588" layer="1" rot="R90"/>
 <smd name="2" x="0" y="-0.1524" dx="1.016" dy="0.5588" layer="1" rot="R90"/>
 <text x="-0.4826" y="2.1336" size="2.032" layer="25" font="vector" ratio="13" rot="SR0">&gt;NAME</text>
-<text x="-0.4826" y="1.8796" size="2.032" layer="27" font="vector" ratio="13" rot="SR0">&gt;VALUE</text>
+<text x="0.7874" y="-1.9304" size="2.032" layer="27" font="vector" ratio="13" rot="SR0">&gt;VALUE</text>
 </package>
 <package name="PORT_1PIN_DECAL_1PRIMARY">
 <description>Original name &lt;b&gt;PORT_1PIN_DECAL&lt;/b&gt;&lt;p&gt;</description>
 <circle x="-0.0762" y="-1.27" radius="0.2794" width="0.1524" layer="21"/>
 <pad name="1" x="-0.0762" y="-1.27" drill="0.6096" diameter="0.9144"/>
 <text x="-0.635" y="0.254" size="2.032" layer="25" font="vector" ratio="13" rot="SR0">&gt;NAME</text>
-<text x="-0.635" y="0" size="2.032" layer="27" font="vector" ratio="13" rot="SR0">&gt;VALUE</text>
+<text x="0.635" y="-2.54" size="2.032" layer="27" font="vector" ratio="13" rot="SR0">&gt;VALUE</text>
 </package>
 </packages>
 </library>
@@ -462,79 +468,79 @@ design rules under a new name.</description>
 <attribute name="NAME" x="271.272" y="253.5682" size="0.423340625" layer="25" font="vector" ratio="6" rot="SR90"/>
 <attribute name="VALUE" x="263.9314" y="264.1092" size="0.423340625" layer="27" font="vector" ratio="6" rot="SR90" display="off"/>
 </element>
-<element name="PB04" library="vocore_dock" package="PORT_1PIN_DECAL_1PRIMARY" value="PORT_1PIN_DECAL" x="265.0744" y="238.252" smashed="yes">
+<element name="PB04" library="vocore_dock" package="PORT_1PIN_DECAL_1PRIMARY" value="PORT_1PIN" x="265.0744" y="238.252" smashed="yes">
 <attribute name="NAME" x="265.0744" y="238.252" size="2.032" layer="25" font="vector" ratio="13" rot="SR0" display="off"/>
 <attribute name="VALUE" x="265.0744" y="238.252" size="2.032" layer="27" font="vector" ratio="13" rot="SR0" display="off"/>
 </element>
-<element name="PB05" library="vocore_dock" package="PORT_1PIN_DECAL_1PRIMARY" value="PORT_1PIN_DECAL" x="263.8044" y="238.252" smashed="yes">
+<element name="PB05" library="vocore_dock" package="PORT_1PIN_DECAL_1PRIMARY" value="PORT_1PIN" x="263.8044" y="238.252" smashed="yes">
 <attribute name="NAME" x="263.8044" y="238.252" size="2.032" layer="25" font="vector" ratio="13" rot="SR0" display="off"/>
 <attribute name="VALUE" x="263.8044" y="238.252" size="2.032" layer="27" font="vector" ratio="13" rot="SR0" display="off"/>
 </element>
-<element name="PB06" library="vocore_dock" package="PORT_1PIN_DECAL_1PRIMARY" value="PORT_1PIN_DECAL" x="262.5852" y="238.252" smashed="yes">
+<element name="PB06" library="vocore_dock" package="PORT_1PIN_DECAL_1PRIMARY" value="PORT_1PIN" x="262.5852" y="238.252" smashed="yes">
 <attribute name="NAME" x="262.5852" y="238.252" size="2.032" layer="25" font="vector" ratio="13" rot="SR0" display="off"/>
 <attribute name="VALUE" x="262.5852" y="238.252" size="2.032" layer="27" font="vector" ratio="13" rot="SR0" display="off"/>
 </element>
-<element name="PB07" library="vocore_dock" package="PORT_1PIN_DECAL_1PRIMARY" value="PORT_1PIN_DECAL" x="261.2644" y="238.252" smashed="yes">
+<element name="PB07" library="vocore_dock" package="PORT_1PIN_DECAL_1PRIMARY" value="PORT_1PIN" x="261.2644" y="238.252" smashed="yes">
 <attribute name="NAME" x="261.2644" y="238.252" size="2.032" layer="25" font="vector" ratio="13" rot="SR0" display="off"/>
 <attribute name="VALUE" x="261.2644" y="238.252" size="2.032" layer="27" font="vector" ratio="13" rot="SR0" display="off"/>
 </element>
-<element name="PB12" library="vocore_dock" package="PORT_1PIN_DECAL_1PRIMARY" value="PORT_1PIN_DECAL" x="254.9144" y="238.252" smashed="yes">
+<element name="PB12" library="vocore_dock" package="PORT_1PIN_DECAL_1PRIMARY" value="PORT_1PIN" x="254.9144" y="238.252" smashed="yes">
 <attribute name="NAME" x="254.9144" y="238.252" size="2.032" layer="25" font="vector" ratio="13" rot="SR0" display="off"/>
 <attribute name="VALUE" x="254.9144" y="238.252" size="2.032" layer="27" font="vector" ratio="13" rot="SR0" display="off"/>
 </element>
-<element name="PB13" library="vocore_dock" package="PORT_1PIN_DECAL_1PRIMARY" value="PORT_1PIN_DECAL" x="253.6444" y="238.252" smashed="yes">
+<element name="PB13" library="vocore_dock" package="PORT_1PIN_DECAL_1PRIMARY" value="PORT_1PIN" x="253.6444" y="238.252" smashed="yes">
 <attribute name="NAME" x="253.6444" y="238.252" size="2.032" layer="25" font="vector" ratio="13" rot="SR0" display="off"/>
 <attribute name="VALUE" x="253.6444" y="238.252" size="2.032" layer="27" font="vector" ratio="13" rot="SR0" display="off"/>
 </element>
-<element name="PB14" library="vocore_dock" package="PORT_1PIN_DECAL_1PRIMARY" value="PORT_1PIN_DECAL" x="252.3744" y="238.252" smashed="yes">
+<element name="PB14" library="vocore_dock" package="PORT_1PIN_DECAL_1PRIMARY" value="PORT_1PIN" x="252.3744" y="238.252" smashed="yes">
 <attribute name="NAME" x="252.3744" y="238.252" size="2.032" layer="25" font="vector" ratio="13" rot="SR0" display="off"/>
 <attribute name="VALUE" x="252.3744" y="238.252" size="2.032" layer="27" font="vector" ratio="13" rot="SR0" display="off"/>
 </element>
-<element name="PB15" library="vocore_dock" package="PORT_1PIN_DECAL_1PRIMARY" value="PORT_1PIN_DECAL" x="251.1044" y="238.252" smashed="yes">
+<element name="PB15" library="vocore_dock" package="PORT_1PIN_DECAL_1PRIMARY" value="PORT_1PIN" x="251.1044" y="238.252" smashed="yes">
 <attribute name="NAME" x="251.1044" y="238.252" size="2.032" layer="25" font="vector" ratio="13" rot="SR0" display="off"/>
 <attribute name="VALUE" x="251.1044" y="238.252" size="2.032" layer="27" font="vector" ratio="13" rot="SR0" display="off"/>
 </element>
-<element name="PB16" library="vocore_dock" package="PORT_1PIN_DECAL_1PRIMARY" value="PORT_1PIN_DECAL" x="249.8344" y="238.252" smashed="yes">
+<element name="PB16" library="vocore_dock" package="PORT_1PIN_DECAL_1PRIMARY" value="PORT_1PIN" x="249.8344" y="238.252" smashed="yes">
 <attribute name="NAME" x="249.8344" y="238.252" size="2.032" layer="25" font="vector" ratio="13" rot="SR0" display="off"/>
 <attribute name="VALUE" x="249.8344" y="238.252" size="2.032" layer="27" font="vector" ratio="13" rot="SR0" display="off"/>
 </element>
-<element name="PB17" library="vocore_dock" package="PORT_1PIN_DECAL_1PRIMARY" value="PORT_1PIN_DECAL" x="248.5644" y="238.252" smashed="yes">
+<element name="PB17" library="vocore_dock" package="PORT_1PIN_DECAL_1PRIMARY" value="PORT_1PIN" x="248.5644" y="238.252" smashed="yes">
 <attribute name="NAME" x="248.5644" y="238.252" size="2.032" layer="25" font="vector" ratio="13" rot="SR0" display="off"/>
 <attribute name="VALUE" x="248.5644" y="238.252" size="2.032" layer="27" font="vector" ratio="13" rot="SR0" display="off"/>
 </element>
-<element name="PB18" library="vocore_dock" package="PORT_1PIN_DECAL_1PRIMARY" value="PORT_1PIN_DECAL" x="247.2944" y="238.252" smashed="yes">
+<element name="PB18" library="vocore_dock" package="PORT_1PIN_DECAL_1PRIMARY" value="PORT_1PIN" x="247.2944" y="238.252" smashed="yes">
 <attribute name="NAME" x="247.2944" y="238.252" size="2.032" layer="25" font="vector" ratio="13" rot="SR0" display="off"/>
 <attribute name="VALUE" x="247.2944" y="238.252" size="2.032" layer="27" font="vector" ratio="13" rot="SR0" display="off"/>
 </element>
-<element name="PL05" library="vocore_dock" package="PORT_1PIN_DECAL_1PRIMARY" value="PORT_1PIN_DECAL" x="271.0942" y="250.571" smashed="yes">
+<element name="PL05" library="vocore_dock" package="PORT_1PIN_DECAL_1PRIMARY" value="PORT_1PIN" x="271.0942" y="250.571" smashed="yes">
 <attribute name="NAME" x="271.0942" y="250.571" size="2.032" layer="25" font="vector" ratio="13" rot="SR0" display="off"/>
 <attribute name="VALUE" x="271.0942" y="250.571" size="2.032" layer="27" font="vector" ratio="13" rot="SR0" display="off"/>
 </element>
-<element name="PL06" library="vocore_dock" package="PORT_1PIN_DECAL_1PRIMARY" value="PORT_1PIN_DECAL" x="271.0942" y="249.301" smashed="yes">
+<element name="PL06" library="vocore_dock" package="PORT_1PIN_DECAL_1PRIMARY" value="PORT_1PIN" x="271.0942" y="249.301" smashed="yes">
 <attribute name="NAME" x="271.0942" y="249.301" size="2.032" layer="25" font="vector" ratio="13" rot="SR0" display="off"/>
 <attribute name="VALUE" x="271.0942" y="249.301" size="2.032" layer="27" font="vector" ratio="13" rot="SR0" display="off"/>
 </element>
-<element name="PL07" library="vocore_dock" package="PORT_1PIN_DECAL_1PRIMARY" value="PORT_1PIN_DECAL" x="271.0942" y="248.031" smashed="yes">
+<element name="PL07" library="vocore_dock" package="PORT_1PIN_DECAL_1PRIMARY" value="PORT_1PIN" x="271.0942" y="248.031" smashed="yes">
 <attribute name="NAME" x="271.0942" y="248.031" size="2.032" layer="25" font="vector" ratio="13" rot="SR0" display="off"/>
 <attribute name="VALUE" x="271.0942" y="248.031" size="2.032" layer="27" font="vector" ratio="13" rot="SR0" display="off"/>
 </element>
-<element name="PL08" library="vocore_dock" package="PORT_1PIN_DECAL_1PRIMARY" value="PORT_1PIN_DECAL" x="271.0942" y="246.761" smashed="yes">
+<element name="PL08" library="vocore_dock" package="PORT_1PIN_DECAL_1PRIMARY" value="PORT_1PIN" x="271.0942" y="246.761" smashed="yes">
 <attribute name="NAME" x="271.0942" y="246.761" size="2.032" layer="25" font="vector" ratio="13" rot="SR0" display="off"/>
 <attribute name="VALUE" x="271.0942" y="246.761" size="2.032" layer="27" font="vector" ratio="13" rot="SR0" display="off"/>
 </element>
-<element name="PT01" library="VoCore.dock.pcb" package="PORT_1PIN_DECAL_1PRIMARY" value="PORT_1PIN_DECAL" x="263.8044" y="262.1026" smashed="yes">
+<element name="PT01" library="vocore_dock" package="PORT_1PIN_DECAL_1PRIMARY" value="PORT_1PIN" x="263.8044" y="262.1026" smashed="yes">
 <attribute name="NAME" x="263.8044" y="262.1026" size="2.032" layer="25" font="vector" ratio="13" rot="SR0" display="off"/>
 <attribute name="VALUE" x="263.8044" y="262.1026" size="2.032" layer="27" font="vector" ratio="13" rot="SR0" display="off"/>
 </element>
-<element name="PT02" library="vocore_dock" package="PORT_1PIN_DECAL_1PRIMARY" value="PORT_1PIN_DECAL" x="262.5344" y="262.1026" smashed="yes">
+<element name="PT02" library="vocore_dock" package="PORT_1PIN_DECAL_1PRIMARY" value="PORT_1PIN" x="262.5344" y="262.1026" smashed="yes">
 <attribute name="NAME" x="262.5344" y="262.1026" size="2.032" layer="25" font="vector" ratio="13" rot="SR0" display="off"/>
 <attribute name="VALUE" x="262.5344" y="262.1026" size="2.032" layer="27" font="vector" ratio="13" rot="SR0" display="off"/>
 </element>
-<element name="PT03" library="vocore_dock" package="PORT_1PIN_DECAL_1PRIMARY" value="PORT_1PIN_DECAL" x="261.2644" y="262.1026" smashed="yes">
+<element name="PT03" library="vocore_dock" package="PORT_1PIN_DECAL_1PRIMARY" value="PORT_1PIN" x="261.2644" y="262.1026" smashed="yes">
 <attribute name="NAME" x="261.2644" y="262.1026" size="2.032" layer="25" font="vector" ratio="13" rot="SR0" display="off"/>
 <attribute name="VALUE" x="261.2644" y="262.1026" size="2.032" layer="27" font="vector" ratio="13" rot="SR0" display="off"/>
 </element>
-<element name="PT04" library="vocore_dock" package="PORT_1PIN_DECAL_1PRIMARY" value="PORT_1PIN_DECAL" x="259.9944" y="262.1026" smashed="yes">
+<element name="PT04" library="vocore_dock" package="PORT_1PIN_DECAL_1PRIMARY" value="PORT_1PIN" x="259.9944" y="262.1026" smashed="yes">
 <attribute name="NAME" x="259.9944" y="262.1026" size="2.032" layer="25" font="vector" ratio="13" rot="SR0" display="off"/>
 <attribute name="VALUE" x="259.9944" y="262.1026" size="2.032" layer="27" font="vector" ratio="13" rot="SR0" display="off"/>
 </element>
@@ -571,8 +577,8 @@ design rules under a new name.</description>
 <attribute name="VALUE" x="270.0782" y="260.2484" size="0.194740625" layer="28" font="vector" ratio="13" rot="SMR90" display="off"/>
 </element>
 <element name="RJ45" library="vocore_dock" package="RJ45ALED_1PRIMARY" value="RJ45ALED" x="245.11" y="254.254" smashed="yes" rot="R270">
-<attribute name="NAME" x="246.9388" y="252.2728" size="0.423340625" layer="25" font="vector" ratio="6" rot="SR0"/>
-<attribute name="VALUE" x="244.7036" y="253.1618" size="0.423340625" layer="27" font="vector" ratio="6" rot="SR270" display="off"/>
+<attribute name="NAME" x="266.7" y="254.381" size="2.032" layer="25" font="vector" ratio="13" rot="SR270"/>
+<attribute name="VALUE" x="242.316" y="248.031" size="2.032" layer="27" font="vector" ratio="13" rot="SR270"/>
 </element>
 <element name="USB1" library="vocore_dock" package="USB_MICRO_A_1PRIMARY" value="USB_MICRO_A" x="267.208" y="236.855" smashed="yes" rot="R90">
 <attribute name="NAME" x="271.272" y="239.395" size="0.423340625" layer="25" font="vector" ratio="6" rot="SR90"/>
