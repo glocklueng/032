@@ -8,34 +8,34 @@
 </settings>
 <grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
-<layer number="1" name="Top" color="4" fill="1" visible="yes" active="no"/>
-<layer number="2" name="Route2" color="1" fill="3" visible="yes" active="no"/>
-<layer number="3" name="Route3" color="4" fill="3" visible="yes" active="no"/>
-<layer number="4" name="Route4" color="1" fill="4" visible="yes" active="no"/>
-<layer number="5" name="Route5" color="4" fill="4" visible="yes" active="no"/>
-<layer number="6" name="Route6" color="1" fill="8" visible="yes" active="no"/>
-<layer number="7" name="Route7" color="4" fill="8" visible="yes" active="no"/>
-<layer number="8" name="Route8" color="1" fill="2" visible="yes" active="no"/>
-<layer number="9" name="Route9" color="4" fill="2" visible="yes" active="no"/>
-<layer number="10" name="Route10" color="1" fill="7" visible="yes" active="no"/>
-<layer number="11" name="Route11" color="4" fill="7" visible="yes" active="no"/>
-<layer number="12" name="Route12" color="1" fill="5" visible="yes" active="no"/>
-<layer number="13" name="Route13" color="4" fill="5" visible="yes" active="no"/>
-<layer number="14" name="Route14" color="1" fill="6" visible="yes" active="no"/>
-<layer number="15" name="Route15" color="4" fill="6" visible="yes" active="no"/>
-<layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="no"/>
-<layer number="17" name="Pads" color="2" fill="1" visible="yes" active="no"/>
-<layer number="18" name="Vias" color="2" fill="1" visible="yes" active="no"/>
-<layer number="19" name="Unrouted" color="6" fill="1" visible="yes" active="no"/>
-<layer number="20" name="Dimension" color="15" fill="1" visible="yes" active="no"/>
-<layer number="21" name="tPlace" color="7" fill="1" visible="yes" active="no"/>
-<layer number="22" name="bPlace" color="7" fill="1" visible="yes" active="no"/>
-<layer number="23" name="tOrigins" color="15" fill="1" visible="yes" active="no"/>
-<layer number="24" name="bOrigins" color="15" fill="1" visible="yes" active="no"/>
-<layer number="25" name="tNames" color="7" fill="1" visible="yes" active="no"/>
-<layer number="26" name="bNames" color="7" fill="1" visible="yes" active="no"/>
-<layer number="27" name="tValues" color="7" fill="1" visible="yes" active="no"/>
-<layer number="28" name="bValues" color="7" fill="1" visible="yes" active="no"/>
+<layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
+<layer number="2" name="Route2" color="1" fill="3" visible="no" active="no"/>
+<layer number="3" name="Route3" color="4" fill="3" visible="no" active="no"/>
+<layer number="4" name="Route4" color="1" fill="4" visible="no" active="no"/>
+<layer number="5" name="Route5" color="4" fill="4" visible="no" active="no"/>
+<layer number="6" name="Route6" color="1" fill="8" visible="no" active="no"/>
+<layer number="7" name="Route7" color="4" fill="8" visible="no" active="no"/>
+<layer number="8" name="Route8" color="1" fill="2" visible="no" active="no"/>
+<layer number="9" name="Route9" color="4" fill="2" visible="no" active="no"/>
+<layer number="10" name="Route10" color="1" fill="7" visible="no" active="no"/>
+<layer number="11" name="Route11" color="4" fill="7" visible="no" active="no"/>
+<layer number="12" name="Route12" color="1" fill="5" visible="no" active="no"/>
+<layer number="13" name="Route13" color="4" fill="5" visible="no" active="no"/>
+<layer number="14" name="Route14" color="1" fill="6" visible="no" active="no"/>
+<layer number="15" name="Route15" color="4" fill="6" visible="no" active="no"/>
+<layer number="16" name="Bottom" color="1" fill="1" visible="no" active="no"/>
+<layer number="17" name="Pads" color="2" fill="1" visible="no" active="no"/>
+<layer number="18" name="Vias" color="2" fill="1" visible="no" active="no"/>
+<layer number="19" name="Unrouted" color="6" fill="1" visible="no" active="no"/>
+<layer number="20" name="Dimension" color="15" fill="1" visible="no" active="no"/>
+<layer number="21" name="tPlace" color="7" fill="1" visible="no" active="no"/>
+<layer number="22" name="bPlace" color="7" fill="1" visible="no" active="no"/>
+<layer number="23" name="tOrigins" color="15" fill="1" visible="no" active="no"/>
+<layer number="24" name="bOrigins" color="15" fill="1" visible="no" active="no"/>
+<layer number="25" name="tNames" color="7" fill="1" visible="no" active="no"/>
+<layer number="26" name="bNames" color="7" fill="1" visible="no" active="no"/>
+<layer number="27" name="tValues" color="7" fill="1" visible="no" active="no"/>
+<layer number="28" name="bValues" color="7" fill="1" visible="no" active="no"/>
 <layer number="29" name="tStop" color="7" fill="3" visible="no" active="no"/>
 <layer number="30" name="bStop" color="7" fill="6" visible="no" active="no"/>
 <layer number="31" name="tCream" color="7" fill="4" visible="no" active="no"/>
@@ -44,8 +44,8 @@
 <layer number="34" name="bFinish" color="6" fill="6" visible="no" active="no"/>
 <layer number="35" name="tGlue" color="7" fill="4" visible="no" active="no"/>
 <layer number="36" name="bGlue" color="7" fill="5" visible="no" active="no"/>
-<layer number="37" name="tTest" color="7" fill="1" visible="yes" active="no"/>
-<layer number="38" name="bTest" color="7" fill="1" visible="yes" active="no"/>
+<layer number="37" name="tTest" color="7" fill="1" visible="no" active="no"/>
+<layer number="38" name="bTest" color="7" fill="1" visible="no" active="no"/>
 <layer number="39" name="tKeepout" color="4" fill="11" visible="no" active="no"/>
 <layer number="40" name="bKeepout" color="1" fill="11" visible="no" active="no"/>
 <layer number="41" name="tRestrict" color="4" fill="10" visible="no" active="no"/>
@@ -53,16 +53,16 @@
 <layer number="43" name="vRestrict" color="2" fill="10" visible="no" active="no"/>
 <layer number="44" name="Drills" color="7" fill="1" visible="no" active="no"/>
 <layer number="45" name="Holes" color="7" fill="1" visible="no" active="no"/>
-<layer number="46" name="Milling" color="3" fill="1" visible="yes" active="no"/>
-<layer number="47" name="Measures" color="7" fill="1" visible="yes" active="no"/>
-<layer number="48" name="Document" color="7" fill="1" visible="yes" active="no"/>
-<layer number="49" name="Reference" color="7" fill="1" visible="yes" active="no"/>
-<layer number="50" name="dxf" color="7" fill="1" visible="yes" active="no"/>
-<layer number="51" name="tDocu" color="7" fill="1" visible="yes" active="no"/>
-<layer number="52" name="bDocu" color="7" fill="1" visible="yes" active="no"/>
-<layer number="53" name="tGND_GNDA" color="7" fill="1" visible="yes" active="no"/>
-<layer number="54" name="bGND_GNDA" color="7" fill="1" visible="yes" active="no"/>
-<layer number="56" name="wert" color="7" fill="1" visible="yes" active="no"/>
+<layer number="46" name="Milling" color="3" fill="1" visible="no" active="no"/>
+<layer number="47" name="Measures" color="7" fill="1" visible="no" active="no"/>
+<layer number="48" name="Document" color="7" fill="1" visible="no" active="no"/>
+<layer number="49" name="Reference" color="7" fill="1" visible="no" active="no"/>
+<layer number="50" name="dxf" color="7" fill="1" visible="no" active="no"/>
+<layer number="51" name="tDocu" color="7" fill="1" visible="no" active="no"/>
+<layer number="52" name="bDocu" color="7" fill="1" visible="no" active="no"/>
+<layer number="53" name="tGND_GNDA" color="7" fill="1" visible="no" active="no"/>
+<layer number="54" name="bGND_GNDA" color="7" fill="1" visible="no" active="no"/>
+<layer number="56" name="wert" color="7" fill="1" visible="no" active="no"/>
 <layer number="90" name="Modules" color="5" fill="1" visible="yes" active="yes"/>
 <layer number="91" name="Nets" color="2" fill="1" visible="yes" active="yes"/>
 <layer number="92" name="Busses" color="1" fill="1" visible="yes" active="yes"/>
@@ -127,7 +127,7 @@
 <wire x1="0" y1="25.6032" x2="25.6032" y2="25.6032" width="0.127" layer="21"/>
 <wire x1="25.6032" y1="25.6032" x2="25.6032" y2="0" width="0.127" layer="21"/>
 <wire x1="25.6032" y1="0" x2="0" y2="0" width="0.127" layer="21"/>
-<pad name="G#14/PCM_TDX" x="0.889" y="1.778" drill="0.6" diameter="0.889" shape="octagon"/>
+<pad name="G#14/PCM_TDX" x="0.889" y="1.778" drill="0.6" diameter="0.889"/>
 <pad name="G#26/LED4" x="0.889" y="3.048" drill="0.6" diameter="0.889" shape="octagon"/>
 <pad name="G#25/LED3" x="0.889" y="4.318" drill="0.6" diameter="0.889" shape="octagon"/>
 <pad name="G#24/LED2" x="0.889" y="5.588" drill="0.6" diameter="0.889" shape="octagon"/>
@@ -154,7 +154,7 @@
 <pad name="GND1" x="12.0142" y="24.7142" drill="0.6" diameter="0.889" shape="octagon" rot="R90"/>
 <pad name="+6.0VIN1" x="10.7442" y="24.7142" drill="0.6" diameter="0.889" shape="octagon" rot="R90"/>
 <pad name="+6.0VIN" x="9.4742" y="24.7142" drill="0.6" diameter="0.889" shape="octagon" rot="R90"/>
-<pad name="GND2" x="8.2042" y="24.7142" drill="0.6" diameter="0.889" shape="octagon" rot="R90"/>
+<pad name="GND2" x="8.2042" y="24.7142" drill="0.6" diameter="0.889" rot="R90"/>
 <pad name="P4TN" x="17.018" y="0.889" drill="0.6" diameter="0.889" shape="octagon" rot="R90"/>
 <pad name="P0RN" x="15.748" y="0.889" drill="0.6" diameter="0.889" shape="octagon" rot="R90"/>
 <pad name="P0RP" x="14.478" y="0.889" drill="0.6" diameter="0.889" shape="octagon" rot="R90"/>
@@ -167,13 +167,60 @@
 <pad name="G#16/RXD2" x="5.588" y="0.889" drill="0.6" diameter="0.889" shape="octagon" rot="R90"/>
 <pad name="G#07/I2S_CLK" x="4.318" y="0.889" drill="0.6" diameter="0.889" shape="octagon" rot="R90"/>
 <pad name="G#15/TXD2" x="3.048" y="0.889" drill="0.6" diameter="0.889" shape="octagon" rot="R90"/>
-<pad name="GND3" x="1.778" y="0.889" drill="0.6" diameter="0.889" shape="octagon" rot="R90"/>
-<pad name="+3.2V~+3.5V" x="24.638" y="0.889" drill="0.6" diameter="0.889" shape="octagon" rot="R90"/>
+<pad name="GND3" x="1.778" y="0.889" drill="0.6" diameter="0.889" rot="R90"/>
+<pad name="+3.2V~+3.5V" x="24.638" y="0.889" drill="0.6" diameter="0.889" shape="octagon" rot="R270"/>
 <pad name="USB+" x="23.368" y="0.889" drill="0.6" diameter="0.889" shape="octagon" rot="R90"/>
 <pad name="USB-" x="22.098" y="0.889" drill="0.6" diameter="0.889" shape="octagon" rot="R90"/>
 <pad name="P4RN" x="20.828" y="0.889" drill="0.6" diameter="0.889" shape="octagon" rot="R90"/>
 <pad name="P4RP" x="19.558" y="0.889" drill="0.6" diameter="0.889" shape="octagon" rot="R90"/>
 <pad name="P4TP" x="18.288" y="0.889" drill="0.6" diameter="0.889" shape="octagon" rot="R90"/>
+<text x="-2.6924" y="13.95221875" size="1.016" layer="21" font="vector" rot="R180">+1.8V</text>
+<text x="-2.6924" y="19.03221875" size="1.016" layer="21" font="vector" rot="R180">G#12/PCM_CLK</text>
+<text x="-2.6924" y="17.76221875" size="1.016" layer="21" font="vector" rot="R180">G#09/I2S_SDO</text>
+<text x="-2.6924" y="16.49221875" size="1.016" layer="21" font="vector" rot="R180">G#22/LED0</text>
+<text x="-2.6924" y="15.22221875" size="1.016" layer="21" font="vector" rot="R180">G#08/I2S_WS/TXD</text>
+<text x="-2.6924" y="8.87221875" size="1.016" layer="21" font="vector" rot="R180">G#23/LED1</text>
+<text x="-2.6924" y="7.60221875" size="1.016" layer="21" font="vector" rot="R180">G#13/PCM_DRX</text>
+<text x="-2.6924" y="6.33221875" size="1.016" layer="21" font="vector" rot="R180">G#24/LED2</text>
+<text x="-2.6924" y="10.14221875" size="1.016" layer="21" font="vector" rot="R180">G#27/SPI_CS1</text>
+<text x="-2.6924" y="5.06221875" size="1.016" layer="21" font="vector" rot="R180">G#25/LED3</text>
+<text x="-2.6924" y="2.52221875" size="1.016" layer="21" font="vector" rot="R180">G#14/PCM_DTX</text>
+<text x="-2.6924" y="3.79221875" size="1.016" layer="21" font="vector" rot="R180">G#26/LED4</text>
+<text x="-2.6924" y="11.41221875" size="1.016" layer="21" font="vector" rot="R180">G#05/SPI_MOSI</text>
+<text x="-2.6924" y="12.68221875" size="1.016" layer="21" font="vector" rot="R180">G#04/SPI_CLK</text>
+<text x="2.5146" y="-0.65278125" size="1.016" layer="21" font="vector" rot="SR270">G#15/TXD2</text>
+<text x="3.7846" y="-0.65278125" size="1.016" layer="21" font="vector" rot="SR270">G#07/I2S_CLK</text>
+<text x="6.3246" y="-0.65278125" size="1.016" layer="21" font="vector" rot="SR270">G#10/I2S_SDI/RXD</text>
+<text x="5.0546" y="-0.65278125" size="1.016" layer="21" font="vector" rot="SR270">G#16/RXD2</text>
+<text x="10.1346" y="-0.65278125" size="1.016" layer="21" font="vector" rot="SR270">G#11/PCM_FS</text>
+<text x="11.4046" y="-0.65278125" size="1.016" layer="21" font="vector" rot="SR270">P0TN</text>
+<text x="12.6746" y="-0.65278125" size="1.016" layer="21" font="vector" rot="SR270">P0TP</text>
+<text x="13.9446" y="-0.65278125" size="1.016" layer="21" font="vector" rot="SR270">P0RP</text>
+<text x="15.2146" y="-0.65278125" size="1.016" layer="21" font="vector" rot="SR270">P0RN</text>
+<text x="16.4846" y="-0.65278125" size="1.016" layer="21" font="vector" rot="SR270">P4TN</text>
+<text x="17.7546" y="-0.65278125" size="1.016" layer="21" font="vector" rot="SR270">P4TP</text>
+<text x="19.0246" y="-0.65278125" size="1.016" layer="21" font="vector" rot="SR270">P4RP</text>
+<text x="20.2946" y="-0.65278125" size="1.016" layer="21" font="vector" rot="SR270">P4RN</text>
+<text x="24.1046" y="-0.65278125" size="1.016" layer="21" font="vector" rot="SR270">+3.2V ~ +3.5V</text>
+<text x="21.5646" y="-0.65278125" size="1.016" layer="21" font="vector" rot="SR270">USB-</text>
+<text x="22.8346" y="-0.65278125" size="1.016" layer="21" font="vector" rot="SR270">USB+</text>
+<text x="1.2446" y="-0.65278125" size="1.016" layer="21" font="vector" rot="SR270">GND</text>
+<text x="7.5946" y="-0.65278125" size="1.016" layer="21" font="vector" rot="SR270">G#06/SPI_MISO</text>
+<text x="8.8646" y="-0.65278125" size="1.016" layer="21" font="vector" rot="SR270">G#03/SPI_CS0</text>
+<text x="11.1506" y="26.39821875" size="1.016" layer="21" font="vector" rot="SR90">+3.5V ~ +6.0V</text>
+<text x="13.6906" y="26.39821875" size="1.016" layer="21" font="vector" rot="SR90">G#17/JTAG_TDO</text>
+<text x="14.9606" y="26.39821875" size="1.016" layer="21" font="vector" rot="SR90">G#21/JTAG_TRST</text>
+<text x="16.2306" y="26.39821875" size="1.016" layer="21" font="vector" rot="SR90">G#20/JTAG_TCLK</text>
+<text x="17.5006" y="26.39821875" size="1.016" layer="21" font="vector" rot="SR90">G#19/JTAG_TMS</text>
+<text x="18.7706" y="26.39821875" size="1.016" layer="21" font="vector" rot="SR90">G#00</text>
+<text x="20.0406" y="26.39821875" size="1.016" layer="21" font="vector" rot="SR90">G#18/JTAG_TDI</text>
+<text x="21.3106" y="26.39821875" size="1.016" layer="21" font="vector" rot="SR90">G#01/I2C_SCLK</text>
+<text x="22.5806" y="26.39821875" size="1.016" layer="21" font="vector" rot="SR90">G#02/I2C_SD</text>
+<text x="9.8806" y="26.39821875" size="1.016" layer="21" font="vector" rot="SR90">+3.5V ~ +6.0V</text>
+<text x="12.4206" y="26.39821875" size="1.016" layer="21" font="vector" rot="SR90">GND</text>
+<text x="25.1206" y="26.39821875" size="1.016" layer="21" font="vector" rot="SR90">GND</text>
+<text x="8.6106" y="26.39821875" size="1.016" layer="21" font="vector" rot="SR90">GND</text>
+<text x="23.8506" y="26.39821875" size="1.016" layer="21" font="vector" rot="SR90">RESET</text>
 </package>
 </packages>
 <symbols>
@@ -1365,7 +1412,7 @@ Basic schematic elements and footprints for 0603, 1206, and PTH resistors.</desc
 <variantdefs>
 </variantdefs>
 <classes>
-<class number="0" name="default" width="0" drill="0">
+<class number="0" name="default" width="0.254" drill="0">
 </class>
 </classes>
 <parts>
