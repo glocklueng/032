@@ -1433,16 +1433,16 @@ by exp-project-lbr.ulp</description>
 <pin name="UPHY0_VRES" x="-33.02" y="121.92" length="middle"/>
 <pin name="UPHY0_PADM" x="-33.02" y="119.38" length="middle"/>
 <pin name="UPHY0_PADP" x="-33.02" y="116.84" length="middle"/>
-<pin name="MD15" x="30.48" y="-22.86" length="middle" rot="R180"/>
-<pin name="MA0" x="30.48" y="-93.98" length="middle" rot="R180"/>
-<pin name="MCAS_N" x="30.48" y="-104.14" length="middle" rot="R180"/>
-<pin name="MWE_N" x="30.48" y="-106.68" length="middle" rot="R180"/>
-<pin name="MCLK" x="30.48" y="-109.22" length="middle" rot="R180"/>
-<pin name="MCKE" x="30.48" y="-111.76" length="middle" rot="R180"/>
-<pin name="MDQM1" x="30.48" y="-114.3" length="middle" rot="R180"/>
-<pin name="MDQM0" x="30.48" y="-116.84" length="middle" rot="R180"/>
-<pin name="MCS0_N" x="30.48" y="-119.38" length="middle" rot="R180"/>
-<pin name="MCS1_N" x="30.48" y="-121.92" length="middle" rot="R180"/>
+<pin name="MD15" x="48.26" y="-53.34" length="middle" rot="R90"/>
+<pin name="MA0" x="-22.86" y="-53.34" length="middle" rot="R90"/>
+<pin name="MCAS_N" x="-33.02" y="-53.34" length="middle" rot="R90"/>
+<pin name="MWE_N" x="-35.56" y="-53.34" length="middle" rot="R90"/>
+<pin name="MCLK" x="-38.1" y="-53.34" length="middle" rot="R90"/>
+<pin name="MCKE" x="-40.64" y="-53.34" length="middle" rot="R90"/>
+<pin name="MDQM1" x="-43.18" y="-53.34" length="middle" rot="R90"/>
+<pin name="MDQM0" x="-45.72" y="-53.34" length="middle" rot="R90"/>
+<pin name="MCS0_N" x="-48.26" y="-53.34" length="middle" rot="R90"/>
+<pin name="MCS1_N" x="-50.8" y="-53.34" length="middle" rot="R90"/>
 <pin name="LDO_V18A" x="-33.02" y="60.96" length="middle"/>
 <pin name="VOUT_1P2" x="-33.02" y="63.5" length="middle"/>
 <pin name="LDOSEL" x="-33.02" y="66.04" length="middle"/>
@@ -1482,36 +1482,36 @@ by exp-project-lbr.ulp</description>
 <pin name="SOC_CO_V12D" x="-33.02" y="101.6" length="middle"/>
 <pin name="EPHY_V33A" x="-33.02" y="104.14" length="middle"/>
 <pin name="GND" x="-33.02" y="109.22" length="middle"/>
-<pin name="MD0" x="30.48" y="-60.96" length="middle" rot="R180"/>
-<pin name="MD1" x="30.48" y="-58.42" length="middle" rot="R180"/>
-<pin name="MD2" x="30.48" y="-55.88" length="middle" rot="R180"/>
-<pin name="MD3" x="30.48" y="-53.34" length="middle" rot="R180"/>
-<pin name="MD4" x="30.48" y="-50.8" length="middle" rot="R180"/>
-<pin name="MD5" x="30.48" y="-48.26" length="middle" rot="R180"/>
-<pin name="MD6" x="30.48" y="-45.72" length="middle" rot="R180"/>
-<pin name="MD7" x="30.48" y="-43.18" length="middle" rot="R180"/>
-<pin name="MD8" x="30.48" y="-40.64" length="middle" rot="R180"/>
-<pin name="MD9" x="30.48" y="-38.1" length="middle" rot="R180"/>
-<pin name="MD10" x="30.48" y="-35.56" length="middle" rot="R180"/>
-<pin name="MD11" x="30.48" y="-33.02" length="middle" rot="R180"/>
-<pin name="MD12" x="30.48" y="-30.48" length="middle" rot="R180"/>
-<pin name="MD13" x="30.48" y="-27.94" length="middle" rot="R180"/>
-<pin name="MD14" x="30.48" y="-25.4" length="middle" rot="R180"/>
-<pin name="MA1" x="30.48" y="-91.44" length="middle" rot="R180"/>
-<pin name="MA2" x="30.48" y="-88.9" length="middle" rot="R180"/>
-<pin name="MA3" x="30.48" y="-86.36" length="middle" rot="R180"/>
-<pin name="MA4" x="30.48" y="-83.82" length="middle" rot="R180"/>
-<pin name="MA5" x="30.48" y="-81.28" length="middle" rot="R180"/>
-<pin name="MA6" x="30.48" y="-78.74" length="middle" rot="R180"/>
-<pin name="MA7" x="30.48" y="-76.2" length="middle" rot="R180"/>
-<pin name="MA8" x="30.48" y="-73.66" length="middle" rot="R180"/>
-<pin name="MA9" x="30.48" y="-71.12" length="middle" rot="R180"/>
-<pin name="MA10" x="30.48" y="-68.58" length="middle" rot="R180"/>
-<pin name="MA11" x="30.48" y="-66.04" length="middle" rot="R180"/>
-<pin name="MA12" x="30.48" y="-63.5" length="middle" rot="R180"/>
-<pin name="MRAS_N" x="30.48" y="-101.6" length="middle" rot="R180"/>
-<pin name="MBA0" x="30.48" y="-99.06" length="middle" rot="R180"/>
-<pin name="MBA1" x="30.48" y="-96.52" length="middle" rot="R180"/>
+<pin name="MD0" x="10.16" y="-53.34" length="middle" rot="R90"/>
+<pin name="MD1" x="12.7" y="-53.34" length="middle" rot="R90"/>
+<pin name="MD2" x="15.24" y="-53.34" length="middle" rot="R90"/>
+<pin name="MD3" x="17.78" y="-53.34" length="middle" rot="R90"/>
+<pin name="MD4" x="20.32" y="-53.34" length="middle" rot="R90"/>
+<pin name="MD5" x="22.86" y="-53.34" length="middle" rot="R90"/>
+<pin name="MD6" x="25.4" y="-53.34" length="middle" rot="R90"/>
+<pin name="MD7" x="27.94" y="-53.34" length="middle" rot="R90"/>
+<pin name="MD8" x="30.48" y="-53.34" length="middle" rot="R90"/>
+<pin name="MD9" x="33.02" y="-53.34" length="middle" rot="R90"/>
+<pin name="MD10" x="35.56" y="-53.34" length="middle" rot="R90"/>
+<pin name="MD11" x="38.1" y="-53.34" length="middle" rot="R90"/>
+<pin name="MD12" x="40.64" y="-53.34" length="middle" rot="R90"/>
+<pin name="MD13" x="43.18" y="-53.34" length="middle" rot="R90"/>
+<pin name="MD14" x="45.72" y="-53.34" length="middle" rot="R90"/>
+<pin name="MA1" x="-20.32" y="-53.34" length="middle" rot="R90"/>
+<pin name="MA2" x="-17.78" y="-53.34" length="middle" rot="R90"/>
+<pin name="MA3" x="-15.24" y="-53.34" length="middle" rot="R90"/>
+<pin name="MA4" x="-12.7" y="-53.34" length="middle" rot="R90"/>
+<pin name="MA5" x="-10.16" y="-53.34" length="middle" rot="R90"/>
+<pin name="MA6" x="-7.62" y="-53.34" length="middle" rot="R90"/>
+<pin name="MA7" x="-5.08" y="-53.34" length="middle" rot="R90"/>
+<pin name="MA8" x="-2.54" y="-53.34" length="middle" rot="R90"/>
+<pin name="MA9" x="0" y="-53.34" length="middle" rot="R90"/>
+<pin name="MA10" x="2.54" y="-53.34" length="middle" rot="R90"/>
+<pin name="MA11" x="5.08" y="-53.34" length="middle" rot="R90"/>
+<pin name="MA12" x="7.62" y="-53.34" length="middle" rot="R90"/>
+<pin name="MRAS_N" x="-30.48" y="-53.34" length="middle" rot="R90"/>
+<pin name="MBA0" x="-27.94" y="-53.34" length="middle" rot="R90"/>
+<pin name="MBA1" x="-25.4" y="-53.34" length="middle" rot="R90"/>
 <wire x1="-27.94" y1="129.54" x2="0" y2="129.54" width="0.254" layer="94"/>
 <wire x1="0" y1="129.54" x2="25.4" y2="129.54" width="0.254" layer="94"/>
 <wire x1="25.4" y1="129.54" x2="25.4" y2="114.3" width="0.254" layer="94"/>
@@ -1522,16 +1522,15 @@ by exp-project-lbr.ulp</description>
 <wire x1="25.4" y1="60.96" x2="25.4" y2="55.88" width="0.254" layer="94"/>
 <wire x1="25.4" y1="55.88" x2="25.4" y2="-12.7" width="0.254" layer="94"/>
 <wire x1="25.4" y1="-12.7" x2="25.4" y2="-20.32" width="0.254" layer="94"/>
-<wire x1="25.4" y1="-20.32" x2="25.4" y2="-124.46" width="0.254" layer="94"/>
-<wire x1="25.4" y1="-124.46" x2="0" y2="-124.46" width="0.254" layer="94"/>
-<wire x1="0" y1="-124.46" x2="0" y2="-20.32" width="0.254" layer="94"/>
+<wire x1="-53.34" y1="-48.26" x2="-53.34" y2="-22.86" width="0.254" layer="94"/>
+<wire x1="-53.34" y1="-22.86" x2="50.8" y2="-22.86" width="0.254" layer="94"/>
 <wire x1="0" y1="-20.32" x2="0" y2="-12.7" width="0.254" layer="94"/>
 <wire x1="0" y1="-12.7" x2="0" y2="0" width="0.254" layer="94"/>
 <wire x1="0" y1="0" x2="-27.94" y2="0" width="0.254" layer="94"/>
 <wire x1="-27.94" y1="0" x2="-27.94" y2="114.3" width="0.254" layer="94"/>
-<text x="-27.94" y="132.08" size="1.6764" layer="94">&gt;NAME</text>
-<text x="-27.94" y="134.62" size="1.6764" layer="94">RT5350</text>
-<text x="2.54" y="-25.4" size="2.54" layer="94">SDRAM</text>
+<text x="17.78" y="132.08" size="1.6764" layer="94">&gt;NAME</text>
+<text x="-27.94" y="132.08" size="1.6764" layer="94">RT5350</text>
+<text x="-50.8" y="-27.94" size="2.54" layer="94">SDRAM</text>
 <text x="-7.62" y="116.84" size="1.9304" layer="94">USB</text>
 <wire x1="-27.94" y1="114.3" x2="-27.94" y2="129.54" width="0.254" layer="94"/>
 <wire x1="-27.94" y1="114.3" x2="0" y2="114.3" width="0.254" layer="94"/>
@@ -1557,6 +1556,8 @@ by exp-project-lbr.ulp</description>
 <wire x1="25.4" y1="-12.7" x2="0" y2="-12.7" width="0.254" layer="94"/>
 <wire x1="0" y1="-20.32" x2="25.4" y2="-20.32" width="0.254" layer="94"/>
 <text x="1.27" y="-16.51" size="1.9304" layer="94">LEDS</text>
+<wire x1="50.8" y1="-22.86" x2="50.8" y2="-48.26" width="0.254" layer="94"/>
+<wire x1="50.8" y1="-48.26" x2="-53.34" y2="-48.26" width="0.254" layer="94"/>
 </symbol>
 </symbols>
 <devicesets>
@@ -1729,7 +1730,7 @@ by exp-project-lbr.ulp</description>
 <plain>
 </plain>
 <instances>
-<instance part="U$2" gate="MOD$1" x="-20.32" y="43.18"/>
+<instance part="U$2" gate="MOD$1" x="-45.72" y="144.78"/>
 <instance part="L1" gate="G$1" x="111.76" y="76.2"/>
 </instances>
 <busses>
