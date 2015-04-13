@@ -32,7 +32,7 @@
 <layer number="22" name="bPlace" color="14" fill="1" visible="yes" active="yes"/>
 <layer number="23" name="tOrigins" color="15" fill="1" visible="yes" active="yes"/>
 <layer number="24" name="bOrigins" color="15" fill="1" visible="yes" active="yes"/>
-<layer number="25" name="tNames" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="25" name="tNames" color="7" fill="1" visible="no" active="yes"/>
 <layer number="26" name="bNames" color="7" fill="1" visible="no" active="yes"/>
 <layer number="27" name="tValues" color="7" fill="1" visible="no" active="yes"/>
 <layer number="28" name="bValues" color="7" fill="1" visible="no" active="yes"/>
@@ -1662,11 +1662,11 @@ Source: http://www.semiconductors.philips.com/acrobat_download/datasheets/74HC_H
 <wire x1="-1" y1="0.55" x2="-1" y2="-0.55" width="0.127" layer="21"/>
 <wire x1="-1" y1="-0.55" x2="1" y2="-0.55" width="0.127" layer="51"/>
 <wire x1="1" y1="-0.55" x2="1" y2="0.55" width="0.127" layer="21"/>
-<smd name="1" x="-0.65" y="-0.85" dx="0.4" dy="0.7" layer="1"/>
-<smd name="2" x="0" y="-0.85" dx="0.4" dy="0.7" layer="1"/>
-<smd name="3" x="0.65" y="-0.85" dx="0.4" dy="0.7" layer="1"/>
-<smd name="4" x="0.65" y="0.85" dx="0.4" dy="0.7" layer="1"/>
-<smd name="5" x="-0.65" y="0.85" dx="0.4" dy="0.7" layer="1"/>
+<smd name="1" x="-0.65" y="-0.95" dx="0.4" dy="1" layer="1"/>
+<smd name="2" x="0" y="-0.95" dx="0.4" dy="1" layer="1"/>
+<smd name="3" x="0.65" y="-0.95" dx="0.4" dy="1" layer="1"/>
+<smd name="4" x="0.65" y="0.95" dx="0.4" dy="1" layer="1"/>
+<smd name="5" x="-0.65" y="0.95" dx="0.4" dy="1" layer="1"/>
 <text x="-2.54" y="1.27" size="1.27" layer="25">&gt;NAME</text>
 <text x="-2.54" y="-2.54" size="1.27" layer="27">&gt;VALUE</text>
 <rectangle x1="-0.125" y1="-1.05" x2="0.125" y2="-0.6" layer="51"/>
@@ -2300,7 +2300,7 @@ design rules under a new name.</description>
 <wire x1="30.95" y1="-1.27" x2="32.13" y2="-2.45" width="0.254" layer="1" curve="-90"/>
 <via x="30.95" y="-1.27" extent="1-16" drill="0.3556"/>
 <contactref element="IC9" pad="4"/>
-<wire x1="14.82" y1="3.16" x2="14.82" y2="2.96" width="0.2032" layer="1"/>
+<wire x1="14.92" y1="3.16" x2="14.82" y2="2.96" width="0.2032" layer="1"/>
 <wire x1="14.82" y1="2.96" x2="21.59" y2="-2.54" width="0.2032" layer="1" curve="90"/>
 </signal>
 <signal name="GND">
@@ -2403,6 +2403,7 @@ design rules under a new name.</description>
 <via x="-3.81" y="1.27" extent="1-16" drill="0.3556"/>
 <wire x1="-3.2" y1="5.8" x2="-3.2" y2="1.27" width="0.2032" layer="1"/>
 <wire x1="-3.2" y1="1.27" x2="-3.81" y2="1.27" width="0.2032" layer="1"/>
+<via x="-10.16" y="18.78" extent="1-16" drill="1.016" diameter="1.778" shape="square"/>
 </signal>
 <signal name="N$19">
 <contactref element="L22" pad="2-DOUT"/>
@@ -2614,7 +2615,7 @@ design rules under a new name.</description>
 <contactref element="U$1" pad="42"/>
 <wire x1="5.8" y1="2.4" x2="8.815265625" y2="2.4" width="0.254" layer="1"/>
 <wire x1="8.815265625" y1="2.4" x2="10.871875" y2="3.251875" width="0.254" layer="1" curve="44.999956"/>
-<wire x1="13.12" y1="3.81" x2="12.173946875" y2="3.81" width="0.254" layer="1"/>
+<wire x1="13.02" y1="3.81" x2="12.173946875" y2="3.81" width="0.254" layer="1"/>
 <wire x1="12.173946875" y1="3.81" x2="10.90395" y2="3.28395" width="0.254" layer="1" curve="44.99993"/>
 <wire x1="10.90395" y1="3.28395" x2="10.871875" y2="3.251875" width="0.254" layer="1"/>
 <contactref element="IC9" pad="2"/>
@@ -2686,7 +2687,7 @@ design rules under a new name.</description>
 <wire x1="12.3902" y1="-1.5798" x2="11.43" y2="-2.54" width="0.2032" layer="1" curve="90"/>
 <wire x1="11.43" y1="-2.54" x2="12.3698" y2="-3.4798" width="0.2032" layer="1" curve="90"/>
 <wire x1="12.3698" y1="-3.4798" x2="12.8524" y2="-3.4798" width="0.2032" layer="1"/>
-<wire x1="14.82" y1="4.46" x2="14.62" y2="4.46" width="0.2032" layer="1"/>
+<wire x1="14.92" y1="4.46" x2="14.62" y2="4.46" width="0.2032" layer="1"/>
 <wire x1="14.62" y1="4.46" x2="13.97" y2="3.81" width="0.2032" layer="1" curve="90"/>
 <wire x1="13.97" y1="3.81" x2="13.97" y2="-0.4622" width="0.2032" layer="1"/>
 <wire x1="13.97" y1="-0.4622" x2="12.8524" y2="-1.5798" width="0.2032" layer="1" curve="-90"/>
@@ -2866,9 +2867,6 @@ design rules under a new name.</description>
 <wire x1="2.25446875" y1="-12.41446875" x2="4.248240625" y2="-14.408240625" width="0.2032" layer="1"/>
 <wire x1="4.248240625" y1="-14.408240625" x2="5.08" y2="-16.4162875" width="0.2032" layer="1" curve="-45"/>
 <wire x1="5.08" y1="-16.4162875" x2="5.08" y2="-19.05" width="0.2032" layer="1"/>
-</signal>
-<signal name="N$37">
-<via x="-10.16" y="17.78" extent="1-16" drill="1.016" diameter="1.778" shape="square"/>
 </signal>
 <signal name="N$36">
 <contactref element="BAT1" pad="+"/>

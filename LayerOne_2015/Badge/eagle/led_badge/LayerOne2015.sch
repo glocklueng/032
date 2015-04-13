@@ -5034,11 +5034,11 @@ Source: http://www.semiconductors.philips.com/acrobat_download/datasheets/74HC_H
 <wire x1="-1" y1="0.55" x2="-1" y2="-0.55" width="0.127" layer="21"/>
 <wire x1="-1" y1="-0.55" x2="1" y2="-0.55" width="0.127" layer="51"/>
 <wire x1="1" y1="-0.55" x2="1" y2="0.55" width="0.127" layer="21"/>
-<smd name="1" x="-0.65" y="-0.85" dx="0.4" dy="0.7" layer="1"/>
-<smd name="2" x="0" y="-0.85" dx="0.4" dy="0.7" layer="1"/>
-<smd name="3" x="0.65" y="-0.85" dx="0.4" dy="0.7" layer="1"/>
-<smd name="4" x="0.65" y="0.85" dx="0.4" dy="0.7" layer="1"/>
-<smd name="5" x="-0.65" y="0.85" dx="0.4" dy="0.7" layer="1"/>
+<smd name="1" x="-0.65" y="-0.95" dx="0.4" dy="1" layer="1"/>
+<smd name="2" x="0" y="-0.95" dx="0.4" dy="1" layer="1"/>
+<smd name="3" x="0.65" y="-0.95" dx="0.4" dy="1" layer="1"/>
+<smd name="4" x="0.65" y="0.95" dx="0.4" dy="1" layer="1"/>
+<smd name="5" x="-0.65" y="0.95" dx="0.4" dy="1" layer="1"/>
 <text x="-2.54" y="1.27" size="1.27" layer="25">&gt;NAME</text>
 <text x="-2.54" y="-2.54" size="1.27" layer="27">&gt;VALUE</text>
 <rectangle x1="-0.125" y1="-1.05" x2="0.125" y2="-0.6" layer="51"/>
