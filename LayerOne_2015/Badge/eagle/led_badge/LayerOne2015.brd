@@ -664,9 +664,9 @@
 <rectangle x1="-10.3378" y1="6.223" x2="-7.3914" y2="6.2738" layer="25" rot="R180"/>
 <text x="-7.366" y="33.782" size="1.778" layer="25" font="vector" ratio="10" rot="R180">Return of the</text>
 <text x="9.652" y="32.004" size="1.778" layer="25" font="vector" ratio="10">Blinkenlights</text>
-<text x="-21.082" y="-10.287" size="1.778" layer="25" font="vector" rot="R90">LayerOne 2015</text>
-<text x="31.35" y="5.65" size="1.778" layer="25" font="vector" rot="R90">www.layerone.org</text>
-<text x="33.528" y="10.287" size="1.778" layer="25" font="vector" rot="R90">charliex</text>
+<text x="29.972" y="33.401" size="1.778" layer="25" font="vector" rot="R270">LayerOne 2015</text>
+<text x="-32.404" y="6.92" size="1.778" layer="25" font="vector" rot="R90">www.layerone.org</text>
+<text x="33.782" y="17.399" size="1.778" layer="25" font="vector" rot="R90">charliex</text>
 <text x="-8.81" y="-17.51" size="1.778" layer="25" font="vector">DYNO I/O</text>
 <text x="-17.11" y="-4.21" size="1.778" layer="25" font="vector" rot="R90">PROG</text>
 <text x="-5.15" y="19.59" size="1.778" layer="25" font="vector">ESP8266</text>
@@ -1225,6 +1225,7 @@
 <rectangle x1="19.95" y1="33.45" x2="24.75" y2="33.75" layer="201"/>
 <rectangle x1="-24.45" y1="33.75" x2="-21.45" y2="34.05" layer="201"/>
 <rectangle x1="21.15" y1="33.75" x2="24.15" y2="34.05" layer="201"/>
+<text x="-8.001" y="21.971" size="1.27" layer="25" font="vector">www.hackaday.com</text>
 </plain>
 <libraries>
 <library name="tvbgone-adj">
