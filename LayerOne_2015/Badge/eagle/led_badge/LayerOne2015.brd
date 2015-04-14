@@ -663,23 +663,23 @@
 <rectangle x1="-10.3378" y1="6.2738" x2="-7.3914" y2="6.3246" layer="25" rot="R180"/>
 <rectangle x1="-10.3378" y1="6.223" x2="-7.3914" y2="6.2738" layer="25" rot="R180"/>
 <text x="-9.144" y="32.258" size="1.778" layer="25" font="vector" ratio="10">Return of the</text>
-<text x="-10.287" y="-15.113" size="1.778" layer="25" font="vector" ratio="10">Blinkenlights</text>
-<text x="29.972" y="33.401" size="1.778" layer="25" font="vector" rot="R270">LayerOne 2015</text>
-<text x="-32.404" y="6.92" size="1.778" layer="25" font="vector" rot="R90">www.layerone.org</text>
-<text x="33.782" y="17.399" size="1.778" layer="25" font="vector" rot="R90">charliex</text>
-<text x="-8.81" y="-17.51" size="1.778" layer="25" font="vector">DYNO I/O</text>
-<text x="-17.11" y="-4.21" size="1.778" layer="25" font="vector" rot="R90">PROG</text>
+<text x="-10.287" y="-15.367" size="1.778" layer="25" font="vector" ratio="10">Blinkenlights</text>
+<text x="31.369" y="30.607" size="1.778" layer="25" font="vector" rot="R270">LayerOne 2015</text>
+<text x="-31.896" y="6.92" size="1.778" layer="25" font="vector" rot="R90">www.layerone.org</text>
+<text x="-20.447" y="-3.429" size="1.778" layer="25" font="vector" rot="R90">charliex</text>
+<text x="-8.175" y="-17.891" size="1.778" layer="25" font="vector">DYNO I/O</text>
+<text x="-17.237" y="-2.559" size="1.778" layer="25" font="vector" rot="R90">PROG</text>
 <text x="-5.15" y="19.59" size="1.778" layer="25" font="vector">ESP8266</text>
 <text x="26.195" y="-4.299" size="1" layer="25" font="vector">dout</text>
 <text x="5.809" y="17.065" size="1.778" layer="25" font="vector">1</text>
 <text x="-17.926" y="-6.782" size="1.778" layer="25" font="vector">1</text>
-<text x="4.572" y="-17.399" size="1.778" layer="25" font="vector">1</text>
+<text x="4.572" y="-22.479" size="1.778" layer="25" font="vector">1</text>
 <text x="21.59" y="10.16" size="1.778" layer="25" font="vector" rot="R90">-</text>
 <text x="20.32" y="-11.43" size="1.778" layer="25" font="vector">+</text>
 <text x="-20.32" y="11.43" size="1.778" layer="25" font="vector">+</text>
 <text x="-19.05" y="-11.43" size="1.778" layer="25" font="vector">-</text>
-<text x="21" y="2" size="1" layer="25">G</text>
-<text x="20.2" y="-6.4" size="1" layer="25" rot="R90">VCC</text>
+<text x="19.476" y="-0.286" size="1" layer="25">G</text>
+<text x="25.704" y="-4.819" size="1" layer="25" rot="R180">VCC</text>
 <rectangle x1="-24.75" y1="-22.05" x2="-21.15" y2="-21.75" layer="25"/>
 <rectangle x1="20.85" y1="-22.05" x2="24.45" y2="-21.75" layer="25"/>
 <rectangle x1="-25.35" y1="-21.75" x2="-20.25" y2="-21.45" layer="25"/>
@@ -1225,7 +1225,9 @@
 <rectangle x1="19.95" y1="33.45" x2="24.75" y2="33.75" layer="25"/>
 <rectangle x1="-24.45" y1="33.75" x2="-21.45" y2="34.05" layer="25"/>
 <rectangle x1="21.15" y1="33.75" x2="24.15" y2="34.05" layer="25"/>
-<text x="-8.001" y="21.971" size="1.27" layer="25" font="vector">www.hackaday.com</text>
+<text x="-8.636" y="21.971" size="1.397" layer="25" font="vector">www.hackaday.com</text>
+<circle x="5.334" y="5.08" radius="0.457903125" width="0.4064" layer="25"/>
+<wire x1="11.938" y1="-12.7" x2="11.938" y2="-11.303" width="0.4064" layer="25"/>
 </plain>
 <libraries>
 <library name="tvbgone-adj">
@@ -2519,7 +2521,7 @@ design rules under a new name.</description>
 <attribute name="VALUE" x="-21" y="1.01" size="0.4064" layer="28" rot="MR180"/>
 </element>
 <element name="C1" library="SparkFun-Passives" package="0805" value="" x="25.4" y="0" smashed="yes" rot="R180">
-<attribute name="NAME" x="26.162" y="-0.8255" size="1" layer="25" rot="R180"/>
+<attribute name="NAME" x="25.273" y="2.2225" size="1" layer="25" rot="R180"/>
 <attribute name="VALUE" x="26.416" y="1.397" size="0.4064" layer="27" rot="R180"/>
 </element>
 <element name="C10" library="SparkFun-Passives" package="0805" value="" x="-21.367840625" y="13.732278125" smashed="yes" rot="R327.3">
@@ -2535,7 +2537,7 @@ design rules under a new name.</description>
 <attribute name="VALUE" x="-26.416" y="-1.397" size="0.4064" layer="27"/>
 </element>
 <element name="C13" library="SparkFun-Passives" package="0805" value="" x="-24.371121875" y="-7.15600625" smashed="yes" rot="R16.3">
-<attribute name="NAME" x="-25.33418125" y="-6.577553125" size="1" layer="25" rot="R16.3"/>
+<attribute name="NAME" x="-24.44518125" y="-5.815553125" size="1" layer="25" rot="R16.3"/>
 <attribute name="VALUE" x="-24.954190625" y="-8.782009375" size="0.4064" layer="27" rot="R16.3"/>
 </element>
 <element name="C14" library="SparkFun-Passives" package="0805" value="" x="-21.367840625" y="-13.732278125" smashed="yes" rot="R32.7">
@@ -2543,7 +2545,7 @@ design rules under a new name.</description>
 <attribute name="VALUE" x="-21.468096875" y="-15.45675" size="0.4064" layer="27" rot="R32.7"/>
 </element>
 <element name="C15" library="SparkFun-Passives" package="0805" value="" x="-16.6334625" y="-19.196040625" smashed="yes" rot="R49.1">
-<attribute name="NAME" x="-17.75633125" y="-19.231509375" size="1" layer="25" rot="R49.1"/>
+<attribute name="NAME" x="-14.96233125" y="-20.501509375" size="1" layer="25" rot="R49.1"/>
 <attribute name="VALUE" x="-16.24275" y="-20.878659375" size="0.4064" layer="27" rot="R49.1"/>
 </element>
 <element name="C16" library="SparkFun-Passives" package="0805" value="" x="-10.551540625" y="-23.104653125" smashed="yes" rot="R65.5">
@@ -2583,7 +2585,7 @@ design rules under a new name.</description>
 <attribute name="VALUE" x="2.413" y="-7.874" size="0.4064" layer="27" rot="R270"/>
 </element>
 <element name="C24" library="SparkFun-Capacitors" package="0805" value="2200pF" x="-11.43" y="-12.7" smashed="yes" rot="R270">
-<attribute name="NAME" x="-13.3045" y="-11.338" size="1" layer="25" rot="R270"/>
+<attribute name="NAME" x="-13.4315" y="-12.227" size="1" layer="25" rot="R270"/>
 <attribute name="VALUE" x="-12.827" y="-11.684" size="0.4064" layer="27" rot="R270"/>
 </element>
 <element name="C25" library="SparkFun-Capacitors" package="0805" value="1.0uF" x="6.35" y="11.43" smashed="yes" rot="R90">
@@ -2615,7 +2617,7 @@ design rules under a new name.</description>
 <attribute name="VALUE" x="-16.637" y="-7.874" size="0.4064" layer="27" rot="R270"/>
 </element>
 <element name="C31" library="SparkFun-Capacitors" package="0805" value="10uF" x="10.16" y="1.27" smashed="yes">
-<attribute name="NAME" x="9.098" y="2.3955" size="1" layer="25"/>
+<attribute name="NAME" x="9.2885" y="2.367" size="1" layer="25" rot="R90"/>
 <attribute name="VALUE" x="9.779" y="0.127" size="0.4064" layer="27"/>
 </element>
 <element name="C4" library="SparkFun-Passives" package="0805" value="" x="16.6334625" y="19.196040625" smashed="yes" rot="R229.1">
@@ -2664,7 +2666,7 @@ design rules under a new name.</description>
 <attribute name="NAME" x="28.8925" y="3.4925" size="1" layer="25" ratio="10"/>
 </element>
 <element name="L10" library="adafruit" package="WS2812B" value="WS2812B" x="-25.64140625" y="16.47873125" smashed="yes" rot="R237.3">
-<attribute name="NAME" x="-26.192296875" y="12.682121875" size="1" layer="25" ratio="10" rot="R147.3"/>
+<attribute name="NAME" x="-25.430296875" y="17.000121875" size="1" layer="25" ratio="10" rot="R147.3"/>
 </element>
 <element name="L11" library="adafruit" package="WS2812B" value="WS2812B" x="-29.245346875" y="8.587209375" smashed="yes" rot="R253.7">
 <attribute name="NAME" x="-28.701884375" y="4.789528125" size="1" layer="25" ratio="10" rot="R163.7"/>
@@ -2769,10 +2771,10 @@ design rules under a new name.</description>
 <attribute name="DIGIKEY-ND" value="M74VHC1GT125DF1GOSCT-ND" x="13.97" y="2.81" size="1.778" layer="27" font="vector" ratio="15" rot="R270" display="off"/>
 <attribute name="PARTNO" value="M74VHC1GT125DF2G" x="13.97" y="2.81" size="1.778" layer="27" font="vector" ratio="15" rot="R270" display="off"/>
 <attribute name="MOUSER" value="863-M74VHC1GT125DF2G" x="13.97" y="2.81" size="1.778" layer="27" font="vector" ratio="15" rot="R270" display="off"/>
-<attribute name="NAME" x="12.55" y="4.24" size="1.27" layer="25"/>
+<attribute name="NAME" x="14.908" y="2.055" size="1.27" layer="25" rot="R270"/>
 </element>
 <element name="JP4" library="SparkFun" package="1X07" value="" x="5.08" y="-19.05" smashed="yes" rot="R180">
-<attribute name="NAME" x="0.4262" y="-20.6788" size="1.27" layer="25" ratio="10" rot="R180"/>
+<attribute name="NAME" x="3.3472" y="-20.9328" size="1.27" layer="25" ratio="10" rot="R180"/>
 <attribute name="VALUE" x="6.35" y="-15.875" size="1.27" layer="27" rot="R180"/>
 </element>
 <element name="JP5" library="SparkFun-Connectors" package="1X02_LONGPADS" value="M02PTH3" x="16" y="-14"/>
