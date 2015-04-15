@@ -2707,13 +2707,13 @@ RJ45 Jack connectors&lt;br&gt;
 <label x="-208.28" y="182.88" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="N$6" class="0">
+<net name="LED2" class="0">
 <segment>
 <pinref part="R9" gate="G$1" pin="1"/>
 <wire x1="-93.98" y1="231.14" x2="-93.98" y2="236.22" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="N$7" class="0">
+<net name="LED1" class="0">
 <segment>
 <pinref part="R10" gate="G$1" pin="2"/>
 <wire x1="-104.14" y1="137.16" x2="-104.14" y2="132.08" width="0.1524" layer="91"/>
