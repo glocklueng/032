@@ -1053,6 +1053,9 @@
 <text x="-8.636" y="21.971" size="1.397" layer="25" font="vector">www.hackaday.com</text>
 <circle x="5.334" y="5.08" radius="0.457903125" width="0.4064" layer="25"/>
 <wire x1="11.938" y1="-12.7" x2="11.938" y2="-11.303" width="0.4064" layer="25"/>
+<text x="-25.019" y="-23.622" size="1.778" layer="25" font="vector" rot="R318">www.</text>
+<text x="-20.447" y="-27.559" size="1.778" layer="25" rot="R329.1">netdc</text>
+<text x="-13.97" y="-31.623" size="1.778" layer="25" rot="R345.1">.com</text>
 </plain>
 <libraries>
 <library name="tvbgone-adj">
