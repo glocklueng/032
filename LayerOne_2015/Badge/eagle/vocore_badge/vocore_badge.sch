@@ -441,8 +441,8 @@ http://www.molex.com/webdocs/datasheets/pdf/en-us/0473093351_MEMORY_CARD_SOCKET.
 <smd name="6" x="3.8608" y="-1.3208" dx="1.2446" dy="0.6096" layer="1" rot="R90"/>
 <smd name="7" x="2.7432" y="-1.3208" dx="1.2446" dy="0.6096" layer="1" rot="R90"/>
 <smd name="8" x="1.651" y="-1.3208" dx="1.2446" dy="0.6096" layer="1" rot="R90"/>
-<smd name="9" x="0.5334" y="-3.1496" dx="2.413" dy="0.9652" layer="1" rot="R90"/>
-<smd name="10" x="10.7696" y="-3.0734" dx="1.4478" dy="1.143" layer="1" rot="R90"/>
+<smd name="9" x="0" y="-3.1496" dx="2.413" dy="1.4732" layer="1" rot="R90"/>
+<smd name="10" x="11.43" y="-3.1496" dx="2.413" dy="1.4732" layer="1" rot="R90"/>
 <text x="-0.1016" y="0.3556" size="2.032" layer="25" font="vector" ratio="13" rot="SR0">&gt;NAME</text>
 <text x="1.1684" y="-7.5184" size="2.032" layer="27" font="vector" ratio="13" rot="SR0">&gt;VALUE</text>
 </package>
