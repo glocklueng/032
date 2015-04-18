@@ -2014,12 +2014,12 @@ RJ45 Jack connectors&lt;br&gt;
 <part name="GND3" library="supply1" deviceset="GND" device=""/>
 <part name="R1" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES" value="150R"/>
 <part name="R2" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES" value="150"/>
-<part name="R3" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES"/>
-<part name="R4" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES"/>
-<part name="R5" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES"/>
-<part name="R6" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES"/>
-<part name="R7" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES"/>
-<part name="R8" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES"/>
+<part name="R3" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES" value="20K"/>
+<part name="R4" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES" value="20K"/>
+<part name="R5" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES" value="20K"/>
+<part name="R6" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES" value="20K"/>
+<part name="R7" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES" value="20K"/>
+<part name="R8" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES" value="20K"/>
 <part name="USB1" library="vocore_dock" deviceset="USB_MICRO_A" device="USB_MICRO_A" value="USB_MICRO_A"/>
 <part name="GND4" library="supply1" deviceset="GND" device=""/>
 <part name="MICROSD" library="vocore_dock" deviceset="MICROSD_PADS" device=""/>
