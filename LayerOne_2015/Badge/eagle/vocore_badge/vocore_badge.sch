@@ -2264,13 +2264,8 @@ RJ45 Jack connectors&lt;br&gt;
 <pinref part="X1" gate="G$1" pin="1"/>
 </segment>
 <segment>
-<pinref part="U1" gate="G$1" pin="VCCIO"/>
-<wire x1="-241.3" y1="172.72" x2="-248.92" y2="172.72" width="0.1524" layer="91"/>
-<wire x1="-248.92" y1="172.72" x2="-248.92" y2="177.8" width="0.1524" layer="91"/>
 <pinref part="U1" gate="G$1" pin="VCC"/>
-<wire x1="-248.92" y1="177.8" x2="-254" y2="177.8" width="0.1524" layer="91"/>
-<wire x1="-241.3" y1="177.8" x2="-248.92" y2="177.8" width="0.1524" layer="91"/>
-<junction x="-248.92" y="177.8"/>
+<wire x1="-241.3" y1="177.8" x2="-254" y2="177.8" width="0.1524" layer="91"/>
 <label x="-254" y="177.8" size="1.778" layer="95"/>
 </segment>
 </net>
@@ -2318,6 +2313,11 @@ RJ45 Jack connectors&lt;br&gt;
 <junction x="-215.9" y="114.3"/>
 <wire x1="-215.9" y1="132.08" x2="-215.9" y2="137.16" width="0.1524" layer="91"/>
 <label x="-215.9" y="137.16" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="U1" gate="G$1" pin="VCCIO"/>
+<wire x1="-241.3" y1="172.72" x2="-248.92" y2="172.72" width="0.1524" layer="91"/>
+<label x="-256.54" y="172.72" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="UARTF_DTR" class="0">
