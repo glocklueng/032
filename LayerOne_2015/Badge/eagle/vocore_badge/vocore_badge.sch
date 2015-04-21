@@ -2040,6 +2040,8 @@ RJ45 Jack connectors&lt;br&gt;
 <part name="JP4" library="adafruit" deviceset="PINHD-1X3" device=""/>
 <part name="JP5" library="pinhead" deviceset="PINHD-1X2" device=""/>
 <part name="X1" library="con-amp" deviceset="USB-787616" device=""/>
+<part name="JP3" library="pinhead" deviceset="PINHD-1X2" device=""/>
+<part name="JP6" library="pinhead" deviceset="PINHD-1X2" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -2482,6 +2484,8 @@ RJ45 Jack connectors&lt;br&gt;
 <instance part="JP2" gate="A" x="154.94" y="20.32"/>
 <instance part="JP4" gate="A" x="91.44" y="-7.62" rot="R270"/>
 <instance part="JP5" gate="G$1" x="63.5" y="-7.62" rot="R270"/>
+<instance part="JP3" gate="G$1" x="109.22" y="-5.08" rot="R270"/>
+<instance part="JP6" gate="G$1" x="124.46" y="-5.08" rot="R270"/>
 </instances>
 <busses>
 </busses>
@@ -2739,6 +2743,11 @@ RJ45 Jack connectors&lt;br&gt;
 <wire x1="53.34" y1="55.88" x2="38.1" y2="55.88" width="0.1524" layer="91"/>
 <label x="38.1" y="55.88" size="1.778" layer="95" rot="R180"/>
 </segment>
+<segment>
+<pinref part="JP6" gate="G$1" pin="2"/>
+<wire x1="124.46" y1="-2.54" x2="124.46" y2="7.62" width="0.1524" layer="91"/>
+<label x="124.46" y="7.62" size="1.778" layer="95" rot="R90"/>
+</segment>
 </net>
 <net name="G#00" class="0">
 <segment>
@@ -2812,6 +2821,11 @@ RJ45 Jack connectors&lt;br&gt;
 <pinref part="U$1" gate="G$1" pin="G#13/PCM_DRX"/>
 <wire x1="53.34" y1="43.18" x2="38.1" y2="43.18" width="0.1524" layer="91"/>
 <label x="38.1" y="43.18" size="1.778" layer="95" rot="R180"/>
+</segment>
+<segment>
+<pinref part="JP3" gate="G$1" pin="1"/>
+<wire x1="111.76" y1="-2.54" x2="111.76" y2="7.62" width="0.1524" layer="91"/>
+<label x="111.76" y="7.62" size="1.778" layer="95" rot="R90"/>
 </segment>
 </net>
 <net name="PCM_TDX" class="0">
@@ -2887,12 +2901,22 @@ RJ45 Jack connectors&lt;br&gt;
 <wire x1="109.22" y1="30.48" x2="116.84" y2="30.48" width="0.1524" layer="91"/>
 <label x="116.84" y="30.48" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="JP6" gate="G$1" pin="1"/>
+<wire x1="127" y1="-2.54" x2="127" y2="7.62" width="0.1524" layer="91"/>
+<label x="127" y="7.62" size="1.778" layer="95" rot="R90"/>
+</segment>
 </net>
 <net name="LED1" class="0">
 <segment>
 <pinref part="U$1" gate="G$1" pin="G#23/LED1"/>
 <wire x1="109.22" y1="27.94" x2="116.84" y2="27.94" width="0.1524" layer="91"/>
 <label x="116.84" y="27.94" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="JP3" gate="G$1" pin="2"/>
+<wire x1="109.22" y1="-2.54" x2="109.22" y2="7.62" width="0.1524" layer="91"/>
+<label x="109.22" y="7.62" size="1.778" layer="95" rot="R90"/>
 </segment>
 </net>
 <net name="LED2" class="0">
