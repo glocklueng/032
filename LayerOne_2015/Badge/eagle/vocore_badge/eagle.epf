@@ -440,8 +440,8 @@ UsedLibrary="drilegend.lbr"
 
 [Win_1]
 Type="Control Panel"
-Loc="2560 0 3503 1161"
-State=2
+Loc="0 0 783 1121"
+State=1
 Number=0
 
 [Desktop]
