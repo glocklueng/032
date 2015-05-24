@@ -25,7 +25,7 @@
       <Tool Name="postbuild" Command="" Options="" />
     </Toolchain>
   </Toolchains>
-  <Project Name="Bootloadable L12015" Path="F:\032\LayerOne_2015\Badge\software\led_badge\BadgeFirmware\Bootloadable L12015.cydsn" Version="4.20" Type="Bootloadable">
+  <Project Name="Bootloadable L12015" Path="C:\code\032\LayerOne_2015\Badge\software\led_badge\BadgeFirmware\Bootloadable L12015.cydsn" Version="4.20" Type="Bootloadable">
     <CMSIS_SVD_File>Bootloadable L12015.svd</CMSIS_SVD_File>
     <Datasheet />
     <LinkerFiles>
@@ -33,8 +33,8 @@
       <LinkerFile Toolchain="ARM MDK Generic">.\Generated_Source\PSoC4\Cm0RealView.scat</LinkerFile>
     </LinkerFiles>
     <Folders>
-      <Folder BuildType="BUILD" Path="F:\032\LayerOne_2015\Badge\software\led_badge\BadgeFirmware\Bootloadable L12015.cydsn">
-        <Files Root="F:\032\LayerOne_2015\Badge\software\led_badge\BadgeFirmware\Bootloadable L12015.cydsn">
+      <Folder BuildType="BUILD" Path="C:\code\032\LayerOne_2015\Badge\software\led_badge\BadgeFirmware\Bootloadable L12015.cydsn">
+        <Files Root="C:\code\032\LayerOne_2015\Badge\software\led_badge\BadgeFirmware\Bootloadable L12015.cydsn">
           <File BuildType="BUILD" Toolchain="">.\main.c</File>
           <File BuildType="BUILD" Toolchain="">.\comms.c</File>
           <File BuildType="BUILD" Toolchain="">.\utils.c</File>
@@ -42,8 +42,8 @@
           <File BuildType="BUILD" Toolchain="">.\effects.h</File>
         </Files>
       </Folder>
-      <Folder BuildType="STRICT" Path="F:\032\LayerOne_2015\Badge\software\led_badge\BadgeFirmware\Bootloadable L12015.cydsn\Generated_Source\PSoC4">
-        <Files Root="F:\032\LayerOne_2015\Badge\software\led_badge\BadgeFirmware\Bootloadable L12015.cydsn">
+      <Folder BuildType="STRICT" Path="C:\code\032\LayerOne_2015\Badge\software\led_badge\BadgeFirmware\Bootloadable L12015.cydsn\Generated_Source\PSoC4">
+        <Files Root="C:\code\032\LayerOne_2015\Badge\software\led_badge\BadgeFirmware\Bootloadable L12015.cydsn">
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\cyfitter_cfg.h</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\cyfitter_cfg.c</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\cybootloader.c</File>
@@ -155,47 +155,47 @@
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC4\project.h</File>
         </Files>
       </Folder>
-      <Folder BuildType="STRICT" Path="F:\032\LayerOne_2015\Badge\software\led_badge\BadgeFirmware\Bootloadable L12015.cydsn\Export\ARM_GCC_Generic">
-        <Files Root="F:\032\LayerOne_2015\Badge\software\led_badge\BadgeFirmware\Bootloadable L12015.cydsn">
+      <Folder BuildType="STRICT" Path="C:\code\032\LayerOne_2015\Badge\software\led_badge\BadgeFirmware\Bootloadable L12015.cydsn\Export\ARM_GCC_Generic">
+        <Files Root="C:\code\032\LayerOne_2015\Badge\software\led_badge\BadgeFirmware\Bootloadable L12015.cydsn">
           <File BuildType="BUILD" Toolchain="ARM GCC Generic">.\Export\ARM_GCC_Generic\CyComponentLibrary.a</File>
         </Files>
       </Folder>
-      <Folder BuildType="STRICT" Path="F:\032\LayerOne_2015\Badge\software\led_badge\BadgeFirmware\Bootloadable L12015.cydsn\Export\ARM_MDK_Generic">
-        <Files Root="F:\032\LayerOne_2015\Badge\software\led_badge\BadgeFirmware\Bootloadable L12015.cydsn">
+      <Folder BuildType="STRICT" Path="C:\code\032\LayerOne_2015\Badge\software\led_badge\BadgeFirmware\Bootloadable L12015.cydsn\Export\ARM_MDK_Generic">
+        <Files Root="C:\code\032\LayerOne_2015\Badge\software\led_badge\BadgeFirmware\Bootloadable L12015.cydsn">
           <File BuildType="BUILD" Toolchain="ARM MDK Generic">.\Export\ARM_MDK_Generic\CyComponentLibrary.a</File>
         </Files>
       </Folder>
-      <Folder BuildType="STRICT" Path="F:\032\LayerOne_2015\Badge\software\led_badge\BadgeFirmware\Bootloadable L12015.cydsn\Export\ARM_IAR_Generic">
-        <Files Root="F:\032\LayerOne_2015\Badge\software\led_badge\BadgeFirmware\Bootloadable L12015.cydsn">
+      <Folder BuildType="STRICT" Path="C:\code\032\LayerOne_2015\Badge\software\led_badge\BadgeFirmware\Bootloadable L12015.cydsn\Export\ARM_IAR_Generic">
+        <Files Root="C:\code\032\LayerOne_2015\Badge\software\led_badge\BadgeFirmware\Bootloadable L12015.cydsn">
           <File BuildType="BUILD" Toolchain="ARM IAR Generic">.\Export\ARM_IAR_Generic\CyComponentLibrary.a</File>
         </Files>
       </Folder>
       <Folder BuildType="EXCLUDE" Path=".\codegentemp">
-        <Files Root="F:\032\LayerOne_2015\Badge\software\led_badge\BadgeFirmware\Bootloadable L12015.cydsn" />
+        <Files Root="C:\code\032\LayerOne_2015\Badge\software\led_badge\BadgeFirmware\Bootloadable L12015.cydsn" />
       </Folder>
       <Folder BuildType="EXCLUDE" Path=".\ARM_GCC_441">
-        <Files Root="F:\032\LayerOne_2015\Badge\software\led_badge\BadgeFirmware\Bootloadable L12015.cydsn" />
+        <Files Root="C:\code\032\LayerOne_2015\Badge\software\led_badge\BadgeFirmware\Bootloadable L12015.cydsn" />
       </Folder>
       <Folder BuildType="EXCLUDE" Path=".\ARM_GCC_473">
-        <Files Root="F:\032\LayerOne_2015\Badge\software\led_badge\BadgeFirmware\Bootloadable L12015.cydsn" />
+        <Files Root="C:\code\032\LayerOne_2015\Badge\software\led_badge\BadgeFirmware\Bootloadable L12015.cydsn" />
       </Folder>
       <Folder BuildType="EXCLUDE" Path=".\DP8051_Keil_951">
-        <Files Root="F:\032\LayerOne_2015\Badge\software\led_badge\BadgeFirmware\Bootloadable L12015.cydsn" />
+        <Files Root="C:\code\032\LayerOne_2015\Badge\software\led_badge\BadgeFirmware\Bootloadable L12015.cydsn" />
       </Folder>
       <Folder BuildType="EXCLUDE" Path=".\DP8051">
-        <Files Root="F:\032\LayerOne_2015\Badge\software\led_badge\BadgeFirmware\Bootloadable L12015.cydsn" />
+        <Files Root="C:\code\032\LayerOne_2015\Badge\software\led_badge\BadgeFirmware\Bootloadable L12015.cydsn" />
       </Folder>
       <Folder BuildType="EXCLUDE" Path=".\CortexM0">
-        <Files Root="F:\032\LayerOne_2015\Badge\software\led_badge\BadgeFirmware\Bootloadable L12015.cydsn" />
+        <Files Root="C:\code\032\LayerOne_2015\Badge\software\led_badge\BadgeFirmware\Bootloadable L12015.cydsn" />
       </Folder>
       <Folder BuildType="EXCLUDE" Path=".\CortexM3">
-        <Files Root="F:\032\LayerOne_2015\Badge\software\led_badge\BadgeFirmware\Bootloadable L12015.cydsn" />
+        <Files Root="C:\code\032\LayerOne_2015\Badge\software\led_badge\BadgeFirmware\Bootloadable L12015.cydsn" />
       </Folder>
       <Folder BuildType="EXCLUDE" Path=".\Generated_Source\PSoC3">
-        <Files Root="F:\032\LayerOne_2015\Badge\software\led_badge\BadgeFirmware\Bootloadable L12015.cydsn" />
+        <Files Root="C:\code\032\LayerOne_2015\Badge\software\led_badge\BadgeFirmware\Bootloadable L12015.cydsn" />
       </Folder>
       <Folder BuildType="EXCLUDE" Path=".\Generated_Source\PSoC5">
-        <Files Root="F:\032\LayerOne_2015\Badge\software\led_badge\BadgeFirmware\Bootloadable L12015.cydsn" />
+        <Files Root="C:\code\032\LayerOne_2015\Badge\software\led_badge\BadgeFirmware\Bootloadable L12015.cydsn" />
       </Folder>
     </Folders>
   </Project>
