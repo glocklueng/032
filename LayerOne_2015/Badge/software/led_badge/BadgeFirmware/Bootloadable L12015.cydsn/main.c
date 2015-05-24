@@ -373,7 +373,7 @@ int main()
 
 	StripLights_DisplayClear( 0 );
 
-	// test uarts 
+	// test uarts , use to talk directly to the esp from the psoc serial 
 	//echo_uart();
 //	run_server();
 
