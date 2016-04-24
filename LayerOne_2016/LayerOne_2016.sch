@@ -191,26 +191,6 @@
 <wire x1="-2.8" y1="-1.3" x2="-3.2" y2="-1.7" width="0.127" layer="21"/>
 <wire x1="-3.2" y1="-1.7" x2="-2.5" y2="-2.5" width="0.127" layer="21"/>
 </package>
-<package name="1X01">
-<description>&lt;b&gt;PIN HEADER&lt;/b&gt;</description>
-<wire x1="-0.635" y1="1.27" x2="0.635" y2="1.27" width="0.1524" layer="21"/>
-<wire x1="0.635" y1="1.27" x2="1.27" y2="0.635" width="0.1524" layer="21"/>
-<wire x1="1.27" y1="0.635" x2="1.27" y2="-0.635" width="0.1524" layer="21"/>
-<wire x1="1.27" y1="-0.635" x2="0.635" y2="-1.27" width="0.1524" layer="21"/>
-<wire x1="-1.27" y1="0.635" x2="-1.27" y2="-0.635" width="0.1524" layer="21"/>
-<wire x1="-0.635" y1="1.27" x2="-1.27" y2="0.635" width="0.1524" layer="21"/>
-<wire x1="-1.27" y1="-0.635" x2="-0.635" y2="-1.27" width="0.1524" layer="21"/>
-<wire x1="0.635" y1="-1.27" x2="-0.635" y2="-1.27" width="0.1524" layer="21"/>
-<pad name="1" x="0" y="0" drill="1.016" diameter="1.9304" shape="octagon"/>
-<text x="-1.3462" y="1.8288" size="1.27" layer="25" ratio="10">&gt;NAME</text>
-<text x="-1.27" y="-3.175" size="1.27" layer="27">&gt;VALUE</text>
-<rectangle x1="-0.254" y1="-0.254" x2="0.254" y2="0.254" layer="51"/>
-</package>
-<package name="1X01-CLEANBIG">
-<pad name="1" x="0" y="0" drill="1.016" diameter="1.778"/>
-<text x="-1.3462" y="1.8288" size="1.27" layer="25" ratio="10">&gt;NAME</text>
-<text x="-1.27" y="-3.175" size="1.27" layer="27">&gt;VALUE</text>
-</package>
 </packages>
 <symbols>
 <symbol name="WS2812B">
@@ -237,15 +217,6 @@
 <wire x1="1.016" y1="-1.016" x2="1.27" y2="-1.27" width="0.254" layer="94"/>
 <text x="2.54" y="3.048" size="0.6096" layer="95">&gt;NAME</text>
 </symbol>
-<symbol name="PINHD1">
-<wire x1="-6.35" y1="-2.54" x2="1.27" y2="-2.54" width="0.4064" layer="94"/>
-<wire x1="1.27" y1="-2.54" x2="1.27" y2="2.54" width="0.4064" layer="94"/>
-<wire x1="1.27" y1="2.54" x2="-6.35" y2="2.54" width="0.4064" layer="94"/>
-<wire x1="-6.35" y1="2.54" x2="-6.35" y2="-2.54" width="0.4064" layer="94"/>
-<text x="-6.35" y="3.175" size="1.778" layer="95">&gt;NAME</text>
-<text x="-6.35" y="-5.08" size="1.778" layer="96">&gt;VALUE</text>
-<pin name="1" x="-2.54" y="0" visible="pad" length="short" direction="pas" function="dot"/>
-</symbol>
 </symbols>
 <devicesets>
 <deviceset name="WS2812B" prefix="L">
@@ -259,32 +230,6 @@
 <connect gate="G$1" pin="DOUT" pad="2-DOUT"/>
 <connect gate="G$1" pin="GND" pad="3-GND"/>
 <connect gate="G$1" pin="VDD" pad="1-VDD"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-<deviceset name="PINHD-1X1" prefix="JP" uservalue="yes">
-<description>&lt;b&gt;Pin header 1x1 for 0.1" spacing&lt;/b&gt;
-&lt;p&gt;
-With round pins</description>
-<gates>
-<gate name="G$1" symbol="PINHD1" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="1X01">
-<connects>
-<connect gate="G$1" pin="1" pad="1"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-<device name="CB" package="1X01-CLEANBIG">
-<connects>
-<connect gate="G$1" pin="1" pad="1"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -6046,7 +5991,6 @@ Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
 <part name="SUPPLY20" library="supply2" deviceset="GND" device=""/>
 <part name="SUPPLY21" library="supply2" deviceset="GND" device=""/>
 <part name="SUPPLY22" library="supply2" deviceset="GND" device=""/>
-<part name="JP1-DOUT" library="adafruit" deviceset="PINHD-1X1" device="CB"/>
 <part name="C2" library="SparkFun-Passives" deviceset="CAP" device="0805"/>
 <part name="SUPPLY25" library="supply2" deviceset="VDD" device=""/>
 <part name="SUPPLY26" library="supply2" deviceset="GND" device=""/>
@@ -6149,6 +6093,7 @@ Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
 <part name="GND15" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="GND6" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="GND7" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
+<part name="JP14" library="SparkFun-Connectors" deviceset="M03" device="1X03_NO_SILK"/>
 </parts>
 <sheets>
 <sheet>
@@ -6198,7 +6143,6 @@ Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
 <instance part="SUPPLY20" gate="GND" x="109.22" y="27.94"/>
 <instance part="SUPPLY21" gate="GND" x="124.46" y="27.94"/>
 <instance part="SUPPLY22" gate="GND" x="139.7" y="27.94"/>
-<instance part="JP1-DOUT" gate="G$1" x="152.4" y="33.02" rot="R270"/>
 <instance part="C2" gate="G$1" x="20.32" y="88.9" rot="R90"/>
 <instance part="SUPPLY25" gate="G$1" x="12.7" y="93.98"/>
 <instance part="SUPPLY26" gate="GND" x="25.4" y="86.36"/>
@@ -6250,6 +6194,7 @@ Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
 <instance part="C20" gate="G$1" x="147.32" y="50.8" rot="R90"/>
 <instance part="SUPPLY61" gate="G$1" x="139.7" y="55.88"/>
 <instance part="SUPPLY62" gate="GND" x="152.4" y="48.26"/>
+<instance part="JP14" gate="G$1" x="152.4" y="17.78" rot="R90"/>
 </instances>
 <busses>
 </busses>
@@ -6436,6 +6381,10 @@ Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
 <wire x1="139.7" y1="35.56" x2="139.7" y2="30.48" width="0.2032" layer="91"/>
 <pinref part="SUPPLY22" gate="GND" pin="GND"/>
 <pinref part="L20" gate="G$1" pin="GND"/>
+<wire x1="139.7" y1="35.56" x2="149.86" y2="35.56" width="0.1524" layer="91"/>
+<pinref part="JP14" gate="G$1" pin="3"/>
+<wire x1="149.86" y1="35.56" x2="149.86" y2="25.4" width="0.1524" layer="91"/>
+<junction x="139.7" y="35.56"/>
 </segment>
 <segment>
 <wire x1="124.46" y1="35.56" x2="124.46" y2="30.48" width="0.2032" layer="91"/>
@@ -6591,11 +6540,9 @@ Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
 <net name="N$26" class="0">
 <segment>
 <pinref part="L20" gate="G$1" pin="DOUT"/>
-<wire x1="144.78" y1="40.64" x2="147.32" y2="40.64" width="0.2032" layer="91"/>
-<wire x1="147.32" y1="40.64" x2="149.86" y2="40.64" width="0.2032" layer="91"/>
-<wire x1="149.86" y1="40.64" x2="152.4" y2="40.64" width="0.2032" layer="91"/>
-<wire x1="152.4" y1="40.64" x2="152.4" y2="35.56" width="0.2032" layer="91"/>
-<pinref part="JP1-DOUT" gate="G$1" pin="1"/>
+<wire x1="144.78" y1="40.64" x2="152.4" y2="40.64" width="0.2032" layer="91"/>
+<wire x1="152.4" y1="40.64" x2="152.4" y2="25.4" width="0.2032" layer="91"/>
+<pinref part="JP14" gate="G$1" pin="2"/>
 </segment>
 </net>
 <net name="N$27" class="0">
@@ -6779,6 +6726,13 @@ Various common sizes : AA, AAA, 20mm coin cell and 12mm coin cell.</description>
 <junction x="139.7" y="50.8"/>
 <pinref part="SUPPLY61" gate="G$1" pin="VDD"/>
 <pinref part="L20" gate="G$1" pin="VDD"/>
+</segment>
+<segment>
+<pinref part="JP14" gate="G$1" pin="1"/>
+<wire x1="157.48" y1="35.56" x2="157.48" y2="53.34" width="0.2032" layer="91"/>
+<wire x1="157.48" y1="35.56" x2="154.94" y2="35.56" width="0.1524" layer="91"/>
+<wire x1="154.94" y1="35.56" x2="154.94" y2="25.4" width="0.1524" layer="91"/>
+<label x="157.48" y="55.88" size="1.778" layer="95" rot="R90"/>
 </segment>
 </net>
 </nets>
