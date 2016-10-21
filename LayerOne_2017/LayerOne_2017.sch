@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="7.6.0">
+<eagle version="7.7.0">
 <drawing>
 <settings>
 <setting alwaysvectorfont="yes"/>
@@ -4011,6 +4011,7 @@ MMBT5088LT1G - TRANS-11160 (SOT-23, 50 mA 30V)&lt;br&gt;</description>
 <part name="R14" library="microbuilder" deviceset="RESISTOR" device="_0805" value="1K"/>
 <part name="R15" library="microbuilder" deviceset="RESISTOR" device="_0805" value="1K"/>
 <part name="CN1" library="microbuilder" deviceset="USB_TYPEA" device="PTHFML"/>
+<part name="R16" library="microbuilder" deviceset="RESISTOR" device="_0805" value="220"/>
 </parts>
 <sheets>
 <sheet>
@@ -4843,13 +4844,14 @@ MMBT5088LT1G - TRANS-11160 (SOT-23, 50 mA 30V)&lt;br&gt;</description>
 <instance part="U$2" gate="G$1" x="116.84" y="106.68"/>
 <instance part="C2" gate="G$1" x="134.62" y="88.9" rot="R90"/>
 <instance part="C3" gate="G$1" x="134.62" y="73.66" rot="R90"/>
-<instance part="XT1" gate="G$1" x="121.92" y="76.2" rot="R90"/>
+<instance part="XT1" gate="G$1" x="124.46" y="76.2" rot="R90"/>
 <instance part="U$13" gate="G$1" x="142.24" y="68.58"/>
 <instance part="Q2" gate="G$1" x="175.26" y="119.38"/>
 <instance part="R1" gate="G$1" x="160.02" y="119.38"/>
 <instance part="R13" gate="G$1" x="167.64" y="104.14" rot="R90"/>
 <instance part="R14" gate="G$1" x="167.64" y="127" rot="R90"/>
 <instance part="R15" gate="G$1" x="177.8" y="104.14" rot="R90"/>
+<instance part="R16" gate="G$1" x="116.84" y="78.74" rot="R90"/>
 </instances>
 <busses>
 </busses>
@@ -4907,25 +4909,23 @@ MMBT5088LT1G - TRANS-11160 (SOT-23, 50 mA 30V)&lt;br&gt;</description>
 <net name="N$10" class="0">
 <segment>
 <pinref part="IC1" gate="G$1" pin="PH1"/>
-<wire x1="101.6" y1="88.9" x2="124.46" y2="88.9" width="0.1524" layer="91"/>
+<wire x1="101.6" y1="88.9" x2="127" y2="88.9" width="0.1524" layer="91"/>
 <pinref part="C2" gate="G$1" pin="1"/>
 <pinref part="XT1" gate="G$1" pin="B"/>
-<wire x1="124.46" y1="88.9" x2="129.54" y2="88.9" width="0.1524" layer="91"/>
-<wire x1="124.46" y1="86.36" x2="124.46" y2="88.9" width="0.1524" layer="91"/>
-<junction x="124.46" y="88.9"/>
+<wire x1="127" y1="88.9" x2="129.54" y2="88.9" width="0.1524" layer="91"/>
+<wire x1="127" y1="86.36" x2="127" y2="88.9" width="0.1524" layer="91"/>
+<junction x="127" y="88.9"/>
 </segment>
 </net>
 <net name="N$18" class="0">
 <segment>
-<pinref part="IC1" gate="G$1" pin="PH0"/>
-<wire x1="101.6" y1="86.36" x2="116.84" y2="86.36" width="0.1524" layer="91"/>
-<wire x1="116.84" y1="86.36" x2="116.84" y2="73.66" width="0.1524" layer="91"/>
-<wire x1="116.84" y1="73.66" x2="124.46" y2="73.66" width="0.1524" layer="91"/>
+<wire x1="116.84" y1="73.66" x2="127" y2="73.66" width="0.1524" layer="91"/>
 <pinref part="C3" gate="G$1" pin="1"/>
 <pinref part="XT1" gate="G$1" pin="A"/>
-<wire x1="124.46" y1="73.66" x2="129.54" y2="73.66" width="0.1524" layer="91"/>
-<wire x1="124.46" y1="76.2" x2="124.46" y2="73.66" width="0.1524" layer="91"/>
-<junction x="124.46" y="73.66"/>
+<wire x1="127" y1="73.66" x2="129.54" y2="73.66" width="0.1524" layer="91"/>
+<wire x1="127" y1="76.2" x2="127" y2="73.66" width="0.1524" layer="91"/>
+<junction x="127" y="73.66"/>
+<pinref part="R16" gate="G$1" pin="1"/>
 </segment>
 </net>
 <net name="TFT_RESET" class="0">
@@ -5051,12 +5051,14 @@ MMBT5088LT1G - TRANS-11160 (SOT-23, 50 mA 30V)&lt;br&gt;</description>
 <segment>
 <pinref part="IC1" gate="G$1" pin="PB13"/>
 <wire x1="40.64" y1="43.18" x2="30.48" y2="43.18" width="0.1524" layer="91"/>
+<label x="30.48" y="43.18" size="1.778" layer="95" rot="R180"/>
 </segment>
 </net>
 <net name="N$7" class="0">
 <segment>
 <pinref part="IC1" gate="G$1" pin="PB14"/>
 <wire x1="40.64" y1="40.64" x2="30.48" y2="40.64" width="0.1524" layer="91"/>
+<label x="30.48" y="40.64" size="1.778" layer="95" rot="R180"/>
 </segment>
 </net>
 <net name="N$8" class="0">
@@ -5112,6 +5114,7 @@ MMBT5088LT1G - TRANS-11160 (SOT-23, 50 mA 30V)&lt;br&gt;</description>
 <segment>
 <pinref part="Q2" gate="G$1" pin="C"/>
 <wire x1="177.8" y1="124.46" x2="177.8" y2="134.62" width="0.1524" layer="91"/>
+<label x="177.8" y="134.62" size="1.778" layer="95" rot="R90"/>
 </segment>
 </net>
 <net name="N$3" class="0">
@@ -5138,24 +5141,36 @@ MMBT5088LT1G - TRANS-11160 (SOT-23, 50 mA 30V)&lt;br&gt;</description>
 <segment>
 <pinref part="R1" gate="G$1" pin="1"/>
 <wire x1="154.94" y1="119.38" x2="152.4" y2="119.38" width="0.1524" layer="91"/>
+<label x="152.4" y="119.38" size="1.778" layer="95" rot="R180"/>
 </segment>
 </net>
 <net name="N$9" class="0">
 <segment>
 <pinref part="R14" gate="G$1" pin="2"/>
 <wire x1="167.64" y1="132.08" x2="167.64" y2="134.62" width="0.1524" layer="91"/>
+<label x="167.64" y="134.62" size="1.778" layer="95" rot="R90"/>
 </segment>
 </net>
 <net name="N$11" class="0">
 <segment>
 <pinref part="R13" gate="G$1" pin="1"/>
 <wire x1="167.64" y1="99.06" x2="167.64" y2="93.98" width="0.1524" layer="91"/>
+<label x="167.64" y="93.98" size="1.778" layer="95" rot="R270"/>
 </segment>
 </net>
 <net name="N$12" class="0">
 <segment>
 <pinref part="R15" gate="G$1" pin="1"/>
 <wire x1="177.8" y1="99.06" x2="177.8" y2="93.98" width="0.1524" layer="91"/>
+<label x="177.8" y="93.98" size="1.778" layer="95" rot="R270"/>
+</segment>
+</net>
+<net name="N$19" class="0">
+<segment>
+<pinref part="IC1" gate="G$1" pin="PH0"/>
+<wire x1="101.6" y1="86.36" x2="116.84" y2="86.36" width="0.1524" layer="91"/>
+<pinref part="R16" gate="G$1" pin="2"/>
+<wire x1="116.84" y1="86.36" x2="116.84" y2="83.82" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>
