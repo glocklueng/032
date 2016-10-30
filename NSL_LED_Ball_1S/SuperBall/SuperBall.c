@@ -1,6 +1,7 @@
 // todo:
 // convert the spi to software bitbang.
 // write comments, tidy up code :)
+// fuse 0xFF 0xD9 0xCE
 
 #include "SuperBall.h"
 
