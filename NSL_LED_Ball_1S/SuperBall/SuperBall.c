@@ -22,6 +22,19 @@ void loop_scroll(void);
 
 static char String[]="P";
 
+void delay_ms(uint16_t count) {
+	while(count--) {
+		_delay_ms(1);
+
+	}
+}
+
+void delay_us(uint16_t count) {
+	while(count--) {
+		_delay_us(1);
+
+	}
+}
 
 void USART_init(void)
 {
@@ -295,7 +308,24 @@ int main(void)
 			_delay_ms( 1000 );
 		}
 
-		//gMode = 14;
+		//gMode = 0;
+		/*
+		0 -  spiral
+		1 - fadey
+		2 - swirly
+		3 -  text
+		4 - slow fill with fade up
+		5 - smooth up and down larson
+		6 - smooth up and down larson, every other (not smooth)
+		7 - fast up and down larson
+		8 - super fast up and down larson
+		9 - hula hoop
+		10- random pixels
+		11- larson up repeated
+		12- strange up down flash. maybe too fast ( bad)
+		13- rotate starry swirl
+		14- brads trails 
+		*/
 
 		switch( gMode) {
 
@@ -464,7 +494,7 @@ int main(void)
 
 						LEDscan2(4096,(offset*2),1);
 					  	WriteLEDArray(1);  
-						_delay_ms(i*6);
+						delay_ms(i*6);
  					
 				}
 				}
@@ -520,20 +550,22 @@ int main(void)
 	
 			case 12:
 			{
-
-
-				
 				for(unsigned int i =1 ; i < 6 ;i++){
-				LEDscan(0,0,1);
+					LEDscan(0,0,1);
+					
+					_delay_ms(10);
+					
 					for (unsigned int offset = 0; offset < 360; offset += 16) {
 
 						LEDscan2Add(4096/i,offset,1);
+						_delay_ms(10);
 						for(int k =1 ; k <= 16 ;k++)
 					  	  WriteLEDArray(1);  
+							_delay_ms(10);
 
  					}
 				}
-			 gMode=0;
+			 gMode=13;
 			}
 			break;
 
@@ -585,7 +617,7 @@ int main(void)
 						else if ((ran>30720)&&DotDirY[x]!=0) {DotDirY[x]=0;DotDirX[x]=-1;}
 					}
 				WriteArrayOffset(NUM_TLC5947,0);
-				_delay_ms(rand()%100);
+				delay_ms(rand()%100);
 				}
 			}
 
