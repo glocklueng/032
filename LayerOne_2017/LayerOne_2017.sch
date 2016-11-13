@@ -8794,7 +8794,7 @@ Source: http://www.diodes.com/datasheets/ds23001.pdf</description>
 <attribute name="PARTNO" value="RMCF0603JT10K0"/>
 </part>
 <part name="X1" library="adafruit" deviceset="STEREOJACK" device=""/>
-<part name="C1" library="SparkFun-Passives" deviceset="CAP" device="0805"/>
+<part name="C1" library="SparkFun-Passives" deviceset="CAP" device="0805" value="1uF/16V"/>
 <part name="U1" library="SparkFun" deviceset="MCP2551" device="" value="SN65HVD235DR"/>
 <part name="U2" library="SparkFun" deviceset="MCP2551" device="" value="SN65HVD235DR"/>
 <part name="JP2" library="microbuilder" deviceset="HEADER-1X2" device=""/>
@@ -8855,8 +8855,8 @@ Source: http://www.diodes.com/datasheets/ds23001.pdf</description>
 <part name="IC2" library="burr-brown" deviceset="REG1117" device=""/>
 <part name="U$10" library="microbuilder" deviceset="GND" device=""/>
 <part name="JP5" library="SparkFun-Connectors" deviceset="M03" device="PTH"/>
-<part name="C4" library="SparkFun-Passives" deviceset="CAP" device="0805" value="1uF"/>
-<part name="C5" library="SparkFun-Passives" deviceset="CAP" device="0805" value="1uF"/>
+<part name="C4" library="SparkFun-Passives" deviceset="CAP" device="0805" value="1uF/16V"/>
+<part name="C5" library="SparkFun-Passives" deviceset="CAP" device="0805" value="1uF/16V"/>
 <part name="U$11" library="microbuilder" deviceset="GND" device=""/>
 <part name="U$12" library="microbuilder" deviceset="GND" device=""/>
 <part name="XT1" library="STM32-PROX" deviceset="XTAL-SMD-CITIZEN-CS10" device="" value="8Mhz/16pF"/>
@@ -8896,14 +8896,14 @@ Source: http://www.diodes.com/datasheets/ds23001.pdf</description>
 <part name="FID2" library="microbuilder" deviceset="FIDUCIAL" device="ROUND"/>
 <part name="FID3" library="microbuilder" deviceset="FIDUCIAL" device="ROUND"/>
 <part name="C10" library="SparkFun-Capacitors" deviceset="CAP" device="0805" value="100nF"/>
-<part name="C11" library="SparkFun-Capacitors" deviceset="CAP" device="0805" value="1uF"/>
+<part name="C11" library="SparkFun-Capacitors" deviceset="CAP" device="0805" value="1uF/16V"/>
 <part name="C12" library="SparkFun-Capacitors" deviceset="CAP" device="0805" value="100nF"/>
-<part name="C13" library="SparkFun-Capacitors" deviceset="CAP" device="0805" value="1uF"/>
+<part name="C13" library="SparkFun-Capacitors" deviceset="CAP" device="0805" value="1uF/16V"/>
 <part name="U$17" library="microbuilder" deviceset="GND" device=""/>
 <part name="U$18" library="microbuilder" deviceset="GND" device=""/>
 <part name="U$1" library="microbuilder" deviceset="GND" device=""/>
 <part name="U5" library="STM32-PROX" deviceset="FERRITE" device="0805"/>
-<part name="C14" library="SparkFun-Passives" deviceset="CAP" device="0805" value="4.7uF/X7R"/>
+<part name="C14" library="SparkFun-Passives" deviceset="CAP" device="0805" value="4.7uF/X7R/10V"/>
 <part name="JP6" library="microbuilder" deviceset="HEADER-1X2" device=""/>
 <part name="JP7" library="microbuilder" deviceset="HEADER-1X2" device=""/>
 <part name="SW1" library="microbuilder" deviceset="SWITCH_SPST" device=""/>
@@ -8912,9 +8912,9 @@ Source: http://www.diodes.com/datasheets/ds23001.pdf</description>
 <part name="U$20" library="microbuilder" deviceset="GND" device=""/>
 <part name="U$23" library="LayerOne_2017" deviceset="TI-BQ2407X" device="BQ24075"/>
 <part name="U$24" library="STM32-PROX" deviceset="BATT" device=""/>
-<part name="C15" library="SparkFun-Passives" deviceset="CAP" device="0805" value="1uF 16V"/>
+<part name="C15" library="SparkFun-Passives" deviceset="CAP" device="0805" value="1uF/16V"/>
 <part name="U$25" library="microbuilder" deviceset="GND" device=""/>
-<part name="C16" library="SparkFun-Passives" deviceset="CAP" device="0805" value="4.7uF 10V"/>
+<part name="C16" library="SparkFun-Passives" deviceset="CAP" device="0805" value="4.7uF/X7R/10V"/>
 <part name="U$26" library="microbuilder" deviceset="GND" device=""/>
 <part name="SW3" library="microbuilder" deviceset="SWITCH_SPST" device=""/>
 <part name="R20" library="SparkFun-Passives" deviceset="RESISTOR" device="0805-RES" value="46.4K">
