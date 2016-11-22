@@ -6065,6 +6065,26 @@ by exp-lbrs.ulp</description>
 <rectangle x1="1.25" y1="0.05" x2="1.45" y2="0.45" layer="51" rot="R270"/>
 <rectangle x1="1.25" y1="0.55" x2="1.45" y2="0.95" layer="51" rot="R270"/>
 </package>
+<package name="TDFN12_STM">
+<wire x1="1" y1="1.5" x2="1" y2="-1.5" width="0.127" layer="21"/>
+<wire x1="1" y1="-1.5" x2="-1" y2="-1.5" width="0.127" layer="21"/>
+<wire x1="-1" y1="-1.5" x2="-1" y2="1.5" width="0.127" layer="21"/>
+<wire x1="-1" y1="1.5" x2="1" y2="1.5" width="0.127" layer="21"/>
+<circle x="-1.8" y="1.25" radius="0.25" width="0.127" layer="21"/>
+<text x="0" y="2" size="0.8128" layer="21" align="center">&gt;NAME</text>
+<smd name="1" x="-0.8" y="1.25" dx="0.25" dy="0.7" layer="1" rot="R270"/>
+<smd name="2" x="-0.8" y="0.75" dx="0.25" dy="0.7" layer="1" rot="R270"/>
+<smd name="3" x="-0.8" y="0.25" dx="0.25" dy="0.7" layer="1" rot="R270"/>
+<smd name="4" x="-0.8" y="-0.25" dx="0.25" dy="0.7" layer="1" rot="R270"/>
+<smd name="5" x="-0.8" y="-0.75" dx="0.25" dy="0.7" layer="1" rot="R270"/>
+<smd name="6" x="-0.8" y="-1.25" dx="0.25" dy="0.7" layer="1" rot="R270"/>
+<smd name="7" x="0.8" y="-1.25" dx="0.25" dy="0.7" layer="1" rot="R270"/>
+<smd name="8" x="0.8" y="-0.75" dx="0.25" dy="0.7" layer="1" rot="R270"/>
+<smd name="9" x="0.8" y="-0.25" dx="0.25" dy="0.7" layer="1" rot="R270"/>
+<smd name="10" x="0.8" y="0.25" dx="0.25" dy="0.7" layer="1" rot="R270"/>
+<smd name="11" x="0.8" y="0.75" dx="0.25" dy="0.7" layer="1" rot="R270"/>
+<smd name="12" x="0.8" y="1.25" dx="0.25" dy="0.7" layer="1" rot="R270"/>
+</package>
 </packages>
 <symbols>
 <symbol name="BQ2407X">
@@ -6100,6 +6120,24 @@ by exp-lbrs.ulp</description>
 <pin name="VDD" x="15.24" y="-2.54" length="short" direction="pwr" rot="R180"/>
 <pin name="BOOT" x="15.24" y="7.62" length="short" direction="pwr" rot="R180"/>
 <pin name="SW" x="-15.24" y="7.62" length="short" direction="pwr"/>
+</symbol>
+<symbol name="STM6600">
+<wire x1="-20.32" y1="15.24" x2="-20.32" y2="-15.24" width="0.254" layer="94"/>
+<wire x1="-20.32" y1="-15.24" x2="20.32" y2="-15.24" width="0.254" layer="94"/>
+<wire x1="20.32" y1="-15.24" x2="20.32" y2="15.24" width="0.254" layer="94"/>
+<wire x1="20.32" y1="15.24" x2="-20.32" y2="15.24" width="0.254" layer="94"/>
+<pin name="!SR" x="-25.4" y="-10.16" length="middle"/>
+<pin name="!PB" x="-25.4" y="2.54" length="middle"/>
+<pin name="!VCCLO" x="-25.4" y="7.62" length="middle"/>
+<pin name="VCC" x="-10.16" y="20.32" length="middle" rot="R270"/>
+<pin name="EN" x="10.16" y="20.32" length="middle" rot="R270"/>
+<pin name="!RST" x="25.4" y="10.16" length="middle" rot="R180"/>
+<pin name="PSHOLD" x="25.4" y="5.08" length="middle" rot="R180"/>
+<pin name="!INT" x="25.4" y="0" length="middle" rot="R180"/>
+<pin name="VREF" x="25.4" y="-10.16" length="middle" rot="R180"/>
+<pin name="SCRD" x="10.16" y="-20.32" length="middle" rot="R90"/>
+<pin name="GND" x="-10.16" y="-20.32" length="middle" rot="R90"/>
+<pin name="!PBOUT" x="25.4" y="-5.08" length="middle" rot="R180"/>
 </symbol>
 </symbols>
 <devicesets>
@@ -6146,6 +6184,32 @@ by exp-lbrs.ulp</description>
 <connect gate="G$1" pin="SGND" pad="5"/>
 <connect gate="G$1" pin="SW" pad="8"/>
 <connect gate="G$1" pin="VDD" pad="6"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="STM6600">
+<gates>
+<gate name="G$1" symbol="STM6600" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="TDFN12_STM">
+<connects>
+<connect gate="G$1" pin="!INT" pad="11"/>
+<connect gate="G$1" pin="!PB" pad="6"/>
+<connect gate="G$1" pin="!PBOUT" pad="8"/>
+<connect gate="G$1" pin="!RST" pad="10"/>
+<connect gate="G$1" pin="!SR" pad="2"/>
+<connect gate="G$1" pin="!VCCLO" pad="7"/>
+<connect gate="G$1" pin="EN" pad="9"/>
+<connect gate="G$1" pin="GND" pad="12"/>
+<connect gate="G$1" pin="PSHOLD" pad="4"/>
+<connect gate="G$1" pin="SCRD" pad="5"/>
+<connect gate="G$1" pin="VCC" pad="1"/>
+<connect gate="G$1" pin="VREF" pad="3"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -13577,6 +13641,11 @@ Source: AVX .. aphvc.pdf</description>
 <part name="C20" library="SparkFun-Passives" deviceset="CAP" device="0805" value="100nF"/>
 <part name="U$35" library="microbuilder" deviceset="GND" device=""/>
 <part name="U$36" library="microbuilder" deviceset="GND" device=""/>
+<part name="U$29" library="LayerOne_2017" deviceset="STM6600" device=""/>
+<part name="S2" library="Nullspace" deviceset="SPARKFUN_SWITCH-MOMENTARY-2" device="SMD" value=""/>
+<part name="U$37" library="microbuilder" deviceset="GND" device=""/>
+<part name="S3" library="Nullspace" deviceset="SPARKFUN_SWITCH-MOMENTARY-2" device="SMD" value=""/>
+<part name="U$38" library="microbuilder" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -15230,6 +15299,47 @@ Source: AVX .. aphvc.pdf</description>
 <pinref part="C20" gate="G$1" pin="1"/>
 <wire x1="93.98" y1="76.2" x2="93.98" y2="71.12" width="0.1524" layer="91"/>
 <junction x="93.98" y="76.2"/>
+</segment>
+</net>
+</nets>
+</sheet>
+<sheet>
+<plain>
+</plain>
+<instances>
+<instance part="U$29" gate="G$1" x="0" y="0"/>
+<instance part="S2" gate="G$1" x="-50.8" y="2.54"/>
+<instance part="U$37" gate="G$1" x="-73.66" y="2.54" rot="R270"/>
+<instance part="S3" gate="G$1" x="-50.8" y="-10.16"/>
+<instance part="U$38" gate="G$1" x="-73.66" y="-10.16" rot="R270"/>
+</instances>
+<busses>
+</busses>
+<nets>
+<net name="GND" class="0">
+<segment>
+<pinref part="U$37" gate="G$1" pin="GND"/>
+<pinref part="S2" gate="G$1" pin="1"/>
+<wire x1="-71.12" y1="2.54" x2="-55.88" y2="2.54" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="U$38" gate="G$1" pin="GND"/>
+<pinref part="S3" gate="G$1" pin="1"/>
+<wire x1="-71.12" y1="-10.16" x2="-55.88" y2="-10.16" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$1" class="0">
+<segment>
+<pinref part="S2" gate="G$1" pin="2"/>
+<pinref part="U$29" gate="G$1" pin="!PB"/>
+<wire x1="-45.72" y1="2.54" x2="-25.4" y2="2.54" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$13" class="0">
+<segment>
+<pinref part="S3" gate="G$1" pin="2"/>
+<pinref part="U$29" gate="G$1" pin="!SR"/>
+<wire x1="-45.72" y1="-10.16" x2="-25.4" y2="-10.16" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>
