@@ -14269,7 +14269,7 @@ Source: AVX .. aphvc.pdf</description>
 <segment>
 <pinref part="IC1" gate="G$1" pin="PC13"/>
 <wire x1="101.6" y1="76.2" x2="106.68" y2="76.2" width="0.1524" layer="91"/>
-<label x="107.95" y="77.47" size="1.778" layer="95" rot="R270"/>
+<label x="101.346" y="76.454" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="SELECT1" class="0">
@@ -14316,6 +14316,27 @@ Source: AVX .. aphvc.pdf</description>
 <wire x1="180.34" y1="38.1" x2="180.34" y2="45.72" width="0.1524" layer="91"/>
 <wire x1="180.34" y1="45.72" x2="187.96" y2="45.72" width="0.1524" layer="91"/>
 <label x="187.96" y="43.18" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="PBOUT" class="0">
+<segment>
+<pinref part="IC1" gate="G$1" pin="PC12"/>
+<wire x1="101.6" y1="73.66" x2="111.76" y2="73.66" width="0.1524" layer="91"/>
+<label x="106.68" y="73.66" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="PSHOLD" class="0">
+<segment>
+<pinref part="IC1" gate="G$1" pin="PC11"/>
+<wire x1="101.6" y1="71.12" x2="111.76" y2="71.12" width="0.1524" layer="91"/>
+<label x="106.68" y="71.12" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="INT" class="0">
+<segment>
+<pinref part="IC1" gate="G$1" pin="PC10"/>
+<wire x1="101.6" y1="68.58" x2="111.76" y2="68.58" width="0.1524" layer="91"/>
+<label x="106.68" y="68.58" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>
