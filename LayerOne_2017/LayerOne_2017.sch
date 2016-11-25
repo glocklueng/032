@@ -14364,7 +14364,7 @@ Source: AVX .. aphvc.pdf</description>
 <instance part="R10" gate="G$1" x="30.48" y="25.4"/>
 <instance part="R11" gate="G$1" x="20.32" y="40.64" rot="R90"/>
 <instance part="U$21" gate="G$1" x="20.32" y="53.34"/>
-<instance part="U3" gate="G$1" x="119.38" y="43.18"/>
+<instance part="U3" gate="G$1" x="124.46" y="43.18"/>
 <instance part="U$6" gate="G$1" x="81.28" y="43.18"/>
 <instance part="U$19" gate="G$1" x="93.98" y="40.64"/>
 <instance part="U$22" gate="G$1" x="96.52" y="68.58" rot="R180"/>
@@ -14389,13 +14389,13 @@ Source: AVX .. aphvc.pdf</description>
 </segment>
 <segment>
 <pinref part="U3" gate="G$1" pin="GND@2"/>
-<wire x1="106.68" y1="43.18" x2="93.98" y2="43.18" width="0.1524" layer="91"/>
+<wire x1="111.76" y1="43.18" x2="93.98" y2="43.18" width="0.1524" layer="91"/>
 <pinref part="U$19" gate="G$1" pin="GND"/>
 </segment>
 <segment>
 <pinref part="U3" gate="G$1" pin="GND@1"/>
 <pinref part="U$22" gate="G$1" pin="GND"/>
-<wire x1="106.68" y1="60.96" x2="96.52" y2="60.96" width="0.1524" layer="91"/>
+<wire x1="111.76" y1="60.96" x2="96.52" y2="60.96" width="0.1524" layer="91"/>
 <wire x1="96.52" y1="60.96" x2="96.52" y2="66.04" width="0.1524" layer="91"/>
 </segment>
 <segment>
@@ -14408,11 +14408,11 @@ Source: AVX .. aphvc.pdf</description>
 <segment>
 <pinref part="U3" gate="G$1" pin="LEDA"/>
 <pinref part="U$6" gate="G$1" pin="3.3V"/>
-<wire x1="106.68" y1="38.1" x2="99.06" y2="38.1" width="0.1524" layer="91"/>
+<wire x1="111.76" y1="38.1" x2="99.06" y2="38.1" width="0.1524" layer="91"/>
 <wire x1="99.06" y1="38.1" x2="81.28" y2="38.1" width="0.1524" layer="91"/>
 <wire x1="81.28" y1="38.1" x2="81.28" y2="40.64" width="0.1524" layer="91"/>
 <pinref part="U3" gate="G$1" pin="VCC"/>
-<wire x1="106.68" y1="40.64" x2="99.06" y2="40.64" width="0.1524" layer="91"/>
+<wire x1="111.76" y1="40.64" x2="99.06" y2="40.64" width="0.1524" layer="91"/>
 <wire x1="99.06" y1="40.64" x2="99.06" y2="38.1" width="0.1524" layer="91"/>
 <junction x="99.06" y="38.1"/>
 </segment>
@@ -14434,7 +14434,7 @@ Source: AVX .. aphvc.pdf</description>
 </net>
 <net name="TFT_CS" class="0">
 <segment>
-<wire x1="106.68" y1="50.8" x2="99.06" y2="50.8" width="0.1524" layer="91"/>
+<wire x1="111.76" y1="50.8" x2="99.06" y2="50.8" width="0.1524" layer="91"/>
 <label x="99.06" y="50.8" size="1.778" layer="95" rot="R180" xref="yes"/>
 <pinref part="U3" gate="G$1" pin="CS"/>
 </segment>
@@ -14446,7 +14446,7 @@ Source: AVX .. aphvc.pdf</description>
 </net>
 <net name="TFT_DC" class="0">
 <segment>
-<wire x1="73.66" y1="53.34" x2="106.68" y2="53.34" width="0.1524" layer="91"/>
+<wire x1="73.66" y1="53.34" x2="111.76" y2="53.34" width="0.1524" layer="91"/>
 <label x="73.66" y="53.34" size="1.778" layer="95" rot="R180" xref="yes"/>
 <pinref part="U3" gate="G$1" pin="D/C"/>
 </segment>
@@ -14458,7 +14458,7 @@ Source: AVX .. aphvc.pdf</description>
 </net>
 <net name="TFT_MOSI" class="0">
 <segment>
-<wire x1="106.68" y1="48.26" x2="53.34" y2="48.26" width="0.1524" layer="91"/>
+<wire x1="111.76" y1="48.26" x2="53.34" y2="48.26" width="0.1524" layer="91"/>
 <label x="53.34" y="48.26" size="1.778" layer="95" rot="R180" xref="yes"/>
 <pinref part="U3" gate="G$1" pin="MOSI"/>
 </segment>
@@ -14470,7 +14470,7 @@ Source: AVX .. aphvc.pdf</description>
 </net>
 <net name="TFT_SCK" class="0">
 <segment>
-<wire x1="106.68" y1="55.88" x2="99.06" y2="55.88" width="0.1524" layer="91"/>
+<wire x1="111.76" y1="55.88" x2="99.06" y2="55.88" width="0.1524" layer="91"/>
 <label x="99.06" y="55.88" size="1.778" layer="95" rot="R180" xref="yes"/>
 <pinref part="U3" gate="G$1" pin="SCK"/>
 </segment>
@@ -14482,7 +14482,7 @@ Source: AVX .. aphvc.pdf</description>
 </net>
 <net name="TFT_MISO" class="0">
 <segment>
-<wire x1="78.74" y1="45.72" x2="106.68" y2="45.72" width="0.1524" layer="91"/>
+<wire x1="78.74" y1="45.72" x2="111.76" y2="45.72" width="0.1524" layer="91"/>
 <label x="78.74" y="45.72" size="1.778" layer="95" rot="R180" xref="yes"/>
 <pinref part="U3" gate="G$1" pin="MISO"/>
 </segment>
@@ -14494,7 +14494,7 @@ Source: AVX .. aphvc.pdf</description>
 </net>
 <net name="TFT_RESET" class="0">
 <segment>
-<wire x1="106.68" y1="58.42" x2="73.66" y2="58.42" width="0.1524" layer="91"/>
+<wire x1="111.76" y1="58.42" x2="73.66" y2="58.42" width="0.1524" layer="91"/>
 <label x="73.66" y="58.42" size="1.778" layer="95" rot="R180" xref="yes"/>
 <pinref part="U3" gate="G$1" pin="RESET"/>
 </segment>
@@ -14512,17 +14512,17 @@ Source: AVX .. aphvc.pdf</description>
 <pinref part="Q1" gate="G$1" pin="C"/>
 <pinref part="U3" gate="G$1" pin="LEDK@2"/>
 <wire x1="50.8" y1="33.02" x2="86.36" y2="33.02" width="0.1524" layer="91"/>
-<wire x1="86.36" y1="33.02" x2="106.68" y2="33.02" width="0.1524" layer="91"/>
+<wire x1="86.36" y1="33.02" x2="111.76" y2="33.02" width="0.1524" layer="91"/>
 <wire x1="86.36" y1="33.02" x2="86.36" y2="35.56" width="0.1524" layer="91"/>
 <pinref part="U3" gate="G$1" pin="LEDK@4"/>
-<wire x1="106.68" y1="27.94" x2="86.36" y2="27.94" width="0.1524" layer="91"/>
+<wire x1="111.76" y1="27.94" x2="86.36" y2="27.94" width="0.1524" layer="91"/>
 <wire x1="86.36" y1="33.02" x2="86.36" y2="30.48" width="0.1524" layer="91"/>
 <wire x1="86.36" y1="30.48" x2="86.36" y2="27.94" width="0.1524" layer="91"/>
-<wire x1="106.68" y1="30.48" x2="86.36" y2="30.48" width="0.1524" layer="91"/>
+<wire x1="111.76" y1="30.48" x2="86.36" y2="30.48" width="0.1524" layer="91"/>
 <pinref part="U3" gate="G$1" pin="LEDK@3"/>
 <junction x="86.36" y="30.48"/>
 <junction x="86.36" y="33.02"/>
-<wire x1="106.68" y1="35.56" x2="86.36" y2="35.56" width="0.1524" layer="91"/>
+<wire x1="111.76" y1="35.56" x2="86.36" y2="35.56" width="0.1524" layer="91"/>
 <pinref part="U3" gate="G$1" pin="LEDK@1"/>
 <junction x="86.36" y="35.56"/>
 <junction x="86.36" y="27.94"/>
@@ -15394,7 +15394,6 @@ Source: AVX .. aphvc.pdf</description>
 </sheet>
 <sheet>
 <plain>
-<text x="93.98" y="-7.62" size="1.778" layer="91" rot="R90">Connect to MCU</text>
 </plain>
 <instances>
 <instance part="U$29" gate="G$1" x="0" y="0"/>
