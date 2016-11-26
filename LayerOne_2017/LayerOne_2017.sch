@@ -13679,6 +13679,7 @@ Source: AVX .. aphvc.pdf</description>
 <attribute name="PARTNO" value="RMCF0603JT10K0"/>
 </part>
 <part name="U$43" library="microbuilder" deviceset="GND" device=""/>
+<part name="GND2" library="STM32-PROX" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -14362,7 +14363,7 @@ Source: AVX .. aphvc.pdf</description>
 <instances>
 <instance part="Q1" gate="G$1" x="50.8" y="25.4"/>
 <instance part="R10" gate="G$1" x="30.48" y="25.4"/>
-<instance part="R11" gate="G$1" x="20.32" y="40.64" rot="R90"/>
+<instance part="R11" gate="G$1" x="38.1" y="15.24" rot="R90"/>
 <instance part="U$21" gate="G$1" x="20.32" y="53.34"/>
 <instance part="U3" gate="G$1" x="124.46" y="43.18"/>
 <instance part="U$6" gate="G$1" x="81.28" y="43.18"/>
@@ -14377,6 +14378,7 @@ Source: AVX .. aphvc.pdf</description>
 <attribute name="MPN" x="53.34" y="91.44" size="1.778" layer="96" rot="R90" display="off"/>
 <attribute name="DIGIKEY" x="53.34" y="91.44" size="1.778" layer="96" rot="R180" display="off"/>
 </instance>
+<instance part="GND2" gate="GND" x="38.1" y="5.08"/>
 </instances>
 <busses>
 </busses>
@@ -14403,6 +14405,11 @@ Source: AVX .. aphvc.pdf</description>
 <wire x1="111.76" y1="96.52" x2="81.28" y2="96.52" width="0.1524" layer="91"/>
 <label x="81.28" y="96.52" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
+<segment>
+<pinref part="GND2" gate="GND" pin="GND"/>
+<pinref part="R11" gate="G$1" pin="1"/>
+<wire x1="38.1" y1="7.62" x2="38.1" y2="10.16" width="0.1524" layer="91"/>
+</segment>
 </net>
 <net name="+3V3" class="0">
 <segment>
@@ -14415,11 +14422,6 @@ Source: AVX .. aphvc.pdf</description>
 <wire x1="111.76" y1="40.64" x2="99.06" y2="40.64" width="0.1524" layer="91"/>
 <wire x1="99.06" y1="40.64" x2="99.06" y2="38.1" width="0.1524" layer="91"/>
 <junction x="99.06" y="38.1"/>
-</segment>
-<segment>
-<pinref part="R11" gate="G$1" pin="2"/>
-<pinref part="U$21" gate="G$1" pin="3.3V"/>
-<wire x1="20.32" y1="45.72" x2="20.32" y2="50.8" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="J1" gate="G$1" pin="VCC"/>
@@ -14537,18 +14539,18 @@ Source: AVX .. aphvc.pdf</description>
 <segment>
 <pinref part="R10" gate="G$1" pin="2"/>
 <pinref part="Q1" gate="G$1" pin="B"/>
-<wire x1="35.56" y1="25.4" x2="45.72" y2="25.4" width="0.1524" layer="91"/>
+<wire x1="35.56" y1="25.4" x2="38.1" y2="25.4" width="0.1524" layer="91"/>
+<pinref part="R11" gate="G$1" pin="2"/>
+<wire x1="38.1" y1="25.4" x2="45.72" y2="25.4" width="0.1524" layer="91"/>
+<wire x1="38.1" y1="20.32" x2="38.1" y2="25.4" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="TFT_BACKLIGHT" class="0">
 <segment>
 <wire x1="25.4" y1="25.4" x2="20.32" y2="25.4" width="0.1524" layer="91"/>
 <wire x1="20.32" y1="25.4" x2="15.24" y2="25.4" width="0.1524" layer="91"/>
-<wire x1="20.32" y1="35.56" x2="20.32" y2="25.4" width="0.1524" layer="91"/>
-<junction x="20.32" y="25.4"/>
 <label x="15.24" y="25.4" size="1.778" layer="95" rot="R180" xref="yes"/>
 <pinref part="R10" gate="G$1" pin="1"/>
-<pinref part="R11" gate="G$1" pin="1"/>
 </segment>
 </net>
 </nets>

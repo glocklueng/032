@@ -3017,13 +3017,13 @@ design rules under a new name.</description>
 <attribute name="NAME" x="55.88" y="26.035" size="1" layer="25" ratio="10" rot="R270"/>
 <attribute name="VALUE" x="55.245" y="26.035" size="0.4064" layer="27" ratio="10" rot="R270"/>
 </element>
-<element name="R10" library="SparkFun-Passives" package="0805" value="100" x="50.8" y="26.67" smashed="yes">
-<attribute name="NAME" x="50.038" y="24.9555" size="1" layer="25" ratio="10"/>
-<attribute name="VALUE" x="49.784" y="25.273" size="0.4064" layer="27"/>
-</element>
-<element name="R11" library="SparkFun-Passives" package="0805" value="10K" x="50.8" y="29.21" smashed="yes">
-<attribute name="NAME" x="50.038" y="30.0355" size="1" layer="25" ratio="10"/>
+<element name="R10" library="SparkFun-Passives" package="0805" value="100" x="50.8" y="29.21" smashed="yes">
+<attribute name="NAME" x="50.038" y="27.4955" size="1" layer="25" ratio="10"/>
 <attribute name="VALUE" x="49.784" y="27.813" size="0.4064" layer="27"/>
+</element>
+<element name="R11" library="SparkFun-Passives" package="0805" value="10K" x="50.8" y="26.67" smashed="yes" rot="R180">
+<attribute name="NAME" x="51.562" y="25.8445" size="1" layer="25" ratio="10" rot="R180"/>
+<attribute name="VALUE" x="51.816" y="28.067" size="0.4064" layer="27" rot="R180"/>
 </element>
 <element name="U3" library="microbuilder" package="TM022HDH26_2.2IN_LCD" value="" x="35.56" y="41.91" smashed="yes" rot="R90">
 <attribute name="NAME" x="11.597" y="21.163" size="1" layer="25" ratio="10" rot="R180"/>
@@ -3290,7 +3290,6 @@ design rules under a new name.</description>
 <contactref element="IC1" pad="19"/>
 <contactref element="IC1" pad="48"/>
 <contactref element="IC1" pad="32"/>
-<contactref element="R11" pad="2"/>
 <contactref element="Q2" pad="3"/>
 <contactref element="B00T0" pad="2"/>
 <contactref element="C6" pad="1"/>
@@ -3401,7 +3400,6 @@ design rules under a new name.</description>
 <wire x1="66.04" y1="32.374" x2="66.04" y2="31.242" width="0.4064" layer="1"/>
 <wire x1="66.04" y1="31.242" x2="65.2526" y2="30.4546" width="0.4064" layer="1"/>
 <wire x1="65.2526" y1="30.4546" x2="65.2526" y2="29.8196" width="0.4064" layer="1"/>
-<wire x1="51.954" y1="29.464" x2="51.816" y2="29.464" width="0.254" layer="1"/>
 <wire x1="32.3342" y1="36.83" x2="32.2834" y2="36.7792" width="0.254" layer="1"/>
 <wire x1="54.62445625" y1="32.13445625" x2="40.50954375" y2="32.13445625" width="0.3048" layer="1"/>
 <wire x1="40.50954375" y1="32.13445625" x2="36.83" y2="35.814" width="0.3048" layer="1"/>
@@ -3409,9 +3407,6 @@ design rules under a new name.</description>
 <wire x1="36.83" y1="35.814" x2="35.814" y2="36.83" width="0.3048" layer="1"/>
 <wire x1="35.814" y1="36.83" x2="32.3342" y2="36.83" width="0.3048" layer="1"/>
 <wire x1="32.3342" y1="36.83" x2="32.2834" y2="36.7792" width="0.3048" layer="1"/>
-<wire x1="54.62445625" y1="32.13445625" x2="51.7" y2="29.21" width="0.254" layer="1"/>
-<wire x1="51.7" y1="29.21" x2="51.816" y2="29.326" width="0.254" layer="1"/>
-<wire x1="51.816" y1="29.326" x2="51.816" y2="29.464" width="0.254" layer="1"/>
 </signal>
 <signal name="GND">
 <contactref element="J1" pad="GND"/>
@@ -3578,6 +3573,7 @@ design rules under a new name.</description>
 <via x="49.276" y="44.196" extent="1-16" drill="0.3048" shape="square"/>
 <contactref element="R30" pad="2"/>
 <via x="65.278" y="48.514" extent="1-16" drill="0.3048" shape="square"/>
+<contactref element="R11" pad="1"/>
 </signal>
 <signal name="SD_MOSI">
 <contactref element="U4" pad="3"/>
@@ -3957,17 +3953,19 @@ design rules under a new name.</description>
 <signal name="N$16">
 <contactref element="R10" pad="2"/>
 <contactref element="Q1" pad="1"/>
-<wire x1="51.7" y1="26.67" x2="52.07" y2="26.67" width="0.254" layer="1"/>
 <wire x1="54.61" y1="29.21" x2="54.61" y2="29.16" width="0.254" layer="1"/>
 <wire x1="54.61" y1="29.16" x2="54.88" y2="28.89" width="0.254" layer="1"/>
-<wire x1="52.07" y1="26.67" x2="54.29" y2="28.89" width="0.254" layer="1"/>
-<wire x1="54.29" y1="28.89" x2="54.88" y2="28.89" width="0.254" layer="1"/>
+<contactref element="R11" pad="2"/>
+<wire x1="49.9" y1="26.67" x2="50.8" y2="27.57" width="0.254" layer="1"/>
+<wire x1="50.8" y1="27.57" x2="50.8" y2="28.702" width="0.254" layer="1"/>
+<wire x1="50.8" y1="28.702" x2="51.308" y2="29.21" width="0.254" layer="1"/>
+<wire x1="51.308" y1="29.21" x2="51.7" y2="29.21" width="0.254" layer="1"/>
+<wire x1="51.7" y1="29.21" x2="52.02" y2="28.89" width="0.254" layer="1"/>
+<wire x1="52.02" y1="28.89" x2="54.88" y2="28.89" width="0.254" layer="1"/>
 </signal>
 <signal name="TFT_BACKLIGHT">
 <contactref element="R10" pad="1"/>
-<contactref element="R11" pad="1"/>
 <contactref element="IC1" pad="40"/>
-<wire x1="49.9" y1="26.67" x2="49.9" y2="29.21" width="0.254" layer="1"/>
 <wire x1="32.2834" y1="32.766" x2="34.86128125" y2="32.766" width="0.254" layer="1"/>
 <wire x1="34.86128125" y1="32.766" x2="36.487675" y2="32.092325" width="0.254" layer="1" curve="-45.000055"/>
 <wire x1="36.487675" y1="32.092325" x2="38.1" y2="30.48" width="0.254" layer="1"/>
