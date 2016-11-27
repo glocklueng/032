@@ -14213,7 +14213,6 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <part name="Q1" library="microbuilder" deviceset="TRANSISTOR_NPN" device="WIDE" value="2N2222"/>
 <part name="R10" library="SparkFun-Passives" deviceset="RESISTOR" device="0805-RES" value="100"/>
 <part name="R11" library="SparkFun-Passives" deviceset="RESISTOR" device="0805-RES" value="10K"/>
-<part name="U$21" library="microbuilder" deviceset="3.3V" device=""/>
 <part name="U3" library="microbuilder" deviceset="DISP_LCD_TM022HDH26" device=""/>
 <part name="U$6" library="microbuilder" deviceset="3.3V" device=""/>
 <part name="U$19" library="microbuilder" deviceset="GND" device=""/>
@@ -15080,7 +15079,6 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <instance part="Q1" gate="G$1" x="50.8" y="25.4"/>
 <instance part="R10" gate="G$1" x="30.48" y="25.4"/>
 <instance part="R11" gate="G$1" x="38.1" y="15.24" rot="R90"/>
-<instance part="U$21" gate="G$1" x="20.32" y="53.34"/>
 <instance part="U3" gate="G$1" x="124.46" y="43.18"/>
 <instance part="U$6" gate="G$1" x="81.28" y="43.18"/>
 <instance part="U$19" gate="G$1" x="93.98" y="40.64"/>
@@ -15259,6 +15257,7 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <pinref part="R11" gate="G$1" pin="2"/>
 <wire x1="38.1" y1="25.4" x2="45.72" y2="25.4" width="0.1524" layer="91"/>
 <wire x1="38.1" y1="20.32" x2="38.1" y2="25.4" width="0.1524" layer="91"/>
+<junction x="38.1" y="25.4"/>
 </segment>
 </net>
 <net name="TFT_BACKLIGHT" class="0">
@@ -15799,6 +15798,7 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <wire x1="-12.7" y1="10.16" x2="-15.24" y2="10.16" width="0.1524" layer="91"/>
 <wire x1="-15.24" y1="10.16" x2="-15.24" y2="7.62" width="0.1524" layer="91"/>
 <wire x1="-15.24" y1="7.62" x2="-22.86" y2="7.62" width="0.1524" layer="91"/>
+<junction x="-22.86" y="7.62"/>
 </segment>
 <segment>
 <pinref part="C16" gate="G$1" pin="2"/>
@@ -15824,12 +15824,13 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <wire x1="-7.62" y1="-50.8" x2="-2.54" y2="-50.8" width="0.1524" layer="91"/>
 <pinref part="R21" gate="G$1" pin="2"/>
 <wire x1="-2.54" y1="-50.8" x2="0" y2="-50.8" width="0.1524" layer="91"/>
-<wire x1="0" y1="-50.8" x2="0" y2="-53.34" width="0.1524" layer="91"/>
 <wire x1="-2.54" y1="-48.26" x2="-2.54" y2="-50.8" width="0.1524" layer="91"/>
 <pinref part="R22" gate="G$1" pin="2"/>
 <wire x1="7.62" y1="-40.64" x2="7.62" y2="-50.8" width="0.1524" layer="91"/>
 <wire x1="7.62" y1="-50.8" x2="0" y2="-50.8" width="0.1524" layer="91"/>
 <wire x1="0" y1="-50.8" x2="0" y2="-53.34" width="0.1524" layer="91"/>
+<junction x="-2.54" y="-50.8"/>
+<junction x="0" y="-50.8"/>
 </segment>
 <segment>
 <pinref part="U$24" gate="G$1" pin="NEG"/>
@@ -15852,6 +15853,8 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <pinref part="VUSB" gate="G$1" pin="TP"/>
 <wire x1="-25.4" y1="15.24" x2="-33.02" y2="15.24" width="0.1524" layer="91"/>
 <wire x1="-25.4" y1="15.24" x2="-25.4" y2="25.4" width="0.1524" layer="91"/>
+<junction x="-25.4" y="15.24"/>
+<junction x="-22.86" y="15.24"/>
 </segment>
 </net>
 <net name="VBAT" class="0">
@@ -15879,6 +15882,7 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <junction x="10.16" y="50.8"/>
 <pinref part="VBAT" gate="G$1" pin="TP"/>
 <wire x1="50.8" y1="12.7" x2="50.8" y2="22.86" width="0.1524" layer="91"/>
+<junction x="50.8" y="12.7"/>
 </segment>
 </net>
 <net name="N$31" class="0">
@@ -16031,6 +16035,7 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <pinref part="5V" gate="G$1" pin="TP"/>
 <wire x1="119.38" y1="86.36" x2="124.46" y2="86.36" width="0.1524" layer="91"/>
 <wire x1="119.38" y1="93.98" x2="119.38" y2="86.36" width="0.1524" layer="91"/>
+<junction x="119.38" y="86.36"/>
 </segment>
 </net>
 <net name="GND" class="0">
@@ -16078,6 +16083,7 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <wire x1="17.78" y1="86.36" x2="2.54" y2="86.36" width="0.1524" layer="91"/>
 <wire x1="17.78" y1="81.28" x2="17.78" y2="86.36" width="0.1524" layer="91"/>
 <junction x="17.78" y="86.36"/>
+<label x="2.54" y="86.36" size="1.778" layer="95" font="fixed" rot="R180" xref="yes"/>
 </segment>
 </net>
 <net name="N$40" class="0">
@@ -16257,6 +16263,9 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <wire x1="50.8" y1="43.18" x2="50.8" y2="25.4" width="0.1524" layer="91"/>
 <pinref part="R12" gate="G$1" pin="2"/>
 <wire x1="60.96" y1="43.18" x2="60.96" y2="25.4" width="0.1524" layer="91"/>
+<junction x="38.1" y="43.18"/>
+<junction x="50.8" y="43.18"/>
+<junction x="60.96" y="43.18"/>
 </segment>
 </net>
 <net name="NRST" class="0">
