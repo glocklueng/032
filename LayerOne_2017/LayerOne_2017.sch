@@ -14226,8 +14226,8 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <part name="U$7" library="adafruit" deviceset="FIDUCIAL" device=""/>
 <part name="U$8" library="adafruit" deviceset="FIDUCIAL" device=""/>
 <part name="U$9" library="adafruit" deviceset="FIDUCIAL" device=""/>
-<part name="C2" library="SparkFun-Passives" deviceset="CAP" device="0805" value="20pF"/>
-<part name="C3" library="SparkFun-Passives" deviceset="CAP" device="0805" value="20pF"/>
+<part name="C2" library="SparkFun-Passives" deviceset="CAP" device="0805" value="18pF"/>
+<part name="C3" library="SparkFun-Passives" deviceset="CAP" device="0805" value="18pF "/>
 <part name="IC2" library="burr-brown" deviceset="REG1117" device=""/>
 <part name="U$10" library="microbuilder" deviceset="GND" device=""/>
 <part name="C4" library="SparkFun-Passives" deviceset="CAP" device="0805" value="1uF/16V"/>
@@ -14752,9 +14752,8 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <label x="38.1" y="73.66" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<wire x1="210.82" y1="43.18" x2="210.82" y2="45.72" width="0.1524" layer="91"/>
-<label x="210.82" y="45.72" size="1.778" layer="95" rot="R90" xref="yes"/>
-<pinref part="CN1" gate="G$1" pin="D+"/>
+<pinref part="CN1" gate="G$1" pin="D-"/>
+<wire x1="208.28" y1="43.18" x2="208.28" y2="63.5" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="D+" class="0">
@@ -14764,9 +14763,8 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <label x="2.54" y="71.12" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<wire x1="208.28" y1="43.18" x2="208.28" y2="63.5" width="0.1524" layer="91"/>
-<label x="208.28" y="63.5" size="1.778" layer="95" rot="R90" xref="yes"/>
-<pinref part="CN1" gate="G$1" pin="D-"/>
+<pinref part="CN1" gate="G$1" pin="D+"/>
+<wire x1="210.82" y1="43.18" x2="210.82" y2="66.04" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="SYS_JTMS-SWDIO" class="0">
