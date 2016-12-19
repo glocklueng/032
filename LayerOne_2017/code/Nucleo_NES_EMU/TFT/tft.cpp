@@ -8,6 +8,13 @@
 
 #include "mbed.h"
 #include "tft.h"
+// rev 1
+//#define OLD_BOARD
+// shield
+// #define MOPHO_BOARD
+
+//standalone
+#define STANDALONE_BOARD
 
 #ifdef OLD_BOARD
 DigitalOut cs ( PB_5, PullUp ); // TFT chipselect pin
@@ -16,7 +23,14 @@ DigitalOut cs ( PC_7, PullUp ); // TFT chipselect pin
 #endif
 
 DigitalOut dc ( PA_8, PullUp ); // TFT data command select pin
+//mopho
+#if defined( MOPHO_BOARD) 
+DigitalOut rst ( PA_2, PullUp ); // TFT reset pin
+#endif
+// standalone
+#if defined( STANDALONE_BOARD) 
 DigitalOut rst ( PC_8, PullUp ); // TFT reset pin
+#endif
 
 static DigitalOut back ( PC_9 );
 
@@ -285,20 +299,20 @@ bool draw_bmp_4bpp ( const unsigned char *imgdata, int x, int y )
 
 void backlight ( int status )
 {
-    back = status;
+    back = 1;
 }
 /*-------------------------------------------------------------------*/
 /*  Initialize TFT                                                   */
 /*-------------------------------------------------------------------*/
 void tft_init ( void )
 {
-    backlight ( 0 );
+    backlight ( 1 );
 
     spi_init();
 
     tft_reset();
 	
-	read_diag();
+	//read_diag();
 	
 }
 
