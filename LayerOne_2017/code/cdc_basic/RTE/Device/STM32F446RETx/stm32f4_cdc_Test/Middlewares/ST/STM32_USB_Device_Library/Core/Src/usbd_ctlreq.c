@@ -616,7 +616,6 @@ static void USBD_GetStatus(USBD_HandleTypeDef *pdev ,
   case USBD_STATE_CONFIGURED:
     
 #if ( USBD_SELF_POWERED == 1)
-
     pdev->dev_config_status = USB_CONFIG_SELF_POWERED;                                  
 #else
     pdev->dev_config_status = 0;                                   
