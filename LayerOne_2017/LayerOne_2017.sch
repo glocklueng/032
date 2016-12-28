@@ -15689,6 +15689,8 @@ Source: www.kingbright.com</description>
 <class number="2" name="power" width="0.254" drill="0.254">
 <clearance class="2" value="0.1778"/>
 </class>
+<class number="3" name="signals" width="0.3556" drill="0">
+</class>
 </classes>
 <parts>
 <part name="U4" library="STM32-PROX" deviceset="USD-SOCKET" device="NEW" value="SDCARD">
@@ -15964,6 +15966,22 @@ Source: www.kingbright.com</description>
 <part name="R31" library="SparkFun-Passives" deviceset="RESISTOR" device="0805-RES" value="10K"/>
 <part name="R32" library="SparkFun-Passives" deviceset="RESISTOR" device="0805-RES" value="10K"/>
 <part name="R33" library="SparkFun-Passives" deviceset="RESISTOR" device="0805-RES" value="100K"/>
+<part name="R34" library="SparkFun-Passives" deviceset="RESISTOR" device="0805-RES" value="DNP">
+<attribute name="DIGIKEY" value="RMCF0603JT10K0CT-ND"/>
+<attribute name="MF" value=""/>
+<attribute name="MPN" value="RMCF0603JT10K0"/>
+<attribute name="OC_NEWARK" value="unknown"/>
+<attribute name="PARTNO" value="RMCF0603JT10K0"/>
+</part>
+<part name="R35" library="SparkFun-Passives" deviceset="RESISTOR" device="0805-RES" value="DNP">
+<attribute name="DIGIKEY" value="RMCF0603JT10K0CT-ND"/>
+<attribute name="MF" value=""/>
+<attribute name="MPN" value="RMCF0603JT10K0"/>
+<attribute name="OC_NEWARK" value="unknown"/>
+<attribute name="PARTNO" value="RMCF0603JT10K0"/>
+</part>
+<part name="U$46" library="microbuilder" deviceset="GND" device=""/>
+<part name="U$47" library="microbuilder" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -16980,6 +16998,22 @@ Source: www.kingbright.com</description>
 <instance part="U$18" gate="G$1" x="0" y="0"/>
 <instance part="JP6" gate="G$1" x="-48.26" y="38.1" rot="R90"/>
 <instance part="JP7" gate="G$1" x="35.56" y="60.96" rot="R90"/>
+<instance part="R34" gate="G$1" x="-60.96" y="30.48" rot="R90">
+<attribute name="PARTNO" x="-60.96" y="30.48" size="1.778" layer="96" display="off"/>
+<attribute name="OC_NEWARK" x="-60.96" y="30.48" size="1.778" layer="96" display="off"/>
+<attribute name="MF" x="-60.96" y="30.48" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="-60.96" y="30.48" size="1.778" layer="96" display="off"/>
+<attribute name="DIGIKEY" x="-60.96" y="30.48" size="1.778" layer="96" rot="R90" display="off"/>
+</instance>
+<instance part="R35" gate="G$1" x="22.86" y="27.94" rot="R90">
+<attribute name="PARTNO" x="22.86" y="27.94" size="1.778" layer="96" display="off"/>
+<attribute name="OC_NEWARK" x="22.86" y="27.94" size="1.778" layer="96" display="off"/>
+<attribute name="MF" x="22.86" y="27.94" size="1.778" layer="96" display="off"/>
+<attribute name="MPN" x="22.86" y="27.94" size="1.778" layer="96" display="off"/>
+<attribute name="DIGIKEY" x="22.86" y="27.94" size="1.778" layer="96" rot="R90" display="off"/>
+</instance>
+<instance part="U$46" gate="G$1" x="-60.96" y="17.78"/>
+<instance part="U$47" gate="G$1" x="22.86" y="15.24"/>
 </instances>
 <busses>
 </busses>
@@ -17033,6 +17067,16 @@ Source: www.kingbright.com</description>
 <wire x1="0" y1="5.08" x2="0" y2="2.54" width="0.1524" layer="91"/>
 <pinref part="U$18" gate="G$1" pin="GND"/>
 <junction x="0" y="5.08"/>
+</segment>
+<segment>
+<pinref part="R34" gate="G$1" pin="1"/>
+<wire x1="-60.96" y1="25.4" x2="-60.96" y2="20.32" width="0.1524" layer="91"/>
+<pinref part="U$46" gate="G$1" pin="GND"/>
+</segment>
+<segment>
+<pinref part="R35" gate="G$1" pin="1"/>
+<wire x1="22.86" y1="22.86" x2="22.86" y2="17.78" width="0.1524" layer="91"/>
+<pinref part="U$47" gate="G$1" pin="GND"/>
 </segment>
 </net>
 <net name="3V3" class="0">
@@ -17116,7 +17160,7 @@ Source: www.kingbright.com</description>
 <label x="-12.7" y="48.26" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 </net>
-<net name="CLOPE1" class="0">
+<net name="SLOPE1" class="0">
 <segment>
 <pinref part="U2" gate="G$1" pin="RS"/>
 <wire x1="20.32" y1="48.26" x2="22.86" y2="48.26" width="0.1524" layer="91"/>
@@ -17190,6 +17234,22 @@ Source: www.kingbright.com</description>
 <wire x1="-43.18" y1="40.64" x2="-43.18" y2="43.18" width="0.1524" layer="91"/>
 <pinref part="JP6" gate="G$1" pin="2"/>
 <wire x1="-48.26" y1="40.64" x2="-48.26" y2="35.56" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$30" class="0">
+<segment>
+<pinref part="U1" gate="G$1" pin="VREF"/>
+<pinref part="R34" gate="G$1" pin="2"/>
+<wire x1="-63.5" y1="43.18" x2="-60.96" y2="43.18" width="0.1524" layer="91"/>
+<wire x1="-60.96" y1="43.18" x2="-60.96" y2="35.56" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$41" class="0">
+<segment>
+<pinref part="U2" gate="G$1" pin="VREF"/>
+<pinref part="R35" gate="G$1" pin="2"/>
+<wire x1="20.32" y1="40.64" x2="22.86" y2="40.64" width="0.1524" layer="91"/>
+<wire x1="22.86" y1="40.64" x2="22.86" y2="33.02" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>
