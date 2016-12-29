@@ -78,11 +78,6 @@ static const unsigned char chrimg[][7] = {
 
 extern SPI_HandleTypeDef hspi1;
 
-void DMA2_Stream3_IRQHandler ( void )
-{
-    HAL_DMA_IRQHandler ( hspi1.hdmatx );
-}
-
 void spi_init ( void )
 {
 	/*
@@ -376,6 +371,8 @@ void tft_init ( void )
     tft_reset();
 }
 
+///////////////////////////////////////////////////////
+// TFT 9341 + touchscreen 8 bit version
 
 
 

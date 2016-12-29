@@ -67,6 +67,7 @@
 #define TFT_DC_GPIO_Port GPIOA
 /* USER CODE BEGIN Private defines */
 
+
 /* USER CODE END Private defines */
 
 /**

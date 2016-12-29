@@ -647,6 +647,7 @@ HAL_StatusTypeDef HAL_CAN_Transmit(CAN_HandleTypeDef* hcan, uint32_t Timeout)
          hcan->State = HAL_CAN_STATE_TIMEOUT;
          /* Process unlocked */
          __HAL_UNLOCK(hcan);
+				 __HAL_CAN_CANCEL_TRANSMIT(hcan, transmitmailbox);
          return HAL_TIMEOUT;
         }
       }
@@ -672,7 +673,7 @@ HAL_StatusTypeDef HAL_CAN_Transmit(CAN_HandleTypeDef* hcan, uint32_t Timeout)
   {
     /* Change CAN state */
     hcan->State = HAL_CAN_STATE_ERROR; 
-
+		 __HAL_CAN_CANCEL_TRANSMIT(hcan, transmitmailbox);
     /* Return function status */
     return HAL_ERROR;
   }
